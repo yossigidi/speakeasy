@@ -1,0 +1,902 @@
+[
+  {
+    "id": "p_001",
+    "phrase": "How are you?",
+    "translation": "מה שלומך?",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Casual greeting",
+    "response": "I'm fine, thank you."
+  },
+  {
+    "id": "p_002",
+    "phrase": "Good morning!",
+    "translation": "!בוקר טוב",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Morning greeting",
+    "response": "Good morning to you too!"
+  },
+  {
+    "id": "p_003",
+    "phrase": "Good evening!",
+    "translation": "!ערב טוב",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Evening greeting",
+    "response": "Good evening!"
+  },
+  {
+    "id": "p_004",
+    "phrase": "Nice to meet you.",
+    "translation": ".נעים להכיר",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "First introduction",
+    "response": "Nice to meet you too."
+  },
+  {
+    "id": "p_005",
+    "phrase": "What's your name?",
+    "translation": "?איך קוראים לך",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Asking someone's name",
+    "response": "My name is..."
+  },
+  {
+    "id": "p_006",
+    "phrase": "Where are you from?",
+    "translation": "?מאיפה אתה",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Getting to know someone",
+    "response": "I'm from..."
+  },
+  {
+    "id": "p_007",
+    "phrase": "See you later!",
+    "translation": "!להתראות",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Saying goodbye casually",
+    "response": "See you!"
+  },
+  {
+    "id": "p_008",
+    "phrase": "Have a nice day!",
+    "translation": "!יום נעים",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Parting wish",
+    "response": "You too!"
+  },
+  {
+    "id": "p_009",
+    "phrase": "How's it going?",
+    "translation": "?מה נשמע",
+    "category": "greetings",
+    "cefrLevel": "A2",
+    "context": "Informal greeting between friends",
+    "response": "Not bad, thanks!"
+  },
+  {
+    "id": "p_010",
+    "phrase": "Long time no see!",
+    "translation": "!כמה זמן לא התראינו",
+    "category": "greetings",
+    "cefrLevel": "A2",
+    "context": "Meeting someone after a long time",
+    "response": "I know, it's been ages!"
+  },
+  {
+    "id": "p_011",
+    "phrase": "Good night, sleep well.",
+    "translation": ".לילה טוב, שינה טובה",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Saying goodnight",
+    "response": "Good night!"
+  },
+  {
+    "id": "p_012",
+    "phrase": "How have you been?",
+    "translation": "?מה איתך",
+    "category": "greetings",
+    "cefrLevel": "A2",
+    "context": "Catching up with someone",
+    "response": "I've been great, thanks for asking."
+  },
+  {
+    "id": "p_013",
+    "phrase": "Welcome!",
+    "translation": "!ברוכים הבאים",
+    "category": "greetings",
+    "cefrLevel": "A1",
+    "context": "Welcoming a guest",
+    "response": "Thank you!"
+  },
+  {
+    "id": "p_014",
+    "phrase": "Please to meet you, I've heard a lot about you.",
+    "translation": ".נעים מאוד, שמעתי עליך הרבה",
+    "category": "greetings",
+    "cefrLevel": "B1",
+    "context": "Meeting someone you've been told about",
+    "response": "All good things, I hope!"
+  },
+  {
+    "id": "p_015",
+    "phrase": "Take care!",
+    "translation": "!תשמור על עצמך",
+    "category": "greetings",
+    "cefrLevel": "A2",
+    "context": "Warm goodbye",
+    "response": "You too, take care!"
+  },
+  {
+    "id": "p_016",
+    "phrase": "What time is it?",
+    "translation": "?מה השעה",
+    "category": "daily-life",
+    "cefrLevel": "A1",
+    "context": "Asking for the time",
+    "response": "It's three o'clock."
+  },
+  {
+    "id": "p_017",
+    "phrase": "What's the weather like today?",
+    "translation": "?איך מזג האוויר היום",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Small talk about weather",
+    "response": "It's sunny and warm."
+  },
+  {
+    "id": "p_018",
+    "phrase": "I need to go to the bank.",
+    "translation": ".אני צריך ללכת לבנק",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Running errands",
+    "response": "The bank closes at four."
+  },
+  {
+    "id": "p_019",
+    "phrase": "Can you help me, please?",
+    "translation": "?אתה יכול לעזור לי, בבקשה",
+    "category": "daily-life",
+    "cefrLevel": "A1",
+    "context": "Asking for assistance",
+    "response": "Of course, what do you need?"
+  },
+  {
+    "id": "p_020",
+    "phrase": "Where is the nearest pharmacy?",
+    "translation": "?איפה בית המרקחת הקרוב",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Asking for directions",
+    "response": "It's around the corner on the left."
+  },
+  {
+    "id": "p_021",
+    "phrase": "I'm running late.",
+    "translation": ".אני מאחר",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Explaining tardiness",
+    "response": "No worries, take your time."
+  },
+  {
+    "id": "p_022",
+    "phrase": "Could you repeat that, please?",
+    "translation": "?אפשר לחזור על זה, בבקשה",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "When you didn't understand something",
+    "response": "Sure, I said..."
+  },
+  {
+    "id": "p_023",
+    "phrase": "I don't understand.",
+    "translation": ".אני לא מבין",
+    "category": "daily-life",
+    "cefrLevel": "A1",
+    "context": "Expressing confusion",
+    "response": "Let me explain it differently."
+  },
+  {
+    "id": "p_024",
+    "phrase": "Can I have a glass of water?",
+    "translation": "?אפשר כוס מים",
+    "category": "daily-life",
+    "cefrLevel": "A1",
+    "context": "Requesting water at someone's home",
+    "response": "Of course, here you go."
+  },
+  {
+    "id": "p_025",
+    "phrase": "What do you do for a living?",
+    "translation": "?מה אתה עושה בחיים",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Asking about someone's job",
+    "response": "I'm a teacher."
+  },
+  {
+    "id": "p_026",
+    "phrase": "I'm sorry, I didn't mean to.",
+    "translation": ".סליחה, לא התכוונתי",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Apologizing for a mistake",
+    "response": "That's okay, don't worry about it."
+  },
+  {
+    "id": "p_027",
+    "phrase": "Do you speak English?",
+    "translation": "?אתה מדבר אנגלית",
+    "category": "daily-life",
+    "cefrLevel": "A1",
+    "context": "Checking language ability",
+    "response": "Yes, a little."
+  },
+  {
+    "id": "p_028",
+    "phrase": "I'm looking for the restroom.",
+    "translation": ".אני מחפש את השירותים",
+    "category": "daily-life",
+    "cefrLevel": "A1",
+    "context": "Finding the bathroom in a public place",
+    "response": "It's down the hall on the right."
+  },
+  {
+    "id": "p_029",
+    "phrase": "What does this word mean?",
+    "translation": "?מה המילה הזו אומרת",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Asking for a definition",
+    "response": "It means..."
+  },
+  {
+    "id": "p_030",
+    "phrase": "Could you speak more slowly, please?",
+    "translation": "?אפשר לדבר יותר לאט, בבקשה",
+    "category": "daily-life",
+    "cefrLevel": "A2",
+    "context": "Asking someone to slow down",
+    "response": "Sure, no problem."
+  },
+  {
+    "id": "p_031",
+    "phrase": "How much does this cost?",
+    "translation": "?כמה זה עולה",
+    "category": "shopping",
+    "cefrLevel": "A1",
+    "context": "Asking the price in a store",
+    "response": "It's twenty dollars."
+  },
+  {
+    "id": "p_032",
+    "phrase": "Do you have this in a different size?",
+    "translation": "?יש לכם את זה במידה אחרת",
+    "category": "shopping",
+    "cefrLevel": "A2",
+    "context": "Clothing shopping",
+    "response": "Let me check in the back."
+  },
+  {
+    "id": "p_033",
+    "phrase": "Can I try this on?",
+    "translation": "?אפשר למדוד את זה",
+    "category": "shopping",
+    "cefrLevel": "A2",
+    "context": "Trying on clothes",
+    "response": "The fitting room is over there."
+  },
+  {
+    "id": "p_034",
+    "phrase": "I'm just looking, thanks.",
+    "translation": ".אני רק מסתכל, תודה",
+    "category": "shopping",
+    "cefrLevel": "A2",
+    "context": "Browsing without wanting help",
+    "response": "No problem, let me know if you need anything."
+  },
+  {
+    "id": "p_035",
+    "phrase": "Do you accept credit cards?",
+    "translation": "?אתם מקבלים כרטיס אשראי",
+    "category": "shopping",
+    "cefrLevel": "A2",
+    "context": "Paying at a store",
+    "response": "Yes, we accept all major cards."
+  },
+  {
+    "id": "p_036",
+    "phrase": "Is there a discount?",
+    "translation": "?יש הנחה",
+    "category": "shopping",
+    "cefrLevel": "A2",
+    "context": "Asking about sales",
+    "response": "Yes, it's 20% off today."
+  },
+  {
+    "id": "p_037",
+    "phrase": "I'd like to return this item.",
+    "translation": ".אני רוצה להחזיר את המוצר הזה",
+    "category": "shopping",
+    "cefrLevel": "B1",
+    "context": "Returning a product",
+    "response": "Do you have the receipt?"
+  },
+  {
+    "id": "p_038",
+    "phrase": "Where can I find the dairy section?",
+    "translation": "?איפה מחלקת החלב",
+    "category": "shopping",
+    "cefrLevel": "A2",
+    "context": "Navigating a supermarket",
+    "response": "It's in aisle three."
+  },
+  {
+    "id": "p_039",
+    "phrase": "Can I get a bag, please?",
+    "translation": "?אפשר לקבל שקית, בבקשה",
+    "category": "shopping",
+    "cefrLevel": "A1",
+    "context": "At the checkout",
+    "response": "Sure, bags are ten cents each."
+  },
+  {
+    "id": "p_040",
+    "phrase": "I'll take this one.",
+    "translation": ".אני אקח את זה",
+    "category": "shopping",
+    "cefrLevel": "A1",
+    "context": "Deciding to buy something",
+    "response": "Great choice! Shall I wrap it for you?"
+  },
+  {
+    "id": "p_041",
+    "phrase": "How do I get to the train station?",
+    "translation": "?איך מגיעים לתחנת הרכבת",
+    "category": "travel",
+    "cefrLevel": "A2",
+    "context": "Asking for directions",
+    "response": "Go straight and turn left at the traffic light."
+  },
+  {
+    "id": "p_042",
+    "phrase": "I'd like to book a room for two nights.",
+    "translation": ".אני רוצה להזמין חדר לשני לילות",
+    "category": "travel",
+    "cefrLevel": "B1",
+    "context": "Hotel reservation",
+    "response": "Single or double room?"
+  },
+  {
+    "id": "p_043",
+    "phrase": "What time does the flight depart?",
+    "translation": "?באיזו שעה הטיסה יוצאת",
+    "category": "travel",
+    "cefrLevel": "A2",
+    "context": "Airport inquiry",
+    "response": "The flight departs at 6:30 PM."
+  },
+  {
+    "id": "p_044",
+    "phrase": "Is this seat taken?",
+    "translation": "?המקום הזה תפוס",
+    "category": "travel",
+    "cefrLevel": "A2",
+    "context": "On a bus or train",
+    "response": "No, go ahead and sit down."
+  },
+  {
+    "id": "p_045",
+    "phrase": "Where is the baggage claim?",
+    "translation": "?איפה אולם קבלת המזוודות",
+    "category": "travel",
+    "cefrLevel": "B1",
+    "context": "After landing at an airport",
+    "response": "Follow the signs to the lower level."
+  },
+  {
+    "id": "p_046",
+    "phrase": "I need a taxi to the airport.",
+    "translation": ".אני צריך מונית לשדה התעופה",
+    "category": "travel",
+    "cefrLevel": "A2",
+    "context": "Arranging transportation",
+    "response": "I can call one for you right away."
+  },
+  {
+    "id": "p_047",
+    "phrase": "Can you recommend a good hotel nearby?",
+    "translation": "?אתה יכול להמליץ על מלון טוב בסביבה",
+    "category": "travel",
+    "cefrLevel": "B1",
+    "context": "Seeking accommodation",
+    "response": "There's a nice one two blocks from here."
+  },
+  {
+    "id": "p_048",
+    "phrase": "How long does the trip take?",
+    "translation": "?כמה זמן לוקחת הנסיעה",
+    "category": "travel",
+    "cefrLevel": "A2",
+    "context": "Planning travel time",
+    "response": "About two hours by bus."
+  },
+  {
+    "id": "p_049",
+    "phrase": "I've lost my passport.",
+    "translation": ".איבדתי את הדרכון שלי",
+    "category": "travel",
+    "cefrLevel": "B1",
+    "context": "Reporting a lost document",
+    "response": "You should go to the embassy immediately."
+  },
+  {
+    "id": "p_050",
+    "phrase": "One round-trip ticket to Tel Aviv, please.",
+    "translation": ".כרטיס הלוך-חזור לתל אביב, בבקשה",
+    "category": "travel",
+    "cefrLevel": "A2",
+    "context": "Buying a train or bus ticket",
+    "response": "That'll be fifty shekels."
+  },
+  {
+    "id": "p_051",
+    "phrase": "A table for two, please.",
+    "translation": ".שולחן לשניים, בבקשה",
+    "category": "restaurant",
+    "cefrLevel": "A1",
+    "context": "Arriving at a restaurant",
+    "response": "Right this way, please."
+  },
+  {
+    "id": "p_052",
+    "phrase": "Can I see the menu, please?",
+    "translation": "?אפשר לראות את התפריט, בבקשה",
+    "category": "restaurant",
+    "cefrLevel": "A1",
+    "context": "Ordering at a restaurant",
+    "response": "Here you are."
+  },
+  {
+    "id": "p_053",
+    "phrase": "What do you recommend?",
+    "translation": "?מה אתה ממליץ",
+    "category": "restaurant",
+    "cefrLevel": "A2",
+    "context": "Asking for a suggestion",
+    "response": "The grilled fish is excellent."
+  },
+  {
+    "id": "p_054",
+    "phrase": "I'm allergic to nuts.",
+    "translation": ".יש לי אלרגיה לאגוזים",
+    "category": "restaurant",
+    "cefrLevel": "B1",
+    "context": "Informing about food allergies",
+    "response": "I'll let the kitchen know right away."
+  },
+  {
+    "id": "p_055",
+    "phrase": "Could we have the check, please?",
+    "translation": "?אפשר את החשבון, בבקשה",
+    "category": "restaurant",
+    "cefrLevel": "A2",
+    "context": "Finishing a meal",
+    "response": "Of course, I'll bring it right over."
+  },
+  {
+    "id": "p_056",
+    "phrase": "I'd like to order the chicken salad.",
+    "translation": ".אני רוצה להזמין סלט עוף",
+    "category": "restaurant",
+    "cefrLevel": "A2",
+    "context": "Placing an order",
+    "response": "Would you like anything to drink with that?"
+  },
+  {
+    "id": "p_057",
+    "phrase": "Is this dish spicy?",
+    "translation": "?המנה הזו חריפה",
+    "category": "restaurant",
+    "cefrLevel": "A2",
+    "context": "Asking about food",
+    "response": "It's mildly spicy, but we can make it less."
+  },
+  {
+    "id": "p_058",
+    "phrase": "The food was delicious, thank you.",
+    "translation": ".האוכל היה טעים, תודה",
+    "category": "restaurant",
+    "cefrLevel": "A2",
+    "context": "Complimenting the meal",
+    "response": "I'm glad you enjoyed it!"
+  },
+  {
+    "id": "p_059",
+    "phrase": "Can I have a coffee with milk?",
+    "translation": "?אפשר קפה עם חלב",
+    "category": "restaurant",
+    "cefrLevel": "A1",
+    "context": "Ordering a drink at a cafe",
+    "response": "Sure, regular or decaf?"
+  },
+  {
+    "id": "p_060",
+    "phrase": "Do you have any vegetarian options?",
+    "translation": "?יש לכם אפשרויות צמחוניות",
+    "category": "restaurant",
+    "cefrLevel": "B1",
+    "context": "Dietary preferences",
+    "response": "Yes, we have several. Let me show you."
+  },
+  {
+    "id": "p_061",
+    "phrase": "I have a meeting at ten o'clock.",
+    "translation": ".יש לי פגישה בעשר",
+    "category": "work",
+    "cefrLevel": "A2",
+    "context": "Talking about your schedule",
+    "response": "Which conference room?"
+  },
+  {
+    "id": "p_062",
+    "phrase": "Could you send me that by email?",
+    "translation": "?אתה יכול לשלוח לי את זה במייל",
+    "category": "work",
+    "cefrLevel": "A2",
+    "context": "Requesting a document",
+    "response": "Sure, I'll send it right now."
+  },
+  {
+    "id": "p_063",
+    "phrase": "I'm working on a new project.",
+    "translation": ".אני עובד על פרויקט חדש",
+    "category": "work",
+    "cefrLevel": "A2",
+    "context": "Discussing work",
+    "response": "That sounds interesting. What is it about?"
+  },
+  {
+    "id": "p_064",
+    "phrase": "When is the deadline?",
+    "translation": "?מתי הדדליין",
+    "category": "work",
+    "cefrLevel": "B1",
+    "context": "Asking about a due date",
+    "response": "It's due by the end of the month."
+  },
+  {
+    "id": "p_065",
+    "phrase": "I need to take a day off.",
+    "translation": ".אני צריך לקחת יום חופש",
+    "category": "work",
+    "cefrLevel": "B1",
+    "context": "Requesting time off",
+    "response": "Sure, just fill out the request form."
+  },
+  {
+    "id": "p_066",
+    "phrase": "Can we schedule a meeting for tomorrow?",
+    "translation": "?אפשר לקבוע פגישה למחר",
+    "category": "work",
+    "cefrLevel": "B1",
+    "context": "Setting up a meeting",
+    "response": "Let me check my calendar."
+  },
+  {
+    "id": "p_067",
+    "phrase": "I'll finish the report by Friday.",
+    "translation": ".אני אסיים את הדוח עד יום שישי",
+    "category": "work",
+    "cefrLevel": "B1",
+    "context": "Making a commitment at work",
+    "response": "Great, please send it to the team."
+  },
+  {
+    "id": "p_068",
+    "phrase": "Sorry, I'm going to be late to the meeting.",
+    "translation": ".סליחה, אני הולך לאחר לפגישה",
+    "category": "work",
+    "cefrLevel": "B1",
+    "context": "Notifying about tardiness",
+    "response": "No problem, we'll wait for you."
+  },
+  {
+    "id": "p_069",
+    "phrase": "What are your working hours?",
+    "translation": "?מה שעות העבודה שלך",
+    "category": "work",
+    "cefrLevel": "A2",
+    "context": "Asking about a schedule",
+    "response": "I work from nine to five."
+  },
+  {
+    "id": "p_070",
+    "phrase": "I have a job interview next week.",
+    "translation": ".יש לי ראיון עבודה בשבוע הבא",
+    "category": "work",
+    "cefrLevel": "B1",
+    "context": "Sharing news about a job search",
+    "response": "Good luck! I'm sure you'll do great."
+  },
+  {
+    "id": "p_071",
+    "phrase": "Would you like to come over for dinner?",
+    "translation": "?בא לך לבוא לארוחת ערב",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Inviting someone to your home",
+    "response": "I'd love to! What time?"
+  },
+  {
+    "id": "p_072",
+    "phrase": "What are your hobbies?",
+    "translation": "?מה התחביבים שלך",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Getting to know someone",
+    "response": "I enjoy reading and hiking."
+  },
+  {
+    "id": "p_073",
+    "phrase": "Do you want to grab a coffee?",
+    "translation": "?בא לך ללכת לשתות קפה",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Casual invitation",
+    "response": "Sure, there's a great cafe nearby."
+  },
+  {
+    "id": "p_074",
+    "phrase": "Happy birthday! I got you a present.",
+    "translation": "!יום הולדת שמח! הבאתי לך מתנה",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Birthday celebration",
+    "response": "Thank you so much, you shouldn't have!"
+  },
+  {
+    "id": "p_075",
+    "phrase": "Let's keep in touch.",
+    "translation": ".בוא נשמור על קשר",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Parting after meeting someone",
+    "response": "Definitely! Here's my number."
+  },
+  {
+    "id": "p_076",
+    "phrase": "I'm sorry to hear that.",
+    "translation": ".אני מצטער לשמוע",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Expressing sympathy",
+    "response": "Thank you, I appreciate it."
+  },
+  {
+    "id": "p_077",
+    "phrase": "Congratulations on your promotion!",
+    "translation": "!מזל טוב על הקידום",
+    "category": "social",
+    "cefrLevel": "B1",
+    "context": "Celebrating someone's achievement",
+    "response": "Thank you, I'm so excited!"
+  },
+  {
+    "id": "p_078",
+    "phrase": "What are you doing this weekend?",
+    "translation": "?מה אתה עושה בסוף השבוע",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Making plans",
+    "response": "Nothing yet, do you have something in mind?"
+  },
+  {
+    "id": "p_079",
+    "phrase": "Thank you for having me.",
+    "translation": ".תודה שאירחת אותי",
+    "category": "social",
+    "cefrLevel": "B1",
+    "context": "Leaving a host's home",
+    "response": "It was our pleasure!"
+  },
+  {
+    "id": "p_080",
+    "phrase": "Can I bring anything to the party?",
+    "translation": "?אפשר להביא משהו למסיבה",
+    "category": "social",
+    "cefrLevel": "A2",
+    "context": "Being a polite guest",
+    "response": "Just bring yourself!"
+  },
+  {
+    "id": "p_081",
+    "phrase": "Call an ambulance!",
+    "translation": "!תזמין אמבולנס",
+    "category": "emergencies",
+    "cefrLevel": "A2",
+    "context": "Medical emergency",
+    "response": "I'm calling right now."
+  },
+  {
+    "id": "p_082",
+    "phrase": "I need to see a doctor.",
+    "translation": ".אני צריך לראות רופא",
+    "category": "emergencies",
+    "cefrLevel": "A2",
+    "context": "Feeling unwell",
+    "response": "The nearest clinic is on Main Street."
+  },
+  {
+    "id": "p_083",
+    "phrase": "Help! Someone stole my wallet.",
+    "translation": "!עזרה! מישהו גנב לי את הארנק",
+    "category": "emergencies",
+    "cefrLevel": "B1",
+    "context": "Reporting a theft",
+    "response": "Let's go to the police station."
+  },
+  {
+    "id": "p_084",
+    "phrase": "Where is the nearest hospital?",
+    "translation": "?איפה בית החולים הקרוב",
+    "category": "emergencies",
+    "cefrLevel": "A2",
+    "context": "Seeking medical help",
+    "response": "It's about ten minutes by car."
+  },
+  {
+    "id": "p_085",
+    "phrase": "I don't feel well, I think I have a fever.",
+    "translation": ".אני לא מרגיש טוב, אני חושב שיש לי חום",
+    "category": "emergencies",
+    "cefrLevel": "B1",
+    "context": "Describing symptoms",
+    "response": "You should rest and drink plenty of fluids."
+  },
+  {
+    "id": "p_086",
+    "phrase": "In my opinion, that's a great idea.",
+    "translation": ".לדעתי, זה רעיון מצוין",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Agreeing with someone",
+    "response": "I'm glad you think so!"
+  },
+  {
+    "id": "p_087",
+    "phrase": "I'm not sure I agree with you.",
+    "translation": ".אני לא בטוח שאני מסכים איתך",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Politely disagreeing",
+    "response": "What makes you think that?"
+  },
+  {
+    "id": "p_088",
+    "phrase": "I think you're absolutely right.",
+    "translation": ".אני חושב שאתה לגמרי צודק",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Strongly agreeing",
+    "response": "Thank you for seeing it that way."
+  },
+  {
+    "id": "p_089",
+    "phrase": "What do you think about this?",
+    "translation": "?מה אתה חושב על זה",
+    "category": "opinions",
+    "cefrLevel": "A2",
+    "context": "Asking for an opinion",
+    "response": "I think it has potential."
+  },
+  {
+    "id": "p_090",
+    "phrase": "I see your point, but I think differently.",
+    "translation": ".אני מבין את הנקודה שלך, אבל אני חושב אחרת",
+    "category": "opinions",
+    "cefrLevel": "B2",
+    "context": "Respectful disagreement",
+    "response": "I'd like to hear your perspective."
+  },
+  {
+    "id": "p_091",
+    "phrase": "I completely disagree.",
+    "translation": ".אני לגמרי לא מסכים",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Strong disagreement",
+    "response": "Let's agree to disagree then."
+  },
+  {
+    "id": "p_092",
+    "phrase": "That's an interesting point of view.",
+    "translation": ".זו נקודת מבט מעניינת",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Acknowledging someone's opinion",
+    "response": "Thank you, I've thought about it a lot."
+  },
+  {
+    "id": "p_093",
+    "phrase": "I'd rather go to the movies.",
+    "translation": ".אני מעדיף ללכת לקולנוע",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Expressing a preference",
+    "response": "Sounds good, what do you want to see?"
+  },
+  {
+    "id": "p_094",
+    "phrase": "I believe this is the best solution.",
+    "translation": ".אני מאמין שזה הפתרון הטוב ביותר",
+    "category": "opinions",
+    "cefrLevel": "B1",
+    "context": "Proposing a solution",
+    "response": "Let's try it and see how it goes."
+  },
+  {
+    "id": "p_095",
+    "phrase": "As far as I'm concerned, it's fine.",
+    "translation": ".מבחינתי, זה בסדר",
+    "category": "opinions",
+    "cefrLevel": "B2",
+    "context": "Giving approval",
+    "response": "Great, then we'll go with that."
+  },
+  {
+    "id": "p_096",
+    "phrase": "Hello, may I speak to Mr. Cohen?",
+    "translation": "?שלום, אפשר לדבר עם מר כהן",
+    "category": "phone",
+    "cefrLevel": "A2",
+    "context": "Making a formal phone call",
+    "response": "One moment, I'll transfer you."
+  },
+  {
+    "id": "p_097",
+    "phrase": "Sorry, you have the wrong number.",
+    "translation": ".סליחה, טעית במספר",
+    "category": "phone",
+    "cefrLevel": "A2",
+    "context": "Receiving a wrong call",
+    "response": "Oh, I'm sorry about that."
+  },
+  {
+    "id": "p_098",
+    "phrase": "Can I leave a message?",
+    "translation": "?אפשר להשאיר הודעה",
+    "category": "phone",
+    "cefrLevel": "A2",
+    "context": "When the person is unavailable",
+    "response": "Of course, go ahead."
+  },
+  {
+    "id": "p_099",
+    "phrase": "I'll call you back later.",
+    "translation": ".אני אחזור אליך מאוחר יותר",
+    "category": "phone",
+    "cefrLevel": "A2",
+    "context": "Ending a call temporarily",
+    "response": "Okay, talk to you later."
+  },
+  {
+    "id": "p_100",
+    "phrase": "Could you hold on for a moment?",
+    "translation": "?אתה יכול לחכות רגע",
+    "category": "phone",
+    "cefrLevel": "B1",
+    "context": "Asking someone to wait on the phone",
+    "response": "Sure, take your time."
+  }
+]

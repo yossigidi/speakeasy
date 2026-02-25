@@ -1,0 +1,425 @@
+{
+  "units": [
+    {
+      "id": "u1",
+      "title": "Greetings & Introductions",
+      "titleHe": "ברכות והיכרות",
+      "cefrLevel": "A1",
+      "lessons": [
+        {
+          "id": "u1l1",
+          "title": "Hello & Goodbye",
+          "titleHe": "שלום ולהתראות",
+          "exercises": [
+            {
+              "type": "multiple-choice",
+              "question": "What do you say when you meet someone in the morning?",
+              "questionHe": "מה אומרים כשפוגשים מישהו בבוקר?",
+              "options": ["Good night", "Good morning", "Good luck", "Goodbye"],
+              "correct": 1,
+              "explanation": "We say 'Good morning' when greeting someone in the morning."
+            },
+            {
+              "type": "match-pairs",
+              "instruction": "Match the English greeting to its Hebrew translation",
+              "instructionHe": "התאם את הברכה באנגלית לתרגום בעברית",
+              "pairs": [
+                ["Hello", "שלום"],
+                ["Goodbye", "להתראות"],
+                ["Good morning", "בוקר טוב"],
+                ["Good night", "לילה טוב"]
+              ]
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "Good ___, see you tomorrow!",
+              "answer": "bye",
+              "alternatives": ["bye", "Bye"],
+              "hint": "A short way to say goodbye",
+              "hintHe": "דרך קצרה לומר להתראות"
+            },
+            {
+              "type": "translation",
+              "source": "שלום",
+              "target": "Hello",
+              "alternatives": ["Hi", "Hey"],
+              "direction": "he-en"
+            },
+            {
+              "type": "word-arrange",
+              "words": ["morning", "Good", "!"],
+              "correct": "Good morning!",
+              "translation": "בוקר טוב!"
+            },
+            {
+              "type": "multiple-choice",
+              "question": "Which is a formal way to say goodbye?",
+              "questionHe": "מהי דרך רשמית לומר להתראות?",
+              "options": ["See ya!", "Bye-bye!", "Goodbye", "Later!"],
+              "correct": 2,
+              "explanation": "'Goodbye' is the most formal option. The others are informal."
+            },
+            {
+              "type": "translation",
+              "source": "להתראות",
+              "target": "Goodbye",
+              "alternatives": ["Bye", "See you"],
+              "direction": "he-en"
+            },
+            {
+              "type": "listening",
+              "text": "Good evening",
+              "options": ["Good morning", "Good afternoon", "Good evening", "Good night"],
+              "correct": 2,
+              "instructionHe": "הקשב ובחר את מה ששמעת"
+            },
+            {
+              "type": "speaking",
+              "text": "Hello, good morning!",
+              "translation": "שלום, בוקר טוב!",
+              "instructionHe": "אמור את המשפט הבא באנגלית"
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "Good ___! How are you today?",
+              "answer": "morning",
+              "alternatives": ["morning", "afternoon", "evening"],
+              "hint": "A greeting for the start of the day",
+              "hintHe": "ברכה לתחילת היום"
+            }
+          ]
+        },
+        {
+          "id": "u1l2",
+          "title": "What's Your Name?",
+          "titleHe": "מה השם שלך?",
+          "exercises": [
+            {
+              "type": "multiple-choice",
+              "question": "How do you ask someone's name?",
+              "questionHe": "איך שואלים מישהו מה שמו?",
+              "options": ["How is your name?", "What is your name?", "Who is your name?", "Where is your name?"],
+              "correct": 1,
+              "explanation": "In English we say 'What is your name?' to ask someone's name."
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "My ___ is David.",
+              "answer": "name",
+              "alternatives": ["name"],
+              "hint": "What people call you",
+              "hintHe": "איך אנשים קוראים לך"
+            },
+            {
+              "type": "word-arrange",
+              "words": ["is", "name", "My", "Sarah", "."],
+              "correct": "My name is Sarah.",
+              "translation": "השם שלי הוא שרה."
+            },
+            {
+              "type": "translation",
+              "source": "מה השם שלך?",
+              "target": "What is your name?",
+              "alternatives": ["What's your name?"],
+              "direction": "he-en"
+            },
+            {
+              "type": "multiple-choice",
+              "question": "\"Nice to meet you\" means:",
+              "questionHe": "\"Nice to meet you\" פירושו:",
+              "options": ["להתראות", "נעים להכיר", "מה שלומך", "תודה רבה"],
+              "correct": 1,
+              "explanation": "'Nice to meet you' is what we say when meeting someone for the first time."
+            },
+            {
+              "type": "match-pairs",
+              "instruction": "Match the question to the correct answer",
+              "instructionHe": "התאם את השאלה לתשובה הנכונה",
+              "pairs": [
+                ["What is your name?", "My name is Dan."],
+                ["How are you?", "I'm fine, thanks."],
+                ["Nice to meet you.", "Nice to meet you too."],
+                ["Where are you from?", "I'm from Israel."]
+              ]
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "Nice to ___ you!",
+              "answer": "meet",
+              "alternatives": ["meet"],
+              "hint": "What you say when you first meet someone",
+              "hintHe": "מה שאומרים כשפוגשים מישהו בפעם הראשונה"
+            },
+            {
+              "type": "speaking",
+              "text": "My name is David. Nice to meet you.",
+              "translation": "השם שלי דוד. נעים להכיר.",
+              "instructionHe": "אמור את המשפט הבא באנגלית"
+            },
+            {
+              "type": "word-arrange",
+              "words": ["to", "Nice", "you", "meet", "!"],
+              "correct": "Nice to meet you!",
+              "translation": "נעים להכיר!"
+            },
+            {
+              "type": "listening",
+              "text": "What is your name?",
+              "options": ["What is your name?", "Where is your home?", "What is your job?", "How is your day?"],
+              "correct": 0,
+              "instructionHe": "הקשב ובחר את מה ששמעת"
+            }
+          ]
+        },
+        {
+          "id": "u1l3",
+          "title": "How Are You?",
+          "titleHe": "מה שלומך?",
+          "exercises": [
+            {
+              "type": "multiple-choice",
+              "question": "What is a common reply to 'How are you?'",
+              "questionHe": "מהי תשובה נפוצה ל-'How are you?'",
+              "options": ["I'm fine, thanks.", "My name is John.", "I'm from Israel.", "Nice to meet you."],
+              "correct": 0,
+              "explanation": "'I'm fine, thanks' is the most common reply to 'How are you?'"
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "How ___ you?",
+              "answer": "are",
+              "alternatives": ["are"],
+              "hint": "The verb 'to be' for 'you'",
+              "hintHe": "הפועל 'to be' עבור 'you'"
+            },
+            {
+              "type": "match-pairs",
+              "instruction": "Match the feeling to its meaning",
+              "instructionHe": "התאם את ההרגשה לפירוש שלה",
+              "pairs": [
+                ["Happy", "שמח"],
+                ["Sad", "עצוב"],
+                ["Tired", "עייף"],
+                ["Great", "מצוין"],
+                ["Okay", "בסדר"]
+              ]
+            },
+            {
+              "type": "translation",
+              "source": "מה שלומך?",
+              "target": "How are you?",
+              "alternatives": ["How are you doing?", "How's it going?"],
+              "direction": "he-en"
+            },
+            {
+              "type": "word-arrange",
+              "words": ["fine", "I'm", "thanks", ",", "."],
+              "correct": "I'm fine, thanks.",
+              "translation": "אני בסדר, תודה."
+            },
+            {
+              "type": "multiple-choice",
+              "question": "Which means 'not good' in English?",
+              "questionHe": "מה פירושו 'לא טוב' באנגלית?",
+              "options": ["I'm great", "I'm not so good", "I'm fine", "I'm happy"],
+              "correct": 1,
+              "explanation": "'I'm not so good' expresses that you are not feeling well."
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "I'm ___, and you?",
+              "answer": "good",
+              "alternatives": ["good", "fine", "great", "okay"],
+              "hint": "A positive feeling",
+              "hintHe": "הרגשה חיובית"
+            },
+            {
+              "type": "speaking",
+              "text": "I'm fine, thank you. And you?",
+              "translation": "אני בסדר, תודה. ואתה?",
+              "instructionHe": "אמור את המשפט הבא באנגלית"
+            },
+            {
+              "type": "listening",
+              "text": "I'm great, thank you!",
+              "options": ["I'm great, thank you!", "I'm late, thank you!", "I'm eight, thank you!", "I'm gray, thank you!"],
+              "correct": 0,
+              "instructionHe": "הקשב ובחר את מה ששמעת"
+            }
+          ]
+        },
+        {
+          "id": "u1l4",
+          "title": "Where Are You From?",
+          "titleHe": "מאיפה אתה?",
+          "exercises": [
+            {
+              "type": "multiple-choice",
+              "question": "How do you ask where someone is from?",
+              "questionHe": "איך שואלים מאיפה מישהו?",
+              "options": ["What are you from?", "Where are you from?", "Who are you from?", "When are you from?"],
+              "correct": 1,
+              "explanation": "We use 'Where are you from?' to ask about someone's origin."
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "I ___ from Israel.",
+              "answer": "am",
+              "alternatives": ["am", "'m"],
+              "hint": "The verb 'to be' for 'I'",
+              "hintHe": "הפועל 'to be' עבור 'I'"
+            },
+            {
+              "type": "match-pairs",
+              "instruction": "Match the country to its nationality",
+              "instructionHe": "התאם את המדינה ללאום",
+              "pairs": [
+                ["Israel", "Israeli"],
+                ["America", "American"],
+                ["England", "English"],
+                ["France", "French"],
+                ["Russia", "Russian"]
+              ]
+            },
+            {
+              "type": "word-arrange",
+              "words": ["from", "I", "am", "Israel", "."],
+              "correct": "I am from Israel.",
+              "translation": "אני מישראל."
+            },
+            {
+              "type": "translation",
+              "source": "מאיפה אתה?",
+              "target": "Where are you from?",
+              "alternatives": ["Where do you come from?"],
+              "direction": "he-en"
+            },
+            {
+              "type": "multiple-choice",
+              "question": "\"I live in Tel Aviv\" - what does 'live' mean?",
+              "questionHe": "\"I live in Tel Aviv\" - מה פירוש 'live'?",
+              "options": ["עובד", "גר", "לומד", "אוהב"],
+              "correct": 1,
+              "explanation": "'Live' means to reside in a place - לגור."
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "I ___ in Tel Aviv.",
+              "answer": "live",
+              "alternatives": ["live"],
+              "hint": "To reside somewhere",
+              "hintHe": "לגור במקום מסוים"
+            },
+            {
+              "type": "speaking",
+              "text": "I am from Israel. I live in Tel Aviv.",
+              "translation": "אני מישראל. אני גר בתל אביב.",
+              "instructionHe": "אמור את המשפט הבא באנגלית"
+            },
+            {
+              "type": "word-arrange",
+              "words": ["are", "Where", "from", "you", "?"],
+              "correct": "Where are you from?",
+              "translation": "מאיפה אתה?"
+            },
+            {
+              "type": "listening",
+              "text": "I am from Israel.",
+              "options": ["I am from Israel.", "I am from Italy.", "I am from Ireland.", "I am from Iceland."],
+              "correct": 0,
+              "instructionHe": "הקשב ובחר את מה ששמעת"
+            }
+          ]
+        },
+        {
+          "id": "u1l5",
+          "title": "Numbers & Age",
+          "titleHe": "מספרים וגיל",
+          "exercises": [
+            {
+              "type": "match-pairs",
+              "instruction": "Match the number to its word",
+              "instructionHe": "התאם את המספר למילה",
+              "pairs": [
+                ["1", "one"],
+                ["2", "two"],
+                ["3", "three"],
+                ["5", "five"],
+                ["10", "ten"]
+              ]
+            },
+            {
+              "type": "multiple-choice",
+              "question": "How do you ask someone's age?",
+              "questionHe": "איך שואלים מישהו מה גילו?",
+              "options": ["What old are you?", "How old are you?", "How many are you?", "What age is you?"],
+              "correct": 1,
+              "explanation": "We say 'How old are you?' to ask about someone's age."
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "I am twenty-___ years old.",
+              "answer": "five",
+              "alternatives": ["five"],
+              "hint": "The number 5",
+              "hintHe": "המספר 5"
+            },
+            {
+              "type": "translation",
+              "source": "בן כמה אתה?",
+              "target": "How old are you?",
+              "alternatives": ["What is your age?"],
+              "direction": "he-en"
+            },
+            {
+              "type": "word-arrange",
+              "words": ["old", "I", "years", "am", "30", "."],
+              "correct": "I am 30 years old.",
+              "translation": "אני בן 30."
+            },
+            {
+              "type": "multiple-choice",
+              "question": "What is 'fifteen' as a number?",
+              "questionHe": "מה המספר של 'fifteen'?",
+              "options": ["50", "5", "15", "25"],
+              "correct": 2,
+              "explanation": "Fifteen = 15. It comes from 'five' + 'teen'."
+            },
+            {
+              "type": "fill-blank",
+              "sentence": "She is ___ years old. (18)",
+              "answer": "eighteen",
+              "alternatives": ["eighteen"],
+              "hint": "Write the number 18 in words",
+              "hintHe": "כתוב את המספר 18 במילים"
+            },
+            {
+              "type": "match-pairs",
+              "instruction": "Match the number word to its numeral",
+              "instructionHe": "התאם את מילת המספר למספר",
+              "pairs": [
+                ["twelve", "12"],
+                ["twenty", "20"],
+                ["fifteen", "15"],
+                ["thirty", "30"]
+              ]
+            },
+            {
+              "type": "speaking",
+              "text": "I am twenty-five years old.",
+              "translation": "אני בן עשרים וחמש.",
+              "instructionHe": "אמור את המשפט הבא באנגלית"
+            },
+            {
+              "type": "listening",
+              "text": "I am twenty years old.",
+              "options": ["I am twelve years old.", "I am twenty years old.", "I am thirty years old.", "I am thirteen years old."],
+              "correct": 1,
+              "instructionHe": "הקשב ובחר את מה ששמעת"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

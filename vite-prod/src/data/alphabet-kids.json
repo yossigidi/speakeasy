@@ -1,0 +1,886 @@
+[
+  {
+    "letter": "A",
+    "lower": "a",
+    "phonetic": "/eɪ/",
+    "sound": "æ",
+    "soundWord": "apple",
+    "color": "from-red-400 to-rose-500",
+    "emoji": "🍎",
+    "words": [
+      {
+        "word": "apple",
+        "translation": "תפוח",
+        "emoji": "🍎",
+        "sentence": "I eat a red apple.",
+        "sentenceHe": "אני אוכל תפוח אדום."
+      },
+      {
+        "word": "ant",
+        "translation": "נמלה",
+        "emoji": "🐜",
+        "sentence": "The ant is small.",
+        "sentenceHe": "הנמלה קטנה."
+      },
+      {
+        "word": "airplane",
+        "translation": "מטוס",
+        "emoji": "✈️",
+        "sentence": "The airplane flies high.",
+        "sentenceHe": "המטוס טס גבוה."
+      }
+    ],
+    "funFact": "A is the first letter and one of the most used letters!",
+    "funFactHe": "A היא האות הראשונה ואחת מהאותיות הנפוצות ביותר!"
+  },
+  {
+    "letter": "B",
+    "lower": "b",
+    "phonetic": "/biː/",
+    "sound": "b",
+    "soundWord": "ball",
+    "color": "from-orange-400 to-amber-500",
+    "emoji": "🏀",
+    "words": [
+      {
+        "word": "ball",
+        "translation": "כדור",
+        "emoji": "🏀",
+        "sentence": "I throw the ball.",
+        "sentenceHe": "אני זורק את הכדור."
+      },
+      {
+        "word": "bear",
+        "translation": "דוב",
+        "emoji": "🐻",
+        "sentence": "The bear is big.",
+        "sentenceHe": "הדוב גדול."
+      },
+      {
+        "word": "butterfly",
+        "translation": "פרפר",
+        "emoji": "🦋",
+        "sentence": "The butterfly is pretty.",
+        "sentenceHe": "הפרפר יפה."
+      }
+    ],
+    "funFact": "B looks like a butterfly with two wings!",
+    "funFactHe": "B נראית כמו פרפר עם שני כנפיים!"
+  },
+  {
+    "letter": "C",
+    "lower": "c",
+    "phonetic": "/siː/",
+    "sound": "k",
+    "soundWord": "cat",
+    "color": "from-amber-400 to-yellow-500",
+    "emoji": "🐱",
+    "words": [
+      {
+        "word": "cat",
+        "translation": "חתול",
+        "emoji": "🐱",
+        "sentence": "The cat is soft.",
+        "sentenceHe": "החתול רך."
+      },
+      {
+        "word": "cake",
+        "translation": "עוגה",
+        "emoji": "🎂",
+        "sentence": "I love chocolate cake.",
+        "sentenceHe": "אני אוהב עוגת שוקולד."
+      },
+      {
+        "word": "car",
+        "translation": "מכונית",
+        "emoji": "🚗",
+        "sentence": "The car is fast.",
+        "sentenceHe": "המכונית מהירה."
+      }
+    ],
+    "funFact": "C can sound like K or S depending on the word!",
+    "funFactHe": "C יכולה להישמע כמו K או S בהתאם למילה!"
+  },
+  {
+    "letter": "D",
+    "lower": "d",
+    "phonetic": "/diː/",
+    "sound": "d",
+    "soundWord": "dog",
+    "color": "from-yellow-400 to-lime-500",
+    "emoji": "🐶",
+    "words": [
+      {
+        "word": "dog",
+        "translation": "כלב",
+        "emoji": "🐶",
+        "sentence": "The dog wags its tail.",
+        "sentenceHe": "הכלב מכשכש בזנב."
+      },
+      {
+        "word": "duck",
+        "translation": "ברווז",
+        "emoji": "🦆",
+        "sentence": "The duck swims in water.",
+        "sentenceHe": "הברווז שוחה במים."
+      },
+      {
+        "word": "drum",
+        "translation": "תוף",
+        "emoji": "🥁",
+        "sentence": "I play the drum.",
+        "sentenceHe": "אני מנגן בתוף."
+      }
+    ],
+    "funFact": "D is shaped like a half circle with a line!",
+    "funFactHe": "D בצורה של חצי עיגול עם קו!"
+  },
+  {
+    "letter": "E",
+    "lower": "e",
+    "phonetic": "/iː/",
+    "sound": "ɛ",
+    "soundWord": "egg",
+    "color": "from-lime-400 to-green-500",
+    "emoji": "🥚",
+    "words": [
+      {
+        "word": "egg",
+        "translation": "ביצה",
+        "emoji": "🥚",
+        "sentence": "I eat an egg.",
+        "sentenceHe": "אני אוכל ביצה."
+      },
+      {
+        "word": "elephant",
+        "translation": "פיל",
+        "emoji": "🐘",
+        "sentence": "The elephant is huge.",
+        "sentenceHe": "הפיל ענק."
+      },
+      {
+        "word": "ear",
+        "translation": "אוזן",
+        "emoji": "👂",
+        "sentence": "I hear with my ear.",
+        "sentenceHe": "אני שומע עם האוזן."
+      }
+    ],
+    "funFact": "E is the most common letter in English!",
+    "funFactHe": "E היא האות הנפוצה ביותר באנגלית!"
+  },
+  {
+    "letter": "F",
+    "lower": "f",
+    "phonetic": "/ɛf/",
+    "sound": "f",
+    "soundWord": "fish",
+    "color": "from-green-400 to-emerald-500",
+    "emoji": "🐟",
+    "words": [
+      {
+        "word": "fish",
+        "translation": "דג",
+        "emoji": "🐟",
+        "sentence": "The fish swims fast.",
+        "sentenceHe": "הדג שוחה מהר."
+      },
+      {
+        "word": "flower",
+        "translation": "פרח",
+        "emoji": "🌸",
+        "sentence": "The flower smells nice.",
+        "sentenceHe": "הפרח מריח טוב."
+      },
+      {
+        "word": "frog",
+        "translation": "צפרדע",
+        "emoji": "🐸",
+        "sentence": "The frog jumps high.",
+        "sentenceHe": "הצפרדע קופצת גבוה."
+      }
+    ],
+    "funFact": "F is one of the letters you can feel with your teeth on your lip!",
+    "funFactHe": "F היא אות שאפשר להרגיש עם השיניים על השפה!"
+  },
+  {
+    "letter": "G",
+    "lower": "g",
+    "phonetic": "/dʒiː/",
+    "sound": "ɡ",
+    "soundWord": "grape",
+    "color": "from-emerald-400 to-teal-500",
+    "emoji": "🍇",
+    "words": [
+      {
+        "word": "grape",
+        "translation": "ענב",
+        "emoji": "🍇",
+        "sentence": "I eat purple grapes.",
+        "sentenceHe": "אני אוכל ענבים סגולים."
+      },
+      {
+        "word": "giraffe",
+        "translation": "ג'ירפה",
+        "emoji": "🦒",
+        "sentence": "The giraffe is tall.",
+        "sentenceHe": "הג'ירפה גבוהה."
+      },
+      {
+        "word": "guitar",
+        "translation": "גיטרה",
+        "emoji": "🎸",
+        "sentence": "I play the guitar.",
+        "sentenceHe": "אני מנגן בגיטרה."
+      }
+    ],
+    "funFact": "G can make a hard sound like 'go' or soft like 'giraffe'!",
+    "funFactHe": "G יכולה להשמיע צליל קשה כמו go או רך כמו giraffe!"
+  },
+  {
+    "letter": "H",
+    "lower": "h",
+    "phonetic": "/eɪtʃ/",
+    "sound": "h",
+    "soundWord": "hat",
+    "color": "from-teal-400 to-cyan-500",
+    "emoji": "🎩",
+    "words": [
+      {
+        "word": "hat",
+        "translation": "כובע",
+        "emoji": "🎩",
+        "sentence": "I wear a hat.",
+        "sentenceHe": "אני חובש כובע."
+      },
+      {
+        "word": "horse",
+        "translation": "סוס",
+        "emoji": "🐴",
+        "sentence": "The horse runs fast.",
+        "sentenceHe": "הסוס רץ מהר."
+      },
+      {
+        "word": "house",
+        "translation": "בית",
+        "emoji": "🏠",
+        "sentence": "I live in a house.",
+        "sentenceHe": "אני גר בבית."
+      }
+    ],
+    "funFact": "H sounds like a little breath of air!",
+    "funFactHe": "H נשמעת כמו נשיפה קטנה של אוויר!"
+  },
+  {
+    "letter": "I",
+    "lower": "i",
+    "phonetic": "/aɪ/",
+    "sound": "ɪ",
+    "soundWord": "igloo",
+    "color": "from-cyan-400 to-sky-500",
+    "emoji": "🏠",
+    "words": [
+      {
+        "word": "igloo",
+        "translation": "איגלו",
+        "emoji": "🏠",
+        "sentence": "The igloo is cold.",
+        "sentenceHe": "האיגלו קר."
+      },
+      {
+        "word": "ice cream",
+        "translation": "גלידה",
+        "emoji": "🍦",
+        "sentence": "I like ice cream.",
+        "sentenceHe": "אני אוהב גלידה."
+      },
+      {
+        "word": "insect",
+        "translation": "חרק",
+        "emoji": "🐛",
+        "sentence": "The insect is tiny.",
+        "sentenceHe": "החרק זעיר."
+      }
+    ],
+    "funFact": "I is the smallest letter when written in lowercase!",
+    "funFactHe": "i היא האות הקטנה ביותר כשכותבים אותה באות קטנה!"
+  },
+  {
+    "letter": "J",
+    "lower": "j",
+    "phonetic": "/dʒeɪ/",
+    "sound": "dʒ",
+    "soundWord": "juice",
+    "color": "from-sky-400 to-blue-500",
+    "emoji": "🧃",
+    "words": [
+      {
+        "word": "juice",
+        "translation": "מיץ",
+        "emoji": "🧃",
+        "sentence": "I drink orange juice.",
+        "sentenceHe": "אני שותה מיץ תפוזים."
+      },
+      {
+        "word": "jellyfish",
+        "translation": "מדוזה",
+        "emoji": "🪼",
+        "sentence": "The jellyfish is in the sea.",
+        "sentenceHe": "המדוזה בים."
+      },
+      {
+        "word": "jump",
+        "translation": "קפיצה",
+        "emoji": "🤸",
+        "sentence": "I can jump high.",
+        "sentenceHe": "אני יכול לקפוץ גבוה."
+      }
+    ],
+    "funFact": "J is one of the newest letters in the alphabet!",
+    "funFactHe": "J היא אחת מהאותיות החדשות ביותר באלפבית!"
+  },
+  {
+    "letter": "K",
+    "lower": "k",
+    "phonetic": "/keɪ/",
+    "sound": "k",
+    "soundWord": "kite",
+    "color": "from-blue-400 to-indigo-500",
+    "emoji": "🪁",
+    "words": [
+      {
+        "word": "kite",
+        "translation": "עפיפון",
+        "emoji": "🪁",
+        "sentence": "The kite flies in the sky.",
+        "sentenceHe": "העפיפון עף בשמיים."
+      },
+      {
+        "word": "king",
+        "translation": "מלך",
+        "emoji": "🤴",
+        "sentence": "The king wears a crown.",
+        "sentenceHe": "המלך חובש כתר."
+      },
+      {
+        "word": "kangaroo",
+        "translation": "קנגורו",
+        "emoji": "🦘",
+        "sentence": "The kangaroo can jump.",
+        "sentenceHe": "הקנגורו יכול לקפוץ."
+      }
+    ],
+    "funFact": "K and C often make the same sound!",
+    "funFactHe": "K ו-C לעיתים קרובות משמיעות את אותו צליל!"
+  },
+  {
+    "letter": "L",
+    "lower": "l",
+    "phonetic": "/ɛl/",
+    "sound": "l",
+    "soundWord": "lion",
+    "color": "from-indigo-400 to-violet-500",
+    "emoji": "🦁",
+    "words": [
+      {
+        "word": "lion",
+        "translation": "אריה",
+        "emoji": "🦁",
+        "sentence": "The lion is strong.",
+        "sentenceHe": "האריה חזק."
+      },
+      {
+        "word": "lemon",
+        "translation": "לימון",
+        "emoji": "🍋",
+        "sentence": "The lemon is sour.",
+        "sentenceHe": "הלימון חמוץ."
+      },
+      {
+        "word": "leaf",
+        "translation": "עלה",
+        "emoji": "🍃",
+        "sentence": "The leaf is green.",
+        "sentenceHe": "העלה ירוק."
+      }
+    ],
+    "funFact": "L is the letter your tongue touches the roof of your mouth!",
+    "funFactHe": "L היא האות שבה הלשון נוגעת בחיך!"
+  },
+  {
+    "letter": "M",
+    "lower": "m",
+    "phonetic": "/ɛm/",
+    "sound": "m",
+    "soundWord": "moon",
+    "color": "from-violet-400 to-purple-500",
+    "emoji": "🌙",
+    "words": [
+      {
+        "word": "moon",
+        "translation": "ירח",
+        "emoji": "🌙",
+        "sentence": "The moon shines at night.",
+        "sentenceHe": "הירח מאיר בלילה."
+      },
+      {
+        "word": "monkey",
+        "translation": "קוף",
+        "emoji": "🐒",
+        "sentence": "The monkey eats bananas.",
+        "sentenceHe": "הקוף אוכל בננות."
+      },
+      {
+        "word": "milk",
+        "translation": "חלב",
+        "emoji": "🥛",
+        "sentence": "I drink cold milk.",
+        "sentenceHe": "אני שותה חלב קר."
+      }
+    ],
+    "funFact": "M sounds like humming with your lips closed!",
+    "funFactHe": "M נשמעת כמו זמזום עם שפתיים סגורות!"
+  },
+  {
+    "letter": "N",
+    "lower": "n",
+    "phonetic": "/ɛn/",
+    "sound": "n",
+    "soundWord": "nose",
+    "color": "from-purple-400 to-fuchsia-500",
+    "emoji": "👃",
+    "words": [
+      {
+        "word": "nose",
+        "translation": "אף",
+        "emoji": "👃",
+        "sentence": "I smell with my nose.",
+        "sentenceHe": "אני מריח עם האף."
+      },
+      {
+        "word": "nest",
+        "translation": "קן",
+        "emoji": "🪺",
+        "sentence": "The bird has a nest.",
+        "sentenceHe": "לציפור יש קן."
+      },
+      {
+        "word": "nut",
+        "translation": "אגוז",
+        "emoji": "🥜",
+        "sentence": "The squirrel eats a nut.",
+        "sentenceHe": "הסנאי אוכל אגוז."
+      }
+    ],
+    "funFact": "N is the letter that vibrates in your nose!",
+    "funFactHe": "N היא האות שרוטטת באף!"
+  },
+  {
+    "letter": "O",
+    "lower": "o",
+    "phonetic": "/oʊ/",
+    "sound": "ɒ",
+    "soundWord": "orange",
+    "color": "from-fuchsia-400 to-pink-500",
+    "emoji": "🍊",
+    "words": [
+      {
+        "word": "orange",
+        "translation": "תפוז",
+        "emoji": "🍊",
+        "sentence": "The orange is sweet.",
+        "sentenceHe": "התפוז מתוק."
+      },
+      {
+        "word": "owl",
+        "translation": "ינשוף",
+        "emoji": "🦉",
+        "sentence": "The owl sees at night.",
+        "sentenceHe": "הינשוף רואה בלילה."
+      },
+      {
+        "word": "octopus",
+        "translation": "תמנון",
+        "emoji": "🐙",
+        "sentence": "The octopus has eight arms.",
+        "sentenceHe": "לתמנון יש שמונה זרועות."
+      }
+    ],
+    "funFact": "O is shaped like a mouth saying 'oh'!",
+    "funFactHe": "O בצורה של פה שאומר 'אוֹ'!"
+  },
+  {
+    "letter": "P",
+    "lower": "p",
+    "phonetic": "/piː/",
+    "sound": "p",
+    "soundWord": "penguin",
+    "color": "from-pink-400 to-rose-500",
+    "emoji": "🐧",
+    "words": [
+      {
+        "word": "penguin",
+        "translation": "פינגווין",
+        "emoji": "🐧",
+        "sentence": "The penguin likes the cold.",
+        "sentenceHe": "הפינגווין אוהב קור."
+      },
+      {
+        "word": "pizza",
+        "translation": "פיצה",
+        "emoji": "🍕",
+        "sentence": "I love eating pizza.",
+        "sentenceHe": "אני אוהב לאכול פיצה."
+      },
+      {
+        "word": "parrot",
+        "translation": "תוכי",
+        "emoji": "🦜",
+        "sentence": "The parrot can talk.",
+        "sentenceHe": "התוכי יכול לדבר."
+      }
+    ],
+    "funFact": "P makes a little puff of air when you say it!",
+    "funFactHe": "P יוצרת נשיפת אוויר קטנה כשאומרים אותה!"
+  },
+  {
+    "letter": "Q",
+    "lower": "q",
+    "phonetic": "/kjuː/",
+    "sound": "kw",
+    "soundWord": "queen",
+    "color": "from-rose-400 to-red-500",
+    "emoji": "👑",
+    "words": [
+      {
+        "word": "queen",
+        "translation": "מלכה",
+        "emoji": "👑",
+        "sentence": "The queen wears a crown.",
+        "sentenceHe": "המלכה חובשת כתר."
+      },
+      {
+        "word": "quilt",
+        "translation": "שמיכה",
+        "emoji": "🛏️",
+        "sentence": "The quilt is warm.",
+        "sentenceHe": "השמיכה חמה."
+      },
+      {
+        "word": "question",
+        "translation": "שאלה",
+        "emoji": "❓",
+        "sentence": "I ask a question.",
+        "sentenceHe": "אני שואל שאלה."
+      }
+    ],
+    "funFact": "Q almost always has the letter U right after it!",
+    "funFactHe": "Q כמעט תמיד מופיעה עם האות U אחריה!"
+  },
+  {
+    "letter": "R",
+    "lower": "r",
+    "phonetic": "/ɑːr/",
+    "sound": "r",
+    "soundWord": "rainbow",
+    "color": "from-red-400 to-orange-500",
+    "emoji": "🌈",
+    "words": [
+      {
+        "word": "rainbow",
+        "translation": "קשת",
+        "emoji": "🌈",
+        "sentence": "The rainbow has many colors.",
+        "sentenceHe": "לקשת יש הרבה צבעים."
+      },
+      {
+        "word": "rabbit",
+        "translation": "ארנב",
+        "emoji": "🐰",
+        "sentence": "The rabbit hops around.",
+        "sentenceHe": "הארנב מקפץ מסביב."
+      },
+      {
+        "word": "rocket",
+        "translation": "טיל",
+        "emoji": "🚀",
+        "sentence": "The rocket goes to space.",
+        "sentenceHe": "הטיל טס לחלל."
+      }
+    ],
+    "funFact": "R is one of the hardest letters for kids to say!",
+    "funFactHe": "R היא אחת מהאותיות הקשות ביותר לילדים להגיד!"
+  },
+  {
+    "letter": "S",
+    "lower": "s",
+    "phonetic": "/ɛs/",
+    "sound": "s",
+    "soundWord": "sun",
+    "color": "from-orange-400 to-yellow-500",
+    "emoji": "☀️",
+    "words": [
+      {
+        "word": "sun",
+        "translation": "שמש",
+        "emoji": "☀️",
+        "sentence": "The sun is bright.",
+        "sentenceHe": "השמש בוהקת."
+      },
+      {
+        "word": "star",
+        "translation": "כוכב",
+        "emoji": "⭐",
+        "sentence": "I see a star.",
+        "sentenceHe": "אני רואה כוכב."
+      },
+      {
+        "word": "snake",
+        "translation": "נחש",
+        "emoji": "🐍",
+        "sentence": "The snake is long.",
+        "sentenceHe": "הנחש ארוך."
+      }
+    ],
+    "funFact": "S looks like a snake and even sounds like one!",
+    "funFactHe": "S נראית כמו נחש ואפילו נשמעת כמו אחד!"
+  },
+  {
+    "letter": "T",
+    "lower": "t",
+    "phonetic": "/tiː/",
+    "sound": "t",
+    "soundWord": "tree",
+    "color": "from-yellow-400 to-green-500",
+    "emoji": "🌳",
+    "words": [
+      {
+        "word": "tree",
+        "translation": "עץ",
+        "emoji": "🌳",
+        "sentence": "The tree is very tall.",
+        "sentenceHe": "העץ מאוד גבוה."
+      },
+      {
+        "word": "turtle",
+        "translation": "צב",
+        "emoji": "🐢",
+        "sentence": "The turtle walks slowly.",
+        "sentenceHe": "הצב הולך לאט."
+      },
+      {
+        "word": "train",
+        "translation": "רכבת",
+        "emoji": "🚂",
+        "sentence": "The train goes fast.",
+        "sentenceHe": "הרכבת נוסעת מהר."
+      }
+    ],
+    "funFact": "T is the second most common consonant in English!",
+    "funFactHe": "T היא העיצור השני בשכיחותו באנגלית!"
+  },
+  {
+    "letter": "U",
+    "lower": "u",
+    "phonetic": "/juː/",
+    "sound": "ʌ",
+    "soundWord": "umbrella",
+    "color": "from-green-400 to-teal-500",
+    "emoji": "☂️",
+    "words": [
+      {
+        "word": "umbrella",
+        "translation": "מטריה",
+        "emoji": "☂️",
+        "sentence": "I use an umbrella.",
+        "sentenceHe": "אני משתמש במטריה."
+      },
+      {
+        "word": "unicorn",
+        "translation": "חד קרן",
+        "emoji": "🦄",
+        "sentence": "The unicorn is magical.",
+        "sentenceHe": "חד הקרן קסום."
+      },
+      {
+        "word": "up",
+        "translation": "למעלה",
+        "emoji": "⬆️",
+        "sentence": "The balloon goes up.",
+        "sentenceHe": "הבלון עולה למעלה."
+      }
+    ],
+    "funFact": "U is shaped like a cup that can hold water!",
+    "funFactHe": "U בצורת כוס שיכולה להכיל מים!"
+  },
+  {
+    "letter": "V",
+    "lower": "v",
+    "phonetic": "/viː/",
+    "sound": "v",
+    "soundWord": "violin",
+    "color": "from-teal-400 to-sky-500",
+    "emoji": "🎻",
+    "words": [
+      {
+        "word": "violin",
+        "translation": "כינור",
+        "emoji": "🎻",
+        "sentence": "I play the violin.",
+        "sentenceHe": "אני מנגן בכינור."
+      },
+      {
+        "word": "volcano",
+        "translation": "הר געש",
+        "emoji": "🌋",
+        "sentence": "The volcano is hot.",
+        "sentenceHe": "הר הגעש חם."
+      },
+      {
+        "word": "vegetable",
+        "translation": "ירק",
+        "emoji": "🥦",
+        "sentence": "I eat vegetables every day.",
+        "sentenceHe": "אני אוכל ירקות כל יום."
+      }
+    ],
+    "funFact": "V looks like an arrow pointing down!",
+    "funFactHe": "V נראית כמו חץ שמצביע למטה!"
+  },
+  {
+    "letter": "W",
+    "lower": "w",
+    "phonetic": "/ˈdʌbəljuː/",
+    "sound": "w",
+    "soundWord": "water",
+    "color": "from-sky-400 to-indigo-500",
+    "emoji": "💧",
+    "words": [
+      {
+        "word": "water",
+        "translation": "מים",
+        "emoji": "💧",
+        "sentence": "I drink cold water.",
+        "sentenceHe": "אני שותה מים קרים."
+      },
+      {
+        "word": "whale",
+        "translation": "לווייתן",
+        "emoji": "🐳",
+        "sentence": "The whale is very big.",
+        "sentenceHe": "הלווייתן מאוד גדול."
+      },
+      {
+        "word": "watermelon",
+        "translation": "אבטיח",
+        "emoji": "🍉",
+        "sentence": "The watermelon is sweet.",
+        "sentenceHe": "האבטיח מתוק."
+      }
+    ],
+    "funFact": "W is the only letter with three syllables in its name!",
+    "funFactHe": "W היא האות היחידה עם שלוש הברות בשמה!"
+  },
+  {
+    "letter": "X",
+    "lower": "x",
+    "phonetic": "/ɛks/",
+    "sound": "ks",
+    "soundWord": "fox",
+    "color": "from-indigo-400 to-purple-500",
+    "emoji": "🦊",
+    "words": [
+      {
+        "word": "fox",
+        "translation": "שועל",
+        "emoji": "🦊",
+        "sentence": "The fox is clever.",
+        "sentenceHe": "השועל חכם."
+      },
+      {
+        "word": "box",
+        "translation": "קופסה",
+        "emoji": "📦",
+        "sentence": "I open the box.",
+        "sentenceHe": "אני פותח את הקופסה."
+      },
+      {
+        "word": "xylophone",
+        "translation": "קסילופון",
+        "emoji": "🎵",
+        "sentence": "I play the xylophone.",
+        "sentenceHe": "אני מנגן בקסילופון."
+      }
+    ],
+    "funFact": "X marks the spot on a treasure map!",
+    "funFactHe": "X מסמנת את המקום על מפת אוצרות!"
+  },
+  {
+    "letter": "Y",
+    "lower": "y",
+    "phonetic": "/waɪ/",
+    "sound": "j",
+    "soundWord": "yellow",
+    "color": "from-purple-400 to-violet-500",
+    "emoji": "💛",
+    "words": [
+      {
+        "word": "yellow",
+        "translation": "צהוב",
+        "emoji": "💛",
+        "sentence": "The sun is yellow.",
+        "sentenceHe": "השמש צהובה."
+      },
+      {
+        "word": "yogurt",
+        "translation": "יוגורט",
+        "emoji": "🥛",
+        "sentence": "I eat strawberry yogurt.",
+        "sentenceHe": "אני אוכל יוגורט תות."
+      },
+      {
+        "word": "yarn",
+        "translation": "חוט",
+        "emoji": "🧶",
+        "sentence": "The cat plays with yarn.",
+        "sentenceHe": "החתול משחק עם חוט."
+      }
+    ],
+    "funFact": "Y can be a vowel or a consonant!",
+    "funFactHe": "Y יכולה להיות תנועה או עיצור!"
+  },
+  {
+    "letter": "Z",
+    "lower": "z",
+    "phonetic": "/ziː/",
+    "sound": "z",
+    "soundWord": "zebra",
+    "color": "from-fuchsia-400 to-purple-500",
+    "emoji": "🦓",
+    "words": [
+      {
+        "word": "zebra",
+        "translation": "זברה",
+        "emoji": "🦓",
+        "sentence": "The zebra has stripes.",
+        "sentenceHe": "לזברה יש פסים."
+      },
+      {
+        "word": "zoo",
+        "translation": "גן חיות",
+        "emoji": "🦁",
+        "sentence": "I go to the zoo.",
+        "sentenceHe": "אני הולך לגן החיות."
+      },
+      {
+        "word": "zipper",
+        "translation": "רוכסן",
+        "emoji": "🧥",
+        "sentence": "I close the zipper.",
+        "sentenceHe": "אני סוגר את הרוכסן."
+      }
+    ],
+    "funFact": "Z is the last letter of the alphabet!",
+    "funFactHe": "Z היא האות האחרונה באלפבית!"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "g1",
+    "title": "Present Simple - To Be",
+    "titleHe": "הווה פשוט - To Be",
+    "cefrLevel": "A1",
+    "explanation": "Use 'am', 'is', 'are' to describe states and facts.",
+    "explanationHe": "משתמשים ב-am, is, are לתיאור מצבים ועובדות.",
+    "examples": ["I am a student.", "She is happy.", "They are from Israel."],
+    "rule": "I am / He-She-It is / We-You-They are"
+  },
+  {
+    "id": "g2",
+    "title": "Present Simple - Regular Verbs",
+    "titleHe": "הווה פשוט - פעלים רגילים",
+    "cefrLevel": "A1",
+    "explanation": "Add -s or -es for he/she/it. Use 'do/does' for questions and negatives.",
+    "explanationHe": "מוסיפים s- או es- בגוף שלישי. משתמשים ב-do/does לשאלות ושלילה.",
+    "examples": ["I work every day.", "She works at a bank.", "Do you like coffee?"],
+    "rule": "I/You/We/They + verb | He/She/It + verb+s"
+  },
+  {
+    "id": "g3",
+    "title": "Articles - A, An, The",
+    "titleHe": "תווית יידוע - A, An, The",
+    "cefrLevel": "A1",
+    "explanation": "'A/An' for non-specific things, 'The' for specific things.",
+    "explanationHe": "A/An לדברים לא ספציפיים, The לדברים ספציפיים.",
+    "examples": ["I have a cat.", "She ate an apple.", "The cat is on the table."],
+    "rule": "a + consonant sound | an + vowel sound | the + specific"
+  },
+  {
+    "id": "g4",
+    "title": "Past Simple",
+    "titleHe": "עבר פשוט",
+    "cefrLevel": "A2",
+    "explanation": "Add -ed for regular verbs. Irregular verbs have special forms.",
+    "explanationHe": "מוסיפים ed- לפעלים רגילים. לפעלים חריגים יש צורות מיוחדות.",
+    "examples": ["I walked to school.", "She went to the store.", "Did you see the movie?"],
+    "rule": "verb+ed (regular) | special form (irregular) | did + base verb (question/negative)"
+  },
+  {
+    "id": "g5",
+    "title": "Present Continuous",
+    "titleHe": "הווה מתמשך",
+    "cefrLevel": "A2",
+    "explanation": "Use am/is/are + verb-ing for actions happening now.",
+    "explanationHe": "משתמשים ב-am/is/are + ing-פועל לפעולות שקורות עכשיו.",
+    "examples": ["I am reading a book.", "She is cooking dinner.", "They are playing football."],
+    "rule": "am/is/are + verb-ing"
+  },
+  {
+    "id": "g6",
+    "title": "Comparatives & Superlatives",
+    "titleHe": "השוואה ושם תואר מופלג",
+    "cefrLevel": "A2",
+    "explanation": "Short adjectives: add -er/-est. Long adjectives: use more/most.",
+    "explanationHe": "תארים קצרים: מוסיפים er-/est-. תארים ארוכים: more/most.",
+    "examples": ["She is taller than me.", "This is the biggest city.", "English is more interesting than math."],
+    "rule": "short: adj+er/est | long: more/most + adj"
+  },
+  {
+    "id": "g7",
+    "title": "Present Perfect",
+    "titleHe": "הווה מושלם",
+    "cefrLevel": "B1",
+    "explanation": "Use have/has + past participle for experiences and unfinished time.",
+    "explanationHe": "משתמשים ב-have/has + צורת עבר שלישי לחוויות ולזמן שלא נגמר.",
+    "examples": ["I have visited London.", "She has lived here for 5 years.", "Have you ever eaten sushi?"],
+    "rule": "have/has + past participle"
+  },
+  {
+    "id": "g8",
+    "title": "Conditional - First",
+    "titleHe": "משפט תנאי ראשון",
+    "cefrLevel": "B1",
+    "explanation": "If + present simple, will + verb. For real/possible situations.",
+    "explanationHe": "If + הווה פשוט, will + פועל. למצבים אפשריים.",
+    "examples": ["If it rains, I will stay home.", "If you study hard, you will pass."],
+    "rule": "If + present simple, will + base verb"
+  },
+  {
+    "id": "g9",
+    "title": "Passive Voice",
+    "titleHe": "סביל",
+    "cefrLevel": "B1",
+    "explanation": "Use be + past participle when the action is more important than who did it.",
+    "explanationHe": "משתמשים ב-be + צורת עבר שלישי כשהפעולה חשובה יותר ממי שעשה אותה.",
+    "examples": ["The book was written in 1990.", "English is spoken worldwide.", "The cake was made by my mother."],
+    "rule": "be + past participle (+ by agent)"
+  },
+  {
+    "id": "g10",
+    "title": "Reported Speech",
+    "titleHe": "דיבור עקיף",
+    "cefrLevel": "B2",
+    "explanation": "Shift tenses back when reporting what someone said.",
+    "explanationHe": "מזיזים את הזמנים אחורה כשמדווחים על מה שמישהו אמר.",
+    "examples": ["He said he was tired.", "She told me she had finished.", "They asked if I could help."],
+    "rule": "present → past | past → past perfect | will → would"
+  }
+]

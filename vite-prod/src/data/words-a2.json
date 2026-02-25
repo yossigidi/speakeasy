@@ -1,0 +1,4675 @@
+[
+  {
+    "id": "a2_001",
+    "word": "appointment",
+    "ipa": "/əˈpɔɪntmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "health",
+    "translation": "תור (אצל רופא)",
+    "definition": "An arrangement to meet someone at a particular time and place, especially a doctor or dentist.",
+    "definitionHe": "סידור מוסכם לפגישה עם מישהו בזמן ובמקום מסוימים, בדרך כלל אצל רופא או רופא שיניים.",
+    "examples": [
+      "I have a doctor's appointment at 3 PM.",
+      "She called to make an appointment with the dentist.",
+      "Don't forget your appointment tomorrow morning."
+    ],
+    "audioHint": "uh-POINT-ment",
+    "collocations": [
+      "make an appointment",
+      "doctor's appointment",
+      "cancel an appointment"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to fix an appointment",
+        "correct": "I need to make an appointment",
+        "explanation": "בעברית אומרים 'לקבוע תור', אבל באנגלית לא משתמשים ב-fix אלא ב-make."
+      },
+      {
+        "wrong": "I have a turn at the doctor",
+        "correct": "I have an appointment with the doctor",
+        "explanation": "תרגום מילולי של 'תור' ל-turn שגוי. באנגלית משתמשים ב-appointment."
+      }
+    ],
+    "tip": "Use 'make' to schedule an appointment and 'have' when one already exists.",
+    "tipHe": "משתמשים ב-make כדי לקבוע תור, וב-have כשכבר יש תור קבוע.",
+    "synonyms": [
+      "booking",
+      "meeting"
+    ]
+  },
+  {
+    "id": "a2_002",
+    "word": "medicine",
+    "ipa": "/ˈmɛdɪsɪn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "health",
+    "translation": "תרופה",
+    "definition": "A substance, especially a pill or liquid, that you take to treat an illness.",
+    "definitionHe": "חומר, בדרך כלל כדור או נוזל, שלוקחים כדי לטפל במחלה.",
+    "examples": [
+      "Take your medicine twice a day after meals.",
+      "The doctor gave me some medicine for my cold.",
+      "Keep medicine away from children."
+    ],
+    "audioHint": "MED-uh-sin",
+    "collocations": [
+      "take medicine",
+      "prescribe medicine",
+      "over-the-counter medicine"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to drink a medicine",
+        "correct": "I need to take medicine",
+        "explanation": "בעברית אומרים 'לקחת תרופה', וגם באנגלית משתמשים ב-take ולא ב-drink, גם אם מדובר בנוזל."
+      }
+    ],
+    "tip": "Medicine is uncountable when referring to the field (She studies medicine), but countable for specific drugs (different medicines).",
+    "tipHe": "medicine היא מילה לא ספירה כשמתייחסים לתחום הרפואה, אבל ספירה כשמדברים על תרופות ספציפיות.",
+    "synonyms": [
+      "medication",
+      "drug"
+    ]
+  },
+  {
+    "id": "a2_003",
+    "word": "headache",
+    "ipa": "/ˈhɛdeɪk/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "health",
+    "translation": "כאב ראש",
+    "definition": "A continuous pain in the head.",
+    "definitionHe": "כאב מתמשך בראש.",
+    "examples": [
+      "I have a terrible headache today.",
+      "Loud music gives me a headache.",
+      "She took a pill for her headache."
+    ],
+    "audioHint": "HED-ayk",
+    "collocations": [
+      "have a headache",
+      "terrible headache",
+      "get a headache"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have headache",
+        "correct": "I have a headache",
+        "explanation": "חייבים להשתמש ב-a לפני headache. בעברית אין תווית יידוע כזו אבל באנגלית היא הכרחית."
+      }
+    ],
+    "tip": "English uses 'have a + symptom': have a headache, have a stomachache, have a fever.",
+    "tipHe": "באנגלית משתמשים ב-have a + סימפטום: have a headache, have a stomachache, have a fever.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_004",
+    "word": "exercise",
+    "ipa": "/ˈɛksərˌsaɪz/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "health",
+    "translation": "פעילות גופנית",
+    "definition": "Physical activity done to stay healthy and strong.",
+    "definitionHe": "פעילות גופנית שעושים כדי להישאר בריאים וחזקים.",
+    "examples": [
+      "Regular exercise is good for your health.",
+      "I try to do exercise at least three times a week.",
+      "Walking is a simple form of exercise."
+    ],
+    "audioHint": "EK-sur-size",
+    "collocations": [
+      "do exercise",
+      "regular exercise",
+      "physical exercise"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to make exercise",
+        "correct": "I need to do exercise",
+        "explanation": "באנגלית אומרים do exercise ולא make exercise. זו טעות נפוצה בגלל התרגום מעברית 'לעשות פעילות גופנית'."
+      }
+    ],
+    "tip": "Exercise as a noun is usually uncountable ('do exercise'), but exercises (plural) can mean specific movements ('do exercises').",
+    "tipHe": "exercise כשם עצם היא לרוב לא ספירה (do exercise), אבל exercises ברבים מתייחס לתרגילים ספציפיים.",
+    "synonyms": [
+      "workout",
+      "physical activity"
+    ]
+  },
+  {
+    "id": "a2_005",
+    "word": "healthy",
+    "ipa": "/ˈhɛlθi/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "health",
+    "translation": "בריא",
+    "definition": "In good physical condition; good for your health.",
+    "definitionHe": "במצב גופני טוב; טוב לבריאות.",
+    "examples": [
+      "Eating vegetables is healthy.",
+      "She looks very healthy after her vacation.",
+      "It's important to have a healthy lifestyle."
+    ],
+    "audioHint": "HEL-thee",
+    "collocations": [
+      "healthy food",
+      "healthy lifestyle",
+      "stay healthy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "This food is very health",
+        "correct": "This food is very healthy",
+        "explanation": "health היא שם עצם (בריאות), healthy היא שם תואר (בריא). צריך שם תואר אחרי very."
+      }
+    ],
+    "tip": "Don't confuse health (noun) with healthy (adjective). 'Good for your health' = 'healthy'.",
+    "tipHe": "אל תבלבלו בין health (שם עצם - בריאות) ל-healthy (שם תואר - בריא).",
+    "synonyms": [
+      "fit",
+      "well"
+    ]
+  },
+  {
+    "id": "a2_006",
+    "word": "computer",
+    "ipa": "/kəmˈpjuːtər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "מחשב",
+    "definition": "An electronic machine that stores and processes information.",
+    "definitionHe": "מכונה אלקטרונית שמאחסנת ומעבדת מידע.",
+    "examples": [
+      "I use my computer for work every day.",
+      "The computer crashed and I lost my files.",
+      "She bought a new laptop computer."
+    ],
+    "audioHint": "kum-PYOO-ter",
+    "collocations": [
+      "use a computer",
+      "computer screen",
+      "turn on/off the computer"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I opened the computer",
+        "correct": "I turned on the computer",
+        "explanation": "בעברית אומרים 'להדליק את המחשב', אבל באנגלית לא אומרים open the computer אלא turn on the computer."
+      }
+    ],
+    "tip": "Use 'turn on/off' for starting and stopping a computer, not 'open/close'.",
+    "tipHe": "משתמשים ב-turn on/off להפעלה וכיבוי של מחשב, לא ב-open/close.",
+    "synonyms": [
+      "PC"
+    ]
+  },
+  {
+    "id": "a2_007",
+    "word": "internet",
+    "ipa": "/ˈɪntərˌnɛt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "אינטרנט",
+    "definition": "The global network that connects computers and allows people to share information.",
+    "definitionHe": "הרשת העולמית שמחברת מחשבים ומאפשרת לאנשים לשתף מידע.",
+    "examples": [
+      "I can't work without the internet.",
+      "The internet connection is very slow today.",
+      "You can find almost anything on the internet."
+    ],
+    "audioHint": "IN-ter-net",
+    "collocations": [
+      "internet connection",
+      "on the internet",
+      "use the internet"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I saw it in the internet",
+        "correct": "I saw it on the internet",
+        "explanation": "באנגלית אומרים on the internet ולא in the internet. זו מילת יחס קבועה."
+      }
+    ],
+    "tip": "Always say 'on the internet', never 'in the internet'. The word 'the' is usually included.",
+    "tipHe": "תמיד אומרים on the internet ולא in the internet. בדרך כלל כוללים the.",
+    "synonyms": [
+      "the web",
+      "the net"
+    ]
+  },
+  {
+    "id": "a2_008",
+    "word": "website",
+    "ipa": "/ˈwɛbˌsaɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "אתר אינטרנט",
+    "definition": "A set of pages on the internet with information about a particular subject or organization.",
+    "definitionHe": "מכלול של דפים באינטרנט עם מידע על נושא או ארגון מסוים.",
+    "examples": [
+      "Visit our website for more information.",
+      "I found a great website for learning English.",
+      "The company's website was updated last week."
+    ],
+    "audioHint": "WEB-site",
+    "collocations": [
+      "visit a website",
+      "company website",
+      "build a website"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I entered to the website",
+        "correct": "I visited the website / I went to the website",
+        "explanation": "בעברית אומרים 'נכנסתי לאתר', אבל באנגלית לא אומרים entered to. משתמשים ב-visited או went to."
+      }
+    ],
+    "tip": "Website is one word, not two. You 'visit' or 'go to' a website.",
+    "tipHe": "website נכתבת כמילה אחת. אפשר להשתמש ב-visit או go to כדי לתאר גלישה לאתר.",
+    "synonyms": [
+      "site",
+      "web page"
+    ]
+  },
+  {
+    "id": "a2_009",
+    "word": "password",
+    "ipa": "/ˈpæsˌwɜːrd/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "סיסמה",
+    "definition": "A secret word or phrase used to gain access to a computer system or account.",
+    "definitionHe": "מילה או צירוף מילים סודיים שמשמשים לגישה למערכת מחשב או חשבון.",
+    "examples": [
+      "Don't share your password with anyone.",
+      "I forgot my password and had to reset it.",
+      "Choose a strong password with numbers and letters."
+    ],
+    "audioHint": "PAS-wurd",
+    "collocations": [
+      "enter a password",
+      "change your password",
+      "strong password"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "What is the secret code?",
+        "correct": "What is the password?",
+        "explanation": "דוברי עברית לפעמים מתרגמים 'קוד סודי' במקום להשתמש ב-password, שהיא המילה הנכונה לסיסמה דיגיטלית."
+      }
+    ],
+    "tip": "Password = pass + word. Think of it as a 'word' that lets you 'pass' through security.",
+    "tipHe": "password = pass (לעבור) + word (מילה). חשבו על זה כ'מילה' שמאפשרת לכם 'לעבור' את האבטחה.",
+    "synonyms": [
+      "passcode"
+    ]
+  },
+  {
+    "id": "a2_010",
+    "word": "download",
+    "ipa": "/ˈdaʊnˌloʊd/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "להוריד (קובץ)",
+    "definition": "To copy data from the internet or another computer to your own device.",
+    "definitionHe": "להעתיק מידע מהאינטרנט או ממחשב אחר למכשיר שלכם.",
+    "examples": [
+      "I need to download the app to my phone.",
+      "It takes a long time to download large files.",
+      "You can download the document for free."
+    ],
+    "audioHint": "DOWN-lohd",
+    "collocations": [
+      "download an app",
+      "download a file",
+      "free download"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to lower the file",
+        "correct": "I need to download the file",
+        "explanation": "בעברית אומרים 'להוריד קובץ' ודוברי עברית מתרגמים לפעמים ל-lower שמשמעותו להנמיך. המילה הנכונה היא download."
+      }
+    ],
+    "tip": "Download = getting files FROM the internet. Upload = sending files TO the internet. Think: down = to you, up = away from you.",
+    "tipHe": "download = לקבל קבצים מהאינטרנט. upload = לשלוח קבצים לאינטרנט. down = אליכם, up = מכם.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_011",
+    "word": "museum",
+    "ipa": "/mjuˈziːəm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "מוזיאון",
+    "definition": "A building where important objects of art, history, or science are kept and shown to the public.",
+    "definitionHe": "מבנה שבו שומרים ומציגים לציבור פריטים חשובים של אמנות, היסטוריה או מדע.",
+    "examples": [
+      "We visited the science museum last weekend.",
+      "The museum has a new exhibition about ancient Egypt.",
+      "Admission to the museum is free on Saturdays."
+    ],
+    "audioHint": "myoo-ZEE-um",
+    "collocations": [
+      "visit a museum",
+      "art museum",
+      "museum exhibition"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We went to a muzeum",
+        "correct": "We went to a museum",
+        "explanation": "שימו לב לאיות: museum עם s, לא z כמו באיות העברי מוזיאון."
+      }
+    ],
+    "tip": "The stress is on the second syllable: mu-ZE-um, not MU-ze-um.",
+    "tipHe": "הדגש בהגייה הוא על ההברה השנייה: mu-ZE-um, לא MU-ze-um.",
+    "synonyms": [
+      "gallery"
+    ]
+  },
+  {
+    "id": "a2_012",
+    "word": "concert",
+    "ipa": "/ˈkɒnsərt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "קונצרט / הופעה",
+    "definition": "A public performance of music.",
+    "definitionHe": "הופעת מוזיקה ציבורית.",
+    "examples": [
+      "We went to a rock concert last night.",
+      "The concert starts at 8 PM.",
+      "She bought tickets for the concert months ago."
+    ],
+    "audioHint": "KON-sert",
+    "collocations": [
+      "go to a concert",
+      "live concert",
+      "concert hall"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I was in a concert",
+        "correct": "I was at a concert",
+        "explanation": "באנגלית אומרים at a concert ולא in a concert. משתמשים ב-at לאירועים."
+      }
+    ],
+    "tip": "Use 'at' for events: at a concert, at a party, at a wedding.",
+    "tipHe": "משתמשים ב-at לאירועים: at a concert, at a party, at a wedding.",
+    "synonyms": [
+      "gig",
+      "show"
+    ]
+  },
+  {
+    "id": "a2_013",
+    "word": "festival",
+    "ipa": "/ˈfɛstɪvəl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "פסטיבל / חגיגה",
+    "definition": "A series of special events, performances, or celebrations, often held over several days.",
+    "definitionHe": "סדרה של אירועים, הופעות או חגיגות מיוחדות, לרוב במשך מספר ימים.",
+    "examples": [
+      "The music festival attracts thousands of visitors every year.",
+      "We enjoyed the food festival in the city center.",
+      "There is a film festival in town next month."
+    ],
+    "audioHint": "FES-tih-vul",
+    "collocations": [
+      "music festival",
+      "film festival",
+      "food festival"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I went to a festival of music",
+        "correct": "I went to a music festival",
+        "explanation": "באנגלית שם התואר בא לפני שם העצם: music festival ולא festival of music."
+      }
+    ],
+    "tip": "Festival comes from 'festive' (celebratory). Think of it as a big celebration event.",
+    "tipHe": "festival מגיעה מ-festive (חגיגי). חשבו על זה כאירוע חגיגה גדול.",
+    "synonyms": [
+      "celebration",
+      "fair"
+    ]
+  },
+  {
+    "id": "a2_014",
+    "word": "tradition",
+    "ipa": "/trəˈdɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "מסורת",
+    "definition": "A custom or belief that has existed for a long time and is passed from one generation to another.",
+    "definitionHe": "מנהג או אמונה שקיימים מזמן רב ועוברים מדור לדור.",
+    "examples": [
+      "It's a family tradition to eat together on Friday nights.",
+      "Every country has its own traditions.",
+      "We want to keep our traditions alive."
+    ],
+    "audioHint": "truh-DISH-un",
+    "collocations": [
+      "family tradition",
+      "cultural tradition",
+      "keep a tradition"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "It's a tradition to eat together in Friday",
+        "correct": "It's a tradition to eat together on Friday",
+        "explanation": "עם ימי השבוע משתמשים ב-on ולא ב-in: on Friday, on Monday וכו'."
+      }
+    ],
+    "tip": "Tradition (noun) vs. traditional (adjective): 'a tradition' but 'traditional food'.",
+    "tipHe": "tradition (שם עצם) לעומת traditional (שם תואר): 'a tradition' אבל 'traditional food'.",
+    "synonyms": [
+      "custom"
+    ]
+  },
+  {
+    "id": "a2_015",
+    "word": "art",
+    "ipa": "/ɑːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "אמנות",
+    "definition": "The creation of paintings, drawings, music, and other things that are considered beautiful or meaningful.",
+    "definitionHe": "יצירת ציורים, רישומים, מוזיקה ודברים אחרים שנחשבים יפים או משמעותיים.",
+    "examples": [
+      "She studies art at university.",
+      "Modern art can be difficult to understand.",
+      "The gallery has a beautiful collection of art."
+    ],
+    "audioHint": "art",
+    "collocations": [
+      "work of art",
+      "modern art",
+      "art gallery"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I like the arts of this painter",
+        "correct": "I like the art of this painter / I like this painter's works",
+        "explanation": "art כמושג כללי היא לא ספירה. אל תוסיפו s. אם רוצים לדבר על יצירות ספציפיות, אומרים works of art."
+      }
+    ],
+    "tip": "Art is usually uncountable. For individual pieces, say 'a work of art' or 'a piece of art'.",
+    "tipHe": "art היא בדרך כלל לא ספירה. ליצירה בודדת אומרים a work of art או a piece of art.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_016",
+    "word": "passport",
+    "ipa": "/ˈpæspɔːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "travel-advanced",
+    "translation": "דרכון",
+    "definition": "An official document issued by a government that proves your identity and allows you to travel to other countries.",
+    "definitionHe": "מסמך רשמי שהממשלה מנפיקה, מוכיח את הזהות שלכם ומאפשר לכם לנסוע למדינות אחרות.",
+    "examples": [
+      "You need a valid passport to travel abroad.",
+      "My passport expires next month, so I need to renew it.",
+      "Please show your passport at the border."
+    ],
+    "audioHint": "PAS-port",
+    "collocations": [
+      "valid passport",
+      "renew a passport",
+      "passport control"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to make a new passport",
+        "correct": "I need to get/renew my passport",
+        "explanation": "באנגלית לא 'עושים' דרכון, אלא 'מקבלים' (get) או 'מחדשים' (renew) אותו."
+      }
+    ],
+    "tip": "Passport = pass + port (a document that lets you pass through a port/border).",
+    "tipHe": "passport = pass (לעבור) + port (נמל/מעבר) - מסמך שמאפשר לכם לעבור את הגבול.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_017",
+    "word": "reservation",
+    "ipa": "/ˌrɛzərˈveɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "travel-advanced",
+    "translation": "הזמנה (מקום)",
+    "definition": "An arrangement to have something kept for you, such as a table at a restaurant or a hotel room.",
+    "definitionHe": "סידור לשמור עבורכם משהו, כמו שולחן במסעדה או חדר במלון.",
+    "examples": [
+      "I made a reservation for two at the restaurant.",
+      "Do you have a reservation, sir?",
+      "We should make a hotel reservation before we travel."
+    ],
+    "audioHint": "rez-er-VAY-shun",
+    "collocations": [
+      "make a reservation",
+      "hotel reservation",
+      "dinner reservation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to save a table",
+        "correct": "I want to make a reservation / I want to book a table",
+        "explanation": "בעברית אומרים 'לשמור מקום' אבל באנגלית לא אומרים save a table אלא make a reservation או book a table."
+      }
+    ],
+    "tip": "In American English 'reservation' is more common; in British English 'booking' is often used instead.",
+    "tipHe": "באנגלית אמריקאית reservation נפוצה יותר; באנגלית בריטית משתמשים לעיתים ב-booking.",
+    "synonyms": [
+      "booking"
+    ]
+  },
+  {
+    "id": "a2_018",
+    "word": "suitcase",
+    "ipa": "/ˈsuːtˌkeɪs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "travel-advanced",
+    "translation": "מזוודה",
+    "definition": "A large bag with a handle used for carrying clothes and personal items when traveling.",
+    "definitionHe": "תיק גדול עם ידית שמשמש לנשיאת בגדים וחפצים אישיים בנסיעות.",
+    "examples": [
+      "Pack your suitcase the night before your trip.",
+      "My suitcase was too heavy for the airplane.",
+      "She bought a new suitcase for her vacation."
+    ],
+    "audioHint": "SOOT-kays",
+    "collocations": [
+      "pack a suitcase",
+      "carry a suitcase",
+      "heavy suitcase"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to prepare my suitcase",
+        "correct": "I need to pack my suitcase",
+        "explanation": "באנגלית משתמשים ב-pack כדי לתאר הכנסת דברים למזוודה, לא ב-prepare."
+      }
+    ],
+    "tip": "Suitcase = suit + case (originally a case for carrying suits). Related words: luggage (all bags), backpack (worn on back).",
+    "tipHe": "suitcase = suit (חליפה) + case (מארז). מילים קשורות: luggage (כל התיקים), backpack (תיק גב).",
+    "synonyms": [
+      "luggage",
+      "bag"
+    ]
+  },
+  {
+    "id": "a2_019",
+    "word": "cancel",
+    "ipa": "/ˈkænsəl/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "travel-advanced",
+    "translation": "לבטל",
+    "definition": "To decide that something that was planned will not happen.",
+    "definitionHe": "להחליט שמשהו שתוכנן לא יתקיים.",
+    "examples": [
+      "We had to cancel our flight because of the storm.",
+      "She called to cancel her appointment.",
+      "The concert was canceled due to rain."
+    ],
+    "audioHint": "KAN-sul",
+    "collocations": [
+      "cancel a flight",
+      "cancel a reservation",
+      "cancel an order"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They cancelled the meeting",
+        "correct": "They canceled the meeting (AmE) / They cancelled the meeting (BrE)",
+        "explanation": "שני האיותים נכונים! באנגלית אמריקאית canceled (L אחת), באנגלית בריטית cancelled (שתי L)."
+      }
+    ],
+    "tip": "The past tense can be spelled 'canceled' (American) or 'cancelled' (British). Both are correct.",
+    "tipHe": "העבר יכול להיכתב canceled (אמריקאית) או cancelled (בריטית). שניהם נכונים.",
+    "synonyms": [
+      "call off"
+    ]
+  },
+  {
+    "id": "a2_020",
+    "word": "delay",
+    "ipa": "/dɪˈleɪ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "travel-advanced",
+    "translation": "עיכוב",
+    "definition": "A situation where something happens later than expected or planned.",
+    "definitionHe": "מצב שבו משהו קורה מאוחר יותר מהצפוי או מהמתוכנן.",
+    "examples": [
+      "There was a two-hour delay at the airport.",
+      "Sorry for the delay in responding to your email.",
+      "Traffic delays made us late for the meeting."
+    ],
+    "audioHint": "dih-LAY",
+    "collocations": [
+      "long delay",
+      "flight delay",
+      "without delay"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The flight has a late",
+        "correct": "The flight has a delay / The flight is delayed",
+        "explanation": "late היא שם תואר (מאוחר), לא שם עצם. להשתמש ב-delay כשם עצם או delayed כשם תואר."
+      }
+    ],
+    "tip": "Delay works as both a noun ('a delay') and a verb ('to delay something'). The adjective form is 'delayed'.",
+    "tipHe": "delay עובדת גם כשם עצם (a delay) וגם כפועל (to delay). צורת שם התואר היא delayed.",
+    "synonyms": [
+      "hold-up"
+    ]
+  },
+  {
+    "id": "a2_021",
+    "word": "colleague",
+    "ipa": "/ˈkɒliːɡ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "עמית לעבודה",
+    "definition": "A person you work with, especially in a professional job.",
+    "definitionHe": "אדם שאתם עובדים איתו, בעיקר בעבודה מקצועית.",
+    "examples": [
+      "My colleague helped me finish the project.",
+      "She invited all her colleagues to the party.",
+      "I get along well with my colleagues."
+    ],
+    "audioHint": "KOL-eeg",
+    "collocations": [
+      "work colleague",
+      "former colleague",
+      "close colleague"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is my college at work",
+        "correct": "He is my colleague at work",
+        "explanation": "אל תבלבלו בין colleague (עמית לעבודה) ל-college (מכללה). ההגייה והאיות שונים!"
+      }
+    ],
+    "tip": "Don't confuse colleague (co-worker) with college (school). They sound similar but mean different things.",
+    "tipHe": "אל תבלבלו בין colleague (עמית) ל-college (מכללה). הם נשמעים דומה אבל המשמעות שונה לגמרי.",
+    "synonyms": [
+      "coworker"
+    ]
+  },
+  {
+    "id": "a2_022",
+    "word": "meeting",
+    "ipa": "/ˈmiːtɪŋ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "פגישה / ישיבה",
+    "definition": "An occasion when people come together to discuss or decide something.",
+    "definitionHe": "אירוע שבו אנשים מתכנסים כדי לדון או להחליט על משהו.",
+    "examples": [
+      "We have a team meeting every Monday morning.",
+      "The meeting will start at 10 o'clock.",
+      "She is in a meeting right now and can't talk."
+    ],
+    "audioHint": "MEE-ting",
+    "collocations": [
+      "have a meeting",
+      "business meeting",
+      "attend a meeting"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have a meeting with 3 o'clock",
+        "correct": "I have a meeting at 3 o'clock",
+        "explanation": "עם שעות ספציפיות משתמשים ב-at ולא ב-with. with משמשת לאנשים: a meeting with my boss."
+      }
+    ],
+    "tip": "Use 'at' for time (meeting at 3), 'with' for people (meeting with my boss), and 'about' for topics (meeting about the budget).",
+    "tipHe": "משתמשים ב-at לזמן, ב-with לאנשים, וב-about לנושאים.",
+    "synonyms": [
+      "gathering"
+    ]
+  },
+  {
+    "id": "a2_023",
+    "word": "salary",
+    "ipa": "/ˈsæləri/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "משכורת",
+    "definition": "A fixed amount of money paid to an employee regularly, usually every month.",
+    "definitionHe": "סכום כסף קבוע שמשולם לעובד באופן קבוע, בדרך כלל כל חודש.",
+    "examples": [
+      "She earns a good salary as an engineer.",
+      "My salary is paid on the first of every month.",
+      "He asked for a higher salary during the interview."
+    ],
+    "audioHint": "SAL-uh-ree",
+    "collocations": [
+      "earn a salary",
+      "high salary",
+      "monthly salary"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I get a good salary",
+        "correct": "I earn a good salary",
+        "explanation": "אפשר להשתמש גם ב-get וגם ב-earn, אבל earn נשמע יותר מקצועי ורשמי. get מתאים לשיחה יומיומית."
+      }
+    ],
+    "tip": "Salary = fixed monthly pay. Wage = pay by hour/day. Don't confuse them.",
+    "tipHe": "salary = תשלום חודשי קבוע. wage = תשלום לפי שעה/יום. אל תבלבלו ביניהם.",
+    "synonyms": [
+      "pay",
+      "wage"
+    ]
+  },
+  {
+    "id": "a2_024",
+    "word": "experience",
+    "ipa": "/ɪkˈspɪriəns/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "ניסיון / חוויה",
+    "definition": "Knowledge or skill gained from doing something over time; or an event that affects you.",
+    "definitionHe": "ידע או מיומנות שנרכשים מעשייה לאורך זמן; או אירוע שמשפיע עליכם.",
+    "examples": [
+      "Do you have any experience in sales?",
+      "Living abroad was an amazing experience.",
+      "She has ten years of teaching experience."
+    ],
+    "audioHint": "ik-SPEER-ee-uns",
+    "collocations": [
+      "work experience",
+      "learning experience",
+      "personal experience"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have many experiences in this field",
+        "correct": "I have a lot of experience in this field",
+        "explanation": "כשמדברים על ניסיון מקצועי, experience היא לא ספירה (בלי s). כשמדברים על חוויות ספציפיות, אפשר להוסיף s."
+      }
+    ],
+    "tip": "Experience (uncountable) = general knowledge from doing things. An experience (countable) = a specific event.",
+    "tipHe": "experience (לא ספירה) = ידע כללי. an experience (ספירה) = חוויה ספציפית.",
+    "synonyms": [
+      "expertise"
+    ]
+  },
+  {
+    "id": "a2_025",
+    "word": "opportunity",
+    "ipa": "/ˌɒpərˈtjuːnɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "הזדמנות",
+    "definition": "A chance to do something good or beneficial.",
+    "definitionHe": "סיכוי לעשות משהו טוב או מועיל.",
+    "examples": [
+      "This job is a great opportunity for me.",
+      "Don't miss this opportunity to learn something new.",
+      "She had the opportunity to study abroad."
+    ],
+    "audioHint": "op-er-TOO-nih-tee",
+    "collocations": [
+      "great opportunity",
+      "job opportunity",
+      "take the opportunity"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I had an opportunity to meeting her",
+        "correct": "I had an opportunity to meet her",
+        "explanation": "אחרי opportunity to באה צורת הפועל הבסיסית (infinitive), לא ה-ing form."
+      }
+    ],
+    "tip": "Opportunity is followed by 'to + verb': opportunity to learn, opportunity to travel.",
+    "tipHe": "אחרי opportunity בא to + פועל: opportunity to learn, opportunity to travel.",
+    "synonyms": [
+      "chance"
+    ]
+  },
+  {
+    "id": "a2_026",
+    "word": "recipe",
+    "ipa": "/ˈrɛsɪpi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "food-advanced",
+    "translation": "מתכון",
+    "definition": "A set of instructions for preparing a particular dish, including the ingredients needed.",
+    "definitionHe": "סט הוראות להכנת מאכל מסוים, כולל המרכיבים הנדרשים.",
+    "examples": [
+      "I found a great recipe for chocolate cake online.",
+      "This recipe is easy enough for beginners.",
+      "My grandmother's recipe for soup is the best."
+    ],
+    "audioHint": "RES-uh-pee",
+    "collocations": [
+      "follow a recipe",
+      "simple recipe",
+      "family recipe"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need a receipt for this cake",
+        "correct": "I need a recipe for this cake",
+        "explanation": "אל תבלבלו בין recipe (מתכון) ל-receipt (קבלה). הם נשמעים דומה אבל המשמעות שונה לגמרי!"
+      }
+    ],
+    "tip": "Recipe (cooking instructions) vs. receipt (proof of payment). They look and sound similar but are very different!",
+    "tipHe": "recipe (מתכון) לעומת receipt (קבלה). הם נראים ונשמעים דומה אבל שונים לגמרי!",
+    "synonyms": []
+  },
+  {
+    "id": "a2_027",
+    "word": "dessert",
+    "ipa": "/dɪˈzɜːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "food-advanced",
+    "translation": "קינוח",
+    "definition": "A sweet dish served at the end of a meal.",
+    "definitionHe": "מנה מתוקה שמוגשת בסוף הארוחה.",
+    "examples": [
+      "Would you like dessert after dinner?",
+      "We had ice cream for dessert.",
+      "The chocolate cake is the best dessert on the menu."
+    ],
+    "audioHint": "dih-ZURT",
+    "collocations": [
+      "have dessert",
+      "for dessert",
+      "dessert menu"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want a desert after dinner",
+        "correct": "I want a dessert after dinner",
+        "explanation": "desert (S אחת) = מדבר. dessert (שתי S) = קינוח. זכרו: קינוח טעים יותר אז הוא מקבל S נוספת!"
+      }
+    ],
+    "tip": "Dessert has two S's (it's extra sweet!). Desert has one S (dry and empty like a desert).",
+    "tipHe": "dessert עם שתי S (כי הוא מתוק במיוחד!). desert עם S אחת (יבש וריק כמו מדבר).",
+    "synonyms": [
+      "sweet"
+    ]
+  },
+  {
+    "id": "a2_028",
+    "word": "vegetarian",
+    "ipa": "/ˌvɛdʒɪˈtɛriən/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "food-advanced",
+    "translation": "צמחוני",
+    "definition": "A person who does not eat meat; or food that contains no meat.",
+    "definitionHe": "אדם שלא אוכל בשר; או אוכל שלא מכיל בשר.",
+    "examples": [
+      "Are you vegetarian?",
+      "This restaurant has a great vegetarian menu.",
+      "She became vegetarian two years ago."
+    ],
+    "audioHint": "vej-uh-TAIR-ee-un",
+    "collocations": [
+      "vegetarian food",
+      "vegetarian restaurant",
+      "vegetarian option"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I am vegetable",
+        "correct": "I am vegetarian",
+        "explanation": "vegetable = ירק. vegetarian = צמחוני. לא לבלבל בין השניים!"
+      }
+    ],
+    "tip": "Vegetarian = no meat. Vegan = no animal products at all (no eggs, milk, cheese either).",
+    "tipHe": "vegetarian = בלי בשר. vegan = בלי מוצרים מן החי בכלל (גם בלי ביצים, חלב, גבינה).",
+    "synonyms": []
+  },
+  {
+    "id": "a2_029",
+    "word": "recommend",
+    "ipa": "/ˌrɛkəˈmɛnd/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "food-advanced",
+    "translation": "להמליץ",
+    "definition": "To suggest that something is good or suitable for a particular purpose.",
+    "definitionHe": "להציע שמשהו טוב או מתאים למטרה מסוימת.",
+    "examples": [
+      "Can you recommend a good restaurant?",
+      "I recommend the fish - it's excellent here.",
+      "My friend recommended this book to me."
+    ],
+    "audioHint": "rek-uh-MEND",
+    "collocations": [
+      "highly recommend",
+      "recommend a restaurant",
+      "recommend a book"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I recommend you to try this",
+        "correct": "I recommend that you try this / I recommend trying this",
+        "explanation": "באנגלית לא אומרים recommend someone to do. אומרים recommend that someone do או recommend doing."
+      }
+    ],
+    "tip": "Recommend + verb-ing: 'I recommend visiting the museum.' NOT 'I recommend to visit.'",
+    "tipHe": "recommend + verb-ing: 'I recommend visiting the museum.' לא 'I recommend to visit.'",
+    "synonyms": [
+      "suggest"
+    ]
+  },
+  {
+    "id": "a2_030",
+    "word": "delicious",
+    "ipa": "/dɪˈlɪʃəs/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "food-advanced",
+    "translation": "טעים מאוד",
+    "definition": "Having a very pleasant taste or smell.",
+    "definitionHe": "בעל טעם או ריח נעים מאוד.",
+    "examples": [
+      "This cake is absolutely delicious!",
+      "Thank you for the delicious meal.",
+      "The soup smells delicious."
+    ],
+    "audioHint": "dih-LISH-us",
+    "collocations": [
+      "delicious food",
+      "absolutely delicious",
+      "smell delicious"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The food was very delicious",
+        "correct": "The food was delicious / The food was absolutely delicious",
+        "explanation": "delicious כבר אומרת 'טעים מאוד', אז very delicious נשמע מוגזם. אפשר להשתמש ב-absolutely במקום."
+      }
+    ],
+    "tip": "Delicious already means 'very tasty'. Use 'absolutely' instead of 'very' to intensify it.",
+    "tipHe": "delicious כבר אומרת 'טעים מאוד'. השתמשו ב-absolutely במקום very כדי להדגיש.",
+    "synonyms": [
+      "tasty",
+      "yummy"
+    ]
+  },
+  {
+    "id": "a2_031",
+    "word": "university",
+    "ipa": "/ˌjuːnɪˈvɜːrsɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "אוניברסיטה",
+    "definition": "An institution of higher education where students study for degrees.",
+    "definitionHe": "מוסד להשכלה גבוהה שבו סטודנטים לומדים לקראת תואר.",
+    "examples": [
+      "She studies medicine at the university.",
+      "He went to university in London.",
+      "The university has over 20,000 students."
+    ],
+    "audioHint": "yoo-nih-VUR-sih-tee",
+    "collocations": [
+      "go to university",
+      "university student",
+      "university degree"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I study in the university",
+        "correct": "I study at the university / I go to university",
+        "explanation": "משתמשים ב-at the university (מקום ספציפי) או go to university (באופן כללי, בלי the). לא משתמשים ב-in."
+      }
+    ],
+    "tip": "In British English: 'go to university' (no 'the'). In American English: 'go to college' is more common.",
+    "tipHe": "באנגלית בריטית: go to university (בלי the). באנגלית אמריקאית: go to college נפוצה יותר.",
+    "synonyms": [
+      "college"
+    ]
+  },
+  {
+    "id": "a2_032",
+    "word": "exam",
+    "ipa": "/ɪɡˈzæm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "מבחן",
+    "definition": "A formal test of knowledge or ability in a particular subject.",
+    "definitionHe": "בחינה רשמית של ידע או יכולת בנושא מסוים.",
+    "examples": [
+      "I have a math exam tomorrow.",
+      "She passed all her exams with high grades.",
+      "Students are nervous before the final exam."
+    ],
+    "audioHint": "ig-ZAM",
+    "collocations": [
+      "take an exam",
+      "pass an exam",
+      "final exam"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I did an exam yesterday",
+        "correct": "I took an exam yesterday",
+        "explanation": "באנגלית אומרים take an exam ולא do an exam (למרות ש-do מקובלת באנגלית בריטית, take נפוצה יותר)."
+      }
+    ],
+    "tip": "Take/sit an exam = write it. Pass an exam = succeed. Fail an exam = not succeed.",
+    "tipHe": "take an exam = לגשת למבחן. pass an exam = לעבור. fail an exam = להיכשל.",
+    "synonyms": [
+      "test",
+      "examination"
+    ]
+  },
+  {
+    "id": "a2_033",
+    "word": "homework",
+    "ipa": "/ˈhoʊmˌwɜːrk/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "שיעורי בית",
+    "definition": "Work that a student is given to do at home by their teacher.",
+    "definitionHe": "עבודה שמורה נותן לתלמיד לעשות בבית.",
+    "examples": [
+      "Did you finish your homework?",
+      "The teacher gives us a lot of homework.",
+      "I usually do my homework after dinner."
+    ],
+    "audioHint": "HOHM-wurk",
+    "collocations": [
+      "do homework",
+      "finish homework",
+      "homework assignment"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have many homeworks",
+        "correct": "I have a lot of homework",
+        "explanation": "homework היא מילה לא ספירה באנגלית! אין homeworks. אומרים a lot of homework או much homework."
+      }
+    ],
+    "tip": "Homework is ALWAYS uncountable in English. Never add 's'. Say 'a lot of homework', not 'many homeworks'.",
+    "tipHe": "homework היא תמיד לא ספירה באנגלית! אף פעם לא מוסיפים s. אומרים a lot of homework.",
+    "synonyms": [
+      "assignment"
+    ]
+  },
+  {
+    "id": "a2_034",
+    "word": "improve",
+    "ipa": "/ɪmˈpruːv/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "לשפר",
+    "definition": "To make something better, or to become better.",
+    "definitionHe": "לעשות משהו טוב יותר, או להפוך לטוב יותר.",
+    "examples": [
+      "I want to improve my English.",
+      "The weather is improving day by day.",
+      "You can improve your skills by practicing every day."
+    ],
+    "audioHint": "im-PROOV",
+    "collocations": [
+      "improve your skills",
+      "improve your English",
+      "greatly improve"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to improve my English level",
+        "correct": "I want to improve my English",
+        "explanation": "אפשר לומר improve my English בלי level. הוספת level מיותרת ונשמעת פחות טבעית."
+      }
+    ],
+    "tip": "Improve can be transitive (improve something) or intransitive (something improves). No preposition needed.",
+    "tipHe": "improve יכול להיות עם מושא (improve something) או בלי (something improves). אין צורך במילת יחס.",
+    "synonyms": [
+      "get better",
+      "enhance"
+    ]
+  },
+  {
+    "id": "a2_035",
+    "word": "knowledge",
+    "ipa": "/ˈnɒlɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "ידע",
+    "definition": "Information, understanding, and skills that you have gained through learning or experience.",
+    "definitionHe": "מידע, הבנה ומיומנויות שרכשתם דרך למידה או ניסיון.",
+    "examples": [
+      "She has a good knowledge of French.",
+      "Reading is a great way to gain knowledge.",
+      "His knowledge of history is impressive."
+    ],
+    "audioHint": "NOL-ij",
+    "collocations": [
+      "general knowledge",
+      "gain knowledge",
+      "knowledge of"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have a good knowledges",
+        "correct": "I have good knowledge",
+        "explanation": "knowledge היא מילה לא ספירה! אין knowledges. אומרים good knowledge או a lot of knowledge."
+      },
+      {
+        "wrong": "I have knowledge in English",
+        "correct": "I have knowledge of English",
+        "explanation": "הצירוף הנכון הוא knowledge of ולא knowledge in."
+      }
+    ],
+    "tip": "The K in knowledge is silent! Pronounce it 'NOL-ij'. Knowledge is uncountable - no plural form.",
+    "tipHe": "ה-K ב-knowledge שקטה! מבטאים NOL-ij. המילה לא ספירה - אין צורת רבים.",
+    "synonyms": [
+      "understanding"
+    ]
+  },
+  {
+    "id": "a2_036",
+    "word": "movie",
+    "ipa": "/ˈmuːvi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "סרט",
+    "definition": "A story shown in moving pictures, watched at a cinema or on a screen.",
+    "definitionHe": "סיפור שמוצג בתמונות נעות, שצופים בו בקולנוע או על מסך.",
+    "examples": [
+      "Let's watch a movie tonight.",
+      "What's your favorite movie?",
+      "We saw a really good movie at the cinema."
+    ],
+    "audioHint": "MOO-vee",
+    "collocations": [
+      "watch a movie",
+      "movie theater",
+      "action movie"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I saw a movie in the cinema",
+        "correct": "I saw a movie at the cinema",
+        "explanation": "משתמשים ב-at the cinema (מקום כללי שבו צופים), לא in the cinema."
+      }
+    ],
+    "tip": "Movie = American English. Film = British English. Both are correct and understood everywhere.",
+    "tipHe": "movie = אנגלית אמריקאית. film = אנגלית בריטית. שניהם נכונים ומובנים בכל מקום.",
+    "synonyms": [
+      "film"
+    ]
+  },
+  {
+    "id": "a2_037",
+    "word": "ticket",
+    "ipa": "/ˈtɪkɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "כרטיס",
+    "definition": "A piece of paper or electronic record that shows you have paid to enter a place or travel.",
+    "definitionHe": "פיסת נייר או רישום אלקטרוני שמוכיח ששילמתם כדי להיכנס למקום או לנסוע.",
+    "examples": [
+      "I bought two tickets for the concert.",
+      "How much does a train ticket cost?",
+      "You need a ticket to enter the museum."
+    ],
+    "audioHint": "TIK-it",
+    "collocations": [
+      "buy a ticket",
+      "train ticket",
+      "ticket office"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to order a ticket",
+        "correct": "I want to buy/book a ticket",
+        "explanation": "באנגלית 'קונים' (buy) או 'מזמינים' (book) כרטיס, לא 'מזמינים' במובן של order."
+      }
+    ],
+    "tip": "Buy a ticket = purchase. Book a ticket = reserve in advance. Both are common.",
+    "tipHe": "buy a ticket = לקנות. book a ticket = להזמין מראש. שניהם נפוצים.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_038",
+    "word": "audience",
+    "ipa": "/ˈɔːdiəns/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "קהל",
+    "definition": "The group of people who watch or listen to a performance, movie, or show.",
+    "definitionHe": "קבוצת האנשים שצופים או מאזינים להופעה, סרט או תוכנית.",
+    "examples": [
+      "The audience clapped at the end of the performance.",
+      "There was a large audience at the concert.",
+      "The comedian made the audience laugh."
+    ],
+    "audioHint": "AW-dee-uns",
+    "collocations": [
+      "large audience",
+      "target audience",
+      "live audience"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The audiences were very big",
+        "correct": "The audience was very big",
+        "explanation": "audience היא שם קיבוצי ובדרך כלל נחשבת יחידנית. אומרים the audience was, לא the audiences were (אלא אם מדברים על קהלים שונים)."
+      }
+    ],
+    "tip": "Audience is a collective noun. In American English, treat it as singular: 'The audience was excited.'",
+    "tipHe": "audience הוא שם קיבוצי. באנגלית אמריקאית, מתייחסים אליו כיחיד: The audience was excited.",
+    "synonyms": [
+      "crowd",
+      "spectators"
+    ]
+  },
+  {
+    "id": "a2_039",
+    "word": "performance",
+    "ipa": "/pərˈfɔːrməns/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "הופעה / ביצוע",
+    "definition": "An act of presenting a play, concert, or other entertainment to an audience.",
+    "definitionHe": "מעשה של הצגת מחזה, קונצרט או בידור אחר בפני קהל.",
+    "examples": [
+      "The performance starts at 7:30 PM.",
+      "She gave an amazing performance on stage.",
+      "We enjoyed the dance performance very much."
+    ],
+    "audioHint": "per-FOR-muns",
+    "collocations": [
+      "live performance",
+      "give a performance",
+      "outstanding performance"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She did a good performance",
+        "correct": "She gave a good performance",
+        "explanation": "באנגלית אומרים give a performance ולא do a performance."
+      }
+    ],
+    "tip": "Performance can mean a show (live performance) or how well someone does something (work performance).",
+    "tipHe": "performance יכולה להיות הופעה (live performance) או רמת ביצוע (work performance).",
+    "synonyms": [
+      "show"
+    ]
+  },
+  {
+    "id": "a2_040",
+    "word": "screen",
+    "ipa": "/skriːn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "מסך",
+    "definition": "The flat surface of a television, computer, or phone where images are shown.",
+    "definitionHe": "המשטח השטוח של טלוויזיה, מחשב או טלפון שעליו מוצגות תמונות.",
+    "examples": [
+      "Don't sit too close to the screen.",
+      "I spend too much time looking at a screen.",
+      "The movie looks great on the big screen."
+    ],
+    "audioHint": "skreen",
+    "collocations": [
+      "big screen",
+      "screen time",
+      "touch screen"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I looked in the screen",
+        "correct": "I looked at the screen",
+        "explanation": "מסתכלים AT the screen (על המסך), לא IN the screen."
+      }
+    ],
+    "tip": "Screen can also be a verb: 'to screen a movie' means to show it. 'Screen time' = time spent looking at devices.",
+    "tipHe": "screen יכולה להיות גם פועל: to screen a movie = להקרין סרט. screen time = זמן מסך.",
+    "synonyms": [
+      "display",
+      "monitor"
+    ]
+  },
+  {
+    "id": "a2_041",
+    "word": "pollution",
+    "ipa": "/pəˈluːʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "environment",
+    "translation": "זיהום",
+    "definition": "Harmful substances that damage the air, water, or land.",
+    "definitionHe": "חומרים מזיקים שפוגעים באוויר, במים או בקרקע.",
+    "examples": [
+      "Air pollution is a serious problem in big cities.",
+      "The factory caused water pollution in the river.",
+      "We need to reduce pollution to protect the planet."
+    ],
+    "audioHint": "puh-LOO-shun",
+    "collocations": [
+      "air pollution",
+      "water pollution",
+      "reduce pollution"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "There is many pollution",
+        "correct": "There is a lot of pollution",
+        "explanation": "pollution היא מילה לא ספירה, אז משתמשים ב-much או a lot of ולא ב-many."
+      }
+    ],
+    "tip": "Pollution (noun) vs. pollute (verb) vs. polluted (adjective): 'Factories pollute the air. Air pollution is bad. The air is polluted.'",
+    "tipHe": "pollution (שם עצם) לעומת pollute (פועל) לעומת polluted (תואר): Factories pollute. Pollution is bad. Air is polluted.",
+    "synonyms": [
+      "contamination"
+    ]
+  },
+  {
+    "id": "a2_042",
+    "word": "recycle",
+    "ipa": "/riːˈsaɪkəl/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "environment",
+    "translation": "למחזר",
+    "definition": "To process used materials so they can be used again.",
+    "definitionHe": "לעבד חומרים משומשים כדי שאפשר יהיה להשתמש בהם שוב.",
+    "examples": [
+      "We should recycle plastic bottles and paper.",
+      "This symbol means the product can be recycled.",
+      "Our school recycles paper and cardboard."
+    ],
+    "audioHint": "ree-SY-kul",
+    "collocations": [
+      "recycle paper",
+      "recycle plastic",
+      "recycle waste"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We need to recycling more",
+        "correct": "We need to recycle more",
+        "explanation": "אחרי need to באה צורת הפועל הבסיסית (infinitive), לא ה-ing form."
+      }
+    ],
+    "tip": "Re-cycle = cycle again. The prefix 're-' means 'again'. Related: reuse, reduce, recycle (the 3 R's).",
+    "tipHe": "re-cycle = מחזור (שימוש חוזר). הקידומת re- משמעה 'שוב'. קשור: reuse, reduce, recycle (3 ה-R).",
+    "synonyms": [
+      "reuse"
+    ]
+  },
+  {
+    "id": "a2_043",
+    "word": "energy",
+    "ipa": "/ˈɛnərdʒi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "environment",
+    "translation": "אנרגיה",
+    "definition": "The power from electricity, gas, or other sources used to make machines work; also physical strength and vitality.",
+    "definitionHe": "כוח מחשמל, גז או מקורות אחרים שמפעיל מכונות; גם כוח גופני וחיוניות.",
+    "examples": [
+      "Solar energy is good for the environment.",
+      "We should save energy by turning off lights.",
+      "I don't have enough energy to exercise today."
+    ],
+    "audioHint": "EN-ur-jee",
+    "collocations": [
+      "save energy",
+      "solar energy",
+      "renewable energy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We need to save energies",
+        "correct": "We need to save energy",
+        "explanation": "energy היא בדרך כלל לא ספירה. אל תוסיפו s. אומרים save energy ולא save energies."
+      }
+    ],
+    "tip": "Energy is usually uncountable. You can say 'a lot of energy' but not 'many energies'.",
+    "tipHe": "energy היא בדרך כלל לא ספירה. אפשר לומר a lot of energy אבל לא many energies.",
+    "synonyms": [
+      "power"
+    ]
+  },
+  {
+    "id": "a2_044",
+    "word": "protect",
+    "ipa": "/prəˈtɛkt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "environment",
+    "translation": "להגן",
+    "definition": "To keep someone or something safe from harm or damage.",
+    "definitionHe": "לשמור על מישהו או משהו מפני נזק או פגיעה.",
+    "examples": [
+      "We must protect the environment for future generations.",
+      "Sunscreen protects your skin from the sun.",
+      "The law protects animals from cruelty."
+    ],
+    "audioHint": "pruh-TEKT",
+    "collocations": [
+      "protect the environment",
+      "protect children",
+      "protect against"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We need to protect on the environment",
+        "correct": "We need to protect the environment",
+        "explanation": "protect הוא פועל ישיר ולא צריך מילת יחס. protect something ולא protect on something."
+      }
+    ],
+    "tip": "Protect + object (no preposition): 'protect the planet'. But: 'protect FROM/AGAINST danger'.",
+    "tipHe": "protect + מושא (בלי מילת יחס): protect the planet. אבל: protect FROM/AGAINST danger.",
+    "synonyms": [
+      "defend",
+      "guard"
+    ]
+  },
+  {
+    "id": "a2_045",
+    "word": "climate",
+    "ipa": "/ˈklaɪmɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "environment",
+    "translation": "אקלים",
+    "definition": "The general weather conditions of an area over a long period of time.",
+    "definitionHe": "תנאי מזג האוויר הכלליים של אזור לאורך תקופה ארוכה.",
+    "examples": [
+      "Israel has a warm climate.",
+      "Climate change is affecting the whole world.",
+      "The tropical climate is hot and humid."
+    ],
+    "audioHint": "KLY-mit",
+    "collocations": [
+      "climate change",
+      "tropical climate",
+      "warm climate"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The climate today is cold",
+        "correct": "The weather today is cold",
+        "explanation": "climate = אקלים (לאורך זמן). weather = מזג אוויר (היום/עכשיו). להיום, משתמשים ב-weather."
+      }
+    ],
+    "tip": "Climate = long-term patterns. Weather = what's happening right now. Don't confuse them.",
+    "tipHe": "climate = דפוסים ארוכי טווח. weather = מה שקורה עכשיו. אל תבלבלו ביניהם.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_046",
+    "word": "neighbor",
+    "ipa": "/ˈneɪbər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "שכן / שכנה",
+    "definition": "A person who lives near you, especially next door.",
+    "definitionHe": "אדם שגר קרוב אליכם, במיוחד בדלת הסמוכה.",
+    "examples": [
+      "Our neighbors are very friendly people.",
+      "I borrowed some sugar from my neighbor.",
+      "The new neighbors moved in last week."
+    ],
+    "audioHint": "NAY-bur",
+    "collocations": [
+      "next-door neighbor",
+      "friendly neighbor",
+      "new neighbor"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "My neighbour is nice (in American context)",
+        "correct": "My neighbor is nice (AmE) / My neighbour is nice (BrE)",
+        "explanation": "שני האיותים נכונים! neighbor (אמריקאית) ו-neighbour (בריטית). בחרו איות אחד והיו עקביים."
+      }
+    ],
+    "tip": "American spelling: neighbor. British spelling: neighbour. Both are correct.",
+    "tipHe": "איות אמריקאי: neighbor. איות בריטי: neighbour. שניהם נכונים.",
+    "synonyms": []
+  },
+  {
+    "id": "a2_047",
+    "word": "invite",
+    "ipa": "/ɪnˈvaɪt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "להזמין (אורחים)",
+    "definition": "To ask someone to come to an event or to do something with you.",
+    "definitionHe": "לבקש ממישהו לבוא לאירוע או לעשות משהו איתכם.",
+    "examples": [
+      "I invited all my friends to my birthday party.",
+      "Would you like to invite her for dinner?",
+      "They invited us to their wedding."
+    ],
+    "audioHint": "in-VITE",
+    "collocations": [
+      "invite someone to",
+      "invite friends",
+      "invite over"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to invite for dinner",
+        "correct": "I want to invite you for dinner / I want to invite you to dinner",
+        "explanation": "invite דורש מושא (את מי מזמינים): invite someone. לא אפשר לומר סתם invite for dinner."
+      }
+    ],
+    "tip": "Invite + person + to/for: 'invite him to the party', 'invite her for lunch'. The noun form is 'invitation'.",
+    "tipHe": "invite + אדם + to/for: invite him to the party. צורת שם העצם היא invitation (הזמנה).",
+    "synonyms": [
+      "ask"
+    ]
+  },
+  {
+    "id": "a2_048",
+    "word": "agree",
+    "ipa": "/əˈɡriː/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להסכים",
+    "definition": "To have the same opinion as someone else; to say yes to a suggestion.",
+    "definitionHe": "להיות בעל אותה דעה כמו מישהו אחר; להגיד כן להצעה.",
+    "examples": [
+      "I agree with you completely.",
+      "We all agreed to meet at 6 PM.",
+      "She didn't agree with his decision."
+    ],
+    "audioHint": "uh-GREE",
+    "collocations": [
+      "agree with someone",
+      "agree to do something",
+      "totally agree"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I am agree with you",
+        "correct": "I agree with you",
+        "explanation": "agree הוא פועל, לא שם תואר. לא מוסיפים am/is/are לפניו. I agree, לא I am agree."
+      },
+      {
+        "wrong": "I agree him",
+        "correct": "I agree with him",
+        "explanation": "agree דורש את מילת היחס with כשמדברים על הסכמה עם אדם: agree with someone."
+      }
+    ],
+    "tip": "Agree WITH a person, agree ON a topic, agree TO do something. The preposition matters!",
+    "tipHe": "agree WITH אדם, agree ON נושא, agree TO לעשות משהו. מילת היחס חשובה!",
+    "synonyms": []
+  },
+  {
+    "id": "a2_049",
+    "word": "explain",
+    "ipa": "/ɪkˈspleɪn/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להסביר",
+    "definition": "To make something clear and easy to understand by describing it in detail.",
+    "definitionHe": "להפוך משהו לברור וקל להבנה על ידי תיאור מפורט.",
+    "examples": [
+      "Can you explain this word to me?",
+      "The teacher explained the grammar rule clearly.",
+      "Let me explain why I was late."
+    ],
+    "audioHint": "ik-SPLAYN",
+    "collocations": [
+      "explain something to someone",
+      "explain why",
+      "explain clearly"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can you explain me this?",
+        "correct": "Can you explain this to me?",
+        "explanation": "באנגלית אומרים explain something TO someone, לא explain someone something. חייבים את ה-to!"
+      }
+    ],
+    "tip": "Explain + something + TO someone. Never: 'explain me' or 'explain him'. Always use 'to'.",
+    "tipHe": "explain + משהו + TO מישהו. אף פעם לא explain me. תמיד משתמשים ב-to.",
+    "synonyms": [
+      "clarify",
+      "describe"
+    ]
+  },
+  {
+    "id": "a2_050",
+    "word": "perhaps",
+    "ipa": "/pərˈhæps/",
+    "partOfSpeech": "adverb",
+    "cefrLevel": "A2",
+    "category": "idioms",
+    "translation": "אולי / יכול להיות",
+    "definition": "Used to show that something is possible but not certain.",
+    "definitionHe": "משמש להראות שמשהו אפשרי אבל לא בטוח.",
+    "examples": [
+      "Perhaps we should try a different approach.",
+      "Perhaps it will rain tomorrow.",
+      "He is perhaps the best player on the team."
+    ],
+    "audioHint": "per-HAPS",
+    "collocations": [
+      "perhaps not",
+      "perhaps so",
+      "perhaps we could"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Perhaps I will can come",
+        "correct": "Perhaps I can come / Perhaps I will come",
+        "explanation": "אי אפשר לשים שני פעלי עזר ביחד (will can). צריך לבחור אחד מהם."
+      }
+    ],
+    "tip": "Perhaps = maybe, but slightly more formal. Use 'maybe' in casual conversation and 'perhaps' in more polite or formal situations.",
+    "tipHe": "perhaps = maybe, אבל קצת יותר רשמית. השתמשו ב-maybe בשיחה יומיומית וב-perhaps במצבים רשמיים יותר.",
+    "synonyms": [
+      "maybe",
+      "possibly"
+    ]
+  },
+  {
+    "id": "a2-052",
+    "word": "believe",
+    "ipa": "/bɪˈliːv/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להאמין",
+    "definition": "To think that something is true or that someone is telling the truth.",
+    "definitionHe": "לחשוב שמשהו נכון או שמישהו אומר אמת.",
+    "examples": [
+      "I believe you.",
+      "She believes that hard work is important.",
+      "Do you believe in ghosts?"
+    ],
+    "audioHint": "bih-LEEV",
+    "collocations": [
+      "believe in",
+      "believe that",
+      "hard to believe"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I believe to him",
+        "correct": "I believe him",
+        "explanation": "בעברית אומרים 'אני מאמין לו' עם 'ל', אבל באנגלית believe בא ישירות בלי מילת יחס: I believe him."
+      }
+    ],
+    "tip": "'Believe someone' = think they're honest. 'Believe in something' = think it exists or is good.",
+    "tipHe": "believe someone = לחשוב שהוא אומר אמת. believe in = להאמין בקיום של משהו או בערך שלו.",
+    "synonyms": [
+      "trust",
+      "think"
+    ]
+  },
+  {
+    "id": "a2-053",
+    "word": "belong",
+    "ipa": "/bɪˈlɒŋ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "להשתייך / לשייך",
+    "definition": "To be the property of someone, or to be a member of a group.",
+    "definitionHe": "להיות הרכוש של מישהו, או להיות חבר בקבוצה.",
+    "examples": [
+      "This book belongs to me.",
+      "She belongs to a sports club.",
+      "Where does this cup belong?"
+    ],
+    "audioHint": "bih-LONG",
+    "collocations": [
+      "belong to",
+      "belong here",
+      "sense of belonging"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "This is belong to me",
+        "correct": "This belongs to me",
+        "explanation": "belong הוא פועל ולא שם תואר, לכן לא צריך is לפניו. אומרים This belongs to me."
+      }
+    ],
+    "tip": "Belong always uses 'to': This belongs TO me. It is never used in progressive: NOT 'is belonging'.",
+    "tipHe": "belong תמיד בא עם to. לא משתמשים בצורה מתמשכת: לא אומרים is belonging.",
+    "synonyms": [
+      "own",
+      "be part of"
+    ]
+  },
+  {
+    "id": "a2-054",
+    "word": "borrow",
+    "ipa": "/ˈbɒroʊ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לשאול (לקחת בהשאלה)",
+    "definition": "To take something from someone with the intention of returning it.",
+    "definitionHe": "לקחת משהו ממישהו עם כוונה להחזיר.",
+    "examples": [
+      "Can I borrow your pen?",
+      "He borrowed a book from the library.",
+      "I don't like to borrow money from friends."
+    ],
+    "audioHint": "BOR-oh",
+    "collocations": [
+      "borrow from",
+      "borrow money",
+      "borrow a book"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can you borrow me your pen?",
+        "correct": "Can I borrow your pen? / Can you lend me your pen?",
+        "explanation": "borrow = לקחת בהשאלה, lend = לתת בהשאלה. דוברי עברית מבלבלים בין השניים כי בעברית 'להשאיל' משמש לשני הכיוונים."
+      }
+    ],
+    "tip": "You BORROW from someone (take), you LEND to someone (give). 'Can I borrow?' vs 'Can you lend?'",
+    "tipHe": "borrow = אתה לוקח ממישהו. lend = אתה נותן למישהו. אל תבלבלו ביניהם!",
+    "synonyms": [
+      "take on loan"
+    ]
+  },
+  {
+    "id": "a2-055",
+    "word": "celebrate",
+    "ipa": "/ˈsɛlɪbreɪt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "לחגוג",
+    "definition": "To do something special for an important event or occasion.",
+    "definitionHe": "לעשות משהו מיוחד לכבוד אירוע או מאורע חשוב.",
+    "examples": [
+      "We celebrate Hanukkah every year.",
+      "Let's celebrate your birthday at a restaurant!",
+      "The whole country celebrated the victory."
+    ],
+    "audioHint": "SEL-uh-brayt",
+    "collocations": [
+      "celebrate a birthday",
+      "celebrate a holiday",
+      "celebrate together"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We made a celebration",
+        "correct": "We celebrated / We had a celebration",
+        "explanation": "אפשר להשתמש בפועל celebrate ישירות, או לומר had a celebration, אבל לא make a celebration."
+      }
+    ],
+    "tip": "Celebrate can be used with or without an object: 'We celebrated' or 'We celebrated his birthday'.",
+    "tipHe": "אפשר להגיד celebrate בלי מושא (We celebrated) או עם מושא (We celebrated his birthday).",
+    "synonyms": [
+      "mark",
+      "observe"
+    ]
+  },
+  {
+    "id": "a2-056",
+    "word": "compare",
+    "ipa": "/kəmˈpɛr/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "להשוות",
+    "definition": "To examine things to see how they are similar or different.",
+    "definitionHe": "לבדוק דברים כדי לראות איך הם דומים או שונים.",
+    "examples": [
+      "Compare these two pictures.",
+      "You can't compare apples and oranges.",
+      "Compared to last year, sales are better."
+    ],
+    "audioHint": "kum-PAIR",
+    "collocations": [
+      "compare with",
+      "compare to",
+      "compared to"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "If you compare between A and B",
+        "correct": "If you compare A and B / If you compare A with B",
+        "explanation": "בעברית אומרים 'להשוות בין', אבל באנגלית לא אומרים compare between. אומרים compare A with/to B."
+      }
+    ],
+    "tip": "'Compare to' shows similarities, 'compare with' shows differences. In everyday English, both are often interchangeable.",
+    "tipHe": "compare to - מדגיש דמיון, compare with - מדגיש הבדלים. בשפה יומיומית, שניהם בסדר.",
+    "synonyms": [
+      "contrast",
+      "evaluate"
+    ]
+  },
+  {
+    "id": "a2-057",
+    "word": "complain",
+    "ipa": "/kəmˈpleɪn/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להתלונן",
+    "definition": "To say that you are unhappy or not satisfied with something.",
+    "definitionHe": "לומר שאתה לא מרוצה או לא מסופק ממשהו.",
+    "examples": [
+      "He always complains about the food.",
+      "She complained to the manager about the service.",
+      "Stop complaining and do something!"
+    ],
+    "audioHint": "kum-PLAYN",
+    "collocations": [
+      "complain about",
+      "complain to",
+      "can't complain"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He complained on the noise",
+        "correct": "He complained about the noise",
+        "explanation": "באנגלית אומרים complain about ולא complain on. מילת היחס הנכונה היא about."
+      }
+    ],
+    "tip": "Complain ABOUT a problem, complain TO a person. The noun is 'complaint'.",
+    "tipHe": "complain about - על בעיה, complain to - למישהו. שם העצם הוא complaint (תלונה).",
+    "synonyms": [
+      "grumble",
+      "protest"
+    ]
+  },
+  {
+    "id": "a2-058",
+    "word": "connect",
+    "ipa": "/kəˈnɛkt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לחבר / להתחבר",
+    "definition": "To join two or more things together, or to link to the internet or a network.",
+    "definitionHe": "לחבר שני דברים או יותר יחד, או להתחבר לאינטרנט או לרשת.",
+    "examples": [
+      "Connect the cable to the computer.",
+      "I can't connect to the Wi-Fi.",
+      "The bridge connects the two cities."
+    ],
+    "audioHint": "kuh-NEKT",
+    "collocations": [
+      "connect to",
+      "connect with",
+      "internet connection"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to connect to the internet on my phone",
+        "correct": "I want to connect to the internet on my phone",
+        "explanation": "כאן אין טעות - רק שימו לב שאומרים connect to ולא connect in או connect at."
+      }
+    ],
+    "tip": "Connect TO a device or network. Connect WITH a person (= get in touch). The noun is 'connection'.",
+    "tipHe": "connect to - להתחבר למכשיר או רשת. connect with - ליצור קשר עם בן אדם. שם העצם: connection.",
+    "synonyms": [
+      "link",
+      "join",
+      "attach"
+    ]
+  },
+  {
+    "id": "a2-059",
+    "word": "decide",
+    "ipa": "/dɪˈsaɪd/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להחליט",
+    "definition": "To make a choice about something after thinking about the options.",
+    "definitionHe": "לבחור משהו אחרי שחושבים על האפשרויות.",
+    "examples": [
+      "I decided to stay home.",
+      "Have you decided what to eat?",
+      "She can't decide between the two dresses."
+    ],
+    "audioHint": "dih-SIDE",
+    "collocations": [
+      "decide to",
+      "decide on",
+      "decide between"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I decided to not go",
+        "correct": "I decided not to go",
+        "explanation": "באנגלית, not בא לפני to ולא אחריו: decided not to go ולא decided to not go."
+      }
+    ],
+    "tip": "Decide TO do something (with infinitive). Decide ON something (choose it). The noun is 'decision'.",
+    "tipHe": "decide to + פועל (להחליט לעשות). decide on + שם (להחליט על). שם העצם: decision.",
+    "synonyms": [
+      "choose",
+      "determine"
+    ]
+  },
+  {
+    "id": "a2-060",
+    "word": "deliver",
+    "ipa": "/dɪˈlɪvər/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "לספק / למסור / לשלוח",
+    "definition": "To bring goods or letters to a particular place or person.",
+    "definitionHe": "להביא סחורות או מכתבים למקום מסוים או לאדם מסוים.",
+    "examples": [
+      "They deliver pizza to your door.",
+      "The package was delivered this morning.",
+      "We deliver orders within two days."
+    ],
+    "audioHint": "dih-LIV-er",
+    "collocations": [
+      "deliver a package",
+      "deliver food",
+      "free delivery"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They delivered me a package",
+        "correct": "They delivered a package to me",
+        "explanation": "למרות שבעברית אומרים 'הם שלחו לי חבילה', באנגלית עדיף deliver something TO someone."
+      }
+    ],
+    "tip": "Deliver something TO someone/somewhere. The noun is 'delivery'. 'Free delivery' = משלוח חינם.",
+    "tipHe": "deliver something to someone. שם העצם: delivery (משלוח). free delivery = משלוח חינם.",
+    "synonyms": [
+      "bring",
+      "send",
+      "ship"
+    ]
+  },
+  {
+    "id": "a2-061",
+    "word": "describe",
+    "ipa": "/dɪˈskraɪb/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לתאר",
+    "definition": "To say what someone or something is like by giving details.",
+    "definitionHe": "לספר איך מישהו או משהו נראה או מרגיש על ידי מתן פרטים.",
+    "examples": [
+      "Can you describe the person you saw?",
+      "She described her trip to Italy.",
+      "It's hard to describe how I feel."
+    ],
+    "audioHint": "dih-SKRIBE",
+    "collocations": [
+      "describe something",
+      "describe as",
+      "describe in detail"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can you describe me the place?",
+        "correct": "Can you describe the place to me?",
+        "explanation": "לא אומרים describe someone something. אומרים describe something TO someone."
+      }
+    ],
+    "tip": "Describe something TO someone (not describe someone something). The noun is 'description'.",
+    "tipHe": "describe something to someone. שם העצם: description (תיאור).",
+    "synonyms": [
+      "explain",
+      "portray",
+      "depict"
+    ]
+  },
+  {
+    "id": "a2-062",
+    "word": "discover",
+    "ipa": "/dɪˈskʌvər/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "לגלות",
+    "definition": "To find something or learn about something for the first time.",
+    "definitionHe": "למצוא משהו או ללמוד על משהו בפעם הראשונה.",
+    "examples": [
+      "Columbus discovered America in 1492.",
+      "I discovered a great restaurant near my house.",
+      "Scientists have discovered a new species."
+    ],
+    "audioHint": "dih-SKUV-er",
+    "collocations": [
+      "discover something new",
+      "discover that",
+      "recently discovered"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I discovered about a new cafe",
+        "correct": "I discovered a new cafe",
+        "explanation": "discover הוא פועל יוצא ולא צריך about. אומרים discover something ולא discover about something."
+      }
+    ],
+    "tip": "Discover = find for the first time. Find = locate something. 'I discovered' sounds more exciting than 'I found'.",
+    "tipHe": "discover = למצוא בפעם הראשונה (יותר מרגש). find = למצוא (כללי). שם העצם: discovery.",
+    "synonyms": [
+      "find",
+      "uncover"
+    ]
+  },
+  {
+    "id": "a2-063",
+    "word": "discuss",
+    "ipa": "/dɪˈskʌs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לדון",
+    "definition": "To talk about something with another person or group, especially to make a decision.",
+    "definitionHe": "לדבר על משהו עם אדם אחר או קבוצה, בעיקר כדי לקבל החלטה.",
+    "examples": [
+      "We need to discuss this problem.",
+      "They discussed the plan for hours.",
+      "Let's discuss it after lunch."
+    ],
+    "audioHint": "dih-SKUS",
+    "collocations": [
+      "discuss a topic",
+      "discuss the matter",
+      "discuss with someone"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We need to discuss about this",
+        "correct": "We need to discuss this",
+        "explanation": "discuss הוא פועל יוצא ולא צריך about אחריו. אומרים discuss something ולא discuss about something."
+      }
+    ],
+    "tip": "NEVER say 'discuss about'. Discuss already means 'talk about', so 'about' is redundant. The noun is 'discussion'.",
+    "tipHe": "לעולם אל תגידו discuss about. הפועל כבר כולל את המשמעות של about. שם העצם: discussion.",
+    "synonyms": [
+      "talk about",
+      "debate"
+    ]
+  },
+  {
+    "id": "a2-064",
+    "word": "earn",
+    "ipa": "/ɜːrn/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "להרוויח",
+    "definition": "To get money for work that you do.",
+    "definitionHe": "לקבל כסף עבור עבודה שעושים.",
+    "examples": [
+      "She earns a good salary.",
+      "How much do you earn per month?",
+      "He earns money by teaching English."
+    ],
+    "audioHint": "URN",
+    "collocations": [
+      "earn money",
+      "earn a living",
+      "earn a salary"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I earn good money",
+        "correct": "I earn good money / I make good money",
+        "explanation": "שתי הצורות נכונות. earn יותר פורמלי, make יותר יומיומי. אבל לא אומרים win money על משכורת."
+      },
+      {
+        "wrong": "I won a lot of money at my job",
+        "correct": "I earned a lot of money at my job",
+        "explanation": "win = לנצח (בתחרות, בהגרלה). earn = להרוויח ממשכורת או עבודה."
+      }
+    ],
+    "tip": "Earn = get money from work. Win = get money from a game or lottery. Don't confuse them!",
+    "tipHe": "earn = להרוויח מעבודה. win = לזכות במשחק או בהגרלה. אל תבלבלו!",
+    "synonyms": [
+      "make",
+      "gain"
+    ]
+  },
+  {
+    "id": "a2-065",
+    "word": "encourage",
+    "ipa": "/ɪnˈkʌrɪdʒ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "לעודד",
+    "definition": "To give someone confidence or support to do something.",
+    "definitionHe": "לתת למישהו ביטחון או תמיכה לעשות משהו.",
+    "examples": [
+      "My parents encouraged me to study abroad.",
+      "The teacher encourages students to ask questions.",
+      "She encouraged him to try again."
+    ],
+    "audioHint": "in-KUR-ij",
+    "collocations": [
+      "encourage someone to",
+      "encourage learning",
+      "words of encouragement"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She encouraged me that I study",
+        "correct": "She encouraged me to study",
+        "explanation": "באנגלית אומרים encourage someone TO DO something, לא encourage someone that."
+      }
+    ],
+    "tip": "Encourage someone TO DO something. The noun is 'encouragement'. The opposite is 'discourage'.",
+    "tipHe": "encourage someone to do something. שם העצם: encouragement (עידוד). ההפך: discourage (לייאש).",
+    "synonyms": [
+      "motivate",
+      "support",
+      "inspire"
+    ]
+  },
+  {
+    "id": "a2-066",
+    "word": "enjoy",
+    "ipa": "/ɪnˈdʒɔɪ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "ליהנות",
+    "definition": "To get pleasure from something.",
+    "definitionHe": "לקבל הנאה ממשהו.",
+    "examples": [
+      "I really enjoy cooking.",
+      "Did you enjoy the movie?",
+      "She enjoys spending time with friends."
+    ],
+    "audioHint": "in-JOY",
+    "collocations": [
+      "enjoy doing",
+      "enjoy yourself",
+      "enjoy the moment"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I enjoy to swim",
+        "correct": "I enjoy swimming",
+        "explanation": "enjoy בא אחריו פועל בצורת -ing ולא to. אומרים enjoy swimming ולא enjoy to swim."
+      }
+    ],
+    "tip": "Enjoy + -ing (NOT enjoy + to). 'Enjoy yourself' = have a good time. 'Enjoy!' by itself is a common wish.",
+    "tipHe": "enjoy + פועל ב-ing (לא to). Enjoy yourself = תהנה. Enjoy! = שתהנה! (ברכה נפוצה).",
+    "synonyms": [
+      "like",
+      "love",
+      "have fun"
+    ]
+  },
+  {
+    "id": "a2-068",
+    "word": "expect",
+    "ipa": "/ɪkˈspɛkt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "לצפות / לדרוש",
+    "definition": "To think that something will happen or that someone will do something.",
+    "definitionHe": "לחשוב שמשהו יקרה או שמישהו יעשה משהו.",
+    "examples": [
+      "I expect the train to arrive at 6.",
+      "We didn't expect so many people.",
+      "She expects her students to work hard."
+    ],
+    "audioHint": "ik-SPEKT",
+    "collocations": [
+      "expect to",
+      "expect someone to",
+      "as expected"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I expect that he will to come",
+        "correct": "I expect him to come / I expect that he will come",
+        "explanation": "יש שתי מבנים: expect someone to do, או expect that someone will do. אל תערבבו ביניהם."
+      }
+    ],
+    "tip": "Expect + person + TO do. OR: expect THAT + clause. 'Expecting a baby' = pregnant.",
+    "tipHe": "expect someone to do, או expect that + משפט. expecting a baby = בהיריון.",
+    "synonyms": [
+      "anticipate",
+      "await"
+    ]
+  },
+  {
+    "id": "a2-070",
+    "word": "express",
+    "ipa": "/ɪkˈsprɛs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לבטא",
+    "definition": "To show or tell people what you think or feel using words or actions.",
+    "definitionHe": "להראות או לספר לאנשים מה אתה חושב או מרגיש באמצעות מילים או מעשים.",
+    "examples": [
+      "He finds it hard to express his feelings.",
+      "She expressed her opinion clearly.",
+      "Words can't express how grateful I am."
+    ],
+    "audioHint": "ik-SPRES",
+    "collocations": [
+      "express feelings",
+      "express an opinion",
+      "express yourself"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I can't express on how I feel",
+        "correct": "I can't express how I feel",
+        "explanation": "express הוא פועל יוצא. אומרים express something ולא express on/about something."
+      }
+    ],
+    "tip": "Express yourself = to say what you think. 'Express' also means fast delivery (express mail).",
+    "tipHe": "express yourself = לבטא את עצמך. express גם אומר מהיר: express mail = דואר מהיר.",
+    "synonyms": [
+      "convey",
+      "communicate",
+      "show"
+    ]
+  },
+  {
+    "id": "a2-071",
+    "word": "fail",
+    "ipa": "/feɪl/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "להיכשל / לכשול",
+    "definition": "To not succeed in doing something, or to not pass an exam.",
+    "definitionHe": "לא להצליח לעשות משהו, או לא לעבור מבחן.",
+    "examples": [
+      "He failed the driving test twice.",
+      "I tried my best, but I failed.",
+      "The plan failed because of bad weather."
+    ],
+    "audioHint": "FAYL",
+    "collocations": [
+      "fail an exam",
+      "fail to do",
+      "fail miserably"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I failed in the exam",
+        "correct": "I failed the exam",
+        "explanation": "באנגלית אומרים fail the exam ולא fail in the exam. הפועל יוצא ולא צריך מילת יחס."
+      }
+    ],
+    "tip": "Fail the exam (no preposition needed). The opposite is 'pass'. The noun is 'failure'.",
+    "tipHe": "fail the exam - בלי מילת יחס. ההפך: pass. שם העצם: failure (כישלון).",
+    "synonyms": [
+      "not succeed",
+      "fall short"
+    ]
+  },
+  {
+    "id": "a2-072",
+    "word": "follow",
+    "ipa": "/ˈfɒloʊ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לעקוב / ללכת אחרי",
+    "definition": "To go or come after someone, or to obey rules or instructions.",
+    "definitionHe": "ללכת אחרי מישהו, או לציית לכללים או הוראות.",
+    "examples": [
+      "Follow me, I'll show you the way.",
+      "Please follow the instructions carefully.",
+      "She follows her favorite singer on Instagram."
+    ],
+    "audioHint": "FOL-oh",
+    "collocations": [
+      "follow instructions",
+      "follow the rules",
+      "follow someone"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I follow after him",
+        "correct": "I follow him",
+        "explanation": "follow כבר כולל את המשמעות של 'אחרי', אז לא צריך after. אומרים follow someone ולא follow after someone."
+      }
+    ],
+    "tip": "Follow = go after (no 'after' needed). Also means: follow rules, follow on social media, follow a recipe.",
+    "tipHe": "follow = ללכת אחרי (בלי after). גם: לעקוב ברשתות חברתיות, לבצע הוראות, לעקוב אחרי מתכון.",
+    "synonyms": [
+      "chase",
+      "obey",
+      "track"
+    ]
+  },
+  {
+    "id": "a2-073",
+    "word": "forgive",
+    "ipa": "/fərˈɡɪv/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "לסלוח",
+    "definition": "To stop being angry with someone who has done something wrong.",
+    "definitionHe": "להפסיק לכעוס על מישהו שעשה משהו רע.",
+    "examples": [
+      "I forgive you for what you said.",
+      "She forgave him and they became friends again.",
+      "It's hard to forgive and forget."
+    ],
+    "audioHint": "fer-GIV",
+    "collocations": [
+      "forgive someone for",
+      "forgive and forget",
+      "please forgive me"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I forgived him",
+        "correct": "I forgave him",
+        "explanation": "forgive הוא פועל לא רגיל: forgive - forgave - forgiven. לא forgived."
+      }
+    ],
+    "tip": "Irregular verb: forgive - forgave - forgiven. Forgive someone FOR something (not 'forgive someone on').",
+    "tipHe": "פועל לא רגיל: forgive - forgave - forgiven. forgive someone for something (לא on).",
+    "synonyms": [
+      "pardon",
+      "excuse"
+    ]
+  },
+  {
+    "id": "a2-074",
+    "word": "guess",
+    "ipa": "/ɡɛs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לנחש",
+    "definition": "To give an answer or opinion without being sure it is correct.",
+    "definitionHe": "לתת תשובה או דעה בלי להיות בטוח שהיא נכונה.",
+    "examples": [
+      "Can you guess how old she is?",
+      "I guess you're right.",
+      "Guess what happened today!"
+    ],
+    "audioHint": "GES",
+    "collocations": [
+      "I guess",
+      "guess what",
+      "take a guess"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I guess that is a good idea",
+        "correct": "I guess that's a good idea",
+        "explanation": "הטעות כאן היא לא דקדוקית, אלא סגנונית. I guess מאוד נפוץ בדיבור וכמעט תמיד בצורה מקוצרת."
+      }
+    ],
+    "tip": "'I guess' in everyday English means 'I think/I suppose'. 'Guess what!' is used to share exciting news.",
+    "tipHe": "'I guess' בשפה יומיומית = אני חושב, אני מניח. 'Guess what!' = מה קרה! (לשתף חדשות מרגשות).",
+    "synonyms": [
+      "estimate",
+      "suppose"
+    ]
+  },
+  {
+    "id": "a2-075",
+    "word": "happen",
+    "ipa": "/ˈhæpən/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לקרות",
+    "definition": "To take place, especially without being planned.",
+    "definitionHe": "להתרחש, במיוחד בלי תכנון מוקדם.",
+    "examples": [
+      "What happened yesterday?",
+      "Accidents can happen to anyone.",
+      "It happened so fast, I couldn't react."
+    ],
+    "audioHint": "HAP-en",
+    "collocations": [
+      "what happened",
+      "happen to",
+      "happen again"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "It was happened yesterday",
+        "correct": "It happened yesterday",
+        "explanation": "happen הוא פועל עצמאי (intransitive), לא משתמשים איתו בצורה סבילה. לא אומרים was happened."
+      }
+    ],
+    "tip": "Happen is NEVER used in passive voice. Say 'it happened', never 'it was happened'.",
+    "tipHe": "happen לעולם לא בא בסביל. אומרים it happened, לא it was happened.",
+    "synonyms": [
+      "occur",
+      "take place"
+    ]
+  },
+  {
+    "id": "a2-076",
+    "word": "hope",
+    "ipa": "/hoʊp/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "לקוות",
+    "definition": "To want something to happen and think that it is possible.",
+    "definitionHe": "לרצות שמשהו יקרה ולחשוב שזה אפשרי.",
+    "examples": [
+      "I hope you feel better soon.",
+      "We hope to see you again.",
+      "She hopes that she will pass the exam."
+    ],
+    "audioHint": "HOHP",
+    "collocations": [
+      "I hope so",
+      "hope for",
+      "hope to"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I hope he will come",
+        "correct": "I hope he comes / I hope he will come",
+        "explanation": "שתי הצורות נכונות, אבל אחרי hope בדרך כלל משתמשים בהווה פשוט גם לעתיד: I hope he comes."
+      }
+    ],
+    "tip": "Hope + present simple for future events: 'I hope it rains tomorrow'. 'I hope so' = אני מקווה שכן.",
+    "tipHe": "אחרי hope משתמשים בהווה פשוט גם לעתיד: I hope it rains tomorrow. I hope so = אני מקווה שכן.",
+    "synonyms": [
+      "wish",
+      "desire"
+    ]
+  },
+  {
+    "id": "a2-077",
+    "word": "imagine",
+    "ipa": "/ɪˈmædʒɪn/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "לדמיין",
+    "definition": "To form a picture or idea in your mind of something that is not real or present.",
+    "definitionHe": "ליצור תמונה או רעיון במוח של משהו שלא קיים או לא נמצא.",
+    "examples": [
+      "Imagine you're on a beach.",
+      "I can't imagine life without my phone.",
+      "She imagined what it would be like to live abroad."
+    ],
+    "audioHint": "ih-MAJ-in",
+    "collocations": [
+      "imagine that",
+      "can you imagine",
+      "hard to imagine"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I can't imagine to live there",
+        "correct": "I can't imagine living there",
+        "explanation": "imagine בא אחריו פועל ב-ing ולא to. אומרים imagine doing ולא imagine to do."
+      }
+    ],
+    "tip": "Imagine + -ing (NOT imagine + to). 'Imagine!' by itself expresses surprise. The noun is 'imagination'.",
+    "tipHe": "imagine + פועל ב-ing (לא to). Imagine! = תדמיין! (הפתעה). שם העצם: imagination (דמיון).",
+    "synonyms": [
+      "picture",
+      "visualize",
+      "dream"
+    ]
+  },
+  {
+    "id": "a2-079",
+    "word": "include",
+    "ipa": "/ɪnˈkluːd/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לכלול",
+    "definition": "To contain something as a part of something else.",
+    "definitionHe": "להכיל משהו כחלק ממשהו אחר.",
+    "examples": [
+      "The price includes breakfast.",
+      "The tour includes a visit to the museum.",
+      "Does the bill include tax?"
+    ],
+    "audioHint": "in-KLOOD",
+    "collocations": [
+      "include in",
+      "including",
+      "price includes"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The price is include breakfast",
+        "correct": "The price includes breakfast",
+        "explanation": "include הוא פועל ולא שם תואר. אומרים The price includes, לא The price is include."
+      }
+    ],
+    "tip": "'Including' is very useful: 'Everyone came, including Tom.' The opposite is 'exclude'.",
+    "tipHe": "including (כולל) מאוד שימושי: Everyone came, including Tom. ההפך: exclude (להוציא).",
+    "synonyms": [
+      "contain",
+      "cover"
+    ]
+  },
+  {
+    "id": "a2-080",
+    "word": "increase",
+    "ipa": "/ɪnˈkriːs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "להגדיל / לעלות",
+    "definition": "To become larger in amount, number, or degree.",
+    "definitionHe": "להפוך לגדול יותר בכמות, במספר, או בדרגה.",
+    "examples": [
+      "Prices have increased by 10%.",
+      "The number of students is increasing.",
+      "We need to increase sales this month."
+    ],
+    "audioHint": "in-KREES (verb) / IN-krees (noun)",
+    "collocations": [
+      "increase in",
+      "increase by",
+      "significant increase"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The price was increased up",
+        "correct": "The price increased / The price went up",
+        "explanation": "increase כבר אומר 'עלייה', לא צריך up. אם רוצים go up, אומרים went up בלי increase."
+      }
+    ],
+    "tip": "As a verb: stress on second syllable (inCREASE). As a noun: stress on first syllable (INcrease). The opposite is 'decrease'.",
+    "tipHe": "כפועל: הטעמה על ההברה השנייה. כשם עצם: הטעמה על ההברה הראשונה. ההפך: decrease.",
+    "synonyms": [
+      "grow",
+      "rise",
+      "go up"
+    ]
+  },
+  {
+    "id": "a2-081",
+    "word": "introduce",
+    "ipa": "/ˌɪntrəˈdjuːs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "להציג / להכיר בין אנשים",
+    "definition": "To tell someone another person's name for the first time, or to present something new.",
+    "definitionHe": "לספר למישהו את שמו של אדם אחר בפעם הראשונה, או להציג משהו חדש.",
+    "examples": [
+      "Let me introduce you to my friend.",
+      "She introduced herself to the class.",
+      "The company introduced a new product."
+    ],
+    "audioHint": "in-truh-DOOS",
+    "collocations": [
+      "introduce someone to",
+      "introduce yourself",
+      "introduce a new idea"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to introduce you with my friend",
+        "correct": "I want to introduce you to my friend",
+        "explanation": "באנגלית אומרים introduce someone TO someone, לא introduce someone with someone."
+      }
+    ],
+    "tip": "Introduce someone TO someone (not 'with'). 'Introduce yourself' = הצג את עצמך. The noun is 'introduction'.",
+    "tipHe": "introduce someone to someone (ולא with). introduce yourself = להציג את עצמך. שם העצם: introduction.",
+    "synonyms": [
+      "present",
+      "acquaint"
+    ]
+  },
+  {
+    "id": "a2-083",
+    "word": "join",
+    "ipa": "/dʒɔɪn/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "להצטרף",
+    "definition": "To become a member of a group, or to go together with someone.",
+    "definitionHe": "להפוך לחבר בקבוצה, או להצטרף למישהו.",
+    "examples": [
+      "Would you like to join us for lunch?",
+      "She joined a gym last month.",
+      "He joined the company in 2020."
+    ],
+    "audioHint": "JOYN",
+    "collocations": [
+      "join a club",
+      "join us",
+      "join in"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to join to the group",
+        "correct": "I want to join the group",
+        "explanation": "join הוא פועל יוצא ולא צריך to אחריו. אומרים join the group ולא join to the group."
+      }
+    ],
+    "tip": "Join a group (no 'to'). 'Join in' = participate in an activity. 'Join us' = come with us.",
+    "tipHe": "join + קבוצה (בלי to). join in = להשתתף בפעילות. join us = בוא איתנו.",
+    "synonyms": [
+      "enter",
+      "participate",
+      "become a member"
+    ]
+  },
+  {
+    "id": "a2-084",
+    "word": "manage",
+    "ipa": "/ˈmænɪdʒ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "לנהל / להצליח",
+    "definition": "To be in charge of something, or to succeed in doing something difficult.",
+    "definitionHe": "להיות אחראי על משהו, או להצליח לעשות משהו קשה.",
+    "examples": [
+      "She manages a team of 20 people.",
+      "I managed to finish on time.",
+      "How do you manage to work and study?"
+    ],
+    "audioHint": "MAN-ij",
+    "collocations": [
+      "manage to",
+      "manage a team",
+      "manage time"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I managed doing it",
+        "correct": "I managed to do it",
+        "explanation": "manage בא אחריו to + פועל, לא פועל ב-ing. אומרים manage to do ולא manage doing."
+      }
+    ],
+    "tip": "Manage TO DO = succeed in doing something difficult. Manage something = be in charge of it. The noun is 'manager'.",
+    "tipHe": "manage to do = להצליח לעשות משהו קשה. manage something = לנהל. שם העצם: manager (מנהל).",
+    "synonyms": [
+      "handle",
+      "run",
+      "succeed"
+    ]
+  },
+  {
+    "id": "a2-085",
+    "word": "mention",
+    "ipa": "/ˈmɛnʃən/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להזכיר",
+    "definition": "To talk about something briefly without giving many details.",
+    "definitionHe": "לדבר על משהו בקצרה בלי לתת הרבה פרטים.",
+    "examples": [
+      "She mentioned that she's moving to a new city.",
+      "He didn't mention the price.",
+      "Don't mention it! (= You're welcome!)"
+    ],
+    "audioHint": "MEN-shun",
+    "collocations": [
+      "mention that",
+      "don't mention it",
+      "worth mentioning"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She mentioned about the problem",
+        "correct": "She mentioned the problem",
+        "explanation": "mention הוא פועל יוצא, לא צריך about. אומרים mention something ולא mention about something."
+      }
+    ],
+    "tip": "Mention something (no 'about'!). 'Don't mention it!' is a polite way to say 'You're welcome!'.",
+    "tipHe": "mention something (בלי about). Don't mention it! = אין בעד מה! (תגובה מנומסת ל-Thank you).",
+    "synonyms": [
+      "refer to",
+      "bring up"
+    ]
+  },
+  {
+    "id": "a2-086",
+    "word": "miss",
+    "ipa": "/mɪs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "להתגעגע / לפספס",
+    "definition": "To feel sad because someone is not with you, or to not catch or attend something.",
+    "definitionHe": "להרגיש עצוב כי מישהו לא איתך, או לפספס משהו.",
+    "examples": [
+      "I miss my family a lot.",
+      "She missed the bus this morning.",
+      "Don't miss this opportunity!"
+    ],
+    "audioHint": "MIS",
+    "collocations": [
+      "miss someone",
+      "miss the bus",
+      "miss a chance"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I miss to my parents",
+        "correct": "I miss my parents",
+        "explanation": "בעברית אומרים 'מתגעגע ל', אבל באנגלית miss בא ישירות בלי מילת יחס: I miss my parents."
+      }
+    ],
+    "tip": "Miss has two meanings: miss someone (feel sad they're away) and miss the bus (fail to catch it).",
+    "tipHe": "miss = להתגעגע (I miss you) וגם לפספס (I missed the bus). שני השימושים בלי מילת יחס.",
+    "synonyms": [
+      "long for",
+      "skip"
+    ]
+  },
+  {
+    "id": "a2-087",
+    "word": "notice",
+    "ipa": "/ˈnoʊtɪs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לשים לב",
+    "definition": "To see or become aware of something.",
+    "definitionHe": "לראות או להיות מודע למשהו.",
+    "examples": [
+      "Did you notice anything different?",
+      "I noticed that she was wearing a new dress.",
+      "Nobody noticed the mistake."
+    ],
+    "audioHint": "NOH-tis",
+    "collocations": [
+      "notice that",
+      "notice a difference",
+      "hard to notice"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I noticed to the change",
+        "correct": "I noticed the change",
+        "explanation": "notice הוא פועל יוצא, לא צריך מילת יחס. אומרים notice something ולא notice to something."
+      }
+    ],
+    "tip": "Notice = see something (usually for the first time). As a noun: 'a notice' = an official written message (מודעה).",
+    "tipHe": "notice כפועל = לשים לב. כשם עצם = מודעה, הודעה רשמית.",
+    "synonyms": [
+      "observe",
+      "see",
+      "spot"
+    ]
+  },
+  {
+    "id": "a2-088",
+    "word": "offer",
+    "ipa": "/ˈɒfər/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להציע",
+    "definition": "To say that you are willing to do something or give something to someone.",
+    "definitionHe": "לומר שאתה מוכן לעשות משהו או לתת משהו למישהו.",
+    "examples": [
+      "He offered to help me move.",
+      "Can I offer you something to drink?",
+      "She was offered a new job."
+    ],
+    "audioHint": "OF-er",
+    "collocations": [
+      "offer help",
+      "offer to do",
+      "special offer"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He offered me to go",
+        "correct": "He offered to go / He suggested that I go",
+        "explanation": "offer someone to do לא נכון. offer to do = להתנדב לעשות. אם רוצים להציע למישהו, אומרים suggest."
+      }
+    ],
+    "tip": "Offer TO DO (volunteer). Offer someone something (give). Don't confuse with 'suggest' (recommend someone do something).",
+    "tipHe": "offer to do = להתנדב. offer someone something = לתת. אל תבלבלו עם suggest (להמליץ למישהו לעשות).",
+    "synonyms": [
+      "propose",
+      "provide",
+      "give"
+    ]
+  },
+  {
+    "id": "a2-089",
+    "word": "organize",
+    "ipa": "/ˈɔːrɡənaɪz/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "לארגן",
+    "definition": "To plan and arrange something, or to put things in order.",
+    "definitionHe": "לתכנן ולסדר משהו, או לשים דברים בסדר.",
+    "examples": [
+      "She organized a surprise party.",
+      "I need to organize my desk.",
+      "Who's organizing the meeting?"
+    ],
+    "audioHint": "OR-guh-nize",
+    "collocations": [
+      "organize an event",
+      "organize files",
+      "well-organized"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to organize myself",
+        "correct": "I need to get organized",
+        "explanation": "באנגלית אומרים get organized כשמתכוונים 'להתארגן'. organize myself נשמע כאילו אתה מסדר את עצמך פיזית."
+      }
+    ],
+    "tip": "Organize an event = plan it. Get organized = become more orderly. British spelling: organise.",
+    "tipHe": "organize an event = לתכנן אירוע. get organized = להתארגן. באנגלית בריטית: organise.",
+    "synonyms": [
+      "arrange",
+      "plan",
+      "sort out"
+    ]
+  },
+  {
+    "id": "a2-090",
+    "word": "prefer",
+    "ipa": "/prɪˈfɜːr/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "להעדיף",
+    "definition": "To like one thing more than another.",
+    "definitionHe": "לאהוב דבר אחד יותר מדבר אחר.",
+    "examples": [
+      "I prefer tea to coffee.",
+      "She prefers reading to watching TV.",
+      "Would you prefer to sit inside or outside?"
+    ],
+    "audioHint": "prih-FUR",
+    "collocations": [
+      "prefer to",
+      "prefer something to",
+      "I'd prefer"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I prefer tea more than coffee",
+        "correct": "I prefer tea to coffee",
+        "explanation": "prefer כבר כולל את המשמעות של 'יותר', אז לא צריך more than. אומרים prefer A to B."
+      }
+    ],
+    "tip": "Prefer A TO B (not 'more than'). 'I'd prefer' = I would prefer (more polite). Also: prefer + -ing or prefer + to do.",
+    "tipHe": "prefer A to B (ולא more than). I'd prefer = הייתי מעדיף (יותר מנומס). אפשר prefer doing או prefer to do.",
+    "synonyms": [
+      "favor",
+      "like better"
+    ]
+  },
+  {
+    "id": "a2-091",
+    "word": "prepare",
+    "ipa": "/prɪˈpɛr/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "להכין / להתכונן",
+    "definition": "To make something ready, or to get ready for something.",
+    "definitionHe": "להכין משהו, או להתכונן למשהו.",
+    "examples": [
+      "She prepared dinner for the family.",
+      "Are you prepared for the exam?",
+      "I need to prepare a presentation."
+    ],
+    "audioHint": "prih-PAIR",
+    "collocations": [
+      "prepare for",
+      "prepare a meal",
+      "well-prepared"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to prepare to the test",
+        "correct": "I need to prepare for the test",
+        "explanation": "אומרים prepare for something ולא prepare to something. מילת היחס הנכונה היא for."
+      }
+    ],
+    "tip": "Prepare FOR something (get ready). Prepare something (make it). The noun is 'preparation'.",
+    "tipHe": "prepare for = להתכונן ל. prepare something = להכין. שם העצם: preparation (הכנה).",
+    "synonyms": [
+      "get ready",
+      "make ready",
+      "set up"
+    ]
+  },
+  {
+    "id": "a2-092",
+    "word": "promise",
+    "ipa": "/ˈprɒmɪs/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "להבטיח",
+    "definition": "To tell someone that you will definitely do something.",
+    "definitionHe": "לומר למישהו שאתה בהחלט תעשה משהו.",
+    "examples": [
+      "I promise I'll be on time.",
+      "She promised to call me back.",
+      "He promised that he would help."
+    ],
+    "audioHint": "PROM-is",
+    "collocations": [
+      "promise to",
+      "keep a promise",
+      "break a promise"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I promise you to that I come",
+        "correct": "I promise you that I'll come / I promise to come",
+        "explanation": "יש שני מבנים: promise to do something, או promise that + משפט. אל תערבבו."
+      }
+    ],
+    "tip": "Promise TO DO or promise THAT + clause. 'Keep a promise' = to do what you said. 'Break a promise' = not do it.",
+    "tipHe": "promise to do או promise that + משפט. keep a promise = לקיים הבטחה. break a promise = להפר הבטחה.",
+    "synonyms": [
+      "guarantee",
+      "swear",
+      "pledge"
+    ]
+  },
+  {
+    "id": "a2-094",
+    "word": "realize",
+    "ipa": "/ˈriːəlaɪz/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "להבין / להיות מודע",
+    "definition": "To understand or become aware of something that you did not know before.",
+    "definitionHe": "להבין או להיות מודע למשהו שלא ידעת לפני כן.",
+    "examples": [
+      "I didn't realize it was so late.",
+      "She suddenly realized that she forgot her keys.",
+      "Do you realize how important this is?"
+    ],
+    "audioHint": "REE-uh-lize",
+    "collocations": [
+      "realize that",
+      "suddenly realized",
+      "didn't realize"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I didn't realize from the problem",
+        "correct": "I didn't realize there was a problem",
+        "explanation": "realize בא אחריו that + משפט, או מושא ישיר. לא אומרים realize from."
+      }
+    ],
+    "tip": "Realize = understand something (not 'make real'). British spelling: realise. Don't confuse with 'understand'.",
+    "tipHe": "realize = פתאום להבין משהו (רגע של הבנה). באנגלית בריטית: realise.",
+    "synonyms": [
+      "understand",
+      "recognize",
+      "become aware"
+    ]
+  },
+  {
+    "id": "a2-095",
+    "word": "receive",
+    "ipa": "/rɪˈsiːv/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לקבל",
+    "definition": "To get something that has been given or sent to you.",
+    "definitionHe": "לקבל משהו שנשלח או ניתן לך.",
+    "examples": [
+      "I received your email yesterday.",
+      "She received a gift from her friend.",
+      "Did you receive my message?"
+    ],
+    "audioHint": "rih-SEEV",
+    "collocations": [
+      "receive a message",
+      "receive a gift",
+      "receive information"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I received an answer on my question",
+        "correct": "I received an answer to my question",
+        "explanation": "באנגלית אומרים answer to a question, לא answer on a question."
+      }
+    ],
+    "tip": "Receive is more formal than 'get'. In everyday speech, people usually say 'get' instead of 'receive'.",
+    "tipHe": "receive יותר רשמי מ-get. בשפה יומיומית, אנשים בדרך כלל אומרים get במקום receive.",
+    "synonyms": [
+      "get",
+      "obtain"
+    ]
+  },
+  {
+    "id": "a2-096",
+    "word": "recognize",
+    "ipa": "/ˈrɛkəɡnaɪz/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "לזהות / להכיר",
+    "definition": "To know who someone is or what something is because you have seen them before.",
+    "definitionHe": "לדעת מי מישהו או מה משהו כי ראית אותם בעבר.",
+    "examples": [
+      "I didn't recognize you with your new haircut!",
+      "She recognized his voice on the phone.",
+      "Do you recognize this song?"
+    ],
+    "audioHint": "REK-ug-nize",
+    "collocations": [
+      "recognize someone",
+      "recognize a voice",
+      "easily recognized"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I recognized on him from his voice",
+        "correct": "I recognized him by his voice",
+        "explanation": "אומרים recognize someone (בלי on), ו-by his voice (לא from)."
+      }
+    ],
+    "tip": "Recognize = identify from memory. Also means to officially accept: 'The country recognized its independence'. British: recognise.",
+    "tipHe": "recognize = לזהות מהזיכרון. גם: להכיר רשמית (The country recognized its independence). בריטית: recognise.",
+    "synonyms": [
+      "identify",
+      "know",
+      "recall"
+    ]
+  },
+  {
+    "id": "a2-098",
+    "word": "remember",
+    "ipa": "/rɪˈmɛmbər/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "לזכור",
+    "definition": "To have information in your mind from the past, or to not forget to do something.",
+    "definitionHe": "להיות עם מידע מהעבר בראש, או לא לשכוח לעשות משהו.",
+    "examples": [
+      "I remember my first day at school.",
+      "Remember to lock the door!",
+      "Do you remember her name?"
+    ],
+    "audioHint": "rih-MEM-ber",
+    "collocations": [
+      "remember to",
+      "remember doing",
+      "always remember"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I remember to see him yesterday",
+        "correct": "I remember seeing him yesterday",
+        "explanation": "remember + ing = לזכור שעשית משהו בעבר. remember + to = לזכור לעשות משהו בעתיד. כאן מדובר בעבר, אז seeing."
+      }
+    ],
+    "tip": "Remember + -ing = recall the past (I remember going). Remember + to = don't forget (Remember to go). Big difference!",
+    "tipHe": "remember + ing = לזכור שעשית (I remember going). remember + to = לזכור לעשות (Remember to go). הבדל חשוב!",
+    "synonyms": [
+      "recall",
+      "recollect"
+    ]
+  },
+  {
+    "id": "a2-099",
+    "word": "suggest",
+    "ipa": "/səˈdʒɛst/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "להציע",
+    "definition": "To put forward an idea or plan for someone to think about.",
+    "definitionHe": "להעלות רעיון או תוכנית שמישהו יחשוב עליהם.",
+    "examples": [
+      "I suggest we take a break.",
+      "She suggested going to the park.",
+      "What do you suggest?"
+    ],
+    "audioHint": "suh-JEST",
+    "collocations": [
+      "suggest that",
+      "suggest doing",
+      "I suggest"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I suggest you to go there",
+        "correct": "I suggest you go there / I suggest going there",
+        "explanation": "לא אומרים suggest someone to do. אומרים suggest that someone do (בלי to), או suggest doing."
+      }
+    ],
+    "tip": "NEVER: suggest someone to do. Use: suggest + -ing OR suggest THAT + clause. The noun is 'suggestion'.",
+    "tipHe": "לעולם לא suggest someone to do! אומרים suggest doing או suggest that + משפט. שם העצם: suggestion (הצעה).",
+    "synonyms": [
+      "propose",
+      "recommend"
+    ]
+  },
+  {
+    "id": "a2-100",
+    "word": "surprise",
+    "ipa": "/sərˈpraɪz/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "הפתעה",
+    "definition": "An unexpected event, or the feeling caused by something unexpected.",
+    "definitionHe": "אירוע לא צפוי, או התחושה שנגרמת ממשהו לא צפוי.",
+    "examples": [
+      "What a nice surprise!",
+      "The ending of the movie was a big surprise.",
+      "They planned a surprise party for her."
+    ],
+    "audioHint": "ser-PRIZE",
+    "collocations": [
+      "surprise party",
+      "big surprise",
+      "to my surprise"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I was very surprise",
+        "correct": "I was very surprised",
+        "explanation": "surprise הוא שם עצם. כשם תואר, צריך surprised (מופתע). אומרים I was surprised, לא I was surprise."
+      },
+      {
+        "wrong": "It was very surprised",
+        "correct": "It was very surprising",
+        "explanation": "surprised = מופתע (מתאר אנשים). surprising = מפתיע (מתאר דברים/מצבים)."
+      }
+    ],
+    "tip": "Surprised = how you feel (I was surprised). Surprising = what caused the feeling (The news was surprising).",
+    "tipHe": "surprised = איך אתה מרגיש (I was surprised). surprising = מה גרם לתחושה (The news was surprising).",
+    "synonyms": [
+      "shock",
+      "amazement"
+    ]
+  },
+  {
+    "id": "a2-101",
+    "word": "advice",
+    "ipa": "/ədˈvaɪs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "עצה",
+    "definition": "A suggestion about what someone should do",
+    "definitionHe": "הצעה על מה שמישהו צריך לעשות",
+    "examples": [
+      "She gave me good advice.",
+      "Can I ask for your advice?"
+    ],
+    "collocations": [
+      "give advice",
+      "take advice",
+      "ask for advice"
+    ],
+    "synonyms": [
+      "suggestion",
+      "recommendation"
+    ],
+    "audioHint": "אֶד-וַייס",
+    "commonMistakes": [
+      {
+        "wrong": "advices",
+        "correct": "advice",
+        "explanation": "advice היא מילה שלא ניתנת לספירה - לא מוסיפים s"
+      }
+    ],
+    "tip": "'Advice' is a noun (uncountable), 'advise' is a verb",
+    "tipHe": "advice - שם עצם (לא סופרים), advise - פועל"
+  },
+  {
+    "id": "a2-104",
+    "word": "career",
+    "ipa": "/kəˈrɪər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "קריירה",
+    "definition": "The job or series of jobs that you do during your working life",
+    "definitionHe": "המקצוע או סדרת העבודות שאדם עושה במהלך חיי העבודה שלו",
+    "examples": [
+      "She wants a career in medicine.",
+      "He changed his career at the age of 40."
+    ],
+    "collocations": [
+      "career change",
+      "career path",
+      "build a career"
+    ],
+    "synonyms": [
+      "profession",
+      "occupation"
+    ],
+    "audioHint": "קָ-רִיר",
+    "commonMistakes": [
+      {
+        "wrong": "What is your career?",
+        "correct": "What do you do for a living?",
+        "explanation": "בעברית שואלים 'מה הקריירה שלך', אבל באנגלית יותר טבעי לשאול What do you do?"
+      }
+    ],
+    "tip": "'Career' refers to long-term professional life, not just a single job",
+    "tipHe": "career מתייחס למסלול מקצועי ארוך טווח, לא לעבודה בודדת"
+  },
+  {
+    "id": "a2-105",
+    "word": "challenge",
+    "ipa": "/ˈtʃælɪndʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "אתגר",
+    "definition": "Something new and difficult that requires great effort",
+    "definitionHe": "דבר חדש וקשה שדורש מאמץ רב",
+    "examples": [
+      "Learning a new language is a big challenge.",
+      "She enjoys the challenge of her new job."
+    ],
+    "collocations": [
+      "big challenge",
+      "face a challenge",
+      "accept a challenge"
+    ],
+    "synonyms": [
+      "difficulty",
+      "test"
+    ],
+    "audioHint": "צַ׳אלֶנְג׳",
+    "commonMistakes": [
+      {
+        "wrong": "It's a very challenge job",
+        "correct": "It's a very challenging job",
+        "explanation": "challenge הוא שם עצם, challenging הוא שם תואר - צריך להוסיף ing כשמתארים משהו"
+      }
+    ],
+    "tip": "'Challenge' is a noun, 'challenging' is the adjective form",
+    "tipHe": "challenge הוא שם עצם, challenging הוא שם התואר"
+  },
+  {
+    "id": "a2-106",
+    "word": "community",
+    "ipa": "/kəˈmjuːnɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "קהילה",
+    "definition": "A group of people living in the same area or sharing common interests",
+    "definitionHe": "קבוצת אנשים שגרים באותו אזור או חולקים תחומי עניין משותפים",
+    "examples": [
+      "We have a strong community in our neighborhood.",
+      "The online community is very supportive."
+    ],
+    "collocations": [
+      "local community",
+      "community center",
+      "sense of community"
+    ],
+    "synonyms": [
+      "neighborhood",
+      "society"
+    ],
+    "audioHint": "קָ-מְיוּ-נִיטִי",
+    "commonMistakes": [
+      {
+        "wrong": "I live in a nice commune",
+        "correct": "I live in a nice community",
+        "explanation": "commune זו קומונה (מגורים משותפים), community זו קהילה - יש הבדל גדול"
+      }
+    ],
+    "tip": "'Community' can refer to a physical neighborhood or a group with shared interests (e.g., online community)",
+    "tipHe": "community יכולה להתייחס לשכונה פיזית או לקבוצה עם עניין משותף (כמו קהילה מקוונת)"
+  },
+  {
+    "id": "a2-107",
+    "word": "competition",
+    "ipa": "/ˌkɒmpɪˈtɪʃn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "תחרות",
+    "definition": "An event in which people try to win something by being the best",
+    "definitionHe": "אירוע שבו אנשים מנסים לנצח על ידי כך שהם הטובים ביותר",
+    "examples": [
+      "She won first place in the cooking competition.",
+      "There is a lot of competition for this job."
+    ],
+    "collocations": [
+      "win a competition",
+      "enter a competition",
+      "tough competition"
+    ],
+    "synonyms": [
+      "contest",
+      "tournament"
+    ],
+    "audioHint": "קוֹמְ-פֶּה-טִישְׁן",
+    "commonMistakes": [
+      {
+        "wrong": "He is my competition in the race",
+        "correct": "He is my competitor in the race",
+        "explanation": "competition היא התחרות עצמה, competitor הוא האדם שמתחרה"
+      }
+    ],
+    "tip": "'Competition' is the event or situation; 'competitor' is the person who competes",
+    "tipHe": "competition היא התחרות או המצב, competitor הוא האדם שמתחרה"
+  },
+  {
+    "id": "a2-108",
+    "word": "conversation",
+    "ipa": "/ˌkɒnvəˈseɪʃn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "שיחה",
+    "definition": "A talk between two or more people, in which they exchange ideas and news",
+    "definitionHe": "דיבור בין שני אנשים או יותר, שבו הם מחליפים רעיונות וחדשות",
+    "examples": [
+      "We had a long conversation about the future.",
+      "I overheard their conversation."
+    ],
+    "collocations": [
+      "have a conversation",
+      "deep conversation",
+      "start a conversation"
+    ],
+    "synonyms": [
+      "talk",
+      "discussion"
+    ],
+    "audioHint": "קוֹנְ-בֶר-סֵיי-שְׁן",
+    "commonMistakes": [
+      {
+        "wrong": "I did a conversation with her",
+        "correct": "I had a conversation with her",
+        "explanation": "באנגלית לא 'עושים' שיחה, אלא 'יש לנו' שיחה - have a conversation"
+      }
+    ],
+    "tip": "Use 'have' with conversation, not 'do' or 'make'",
+    "tipHe": "משתמשים ב-have עם conversation, לא ב-do או make"
+  },
+  {
+    "id": "a2-109",
+    "word": "customer",
+    "ipa": "/ˈkʌstəmər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "לקוח",
+    "definition": "A person who buys goods or services from a shop or business",
+    "definitionHe": "אדם שקונה מוצרים או שירותים מחנות או עסק",
+    "examples": [
+      "The customer asked for a refund.",
+      "We need to keep our customers happy."
+    ],
+    "collocations": [
+      "loyal customer",
+      "customer service",
+      "regular customer"
+    ],
+    "synonyms": [
+      "client",
+      "buyer"
+    ],
+    "audioHint": "קַסְ-טָמֶר",
+    "commonMistakes": [
+      {
+        "wrong": "The costumer was angry",
+        "correct": "The customer was angry",
+        "explanation": "שימו לב לאיות: customer (לקוח) ולא costumer (מעצב תלבושות)"
+      }
+    ],
+    "tip": "Don't confuse 'customer' (buyer) with 'costumer' (a person who makes costumes)",
+    "tipHe": "אל תבלבלו בין customer (לקוח) לבין costumer (מעצב תלבושות)"
+  },
+  {
+    "id": "a2-110",
+    "word": "decision",
+    "ipa": "/dɪˈsɪʒn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "החלטה",
+    "definition": "A choice that you make after thinking about several possibilities",
+    "definitionHe": "בחירה שעושים אחרי שחושבים על כמה אפשרויות",
+    "examples": [
+      "It was a difficult decision to make.",
+      "Have you made a decision yet?"
+    ],
+    "collocations": [
+      "make a decision",
+      "difficult decision",
+      "final decision"
+    ],
+    "synonyms": [
+      "choice",
+      "conclusion"
+    ],
+    "audioHint": "דִי-סִיזְ׳ן",
+    "commonMistakes": [
+      {
+        "wrong": "I need to take a decision",
+        "correct": "I need to make a decision",
+        "explanation": "באנגלית אמריקאית אומרים make a decision, לא take a decision (למרות ש-take מקובל באנגלית בריטית)"
+      }
+    ],
+    "tip": "In American English, we 'make' a decision. British English also accepts 'take' a decision.",
+    "tipHe": "באנגלית אמריקאית אומרים make a decision. באנגלית בריטית גם take a decision מקובל."
+  },
+  {
+    "id": "a2-111",
+    "word": "education",
+    "ipa": "/ˌɛdʒuˈkeɪʃn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "education",
+    "translation": "חינוך / השכלה",
+    "definition": "The process of teaching and learning, usually at school or university",
+    "definitionHe": "תהליך ההוראה והלמידה, בדרך כלל בבית ספר או באוניברסיטה",
+    "examples": [
+      "Education is very important for children.",
+      "She has a university education."
+    ],
+    "collocations": [
+      "higher education",
+      "education system",
+      "get an education"
+    ],
+    "synonyms": [
+      "learning",
+      "schooling"
+    ],
+    "audioHint": "אֶדְ-יוּ-קֵיי-שְׁן",
+    "commonMistakes": [
+      {
+        "wrong": "I have a good education level",
+        "correct": "I have a good level of education",
+        "explanation": "באנגלית אומרים level of education ולא education level (למרות שזה קיים, הראשון יותר נפוץ)"
+      }
+    ],
+    "tip": "'Education' is usually uncountable. You can say 'an education' to mean a complete educational experience.",
+    "tipHe": "education בדרך כלל לא ספירה. אפשר להגיד an education כשמתכוונים לחוויית השכלה שלמה."
+  },
+  {
+    "id": "a2-113",
+    "word": "environment",
+    "ipa": "/ɪnˈvaɪrənmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "environment",
+    "translation": "סביבה",
+    "definition": "The natural world around us, or the conditions in which you live or work",
+    "definitionHe": "העולם הטבעי סביבנו, או התנאים שבהם אדם חי או עובד",
+    "examples": [
+      "We must protect the environment.",
+      "A clean working environment is important."
+    ],
+    "collocations": [
+      "protect the environment",
+      "working environment",
+      "natural environment"
+    ],
+    "synonyms": [
+      "surroundings",
+      "nature"
+    ],
+    "audioHint": "אִין-וַויי-רוֹנְ-מֶנְט",
+    "commonMistakes": [
+      {
+        "wrong": "The enviroment is important",
+        "correct": "The environment is important",
+        "explanation": "שימו לב לאיות הנכון: environment עם n לפני m - טעות איות נפוצה מאוד"
+      }
+    ],
+    "tip": "Remember the spelling: enviroNment (there's an N before the M)",
+    "tipHe": "זכרו את האיות: enviroNment (יש N לפני ה-M)"
+  },
+  {
+    "id": "a2-114",
+    "word": "event",
+    "ipa": "/ɪˈvɛnt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "entertainment",
+    "translation": "אירוע",
+    "definition": "Something that happens, especially something important or unusual",
+    "definitionHe": "משהו שקורה, במיוחד משהו חשוב או יוצא דופן",
+    "examples": [
+      "The wedding was a beautiful event.",
+      "What events are happening this weekend?"
+    ],
+    "collocations": [
+      "sporting event",
+      "social event",
+      "organize an event"
+    ],
+    "synonyms": [
+      "occasion",
+      "happening"
+    ],
+    "audioHint": "אִי-וֶנְט",
+    "commonMistakes": [
+      {
+        "wrong": "There is a big event in the park",
+        "correct": "There is a big event at the park",
+        "explanation": "כשמדברים על אירוע שמתקיים במקום מסוים, בדרך כלל משתמשים ב-at ולא ב-in"
+      }
+    ],
+    "tip": "Use 'at' for events at a venue: 'at the stadium', 'at the park'",
+    "tipHe": "משתמשים ב-at עבור אירועים במקום מסוים: at the stadium, at the park"
+  },
+  {
+    "id": "a2-116",
+    "word": "government",
+    "ipa": "/ˈɡʌvənmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "ממשלה",
+    "definition": "The group of people who officially control a country",
+    "definitionHe": "קבוצת האנשים שמנהלים רשמית את המדינה",
+    "examples": [
+      "The government decided to build new schools.",
+      "She works for the government."
+    ],
+    "collocations": [
+      "local government",
+      "government policy",
+      "form a government"
+    ],
+    "synonyms": [
+      "administration",
+      "authorities"
+    ],
+    "audioHint": "גַּאוֶר-נְמֶנְט",
+    "commonMistakes": [
+      {
+        "wrong": "The goverment is good",
+        "correct": "The government is good",
+        "explanation": "שימו לב לאיות: government עם N אחרי ה-R - הרבה אנשים שוכחים אותה"
+      }
+    ],
+    "tip": "Remember the spelling: goverNment (don't drop the N after the R)",
+    "tipHe": "זכרו את האיות: goverNment (אל תשכחו את ה-N אחרי ה-R)"
+  },
+  {
+    "id": "a2-117",
+    "word": "health",
+    "ipa": "/hɛlθ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "health",
+    "translation": "בריאות",
+    "definition": "The condition of your body and how well or ill you are",
+    "definitionHe": "מצב הגוף שלך וכמה אתה בריא או חולה",
+    "examples": [
+      "Exercise is good for your health.",
+      "His health has improved since he stopped smoking."
+    ],
+    "collocations": [
+      "good health",
+      "health care",
+      "mental health"
+    ],
+    "synonyms": [
+      "wellness",
+      "well-being"
+    ],
+    "audioHint": "הֶלְת׳",
+    "commonMistakes": [
+      {
+        "wrong": "I wish you a good healthy",
+        "correct": "I wish you good health",
+        "explanation": "health היא שם עצם, healthy היא שם תואר. אומרים good health ולא good healthy."
+      }
+    ],
+    "tip": "'Health' is the noun, 'healthy' is the adjective. You have good health / you are healthy.",
+    "tipHe": "health הוא שם עצם, healthy הוא שם תואר. יש לך בריאות טובה / אתה בריא."
+  },
+  {
+    "id": "a2-118",
+    "word": "information",
+    "ipa": "/ˌɪnfəˈmeɪʃn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "מידע",
+    "definition": "Facts or details about a subject",
+    "definitionHe": "עובדות או פרטים על נושא מסוים",
+    "examples": [
+      "Can you give me some information about the course?",
+      "I found the information on the internet."
+    ],
+    "collocations": [
+      "useful information",
+      "personal information",
+      "provide information"
+    ],
+    "synonyms": [
+      "data",
+      "details"
+    ],
+    "audioHint": "אִינְ-פוֹר-מֵיי-שְׁן",
+    "commonMistakes": [
+      {
+        "wrong": "I need some informations",
+        "correct": "I need some information",
+        "explanation": "information היא מילה לא ספירה באנגלית - לעולם לא מוסיפים s. אומרים a piece of information."
+      }
+    ],
+    "tip": "'Information' is ALWAYS uncountable in English. Never say 'informations'. Use 'a piece of information'.",
+    "tipHe": "information היא תמיד מילה לא ספירה. לעולם לא אומרים informations. אומרים a piece of information."
+  },
+  {
+    "id": "a2-120",
+    "word": "message",
+    "ipa": "/ˈmɛsɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "הודעה",
+    "definition": "A piece of written or spoken information that one person sends to another",
+    "definitionHe": "פיסת מידע כתובה או מדוברת שאדם אחד שולח לאחר",
+    "examples": [
+      "I left a message on his phone.",
+      "Did you get my message?"
+    ],
+    "collocations": [
+      "send a message",
+      "leave a message",
+      "text message"
+    ],
+    "synonyms": [
+      "note",
+      "communication"
+    ],
+    "audioHint": "מֶסִידְג׳",
+    "commonMistakes": [
+      {
+        "wrong": "I sent him a massage",
+        "correct": "I sent him a message",
+        "explanation": "message (הודעה) ו-massage (עיסוי) נשמעים דומה אבל המשמעות שונה לגמרי!"
+      }
+    ],
+    "tip": "Don't confuse 'message' (communication) with 'massage' (body treatment)!",
+    "tipHe": "אל תבלבלו בין message (הודעה) לבין massage (עיסוי)!"
+  },
+  {
+    "id": "a2-121",
+    "word": "opinion",
+    "ipa": "/əˈpɪnjən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "דעה",
+    "definition": "What you think or believe about something",
+    "definitionHe": "מה שאתה חושב או מאמין לגבי משהו",
+    "examples": [
+      "In my opinion, this movie is great.",
+      "Everyone has a different opinion."
+    ],
+    "collocations": [
+      "in my opinion",
+      "strong opinion",
+      "public opinion"
+    ],
+    "synonyms": [
+      "view",
+      "belief"
+    ],
+    "audioHint": "אוֹ-פִּינְ-יֶן",
+    "commonMistakes": [
+      {
+        "wrong": "According to my opinion",
+        "correct": "In my opinion",
+        "explanation": "באנגלית אומרים in my opinion ולא according to my opinion. according to משמש לציטוט מקור חיצוני."
+      }
+    ],
+    "tip": "Say 'in my opinion', not 'according to my opinion'. 'According to' is for quoting others.",
+    "tipHe": "אומרים in my opinion, לא according to my opinion. את according to משתמשים לציטוט אחרים."
+  },
+  {
+    "id": "a2-124",
+    "word": "relationship",
+    "ipa": "/rɪˈleɪʃnʃɪp/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "מערכת יחסים / קשר",
+    "definition": "The way in which two people or groups are connected",
+    "definitionHe": "האופן שבו שני אנשים או קבוצות מחוברים זה לזה",
+    "examples": [
+      "They have a good relationship with their neighbors.",
+      "She is in a new relationship."
+    ],
+    "collocations": [
+      "close relationship",
+      "build a relationship",
+      "romantic relationship"
+    ],
+    "synonyms": [
+      "connection",
+      "bond"
+    ],
+    "audioHint": "רִי-לֵיי-שְׁן-שִׁיפּ",
+    "commonMistakes": [
+      {
+        "wrong": "I have a good relation with him",
+        "correct": "I have a good relationship with him",
+        "explanation": "כשמדברים על הקשר בין אנשים, משתמשים ב-relationship, לא ב-relation (שמתייחס יותר לקשר רשמי)"
+      }
+    ],
+    "tip": "Use 'relationship' for personal connections. 'Relations' is more formal (international relations).",
+    "tipHe": "משתמשים ב-relationship לקשרים אישיים. relations הוא יותר רשמי (יחסים בינלאומיים)."
+  },
+  {
+    "id": "a2-125",
+    "word": "technology",
+    "ipa": "/tɛkˈnɒlədʒi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "טכנולוגיה",
+    "definition": "The use of science and machines to solve problems and make life easier",
+    "definitionHe": "השימוש במדע ובמכונות כדי לפתור בעיות ולהקל על החיים",
+    "examples": [
+      "Technology is changing the way we live.",
+      "Modern technology makes communication easier."
+    ],
+    "collocations": [
+      "modern technology",
+      "information technology",
+      "use technology"
+    ],
+    "synonyms": [
+      "innovation",
+      "tech"
+    ],
+    "audioHint": "טֶקְ-נוֹ-לוֹ-ג׳י",
+    "commonMistakes": [
+      {
+        "wrong": "The technologia is advancing",
+        "correct": "Technology is advancing",
+        "explanation": "באנגלית לא אומרים technologia (זה נשמע עברי/לטיני). המילה הנכונה היא technology."
+      }
+    ],
+    "tip": "'Technology' can be uncountable (general) or countable (specific technologies)",
+    "tipHe": "technology יכולה להיות לא ספירה (כללית) או ספירה (טכנולוגיות ספציפיות)"
+  },
+  {
+    "id": "a2-126",
+    "word": "afraid",
+    "ipa": "/əˈfreɪd/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "מפחד / חושש",
+    "definition": "Feeling fear or worry about something",
+    "definitionHe": "מרגיש פחד או דאגה לגבי משהו",
+    "examples": [
+      "She is afraid of dogs.",
+      "I'm afraid I can't come to the party."
+    ],
+    "collocations": [
+      "afraid of",
+      "be afraid",
+      "I'm afraid (that)"
+    ],
+    "synonyms": [
+      "scared",
+      "frightened"
+    ],
+    "audioHint": "אַ-פְרֵייד",
+    "commonMistakes": [
+      {
+        "wrong": "I am afraid from spiders",
+        "correct": "I am afraid of spiders",
+        "explanation": "באנגלית אומרים afraid of, לא afraid from. בעברית אומרים 'פוחד מ-' אז הטעות מובנת."
+      }
+    ],
+    "tip": "'Afraid of' = fear. 'I'm afraid (that)' = polite way to give bad news.",
+    "tipHe": "afraid of = פחד. I'm afraid that = דרך מנומסת לתת חדשות רעות."
+  },
+  {
+    "id": "a2-127",
+    "word": "boring",
+    "ipa": "/ˈbɔːrɪŋ/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "משעמם",
+    "definition": "Not interesting or exciting",
+    "definitionHe": "לא מעניין או מרגש",
+    "examples": [
+      "The movie was really boring.",
+      "I find history lessons boring."
+    ],
+    "collocations": [
+      "really boring",
+      "boring job",
+      "so boring"
+    ],
+    "synonyms": [
+      "dull",
+      "tedious"
+    ],
+    "audioHint": "בּוֹר-אִינְג",
+    "commonMistakes": [
+      {
+        "wrong": "I am boring (when you mean you feel boredom)",
+        "correct": "I am bored",
+        "explanation": "boring = משעמם (מתאר את הדבר), bored = משועמם (מתאר את הרגש). I am boring אומר שאתה אדם משעמם!"
+      }
+    ],
+    "tip": "'Boring' describes the thing, 'bored' describes the person feeling it. Don't say 'I am boring' unless you mean it!",
+    "tipHe": "boring מתאר את הדבר, bored מתאר את האדם. אל תגידו I am boring אלא אם כוונתכם שאתם אנשים משעממים!"
+  },
+  {
+    "id": "a2-128",
+    "word": "brave",
+    "ipa": "/breɪv/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "אמיץ",
+    "definition": "Ready to do dangerous or difficult things without showing fear",
+    "definitionHe": "מוכן לעשות דברים מסוכנים או קשים בלי להראות פחד",
+    "examples": [
+      "The firefighters were very brave.",
+      "It was brave of you to speak in front of everyone."
+    ],
+    "collocations": [
+      "very brave",
+      "brave enough",
+      "brave decision"
+    ],
+    "synonyms": [
+      "courageous",
+      "bold"
+    ],
+    "audioHint": "בְּרֵייב",
+    "commonMistakes": [
+      {
+        "wrong": "He is very brave to do it",
+        "correct": "He is brave enough to do it / It was brave of him to do it",
+        "explanation": "כשמדברים על מעשה ספציפי, אומרים brave enough to או brave of someone to"
+      }
+    ],
+    "tip": "Use 'brave of someone to do something' when praising a specific action",
+    "tipHe": "משתמשים ב-brave of someone to do something כשמשבחים מעשה ספציפי"
+  },
+  {
+    "id": "a2-129",
+    "word": "comfortable",
+    "ipa": "/ˈkʌmftəbl/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "נוח",
+    "definition": "Making you feel physically relaxed, or feeling at ease",
+    "definitionHe": "גורם לך להרגיש רגוע פיזית, או מרגיש בנוח",
+    "examples": [
+      "This chair is very comfortable.",
+      "Make yourself comfortable."
+    ],
+    "collocations": [
+      "feel comfortable",
+      "comfortable with",
+      "comfortable chair"
+    ],
+    "synonyms": [
+      "cozy",
+      "relaxed"
+    ],
+    "audioHint": "קָאמְפ-טֶר-בְּל",
+    "commonMistakes": [
+      {
+        "wrong": "I feel comfortable with myself",
+        "correct": "I feel comfortable by myself / I feel comfortable on my own",
+        "explanation": "comfortable with = בנוח עם מישהו/משהו. by myself = לבד. לא לבלבל."
+      }
+    ],
+    "tip": "Pronounced 'KUMF-tuh-bl' (3 syllables), not 'com-FOR-ta-ble' (4 syllables)",
+    "tipHe": "מבטאים 'קָאמְפ-טֶר-בְּל' (3 הברות), לא 'קוֹם-פוֹר-טַ-בְּל' (4 הברות)"
+  },
+  {
+    "id": "a2-130",
+    "word": "creative",
+    "ipa": "/kriˈeɪtɪv/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "יצירתי",
+    "definition": "Having the ability to produce new and original ideas or things",
+    "definitionHe": "בעל יכולת ליצור רעיונות או דברים חדשים ומקוריים",
+    "examples": [
+      "She is a very creative person.",
+      "We need creative solutions to this problem."
+    ],
+    "collocations": [
+      "creative thinking",
+      "creative person",
+      "creative solution"
+    ],
+    "synonyms": [
+      "imaginative",
+      "inventive"
+    ],
+    "audioHint": "קְרִי-אֵיי-טִיב",
+    "commonMistakes": [
+      {
+        "wrong": "He is very creatable",
+        "correct": "He is very creative",
+        "explanation": "creative (יצירתי) ולא creatable (שניתן ליצירה) - שתי מילים שונות לגמרי"
+      }
+    ],
+    "tip": "'Creative' describes a person or idea. 'Creation' is the noun, 'create' is the verb.",
+    "tipHe": "creative מתאר אדם או רעיון. creation הוא שם העצם, create הוא הפועל."
+  },
+  {
+    "id": "a2-131",
+    "word": "curious",
+    "ipa": "/ˈkjʊəriəs/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "סקרן",
+    "definition": "Wanting to know or learn about something",
+    "definitionHe": "רוצה לדעת או ללמוד על משהו",
+    "examples": [
+      "Children are naturally curious about the world.",
+      "I'm curious to know what happened."
+    ],
+    "collocations": [
+      "curious about",
+      "curious to know",
+      "naturally curious"
+    ],
+    "synonyms": [
+      "interested",
+      "inquisitive"
+    ],
+    "audioHint": "קְיוּר-רִיאָס",
+    "commonMistakes": [
+      {
+        "wrong": "I am curious for your answer",
+        "correct": "I am curious about your answer",
+        "explanation": "אומרים curious about, לא curious for"
+      }
+    ],
+    "tip": "'Curious about' = wanting to know. 'Curious' can also mean 'strange' (a curious coincidence).",
+    "tipHe": "curious about = רוצה לדעת. curious יכול גם להיות 'מוזר' (צירוף נסיבות מוזר)."
+  },
+  {
+    "id": "a2-133",
+    "word": "disappointed",
+    "ipa": "/ˌdɪsəˈpɔɪntɪd/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "מאוכזב",
+    "definition": "Sad because something was not as good as expected or did not happen",
+    "definitionHe": "עצוב כי משהו לא היה טוב כמו שציפית או לא קרה",
+    "examples": [
+      "I was disappointed with the results.",
+      "She felt disappointed when he didn't call."
+    ],
+    "collocations": [
+      "deeply disappointed",
+      "disappointed with",
+      "disappointed in"
+    ],
+    "synonyms": [
+      "let down",
+      "upset"
+    ],
+    "audioHint": "דִיסְ-אַ-פּוֹינְ-טֶד",
+    "commonMistakes": [
+      {
+        "wrong": "I am disappointing from the result",
+        "correct": "I am disappointed with/by the result",
+        "explanation": "disappointed = מאוכזב (הרגש שלך). disappointing = מאכזב (מתאר את הדבר). ומשתמשים ב-with/by, לא from."
+      }
+    ],
+    "tip": "'Disappointed' = how you feel. 'Disappointing' = what caused the feeling. Use 'with' or 'by', not 'from'.",
+    "tipHe": "disappointed = מה שאתה מרגיש. disappointing = מה שגרם לרגש. משתמשים ב-with או by, לא from."
+  },
+  {
+    "id": "a2-134",
+    "word": "excellent",
+    "ipa": "/ˈɛksələnt/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "מצוין",
+    "definition": "Extremely good; of very high quality",
+    "definitionHe": "טוב ביותר; באיכות גבוהה מאוד",
+    "examples": [
+      "She did an excellent job on the project.",
+      "The food at that restaurant is excellent."
+    ],
+    "collocations": [
+      "excellent work",
+      "excellent quality",
+      "excellent service"
+    ],
+    "synonyms": [
+      "outstanding",
+      "superb"
+    ],
+    "audioHint": "אֶקְ-סֵלֶנְט",
+    "commonMistakes": [
+      {
+        "wrong": "It was very excellent",
+        "correct": "It was excellent",
+        "explanation": "excellent כבר מילה חזקה שאומרת 'טוב מאוד', לכן לא צריך להוסיף very"
+      }
+    ],
+    "tip": "'Excellent' is already a strong adjective. Don't use 'very' before it. Use 'truly' or 'absolutely' instead.",
+    "tipHe": "excellent כבר שם תואר חזק. לא צריך very. אפשר להשתמש ב-truly או absolutely."
+  },
+  {
+    "id": "a2-135",
+    "word": "excited",
+    "ipa": "/ɪkˈsaɪtɪd/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "נרגש / מתרגש",
+    "definition": "Feeling very happy and enthusiastic about something",
+    "definitionHe": "מרגיש מאוד שמח ונלהב לגבי משהו",
+    "examples": [
+      "The children were excited about the trip.",
+      "I'm so excited to see you!"
+    ],
+    "collocations": [
+      "excited about",
+      "really excited",
+      "get excited"
+    ],
+    "synonyms": [
+      "thrilled",
+      "enthusiastic"
+    ],
+    "audioHint": "אִיקְ-סַיי-טֶד",
+    "commonMistakes": [
+      {
+        "wrong": "I am exciting about the trip",
+        "correct": "I am excited about the trip",
+        "explanation": "excited = נרגש (מה שאתה מרגיש). exciting = מרגש (מתאר את הדבר). זו טעות נפוצה מאוד!"
+      }
+    ],
+    "tip": "'Excited' = how you feel. 'Exciting' = what causes the feeling. Don't confuse them!",
+    "tipHe": "excited = מה שאתה מרגיש. exciting = מה שגורם להתרגשות. אל תבלבלו ביניהם!"
+  },
+  {
+    "id": "a2-136",
+    "word": "famous",
+    "ipa": "/ˈfeɪməs/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "מפורסם",
+    "definition": "Known by many people",
+    "definitionHe": "מוכר על ידי אנשים רבים",
+    "examples": [
+      "Tel Aviv is famous for its nightlife.",
+      "She wants to be a famous singer."
+    ],
+    "collocations": [
+      "famous for",
+      "world-famous",
+      "famous person"
+    ],
+    "synonyms": [
+      "well-known",
+      "celebrated"
+    ],
+    "audioHint": "פֵיי-מָאס",
+    "commonMistakes": [
+      {
+        "wrong": "He is famous from his cooking",
+        "correct": "He is famous for his cooking",
+        "explanation": "באנגלית אומרים famous for, לא famous from. בעברית אומרים 'מפורסם בזכות' ולא 'מ-'."
+      }
+    ],
+    "tip": "Always use 'famous for' (not 'famous from' or 'famous of')",
+    "tipHe": "תמיד משתמשים ב-famous for (לא famous from או famous of)"
+  },
+  {
+    "id": "a2-137",
+    "word": "foreign",
+    "ipa": "/ˈfɒrɪn/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "זר / חוץ-לארצי",
+    "definition": "Belonging to or coming from another country",
+    "definitionHe": "שייך לארץ אחרת או בא ממנה",
+    "examples": [
+      "She speaks three foreign languages.",
+      "He loves trying foreign food."
+    ],
+    "collocations": [
+      "foreign language",
+      "foreign country",
+      "foreign policy"
+    ],
+    "synonyms": [
+      "international",
+      "overseas"
+    ],
+    "audioHint": "פוֹ-רִין",
+    "commonMistakes": [
+      {
+        "wrong": "foriegn",
+        "correct": "foreign",
+        "explanation": "שימו לב לאיות: foreign - ה-E לפני ה-I, לא אחריו. זו טעות איות נפוצה מאוד."
+      }
+    ],
+    "tip": "Remember the spelling: forEIgn (EI, not IE). The G is silent.",
+    "tipHe": "זכרו את האיות: forEIgn (EI, לא IE). ה-G שקטה."
+  },
+  {
+    "id": "a2-138",
+    "word": "honest",
+    "ipa": "/ˈɒnɪst/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "כנה / ישר",
+    "definition": "Always telling the truth and not cheating or stealing",
+    "definitionHe": "תמיד אומר את האמת ולא מרמה או גונב",
+    "examples": [
+      "To be honest, I don't like this idea.",
+      "She is a very honest person."
+    ],
+    "collocations": [
+      "to be honest",
+      "honest opinion",
+      "honest answer"
+    ],
+    "synonyms": [
+      "truthful",
+      "sincere"
+    ],
+    "audioHint": "אוֹ-נִיסְט",
+    "commonMistakes": [
+      {
+        "wrong": "He is very honest person",
+        "correct": "He is a very honest person",
+        "explanation": "אל תשכחו את ה-a לפני שם עצם ביחיד: a very honest person"
+      }
+    ],
+    "tip": "The H in 'honest' is silent! Say 'ON-ist'. Use 'an honest' (not 'a honest').",
+    "tipHe": "ה-H ב-honest שקטה! מבטאים 'אוֹ-נִיסְט'. אומרים an honest (לא a honest)."
+  },
+  {
+    "id": "a2-139",
+    "word": "interested",
+    "ipa": "/ˈɪntrɪstɪd/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "מעוניין / מתעניין",
+    "definition": "Wanting to know or learn more about something",
+    "definitionHe": "רוצה לדעת או ללמוד עוד על משהו",
+    "examples": [
+      "I'm interested in learning Japanese.",
+      "Are you interested in sports?"
+    ],
+    "collocations": [
+      "interested in",
+      "very interested",
+      "not interested"
+    ],
+    "synonyms": [
+      "curious",
+      "keen"
+    ],
+    "audioHint": "אִינְ-טְרֶסְ-טֶד",
+    "commonMistakes": [
+      {
+        "wrong": "I am interesting in music",
+        "correct": "I am interested in music",
+        "explanation": "interested = מעוניין (מה שאתה מרגיש). interesting = מעניין (מתאר את הדבר). טעות קלאסית!"
+      }
+    ],
+    "tip": "'Interested in' = you want to know more. 'Interesting' = the thing captures attention. Always use 'in' after interested.",
+    "tipHe": "interested in = אתה רוצה לדעת יותר. interesting = הדבר מושך תשומת לב. תמיד משתמשים ב-in אחרי interested."
+  },
+  {
+    "id": "a2-140",
+    "word": "lonely",
+    "ipa": "/ˈləʊnli/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "בודד",
+    "definition": "Unhappy because you are alone or do not have friends",
+    "definitionHe": "עצוב כי אתה לבד או שאין לך חברים",
+    "examples": [
+      "She felt lonely after moving to a new city.",
+      "Living alone can be lonely."
+    ],
+    "collocations": [
+      "feel lonely",
+      "lonely place",
+      "lonely person"
+    ],
+    "synonyms": [
+      "isolated",
+      "alone"
+    ],
+    "audioHint": "לוֹנְ-לִי",
+    "commonMistakes": [
+      {
+        "wrong": "I am alone and I don't like it (meaning lonely)",
+        "correct": "I feel lonely",
+        "explanation": "alone = לבד (מצב פיזי, לא בהכרח שלילי). lonely = בודד (רגש שלילי). אפשר להיות alone ומאושר."
+      }
+    ],
+    "tip": "'Lonely' = sad about being alone. 'Alone' = just by yourself (not necessarily sad).",
+    "tipHe": "lonely = עצוב מבדידות. alone = לבד (לא בהכרח עצוב). אפשר להיות alone בלי להרגיש lonely."
+  },
+  {
+    "id": "a2-141",
+    "word": "modern",
+    "ipa": "/ˈmɒdən/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "technology",
+    "translation": "מודרני / חדיש",
+    "definition": "Relating to the present time or recent times, using new methods or designs",
+    "definitionHe": "קשור לזמן הנוכחי או לזמנים האחרונים, משתמש בשיטות או עיצובים חדשים",
+    "examples": [
+      "This is a very modern building.",
+      "Modern life is fast and busy."
+    ],
+    "collocations": [
+      "modern technology",
+      "modern life",
+      "modern art"
+    ],
+    "synonyms": [
+      "contemporary",
+      "current"
+    ],
+    "audioHint": "מוֹ-דֶרְן",
+    "commonMistakes": [
+      {
+        "wrong": "We need more modernly solutions",
+        "correct": "We need more modern solutions",
+        "explanation": "modern כבר שם תואר - לא צריך להוסיף ly. modernly כמעט לא קיים באנגלית."
+      }
+    ],
+    "tip": "'Modern' is already an adjective. The adverb form is rare; use 'in a modern way' instead of 'modernly'.",
+    "tipHe": "modern כבר שם תואר. צורת התואר הפועל נדירה; אומרים in a modern way במקום modernly."
+  },
+  {
+    "id": "a2-142",
+    "word": "necessary",
+    "ipa": "/ˈnɛsɪsəri/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "communication",
+    "translation": "הכרחי / נחוץ",
+    "definition": "Needed in order to achieve a particular result",
+    "definitionHe": "נדרש כדי להשיג תוצאה מסוימת",
+    "examples": [
+      "Is it necessary to bring a passport?",
+      "Sleep is necessary for good health."
+    ],
+    "collocations": [
+      "if necessary",
+      "absolutely necessary",
+      "necessary for"
+    ],
+    "synonyms": [
+      "essential",
+      "required"
+    ],
+    "audioHint": "נֶסֶ-סֶ-רִי",
+    "commonMistakes": [
+      {
+        "wrong": "neccessary / necesary",
+        "correct": "necessary",
+        "explanation": "שימו לב לאיות: C אחד ואחריו SS כפול: neCeSSary"
+      }
+    ],
+    "tip": "Remember the spelling: one C, double S: neCeSSary. A common spelling mistake!",
+    "tipHe": "זכרו את האיות: C אחד, S כפול: neCeSSary. טעות איות נפוצה!"
+  },
+  {
+    "id": "a2-143",
+    "word": "nervous",
+    "ipa": "/ˈnɜːvəs/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "עצבני / חרד",
+    "definition": "Feeling worried and anxious about something that might happen",
+    "definitionHe": "מרגיש מודאג וחרד לגבי משהו שעלול לקרות",
+    "examples": [
+      "I'm nervous about the exam tomorrow.",
+      "She gets nervous before speaking in public."
+    ],
+    "collocations": [
+      "nervous about",
+      "feel nervous",
+      "nervous system"
+    ],
+    "synonyms": [
+      "anxious",
+      "worried"
+    ],
+    "audioHint": "נֶר-וָאס",
+    "commonMistakes": [
+      {
+        "wrong": "I am nervous from the test",
+        "correct": "I am nervous about the test",
+        "explanation": "אומרים nervous about, לא nervous from. בעברית אומרים 'עצבני מ-', אבל באנגלית זה about."
+      }
+    ],
+    "tip": "Use 'nervous about' (not 'nervous from'). In Hebrew we say 'עצבני מ-' but in English it's 'about'.",
+    "tipHe": "משתמשים ב-nervous about (לא nervous from). בעברית 'עצבני מ-' אבל באנגלית about."
+  },
+  {
+    "id": "a2-144",
+    "word": "patient",
+    "ipa": "/ˈpeɪʃnt/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "סבלני",
+    "definition": "Able to wait calmly for a long time or deal with difficulties without getting angry",
+    "definitionHe": "מסוגל לחכות בשלווה זמן רב או להתמודד עם קשיים בלי לכעוס",
+    "examples": [
+      "Please be patient, your turn will come.",
+      "She is very patient with her students."
+    ],
+    "collocations": [
+      "be patient",
+      "patient with",
+      "very patient"
+    ],
+    "synonyms": [
+      "tolerant",
+      "calm"
+    ],
+    "audioHint": "פֵּיי-שְׁנְט",
+    "commonMistakes": [
+      {
+        "wrong": "You need to be more patience",
+        "correct": "You need to be more patient",
+        "explanation": "patient (שם תואר) = סבלני. patience (שם עצם) = סבלנות. אחרי be צריך שם תואר."
+      }
+    ],
+    "tip": "'Patient' is the adjective (and also means a person at a doctor). 'Patience' is the noun.",
+    "tipHe": "patient הוא שם התואר (וגם מטופל אצל רופא). patience הוא שם העצם (סבלנות)."
+  },
+  {
+    "id": "a2-145",
+    "word": "polite",
+    "ipa": "/pəˈlaɪt/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "relationships",
+    "translation": "מנומס",
+    "definition": "Behaving in a way that is respectful and considerate of other people",
+    "definitionHe": "מתנהג בצורה מכבדת ומתחשבת באנשים אחרים",
+    "examples": [
+      "It's polite to say 'please' and 'thank you'.",
+      "He was very polite to everyone."
+    ],
+    "collocations": [
+      "polite to",
+      "polite way",
+      "very polite"
+    ],
+    "synonyms": [
+      "courteous",
+      "respectful"
+    ],
+    "audioHint": "פָּה-לַייט",
+    "commonMistakes": [
+      {
+        "wrong": "She is polite with everyone",
+        "correct": "She is polite to everyone",
+        "explanation": "באנגלית אומרים polite to someone, לא polite with someone"
+      }
+    ],
+    "tip": "Use 'polite to' (not 'polite with'). The opposite is 'rude' or 'impolite'.",
+    "tipHe": "משתמשים ב-polite to (לא polite with). ההיפך הוא rude או impolite."
+  },
+  {
+    "id": "a2-146",
+    "word": "popular",
+    "ipa": "/ˈpɒpjʊlər/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "culture",
+    "translation": "פופולרי / אהוב",
+    "definition": "Liked or enjoyed by many people",
+    "definitionHe": "אהוב או נהנים ממנו אנשים רבים",
+    "examples": [
+      "This is a very popular restaurant.",
+      "He is popular at school."
+    ],
+    "collocations": [
+      "very popular",
+      "popular with",
+      "popular choice"
+    ],
+    "synonyms": [
+      "well-liked",
+      "trendy"
+    ],
+    "audioHint": "פּוֹפּ-יוּ-לָר",
+    "commonMistakes": [
+      {
+        "wrong": "This place is popular between young people",
+        "correct": "This place is popular with/among young people",
+        "explanation": "אומרים popular with או popular among, לא popular between"
+      }
+    ],
+    "tip": "Use 'popular with' or 'popular among' (not 'popular between')",
+    "tipHe": "משתמשים ב-popular with או popular among (לא popular between)"
+  },
+  {
+    "id": "a2-147",
+    "word": "proud",
+    "ipa": "/praʊd/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "גאה",
+    "definition": "Feeling pleased and satisfied about something you or someone connected to you has achieved",
+    "definitionHe": "מרגיש מרוצה ושבע רצון ממשהו שאתה או מישהו קרוב אליך השיג",
+    "examples": [
+      "I'm proud of my daughter.",
+      "She felt proud when she graduated."
+    ],
+    "collocations": [
+      "proud of",
+      "feel proud",
+      "proud moment"
+    ],
+    "synonyms": [
+      "pleased",
+      "satisfied"
+    ],
+    "audioHint": "פְּרַאוּד",
+    "commonMistakes": [
+      {
+        "wrong": "I am proud from you",
+        "correct": "I am proud of you",
+        "explanation": "באנגלית אומרים proud of, לא proud from. בעברית 'גאה ב-' אבל באנגלית of."
+      }
+    ],
+    "tip": "Always 'proud of' (not 'proud from' or 'proud on'). Hebrew uses 'ב-' but English uses 'of'.",
+    "tipHe": "תמיד proud of (לא proud from או proud on). בעברית 'גאה ב-' אבל באנגלית of."
+  },
+  {
+    "id": "a2-148",
+    "word": "responsible",
+    "ipa": "/rɪˈspɒnsɪbl/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "אחראי",
+    "definition": "Having the duty to deal with something or having caused something to happen",
+    "definitionHe": "בעל חובה לטפל במשהו או שגרם למשהו לקרות",
+    "examples": [
+      "She is responsible for the marketing department.",
+      "Who is responsible for this mess?"
+    ],
+    "collocations": [
+      "responsible for",
+      "responsible person",
+      "feel responsible"
+    ],
+    "synonyms": [
+      "accountable",
+      "reliable"
+    ],
+    "audioHint": "רִיסְ-פּוֹנְ-סִיבְּל",
+    "commonMistakes": [
+      {
+        "wrong": "He is responsible on this project",
+        "correct": "He is responsible for this project",
+        "explanation": "באנגלית אומרים responsible for, לא responsible on. בעברית 'אחראי על' אבל באנגלית for."
+      }
+    ],
+    "tip": "Always 'responsible for' (not 'responsible on'). Hebrew uses 'על' but English uses 'for'.",
+    "tipHe": "תמיד responsible for (לא responsible on). בעברית 'אחראי על' אבל באנגלית for."
+  },
+  {
+    "id": "a2-149",
+    "word": "successful",
+    "ipa": "/səkˈsɛsfʊl/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "work-advanced",
+    "translation": "מצליח",
+    "definition": "Achieving what you wanted or having become rich or famous",
+    "definitionHe": "משיג את מה שרצית או שהפך לעשיר או מפורסם",
+    "examples": [
+      "She is a successful businesswoman.",
+      "The project was very successful."
+    ],
+    "collocations": [
+      "successful business",
+      "very successful",
+      "successful career"
+    ],
+    "synonyms": [
+      "prosperous",
+      "thriving"
+    ],
+    "audioHint": "סָאק-סֶסְ-פוּל",
+    "commonMistakes": [
+      {
+        "wrong": "He is very success in his job",
+        "correct": "He is very successful in his job",
+        "explanation": "success (שם עצם) = הצלחה. successful (שם תואר) = מצליח. אחרי be צריך שם תואר."
+      }
+    ],
+    "tip": "'Success' is the noun, 'successful' is the adjective. Don't forget the -ful ending!",
+    "tipHe": "success הוא שם העצם, successful הוא שם התואר. אל תשכחו את הסיומת -ful!"
+  },
+  {
+    "id": "a2-150",
+    "word": "wonderful",
+    "ipa": "/ˈwʌndəfʊl/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "A2",
+    "category": "emotions",
+    "translation": "נפלא / נהדר",
+    "definition": "Extremely good; making you feel very happy",
+    "definitionHe": "טוב ביותר; גורם לך להרגיש מאוד שמח",
+    "examples": [
+      "We had a wonderful time at the beach.",
+      "She is a wonderful teacher."
+    ],
+    "collocations": [
+      "wonderful time",
+      "wonderful person",
+      "absolutely wonderful"
+    ],
+    "synonyms": [
+      "amazing",
+      "fantastic"
+    ],
+    "audioHint": "וַואנְ-דֶר-פוּל",
+    "commonMistakes": [
+      {
+        "wrong": "It was very wonderful",
+        "correct": "It was wonderful / absolutely wonderful",
+        "explanation": "wonderful כבר מילה חזקה, לא צריך very. אפשר להשתמש ב-absolutely או truly."
+      }
+    ],
+    "tip": "'Wonderful' is a strong adjective. Use 'absolutely wonderful', not 'very wonderful'.",
+    "tipHe": "wonderful הוא שם תואר חזק. אומרים absolutely wonderful, לא very wonderful."
+  }
+]
