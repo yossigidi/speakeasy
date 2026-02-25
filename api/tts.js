@@ -1,33 +1,36 @@
 import { handleCors } from './_lib/cors.js';
-import { getFirestore } from './_lib/firebase.js';
+import { getFirestore, getAccessToken } from './_lib/firebase.js';
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent';
+const CLOUD_TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
 const CACHE_COLLECTION = 'tts-cache';
+const DEFAULT_VOICE = 'he-IL-Chirp3-HD-Kore';
 
-async function callTTS(prompt, voice, apiKey) {
-  const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+async function callCloudTTS(text, voiceName, accessToken) {
+  const response = await fetch(CLOUD_TTS_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        response_modalities: ['AUDIO'],
-        speech_config: {
-          voice_config: {
-            prebuilt_voice_config: { voice_name: voice },
-          },
-        },
+      input: { text },
+      voice: {
+        languageCode: 'he-IL',
+        name: voiceName,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3',
       },
     }),
   });
 
   if (!response.ok) {
     const err = await response.text();
-    throw new Error(`Gemini ${response.status}: ${err}`);
+    throw new Error(`Cloud TTS ${response.status}: ${err}`);
   }
 
   const data = await response.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+  return data.audioContent; // base64 MP3
 }
 
 export default async function handler(req, res) {
@@ -43,8 +46,7 @@ export default async function handler(req, res) {
   }
 
   const trimmed = text.trim();
-  const voiceName = voice || 'Kore';
-  // Use text+voice as cache key (safe for Firestore doc IDs)
+  const voiceName = voice || DEFAULT_VOICE;
   const cacheKey = Buffer.from(`${trimmed}__${voiceName}`).toString('base64url');
 
   // 1. Check Firestore cache
@@ -59,33 +61,21 @@ export default async function handler(req, res) {
       });
     }
   } catch (e) {
-    // Firestore unavailable — continue to Gemini
     console.warn('Firestore cache read failed:', e.message);
   }
 
-  // 2. Generate via Gemini
-  const apiKey = process.env.GEMINI_API_KEY;
-
+  // 2. Generate via Google Cloud TTS
   try {
-    let audioData = await callTTS(
-      `Read aloud the following text exactly as written: ${trimmed}`,
-      voiceName, apiKey
-    );
+    const token = await getAccessToken();
+    const audioBase64 = await callCloudTTS(trimmed, voiceName, token);
 
-    if (!audioData?.data) {
-      audioData = await callTTS(
-        `Please pronounce this clearly: "${trimmed}". Only speak the quoted text, nothing else.`,
-        voiceName, apiKey
-      );
-    }
-
-    if (!audioData?.data) {
+    if (!audioBase64) {
       return res.status(500).json({ error: 'No audio in response' });
     }
 
     const result = {
-      audio: audioData.data,
-      mimeType: audioData.mimeType || 'audio/L16;rate=24000',
+      audio: audioBase64,
+      mimeType: 'audio/mpeg',
     };
 
     // 3. Save to Firestore cache (fire-and-forget)

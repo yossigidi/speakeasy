@@ -1,5 +1,5 @@
 /**
- * Pre-cache all Hebrew translations via Gemini TTS → Firestore
+ * Pre-cache all Hebrew translations via Google Cloud TTS → Firestore
  *
  * Usage: node scripts/precache-tts.mjs
  *
@@ -11,48 +11,46 @@
 import { readFileSync } from 'fs';
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { GoogleAuth } from 'google-auth-library';
 
 // ── Config ──
-const GEMINI_API_KEY = 'AIzaSyB4ncOYYX6sCQ7GIlaN7cuwiXaXxAHCxi0';
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent';
-const VOICE = 'Kore';
+const CLOUD_TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
+const VOICE = 'he-IL-Chirp3-HD-Kore';
 const COLLECTION = 'tts-cache';
-const DELAY_MS = 5000; // 12 RPM — safe with Gemini TTS limits
+const DELAY_MS = 100; // Cloud TTS allows 1000 RPM — 100ms is safe
 
 // ── Firebase init ──
 const sa = JSON.parse(readFileSync('./speakeasy-learn-firebase-adminsdk-fbsvc-8361c07095.json', 'utf8').trim());
-
-// Try the downloads folder if not in project root
-let serviceAccount;
-try {
-  serviceAccount = sa;
-} catch {
-  serviceAccount = JSON.parse(readFileSync(
-    new URL('../speakeasy-learn-firebase-adminsdk-fbsvc-8361c07095.json', import.meta.url), 'utf8'
-  ));
-}
-
-initializeApp({ credential: cert(serviceAccount) });
+initializeApp({ credential: cert(sa) });
 const db = getFirestore();
+
+// ── Google Auth for Cloud TTS ──
+const auth = new GoogleAuth({
+  credentials: sa,
+  scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+});
+
+async function getToken() {
+  const client = await auth.getClient();
+  const { token } = await client.getAccessToken();
+  return token;
+}
 
 // ── Load all Hebrew translations from data files ──
 function loadTranslations() {
   const basePath = './vite-prod/src/data';
   const all = new Set();
 
-  // words-a1.json & words-a2.json: array of { translation: "..." }
   for (const file of ['words-a1.json', 'words-a2.json']) {
     const data = JSON.parse(readFileSync(`${basePath}/${file}`, 'utf8'));
     data.forEach(w => { if (w.translation) all.add(w.translation.trim()); });
   }
 
-  // alphabet-kids.json: array of { words: [{ translation: "..." }] }
   const alpha = JSON.parse(readFileSync(`${basePath}/alphabet-kids.json`, 'utf8'));
   alpha.forEach(letter => {
     if (letter.words) letter.words.forEach(w => { if (w.translation) all.add(w.translation.trim()); });
   });
 
-  // phrases-common.json: array of { translation: "..." }
   const phrases = JSON.parse(readFileSync(`${basePath}/phrases-common.json`, 'utf8'));
   phrases.forEach(p => { if (p.translation) all.add(p.translation.trim()); });
 
@@ -64,59 +62,34 @@ function cacheKey(text) {
   return Buffer.from(`${text}__${VOICE}`).toString('base64url');
 }
 
-// ── Call Gemini TTS ──
-async function generateTTS(text) {
-  // Try two prompt strategies
-  const prompts = [
-    `Read aloud the following text exactly as written: ${text}`,
-    `Please pronounce this clearly: "${text}". Only speak the quoted text, nothing else.`,
-  ];
+// ── Call Google Cloud TTS ──
+async function generateTTS(text, token) {
+  const response = await fetch(CLOUD_TTS_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      input: { text },
+      voice: {
+        languageCode: 'he-IL',
+        name: VOICE,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3',
+      },
+    }),
+  });
 
-  for (const prompt of prompts) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30000);
-
-    try {
-      const res = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            response_modalities: ['AUDIO'],
-            speech_config: {
-              voice_config: {
-                prebuilt_voice_config: { voice_name: VOICE },
-              },
-            },
-          },
-        }),
-      });
-
-      clearTimeout(timeout);
-
-      if (!res.ok) {
-        const err = await res.text();
-        if (res.status === 429) throw new Error(`RATE_LIMITED: ${err}`);
-        console.error(`  API error ${res.status}`);
-        continue;
-      }
-
-      const data = await res.json();
-      const audio = data.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-      if (audio?.data) return audio;
-    } catch (e) {
-      clearTimeout(timeout);
-      if (e.name === 'AbortError') {
-        console.error('timeout');
-        continue;
-      }
-      throw e;
-    }
+  if (!response.ok) {
+    const err = await response.text();
+    if (response.status === 429) throw new Error(`RATE_LIMITED: ${err}`);
+    throw new Error(`Cloud TTS ${response.status}: ${err}`);
   }
 
-  return null;
+  const data = await response.json();
+  return data.audioContent; // base64 MP3
 }
 
 // ── Main ──
@@ -124,7 +97,7 @@ async function main() {
   const translations = loadTranslations();
   console.log(`\nFound ${translations.length} unique Hebrew translations\n`);
 
-  // Check which are already cached (batch read for speed)
+  // Check which are already cached
   let cached = 0;
   let toGenerate = [];
 
@@ -149,6 +122,10 @@ async function main() {
     return;
   }
 
+  // Get access token
+  let token = await getToken();
+  let tokenTime = Date.now();
+
   // Generate and cache
   let success = 0;
   let failed = 0;
@@ -159,14 +136,20 @@ async function main() {
     const pct = Math.round(((i + 1) / toGenerate.length) * 100);
     process.stdout.write(`  [${pct}%] ${i + 1}/${toGenerate.length} "${text}" ... `);
 
-    let retries = 5;
+    // Refresh token every 30 minutes
+    if (Date.now() - tokenTime > 30 * 60 * 1000) {
+      token = await getToken();
+      tokenTime = Date.now();
+    }
+
+    let retries = 3;
     while (retries > 0) {
       try {
-        const audio = await generateTTS(text);
-        if (audio?.data) {
+        const audioBase64 = await generateTTS(text, token);
+        if (audioBase64) {
           await db.collection(COLLECTION).doc(cacheKey(text)).set({
-            audio: audio.data,
-            mimeType: audio.mimeType || 'audio/L16;rate=24000',
+            audio: audioBase64,
+            mimeType: 'audio/mpeg',
             text,
             voice: VOICE,
             createdAt: new Date().toISOString(),
@@ -175,21 +158,15 @@ async function main() {
           success++;
           break;
         } else {
-          if (retries > 1) {
-            process.stdout.write('retry... ');
-            await new Promise(r => setTimeout(r, 5000));
-            retries--;
-          } else {
-            console.log('no audio');
-            failed++;
-            failedWords.push(text);
-            break;
-          }
+          console.log('no audio');
+          failed++;
+          failedWords.push(text);
+          break;
         }
       } catch (e) {
         if (e.message.startsWith('RATE_LIMITED') && retries > 1) {
-          process.stdout.write('rate limited, waiting 90s... ');
-          await new Promise(r => setTimeout(r, 90000));
+          process.stdout.write('rate limited, waiting 10s... ');
+          await new Promise(r => setTimeout(r, 10000));
           retries--;
         } else {
           console.log(`error: ${e.message.slice(0, 80)}`);
@@ -200,7 +177,7 @@ async function main() {
       }
     }
 
-    // Delay between requests
+    // Short delay between requests
     if (i < toGenerate.length - 1) {
       await new Promise(r => setTimeout(r, DELAY_MS));
     }
@@ -215,9 +192,6 @@ async function main() {
     console.log(`\n  Failed words:`);
     failedWords.forEach(w => console.log(`    - "${w}"`));
   }
-
-  const estimatedCost = (success * 85 * 10 / 1000000).toFixed(2);
-  console.log(`\n  Estimated Gemini cost: ~$${estimatedCost}`);
 }
 
 main().catch(e => { console.error('Fatal:', e); process.exit(1); });

@@ -56,7 +56,7 @@ function getAudioContext() {
 }
 
 /**
- * Play Hebrew text via Gemini TTS API.
+ * Play Hebrew text via Google Cloud TTS API.
  * Returns Promise<boolean> - true if played successfully.
  */
 export async function playHebrewFromAPI(text) {
@@ -91,20 +91,11 @@ export async function playHebrewFromAPI(text) {
     const { audio } = await res.json();
     if (!audio) return false;
 
-    // Decode base64 to raw PCM bytes
+    // Decode base64 MP3 → ArrayBuffer → AudioBuffer
     const raw = atob(audio);
     const bytes = new Uint8Array(raw.length);
     for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
-
-    // PCM 16-bit mono 24kHz → AudioBuffer
-    const sampleRate = 24000;
-    const samples = bytes.length / 2;
-    const audioBuffer = ctx.createBuffer(1, samples, sampleRate);
-    const channel = audioBuffer.getChannelData(0);
-    const view = new DataView(bytes.buffer);
-    for (let i = 0; i < samples; i++) {
-      channel[i] = view.getInt16(i * 2, true) / 32768;
-    }
+    const audioBuffer = await ctx.decodeAudioData(bytes.buffer);
 
     // Cache for reuse
     apiAudioCache.set(trimmed, audioBuffer);
