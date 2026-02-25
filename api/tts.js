@@ -1,6 +1,8 @@
 import { handleCors } from './_lib/cors.js';
+import { getFirestore } from './_lib/firebase.js';
 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent';
+const CACHE_COLLECTION = 'tts-cache';
 
 async function callTTS(prompt, voice, apiKey) {
   const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
@@ -40,20 +42,39 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid text (required, max 500 chars)' });
   }
 
+  const trimmed = text.trim();
   const voiceName = voice || 'Kore';
+  // Use text+voice as cache key (safe for Firestore doc IDs)
+  const cacheKey = Buffer.from(`${trimmed}__${voiceName}`).toString('base64url');
+
+  // 1. Check Firestore cache
+  try {
+    const db = getFirestore();
+    const doc = await db.collection(CACHE_COLLECTION).doc(cacheKey).get();
+    if (doc.exists) {
+      const cached = doc.data();
+      return res.status(200).json({
+        audio: cached.audio,
+        mimeType: cached.mimeType,
+      });
+    }
+  } catch (e) {
+    // Firestore unavailable — continue to Gemini
+    console.warn('Firestore cache read failed:', e.message);
+  }
+
+  // 2. Generate via Gemini
   const apiKey = process.env.GEMINI_API_KEY;
 
   try {
-    // Try with instruction prompt first; if model returns no audio
-    // (common with very short text), retry with padded prompt
     let audioData = await callTTS(
-      `Read aloud the following text exactly as written: ${text}`,
+      `Read aloud the following text exactly as written: ${trimmed}`,
       voiceName, apiKey
     );
 
     if (!audioData?.data) {
       audioData = await callTTS(
-        `Please pronounce this clearly: "${text}". Only speak the quoted text, nothing else.`,
+        `Please pronounce this clearly: "${trimmed}". Only speak the quoted text, nothing else.`,
         voiceName, apiKey
       );
     }
@@ -62,10 +83,26 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'No audio in response' });
     }
 
-    return res.status(200).json({
+    const result = {
       audio: audioData.data,
       mimeType: audioData.mimeType || 'audio/L16;rate=24000',
-    });
+    };
+
+    // 3. Save to Firestore cache (fire-and-forget)
+    try {
+      const db = getFirestore();
+      db.collection(CACHE_COLLECTION).doc(cacheKey).set({
+        audio: result.audio,
+        mimeType: result.mimeType,
+        text: trimmed,
+        voice: voiceName,
+        createdAt: new Date().toISOString(),
+      }).catch(e => console.warn('Firestore cache write failed:', e.message));
+    } catch (e) {
+      console.warn('Firestore cache save failed:', e.message);
+    }
+
+    return res.status(200).json(result);
   } catch (error) {
     console.error('TTS API error:', error.message);
     return res.status(502).json({ error: 'TTS generation failed' });
