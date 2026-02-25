@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { playHebrew, playHebrewFromAPI } from '../utils/hebrewAudio';
 
 const SpeechContext = createContext(null);
 
@@ -124,21 +125,13 @@ export function SpeechProvider({ children }) {
     clearInterval(keepAliveRef.current);
   }, []);
 
-  const speak = useCallback((text, options = {}) => {
+  const speakWithWebSpeech = useCallback((text, options = {}) => {
     if (!('speechSynthesis' in window) || !text) return;
-
-    // Only cancel if not queuing
-    if (!options._queued) {
-      window.speechSynthesis.cancel();
-    }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = isHebrew ? 'he-IL' : (options.lang || 'en-US');
 
-    // Natural-sounding defaults
-    // Hebrew: slower rate + slightly higher pitch = warmer, less robotic
-    // English: standard high-quality rate
     utterance.rate = options.rate || (isHebrew ? 0.88 : 0.92);
     utterance.pitch = options.pitch || (isHebrew ? 1.08 : 1.0);
     utterance.volume = options.volume || 1.0;
@@ -159,7 +152,6 @@ export function SpeechProvider({ children }) {
       if (options.onEnd) options.onEnd();
     };
     utterance.onerror = (e) => {
-      // 'interrupted' is expected when we cancel - don't log or callback
       if (e.error === 'interrupted' || e.error === 'canceled') return;
       setIsSpeaking(false);
       stopKeepAlive();
@@ -172,6 +164,41 @@ export function SpeechProvider({ children }) {
     window.speechSynthesis.speak(utterance);
     return utterance;
   }, [startKeepAlive, stopKeepAlive]);
+
+  const speak = useCallback((text, options = {}) => {
+    if (!text) return;
+
+    // Only cancel if not queuing
+    if (!options._queued && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
+
+    if (isHebrew) {
+      // For Hebrew: try pre-recorded MP3 → Gemini API → Web Speech API
+      setIsSpeaking(true);
+      playHebrew(text).then(async (played) => {
+        if (played) {
+          setIsSpeaking(false);
+          if (options.onEnd) options.onEnd();
+          return;
+        }
+        const apiPlayed = await playHebrewFromAPI(text);
+        if (apiPlayed) {
+          setIsSpeaking(false);
+          if (options.onEnd) options.onEnd();
+          return;
+        }
+        // Last resort: Web Speech API
+        speakWithWebSpeech(text, { ...options, _queued: true });
+      });
+      return;
+    }
+
+    // Non-Hebrew: use Web Speech API directly
+    return speakWithWebSpeech(text, options);
+  }, [speakWithWebSpeech]);
 
   // ── speakSequence: chain multiple texts smoothly ─────────
   // Plays an array of { text, lang, rate, pause } items in order.

@@ -46,6 +46,83 @@ const PHRASE_MAP = {
 // Audio cache - reuse Audio objects
 const audioCache = {};
 
+// API TTS cache - stores decoded AudioBuffers by text
+const apiAudioCache = new Map();
+let audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+/**
+ * Play Hebrew text via Gemini TTS API.
+ * Returns Promise<boolean> - true if played successfully.
+ */
+export async function playHebrewFromAPI(text) {
+  try {
+    const trimmed = text.trim();
+    if (!trimmed) return false;
+
+    const ctx = getAudioContext();
+    if (ctx.state === 'suspended') await ctx.resume();
+
+    // Check cache first
+    if (apiAudioCache.has(trimmed)) {
+      const cached = apiAudioCache.get(trimmed);
+      const source = ctx.createBufferSource();
+      source.buffer = cached;
+      source.connect(ctx.destination);
+      return new Promise(resolve => {
+        source.onended = () => resolve(true);
+        source.start(0);
+      });
+    }
+
+    // Fetch from API
+    const res = await fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: trimmed }),
+    });
+
+    if (!res.ok) return false;
+
+    const { audio } = await res.json();
+    if (!audio) return false;
+
+    // Decode base64 to raw PCM bytes
+    const raw = atob(audio);
+    const bytes = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+
+    // PCM 16-bit mono 24kHz → AudioBuffer
+    const sampleRate = 24000;
+    const samples = bytes.length / 2;
+    const audioBuffer = ctx.createBuffer(1, samples, sampleRate);
+    const channel = audioBuffer.getChannelData(0);
+    const view = new DataView(bytes.buffer);
+    for (let i = 0; i < samples; i++) {
+      channel[i] = view.getInt16(i * 2, true) / 32768;
+    }
+
+    // Cache for reuse
+    apiAudioCache.set(trimmed, audioBuffer);
+
+    // Play
+    const source = ctx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(ctx.destination);
+    return new Promise(resolve => {
+      source.onended = () => resolve(true);
+      source.start(0);
+    });
+  } catch (e) {
+    console.warn('Hebrew TTS API failed:', e.message);
+    return false;
+  }
+}
+
 function getAudio(filename) {
   if (!audioCache[filename]) {
     audioCache[filename] = new Audio(`/sounds/he/${filename}.mp3`);
@@ -118,21 +195,27 @@ export function playSequence(items, speakEnglish, onDone) {
 
     if (isHebrew) {
       // Try pre-recorded audio first
-      playHebrew(item.text).then((played) => {
+      playHebrew(item.text).then(async (played) => {
         if (played) {
           playNext();
+          return;
+        }
+        // Try Gemini TTS API
+        const apiPlayed = await playHebrewFromAPI(item.text);
+        if (apiPlayed) {
+          playNext();
+          return;
+        }
+        // Last resort: Web Speech API
+        if (speakEnglish) {
+          speakEnglish(item.text, {
+            lang: 'he',
+            rate: item.rate || 0.88,
+            _queued: true,
+            onEnd: playNext,
+          });
         } else {
-          // Fallback to Web Speech API for unknown phrases
-          if (speakEnglish) {
-            speakEnglish(item.text, {
-              lang: 'he',
-              rate: item.rate || 0.88,
-              _queued: true,
-              onEnd: playNext,
-            });
-          } else {
-            playNext();
-          }
+          playNext();
         }
       });
     } else {
