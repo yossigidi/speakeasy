@@ -176,16 +176,16 @@ export function SpeechProvider({ children }) {
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
 
     if (isHebrew) {
-      // For Hebrew: try pre-recorded MP3 → Gemini API → Web Speech API
+      // For Hebrew: try Cloud TTS API → pre-recorded MP3 → Web Speech API
       setIsSpeaking(true);
-      playHebrew(text).then(async (played) => {
+      playHebrewFromAPI(text).then(async (played) => {
         if (played) {
           setIsSpeaking(false);
           if (options.onEnd) options.onEnd();
           return;
         }
-        const apiPlayed = await playHebrewFromAPI(text);
-        if (apiPlayed) {
+        const mp3Played = await playHebrew(text);
+        if (mp3Played) {
           setIsSpeaking(false);
           if (options.onEnd) options.onEnd();
           return;

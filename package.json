@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@google/genai": "^1.42.0",
-    "firebase-admin": "^13.6.1"
+    "firebase-admin": "^13.6.1",
+    "web-push": "^3.6.7"
   }
 }

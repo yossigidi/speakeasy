@@ -813,3 +813,13 @@ select:focus {
     display: none !important;
   }
 }
+
+/* Fallback for devices that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.97) !important;
+  }
+  .dark .glass-card {
+    background: rgba(17, 24, 39, 0.97) !important;
+  }
+}

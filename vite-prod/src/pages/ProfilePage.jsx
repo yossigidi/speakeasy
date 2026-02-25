@@ -1,5 +1,5 @@
-import React from 'react';
-import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -13,6 +13,67 @@ export default function ProfilePage({ onNavigate }) {
   const { uiLang, toggleLang, isDark, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
   const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild } = useUserProgress();
+
+  const [pushEnabled, setPushEnabled] = useState(false);
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.pushManager.getSubscription().then(sub => setPushEnabled(!!sub));
+      });
+    }
+  }, []);
+
+  const togglePush = async () => {
+    try {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      const reg = await navigator.serviceWorker.ready;
+
+      if (pushEnabled) {
+        const sub = await reg.pushManager.getSubscription();
+        if (sub) {
+          await sub.unsubscribe();
+          // Remove from Firestore
+          if (user) {
+            const subsRef = window.firestore.collection(window.db, 'push-subscriptions');
+            const q = window.firestore.query(subsRef, window.firestore.where('userId', '==', user.uid));
+            const snap = await window.firestore.getDocs(q);
+            snap.forEach(doc => window.firestore.deleteDoc(doc.ref));
+          }
+        }
+        setPushEnabled(false);
+      } else {
+        if (Notification.permission === 'default') {
+          const perm = await Notification.requestPermission();
+          if (perm !== 'granted') return;
+        }
+        if (Notification.permission !== 'granted') return;
+
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: window.VAPID_PUBLIC_KEY
+        });
+        setPushEnabled(true);
+
+        if (user) {
+          const subJson = sub.toJSON();
+          await window.firestore.addDoc(
+            window.firestore.collection(window.db, 'push-subscriptions'),
+            {
+              endpoint: subJson.endpoint,
+              keys: { p256dh: subJson.keys.p256dh, auth: subJson.keys.auth },
+              userId: user.uid,
+              language: uiLang,
+              createdAt: new Date(),
+              userAgent: navigator.userAgent
+            }
+          );
+        }
+      }
+    } catch (e) {
+      console.error('Push toggle error:', e);
+    }
+  };
 
   const stats = [
     { icon: Zap, label: t('totalXP', uiLang), value: progress.xp, color: 'text-brand-500' },
@@ -133,6 +194,21 @@ export default function ProfilePage({ onNavigate }) {
               </span>
             </div>
           </GlassCard>
+
+          {/* Push Notifications */}
+          {'PushManager' in (typeof window !== 'undefined' ? window : {}) && (
+            <GlassCard className="!p-3 cursor-pointer" onClick={togglePush}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {pushEnabled ? <Bell size={20} className="text-green-500" /> : <BellOff size={20} className="text-gray-400" />}
+                  <span className="font-medium text-gray-900 dark:text-white">{t('notifications', uiLang)}</span>
+                </div>
+                <div className={`w-11 h-6 rounded-full transition-colors ${pushEnabled ? 'bg-green-500' : 'bg-gray-300'} relative`}>
+                  <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${pushEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                </div>
+              </div>
+            </GlassCard>
+          )}
 
           {/* Age Group / Mode */}
           <GlassCard

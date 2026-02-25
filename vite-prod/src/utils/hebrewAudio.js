@@ -56,6 +56,39 @@ function getAudioContext() {
 }
 
 /**
+ * Preload Hebrew audio for a list of texts.
+ * Fetches all from API in parallel and caches AudioBuffers.
+ * Call this on game mount so playback is instant.
+ */
+export async function preloadHebrewAudio(texts) {
+  const ctx = getAudioContext();
+  if (ctx.state === 'suspended') await ctx.resume();
+
+  const toLoad = texts.filter(t => t && !apiAudioCache.has(t.trim()));
+  if (toLoad.length === 0) return;
+
+  await Promise.allSettled(toLoad.map(async (text) => {
+    const trimmed = text.trim();
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: trimmed }),
+      });
+      if (!res.ok) return;
+      const { audio } = await res.json();
+      if (!audio) return;
+      const raw = atob(audio);
+      const buf = new ArrayBuffer(raw.length);
+      const bytes = new Uint8Array(buf);
+      for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+      const audioBuffer = await ctx.decodeAudioData(buf);
+      apiAudioCache.set(trimmed, audioBuffer);
+    } catch (e) { /* skip failed */ }
+  }));
+}
+
+/**
  * Play Hebrew text via Google Cloud TTS API.
  * Returns Promise<boolean> - true if played successfully.
  */
@@ -80,22 +113,31 @@ export async function playHebrewFromAPI(text) {
     }
 
     // Fetch from API
+    console.log('TTS API: fetching', trimmed);
     const res = await fetch('/api/tts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: trimmed }),
     });
 
-    if (!res.ok) return false;
+    if (!res.ok) {
+      console.warn('TTS API: HTTP', res.status);
+      return false;
+    }
 
-    const { audio } = await res.json();
-    if (!audio) return false;
+    const { audio, mimeType } = await res.json();
+    if (!audio) {
+      console.warn('TTS API: no audio in response');
+      return false;
+    }
+    console.log('TTS API: got audio', audio.length, 'chars, type:', mimeType);
 
     // Decode base64 MP3 → ArrayBuffer → AudioBuffer
     const raw = atob(audio);
-    const bytes = new Uint8Array(raw.length);
+    const buf = new ArrayBuffer(raw.length);
+    const bytes = new Uint8Array(buf);
     for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
-    const audioBuffer = await ctx.decodeAudioData(bytes.buffer);
+    const audioBuffer = await ctx.decodeAudioData(buf);
 
     // Cache for reuse
     apiAudioCache.set(trimmed, audioBuffer);
@@ -185,15 +227,15 @@ export function playSequence(items, speakEnglish, onDone) {
     const isHebrew = item.lang === 'he' || item.lang === 'he-IL';
 
     if (isHebrew) {
-      // Try pre-recorded audio first
-      playHebrew(item.text).then(async (played) => {
+      // Try Cloud TTS API first (natural voice from Firestore cache)
+      playHebrewFromAPI(item.text).then(async (played) => {
         if (played) {
           playNext();
           return;
         }
-        // Try Gemini TTS API
-        const apiPlayed = await playHebrewFromAPI(item.text);
-        if (apiPlayed) {
+        // Fallback: pre-recorded MP3
+        const mp3Played = await playHebrew(item.text);
+        if (mp3Played) {
           playNext();
           return;
         }

@@ -3,7 +3,15 @@ import { ArrowLeft, Volume2, Star, Zap, RotateCcw } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
-import { playSequence, playHebrew } from '../utils/hebrewAudio.js';
+import { playSequence, playHebrew, preloadHebrewAudio } from '../utils/hebrewAudio.js';
+
+// All Hebrew phrases used in game instructions — preloaded for smooth playback
+const GAME_PHRASES = [
+  'היי! מצאו את הבועה עם האות הנכונה ולחצו עליה',
+  'משחק זיכרון! לחצו על קלף ומצאו את הזוג שלו. בהצלחה!',
+  'בונים מילה! הקשיבו למילה ולחצו על האותיות בסדר הנכון',
+  'איפה האות','יופי!','נכון!','מצוין!','כל הכבוד!','מדהים!','נסו שוב',
+];
 import alphabetData from '../data/alphabet-kids.json';
 import wordsA1 from '../data/words-a1.json';
 
@@ -131,16 +139,10 @@ function BubblePopGame({ onComplete, onBack }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'היי!', lang: 'he' },
-          { pause: 400 },
-          { text: 'מצאו את הבועה', lang: 'he' },
-          { pause: 300 },
-          { text: 'עם האות הנכונה', lang: 'he' },
-          { pause: 300 },
-          { text: 'ולחצו עליה', lang: 'he' },
-          { pause: 600 },
+          { text: 'היי! מצאו את הבועה עם האות הנכונה ולחצו עליה', lang: 'he' },
+          { pause: 200 },
           { text: 'איפה האות', lang: 'he' },
-          { pause: 300 },
+          { pause: 150 },
           { text: target.letter, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
       }, 500);
@@ -149,7 +151,7 @@ function BubblePopGame({ onComplete, onBack }) {
       const t = setTimeout(() => {
         playSequence([
           { text: 'איפה האות', lang: 'he' },
-          { pause: 300 },
+          { pause: 150 },
           { text: target.letter, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
       }, 500);
@@ -378,13 +380,7 @@ function MemoryMatchGame({ onComplete, onBack }) {
   useEffect(() => {
     const t = setTimeout(() => {
       playSequence([
-        { text: 'משחק זיכרון', lang: 'he' },
-        { pause: 400 },
-        { text: 'לחצו על קלף', lang: 'he' },
-        { pause: 350 },
-        { text: 'ומצאו את הזוג שלו', lang: 'he' },
-        { pause: 400 },
-        { text: 'בהצלחה!', lang: 'he' },
+        { text: 'משחק זיכרון! לחצו על קלף ומצאו את הזוג שלו. בהצלחה!', lang: 'he' },
       ], speak);
     }, 500);
     return () => clearTimeout(t);
@@ -396,7 +392,7 @@ function MemoryMatchGame({ onComplete, onBack }) {
     // Speak the English word clearly, then Hebrew (pre-recorded)
     playSequence([
       { text: card.word, lang: 'en-US', rate: 0.75 },
-      { pause: 400 },
+      { pause: 150 },
       { text: card.translation, lang: 'he' },
     ], speak);
 
@@ -414,9 +410,9 @@ function MemoryMatchGame({ onComplete, onBack }) {
         setTimeout(() => {
           playSequence([
             { text: 'יופי!', lang: 'he' },
-            { pause: 400 },
+            { pause: 100 },
             { text: first.word, lang: 'en-US', rate: 0.75 },
-            { pause: 300 },
+            { pause: 150 },
             { text: first.translation, lang: 'he' },
           ], speak);
           setMatched(prev => {
@@ -660,14 +656,8 @@ function WordBuilderGame({ onComplete, onBack }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'בונים מילה', lang: 'he' },
-          { pause: 400 },
-          { text: 'הקשיבו למילה', lang: 'he' },
-          { pause: 350 },
-          { text: 'ולחצו על האותיות', lang: 'he' },
-          { pause: 300 },
-          { text: 'בסדר הנכון', lang: 'he' },
-          { pause: 600 },
+          { text: 'בונים מילה! הקשיבו למילה ולחצו על האותיות בסדר הנכון', lang: 'he' },
+          { pause: 200 },
           { text: w.word, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
       }, 400);
@@ -698,9 +688,9 @@ function WordBuilderGame({ onComplete, onBack }) {
         setTimeout(() => {
           playSequence([
             { text: 'נכון!', lang: 'he' },
-            { pause: 300 },
+            { pause: 100 },
             { text: currentWord.word, lang: 'en-US', rate: 0.75 },
-            { pause: 400 },
+            { pause: 150 },
             { text: currentWord.translation, lang: 'he' },
           ], speak);
         }, 300);
@@ -1014,6 +1004,11 @@ function GameSelector({ onSelectGame, onBack }) {
 export default function KidsGamesPage({ onBack }) {
   const { addXP } = useUserProgress();
   const [selectedGame, setSelectedGame] = useState(null);
+
+  // Preload all game instruction audio on mount for seamless playback
+  useEffect(() => {
+    preloadHebrewAudio(GAME_PHRASES);
+  }, []);
 
   const handleComplete = async (xp) => {
     if (xp > 0) await addXP(xp, 'kids-game');

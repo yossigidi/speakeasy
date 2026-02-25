@@ -13,8 +13,9 @@ import Modal from '../components/shared/Modal.jsx';
 
 import wordsA1 from '../data/words-a1.json';
 import wordsA2 from '../data/words-a2.json';
+import wordsBusiness from '../data/words-business.json';
 
-const ALL_WORDS = [...wordsA1, ...wordsA2];
+const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsBusiness];
 const CATEGORIES = [...new Set(ALL_WORDS.map(w => w.category))];
 
 // ── Word Detail Modal ────────────────────────────────────
@@ -187,7 +188,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
   const [practiceAnswer, setPracticeAnswer] = useState('');
   const [practiceResult, setPracticeResult] = useState(null);
   const [learnedCount, setLearnedCount] = useState(0);
-  const { speak } = useSpeechSynthesis();
+  const { speak, speakWordPair } = useSpeechSynthesis();
   const { uiLang } = useTheme();
   const isHe = uiLang === 'he';
   const inputRef = useRef(null);
@@ -230,12 +231,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
     if (answer === correct || answer === word.word) {
       setPracticeResult('correct');
       // Speak the English word, then the Hebrew translation
-      speak(word.word, {
-        rate: 0.8,
-        onEnd: () => {
-          setTimeout(() => speak(word.translation, { lang: 'he', rate: 0.9 }), 300);
-        }
-      });
+      speakWordPair(word.word, word.translation);
     } else {
       setPracticeResult('wrong');
       // On wrong answer, speak the correct Hebrew translation
@@ -298,14 +294,13 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-purple-400 to-pink-400" />
 
             <button
-              onClick={() => speak(word.word)}
+              onClick={() => speakWordPair(word.word, word.translation)}
               className="mx-auto mb-3 w-14 h-14 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow active:scale-95"
             >
               <Volume2 size={24} className="text-white" />
             </button>
 
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">{word.word}</h2>
-            <p className="text-base text-gray-400 mb-1 font-mono">{word.ipa}</p>
             <span className="inline-block px-3 py-1 text-xs rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 font-medium">
               {word.partOfSpeech}
             </span>
@@ -856,7 +851,7 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
 
 // ── Category Words View ──────────────────────────────────
 function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
-  const { speak } = useSpeechSynthesis();
+  const { speak, speakWordPair } = useSpeechSynthesis();
   const { uiLang } = useTheme();
   const isHe = uiLang === 'he';
   const words = ALL_WORDS.filter(w => w.category === category);
@@ -936,7 +931,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
             onClick={() => onSelectWord(word)}
           >
             <button
-              onClick={(e) => { e.stopPropagation(); speak(word.word); }}
+              onClick={(e) => { e.stopPropagation(); speakWordPair(word.word, word.translation); }}
               className="shrink-0 w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center"
             >
               <Volume2 size={16} className="text-brand-500" />
@@ -944,7 +939,6 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-gray-900 dark:text-white">{word.word}</h3>
-                <span className="text-xs text-gray-400 font-mono">{word.ipa}</span>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{word.translation} - {word.definition}</p>
             </div>

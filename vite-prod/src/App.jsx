@@ -9,6 +9,7 @@ import Header from './components/layout/Header.jsx';
 import BottomNav from './components/layout/BottomNav.jsx';
 import PageTransition from './components/layout/PageTransition.jsx';
 import LoadingSpinner from './components/shared/LoadingSpinner.jsx';
+import ErrorBoundary from './components/shared/ErrorBoundary.jsx';
 
 import HomePage from './pages/HomePage.jsx';
 import OnboardingPage from './pages/OnboardingPage.jsx';
@@ -176,14 +177,16 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <UserProgressProvider>
-          <SpeechProvider>
-            <AppContent />
-          </SpeechProvider>
-        </UserProgressProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <ErrorBoundary title="Oops!" description="Something went wrong. Please refresh.">
+      <ThemeProvider>
+        <AuthProvider>
+          <UserProgressProvider>
+            <SpeechProvider>
+              <AppContent />
+            </SpeechProvider>
+          </UserProgressProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

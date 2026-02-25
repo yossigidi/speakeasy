@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakeasy-v6';
-const STATIC_CACHE = 'speakeasy-static-v6';
+const CACHE_NAME = 'speakeasy-v8';
+const STATIC_CACHE = 'speakeasy-static-v8';
 
 const urlsToCache = [
   '/',
@@ -11,7 +11,7 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('SpeakEasy: Caching app shell v3');
+      console.log('SpeakEasy: Caching app shell v7');
       return cache.addAll(urlsToCache);
     }).then(() => self.skipWaiting())
   );
@@ -44,8 +44,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // Skip non-GET requests and API calls
-  if (event.request.method !== 'GET' || url.pathname.startsWith('/api/')) {
+  // Skip non-GET requests, API calls, and range requests (audio streaming)
+  if (event.request.method !== 'GET' || url.pathname.startsWith('/api/') || event.request.headers.get('range')) {
     return;
   }
 
@@ -53,8 +53,8 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Cache a copy of successful responses
-        if (response.ok) {
+        // Cache a copy of successful responses (skip partial 206 responses)
+        if (response.ok && response.status !== 206) {
           const clone = response.clone();
           const cacheName = url.pathname.match(/\.(js|css|png|jpg|svg|woff2?|mp3)$/)
             ? STATIC_CACHE
@@ -74,5 +74,41 @@ self.addEventListener('fetch', event => {
           return new Response('Offline', { status: 503 });
         });
       })
+  );
+});
+
+// Push notification handler - works even when app is closed
+self.addEventListener('push', event => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch (e) {
+    data = { body: event.data ? event.data.text() : 'Time to practice English!' };
+  }
+  const title = data.title || 'SpeakEasy';
+  const options = {
+    body: data.body || 'Time to practice English!',
+    icon: '/icons/icon-192x192.png',
+    badge: '/icons/icon-72x72.png',
+    dir: data.lang === 'he' ? 'rtl' : 'ltr',
+    lang: data.lang || 'he',
+    tag: data.tag || 'speakeasy-push',
+    vibrate: [200, 100, 200]
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Notification click handler - opens app when user taps notification
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+      for (const client of windowClients) {
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      return clients.openWindow('/');
+    })
   );
 });

@@ -5,6 +5,15 @@ const CLOUD_TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
 const CACHE_COLLECTION = 'tts-cache';
 const DEFAULT_VOICE = 'he-IL-Chirp3-HD-Kore';
 
+// Clean text for natural Hebrew pronunciation
+function cleanForTTS(text) {
+  return text
+    .replace(/\s*\/\s*/g, ' או ')     // "רופא / רופאה" → "רופא או רופאה"
+    .replace(/\s*\(([^)]+)\)/g, ', $1') // "יד (כף יד)" → "יד, כף יד"
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 async function callCloudTTS(text, voiceName, accessToken) {
   const response = await fetch(CLOUD_TTS_URL, {
     method: 'POST',
@@ -67,7 +76,7 @@ export default async function handler(req, res) {
   // 2. Generate via Google Cloud TTS
   try {
     const token = await getAccessToken();
-    const audioBase64 = await callCloudTTS(trimmed, voiceName, token);
+    const audioBase64 = await callCloudTTS(cleanForTTS(trimmed), voiceName, token);
 
     if (!audioBase64) {
       return res.status(500).json({ error: 'No audio in response' });

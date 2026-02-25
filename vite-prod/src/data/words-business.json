@@ -1,0 +1,1602 @@
+[
+  {
+    "id": "b1_001",
+    "word": "meeting",
+    "ipa": "/ˈmiːtɪŋ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "פגישה",
+    "definition": "An event where people come together to discuss things and make decisions.",
+    "definitionHe": "אירוע שבו אנשים מתכנסים כדי לדון בנושאים ולקבל החלטות.",
+    "examples": [
+      "We have a meeting at 10 AM.",
+      "The meeting lasted two hours.",
+      "She scheduled a meeting with the client."
+    ],
+    "audioHint": "MEE-ting",
+    "collocations": [
+      "attend a meeting",
+      "schedule a meeting",
+      "cancel a meeting"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have a meeting in Monday",
+        "correct": "I have a meeting on Monday",
+        "explanation": "בעברית אומרים 'ביום שני' אבל באנגלית משתמשים ב-on לפני ימי השבוע."
+      }
+    ],
+    "tip": "In business English, 'meeting' can be formal or informal. A 'meeting' with a client is more formal than a 'meeting' with coworkers.",
+    "tipHe": "באנגלית עסקית, 'meeting' יכולה להיות רשמית או לא רשמית. פגישה עם לקוח רשמית יותר מפגישה עם עמיתים.",
+    "synonyms": ["conference", "gathering"]
+  },
+  {
+    "id": "b1_002",
+    "word": "deadline",
+    "ipa": "/ˈdɛdlaɪn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "מועד אחרון",
+    "definition": "The latest time or date by which something must be completed.",
+    "definitionHe": "הזמן או התאריך האחרון שבו משהו חייב להיות מוגמר.",
+    "examples": [
+      "The deadline for the project is Friday.",
+      "We need to meet the deadline.",
+      "Can we extend the deadline by one week?"
+    ],
+    "audioHint": "DED-line",
+    "collocations": [
+      "meet a deadline",
+      "miss a deadline",
+      "set a deadline"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The deadline is in Friday",
+        "correct": "The deadline is on Friday",
+        "explanation": "בעברית אומרים 'ביום שישי' אבל באנגלית משתמשים ב-on לפני ימים ספציפיים."
+      }
+    ],
+    "tip": "'Deadline' literally means a line that is dead — you cannot cross it. It's always taken seriously in business contexts.",
+    "tipHe": "'Deadline' פירושו המילולי הוא קו מת — אי אפשר לחצות אותו. בהקשר עסקי זה תמיד נלקח ברצינות.",
+    "synonyms": ["due date", "time limit"]
+  },
+  {
+    "id": "b1_003",
+    "word": "email",
+    "ipa": "/ˈiːmeɪl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "דואר אלקטרוני",
+    "definition": "A message sent electronically from one person to another via computer.",
+    "definitionHe": "הודעה שנשלחת באופן אלקטרוני ממחשב אחד לאחר.",
+    "examples": [
+      "I'll send you an email with the details.",
+      "Did you get my email?",
+      "Please check your email for the invitation."
+    ],
+    "audioHint": "EE-mayl",
+    "collocations": [
+      "send an email",
+      "reply to an email",
+      "check your email"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I sent to you an email",
+        "correct": "I sent you an email",
+        "explanation": "באנגלית אפשר להשתמש בשני דפוסים: 'sent you an email' או 'sent an email to you', אבל לא 'sent to you an email'."
+      }
+    ],
+    "tip": "'Email' can be used as both a noun and a verb: 'I'll email you' means 'I'll send you an email.'",
+    "tipHe": "'Email' יכול לשמש גם כשם עצם וגם כפועל: 'I'll email you' פירושו 'אשלח לך אימייל'.",
+    "synonyms": ["message", "electronic mail"]
+  },
+  {
+    "id": "b1_004",
+    "word": "salary",
+    "ipa": "/ˈsæləri/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "משכורת",
+    "definition": "A fixed amount of money paid to an employee regularly, usually every month.",
+    "definitionHe": "סכום כסף קבוע שמשולם לעובד באופן קבוע, בדרך כלל מדי חודש.",
+    "examples": [
+      "Her salary is paid on the first of every month.",
+      "He got a salary increase after one year.",
+      "What salary are you expecting for this position?"
+    ],
+    "audioHint": "SAL-uh-ree",
+    "collocations": [
+      "annual salary",
+      "salary increase",
+      "starting salary"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I earn a good salary of 10,000 shekels on month",
+        "correct": "I earn a good salary of 10,000 shekels a month",
+        "explanation": "באנגלית אומרים 'a month' או 'per month' ולא 'on month' כשמדברים על תדירות תשלום."
+      }
+    ],
+    "tip": "'Salary' is for monthly or annual pay. 'Wage' is for hourly or daily pay. Office workers usually have a 'salary'; part-time workers often earn 'wages'.",
+    "tipHe": "'Salary' הוא תשלום חודשי או שנתי. 'Wage' הוא תשלום שעתי או יומי. עובדי משרד מקבלים 'salary'; עובדים במשרה חלקית מרוויחים 'wages'.",
+    "synonyms": ["pay", "wages"]
+  },
+  {
+    "id": "b1_005",
+    "word": "contract",
+    "ipa": "/ˈkɒntrækt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "חוזה",
+    "definition": "A written legal agreement between two or more parties.",
+    "definitionHe": "הסכם משפטי כתוב בין שני צדדים או יותר.",
+    "examples": [
+      "She signed a two-year contract with the company.",
+      "Read the contract carefully before signing.",
+      "The contract includes all the terms and conditions."
+    ],
+    "audioHint": "KON-trakt",
+    "collocations": [
+      "sign a contract",
+      "renew a contract",
+      "break a contract"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I signed on the contract",
+        "correct": "I signed the contract",
+        "explanation": "בעברית אומרים 'חתמתי על החוזה' עם 'על', אבל באנגלית הפועל sign הוא ישיר — בלי מילת יחס."
+      }
+    ],
+    "tip": "As a noun, the stress is on the first syllable: CON-tract. As a verb (meaning to shrink or to hire), the stress is on the second syllable: con-TRACT.",
+    "tipHe": "כשם עצם, הדגש על ההברה הראשונה: CON-tract. כפועל (במשמעות להתכווץ או להתקשר), הדגש על ההברה השנייה: con-TRACT.",
+    "synonyms": ["agreement", "deal"]
+  },
+  {
+    "id": "b1_006",
+    "word": "interview",
+    "ipa": "/ˈɪntərvjuː/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "ראיון",
+    "definition": "A formal meeting in which someone is asked questions to find out if they are suitable for a job.",
+    "definitionHe": "פגישה רשמית שבה שואלים מישהו שאלות כדי לבדוק אם הוא מתאים לתפקיד.",
+    "examples": [
+      "I have a job interview tomorrow morning.",
+      "The interview went really well.",
+      "They interviewed ten candidates for the position."
+    ],
+    "audioHint": "IN-ter-vyoo",
+    "collocations": [
+      "job interview",
+      "have an interview",
+      "conduct an interview"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I did an interview for the job",
+        "correct": "I had an interview for the job",
+        "explanation": "בעברית אומרים 'עשיתי ראיון' אבל באנגלית אומרים 'had an interview'. הפועל do לא מתאים כאן כשאתה המרואיין."
+      }
+    ],
+    "tip": "The person asking the questions is the 'interviewer'; the person answering is the 'interviewee'. The suffix -ee means the one who receives the action.",
+    "tipHe": "מי ששואל את השאלות הוא 'interviewer'; מי שעונה הוא 'interviewee'. הסיומת ee- מציינת את מי שמקבל את הפעולה.",
+    "synonyms": ["meeting", "consultation"]
+  },
+  {
+    "id": "b1_007",
+    "word": "manager",
+    "ipa": "/ˈmænɪdʒər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "מנהל",
+    "definition": "A person who is responsible for controlling or organizing a group of people or a department.",
+    "definitionHe": "אדם שאחראי על ניהול או ארגון קבוצת אנשים או מחלקה.",
+    "examples": [
+      "I need to speak to the manager.",
+      "She was promoted to manager last year.",
+      "The manager approved the budget."
+    ],
+    "audioHint": "MAN-ih-jer",
+    "collocations": [
+      "project manager",
+      "general manager",
+      "report to the manager"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She is a manager on twenty people",
+        "correct": "She is a manager of twenty people",
+        "explanation": "בעברית אומרים 'מנהלת על עשרים אנשים' אבל באנגלית משתמשים ב-of ולא ב-on."
+      }
+    ],
+    "tip": "'Manager' is more general than 'boss'. A 'boss' has authority over you; a 'manager' organizes and coordinates. In daily English, 'boss' is more casual.",
+    "tipHe": "'Manager' כללי יותר מ-'boss'. ל-'boss' יש סמכות עליך; 'manager' מארגן ומתאם. באנגלית יומיומית, 'boss' יותר לא רשמי.",
+    "synonyms": ["supervisor", "director"]
+  },
+  {
+    "id": "b1_008",
+    "word": "resume",
+    "ipa": "/ˈrɛzʊmeɪ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "קורות חיים",
+    "definition": "A document that lists your education, work experience, and skills, used when applying for a job.",
+    "definitionHe": "מסמך שמפרט את ההשכלה, ניסיון העבודה והכישורים שלך, המשמש בעת הגשת מועמדות לעבודה.",
+    "examples": [
+      "Please send your resume to the HR department.",
+      "I updated my resume with my latest job experience.",
+      "Her resume was very impressive."
+    ],
+    "audioHint": "REZ-oo-may",
+    "collocations": [
+      "submit a resume",
+      "update your resume",
+      "review a resume"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I sent my CV resume to the company",
+        "correct": "I sent my resume to the company",
+        "explanation": "CV ו-resume הם מילים נרדפות (CV נפוץ יותר בבריטניה, resume בארה\"ב). אין צורך להשתמש בשניהם יחד."
+      }
+    ],
+    "tip": "In American English, 'resume' is common. In British English, 'CV' (curriculum vitae) is preferred. Both mean the same thing.",
+    "tipHe": "באנגלית אמריקאית, 'resume' נפוץ. באנגלית בריטית, 'CV' (curriculum vitae) מועדף. שניהם אומרים אותו דבר.",
+    "synonyms": ["CV", "curriculum vitae"]
+  },
+  {
+    "id": "b1_009",
+    "word": "promotion",
+    "ipa": "/prəˈmoʊʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "קידום",
+    "definition": "A move to a higher position or rank in a company.",
+    "definitionHe": "מעבר לתפקיד או דרגה גבוהים יותר בחברה.",
+    "examples": [
+      "She got a promotion to senior manager.",
+      "He's been working hard and hoping for a promotion.",
+      "The promotion came with a salary increase."
+    ],
+    "audioHint": "pruh-MOH-shun",
+    "collocations": [
+      "get a promotion",
+      "earn a promotion",
+      "deserve a promotion"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I got a promote at work",
+        "correct": "I got a promotion at work",
+        "explanation": "'Promote' הוא פועל. שם העצם הוא 'promotion'. באנגלית חשוב להבדיל בין צורת הפועל לשם העצם."
+      }
+    ],
+    "tip": "'Promotion' also means advertising a product. Context tells you which meaning: 'She got a promotion' (at work) vs. 'There's a promotion on shoes' (a sale).",
+    "tipHe": "'Promotion' גם אומר פרסום מוצר. ההקשר מבהיר את המשמעות: 'She got a promotion' (בעבודה) לעומת 'There's a promotion on shoes' (מבצע).",
+    "synonyms": ["advancement", "upgrade"]
+  },
+  {
+    "id": "b1_010",
+    "word": "colleague",
+    "ipa": "/ˈkɒliːɡ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "עמית לעבודה",
+    "definition": "A person you work with, especially in a professional job.",
+    "definitionHe": "אדם שאתה עובד איתו, במיוחד בעבודה מקצועית.",
+    "examples": [
+      "My colleague helped me finish the report.",
+      "She introduced me to her colleagues.",
+      "We had lunch with some colleagues from the office."
+    ],
+    "audioHint": "KOL-eeg",
+    "collocations": [
+      "work colleague",
+      "former colleague",
+      "close colleague"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is my colleague from the work",
+        "correct": "He is my colleague from work",
+        "explanation": "באנגלית אומרים 'from work' בלי the. 'Work' כאן הוא מושג כללי, לא מקום ספציפי."
+      }
+    ],
+    "tip": "'Colleague' is more formal than 'coworker'. Use 'colleague' in professional settings and 'coworker' in casual conversations.",
+    "tipHe": "'Colleague' רשמי יותר מ-'coworker'. השתמשו ב-'colleague' בהקשרים מקצועיים וב-'coworker' בשיחות יומיומיות.",
+    "synonyms": ["coworker", "associate"]
+  },
+  {
+    "id": "b1_011",
+    "word": "negotiation",
+    "ipa": "/nɪˌɡoʊʃiˈeɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "משא ומתן",
+    "definition": "A discussion between people who are trying to reach an agreement, especially in business.",
+    "definitionHe": "דיון בין אנשים שמנסים להגיע להסכמה, במיוחד בעסקים.",
+    "examples": [
+      "The negotiations lasted for three days.",
+      "We are in negotiations with the supplier.",
+      "Salary negotiation can be stressful."
+    ],
+    "audioHint": "neh-GOH-shee-AY-shun",
+    "collocations": [
+      "enter negotiations",
+      "salary negotiation",
+      "under negotiation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We need to do a negotiation",
+        "correct": "We need to negotiate",
+        "explanation": "במקום 'do a negotiation' עדיף להשתמש בפועל 'negotiate' ישירות. זה יותר טבעי באנגלית."
+      }
+    ],
+    "tip": "The verb is 'negotiate' and the person is a 'negotiator'. In business, 'negotiation skills' are highly valued.",
+    "tipHe": "הפועל הוא 'negotiate' והאדם הוא 'negotiator'. בעסקים, 'negotiation skills' (כישורי משא ומתן) מוערכים מאוד.",
+    "synonyms": ["discussion", "bargaining"]
+  },
+  {
+    "id": "b1_012",
+    "word": "budget",
+    "ipa": "/ˈbʌdʒɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "תקציב",
+    "definition": "A plan that shows how much money you have and how you will spend it.",
+    "definitionHe": "תוכנית שמראה כמה כסף יש לך ואיך תוציא אותו.",
+    "examples": [
+      "We need to stay within the budget.",
+      "The marketing budget was cut by 20%.",
+      "They approved a budget of $50,000 for the project."
+    ],
+    "audioHint": "BUJ-it",
+    "collocations": [
+      "within budget",
+      "over budget",
+      "budget plan"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We passed the budget",
+        "correct": "We went over budget",
+        "explanation": "בעברית אומרים 'עברנו את התקציב' אבל באנגלית אומרים 'went over budget' — ולא 'passed the budget' שמשמעותו אישור התקציב."
+      }
+    ],
+    "tip": "'Budget' can also be an adjective meaning 'cheap': 'budget airline', 'budget hotel'. It implies low cost, not low quality.",
+    "tipHe": "'Budget' יכולה להיות גם שם תואר במשמעות 'זול': 'budget airline', 'budget hotel'. זה מרמז על מחיר נמוך, לא בהכרח על איכות נמוכה.",
+    "synonyms": ["funds", "financial plan"]
+  },
+  {
+    "id": "b1_013",
+    "word": "presentation",
+    "ipa": "/ˌprɛzənˈteɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "business",
+    "translation": "מצגת",
+    "definition": "A talk or speech given to a group of people to explain or show something.",
+    "definitionHe": "הרצאה או דיבור שניתנים בפני קבוצת אנשים כדי להסביר או להציג משהו.",
+    "examples": [
+      "He gave a presentation about the new product.",
+      "The presentation lasted about 30 minutes.",
+      "She's preparing a presentation for the meeting."
+    ],
+    "audioHint": "prez-en-TAY-shun",
+    "collocations": [
+      "give a presentation",
+      "prepare a presentation",
+      "PowerPoint presentation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I did a presentation about marketing",
+        "correct": "I gave a presentation on marketing",
+        "explanation": "באנגלית אומרים 'give a presentation' ולא 'do a presentation'. כמו כן, משתמשים ב-on לנושא המצגת."
+      }
+    ],
+    "tip": "Use 'give a presentation' or 'deliver a presentation' (more formal). 'About' and 'on' both work for the topic, but 'on' is slightly more formal.",
+    "tipHe": "השתמשו ב-'give a presentation' או 'deliver a presentation' (יותר רשמי). 'About' ו-'on' שניהם מתאימים לנושא, אבל 'on' קצת יותר רשמי.",
+    "synonyms": ["talk", "lecture"]
+  },
+  {
+    "id": "b1_014",
+    "word": "airport",
+    "ipa": "/ˈɛərpɔːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "שדה תעופה",
+    "definition": "A place where planes take off and land, with buildings for passengers.",
+    "definitionHe": "מקום שבו מטוסים ממריאים ונוחתים, עם מבנים לנוסעים.",
+    "examples": [
+      "We need to be at the airport two hours early.",
+      "The airport was very crowded.",
+      "Can you pick me up from the airport?"
+    ],
+    "audioHint": "AIR-port",
+    "collocations": [
+      "at the airport",
+      "airport security",
+      "airport terminal"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I arrived to the airport",
+        "correct": "I arrived at the airport",
+        "explanation": "בעברית אומרים 'הגעתי לשדה התעופה' עם 'ל', אבל באנגלית הפועל arrive דורש at למקום ספציפי."
+      }
+    ],
+    "tip": "'Airport' is one word, not two. The main parts of an airport are: terminal, gate, runway, and baggage claim.",
+    "tipHe": "'Airport' זו מילה אחת, לא שתיים. החלקים העיקריים של שדה תעופה הם: terminal (טרמינל), gate (שער), runway (מסלול), ו-baggage claim (אולם מזוודות).",
+    "synonyms": ["airfield", "aerodrome"]
+  },
+  {
+    "id": "b1_015",
+    "word": "passport",
+    "ipa": "/ˈpæspɔːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "דרכון",
+    "definition": "An official document that identifies you as a citizen of a country and allows you to travel abroad.",
+    "definitionHe": "מסמך רשמי שמזהה אותך כאזרח של מדינה ומאפשר לך לנסוע לחו\"ל.",
+    "examples": [
+      "Don't forget to bring your passport.",
+      "My passport expires next month.",
+      "You need a valid passport to travel internationally."
+    ],
+    "audioHint": "PAS-port",
+    "collocations": [
+      "valid passport",
+      "passport control",
+      "renew a passport"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "My passport is ending next month",
+        "correct": "My passport expires next month",
+        "explanation": "בעברית אומרים 'הדרכון נגמר' אבל באנגלית משתמשים בפועל 'expires' למסמכים שפג תוקפם."
+      }
+    ],
+    "tip": "'Passport control' is where officers check your passport at the border. It's different from 'security', which checks your bags and belongings.",
+    "tipHe": "'Passport control' הוא המקום שבו בודקים את הדרכון בגבול. זה שונה מ-'security', שבודק את התיקים והחפצים.",
+    "synonyms": ["travel document", "ID"]
+  },
+  {
+    "id": "b1_016",
+    "word": "luggage",
+    "ipa": "/ˈlʌɡɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "מזוודות",
+    "definition": "Bags and suitcases that you take with you when you travel.",
+    "definitionHe": "תיקים ומזוודות שלוקחים איתך כשנוסעים.",
+    "examples": [
+      "How many pieces of luggage do you have?",
+      "My luggage was lost by the airline.",
+      "Please keep your luggage with you at all times."
+    ],
+    "audioHint": "LUG-ij",
+    "collocations": [
+      "hand luggage",
+      "luggage allowance",
+      "luggage claim"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have three luggages",
+        "correct": "I have three pieces of luggage",
+        "explanation": "'Luggage' הוא שם עצם שאינו ניתן לספירה (uncountable) באנגלית. אומרים 'pieces of luggage' ולא 'luggages'."
+      }
+    ],
+    "tip": "'Luggage' is uncountable in English — you cannot say 'a luggage' or 'luggages'. Use 'a piece of luggage' or 'bags'. 'Baggage' is a synonym used more in American English.",
+    "tipHe": "'Luggage' אינו ניתן לספירה באנגלית — אי אפשר להגיד 'a luggage' או 'luggages'. אומרים 'a piece of luggage' או 'bags'. 'Baggage' הוא מילה נרדפת נפוצה יותר באנגלית אמריקאית.",
+    "synonyms": ["baggage", "bags"]
+  },
+  {
+    "id": "b1_017",
+    "word": "boarding pass",
+    "ipa": "/ˈbɔːrdɪŋ pæs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "כרטיס עלייה למטוס",
+    "definition": "A card or document that allows you to get on an airplane.",
+    "definitionHe": "כרטיס או מסמך שמאפשר לך לעלות על מטוס.",
+    "examples": [
+      "Please have your boarding pass ready.",
+      "You can download your boarding pass on your phone.",
+      "The boarding pass shows your seat number and gate."
+    ],
+    "audioHint": "BOR-ding pas",
+    "collocations": [
+      "show your boarding pass",
+      "print a boarding pass",
+      "mobile boarding pass"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to print my boarding card",
+        "correct": "I need to print my boarding pass",
+        "explanation": "בעברית אומרים 'כרטיס עלייה' אבל באנגלית הביטוי הנפוץ הוא 'boarding pass' ולא 'boarding card' (למרות ש-'boarding card' קיים בבריטניה)."
+      }
+    ],
+    "tip": "You usually get your boarding pass at check-in (either online or at the airport). It contains your gate number, seat number, and boarding time.",
+    "tipHe": "בדרך כלל מקבלים את כרטיס העלייה בצ'ק-אין (אונליין או בשדה התעופה). הוא מכיל את מספר השער, מספר המושב וזמן העלייה.",
+    "synonyms": ["boarding card", "boarding ticket"]
+  },
+  {
+    "id": "b1_018",
+    "word": "reservation",
+    "ipa": "/ˌrɛzərˈveɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "הזמנה",
+    "definition": "An arrangement to have something kept for you, such as a hotel room, table, or seat.",
+    "definitionHe": "סידור לשמור עבורך משהו, כמו חדר מלון, שולחן או מושב.",
+    "examples": [
+      "I made a reservation for two nights.",
+      "Do you have a reservation?",
+      "I'd like to cancel my reservation."
+    ],
+    "audioHint": "rez-er-VAY-shun",
+    "collocations": [
+      "make a reservation",
+      "cancel a reservation",
+      "hotel reservation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to do a reservation",
+        "correct": "I want to make a reservation",
+        "explanation": "באנגלית אומרים 'make a reservation' ולא 'do a reservation'. הפועל make הוא הצירוף הנכון כאן."
+      }
+    ],
+    "tip": "'Reservation' and 'booking' mean the same thing. 'Booking' is more common in British English, while 'reservation' is used in both American and British English.",
+    "tipHe": "'Reservation' ו-'booking' אומרים אותו דבר. 'Booking' נפוץ יותר באנגלית בריטית, בעוד 'reservation' נפוץ גם באנגלית אמריקאית וגם בריטית.",
+    "synonyms": ["booking", "appointment"]
+  },
+  {
+    "id": "b1_019",
+    "word": "destination",
+    "ipa": "/ˌdɛstɪˈneɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "יעד",
+    "definition": "The place you are going to or traveling to.",
+    "definitionHe": "המקום שאליו אתה נוסע או הולך.",
+    "examples": [
+      "Our final destination is Paris.",
+      "We reached our destination after 10 hours.",
+      "Thailand is a popular tourist destination."
+    ],
+    "audioHint": "des-tih-NAY-shun",
+    "collocations": [
+      "final destination",
+      "tourist destination",
+      "popular destination"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We arrived to our destination",
+        "correct": "We arrived at our destination",
+        "explanation": "בעברית אומרים 'הגענו ליעד' עם 'ל', אבל באנגלית הפועל arrive דורש at ולא to."
+      }
+    ],
+    "tip": "'Destination' sounds formal. In casual speech, you might just say 'Where are we going?' instead of 'What's our destination?'",
+    "tipHe": "'Destination' נשמע רשמי. בשיחה יומיומית, אפשר פשוט לשאול 'Where are we going?' במקום 'What's our destination?'",
+    "synonyms": ["target", "end point"]
+  },
+  {
+    "id": "b1_020",
+    "word": "flight",
+    "ipa": "/flaɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "טיסה",
+    "definition": "A journey by airplane from one place to another.",
+    "definitionHe": "מסע במטוס ממקום אחד לאחר.",
+    "examples": [
+      "The flight from Tel Aviv to London takes about five hours.",
+      "My flight was delayed by two hours.",
+      "I booked a direct flight to New York."
+    ],
+    "audioHint": "flite",
+    "collocations": [
+      "book a flight",
+      "direct flight",
+      "connecting flight"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have a flight in 3 o'clock",
+        "correct": "I have a flight at 3 o'clock",
+        "explanation": "באנגלית משתמשים ב-at לשעות מדויקות, לא ב-in. 'At 3 o'clock' ולא 'in 3 o'clock'."
+      }
+    ],
+    "tip": "A 'direct flight' has no stops. A 'connecting flight' means you change planes at another airport. A 'layover' is the waiting time between connecting flights.",
+    "tipHe": "'Direct flight' הוא טיסה ישירה בלי עצירות. 'Connecting flight' אומר שמחליפים מטוס בשדה תעופה אחר. 'Layover' הוא זמן ההמתנה בין טיסות מחברות.",
+    "synonyms": ["plane journey", "air trip"]
+  },
+  {
+    "id": "b1_021",
+    "word": "customs",
+    "ipa": "/ˈkʌstəmz/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "מכס",
+    "definition": "The place at an airport or border where officials check your bags and goods entering a country.",
+    "definitionHe": "המקום בשדה תעופה או בגבול שבו פקידים בודקים את התיקים והסחורות שנכנסות למדינה.",
+    "examples": [
+      "We had to go through customs after landing.",
+      "The customs officer asked if I had anything to declare.",
+      "It took an hour to get through customs."
+    ],
+    "audioHint": "KUS-tumz",
+    "collocations": [
+      "go through customs",
+      "customs officer",
+      "customs declaration"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I passed the custom at the airport",
+        "correct": "I went through customs at the airport",
+        "explanation": "בהקשר של שדה תעופה, המילה תמיד בצורת רבים: 'customs' ולא 'custom'. כמו כן, הביטוי הוא 'go through customs'."
+      }
+    ],
+    "tip": "'Customs' (with an s) means the border checkpoint. 'Custom' (without s) means a tradition or habit. Don't confuse them!",
+    "tipHe": "'Customs' (עם s) הוא מחסום הגבול. 'Custom' (בלי s) הוא מנהג או הרגל. אל תבלבלו ביניהם!",
+    "synonyms": ["border control", "customs checkpoint"]
+  },
+  {
+    "id": "b1_022",
+    "word": "delay",
+    "ipa": "/dɪˈleɪ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "עיכוב",
+    "definition": "A period of time when something happens later than planned.",
+    "definitionHe": "פרק זמן שבו משהו קורה מאוחר מהמתוכנן.",
+    "examples": [
+      "There was a two-hour delay at the airport.",
+      "We apologize for the delay.",
+      "Traffic delays made us late for the meeting."
+    ],
+    "audioHint": "dih-LAY",
+    "collocations": [
+      "flight delay",
+      "without delay",
+      "long delay"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The flight has a late of two hours",
+        "correct": "The flight has a delay of two hours",
+        "explanation": "'Late' הוא שם תואר ולא שם עצם. שם העצם הנכון הוא 'delay'. אפשר גם: 'The flight is two hours late'."
+      }
+    ],
+    "tip": "'Delay' works as both a noun and a verb: 'There was a delay' (noun) and 'The flight was delayed' (verb). The adjective form is 'delayed'.",
+    "tipHe": "'Delay' עובד גם כשם עצם וגם כפועל: 'There was a delay' (שם עצם) ו-'The flight was delayed' (פועל). צורת שם התואר היא 'delayed'.",
+    "synonyms": ["holdup", "wait"]
+  },
+  {
+    "id": "b1_023",
+    "word": "accommodation",
+    "ipa": "/əˌkɒməˈdeɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "מקום לינה",
+    "definition": "A place to stay, such as a hotel or apartment, when traveling.",
+    "definitionHe": "מקום לשהות בו, כמו מלון או דירה, כשנוסעים.",
+    "examples": [
+      "We need to find accommodation for the weekend.",
+      "The accommodation was comfortable and clean.",
+      "Prices for accommodation vary by season."
+    ],
+    "audioHint": "uh-kom-uh-DAY-shun",
+    "collocations": [
+      "find accommodation",
+      "book accommodation",
+      "temporary accommodation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "We booked an accomodation",
+        "correct": "We booked accommodation",
+        "explanation": "שתי טעויות נפוצות: (1) 'accommodation' נכתב עם שני c ושני m. (2) באנגלית בריטית זה uncountable — בלי a."
+      }
+    ],
+    "tip": "In British English, 'accommodation' is uncountable (no plural 's'). In American English, 'accommodations' (plural) is also common.",
+    "tipHe": "באנגלית בריטית, 'accommodation' אינו ניתן לספירה (בלי s ברבים). באנגלית אמריקאית, 'accommodations' (רבים) גם נפוץ.",
+    "synonyms": ["lodging", "housing"]
+  },
+  {
+    "id": "b1_024",
+    "word": "itinerary",
+    "ipa": "/aɪˈtɪnərɛri/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "מסלול טיול",
+    "definition": "A plan or list of places to visit and things to do during a trip.",
+    "definitionHe": "תוכנית או רשימה של מקומות לבקר ודברים לעשות במהלך טיול.",
+    "examples": [
+      "Let me check the itinerary for tomorrow.",
+      "The travel agent sent us a detailed itinerary.",
+      "Our itinerary includes visits to three cities."
+    ],
+    "audioHint": "eye-TIN-er-air-ee",
+    "collocations": [
+      "travel itinerary",
+      "detailed itinerary",
+      "plan an itinerary"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "What is the program of the trip?",
+        "correct": "What is the itinerary for the trip?",
+        "explanation": "בעברית אומרים 'תוכנית הטיול' ומתרגמים לפעמים ל-'program', אבל באנגלית המילה המדויקת היא 'itinerary' כשמדברים על מסלול נסיעה."
+      }
+    ],
+    "tip": "This word is often mispronounced. Say: eye-TIN-er-air-ee. The stress is on the second syllable.",
+    "tipHe": "מילה זו מבוטאת לעיתים קרובות בצורה שגויה. אמרו: eye-TIN-er-air-ee. הדגש על ההברה השנייה.",
+    "synonyms": ["schedule", "route"]
+  },
+  {
+    "id": "b1_025",
+    "word": "currency",
+    "ipa": "/ˈkʌrənsi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "מטבע (כסף)",
+    "definition": "The system of money used in a particular country.",
+    "definitionHe": "מערכת הכסף שמשתמשים בה במדינה מסוימת.",
+    "examples": [
+      "The local currency in Japan is the yen.",
+      "Where can I exchange currency?",
+      "The currency exchange rate changes daily."
+    ],
+    "audioHint": "KUR-un-see",
+    "collocations": [
+      "foreign currency",
+      "currency exchange",
+      "local currency"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need to change money",
+        "correct": "I need to exchange currency",
+        "explanation": "למרות ש-'change money' מובן, הביטוי הרשמי והמדויק יותר הוא 'exchange currency'. בשיחה יומיומית 'change money' בסדר גמור."
+      }
+    ],
+    "tip": "'Currency' refers to the money system (dollar, euro, shekel). 'Coin' and 'bill/note' refer to the physical money. 'Cash' means physical money in general.",
+    "tipHe": "'Currency' מתייחס למערכת הכסף (דולר, אירו, שקל). 'Coin' ו-'bill/note' מתייחסים לכסף הפיזי. 'Cash' אומר כסף פיזי באופן כללי.",
+    "synonyms": ["money", "legal tender"]
+  },
+  {
+    "id": "b1_026",
+    "word": "transfer",
+    "ipa": "/ˈtrænsfɜːr/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "travel",
+    "translation": "העברה / הסעה",
+    "definition": "The act of moving from one place, vehicle, or system to another during a journey.",
+    "definitionHe": "המעבר ממקום, כלי רכב או מערכת אחת לאחרת במהלך נסיעה.",
+    "examples": [
+      "The hotel offers a free airport transfer.",
+      "We have a transfer in Istanbul.",
+      "The transfer from the airport takes about 30 minutes."
+    ],
+    "audioHint": "TRANS-fer (noun) / trans-FER (verb)",
+    "collocations": [
+      "airport transfer",
+      "bank transfer",
+      "transfer to"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I need a passage from the airport to the hotel",
+        "correct": "I need a transfer from the airport to the hotel",
+        "explanation": "בעברית אומרים 'הסעה' ולפעמים מתרגמים ל-'passage', אבל באנגלית של נסיעות המילה הנכונה היא 'transfer'."
+      }
+    ],
+    "tip": "As a noun, stress is on the first syllable: TRANS-fer. As a verb, stress is on the second syllable: trans-FER. This pattern is common in English.",
+    "tipHe": "כשם עצם, הדגש על ההברה הראשונה: TRANS-fer. כפועל, הדגש על ההברה השנייה: trans-FER. דפוס זה נפוץ באנגלית.",
+    "synonyms": ["transport", "shuttle"]
+  },
+  {
+    "id": "b1_027",
+    "word": "receipt",
+    "ipa": "/rɪˈsiːt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "קבלה",
+    "definition": "A piece of paper that shows you have paid for something.",
+    "definitionHe": "פיסת נייר שמוכיחה שילמת עבור משהו.",
+    "examples": [
+      "Keep your receipt in case you need to return it.",
+      "Can I have a receipt, please?",
+      "The receipt shows the date and price of the purchase."
+    ],
+    "audioHint": "rih-SEET",
+    "collocations": [
+      "keep the receipt",
+      "ask for a receipt",
+      "digital receipt"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can I get a recipt?",
+        "correct": "Can I get a receipt?",
+        "explanation": "שימו לב לאיות: receipt — האות p שקטה (לא מבוטאת). טעות כתיב נפוצה מאוד."
+      }
+    ],
+    "tip": "The 'p' in 'receipt' is silent! It's pronounced rih-SEET. This is one of the most commonly misspelled words in English.",
+    "tipHe": "ה-p ב-'receipt' שקט! מבוטא rih-SEET. זו אחת המילים עם הכי הרבה שגיאות כתיב באנגלית.",
+    "synonyms": ["proof of purchase", "sales slip"]
+  },
+  {
+    "id": "b1_028",
+    "word": "discount",
+    "ipa": "/ˈdɪskaʊnt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "הנחה",
+    "definition": "A reduction in the usual price of something.",
+    "definitionHe": "הפחתה במחיר הרגיל של משהו.",
+    "examples": [
+      "Students get a 10% discount.",
+      "Is there a discount for buying in bulk?",
+      "The store offers a big discount during sales."
+    ],
+    "audioHint": "DIS-count",
+    "collocations": [
+      "get a discount",
+      "offer a discount",
+      "student discount"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can I get a discount of 20 percent?",
+        "correct": "Can I get a 20 percent discount?",
+        "explanation": "באנגלית, האחוז בא לפני המילה discount כתואר: '20 percent discount'. אפשר גם 'a discount of 20 percent' אבל פחות טבעי."
+      }
+    ],
+    "tip": "'Discount', 'sale', and 'offer' are related but different. A 'discount' is a price reduction; a 'sale' is a period of discounts; an 'offer' is a special deal.",
+    "tipHe": "'Discount', 'sale' ו-'offer' קשורים אבל שונים. 'Discount' הוא הפחתת מחיר; 'sale' הוא תקופת הנחות; 'offer' הוא מבצע מיוחד.",
+    "synonyms": ["reduction", "markdown"]
+  },
+  {
+    "id": "b1_029",
+    "word": "refund",
+    "ipa": "/ˈriːfʌnd/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "החזר כספי",
+    "definition": "Money that is given back to you because you returned something or paid too much.",
+    "definitionHe": "כסף שמוחזר לך כי החזרת משהו או שילמת יותר מדי.",
+    "examples": [
+      "I'd like a refund for this broken item.",
+      "They gave me a full refund.",
+      "The refund will appear on your credit card in 5 days."
+    ],
+    "audioHint": "REE-fund (noun) / rih-FUND (verb)",
+    "collocations": [
+      "get a refund",
+      "full refund",
+      "request a refund"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to get my money back return",
+        "correct": "I want to get a refund",
+        "explanation": "באנגלית יש מילה ספציפית להחזר כספי: 'refund'. אין צורך להגיד 'money back return' — פשוט 'refund'."
+      }
+    ],
+    "tip": "As a noun: REE-fund (stress on first syllable). As a verb: rih-FUND (stress on second syllable). 'I want a REE-fund' vs. 'They will rih-FUND your money.'",
+    "tipHe": "כשם עצם: REE-fund (דגש על ההברה הראשונה). כפועל: rih-FUND (דגש על ההברה השנייה). 'I want a REE-fund' לעומת 'They will rih-FUND your money.'",
+    "synonyms": ["reimbursement", "money back"]
+  },
+  {
+    "id": "b1_030",
+    "word": "cashier",
+    "ipa": "/kæˈʃɪr/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "קופאי / קופאית",
+    "definition": "A person whose job is to receive and pay out money in a store or bank.",
+    "definitionHe": "אדם שתפקידו לקבל ולשלם כסף בחנות או בנק.",
+    "examples": [
+      "The cashier scanned all my items.",
+      "Please pay the cashier at the front.",
+      "The cashier gave me the wrong change."
+    ],
+    "audioHint": "ka-SHEER",
+    "collocations": [
+      "pay the cashier",
+      "cashier's desk",
+      "head cashier"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The cashier in the supermarket",
+        "correct": "The cashier at the supermarket",
+        "explanation": "באנגלית אומרים 'at the supermarket' ולא 'in the supermarket' כשמתכוונים לעובד במקום מסוים."
+      }
+    ],
+    "tip": "'Cashier' comes from the word 'cash'. In many stores now, there are 'self-checkout' machines where you scan items yourself — no cashier needed.",
+    "tipHe": "'Cashier' מגיע מהמילה 'cash'. בחנויות רבות כיום יש מכונות 'self-checkout' שבהן סורקים פריטים בעצמך — בלי צורך בקופאי.",
+    "synonyms": ["checkout clerk", "teller"]
+  },
+  {
+    "id": "b1_031",
+    "word": "price tag",
+    "ipa": "/praɪs tæɡ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "תג מחיר",
+    "definition": "A label on an item in a store that shows how much it costs.",
+    "definitionHe": "תווית על פריט בחנות שמראה כמה הוא עולה.",
+    "examples": [
+      "I can't find the price tag on this shirt.",
+      "The price tag says $29.99.",
+      "Some luxury stores don't put price tags on their items."
+    ],
+    "audioHint": "price tag",
+    "collocations": [
+      "check the price tag",
+      "remove the price tag",
+      "hefty price tag"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "How much is the price of this?",
+        "correct": "How much is this? / What's the price of this?",
+        "explanation": "אומרים 'How much is this?' או 'What's the price?' אבל לא 'How much is the price?' כי זה כפילות — price כבר אומר כמה זה עולה."
+      }
+    ],
+    "tip": "'Price tag' can also be used figuratively: 'Success comes with a price tag' means success has a cost (not always money).",
+    "tipHe": "'Price tag' יכול לשמש גם בצורה מטפורית: 'Success comes with a price tag' אומר שלהצלחה יש מחיר (לא תמיד כסף).",
+    "synonyms": ["label", "sticker"]
+  },
+  {
+    "id": "b1_032",
+    "word": "checkout",
+    "ipa": "/ˈtʃɛkaʊt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "קופה / תשלום",
+    "definition": "The place in a store where you pay for goods, or the process of paying.",
+    "definitionHe": "המקום בחנות שבו משלמים על סחורות, או תהליך התשלום.",
+    "examples": [
+      "There's a long line at the checkout.",
+      "You can use the self-checkout machine.",
+      "Proceed to checkout to complete your order."
+    ],
+    "audioHint": "CHEK-out",
+    "collocations": [
+      "self-checkout",
+      "go to checkout",
+      "express checkout"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I'm going to the pay",
+        "correct": "I'm going to the checkout",
+        "explanation": "בעברית אומרים 'אני הולך לקופה' אבל באנגלית המילה היא 'checkout' ולא 'pay' כשם עצם למקום."
+      }
+    ],
+    "tip": "'Checkout' (one word) is a noun — the place or process. 'Check out' (two words) is a verb: 'I need to check out these books' or 'Check out this cool store!'",
+    "tipHe": "'Checkout' (מילה אחת) הוא שם עצם — המקום או התהליך. 'Check out' (שתי מילים) הוא פועל: 'I need to check out these books' או 'Check out this cool store!'",
+    "synonyms": ["register", "cash register"]
+  },
+  {
+    "id": "b1_033",
+    "word": "exchange",
+    "ipa": "/ɪksˈtʃeɪndʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "החלפה",
+    "definition": "The act of giving something and receiving something else in return, especially returning an item for a different one.",
+    "definitionHe": "פעולה של נתינה וקבלה של משהו אחר בתמורה, במיוחד החזרת פריט תמורת פריט אחר.",
+    "examples": [
+      "Can I exchange this for a larger size?",
+      "The store has a 30-day exchange policy.",
+      "I'd like to make an exchange, not a return."
+    ],
+    "audioHint": "iks-CHAYNJ",
+    "collocations": [
+      "exchange policy",
+      "in exchange for",
+      "make an exchange"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to replace this shirt for a bigger one",
+        "correct": "I want to exchange this shirt for a bigger one",
+        "explanation": "בעברית משתמשים ב'להחליף' לשני המקרים, אבל באנגלית 'exchange' הוא להחזיר פריט ולקבל אחר. 'Replace' הוא להחליף משהו שבור."
+      }
+    ],
+    "tip": "'Exchange' in shopping means swapping one item for another. 'Return' means giving an item back for money. Know the difference when shopping!",
+    "tipHe": "'Exchange' בקניות אומר להחליף פריט אחד באחר. 'Return' אומר להחזיר פריט ולקבל כסף בחזרה. חשוב לדעת את ההבדל!",
+    "synonyms": ["swap", "trade"]
+  },
+  {
+    "id": "b1_034",
+    "word": "warranty",
+    "ipa": "/ˈwɒrənti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "אחריות",
+    "definition": "A written promise by a company to repair or replace a product if it breaks within a certain time.",
+    "definitionHe": "הבטחה כתובה של חברה לתקן או להחליף מוצר אם הוא מתקלקל תוך זמן מסוים.",
+    "examples": [
+      "The laptop comes with a two-year warranty.",
+      "Is this still under warranty?",
+      "The warranty doesn't cover accidental damage."
+    ],
+    "audioHint": "WOR-un-tee",
+    "collocations": [
+      "under warranty",
+      "extended warranty",
+      "warranty period"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The product is in warranty",
+        "correct": "The product is under warranty",
+        "explanation": "באנגלית אומרים 'under warranty' ולא 'in warranty'. המילית הנכונה היא under."
+      }
+    ],
+    "tip": "'Warranty' is for products. 'Guarantee' is more general and can be used for both products and promises. 'Money-back guarantee' means you get a refund if unhappy.",
+    "tipHe": "'Warranty' הוא למוצרים. 'Guarantee' כללי יותר ומתאים גם למוצרים וגם להבטחות. 'Money-back guarantee' אומר שתקבלו החזר כספי אם לא מרוצים.",
+    "synonyms": ["guarantee", "assurance"]
+  },
+  {
+    "id": "b1_035",
+    "word": "bargain",
+    "ipa": "/ˈbɑːrɡɪn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "מציאה",
+    "definition": "Something bought for a lower price than usual; a good deal.",
+    "definitionHe": "משהו שנקנה במחיר נמוך מהרגיל; עסקה טובה.",
+    "examples": [
+      "This jacket was a real bargain — only $20!",
+      "You can find great bargains at the market.",
+      "She loves bargain hunting at thrift stores."
+    ],
+    "audioHint": "BAR-gin",
+    "collocations": [
+      "real bargain",
+      "bargain hunter",
+      "bargain price"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I found a very good bargain price",
+        "correct": "I found a great bargain",
+        "explanation": "'Bargain' כבר כולל את המשמעות של מחיר טוב, אז לא צריך להוסיף 'price' אחריו. פשוט 'a great bargain'."
+      }
+    ],
+    "tip": "'Bargain' as a verb means to negotiate a price: 'I bargained with the seller.' In some markets, bargaining is expected; in stores with fixed prices, it's not.",
+    "tipHe": "'Bargain' כפועל אומר להתמקח: 'I bargained with the seller.' בשווקים מסוימים, התמקחות מצופה; בחנויות עם מחירים קבועים, לא.",
+    "synonyms": ["deal", "steal"]
+  },
+  {
+    "id": "b1_036",
+    "word": "credit card",
+    "ipa": "/ˈkrɛdɪt kɑːrd/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "כרטיס אשראי",
+    "definition": "A small plastic card that allows you to buy things now and pay for them later.",
+    "definitionHe": "כרטיס פלסטיק קטן שמאפשר לקנות דברים עכשיו ולשלם עליהם מאוחר יותר.",
+    "examples": [
+      "Can I pay by credit card?",
+      "I left my credit card at home.",
+      "They accept all major credit cards."
+    ],
+    "audioHint": "KRED-it kard",
+    "collocations": [
+      "pay by credit card",
+      "credit card number",
+      "credit card bill"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can I pay with credit card?",
+        "correct": "Can I pay by credit card?",
+        "explanation": "באנגלית אומרים 'pay by credit card' (אמצעי תשלום) או 'pay with a credit card' (עם the/a). בלי a/the צריך 'by'."
+      }
+    ],
+    "tip": "'Credit card' = pay later. 'Debit card' = money comes directly from your bank account now. In Israel, most cards are actually debit cards even though people call them credit cards.",
+    "tipHe": "'Credit card' = לשלם אחר כך. 'Debit card' = הכסף יוצא ישירות מחשבון הבנק עכשיו. בישראל, רוב הכרטיסים הם למעשה דביט למרות שקוראים להם אשראי.",
+    "synonyms": ["card", "charge card"]
+  },
+  {
+    "id": "b1_037",
+    "word": "fitting room",
+    "ipa": "/ˈfɪtɪŋ ruːm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "חדר מדידה",
+    "definition": "A room in a clothing store where you can try on clothes before buying them.",
+    "definitionHe": "חדר בחנות בגדים שבו אפשר למדוד בגדים לפני שקונים אותם.",
+    "examples": [
+      "Where are the fitting rooms?",
+      "You can take three items into the fitting room.",
+      "The fitting room was too small."
+    ],
+    "audioHint": "FIT-ing room",
+    "collocations": [
+      "try on in the fitting room",
+      "fitting room mirror",
+      "fitting room limit"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Where is the measure room?",
+        "correct": "Where is the fitting room?",
+        "explanation": "בעברית אומרים 'חדר מדידה' ומתרגמים לפעמים ל-'measure room', אבל באנגלית זה 'fitting room' או 'changing room'."
+      }
+    ],
+    "tip": "'Fitting room' and 'changing room' mean the same thing. 'Dressing room' can also be used. In American English, 'fitting room' is most common.",
+    "tipHe": "'Fitting room' ו-'changing room' אומרים אותו דבר. 'Dressing room' גם אפשרי. באנגלית אמריקאית, 'fitting room' הכי נפוץ.",
+    "synonyms": ["changing room", "dressing room"]
+  },
+  {
+    "id": "b1_038",
+    "word": "cart",
+    "ipa": "/kɑːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "shopping",
+    "translation": "עגלת קניות",
+    "definition": "A large basket on wheels used for carrying items while shopping in a store.",
+    "definitionHe": "סל גדול על גלגלים שמשמש לנשיאת פריטים בזמן קניות בחנות.",
+    "examples": [
+      "I put everything in the shopping cart.",
+      "The cart is full — we need another one.",
+      "Don't forget to return the cart when you're done."
+    ],
+    "audioHint": "kart",
+    "collocations": [
+      "shopping cart",
+      "push a cart",
+      "add to cart"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I put it in the trolley",
+        "correct": "I put it in the cart",
+        "explanation": "'Cart' נפוץ באנגלית אמריקאית; 'trolley' נפוץ באנגלית בריטית. שניהם נכונים, אבל טוב לדעת את שני הביטויים."
+      }
+    ],
+    "tip": "In online shopping, 'add to cart' is the button you click to select items. 'Cart' (US) and 'trolley' (UK) are the same physical object in a store.",
+    "tipHe": "בקניות אונליין, 'add to cart' הוא הכפתור שלוחצים כדי לבחור פריטים. 'Cart' (ארה\"ב) ו-'trolley' (בריטניה) הם אותו חפץ פיזי בחנות.",
+    "synonyms": ["trolley", "shopping cart"]
+  },
+  {
+    "id": "b1_039",
+    "word": "reservation",
+    "ipa": "/ˌrɛzərˈveɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "הזמנת מקום",
+    "definition": "An arrangement to have a table kept for you at a restaurant.",
+    "definitionHe": "סידור לשמור עבורך שולחן במסעדה.",
+    "examples": [
+      "I'd like to make a reservation for tonight.",
+      "Do you have a reservation?",
+      "We have a reservation under the name Cohen."
+    ],
+    "audioHint": "rez-er-VAY-shun",
+    "collocations": [
+      "make a reservation",
+      "dinner reservation",
+      "reservation for two"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to order a table for tonight",
+        "correct": "I want to reserve a table for tonight",
+        "explanation": "בעברית אומרים 'להזמין שולחן' ו-'להזמין' גם אומר 'to order'. אבל באנגלית, לשולחן אומרים 'reserve' או 'book', לא 'order'."
+      }
+    ],
+    "tip": "When calling a restaurant, say: 'I'd like to make a reservation for two at 7 PM, please.' Give the number of people, the time, and your name.",
+    "tipHe": "כשמתקשרים למסעדה, אמרו: 'I'd like to make a reservation for two at 7 PM, please.' תנו את מספר הסועדים, השעה והשם שלכם.",
+    "synonyms": ["booking", "table booking"]
+  },
+  {
+    "id": "b1_040",
+    "word": "menu",
+    "ipa": "/ˈmɛnjuː/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "תפריט",
+    "definition": "A list of food and drinks available at a restaurant with their prices.",
+    "definitionHe": "רשימה של מאכלים ומשקאות זמינים במסעדה עם מחיריהם.",
+    "examples": [
+      "Can I see the menu, please?",
+      "The menu has a great selection of desserts.",
+      "Is there a vegetarian option on the menu?"
+    ],
+    "audioHint": "MEN-yoo",
+    "collocations": [
+      "lunch menu",
+      "drinks menu",
+      "on the menu"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "What do you have in the menu?",
+        "correct": "What do you have on the menu?",
+        "explanation": "באנגלית אומרים 'on the menu' ולא 'in the menu'. פריטים נמצאים on (על פני) התפריט."
+      }
+    ],
+    "tip": "Different types of menus: 'a la carte' (order individual dishes), 'set menu' or 'prix fixe' (fixed courses at a fixed price), 'tasting menu' (many small courses chosen by the chef).",
+    "tipHe": "סוגים שונים של תפריטים: 'a la carte' (להזמין מנות בודדות), 'set menu' או 'prix fixe' (מנות קבועות במחיר קבוע), 'tasting menu' (מנות קטנות רבות שנבחרות על ידי השף).",
+    "synonyms": ["bill of fare", "food list"]
+  },
+  {
+    "id": "b1_041",
+    "word": "appetizer",
+    "ipa": "/ˈæpɪtaɪzər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "מנה ראשונה",
+    "definition": "A small dish served before the main meal.",
+    "definitionHe": "מנה קטנה שמוגשת לפני הארוחה העיקרית.",
+    "examples": [
+      "Would you like to order an appetizer?",
+      "The soup is a popular appetizer here.",
+      "We shared an appetizer before our main course."
+    ],
+    "audioHint": "AP-ih-tie-zer",
+    "collocations": [
+      "order an appetizer",
+      "appetizer menu",
+      "share an appetizer"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want a first dish",
+        "correct": "I want an appetizer",
+        "explanation": "בעברית אומרים 'מנה ראשונה' אבל באנגלית לא אומרים 'first dish'. המילה הנכונה היא 'appetizer' (אמריקאית) או 'starter' (בריטית)."
+      }
+    ],
+    "tip": "American English: 'appetizer'. British English: 'starter'. Both mean the same thing. In fancy restaurants, 'hors d'oeuvres' (pronounced or-DURVZ) are small bite-sized appetizers.",
+    "tipHe": "אנגלית אמריקאית: 'appetizer'. אנגלית בריטית: 'starter'. שניהם אומרים אותו דבר. במסעדות מהודרות, 'hors d'oeuvres' (מבוטא or-DURVZ) הם מנות ראשונות קטנות בגודל ביס.",
+    "synonyms": ["starter", "first course"]
+  },
+  {
+    "id": "b1_042",
+    "word": "main course",
+    "ipa": "/meɪn kɔːrs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "מנה עיקרית",
+    "definition": "The largest and most important dish of a meal.",
+    "definitionHe": "המנה הגדולה והחשובה ביותר בארוחה.",
+    "examples": [
+      "For my main course, I'll have the steak.",
+      "The main course comes with salad and bread.",
+      "What are the main course options?"
+    ],
+    "audioHint": "mayn kors",
+    "collocations": [
+      "for the main course",
+      "main course options",
+      "order a main course"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want a main plate",
+        "correct": "I want a main course",
+        "explanation": "באנגלית אומרים 'main course' ולא 'main plate' או 'main dish' (למרות ש-'main dish' מובן). 'Main course' הוא הביטוי הסטנדרטי במסעדות."
+      }
+    ],
+    "tip": "A typical Western meal structure: appetizer/starter, main course/entree, dessert. In American English, 'entree' means the main course (confusingly, in French it means the starter!).",
+    "tipHe": "מבנה ארוחה מערבית טיפוסית: מנה ראשונה, מנה עיקרית, קינוח. באנגלית אמריקאית, 'entree' אומר מנה עיקרית (מבלבל, כי בצרפתית זה אומר מנה ראשונה!).",
+    "synonyms": ["entree", "main dish"]
+  },
+  {
+    "id": "b1_043",
+    "word": "dessert",
+    "ipa": "/dɪˈzɜːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "קינוח",
+    "definition": "A sweet food served at the end of a meal.",
+    "definitionHe": "מאכל מתוק שמוגש בסוף הארוחה.",
+    "examples": [
+      "Would you like to see the dessert menu?",
+      "I'll have the chocolate cake for dessert.",
+      "The dessert was absolutely delicious."
+    ],
+    "audioHint": "dih-ZURT",
+    "collocations": [
+      "dessert menu",
+      "for dessert",
+      "order dessert"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want a desert after dinner",
+        "correct": "I want a dessert after dinner",
+        "explanation": "'Dessert' (קינוח) נכתב עם שני s. 'Desert' (מדבר) עם s אחד. טריק לזכור: dessert עם שני s כי תמיד רוצים עוד (SS = Sweet Stuff)."
+      }
+    ],
+    "tip": "Don't confuse 'dessert' (dih-ZURT, sweet food) with 'desert' (DEZ-ert, dry land). Dessert has two S's — remember: you always want more dessert, so it has more S's!",
+    "tipHe": "אל תבלבלו בין 'dessert' (dih-ZURT, קינוח) לבין 'desert' (DEZ-ert, מדבר). ל-dessert יש שני S — טריק: תמיד רוצים עוד קינוח, אז יש יותר S!",
+    "synonyms": ["sweet", "pudding"]
+  },
+  {
+    "id": "b1_044",
+    "word": "tip",
+    "ipa": "/tɪp/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "טיפ / תשר",
+    "definition": "Extra money given to a waiter, taxi driver, etc. for their service.",
+    "definitionHe": "כסף נוסף שנותנים למלצר, נהג מונית וכו' עבור השירות שלהם.",
+    "examples": [
+      "We left a 15% tip for the waiter.",
+      "In the US, it's customary to leave a tip.",
+      "How much should I tip?"
+    ],
+    "audioHint": "tip",
+    "collocations": [
+      "leave a tip",
+      "generous tip",
+      "tip included"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I gave a tip to the waiter of 20%",
+        "correct": "I left a 20% tip for the waiter",
+        "explanation": "באנגלית הביטוי הטבעי הוא 'leave a tip' (להשאיר טיפ) ולא 'give a tip to'. כמו כן, האחוז בא לפני tip."
+      }
+    ],
+    "tip": "Tipping culture varies by country. In the US, 15-20% is standard. In Israel, 10-15% is common. In Japan, tipping can be seen as rude!",
+    "tipHe": "תרבות הטיפים משתנה ממדינה למדינה. בארה\"ב, 15-20% הוא סטנדרטי. בישראל, 10-15% נפוץ. ביפן, טיפ יכול להיחשב כלא מנומס!",
+    "synonyms": ["gratuity", "service charge"]
+  },
+  {
+    "id": "b1_045",
+    "word": "waiter",
+    "ipa": "/ˈweɪtər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "מלצר",
+    "definition": "A person whose job is to serve food and drinks at the tables in a restaurant.",
+    "definitionHe": "אדם שתפקידו להגיש אוכל ומשקאות לשולחנות במסעדה.",
+    "examples": [
+      "The waiter brought us the menus.",
+      "Excuse me, waiter, can we order?",
+      "Our waiter was very friendly and helpful."
+    ],
+    "audioHint": "WAY-ter",
+    "collocations": [
+      "call the waiter",
+      "ask the waiter",
+      "friendly waiter"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Waiter! Come here!",
+        "correct": "Excuse me, could we order please?",
+        "explanation": "בישראל נהוג לקרוא 'מלצר!' אבל באנגלית זה נחשב לא מנומס. עדיף לומר 'Excuse me' ולפנות בנימוס."
+      }
+    ],
+    "tip": "The gender-neutral term is 'server', which is increasingly preferred. 'Waiter' is for men; 'waitress' is for women, but many now use 'server' for everyone.",
+    "tipHe": "המונח הניטרלי מבחינה מגדרית הוא 'server', שמועדף יותר ויותר. 'Waiter' לגברים; 'waitress' לנשים, אבל רבים כיום משתמשים ב-'server' לכולם.",
+    "synonyms": ["server", "attendant"]
+  },
+  {
+    "id": "b1_046",
+    "word": "bill",
+    "ipa": "/bɪl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "חשבון",
+    "definition": "A piece of paper showing how much you owe for food and drinks at a restaurant.",
+    "definitionHe": "פיסת נייר שמראה כמה חייבים על אוכל ומשקאות במסעדה.",
+    "examples": [
+      "Can we have the bill, please?",
+      "Let's split the bill.",
+      "The bill came to $85."
+    ],
+    "audioHint": "bil",
+    "collocations": [
+      "pay the bill",
+      "split the bill",
+      "ask for the bill"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Can I have the check?",
+        "correct": "Can I have the bill? (British) / Can I have the check? (American)",
+        "explanation": "שני הביטויים נכונים! 'Bill' נפוץ באנגלית בריטית; 'check' נפוץ באנגלית אמריקאית. שניהם מובנים בכל מקום."
+      }
+    ],
+    "tip": "'Bill' (British) and 'check' (American) mean the same thing in a restaurant. 'Split the bill' means each person pays for their own food.",
+    "tipHe": "'Bill' (בריטי) ו-'check' (אמריקאי) אומרים אותו דבר במסעדה. 'Split the bill' אומר שכל אחד משלם על מה שהוא הזמין.",
+    "synonyms": ["check", "tab"]
+  },
+  {
+    "id": "b1_047",
+    "word": "portion",
+    "ipa": "/ˈpɔːrʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "מנה / כמות",
+    "definition": "The amount of food served to one person.",
+    "definitionHe": "כמות האוכל שמוגשת לאדם אחד.",
+    "examples": [
+      "The portions here are very generous.",
+      "Could I have a smaller portion?",
+      "American restaurants are known for large portions."
+    ],
+    "audioHint": "POR-shun",
+    "collocations": [
+      "large portion",
+      "small portion",
+      "portion size"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The dish was a big portion",
+        "correct": "The portion was very large",
+        "explanation": "ה-'dish' (מנה) הוא סוג האוכל; ה-'portion' (מנה/כמות) הוא גודל ההגשה. באנגלית מבדילים ביניהם."
+      }
+    ],
+    "tip": "'Portion' is the amount served. 'Serving' is similar but more precise (often used in nutrition). A 'helping' is informal: 'Can I have another helping?'",
+    "tipHe": "'Portion' הוא הכמות שמוגשת. 'Serving' דומה אבל מדויק יותר (נפוץ בתזונה). 'Helping' הוא לא רשמי: 'Can I have another helping?'",
+    "synonyms": ["serving", "helping"]
+  },
+  {
+    "id": "b1_048",
+    "word": "takeout",
+    "ipa": "/ˈteɪkaʊt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "אוכל לקחת / טייקאווי",
+    "definition": "Food that you buy at a restaurant to eat somewhere else.",
+    "definitionHe": "אוכל שקונים במסעדה כדי לאכול במקום אחר.",
+    "examples": [
+      "Let's order takeout tonight.",
+      "Do you offer takeout?",
+      "The takeout menu is different from the dine-in menu."
+    ],
+    "audioHint": "TAYK-out",
+    "collocations": [
+      "order takeout",
+      "get takeout",
+      "takeout menu"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I want to take the food away",
+        "correct": "I'd like this to go / I'd like takeout",
+        "explanation": "בעברית אומרים 'לקחת הביתה' אבל באנגלית אמריקאית אומרים 'to go' או 'takeout'. באנגלית בריטית אומרים 'takeaway'."
+      }
+    ],
+    "tip": "American: 'takeout' or 'to go'. British: 'takeaway'. When ordering: 'Is this for here or to go?' means 'Are you eating here or taking it with you?'",
+    "tipHe": "אמריקאי: 'takeout' או 'to go'. בריטי: 'takeaway'. כשמזמינים: 'Is this for here or to go?' אומר 'אתה אוכל כאן או לוקח?'",
+    "synonyms": ["takeaway", "to-go food"]
+  },
+  {
+    "id": "b1_049",
+    "word": "allergy",
+    "ipa": "/ˈælɜːrdʒi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "אלרגיה",
+    "definition": "A medical condition that causes your body to react badly to certain foods or substances.",
+    "definitionHe": "מצב רפואי שגורם לגוף להגיב בצורה רעה למזונות או חומרים מסוימים.",
+    "examples": [
+      "I have a nut allergy.",
+      "Do any dishes contain allergens?",
+      "Please let the kitchen know about any allergies."
+    ],
+    "audioHint": "AL-er-jee",
+    "collocations": [
+      "food allergy",
+      "nut allergy",
+      "allergy information"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I am allergic from nuts",
+        "correct": "I am allergic to nuts",
+        "explanation": "בעברית אומרים 'אלרגי ל-' ובאנגלית 'allergic to'. שימו לב: 'to' ולא 'from' או 'of'."
+      }
+    ],
+    "tip": "At a restaurant, say: 'I have a [food] allergy' or 'I'm allergic to [food]'. This is important for your safety. Common allergens: nuts, gluten, dairy, shellfish.",
+    "tipHe": "במסעדה, אמרו: 'I have a [food] allergy' או 'I'm allergic to [food]'. זה חשוב לבטיחות שלכם. אלרגנים נפוצים: אגוזים, גלוטן, חלב, פירות ים.",
+    "synonyms": ["sensitivity", "intolerance"]
+  },
+  {
+    "id": "b1_050",
+    "word": "chef",
+    "ipa": "/ʃɛf/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B1",
+    "category": "restaurant",
+    "translation": "שף",
+    "definition": "A professional cook, especially the main cook in a restaurant or hotel.",
+    "definitionHe": "טבח מקצועי, במיוחד הטבח הראשי במסעדה או מלון.",
+    "examples": [
+      "The chef prepared a special meal for us.",
+      "He trained as a chef in Paris.",
+      "The chef's recommendation is the grilled fish."
+    ],
+    "audioHint": "shef",
+    "collocations": [
+      "head chef",
+      "chef's special",
+      "pastry chef"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The chief prepared the food",
+        "correct": "The chef prepared the food",
+        "explanation": "אל תבלבלו בין 'chef' (שף, טבח) לבין 'chief' (ראש, מפקד). הם נשמעים דומה אבל המשמעות שונה לחלוטין."
+      }
+    ],
+    "tip": "'Chef' is French for 'chief' — meaning the chief of the kitchen. A 'cook' is anyone who cooks; a 'chef' is a trained professional. 'Head chef' is the boss of the kitchen.",
+    "tipHe": "'Chef' בצרפתית אומר 'ראש' — כלומר ראש המטבח. 'Cook' הוא כל מי שמבשל; 'chef' הוא מקצוען מיומן. 'Head chef' הוא הבוס של המטבח.",
+    "synonyms": ["cook", "culinary artist"]
+  }
+]

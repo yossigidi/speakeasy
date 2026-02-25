@@ -8,7 +8,8 @@
     "api/tts.js": { "maxDuration": 30 }
   },
   "crons": [
-    { "path": "/api/precache-tts", "schedule": "0 6 * * *" }
+    { "path": "/api/precache-tts", "schedule": "0 6 * * *" },
+    { "path": "/api/daily-reminder", "schedule": "0 6 * * *" }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
