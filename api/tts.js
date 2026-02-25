@@ -1,10 +1,31 @@
-import { GoogleGenAI } from '@google/genai';
 import { handleCors } from './_lib/cors.js';
 
-let ai = null;
-function getAI() {
-  if (!ai) ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  return ai;
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent';
+
+async function callTTS(prompt, voice, apiKey) {
+  const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        response_modalities: ['AUDIO'],
+        speech_config: {
+          voice_config: {
+            prebuilt_voice_config: { voice_name: voice },
+          },
+        },
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`Gemini ${response.status}: ${err}`);
+  }
+
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.inlineData;
 }
 
 export default async function handler(req, res) {
@@ -19,21 +40,24 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid text (required, max 500 chars)' });
   }
 
-  try {
-    const response = await getAI().models.generateContent({
-      model: 'gemini-2.5-flash-preview-tts',
-      contents: [{ parts: [{ text }] }],
-      config: {
-        responseModalities: ['AUDIO'],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: voice || 'Kore' },
-          },
-        },
-      },
-    });
+  const voiceName = voice || 'Kore';
+  const apiKey = process.env.GEMINI_API_KEY;
 
-    const audioData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+  try {
+    // Try with instruction prompt first; if model returns no audio
+    // (common with very short text), retry with padded prompt
+    let audioData = await callTTS(
+      `Read aloud the following text exactly as written: ${text}`,
+      voiceName, apiKey
+    );
+
+    if (!audioData?.data) {
+      audioData = await callTTS(
+        `Please pronounce this clearly: "${text}". Only speak the quoted text, nothing else.`,
+        voiceName, apiKey
+      );
+    }
+
     if (!audioData?.data) {
       return res.status(500).json({ error: 'No audio in response' });
     }
@@ -44,6 +68,6 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('TTS API error:', error.message);
-    return res.status(500).json({ error: 'TTS generation failed' });
+    return res.status(502).json({ error: 'TTS generation failed' });
   }
 }
