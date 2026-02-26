@@ -1133,13 +1133,13 @@ export default function EnglishQuestPage({ onBack }) {
         name={progress.displayName}
         emoji="⚔️"
         title="English Quest!"
-        titleHe="!משימת גיבורים"
+        titleHe="משימת גיבורים!"
         desc="Become a hero! Complete missions to defeat monsters using your English skills!"
         descHe="הפוך לגיבור! השלם משימות כדי להביס מפלצות עם כישורי האנגלית שלך!"
         uiLang={uiLang}
         gradient="from-amber-400 via-orange-500 to-red-500"
         buttonLabel="Let's go!"
-        buttonLabelHe="!בואו נלחם"
+        buttonLabelHe="בואו נלחם!"
       />
 
       {phase === 'intro' && (

@@ -122,13 +122,13 @@ export default function CurriculumPage({ onBack }) {
         name={progress.displayName}
         emoji="📚"
         title="Your Lessons!"
-        titleHe="!השיעורים שלך"
+        titleHe="השיעורים שלך!"
         desc="Follow the path and complete lessons to earn stars. Each lesson teaches you something new!"
         descHe="עקוב אחרי המסלול והשלם שיעורים כדי לצבור כוכבים. כל שיעור מלמד אותך משהו חדש!"
         uiLang={uiLang}
         gradient="from-red-500 via-orange-500 to-amber-500"
         buttonLabel="Let's learn!"
-        buttonLabelHe="!בואו נלמד"
+        buttonLabelHe="בואו נלמד!"
       />
 
       {/* Header */}

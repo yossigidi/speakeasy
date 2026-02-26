@@ -24,13 +24,13 @@ export default function KidsIntro({
   name,
   emoji = '🦉',
   title = "Let's go!",
-  titleHe = '!בואו נתחיל',
+  titleHe = 'בואו נתחיל!',
   desc = '',
   descHe = '',
   uiLang = 'en',
   gradient = 'from-indigo-500 via-purple-500 to-pink-500',
   buttonLabel = "Let's go!",
-  buttonLabelHe = '!יאללה',
+  buttonLabelHe = 'יאללה!',
   onDone,
 }) {
   const { speak, stopSpeaking } = useSpeech();
@@ -107,7 +107,7 @@ export default function KidsIntro({
           {/* Greeting with name */}
           {name && (
             <h2 className="text-2xl font-black rainbow-text py-1 mb-1">
-              {isHe ? `!${name} היי` : `Hi ${name}!`}
+              {isHe ? `היי ${name}!` : `Hi ${name}!`}
             </h2>
           )}
 

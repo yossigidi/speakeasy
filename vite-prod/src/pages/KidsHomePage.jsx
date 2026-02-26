@@ -47,10 +47,10 @@ function MascotGreeting({ name, uiLang }) {
         🦉
       </div>
       <h1 className="text-3xl font-black rainbow-text py-1">
-        {uiLang === 'he' ? `!${name || ''} היי` : `Hi ${name || ''}!`}
+        {uiLang === 'he' ? `היי ${name || ''}!` : `Hi ${name || ''}!`}
       </h1>
       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 animate-pop-in">
-        {uiLang === 'he' ? '!בוא נלמד אנגלית היום' : "Let's learn English today!"}
+        {uiLang === 'he' ? 'בוא נלמד אנגלית היום!' : "Let's learn English today!"}
       </p>
     </div>
   );
@@ -377,13 +377,13 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         name={progress.displayName}
         emoji="🦉"
         title="Welcome back!"
-        titleHe="!ברוכים הבאים"
+        titleHe="ברוכים הבאים!"
         desc="This is your learning home! Pick any activity to start learning English. Have fun!"
         descHe="זה הבית שלך ללמידה! בחר פעילות ותתחיל ללמוד אנגלית. בהצלחה!"
         uiLang={uiLang}
         gradient="from-purple-500 via-pink-500 to-rose-500"
         buttonLabel="Let's learn!"
-        buttonLabelHe="!בואו נלמד"
+        buttonLabelHe="בואו נלמד!"
       />
 
       <div className="relative z-10 px-4 pt-4 space-y-5">

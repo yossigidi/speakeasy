@@ -349,13 +349,13 @@ export default function ReadingPage() {
         name={progress.displayName}
         emoji="📖"
         title="Read Stories!"
-        titleHe="!קריאת סיפורים"
+        titleHe="קריאת סיפורים!"
         desc="Read fun stories and learn new words along the way!"
         descHe="קרא סיפורים כיפיים ולמד מילים חדשות בדרך!"
         uiLang={uiLang}
         gradient="from-rose-500 via-pink-500 to-fuchsia-500"
         buttonLabel="Let's read!"
-        buttonLabelHe="!בואו נקרא"
+        buttonLabelHe="בואו נקרא!"
       />
       <h2 className="text-xl font-bold text-gray-900 dark:text-white">
         {t('stories', uiLang)}

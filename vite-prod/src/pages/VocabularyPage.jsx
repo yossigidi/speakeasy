@@ -1107,13 +1107,13 @@ export default function VocabularyPage() {
         name={progress.displayName}
         emoji="📚"
         title="New Words!"
-        titleHe="!מילים חדשות"
+        titleHe="מילים חדשות!"
         desc="Learn new English words with flashcards and quizzes!"
         descHe="למד מילים חדשות באנגלית עם כרטיסיות ומשחקים!"
         uiLang={uiLang}
         gradient="from-emerald-500 via-green-500 to-teal-500"
         buttonLabel="Let's learn!"
-        buttonLabelHe="!בואו נלמד"
+        buttonLabelHe="בואו נלמד!"
       />
       {/* Quick Learn - Random 5 Words (level-appropriate) */}
       <GlassCard

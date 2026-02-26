@@ -73,13 +73,13 @@ function LetterGrid({ onSelect, completedLetters }) {
         name={progress.displayName}
         emoji="🔤"
         title="Learn the Alphabet!"
-        titleHe="!למד את האלפבית"
+        titleHe="למד את האלפבית!"
         desc="Tap on any letter to hear it and learn words. Complete all 26 letters to become an alphabet champion!"
         descHe="לחץ על כל אות כדי לשמוע אותה וללמוד מילים. השלם את כל 26 האותיות כדי להיות אלוף האלפבית!"
         uiLang={uiLang}
         gradient="from-pink-500 via-rose-500 to-red-500"
         buttonLabel="Let's start!"
-        buttonLabelHe="!בואו נתחיל"
+        buttonLabelHe="בואו נתחיל!"
       />
 
       <div className="relative z-10 stagger-children">

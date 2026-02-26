@@ -1026,13 +1026,13 @@ function GameSelector({ onSelectGame, onBack }) {
         name={progress.displayName}
         emoji="🎮"
         title="Game Time!"
-        titleHe="!זמן משחקים"
+        titleHe="זמן משחקים!"
         desc="Choose a game and practice English while having fun! Each game gives you XP points."
         descHe="בחר משחק ותרגל אנגלית תוך כדי כיף! כל משחק נותן לך נקודות XP."
         uiLang={uiLang}
         gradient="from-cyan-500 via-blue-500 to-indigo-500"
         buttonLabel="Let's play!"
-        buttonLabelHe="!בואו נשחק"
+        buttonLabelHe="בואו נשחק!"
       />
 
       <div className="relative z-10 px-4 pt-3">
