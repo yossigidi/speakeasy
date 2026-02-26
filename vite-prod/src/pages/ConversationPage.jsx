@@ -190,7 +190,7 @@ export default function ConversationPage() {
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200/50 dark:border-gray-700/50">
         <button onClick={() => { setScenario(null); setMessages([]); }} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} />
+          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
         </button>
         <span className="text-xl">{scenario.emoji}</span>
         <h3 className="font-semibold text-gray-900 dark:text-white">

@@ -58,7 +58,7 @@ export default function SupportTicketsPage({ onBack }) {
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <button onClick={onBack} className="p-2 rounded-xl bg-white/60 dark:bg-gray-800/60">
-          <ChevronLeft size={20} className="text-gray-600 dark:text-gray-300" />
+          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${uiLang === 'he' ? 'rotate-180' : ''}`} />
         </button>
         <div className="flex items-center gap-2">
           <Ticket size={22} className="text-cyan-500" />

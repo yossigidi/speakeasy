@@ -14,7 +14,10 @@ export default function ChildModeBanner() {
 
   return (
     <>
-      <div className={`sticky top-0 z-40 bg-gradient-to-r ${activeChild.avatarColor} px-4 py-2 flex items-center justify-between shadow-md`}>
+      <div
+        className={`sticky top-0 z-40 bg-gradient-to-r ${activeChild.avatarColor} px-4 py-2 flex items-center justify-between shadow-md`}
+        style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 8px)' }}
+      >
         <div className="flex items-center gap-2">
           <span className="text-lg">{activeChild.avatar}</span>
           <span className="text-white font-semibold text-sm">

@@ -110,45 +110,60 @@ export async function preloadEnglishAudio(texts) {
  * @param {string} text - text to speak
  * @param {string} [lang] - 'he' or 'en' (auto-detected if omitted)
  */
-export async function playFromAPI(text, lang) {
+/**
+ * Play text via Google Cloud TTS API.
+ * Returns { started: true, endPromise } on success, or { started: false } on failure.
+ * The caller can use `started` to know audio began immediately,
+ * and `endPromise` to chain actions after playback finishes.
+ */
+export async function playFromAPI(text, lang, signal) {
   try {
     const trimmed = text.trim();
-    if (!trimmed) return false;
+    if (!trimmed) return { started: false };
 
     const ctx = getAudioContext();
     if (ctx.state === 'suspended') await ctx.resume();
 
     const key = cacheKey(trimmed, lang);
 
-    // Check cache first
-    if (apiAudioCache.has(key)) {
-      const cached = apiAudioCache.get(key);
+    // Helper to play a cached AudioBuffer
+    const playBuffer = (audioBuffer) => {
+      if (signal && signal.aborted) return { started: false };
       const source = ctx.createBufferSource();
-      source.buffer = cached;
+      source.buffer = audioBuffer;
       source.connect(ctx.destination);
       activeSources.add(source);
-      return new Promise(resolve => {
-        source.onended = () => { activeSources.delete(source); resolve(true); };
-        source.start(0);
+      const endPromise = new Promise(resolve => {
+        source.onended = () => { activeSources.delete(source); resolve(); };
       });
+      source.start(0);
+      return { started: true, endPromise };
+    };
+
+    // Check cache first
+    if (apiAudioCache.has(key)) {
+      return playBuffer(apiAudioCache.get(key));
     }
 
-    // Fetch from API
-    const res = await fetch('/api/tts', {
+    // Fetch from API (pass signal to cancel fetch if needed)
+    const fetchOpts = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: trimmed, lang }),
-    });
+    };
+    if (signal) fetchOpts.signal = signal;
+
+    const res = await fetch('/api/tts', fetchOpts);
 
     if (!res.ok) {
       console.warn('TTS API: HTTP', res.status);
-      return false;
+      return { started: false };
     }
 
     const { audio } = await res.json();
     if (!audio) {
       console.warn('TTS API: no audio in response');
-      return false;
+      return { started: false };
     }
 
     // Decode base64 MP3 → ArrayBuffer → AudioBuffer
@@ -161,18 +176,11 @@ export async function playFromAPI(text, lang) {
     // Cache for reuse
     apiAudioCache.set(key, audioBuffer);
 
-    // Play
-    const source = ctx.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(ctx.destination);
-    activeSources.add(source);
-    return new Promise(resolve => {
-      source.onended = () => { activeSources.delete(source); resolve(true); };
-      source.start(0);
-    });
+    return playBuffer(audioBuffer);
   } catch (e) {
+    if (e.name === 'AbortError') return { started: false };
     console.warn('TTS API failed:', e.message);
-    return false;
+    return { started: false };
   }
 }
 
@@ -260,10 +268,11 @@ export function playSequence(items, speakEnglish, onDone) {
 
     // Try Cloud TTS API first for both languages (natural voice)
     const apiLang = isHebrew ? 'he' : 'en';
-    playFromAPI(item.text, apiLang).then(async (played) => {
+    playFromAPI(item.text, apiLang).then(async (result) => {
       if (sequenceCancelled) return;
-      if (played) {
-        playNext();
+      if (result.started) {
+        await result.endPromise;
+        if (!sequenceCancelled) playNext();
         return;
       }
 

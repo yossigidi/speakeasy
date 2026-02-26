@@ -14,8 +14,10 @@ import Modal from '../components/shared/Modal.jsx';
 import wordsA1 from '../data/words-a1.json';
 import wordsA2 from '../data/words-a2.json';
 import wordsBusiness from '../data/words-business.json';
+import wordsB2 from '../data/words-b2.json';
+import wordsC1 from '../data/words-c1.json';
 
-const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsBusiness];
+const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsBusiness, ...wordsB2, ...wordsC1];
 const CATEGORIES = [...new Set(ALL_WORDS.map(w => w.category))];
 
 // ── Word Detail Modal ────────────────────────────────────
@@ -266,7 +268,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} />
+          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
         </button>
         <div className="flex items-center gap-2">
           <GraduationCap size={16} className="text-brand-500" />
@@ -618,7 +620,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} />
+          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
         </button>
         <div className="flex items-center gap-2">
           <Brain size={16} className="text-amber-500" />
@@ -779,6 +781,26 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
     transport: { emoji: '🚇', labelHe: 'תחבורה', color: 'from-blue-400 to-indigo-400' },
     communication: { emoji: '💬', labelHe: 'תקשורת', color: 'from-cyan-400 to-blue-400' },
     idioms: { emoji: '💡', labelHe: 'ביטויים', color: 'from-yellow-400 to-orange-400' },
+    // B1 categories
+    business: { emoji: '💼', labelHe: 'עסקים', color: 'from-slate-400 to-blue-400' },
+    // B2 categories
+    media: { emoji: '📺', labelHe: 'תקשורת', color: 'from-red-400 to-pink-400' },
+    politics: { emoji: '🏛️', labelHe: 'פוליטיקה', color: 'from-blue-400 to-indigo-400' },
+    science: { emoji: '🔬', labelHe: 'מדע', color: 'from-cyan-400 to-teal-400' },
+    finance: { emoji: '💰', labelHe: 'פיננסים', color: 'from-green-400 to-emerald-400' },
+    psychology: { emoji: '🧠', labelHe: 'פסיכולוגיה', color: 'from-purple-400 to-violet-400' },
+    law: { emoji: '⚖️', labelHe: 'משפט', color: 'from-gray-400 to-slate-400' },
+    'abstract-concepts': { emoji: '💭', labelHe: 'מושגים מופשטים', color: 'from-indigo-400 to-purple-400' },
+    career: { emoji: '📈', labelHe: 'קריירה', color: 'from-amber-400 to-orange-400' },
+    // C1 categories
+    academic: { emoji: '🎓', labelHe: 'אקדמי', color: 'from-indigo-400 to-blue-400' },
+    literature: { emoji: '📜', labelHe: 'ספרות', color: 'from-rose-400 to-pink-400' },
+    rhetoric: { emoji: '🎤', labelHe: 'רטוריקה', color: 'from-orange-400 to-red-400' },
+    diplomacy: { emoji: '🤝', labelHe: 'דיפלומטיה', color: 'from-teal-400 to-cyan-400' },
+    economics: { emoji: '📊', labelHe: 'כלכלה', color: 'from-emerald-400 to-green-400' },
+    research: { emoji: '🔍', labelHe: 'מחקר', color: 'from-blue-400 to-cyan-400' },
+    journalism: { emoji: '📰', labelHe: 'עיתונאות', color: 'from-gray-400 to-blue-400' },
+    ethics: { emoji: '⚖️', labelHe: 'אתיקה', color: 'from-violet-400 to-purple-400' },
   };
 
   // Separate A1 and A2 categories
@@ -789,6 +811,18 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
   const a2Categories = CATEGORIES.filter(cat => {
     const catWords = ALL_WORDS.filter(w => w.category === cat);
     return catWords.every(w => w.cefrLevel === 'A2');
+  });
+  const b1Categories = CATEGORIES.filter(cat => {
+    const catWords = ALL_WORDS.filter(w => w.category === cat);
+    return catWords.some(w => w.cefrLevel === 'B1') && !catWords.some(w => w.cefrLevel === 'A1' || w.cefrLevel === 'A2');
+  });
+  const b2Categories = CATEGORIES.filter(cat => {
+    const catWords = ALL_WORDS.filter(w => w.category === cat);
+    return catWords.some(w => w.cefrLevel === 'B2') && !catWords.some(w => ['A1','A2','B1'].includes(w.cefrLevel));
+  });
+  const c1Categories = CATEGORIES.filter(cat => {
+    const catWords = ALL_WORDS.filter(w => w.category === cat);
+    return catWords.some(w => w.cefrLevel === 'C1') && !catWords.some(w => ['A1','A2','B1','B2'].includes(w.cefrLevel));
   });
 
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
@@ -845,6 +879,9 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
     <div className="space-y-6">
       {a1Categories.length > 0 && renderGrid(a1Categories, 'A1')}
       {a2Categories.length > 0 && renderGrid(a2Categories, 'A2')}
+      {b1Categories.length > 0 && renderGrid(b1Categories, 'B1')}
+      {b2Categories.length > 0 && renderGrid(b2Categories, 'B2')}
+      {c1Categories.length > 0 && renderGrid(c1Categories, 'C1')}
     </div>
   );
 }
@@ -892,6 +929,26 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
     transport: { emoji: '🚇', labelHe: 'תחבורה' },
     communication: { emoji: '💬', labelHe: 'תקשורת' },
     idioms: { emoji: '💡', labelHe: 'ביטויים' },
+    // B1
+    business: { emoji: '💼', labelHe: 'עסקים' },
+    // B2
+    media: { emoji: '📺', labelHe: 'תקשורת' },
+    politics: { emoji: '🏛️', labelHe: 'פוליטיקה' },
+    science: { emoji: '🔬', labelHe: 'מדע' },
+    finance: { emoji: '💰', labelHe: 'פיננסים' },
+    psychology: { emoji: '🧠', labelHe: 'פסיכולוגיה' },
+    law: { emoji: '⚖️', labelHe: 'משפט' },
+    'abstract-concepts': { emoji: '💭', labelHe: 'מושגים מופשטים' },
+    career: { emoji: '📈', labelHe: 'קריירה' },
+    // C1
+    academic: { emoji: '🎓', labelHe: 'אקדמי' },
+    literature: { emoji: '📜', labelHe: 'ספרות' },
+    rhetoric: { emoji: '🎤', labelHe: 'רטוריקה' },
+    diplomacy: { emoji: '🤝', labelHe: 'דיפלומטיה' },
+    economics: { emoji: '📊', labelHe: 'כלכלה' },
+    research: { emoji: '🔍', labelHe: 'מחקר' },
+    journalism: { emoji: '📰', labelHe: 'עיתונאות' },
+    ethics: { emoji: '⚖️', labelHe: 'אתיקה' },
   };
 
   const info = categoryInfo[category] || { emoji: '📚', labelHe: category };
@@ -901,7 +958,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
       {/* Header */}
       <div className="flex items-center gap-3">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} />
+          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
         </button>
         <div className="flex items-center gap-2 flex-1">
           <span className="text-xl">{info.emoji}</span>

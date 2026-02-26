@@ -4,11 +4,14 @@ import UnitIsland from '../components/curriculum/UnitIsland.jsx';
 import CurriculumLessonRunner from '../components/curriculum/CurriculumLessonRunner.jsx';
 import useCurriculumProgress from '../hooks/useCurriculumProgress.js';
 import { useTheme } from '../contexts/ThemeContext.jsx';
+import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { getLevel, LEVEL_META, LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 export default function CurriculumPage({ onBack }) {
   const { uiLang } = useTheme();
+  const { progress } = useUserProgress();
   const {
     curriculum,
     isLessonUnlocked,
@@ -114,6 +117,20 @@ export default function CurriculumPage({ onBack }) {
       minHeight: '100vh',
       background: 'linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%)',
     }}>
+      <KidsIntro
+        id="kids-curriculum"
+        name={progress.displayName}
+        emoji="📚"
+        title="Your Lessons!"
+        titleHe="!השיעורים שלך"
+        desc="Follow the path and complete lessons to earn stars. Each lesson teaches you something new!"
+        descHe="עקוב אחרי המסלול והשלם שיעורים כדי לצבור כוכבים. כל שיעור מלמד אותך משהו חדש!"
+        uiLang={uiLang}
+        gradient="from-red-500 via-orange-500 to-amber-500"
+        buttonLabel="Let's learn!"
+        buttonLabelHe="!בואו נלמד"
+      />
+
       {/* Header */}
       <div style={{
         display: 'flex', alignItems: 'center', gap: 12,

@@ -265,3 +265,47 @@ export const LEVEL_INFO = [
   { name: 'קורא', nameEn: 'Reader', emoji: '📖', color: 'from-purple-400 to-violet-500', textColor: 'text-purple-600 dark:text-purple-400' },
   { name: 'אלוף', nameEn: 'Champion', emoji: '🏆', color: 'from-orange-400 to-amber-500', textColor: 'text-orange-600 dark:text-orange-400' },
 ];
+
+// Quest grammar fill-in-blank sentences per level
+export const QUEST_GRAMMAR = {
+  1: [
+    { sentence: 'I ___ a cat', blank: 'have', options: ['have', 'has', 'is'], translationHe: 'יש לי חתול' },
+    { sentence: 'The dog ___ big', blank: 'is', options: ['is', 'am', 'are'], translationHe: 'הכלב גדול' },
+    { sentence: 'I ___ happy', blank: 'am', options: ['am', 'is', 'are'], translationHe: 'אני שמח' },
+    { sentence: 'The ball ___ red', blank: 'is', options: ['is', 'am', 'has'], translationHe: 'הכדור אדום' },
+    { sentence: 'I ___ an apple', blank: 'like', options: ['like', 'likes', 'liking'], translationHe: 'אני אוהב תפוח' },
+    { sentence: 'Hello, ___ name is Dan', blank: 'my', options: ['my', 'me', 'I'], translationHe: 'שלום, השם שלי דן' },
+    { sentence: 'The cat ___ small', blank: 'is', options: ['is', 'am', 'has'], translationHe: 'החתול קטן' },
+    { sentence: 'I can ___ a star', blank: 'see', options: ['see', 'sees', 'saw'], translationHe: 'אני יכול לראות כוכב' },
+  ],
+  2: [
+    { sentence: 'She ___ a dog', blank: 'has', options: ['has', 'have', 'had'], translationHe: 'יש לה כלב' },
+    { sentence: 'We ___ friends', blank: 'are', options: ['are', 'is', 'am'], translationHe: 'אנחנו חברים' },
+    { sentence: 'He ___ to school', blank: 'goes', options: ['goes', 'go', 'going'], translationHe: 'הוא הולך לבית ספר' },
+    { sentence: 'They ___ playing', blank: 'are', options: ['are', 'is', 'am'], translationHe: 'הם משחקים' },
+    { sentence: 'The bird ___ fly', blank: 'can', options: ['can', 'is', 'has'], translationHe: 'הציפור יכולה לעוף' },
+    { sentence: 'I ___ cake', blank: 'like', options: ['like', 'likes', 'liking'], translationHe: 'אני אוהב עוגה' },
+    { sentence: 'Mom ___ cooking', blank: 'is', options: ['is', 'am', 'are'], translationHe: 'אמא מבשלת' },
+    { sentence: 'The sun ___ hot', blank: 'is', options: ['is', 'am', 'has'], translationHe: 'השמש חמה' },
+  ],
+  3: [
+    { sentence: 'I ___ to the park yesterday', blank: 'went', options: ['went', 'go', 'goes'], translationHe: 'הלכתי לפארק אתמול' },
+    { sentence: 'She ___ reading a book', blank: 'is', options: ['is', 'am', 'are'], translationHe: 'היא קוראת ספר' },
+    { sentence: 'They ___ not like rain', blank: 'do', options: ['do', 'does', 'did'], translationHe: 'הם לא אוהבים גשם' },
+    { sentence: 'He ___ fast', blank: 'runs', options: ['runs', 'run', 'running'], translationHe: 'הוא רץ מהר' },
+    { sentence: 'We ___ eat lunch now', blank: 'will', options: ['will', 'was', 'is'], translationHe: 'נאכל ארוחת צהריים עכשיו' },
+    { sentence: 'The flower ___ beautiful', blank: 'is', options: ['is', 'are', 'has'], translationHe: 'הפרח יפה' },
+    { sentence: 'I ___ my homework', blank: 'did', options: ['did', 'do', 'does'], translationHe: 'עשיתי את שיעורי הבית' },
+    { sentence: 'She ___ two cats', blank: 'has', options: ['has', 'have', 'is'], translationHe: 'יש לה שני חתולים' },
+  ],
+  4: [
+    { sentence: 'If it rains, I ___ stay home', blank: 'will', options: ['will', 'was', 'am'], translationHe: 'אם ירד גשם, אשאר בבית' },
+    { sentence: 'She ___ already eaten', blank: 'has', options: ['has', 'have', 'had'], translationHe: 'היא כבר אכלה' },
+    { sentence: 'They ___ playing since morning', blank: 'have been', options: ['have been', 'has been', 'was'], translationHe: 'הם משחקים מהבוקר' },
+    { sentence: 'He ___ not come yesterday', blank: 'did', options: ['did', 'does', 'do'], translationHe: 'הוא לא בא אתמול' },
+    { sentence: 'We should ___ more books', blank: 'read', options: ['read', 'reads', 'reading'], translationHe: 'עלינו לקרוא יותר ספרים' },
+    { sentence: 'The elephant ___ the biggest animal', blank: 'is', options: ['is', 'are', 'am'], translationHe: 'הפיל הוא החיה הגדולה ביותר' },
+    { sentence: 'I ___ never seen a whale', blank: 'have', options: ['have', 'has', 'had'], translationHe: 'מעולם לא ראיתי לווייתן' },
+    { sentence: 'She ___ her homework every day', blank: 'does', options: ['does', 'do', 'did'], translationHe: 'היא עושה שיעורי בית כל יום' },
+  ],
+};

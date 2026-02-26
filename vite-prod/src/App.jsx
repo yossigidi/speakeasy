@@ -35,6 +35,7 @@ import SupportPage from './pages/SupportPage.jsx';
 import SupportFAQPage from './pages/SupportFAQPage.jsx';
 import SupportContactPage from './pages/SupportContactPage.jsx';
 import SupportTicketsPage from './pages/SupportTicketsPage.jsx';
+import EnglishQuestPage from './pages/EnglishQuestPage.jsx';
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -44,7 +45,7 @@ import { t } from './utils/translations.js';
 function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const { childUser, logoutChild } = useChildAuth();
-  const { progress, loading: progressLoading, children, isChildMode } = useUserProgress();
+  const { progress, loading: progressLoading, children, childrenLoaded, isChildMode } = useUserProgress();
   const { uiLang } = useTheme();
   const { dueCount } = useSpacedRepetition();
   const [currentPage, setCurrentPage] = useState('home');
@@ -104,8 +105,8 @@ function AppContent() {
     }
   }, [user, progress.onboardingComplete, profileSelected, children.length]);
 
-  // Show loading while auth initializes
-  if (authLoading || (user && progressLoading)) {
+  // Show loading while auth initializes or children are loading
+  if (authLoading || (user && progressLoading) || (user && progress.onboardingComplete && !childrenLoaded)) {
     return (
       <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)' }}>
         <div className="text-center">
@@ -180,11 +181,12 @@ function AppContent() {
     'support-faq': t('faq', uiLang),
     'support-contact': t('contactSupport', uiLang),
     'support-tickets': t('myTickets', uiLang),
+    'english-quest': null,
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -222,6 +224,8 @@ function AppContent() {
         return <KidsAlphabetPage />;
       case 'kids-games':
         return <KidsGamesPage onBack={() => navigateTo('home')} />;
+      case 'english-quest':
+        return <EnglishQuestPage onBack={() => navigateTo('home')} />;
       case 'audio-learn':
         return <AudioLearningPage onBack={() => navigateTo('home')} />;
       case 'family':
@@ -302,6 +306,8 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         return <KidsAlphabetPage />;
       case 'kids-games':
         return <KidsGamesPage onBack={() => navigateTo('home')} />;
+      case 'english-quest':
+        return <EnglishQuestPage onBack={() => navigateTo('home')} />;
       case 'kids-teacher':
         return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       case 'curriculum':

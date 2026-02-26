@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { playHebrew, playFromAPI } from '../utils/hebrewAudio';
+import { playHebrew, playFromAPI, stopAllAudio } from '../utils/hebrewAudio';
 
 const SpeechContext = createContext(null);
 
@@ -168,23 +168,21 @@ export function SpeechProvider({ children }) {
   const speak = useCallback((text, options = {}) => {
     if (!text) return;
 
-    // Only cancel if not queuing
-    if (!options._queued && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
+    // Cancel ALL audio from all channels (not just WebSpeech)
+    if (!options._queued) {
+      stopAllAudio();
     }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
     const apiLang = isHebrew ? 'he' : 'en';
 
-    // For both languages: try Cloud TTS API first (natural voice)
     setIsSpeaking(true);
-    playFromAPI(text, apiLang).then(async (played) => {
-      if (played) {
-        setIsSpeaking(false);
-        if (options.onEnd) options.onEnd();
-        return;
-      }
 
+    const abortCtrl = new AbortController();
+    const API_TIMEOUT = 2000;
+    let settled = false;
+
+    const fallbackToLocal = async () => {
       // Hebrew-specific fallback: pre-recorded MP3
       if (isHebrew) {
         const mp3Played = await playHebrew(text);
@@ -194,10 +192,48 @@ export function SpeechProvider({ children }) {
           return;
         }
       }
-
       // Last resort: Web Speech API
       speakWithWebSpeech(text, { ...options, _queued: true });
+    };
+
+    // Try Cloud TTS with abort signal
+    const apiPromise = playFromAPI(text, apiLang, abortCtrl.signal);
+
+    apiPromise.then(async (result) => {
+      if (settled) return;
+      if (result.started) {
+        // Audio is playing — cancel timeout, mark settled
+        settled = true;
+        clearTimeout(timeoutId);
+        // Wait for audio to finish, then fire onEnd
+        await result.endPromise;
+        setIsSpeaking(false);
+        if (options.onEnd) options.onEnd();
+      } else {
+        // API failed — fall back
+        if (!settled) {
+          settled = true;
+          clearTimeout(timeoutId);
+          fallbackToLocal();
+        }
+      }
+    }).catch(() => {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeoutId);
+        fallbackToLocal();
+      }
     });
+
+    // Timeout: abort the API request and fall back
+    const timeoutId = setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        abortCtrl.abort();
+        stopAllAudio();
+        fallbackToLocal();
+      }
+    }, API_TIMEOUT);
   }, [speakWithWebSpeech]);
 
   // ── speakSequence: chain multiple texts smoothly ─────────
@@ -209,7 +245,7 @@ export function SpeechProvider({ children }) {
       return;
     }
 
-    window.speechSynthesis.cancel();
+    stopAllAudio();
 
     let index = 0;
 
@@ -241,7 +277,7 @@ export function SpeechProvider({ children }) {
   }, [speak]);
 
   const stopSpeaking = useCallback(() => {
-    window.speechSynthesis.cancel();
+    stopAllAudio();
     setIsSpeaking(false);
     stopKeepAlive();
   }, [stopKeepAlive]);

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import { BookOpen, MessageCircle, BookA, Mic, ChevronRight, Clock, Volume2, Lightbulb, GraduationCap, Headphones } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -11,21 +11,73 @@ import DailyGoalRing from '../components/gamification/DailyGoalRing.jsx';
 
 import wordsA1 from '../data/words-a1.json';
 import wordsA2 from '../data/words-a2.json';
+import wordsB2 from '../data/words-b2.json';
+import wordsC1 from '../data/words-c1.json';
 import grammarRules from '../data/grammar-rules.json';
 
-const ALL_WORDS = [...wordsA1, ...wordsA2];
+const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsB2, ...wordsC1];
 
 export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { uiLang, dir } = useTheme();
   const { progress } = useUserProgress();
-  const { speak } = useSpeech();
+  const { speak, speakSequence, ttsSupported } = useSpeech();
 
-  // Word of the Day - deterministic based on date
+  // Welcome speech on first visit per session (mature style for adults)
+  // Triggered after first user tap (to satisfy browser autoplay policy)
+  const welcomeSpokenRef = useRef(false);
+  useEffect(() => {
+    if (welcomeSpokenRef.current) return;
+    if (!ttsSupported) return;
+    const key = 'home-welcome-spoken';
+    if (sessionStorage.getItem(key)) {
+      welcomeSpokenRef.current = true;
+      return;
+    }
+
+    const name = progress.displayName;
+    const doSpeak = () => {
+      if (welcomeSpokenRef.current) return;
+      welcomeSpokenRef.current = true;
+      sessionStorage.setItem(key, '1');
+      document.removeEventListener('click', doSpeak);
+      document.removeEventListener('touchstart', doSpeak);
+      setTimeout(() => {
+        if (uiLang === 'he') {
+          speak(name ? `שלום ${name}, ברוך הבא חזרה` : 'שלום, ברוך הבא חזרה', { lang: 'he', rate: 0.95 });
+        } else {
+          speak(name ? `Welcome back, ${name}!` : 'Welcome back!', { lang: 'en-US', rate: 0.9 });
+        }
+      }, 300);
+    };
+
+    // Try immediately (works if user already interacted via profile picker)
+    const timer = setTimeout(doSpeak, 1200);
+
+    // Also listen for first tap as fallback
+    document.addEventListener('click', doSpeak, { once: true });
+    document.addEventListener('touchstart', doSpeak, { once: true });
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('click', doSpeak);
+      document.removeEventListener('touchstart', doSpeak);
+    };
+  }, [ttsSupported]);
+
+  // Word of the Day - deterministic based on date, filtered by user level
   const wordOfDay = useMemo(() => {
+    const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const currLevel = progress.cefrLevel || 'A1';
+    const userLevelIndex = levelOrder.indexOf(currLevel);
+    const levelWords = ALL_WORDS.filter(w => {
+      const wordLevelIndex = levelOrder.indexOf(w.cefrLevel || 'A1');
+      return wordLevelIndex <= userLevelIndex;
+    });
+    const pool = levelWords.length > 0 ? levelWords : ALL_WORDS;
     const today = new Date();
-    const dayIndex = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % ALL_WORDS.length;
-    return ALL_WORDS[dayIndex];
-  }, []);
+    const dayIndex = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % pool.length;
+    return pool[dayIndex];
+  }, [progress.cefrLevel]);
 
   // Grammar tip of the day
   const grammarTip = useMemo(() => {

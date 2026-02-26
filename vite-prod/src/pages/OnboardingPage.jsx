@@ -743,7 +743,7 @@ function StepWrapper({ title, onBack, children }) {
           onClick={onBack}
           className="flex items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 mb-4 transition-colors"
         >
-          <ArrowLeft size={18} />
+          <ArrowLeft size={18} className="rtl:rotate-180" />
         </button>
       )}
       <h2 className="text-2xl font-bold text-center mb-2">{title}</h2>

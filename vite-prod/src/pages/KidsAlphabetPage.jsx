@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 import alphabetData from '../data/alphabet-kids.json';
 
 /* ── Confetti burst helper ── */
@@ -61,10 +62,26 @@ function FloatingDecorations() {
 function LetterGrid({ onSelect, completedLetters }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
+  const { progress } = useUserProgress();
 
   return (
     <div className="kids-bg min-h-screen pb-24 px-4 pt-2 relative">
       <FloatingDecorations />
+
+      <KidsIntro
+        id="kids-alphabet"
+        name={progress.displayName}
+        emoji="🔤"
+        title="Learn the Alphabet!"
+        titleHe="!למד את האלפבית"
+        desc="Tap on any letter to hear it and learn words. Complete all 26 letters to become an alphabet champion!"
+        descHe="לחץ על כל אות כדי לשמוע אותה וללמוד מילים. השלם את כל 26 האותיות כדי להיות אלוף האלפבית!"
+        uiLang={uiLang}
+        gradient="from-pink-500 via-rose-500 to-red-500"
+        buttonLabel="Let's start!"
+        buttonLabelHe="!בואו נתחיל"
+      />
+
       <div className="relative z-10 stagger-children">
         {/* Header */}
         <div className="text-center mb-4">
@@ -179,7 +196,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
       <div className="relative z-10 stagger-children">
         {/* Back button */}
         <button onClick={onBack} className="flex items-center gap-1 text-gray-500 hover:text-gray-700 mb-3 bg-white/50 dark:bg-gray-800/50 rounded-full px-3 py-1.5 backdrop-blur-sm">
-          <ArrowLeft size={16} />
+          <ArrowLeft size={16} className={uiLang === 'he' ? 'rotate-180' : ''} />
           <span className="text-sm font-medium">{uiLang === 'he' ? 'חזרה' : 'Back'}</span>
         </button>
 
@@ -772,7 +789,7 @@ function GameFlow({ letter, onComplete, onBack }) {
         {/* Game header */}
         <div className="flex items-center justify-between mb-3">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
           <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1.5">
             <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${letter.color} flex items-center justify-center`}>

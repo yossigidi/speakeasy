@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BookOpen, Clock, Volume2, ArrowLeft, Plus, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { BookOpen, Clock, Volume2, VolumeX, ArrowLeft, Plus, ChevronRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
@@ -131,9 +131,28 @@ function StoryCard({ story, onClick }) {
 function ReadingView({ story, onBack }) {
   const { uiLang } = useTheme();
   const { addXP } = useUserProgress();
-  const { speak } = useSpeechSynthesis();
+  const { speak, stop, isSpeaking } = useSpeechSynthesis();
   const { addWord } = useSpacedRepetition();
+  const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [selectedWord, setSelectedWord] = useState(null);
+
+  const toggleReadAloud = useCallback(() => {
+    if (isReadingAloud) {
+      stop();
+      setIsReadingAloud(false);
+    } else {
+      stop(); // ensure any previous audio is fully stopped
+      setIsReadingAloud(true);
+      speak(story.text, {
+        onEnd: () => setIsReadingAloud(false),
+      });
+    }
+  }, [isReadingAloud, speak, stop, story.text]);
+
+  // Stop audio when leaving the story
+  useEffect(() => {
+    return () => stop();
+  }, [stop]);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizCorrect, setQuizCorrect] = useState(0);
@@ -190,7 +209,7 @@ function ReadingView({ story, onBack }) {
       <div className="pb-24 px-4 pt-4 space-y-4">
         <div className="flex items-center gap-2">
           <button onClick={() => setShowQuiz(false)} className="p-1.5 rounded-lg hover:bg-black/5">
-            <ArrowLeft size={20} />
+            <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
           <span className="text-sm text-gray-500">{quizIndex + 1}/{story.questions.length}</span>
         </div>
@@ -220,10 +239,17 @@ function ReadingView({ story, onBack }) {
     <div className="pb-24 px-4 pt-4 space-y-4">
       <div className="flex items-center justify-between">
         <button onClick={onBack} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} />
+          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
         </button>
-        <button onClick={() => speak(story.text)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-100 dark:bg-brand-900/30 text-brand-600">
-          <Volume2 size={16} /> {t('listenToStory', uiLang)}
+        <button onClick={toggleReadAloud} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
+          isReadingAloud
+            ? 'bg-red-100 dark:bg-red-900/30 text-red-600'
+            : 'bg-brand-100 dark:bg-brand-900/30 text-brand-600'
+        }`}>
+          {isReadingAloud ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          {isReadingAloud
+            ? (uiLang === 'he' ? 'עצור' : 'Stop')
+            : t('listenToStory', uiLang)}
         </button>
       </div>
 

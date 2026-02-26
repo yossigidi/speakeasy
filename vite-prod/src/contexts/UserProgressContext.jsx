@@ -50,6 +50,7 @@ export function UserProgressProvider({ children: reactChildren }) {
   const [loading, setLoading] = useState(true);
   const [activeChildId, setActiveChildId] = useState(() => localStorage.getItem(CHILD_LS_KEY) || null);
   const [childrenList, setChildrenList] = useState([]);
+  const [childrenLoaded, setChildrenLoaded] = useState(false);
   const [familyCode, setFamilyCode] = useState(null);
 
   const isChildMode = !!activeChildId;
@@ -103,8 +104,11 @@ export function UserProgressProvider({ children: reactChildren }) {
   useEffect(() => {
     if (!user) {
       setChildrenList([]);
+      setChildrenLoaded(true);
       return;
     }
+
+    setChildrenLoaded(false);
 
     // First try the new top-level childProfiles collection
     const userRef = window.firestore.doc(window.db, 'users', user.uid);
@@ -112,6 +116,7 @@ export function UserProgressProvider({ children: reactChildren }) {
     const unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
       if (!userSnap.exists()) {
         setChildrenList([]);
+        setChildrenLoaded(true);
         return;
       }
 
@@ -132,6 +137,7 @@ export function UserProgressProvider({ children: reactChildren }) {
           console.warn('Legacy children check failed:', e);
         }
         setChildrenList([]);
+        setChildrenLoaded(true);
         return;
       }
 
@@ -172,6 +178,7 @@ export function UserProgressProvider({ children: reactChildren }) {
         }
       }
       setChildrenList(kids);
+      setChildrenLoaded(true);
 
       // If activeChildId no longer exists, switch to parent
       if (activeChildId && !kids.find(k => k.id === activeChildId)) {
@@ -576,6 +583,7 @@ export function UserProgressProvider({ children: reactChildren }) {
     activeChild,
     isChildMode,
     children: childrenList,
+    childrenLoaded,
     familyCode,
     switchToChild,
     switchToParent,

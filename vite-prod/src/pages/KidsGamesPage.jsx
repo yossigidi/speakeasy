@@ -6,6 +6,7 @@ import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -249,7 +250,7 @@ function BubblePopGame({ onComplete, onBack }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-4 py-1.5 flex items-center gap-2">
             <span className="text-lg">🫧</span>
@@ -505,7 +506,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Header - compact */}
         <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
           <div className="text-center">
             <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
@@ -794,7 +795,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
           <div className="text-center">
             <h2 className="text-lg font-black text-gray-800 dark:text-white flex items-center gap-2">
@@ -1006,6 +1007,7 @@ const GAMES = [
 
 function GameSelector({ onSelectGame, onBack }) {
   const { uiLang } = useTheme();
+  const { progress } = useUserProgress();
   const [cardPops, setCardPops] = useState([]);
 
   useEffect(() => {
@@ -1018,11 +1020,26 @@ function GameSelector({ onSelectGame, onBack }) {
   return (
     <div className="kids-bg min-h-screen pb-24 relative">
       <FloatingDecorations />
+
+      <KidsIntro
+        id="kids-games"
+        name={progress.displayName}
+        emoji="🎮"
+        title="Game Time!"
+        titleHe="!זמן משחקים"
+        desc="Choose a game and practice English while having fun! Each game gives you XP points."
+        descHe="בחר משחק ותרגל אנגלית תוך כדי כיף! כל משחק נותן לך נקודות XP."
+        uiLang={uiLang}
+        gradient="from-cyan-500 via-blue-500 to-indigo-500"
+        buttonLabel="Let's play!"
+        buttonLabelHe="!בואו נשחק"
+      />
+
       <div className="relative z-10 px-4 pt-3">
         {/* Header */}
         <div className="flex items-center gap-3 mb-3">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
           <h1 className="text-2xl font-black rainbow-text py-1 flex-1 text-center">
             {uiLang === 'he' ? 'משחקים' : 'Games'}

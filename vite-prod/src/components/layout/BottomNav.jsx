@@ -25,8 +25,16 @@ export default function BottomNav({ currentPage, onNavigate, reviewCount = 0 }) 
   const tabs = (!progress.curriculumLevel || progress.curriculumLevel <= 2) ? kidsTabs : adultTabs;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 safe-bottom-nav">
-      <div className="glass-card-strong rounded-none border-t border-white/20 dark:border-white/5">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-40"
+      style={{
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+        background: 'rgba(255, 255, 255, 0.97)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+      }}
+    >
+      <div className="rounded-none border-t border-gray-200/60 dark:border-white/5">
         <div className="flex justify-around items-center px-2 pt-2 pb-1">
           {tabs.map(({ id, icon: Icon, labelKey }) => {
             const active = currentPage === id;

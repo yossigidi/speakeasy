@@ -3,6 +3,7 @@ import { Volume2, Star, Zap, Flame } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 import wordsA1 from '../data/words-a1.json';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
@@ -96,6 +97,17 @@ function LevelBadge({ childLevel, uiLang }) {
 
 /* ── Game cards data ── */
 const GAME_CARDS = [
+  {
+    id: 'english-quest',
+    emoji: '⚔️',
+    titleHe: 'משימת גיבורים!',
+    titleEn: 'English Quest!',
+    descHe: 'הצל את העולם עם אנגלית',
+    descEn: 'Save the world with English',
+    gradient: 'from-amber-400 via-orange-500 to-red-500',
+    shadowColor: 'shadow-orange-400/30',
+    page: 'english-quest',
+  },
   {
     id: 'curriculum',
     emoji: '📚',
@@ -348,6 +360,20 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
   return (
     <div className="kids-bg min-h-screen pb-24 relative">
       <FloatingDecorations />
+
+      <KidsIntro
+        id="kids-home"
+        name={progress.displayName}
+        emoji="🦉"
+        title="Welcome back!"
+        titleHe="!ברוכים הבאים"
+        desc="This is your learning home! Pick any activity to start learning English. Have fun!"
+        descHe="זה הבית שלך ללמידה! בחר פעילות ותתחיל ללמוד אנגלית. בהצלחה!"
+        uiLang={uiLang}
+        gradient="from-purple-500 via-pink-500 to-rose-500"
+        buttonLabel="Let's learn!"
+        buttonLabelHe="!בואו נלמד"
+      />
 
       <div className="relative z-10 px-4 pt-4 space-y-5">
         {/* Mascot greeting */}
