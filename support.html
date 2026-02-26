@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speakli - Support | תמיכה</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #ecfdf5 100%);
+      color: #1a1a1a;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(13, 148, 136, 0.2);
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0d9488;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .lang-btn {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: #0d9488;
+      color: white;
+      border-color: #0d9488;
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: #0d9488;
+      color: #0d9488;
+    }
+
+    /* Sections */
+    .section {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0d9488;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section h2 .icon {
+      font-size: 22px;
+    }
+
+    /* Contact Info */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #14b8a6, #10b981);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-item a {
+      color: #0d9488;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-label {
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid #f3f4f6;
+      padding: 14px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 700;
+      font-size: 15px;
+      color: #1f2937;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-q::after {
+      content: '+';
+      font-size: 20px;
+      color: #0d9488;
+      font-weight: 300;
+      transition: transform 0.2s;
+    }
+
+    .faq-item.open .faq-q::after {
+      content: '−';
+    }
+
+    .faq-a {
+      display: none;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-a {
+      display: block;
+    }
+
+    /* Contact Form */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: white;
+      transition: border-color 0.2s;
+      direction: rtl;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #0d9488;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #14b8a6, #10b981);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .success-msg .checkmark {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .success-msg h3 {
+      color: #0d9488;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .success-msg p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: #0d9488;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container { padding: 24px 16px 40px; }
+      .header h1 { font-size: 24px; }
+      .section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="/icons/icon-192.png" alt="Speakli" class="logo">
+      <h1>Speakli</h1>
+      <p class="subtitle" data-he="מרכז תמיכה" data-en="Support Center"></p>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('he')">עברית</button>
+      <button class="lang-btn" onclick="setLang('en')">English</button>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="section">
+      <h2><span class="icon">📬</span> <span data-he="יצירת קשר" data-en="Contact Us"></span></h2>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label" data-he="אימייל" data-en="Email"></div>
+          <a href="mailto:support@speakli.co.il">support@speakli.co.il</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🌐</div>
+        <div>
+          <div class="contact-label" data-he="אתר" data-en="Website"></div>
+          <a href="https://www.speakli.co.il">www.speakli.co.il</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏰</div>
+        <div>
+          <div class="contact-label" data-he="זמן מענה" data-en="Response Time"></div>
+          <span data-he="עד 48 שעות בימי עבודה" data-en="Up to 48 hours on business days"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <h2><span class="icon">❓</span> <span data-he="שאלות נפוצות" data-en="FAQ"></span></h2>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="מה זה Speakli?" data-en="What is Speakli?"></div>
+        <div class="faq-a" data-he="Speakli היא אפליקציית למידת אנגלית אינטראקטיבית המשלבת שיעורים מובנים, תרגול דיבור, משחקים ומערכת חזרות חכמה. מתאימה למבוגרים וילדים כאחד." data-en="Speakli is an interactive English learning app combining structured lessons, speaking practice, games, and a smart review system. Suitable for both adults and children."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="האם Speakli בחינם?" data-en="Is Speakli free?"></div>
+        <div class="faq-a" data-he="כן! Speakli זמינה בחינם עם כל התכונות העיקריות." data-en="Yes! Speakli is available for free with all core features."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="לאיזה גילאים מתאימה האפליקציה?" data-en="What ages is the app suitable for?"></div>
+        <div class="faq-a" data-he="Speakli מתאימה לכל הגילאים. יש מצב ילדים מיוחד לגילאי 4-12, ותוכנית לימודים מלאה למבוגרים ברמות A1 עד C1." data-en="Speakli is suitable for all ages. There's a kids mode for ages 4-12, and a full curriculum for adults from A1 to C1."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="איך משנים רמת לימוד?" data-en="How do I change my learning level?"></div>
+        <div class="faq-a" data-he="היכנס לפרופיל → הגדרות → רמה נוכחית. בחר את הרמה המתאימה (1-5)." data-en="Go to Profile → Settings → Current Level. Select the level that suits you (1-5)."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="איך מפעילים מצב ילדים?" data-en="How do I activate kids mode?"></div>
+        <div class="faq-a" data-he="היכנס לפרופיל → המשפחה שלי → הוסף ילד. לאחר הוספה תוכל לעבור למצב ילד עם ממשק מותאם." data-en="Go to Profile → My Family → Add Child. After adding a child, switch to kids mode with an adapted interface."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="שכחתי סיסמה, מה עושים?" data-en="I forgot my password, what do I do?"></div>
+        <div class="faq-a" data-he="בדף ההתחברות לחץ על 'שכחתי סיסמה' ותקבל קישור לאיפוס באימייל. אם נרשמת עם Google, היכנס דרך כפתור Google." data-en="On the login page, tap 'Forgot Password' to receive a reset link by email. If you signed up with Google, use the Google button."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="איך מוחקים את החשבון?" data-en="How do I delete my account?"></div>
+        <div class="faq-a" data-he="שלח בקשה לאימייל support@speakli.co.il עם הנושא 'מחיקת חשבון'. נטפל בבקשה תוך 48 שעות." data-en="Send a request to support@speakli.co.il with the subject 'Delete Account'. We'll process it within 48 hours."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="השמע/מיקרופון לא עובד" data-en="Audio/microphone is not working"></div>
+        <div class="faq-a" data-he="ודא שהעוצמה מופעלת ושנתת הרשאות מיקרופון לאתר בהגדרות הדפדפן. מומלץ להשתמש ב-Chrome בגרסה עדכנית." data-en="Make sure volume is on and you've granted microphone permissions in browser settings. We recommend using the latest version of Chrome."></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)" data-he="אילו דפדפנים נתמכים?" data-en="Which browsers are supported?"></div>
+        <div class="faq-a" data-he="Speakli עובדת במיטבה ב-Chrome, Edge ו-Safari בגרסאות עדכניות." data-en="Speakli works best on Chrome, Edge, and Safari (latest versions)."></div>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="section">
+      <h2><span class="icon">✍️</span> <span data-he="שלח פנייה" data-en="Send a Request"></span></h2>
+
+      <form id="contactForm">
+        <div class="form-group">
+          <label data-he="אימייל" data-en="Email"></label>
+          <input type="email" id="formEmail" required>
+        </div>
+        <div class="form-group">
+          <label data-he="נושא" data-en="Subject"></label>
+          <select id="formCategory">
+            <option value="bug" data-he="דיווח באג" data-en="Bug Report"></option>
+            <option value="feature" data-he="בקשת פיצ'ר" data-en="Feature Request"></option>
+            <option value="account" data-he="בעיית חשבון" data-en="Account Issue"></option>
+            <option value="billing" data-he="חיוב" data-en="Billing"></option>
+            <option value="other" data-he="אחר" data-en="Other"></option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-he="נושא הפנייה" data-en="Subject"></label>
+          <input type="text" id="formSubject" required>
+        </div>
+        <div class="form-group">
+          <label data-he="הודעה" data-en="Message"></label>
+          <textarea id="formMessage" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" data-he="שלח פנייה" data-en="Submit Request"></button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <div class="checkmark">&#10004;</div>
+        <h3 data-he="הפנייה נשלחה בהצלחה!" data-en="Request Submitted Successfully!"></h3>
+        <p data-he="קיבלנו את הפנייה שלך ונחזור אליך בהקדם. אישור נשלח לאימייל שלך." data-en="We received your request and will get back to you soon. A confirmation was sent to your email."></p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2026 Speakli. <span data-he="כל הזכויות שמורות." data-en="All rights reserved."></span></p>
+      <p style="margin-top: 8px;">
+        <a href="/privacy.html" data-he="מדיניות פרטיות" data-en="Privacy Policy"></a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'he';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+      document.querySelectorAll('[data-he]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+
+      document.querySelectorAll('input, textarea').forEach(el => {
+        el.style.direction = lang === 'he' ? 'rtl' : 'ltr';
+      });
+    }
+
+    function toggleFaq(el) {
+      el.parentElement.classList.toggle('open');
+    }
+
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('.submit-btn');
+      btn.disabled = true;
+      btn.textContent = currentLang === 'he' ? 'שולח...' : 'Sending...';
+
+      try {
+        const res = await fetch('/api/support-ticket', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: 'web-visitor',
+            email: document.getElementById('formEmail').value,
+            name: document.getElementById('formEmail').value.split('@')[0],
+            category: document.getElementById('formCategory').value,
+            subject: document.getElementById('formSubject').value,
+            message: document.getElementById('formMessage').value,
+          }),
+        });
+
+        if (res.ok) {
+          this.style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+          setLang(currentLang);
+        } else {
+          throw new Error();
+        }
+      } catch {
+        alert(currentLang === 'he' ? 'שגיאה בשליחה, נסה שוב' : 'Error sending, please try again');
+        btn.disabled = false;
+        setLang(currentLang);
+      }
+    });
+
+    // Init
+    setLang('he');
+  </script>
+</body>
+</html>
