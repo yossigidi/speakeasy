@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speakli - Terms of Use | תנאי שימוש</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #ecfdf5 100%);
+      color: #1a1a1a;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(13, 148, 136, 0.2);
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0d9488;
+      margin-bottom: 4px;
+    }
+
+    .header .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .lang-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .lang-btn {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: #0d9488;
+      color: white;
+      border-color: #0d9488;
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: #0d9488;
+      color: #0d9488;
+    }
+
+    .updated {
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 32px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0d9488;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section h2 .icon { font-size: 20px; }
+
+    .section p, .section li {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 10px;
+    }
+
+    .section ul, .section ol {
+      padding-right: 20px;
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section li { margin-bottom: 6px; }
+
+    .section strong { color: #1f2937; }
+
+    .highlight {
+      background: #f0fdfa;
+      border-right: 3px solid #14b8a6;
+      border-left: 3px solid #14b8a6;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      font-size: 14px;
+      color: #0d9488;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: #0d9488;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 24px 16px 40px; }
+      .header h1 { font-size: 22px; }
+      .section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="/icons/icon-192.png" alt="Speakli" class="logo">
+      <h1>Speakli</h1>
+      <p class="subtitle" data-he="תנאי שימוש" data-en="Terms of Use"></p>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('he')">עברית</button>
+      <button class="lang-btn" onclick="setLang('en')">English</button>
+    </div>
+
+    <p class="updated" data-he="עדכון אחרון: פברואר 2026" data-en="Last updated: February 2026"></p>
+
+    <!-- 1. Acceptance -->
+    <div class="section">
+      <h2><span class="icon">📄</span> <span data-he="1. קבלת התנאים" data-en="1. Acceptance of Terms"></span></h2>
+      <p data-he="ברוכים הבאים ל-Speakli. על ידי גישה לאפליקציה או שימוש בה, אתה מסכים לתנאי שימוש אלה. אם אינך מסכים לתנאים אלה, אנא הפסק להשתמש באפליקציה." data-en="Welcome to Speakli. By accessing or using the App, you agree to these Terms of Use. If you do not agree to these terms, please stop using the App."></p>
+      <p data-he="תנאים אלה מהווים הסכם מחייב בינך לבין Speakli. אנא קרא אותם בעיון." data-en="These terms constitute a binding agreement between you and Speakli. Please read them carefully."></p>
+    </div>
+
+    <!-- 2. Description -->
+    <div class="section">
+      <h2><span class="icon">📱</span> <span data-he="2. תיאור השירות" data-en="2. Description of Service"></span></h2>
+      <p data-he="Speakli היא אפליקציית למידת אנגלית המציעה:" data-en="Speakli is an English learning app that offers:"></p>
+      <ul>
+        <li data-he="שיעורים מובנים ברמות A1 עד C1" data-en="Structured lessons from A1 to C1 levels"></li>
+        <li data-he="תרגול דיבור והגייה עם זיהוי קולי" data-en="Speaking and pronunciation practice with voice recognition"></li>
+        <li data-he="שיחות AI אינטראקטיביות" data-en="Interactive AI conversations"></li>
+        <li data-he="מערכת חזרות מרווחות לאוצר מילים" data-en="Spaced repetition vocabulary system"></li>
+        <li data-he="מצב ילדים עם תוכן מותאם גיל" data-en="Kids mode with age-appropriate content"></li>
+        <li data-he="משחקים ותרגילים אינטראקטיביים" data-en="Interactive games and exercises"></li>
+      </ul>
+    </div>
+
+    <!-- 3. Account -->
+    <div class="section">
+      <h2><span class="icon">👤</span> <span data-he="3. חשבון משתמש" data-en="3. User Account"></span></h2>
+      <p data-he="כדי להשתמש ב-Speakli, עליך ליצור חשבון באמצעות Google, Apple, או אימייל וסיסמה. אתה אחראי ל:" data-en="To use Speakli, you must create an account using Google, Apple, or email and password. You are responsible for:"></p>
+      <ul>
+        <li data-he="שמירה על אבטחת חשבונך ופרטי הגישה שלך" data-en="Maintaining the security of your account and login credentials"></li>
+        <li data-he="כל הפעילות המתבצעת תחת חשבונך" data-en="All activity that occurs under your account"></li>
+        <li data-he="מתן מידע מדויק ועדכני" data-en="Providing accurate and up-to-date information"></li>
+        <li data-he="הודעה מיידית במקרה של שימוש לא מורשה בחשבונך" data-en="Notifying us immediately in case of unauthorized use of your account"></li>
+      </ul>
+      <p data-he="אנו שומרים על הזכות להשעות או לסגור חשבונות המפרים תנאים אלה." data-en="We reserve the right to suspend or terminate accounts that violate these terms."></p>
+    </div>
+
+    <!-- 4. Kids Mode -->
+    <div class="section">
+      <h2><span class="icon">👧</span> <span data-he="4. מצב ילדים ופיקוח הורי" data-en="4. Kids Mode & Parental Supervision"></span></h2>
+      <p data-he="Speakli כוללת מצב ילדים בכפוף לתנאים הבאים:" data-en="Speakli includes a kids mode subject to the following conditions:"></p>
+      <ul>
+        <li data-he="פרופילי ילדים נוצרים ומנוהלים על ידי ההורה או האפוטרופוס בלבד" data-en="Child profiles are created and managed by the parent or guardian only"></li>
+        <li data-he="ההורה אחראי לפקח על שימוש הילד באפליקציה" data-en="The parent is responsible for supervising the child's use of the App"></li>
+        <li data-he="ילדים מתחת לגיל 13 חייבים להשתמש באפליקציה תחת פיקוח הורי" data-en="Children under 13 must use the App under parental supervision"></li>
+        <li data-he="ההורה רשאי למחוק פרופיל ילד ואת כל הנתונים הקשורים בכל עת" data-en="The parent may delete a child's profile and all related data at any time"></li>
+        <li data-he="מצב ילדים מוגן במנגנון שער מתמטי למניעת יציאה ללא אישור הורה" data-en="Kids mode is protected with a math gate mechanism to prevent exit without parental approval"></li>
+      </ul>
+    </div>
+
+    <!-- 5. Acceptable Use -->
+    <div class="section">
+      <h2><span class="icon">✅</span> <span data-he="5. שימוש מותר" data-en="5. Acceptable Use"></span></h2>
+      <p data-he="בעת השימוש ב-Speakli, אתה מתחייב:" data-en="When using Speakli, you agree to:"></p>
+      <ul>
+        <li data-he="להשתמש באפליקציה למטרות למידה בלבד" data-en="Use the App for learning purposes only"></li>
+        <li data-he="לא להפיץ, להעתיק או לשכפל תכנים מהאפליקציה" data-en="Not distribute, copy, or reproduce content from the App"></li>
+        <li data-he="לא לנסות לפרוץ, לפגוע או להשבית את האפליקציה או השרתים" data-en="Not attempt to hack, damage, or disable the App or servers"></li>
+        <li data-he="לא להשתמש באפליקציה לפעילויות בלתי חוקיות" data-en="Not use the App for illegal activities"></li>
+        <li data-he="לא להתחזות לאדם אחר" data-en="Not impersonate another person"></li>
+        <li data-he="לא להשתמש בבוטים או כלים אוטומטיים לגישה לאפליקציה" data-en="Not use bots or automated tools to access the App"></li>
+      </ul>
+    </div>
+
+    <!-- 6. IP -->
+    <div class="section">
+      <h2><span class="icon">©️</span> <span data-he="6. קניין רוחני" data-en="6. Intellectual Property"></span></h2>
+      <p data-he="כל התכנים ב-Speakli, כולל אך לא מוגבל ל:" data-en="All content in Speakli, including but not limited to:"></p>
+      <ul>
+        <li data-he="שיעורים, תרגילים וחומרי למידה" data-en="Lessons, exercises, and learning materials"></li>
+        <li data-he="עיצוב ממשק המשתמש והגרפיקה" data-en="User interface design and graphics"></li>
+        <li data-he="קוד תוכנה ואלגוריתמים" data-en="Software code and algorithms"></li>
+        <li data-he="סימני מסחר, לוגו ומיתוג" data-en="Trademarks, logos, and branding"></li>
+      </ul>
+      <p data-he="הינם קניינה הרוחני של Speakli ומוגנים על ידי חוקי זכויות יוצרים וקניין רוחני. אין להעתיק, לשנות או להפיץ תכנים אלה ללא אישור מפורש בכתב." data-en="are the intellectual property of Speakli and are protected by copyright and intellectual property laws. You may not copy, modify, or distribute this content without express written permission."></p>
+    </div>
+
+    <!-- 7. User Content -->
+    <div class="section">
+      <h2><span class="icon">💬</span> <span data-he="7. תוכן משתמש" data-en="7. User Content"></span></h2>
+      <p data-he="כאשר אתה שולח תוכן דרך האפליקציה (כגון פניות תמיכה, שיחות AI, או הקלטות קוליות):" data-en="When you submit content through the App (such as support tickets, AI conversations, or voice recordings):"></p>
+      <ul>
+        <li data-he="אתה שומר על הבעלות על התוכן שלך" data-en="You retain ownership of your content"></li>
+        <li data-he="אתה מעניק ל-Speakli רישיון לעבד תוכן זה לצורך הפעלת השירות" data-en="You grant Speakli a license to process this content for operating the service"></li>
+        <li data-he="הקלטות קוליות מעובדות בזמן אמת ואינן נשמרות לצמיתות" data-en="Voice recordings are processed in real-time and not permanently stored"></li>
+        <li data-he="שיחות AI מעובדות לצורך מתן משוב ואינן משמשות לאימון מודלים" data-en="AI conversations are processed for feedback and not used for model training"></li>
+      </ul>
+    </div>
+
+    <!-- 8. Free Service -->
+    <div class="section">
+      <h2><span class="icon">🆓</span> <span data-he="8. שירות חינמי ושינויים" data-en="8. Free Service & Changes"></span></h2>
+      <p data-he="Speakli מסופקת כשירות חינמי. אנו שומרים על הזכות:" data-en="Speakli is provided as a free service. We reserve the right to:"></p>
+      <ul>
+        <li data-he="לשנות, לעדכן או להסיר תכונות בכל עת" data-en="Modify, update, or remove features at any time"></li>
+        <li data-he="להציע שירותים בתשלום (פרימיום) בעתיד, מבלי לפגוע בשירות החינמי" data-en="Offer paid (premium) services in the future, without affecting the free service"></li>
+        <li data-he="להשעות את השירות באופן זמני לצורך תחזוקה או עדכונים" data-en="Temporarily suspend the service for maintenance or updates"></li>
+      </ul>
+    </div>
+
+    <!-- 9. Disclaimer -->
+    <div class="section">
+      <h2><span class="icon">⚠️</span> <span data-he="9. הגבלת אחריות" data-en="9. Disclaimer & Limitation of Liability"></span></h2>
+      <p data-he="Speakli מסופקת 'כמות שהיא' (AS IS) וללא אחריות מכל סוג, מפורשת או משתמעת." data-en="Speakli is provided 'AS IS' without warranty of any kind, express or implied."></p>
+      <ul>
+        <li data-he="אנו אינם מתחייבים לזמינות רציפה וללא הפרעות של השירות" data-en="We do not guarantee continuous and uninterrupted availability of the service"></li>
+        <li data-he="אנו אינם אחראים לתוצאות הלמידה שלך" data-en="We are not responsible for your learning outcomes"></li>
+        <li data-he="Speakli אינה תחליף לשיעורים פרונטליים עם מורה מוסמך" data-en="Speakli is not a substitute for in-person lessons with a qualified teacher"></li>
+        <li data-he="אנו אינם אחראים לנזקים ישירים או עקיפים הנובעים משימוש באפליקציה" data-en="We are not liable for direct or indirect damages arising from use of the App"></li>
+      </ul>
+      <div class="highlight" data-he="בכל מקרה, אחריותנו הכוללת כלפיך לא תעלה על הסכום ששילמת לנו (אם בכלל) ב-12 החודשים האחרונים." data-en="In any case, our total liability to you shall not exceed the amount you paid us (if any) in the last 12 months."></div>
+    </div>
+
+    <!-- 10. Termination -->
+    <div class="section">
+      <h2><span class="icon">🚪</span> <span data-he="10. סיום שימוש" data-en="10. Termination"></span></h2>
+      <p data-he="אתה רשאי להפסיק להשתמש באפליקציה ולמחוק את חשבונך בכל עת. אנו רשאים להשעות או לסגור את חשבונך אם:" data-en="You may stop using the App and delete your account at any time. We may suspend or terminate your account if:"></p>
+      <ul>
+        <li data-he="הפרת תנאי שימוש אלה" data-en="You violated these Terms of Use"></li>
+        <li data-he="השתמשת באפליקציה באופן שעלול לפגוע בשירות או במשתמשים אחרים" data-en="You used the App in a way that could harm the service or other users"></li>
+        <li data-he="חשבונך לא היה פעיל למשך 24 חודשים רצופים" data-en="Your account has been inactive for 24 consecutive months"></li>
+      </ul>
+      <p data-he="במקרה של סגירת חשבון, נמחק את כל הנתונים האישיים שלך בהתאם למדיניות הפרטיות שלנו." data-en="In case of account closure, we will delete all your personal data in accordance with our Privacy Policy."></p>
+    </div>
+
+    <!-- 11. Third Party -->
+    <div class="section">
+      <h2><span class="icon">🔗</span> <span data-he="11. שירותי צד שלישי" data-en="11. Third-Party Services"></span></h2>
+      <p data-he="Speakli משתמשת בשירותי צד שלישי (כגון Firebase, Google Cloud, Groq). השימוש בשירותים אלה כפוף לתנאי השימוש ומדיניות הפרטיות שלהם. Speakli אינה אחראית לפעולות או מחדלים של ספקי שירות צד שלישי." data-en="Speakli uses third-party services (such as Firebase, Google Cloud, Groq). Use of these services is subject to their own terms and privacy policies. Speakli is not responsible for the actions or omissions of third-party service providers."></p>
+    </div>
+
+    <!-- 12. Governing Law -->
+    <div class="section">
+      <h2><span class="icon">⚖️</span> <span data-he="12. דין חל וסמכות שיפוט" data-en="12. Governing Law & Jurisdiction"></span></h2>
+      <p data-he="תנאי שימוש אלה כפופים לחוקי מדינת ישראל. כל סכסוך הנובע מתנאים אלה או מהשימוש באפליקציה יידון בבתי המשפט המוסמכים במדינת ישראל." data-en="These Terms of Use are governed by the laws of the State of Israel. Any dispute arising from these terms or the use of the App shall be adjudicated in the competent courts of the State of Israel."></p>
+    </div>
+
+    <!-- 13. Changes -->
+    <div class="section">
+      <h2><span class="icon">📝</span> <span data-he="13. שינויים בתנאי השימוש" data-en="13. Changes to Terms"></span></h2>
+      <p data-he="אנו רשאים לעדכן תנאי שימוש אלה מעת לעת. שינויים מהותיים יפורסמו באפליקציה ו/או ישלחו כהודעה באימייל. המשך השימוש באפליקציה לאחר העדכון מהווה הסכמה לתנאים המעודכנים." data-en="We may update these Terms of Use from time to time. Material changes will be posted in the App and/or sent via email notification. Continued use of the App after the update constitutes acceptance of the updated terms."></p>
+    </div>
+
+    <!-- 14. Contact -->
+    <div class="section">
+      <h2><span class="icon">📬</span> <span data-he="14. יצירת קשר" data-en="14. Contact Us"></span></h2>
+      <p data-he="לשאלות בנוגע לתנאי שימוש אלה, ניתן לפנות אלינו:" data-en="For questions about these Terms of Use, you can contact us:"></p>
+      <ul>
+        <li><strong data-he="אימייל:" data-en="Email:"></strong> <a href="mailto:support@speakli.co.il" style="color: #0d9488;">support@speakli.co.il</a></li>
+        <li><strong data-he="אתר:" data-en="Website:"></strong> <a href="https://www.speakli.co.il" style="color: #0d9488;">www.speakli.co.il</a></li>
+        <li><strong data-he="דף תמיכה:" data-en="Support Page:"></strong> <a href="/support.html" style="color: #0d9488;">speakli.co.il/support</a></li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2026 Speakli. <span data-he="כל הזכויות שמורות." data-en="All rights reserved."></span></p>
+      <p style="margin-top: 8px;">
+        <a href="/privacy.html" data-he="מדיניות פרטיות" data-en="Privacy Policy"></a>
+        &nbsp;·&nbsp;
+        <a href="/support.html" data-he="מרכז תמיכה" data-en="Support Center"></a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'he';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+      document.querySelectorAll('[data-he]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    setLang('he');
+  </script>
+</body>
+</html>
