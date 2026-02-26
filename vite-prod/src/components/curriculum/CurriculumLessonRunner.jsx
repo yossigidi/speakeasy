@@ -6,7 +6,7 @@ import { getLesson, calculateStars, calculateXP, LESSON_TYPES } from '../../data
 import { generateExercises } from '../../data/curriculum/exercise-generator.js';
 import useCurriculumProgress from '../../hooks/useCurriculumProgress.js';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
-import { playCorrect, playWrong } from '../../utils/gameSounds.js';
+import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
 import { t } from '../../utils/translations.js';
 
 export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, uiLang }) {
@@ -22,8 +22,9 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   const [lessonData, setLessonData] = useState(null);
 
   const curriculum = useCurriculumProgress();
-  const { speak } = useSpeech();
+  const { speak, stopSpeaking } = useSpeech();
   const introTimerRef = useRef(null);
+  const spokenRef = useRef(false);
 
   // Load lesson data and generate exercises
   useEffect(() => {
@@ -35,30 +36,59 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     setExercises(exs);
   }, [lessonId]);
 
-  // Intro phase: auto-advance after 3 seconds
+  // Speak intro when entering intro phase
+  useEffect(() => {
+    if (phase === 'intro' && lessonData && !spokenRef.current) {
+      spokenRef.current = true;
+      const lessonType = lessonData.lesson?.type;
+      const introKey = lessonType === 'speaking' ? 'introSpeakingDesc' :
+        lessonType === 'vocabulary' ? 'introVocabDesc' :
+        lessonType === 'reading' ? 'introReadingDesc' :
+        lessonType === 'writing' ? 'introWritingDesc' :
+        lessonType === 'test' ? 'introTestDesc' : 'introMixedDesc';
+
+      const title = uiLang === 'he' ? lessonData.lesson.titleHe : lessonData.lesson.titleEn;
+      const desc = t(introKey, uiLang);
+
+      // Speak title then description
+      setTimeout(() => {
+        speak(title, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, onEnd: () => {
+          setTimeout(() => speak(desc, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 300);
+        }});
+      }, 500);
+    }
+  }, [phase, lessonData]);
+
+  // Intro phase: start lesson
   const handleStartLesson = useCallback(() => {
+    stopSpeaking && stopSpeaking();
     setPhase('exercise');
     setTeacherState('idle');
-  }, []);
+  }, [stopSpeaking]);
 
-  // Handle exercise answer
+  // Handle exercise answer with voice feedback
   const handleAnswer = useCallback((isCorrect, wordData) => {
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
       setStreak(prev => prev + 1);
-      // Teacher reactions based on streak
       setTeacherState(prev => {
         const newStreak = streak + 1;
         if (newStreak >= 3) return 'celebrating';
         return 'happy';
       });
+      // Voice feedback
+      const msg = streak + 1 >= 3
+        ? t('teacherEncourage3', uiLang)
+        : t('teacherEncourage1', uiLang);
+      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0 });
     } else {
       playWrong();
       setWrongCount(prev => prev + 1);
       setHearts(prev => Math.max(0, prev - 1));
       setStreak(0);
       setTeacherState('encouraging');
+      speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95 });
     }
 
     setAnswers(prev => [...prev, { isCorrect, wordData }]);
@@ -69,19 +99,17 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     // Advance to next exercise
     setTimeout(() => {
       if (currentExercise + 1 >= exercises.length) {
-        // Lesson complete
         handleLessonComplete();
       } else {
         setCurrentExercise(prev => prev + 1);
       }
-    }, 200);
+    }, 1200);
   }, [currentExercise, exercises.length, streak]);
 
   // Lesson complete handler
   const handleLessonComplete = useCallback(async () => {
     const totalCount = exercises.length;
-    const finalCorrect = correctCount + 1; // +1 because handleAnswer hasn't updated yet
-    // Recalculate from answers array + current
+    const finalCorrect = correctCount + 1;
     const acc = ((finalCorrect) / totalCount) * 100;
     const stars = calculateStars(acc);
     const xp = calculateXP(stars);
@@ -92,6 +120,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       console.error('Failed to save lesson progress:', err);
     }
 
+    playComplete && playComplete();
     setPhase('complete');
   }, [exercises.length, correctCount, lessonId, curriculum]);
 
@@ -152,7 +181,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           {lessonTitle}
         </div>
 
-        {/* Lesson type description in Hebrew */}
+        {/* Lesson type description */}
         <div style={{
           fontSize: 15, color: '#6B7280', marginBottom: 12, textAlign: 'center',
           maxWidth: 280, lineHeight: 1.5,
@@ -192,7 +221,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
 
         {/* Back button */}
         <button
-          onClick={onBack}
+          onClick={() => { stopSpeaking && stopSpeaking(); onBack(); }}
           style={{
             marginTop: 16, padding: '10px 20px', borderRadius: 12,
             fontSize: 14, fontWeight: 600, background: 'transparent',
@@ -218,7 +247,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         onNext={() => onComplete && onComplete({ stars: finalStars, accuracy: finalAccuracy, xp: finalXP })}
         onHome={onBack}
         onRetry={finalStars === 0 ? () => {
-          // Reset and restart
+          spokenRef.current = false;
           setPhase('intro');
           setCurrentExercise(0);
           setCorrectCount(0);
@@ -227,13 +256,13 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           setHearts(3);
           setStreak(0);
           setTeacherState('idle');
-          // Regenerate exercises
           if (lessonData) {
             setExercises(generateExercises(lessonData.unit, lessonData.lesson));
           }
         } : null}
         uiLang={uiLang}
         lessonType={lessonData?.lesson?.type}
+        speak={speak}
       />
     );
   }
@@ -255,9 +284,8 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         background: 'white', borderBottom: '1px solid #F3F4F6',
         position: 'relative', zIndex: 10,
       }}>
-        {/* Close button */}
         <button
-          onClick={onBack}
+          onClick={() => { stopSpeaking && stopSpeaking(); onBack(); }}
           style={{
             width: 36, height: 36, borderRadius: '50%', border: 'none',
             background: '#F3F4F6', fontSize: 16, fontWeight: 700,
@@ -268,7 +296,6 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           {'\u2715'}
         </button>
 
-        {/* Progress bar */}
         <div style={{
           flex: 1, height: 10, background: '#E5E7EB', borderRadius: 5,
           overflow: 'hidden',
@@ -281,12 +308,10 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           }} />
         </div>
 
-        {/* Exercise counter */}
         <span style={{ fontSize: 13, fontWeight: 600, color: '#9CA3AF', flexShrink: 0 }}>
           {currentExercise + 1}/{totalCount}
         </span>
 
-        {/* Hearts */}
         <div style={{ display: 'flex', gap: 2, flexShrink: 0 }}>
           {[1, 2, 3].map(h => (
             <span key={h} style={{
@@ -306,7 +331,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         flex: 1, display: 'flex', flexDirection: 'column',
         overflow: 'auto', position: 'relative',
       }}>
-        {/* Teacher character - small, top-right corner with speech bubble */}
+        {/* Teacher character with speech bubble */}
         <div style={{
           position: 'absolute', top: 8, right: 12, zIndex: 5,
           transition: 'all 0.3s',
@@ -368,7 +393,6 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         </div>
       </div>
 
-      {/* Inline styles */}
       <style>{`
         @keyframes curriculum-fade-in {
           from { opacity: 0; transform: translateY(8px); }

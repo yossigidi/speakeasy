@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakly-v15';
-const STATIC_CACHE = 'speakly-static-v15';
+const CACHE_NAME = 'speakly-v16';
+const STATIC_CACHE = 'speakly-static-v16';
 
 const urlsToCache = [
   '/',

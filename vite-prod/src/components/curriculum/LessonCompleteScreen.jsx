@@ -36,6 +36,7 @@ export default function LessonCompleteScreen({
   onRetry,
   uiLang,
   lessonType,
+  speak,
 }) {
   const [showStats, setShowStats] = useState(false);
   const [showWords, setShowWords] = useState(false);
@@ -47,6 +48,19 @@ export default function LessonCompleteScreen({
     const t2 = setTimeout(() => setShowWords(true), 1000);
     const t3 = setTimeout(() => setShowButtons(true), 1400);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, []);
+
+  // Speak congratulations/encouragement
+  useEffect(() => {
+    if (!speak) return;
+    const msg = stars === 3
+      ? (uiLang === 'he' ? 'מושלם! בלי אף טעות! אתם כוכבים!' : 'Perfect! No mistakes! You are stars!')
+      : stars >= 1
+      ? (uiLang === 'he' ? 'כל הכבוד! סיימתם את השיעור!' : 'Great job! You finished the lesson!')
+      : (uiLang === 'he' ? 'לא נורא, בואו ננסה שוב!' : "That's okay, let's try again!");
+    setTimeout(() => {
+      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
+    }, 400);
   }, []);
 
   // Generate confetti pieces for 3 stars
