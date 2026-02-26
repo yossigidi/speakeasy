@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Volume2, Star, Zap, Flame } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -346,6 +346,40 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
   const { speak, speakSequence } = useSpeech();
   const [expandedVideo, setExpandedVideo] = useState(null);
   const [cardPops, setCardPops] = useState([]);
+
+  // Welcome speech for kids on first visit per session (natural Cloud TTS voice)
+  const welcomeSpokenRef = useRef(false);
+  useEffect(() => {
+    if (welcomeSpokenRef.current) return;
+    const key = 'kids-home-welcome-spoken';
+    if (sessionStorage.getItem(key)) {
+      welcomeSpokenRef.current = true;
+      return;
+    }
+
+    const doSpeak = () => {
+      if (welcomeSpokenRef.current) return;
+      welcomeSpokenRef.current = true;
+      sessionStorage.setItem(key, '1');
+      document.removeEventListener('click', doSpeak);
+      document.removeEventListener('touchstart', doSpeak);
+
+      const name = progress.displayName;
+      const isHe = uiLang === 'he';
+      const text = isHe
+        ? (name ? `היי ${name}! בואו נלמד` : 'היי! בואו נלמד')
+        : (name ? `Hi ${name}! Let's learn!` : "Hi! Let's learn!");
+      speak(text, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
+    };
+
+    document.addEventListener('click', doSpeak);
+    document.addEventListener('touchstart', doSpeak);
+
+    return () => {
+      document.removeEventListener('click', doSpeak);
+      document.removeEventListener('touchstart', doSpeak);
+    };
+  }, [uiLang, speak]);
 
   // Stagger card pop-in animations
   useEffect(() => {

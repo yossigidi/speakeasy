@@ -22,12 +22,11 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { progress } = useUserProgress();
   const { speak, speakSequence, ttsSupported } = useSpeech();
 
-  // Welcome speech on first visit per session (mature style for adults)
-  // Uses Web Speech API directly to avoid AudioContext gesture issues
+  // Welcome speech on first visit per session (natural Cloud TTS voice)
+  // Fires on first user tap to satisfy browser AudioContext policy
   const welcomeSpokenRef = useRef(false);
   useEffect(() => {
     if (welcomeSpokenRef.current) return;
-    if (!('speechSynthesis' in window)) return;
     const key = 'home-welcome-spoken';
     if (sessionStorage.getItem(key)) {
       welcomeSpokenRef.current = true;
@@ -37,35 +36,21 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
     const doSpeak = () => {
       if (welcomeSpokenRef.current) return;
       welcomeSpokenRef.current = true;
+      sessionStorage.setItem(key, '1');
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
 
-      // Small delay so the UI settles first
-      setTimeout(() => {
-        const name = progress.displayName;
-        const isHe = uiLang === 'he';
-        const text = isHe
-          ? (name ? `שלום ${name}, ברוך הבא חזרה` : 'שלום, ברוך הבא חזרה')
-          : (name ? `Welcome back, ${name}!` : 'Welcome back!');
-
-        // Use Web Speech API directly — guaranteed to work from user gesture
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = isHe ? 'he-IL' : 'en-US';
-        utterance.rate = isHe ? 0.88 : 0.9;
-        utterance.volume = 1.0;
-        utterance.onstart = () => {
-          // Only mark as spoken once it actually starts
-          sessionStorage.setItem(key, '1');
-        };
-        utterance.onerror = () => {
-          // Reset so it can retry next time
-          welcomeSpokenRef.current = false;
-        };
-        window.speechSynthesis.speak(utterance);
-      }, 400);
+      // Call speak() directly from gesture handler (no setTimeout!)
+      // so AudioContext.resume() works on iOS/Safari
+      const name = progress.displayName;
+      const isHe = uiLang === 'he';
+      const text = isHe
+        ? (name ? `שלום ${name}, ברוך הבא חזרה` : 'שלום, ברוך הבא חזרה')
+        : (name ? `Welcome back, ${name}!` : 'Welcome back!');
+      speak(text, { lang: isHe ? 'he' : 'en-US', rate: isHe ? 0.95 : 0.9 });
     };
 
-    // Fire on first user interaction (required for mobile browsers)
+    // Fire on first user interaction
     document.addEventListener('click', doSpeak);
     document.addEventListener('touchstart', doSpeak);
 
@@ -73,7 +58,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
     };
-  }, [uiLang]);
+  }, [uiLang, speak]);
 
   // Word of the Day - deterministic based on date, filtered by user level
   const wordOfDay = useMemo(() => {
