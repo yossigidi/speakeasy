@@ -7,6 +7,7 @@ import { t } from '../utils/translations.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
@@ -1103,6 +1104,19 @@ export default function VocabularyPage() {
   // ── Main View ──
   return (
     <div className="pb-24 px-4 pt-4 space-y-5">
+      <KidsIntro
+        id="vocabulary"
+        name={progress.displayName}
+        emoji="📚"
+        title="New Words!"
+        titleHe="!מילים חדשות"
+        desc="Learn new English words with flashcards and quizzes!"
+        descHe="למד מילים חדשות באנגלית עם כרטיסיות ומשחקים!"
+        uiLang={uiLang}
+        gradient="from-emerald-500 via-green-500 to-teal-500"
+        buttonLabel="Let's learn!"
+        buttonLabelHe="!בואו נלמד"
+      />
       {/* Quick Learn - Random 5 Words (level-appropriate) */}
       <GlassCard
         variant="strong"

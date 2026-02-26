@@ -74,7 +74,12 @@ export default function KidsIntro({
       className={`fixed inset-0 z-[100] flex items-center justify-center p-6 transition-all duration-300 ${
         phase === 'exit' ? 'opacity-0 scale-95' : phase === 'visible' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
       }`}
-      style={{ backdropFilter: 'blur(12px)', background: 'rgba(0,0,0,0.4)' }}
+      style={{
+        backdropFilter: 'blur(12px)',
+        background: 'rgba(0,0,0,0.4)',
+        paddingTop: 'calc(env(safe-area-inset-top, 0px) + 24px)',
+        paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)',
+      }}
       onClick={dismiss}
     >
       <div

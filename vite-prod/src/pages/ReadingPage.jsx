@@ -6,6 +6,7 @@ import { t } from '../utils/translations.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
 import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import Modal from '../components/shared/Modal.jsx';
@@ -345,6 +346,19 @@ export default function ReadingPage() {
 
   return (
     <div className="pb-24 px-4 pt-4 space-y-4">
+      <KidsIntro
+        id="reading"
+        name={progress.displayName}
+        emoji="📖"
+        title="Read Stories!"
+        titleHe="!קריאת סיפורים"
+        desc="Read fun stories and learn new words along the way!"
+        descHe="קרא סיפורים כיפיים ולמד מילים חדשות בדרך!"
+        uiLang={uiLang}
+        gradient="from-rose-500 via-pink-500 to-fuchsia-500"
+        buttonLabel="Let's read!"
+        buttonLabelHe="!בואו נקרא"
+      />
       <h2 className="text-xl font-bold text-gray-900 dark:text-white">
         {t('stories', uiLang)}
       </h2>
