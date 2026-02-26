@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speakli - Privacy Policy | מדיניות פרטיות</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #ecfdf5 100%);
+      color: #1a1a1a;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(13, 148, 136, 0.2);
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0d9488;
+      margin-bottom: 4px;
+    }
+
+    .header .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .lang-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .lang-btn {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: #0d9488;
+      color: white;
+      border-color: #0d9488;
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: #0d9488;
+      color: #0d9488;
+    }
+
+    .updated {
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 32px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0d9488;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section h2 .icon { font-size: 20px; }
+
+    .section p, .section li {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 10px;
+    }
+
+    .section ul {
+      padding-right: 20px;
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section li { margin-bottom: 6px; }
+
+    .section strong { color: #1f2937; }
+
+    .highlight {
+      background: #f0fdfa;
+      border-right: 3px solid #14b8a6;
+      border-left: 3px solid #14b8a6;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      font-size: 14px;
+      color: #0d9488;
+      font-weight: 600;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .data-table th {
+      background: #f0fdfa;
+      color: #0d9488;
+      font-weight: 700;
+      padding: 10px 12px;
+      text-align: start;
+      border-bottom: 2px solid #ccfbf1;
+    }
+
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f3f4f6;
+      color: #4b5563;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: #0d9488;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 24px 16px 40px; }
+      .header h1 { font-size: 22px; }
+      .section { padding: 20px; }
+      .data-table { font-size: 12px; }
+      .data-table th, .data-table td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="/icons/icon-192.png" alt="Speakli" class="logo">
+      <h1>Speakli</h1>
+      <p class="subtitle" data-he="מדיניות פרטיות" data-en="Privacy Policy"></p>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('he')">עברית</button>
+      <button class="lang-btn" onclick="setLang('en')">English</button>
+    </div>
+
+    <p class="updated" data-he="עדכון אחרון: פברואר 2026" data-en="Last updated: February 2026"></p>
+
+    <!-- Intro -->
+    <div class="section">
+      <h2><span class="icon">🛡️</span> <span data-he="מבוא" data-en="Introduction"></span></h2>
+      <p data-he="Speakli ('האפליקציה', 'אנחנו', 'שלנו') מחויבת להגן על פרטיותך. מדיניות פרטיות זו מסבירה אילו נתונים אנו אוספים, כיצד אנו משתמשים בהם, וכיצד אנו מגינים עליהם." data-en="Speakli ('the App', 'we', 'our') is committed to protecting your privacy. This Privacy Policy explains what data we collect, how we use it, and how we protect it."></p>
+      <p data-he="על ידי שימוש ב-Speakli, אתה מסכים למדיניות פרטיות זו. אם אינך מסכים, אנא הפסק להשתמש באפליקציה." data-en="By using Speakli, you agree to this Privacy Policy. If you do not agree, please stop using the App."></p>
+    </div>
+
+    <!-- Data Collection -->
+    <div class="section">
+      <h2><span class="icon">📋</span> <span data-he="מידע שאנו אוספים" data-en="Information We Collect"></span></h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th data-he="סוג מידע" data-en="Data Type"></th>
+            <th data-he="פרטים" data-en="Details"></th>
+            <th data-he="מטרה" data-en="Purpose"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-he="פרטי חשבון" data-en="Account Info"></td>
+            <td data-he="שם, אימייל, תמונת פרופיל (Google/Apple)" data-en="Name, email, profile photo (Google/Apple)"></td>
+            <td data-he="אימות ומערכת חשבון" data-en="Authentication & account system"></td>
+          </tr>
+          <tr>
+            <td data-he="נתוני למידה" data-en="Learning Data"></td>
+            <td data-he="XP, רצפים, רמה, שיעורים שהושלמו, מילים שנלמדו" data-en="XP, streaks, level, lessons completed, words learned"></td>
+            <td data-he="מעקב התקדמות והתאמה אישית" data-en="Progress tracking & personalization"></td>
+          </tr>
+          <tr>
+            <td data-he="פרופילי ילדים" data-en="Child Profiles"></td>
+            <td data-he="שם, גיל, אווטאר, קוד PIN" data-en="Name, age, avatar, PIN code"></td>
+            <td data-he="מצב ילדים עם בקרת הורים" data-en="Kids mode with parental controls"></td>
+          </tr>
+          <tr>
+            <td data-he="נתוני דיבור" data-en="Speech Data"></td>
+            <td data-he="הקלטות קוליות לתרגול הגייה" data-en="Voice recordings for pronunciation practice"></td>
+            <td data-he="משוב הגייה בזמן אמת" data-en="Real-time pronunciation feedback"></td>
+          </tr>
+          <tr>
+            <td data-he="נתוני שימוש" data-en="Usage Data"></td>
+            <td data-he="דפים שנצפו, זמני שימוש, סוג דפדפן" data-en="Pages viewed, usage times, browser type"></td>
+            <td data-he="שיפור חוויית משתמש" data-en="Improving user experience"></td>
+          </tr>
+          <tr>
+            <td data-he="פניות תמיכה" data-en="Support Tickets"></td>
+            <td data-he="אימייל, נושא, הודעה" data-en="Email, subject, message"></td>
+            <td data-he="מענה לפניות תמיכה" data-en="Responding to support requests"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- How We Use Data -->
+    <div class="section">
+      <h2><span class="icon">⚙️</span> <span data-he="כיצד אנו משתמשים במידע" data-en="How We Use Your Information"></span></h2>
+      <ul>
+        <li data-he="אספקת שירותי הלמידה, כולל שיעורים, תרגולים ומשוב" data-en="Providing learning services, including lessons, exercises, and feedback"></li>
+        <li data-he="שמירת התקדמות הלמידה שלך בין מכשירים" data-en="Saving your learning progress across devices"></li>
+        <li data-he="התאמה אישית של תוכן לפי רמתך ומטרותיך" data-en="Personalizing content based on your level and goals"></li>
+        <li data-he="שליחת תזכורות למידה (רק אם הפעלת התראות)" data-en="Sending learning reminders (only if you enabled notifications)"></li>
+        <li data-he="מענה לפניות תמיכה ושירות" data-en="Responding to support and service requests"></li>
+        <li data-he="שיפור האפליקציה ותיקון באגים" data-en="Improving the app and fixing bugs"></li>
+      </ul>
+      <div class="highlight" data-he="🚫 אנחנו לא מוכרים, משכירים או משתפים את המידע האישי שלך לצדדים שלישיים לצרכי שיווק." data-en="🚫 We do not sell, rent, or share your personal information with third parties for marketing purposes."></div>
+    </div>
+
+    <!-- Third Party Services -->
+    <div class="section">
+      <h2><span class="icon">🔗</span> <span data-he="שירותי צד שלישי" data-en="Third-Party Services"></span></h2>
+      <p data-he="אנו משתמשים בשירותים הבאים לצורך הפעלת האפליקציה:" data-en="We use the following services to operate the App:"></p>
+      <ul>
+        <li><strong>Firebase (Google)</strong> — <span data-he="אימות, אחסון נתונים, ומטמון" data-en="Authentication, data storage, and caching"></span></li>
+        <li><strong>Google Cloud</strong> — <span data-he="שירותי המרת טקסט לדיבור (TTS)" data-en="Text-to-Speech (TTS) services"></span></li>
+        <li><strong>Vercel</strong> — <span data-he="אירוח האתר ופונקציות שרת" data-en="Website hosting and serverless functions"></span></li>
+        <li><strong>Brevo</strong> — <span data-he="שליחת אימיילי תמיכה ואישורים" data-en="Sending support and confirmation emails"></span></li>
+        <li><strong>Groq</strong> — <span data-he="עיבוד שפה טבעית לשיחות AI" data-en="Natural language processing for AI conversations"></span></li>
+      </ul>
+      <p data-he="כל שירות צד שלישי כפוף למדיניות הפרטיות שלו. אנו ממליצים לעיין בהן." data-en="Each third-party service is subject to its own privacy policy. We recommend reviewing them."></p>
+    </div>
+
+    <!-- Speech & Audio -->
+    <div class="section">
+      <h2><span class="icon">🎤</span> <span data-he="נתוני דיבור ושמע" data-en="Speech & Audio Data"></span></h2>
+      <p data-he="כאשר אתה משתמש בתכונות תרגול הדיבור וההגייה:" data-en="When you use speech and pronunciation practice features:"></p>
+      <ul>
+        <li data-he="הקלטות קוליות מעובדות בזמן אמת לצורך משוב הגייה" data-en="Voice recordings are processed in real-time for pronunciation feedback"></li>
+        <li data-he="ההקלטות אינן נשמרות באופן קבוע בשרתים שלנו" data-en="Recordings are not permanently stored on our servers"></li>
+        <li data-he="גישה למיקרופון דורשת את הסכמתך המפורשת" data-en="Microphone access requires your explicit consent"></li>
+        <li data-he="תוכל לבטל את הרשאת המיקרופון בכל עת דרך הגדרות הדפדפן" data-en="You can revoke microphone permission at any time through browser settings"></li>
+      </ul>
+    </div>
+
+    <!-- Children's Privacy -->
+    <div class="section">
+      <h2><span class="icon">👧</span> <span data-he="פרטיות ילדים" data-en="Children's Privacy"></span></h2>
+      <p data-he="Speakli כוללת מצב ילדים המיועד לשימוש תחת פיקוח הורי:" data-en="Speakli includes a kids mode designed for use under parental supervision:"></p>
+      <ul>
+        <li data-he="פרופילי ילדים נוצרים ומנוהלים על ידי ההורה בלבד" data-en="Child profiles are created and managed by the parent only"></li>
+        <li data-he="ילדים אינם מספקים מידע אישי ישירות" data-en="Children do not provide personal information directly"></li>
+        <li data-he="נתוני למידה של ילדים (XP, התקדמות) נשמרים תחת חשבון ההורה" data-en="Children's learning data (XP, progress) is stored under the parent's account"></li>
+        <li data-he="אין פרסומות, רכישות בתוך האפליקציה, או קישורים חיצוניים במצב ילדים" data-en="No ads, in-app purchases, or external links in kids mode"></li>
+        <li data-he="מצב ילדים מוגן בשער מתמטי למניעת יציאה לא מורשית" data-en="Kids mode is protected with a math gate to prevent unauthorized exit"></li>
+        <li data-he="ההורה יכול למחוק את פרופיל הילד ואת כל הנתונים הקשורים בכל עת" data-en="The parent can delete the child's profile and all related data at any time"></li>
+      </ul>
+      <div class="highlight" data-he="אנו מציתים לחוק COPPA ולתקנת GDPR בנוגע לפרטיות ילדים. אנו לא אוספים ביודעין מידע מילדים מתחת לגיל 13 ללא הסכמת הורה." data-en="We comply with COPPA and GDPR regarding children's privacy. We do not knowingly collect information from children under 13 without parental consent."></div>
+    </div>
+
+    <!-- Data Storage & Security -->
+    <div class="section">
+      <h2><span class="icon">🔒</span> <span data-he="אחסון ואבטחת מידע" data-en="Data Storage & Security"></span></h2>
+      <ul>
+        <li data-he="כל הנתונים מאוחסנים ב-Firebase (Google Cloud) עם הצפנה בזמן מנוחה ובתעבורה" data-en="All data is stored on Firebase (Google Cloud) with encryption at rest and in transit"></li>
+        <li data-he="סיסמאות מוצפנות ואינן נגישות לנו" data-en="Passwords are encrypted and not accessible to us"></li>
+        <li data-he="קודי PIN של ילדים מאוחסנים בצורה מאובטחת" data-en="Children's PIN codes are stored securely"></li>
+        <li data-he="אנו משתמשים בפרוטוקול HTTPS לכל התקשורת" data-en="We use HTTPS protocol for all communications"></li>
+        <li data-he="גישה לנתונים מוגבלת על בסיס need-to-know" data-en="Data access is restricted on a need-to-know basis"></li>
+      </ul>
+    </div>
+
+    <!-- Data Retention -->
+    <div class="section">
+      <h2><span class="icon">🗄️</span> <span data-he="שמירת מידע" data-en="Data Retention"></span></h2>
+      <p data-he="אנו שומרים את המידע שלך כל עוד חשבונך פעיל. אם תבקש למחוק את חשבונך:" data-en="We retain your information as long as your account is active. If you request account deletion:"></p>
+      <ul>
+        <li data-he="כל נתוני החשבון, כולל פרופילי ילדים, יימחקו תוך 48 שעות" data-en="All account data, including child profiles, will be deleted within 48 hours"></li>
+        <li data-he="נתונים אנונימיים ומצטברים עשויים להישמר לצורכי שיפור השירות" data-en="Anonymous and aggregated data may be retained for service improvement"></li>
+        <li data-he="פניות תמיכה יישמרו למשך 12 חודשים לאחר סגירתן" data-en="Support tickets will be retained for 12 months after closure"></li>
+      </ul>
+    </div>
+
+    <!-- Your Rights -->
+    <div class="section">
+      <h2><span class="icon">✅</span> <span data-he="הזכויות שלך" data-en="Your Rights"></span></h2>
+      <p data-he="יש לך את הזכויות הבאות בנוגע למידע האישי שלך:" data-en="You have the following rights regarding your personal information:"></p>
+      <ul>
+        <li><strong data-he="גישה" data-en="Access"></strong> — <span data-he="לבקש עותק של המידע שאנו מחזיקים עליך" data-en="Request a copy of the information we hold about you"></span></li>
+        <li><strong data-he="תיקון" data-en="Correction"></strong> — <span data-he="לבקש תיקון של מידע שגוי" data-en="Request correction of inaccurate information"></span></li>
+        <li><strong data-he="מחיקה" data-en="Deletion"></strong> — <span data-he="לבקש מחיקת חשבונך וכל המידע הקשור" data-en="Request deletion of your account and all related data"></span></li>
+        <li><strong data-he="ניוד" data-en="Portability"></strong> — <span data-he="לקבל את המידע שלך בפורמט מובנה" data-en="Receive your data in a structured format"></span></li>
+        <li><strong data-he="הסכמה" data-en="Consent"></strong> — <span data-he="לבטל הסכמה בכל עת (כגון התראות push)" data-en="Withdraw consent at any time (such as push notifications)"></span></li>
+      </ul>
+      <p data-he="לכל בקשה, פנה אלינו בכתובת:" data-en="For any request, contact us at:"></p>
+      <p><strong><a href="mailto:support@speakli.co.il" style="color: #0d9488;">support@speakli.co.il</a></strong></p>
+    </div>
+
+    <!-- Cookies -->
+    <div class="section">
+      <h2><span class="icon">🍪</span> <span data-he="עוגיות ואחסון מקומי" data-en="Cookies & Local Storage"></span></h2>
+      <p data-he="Speakli משתמשת באחסון מקומי (Local Storage) בדפדפן לצורך:" data-en="Speakli uses Local Storage in the browser for:"></p>
+      <ul>
+        <li data-he="שמירת העדפות משתמש (שפה, מצב כהה)" data-en="Saving user preferences (language, dark mode)"></li>
+        <li data-he="מטמון תוכן לשימוש אופליין" data-en="Caching content for offline use"></li>
+        <li data-he="שמירת מצב אימות" data-en="Maintaining authentication state"></li>
+      </ul>
+      <p data-he="אנו לא משתמשים בעוגיות מעקב או עוגיות צד שלישי לצרכי פרסום." data-en="We do not use tracking cookies or third-party cookies for advertising."></p>
+    </div>
+
+    <!-- Push Notifications -->
+    <div class="section">
+      <h2><span class="icon">🔔</span> <span data-he="התראות Push" data-en="Push Notifications"></span></h2>
+      <ul>
+        <li data-he="התראות Push הן אופציונליות לחלוטין ודורשות הסכמה מפורשת" data-en="Push notifications are completely optional and require explicit consent"></li>
+        <li data-he="אנו שולחים רק תזכורות למידה יומיות" data-en="We only send daily learning reminders"></li>
+        <li data-he="תוכל לכבות התראות בכל עת מדף הפרופיל או מהגדרות המכשיר" data-en="You can disable notifications at any time from the Profile page or device settings"></li>
+      </ul>
+    </div>
+
+    <!-- Changes -->
+    <div class="section">
+      <h2><span class="icon">📝</span> <span data-he="שינויים במדיניות" data-en="Changes to This Policy"></span></h2>
+      <p data-he="אנו עשויים לעדכן מדיניות פרטיות זו מעת לעת. שינויים מהותיים יפורסמו באפליקציה. המשך השימוש באפליקציה לאחר השינויים מהווה הסכמה למדיניות המעודכנת." data-en="We may update this Privacy Policy from time to time. Material changes will be posted in the App. Continued use of the App after changes constitutes acceptance of the updated policy."></p>
+    </div>
+
+    <!-- Contact -->
+    <div class="section">
+      <h2><span class="icon">📬</span> <span data-he="יצירת קשר" data-en="Contact Us"></span></h2>
+      <p data-he="לשאלות בנוגע למדיניות פרטיות זו, ניתן לפנות אלינו:" data-en="For questions about this Privacy Policy, you can contact us:"></p>
+      <ul>
+        <li><strong data-he="אימייל:" data-en="Email:"></strong> <a href="mailto:support@speakli.co.il" style="color: #0d9488;">support@speakli.co.il</a></li>
+        <li><strong data-he="אתר:" data-en="Website:"></strong> <a href="https://www.speakli.co.il" style="color: #0d9488;">www.speakli.co.il</a></li>
+        <li><strong data-he="דף תמיכה:" data-en="Support Page:"></strong> <a href="/support.html" style="color: #0d9488;">speakli.co.il/support</a></li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2026 Speakli. <span data-he="כל הזכויות שמורות." data-en="All rights reserved."></span></p>
+      <p style="margin-top: 8px;">
+        <a href="/support.html" data-he="מרכז תמיכה" data-en="Support Center"></a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'he';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+      document.querySelectorAll('[data-he]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    setLang('he');
+  </script>
+</body>
+</html>
