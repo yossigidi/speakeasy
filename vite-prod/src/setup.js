@@ -97,7 +97,7 @@ window.hideLoadingSkeleton = function() {
 };
 
 // VAPID public key for Web Push notifications
-window.VAPID_PUBLIC_KEY = 'BEvACofaoymhF0j7_DrrI7OLX40kU43sCjZl6u5SJCAlpcqm0Hj6sG_5QC9x1iQ2q2w0IkAQGnUenz4GfW6S_Uc';
+window.VAPID_PUBLIC_KEY = 'BAu0IkbWrLa0BEKOMgGITPuIqCn5tWCccr7IwqhdhN90tIzQ98CTgTp9NC8gPxQyNDWnhpNv1kbJzi_2PnHl1Gc';
 
 // Performance timing
 window.appLoadStart = performance.now();
