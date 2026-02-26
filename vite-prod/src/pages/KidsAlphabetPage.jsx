@@ -5,6 +5,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 import alphabetData from '../data/alphabet-kids.json';
 
 /* ── Confetti burst helper ── */
@@ -838,6 +839,7 @@ function GameFlow({ letter, onComplete, onBack }) {
    ══════════════════════════════════════════ */
 export default function KidsAlphabetPage() {
   const { progress, updateProgress, addXP } = useUserProgress();
+  useWelcomeSpeech('alphabet', 'בואו נלמד אותיות!', "Let's learn letters!");
   const [view, setView] = useState('grid');
   const [selectedLetter, setSelectedLetter] = useState(null);
 

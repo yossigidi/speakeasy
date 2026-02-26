@@ -5,6 +5,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
+import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import Modal from '../components/shared/Modal.jsx';
@@ -330,6 +331,7 @@ function ReadingView({ story, onBack }) {
 export default function ReadingPage() {
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
+  useWelcomeSpeech('reading', 'בואו נקרא סיפור!', "Let's read a story!");
   const [selectedStory, setSelectedStory] = useState(null);
 
   // Filter stories by user level

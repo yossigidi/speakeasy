@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Volume2, Star, Zap, Flame } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 
 import wordsA1 from '../data/words-a1.json';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
@@ -173,6 +174,17 @@ const GAME_CARDS = [
     gradient: 'from-orange-400 via-amber-400 to-yellow-400',
     shadowColor: 'shadow-orange-400/30',
     page: 'pronunciation',
+  },
+  {
+    id: 'reading',
+    emoji: '📖',
+    titleHe: 'קריאת סיפורים!',
+    titleEn: 'Read Stories!',
+    descHe: 'קרא ולמד מילים חדשות',
+    descEn: 'Read & learn new words',
+    gradient: 'from-rose-400 via-pink-400 to-fuchsia-400',
+    shadowColor: 'shadow-rose-400/30',
+    page: 'reading',
   },
 ];
 
@@ -347,39 +359,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
   const [expandedVideo, setExpandedVideo] = useState(null);
   const [cardPops, setCardPops] = useState([]);
 
-  // Welcome speech for kids on first visit per session (natural Cloud TTS voice)
-  const welcomeSpokenRef = useRef(false);
-  useEffect(() => {
-    if (welcomeSpokenRef.current) return;
-    const key = 'kids-home-welcome-spoken';
-    if (sessionStorage.getItem(key)) {
-      welcomeSpokenRef.current = true;
-      return;
-    }
-
-    const doSpeak = () => {
-      if (welcomeSpokenRef.current) return;
-      welcomeSpokenRef.current = true;
-      sessionStorage.setItem(key, '1');
-      document.removeEventListener('click', doSpeak);
-      document.removeEventListener('touchstart', doSpeak);
-
-      const name = progress.displayName;
-      const isHe = uiLang === 'he';
-      const text = isHe
-        ? (name ? `היי ${name}! בואו נלמד` : 'היי! בואו נלמד')
-        : (name ? `Hi ${name}! Let's learn!` : "Hi! Let's learn!");
-      speak(text, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
-    };
-
-    document.addEventListener('click', doSpeak);
-    document.addEventListener('touchstart', doSpeak);
-
-    return () => {
-      document.removeEventListener('click', doSpeak);
-      document.removeEventListener('touchstart', doSpeak);
-    };
-  }, [uiLang, speak]);
+  useWelcomeSpeech('kids-home', 'היי! בואו נלמד', "Hi! Let's learn!");
 
   // Stagger card pop-in animations
   useEffect(() => {

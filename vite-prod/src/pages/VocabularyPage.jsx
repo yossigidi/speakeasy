@@ -6,6 +6,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
+import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
@@ -1024,6 +1025,7 @@ export default function VocabularyPage() {
   const { addXP, progress } = useUserProgress();
   const { dueWords, dueCount, reviewWord, addWord, isLoading } = useSpacedRepetition();
   const { speak } = useSpeechSynthesis();
+  useWelcomeSpeech('vocabulary', 'בואו נלמד מילים חדשות!', "Let's learn new words!");
   const [view, setView] = useState('main'); // main, review, browse, learn, detail
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedWord, setSelectedWord] = useState(null);
