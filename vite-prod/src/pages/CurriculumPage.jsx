@@ -8,12 +8,10 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { getLevel, LEVEL_META, LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
-import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 
 export default function CurriculumPage({ onBack }) {
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
-  useWelcomeSpeech('curriculum', 'בואו נלמד!', "Let's learn!");
   const {
     curriculum,
     isLessonUnlocked,

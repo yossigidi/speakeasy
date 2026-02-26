@@ -7,7 +7,6 @@ import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../u
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
-import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -1095,7 +1094,6 @@ function GameSelector({ onSelectGame, onBack }) {
    ══════════════════════════════════════════════════════ */
 export default function KidsGamesPage({ onBack }) {
   const { addXP, progress } = useUserProgress();
-  useWelcomeSpeech('games', 'בואו נשחק!', "Let's play games!");
   const [selectedGame, setSelectedGame] = useState(null);
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
 

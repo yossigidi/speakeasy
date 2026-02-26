@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSpeech } from '../../contexts/SpeechContext.jsx';
 
 const SESSION_KEY = 'kids-intro-seen';
 
@@ -16,17 +17,7 @@ function markSeen(id) {
 
 /**
  * KidsIntro — fun animated intro overlay for kids pages.
- *
- * Props:
- *  - id: unique key per page (e.g. 'home', 'games', 'alphabet')
- *  - name: child's display name
- *  - emoji: large mascot/page emoji
- *  - title / titleHe: heading text
- *  - desc / descHe: description text
- *  - uiLang: 'he' or 'en'
- *  - gradient: tailwind gradient classes (default provided)
- *  - buttonLabel / buttonLabelHe: CTA text
- *  - onDone: optional callback after dismiss
+ * Speaks the greeting + description aloud when shown.
  */
 export default function KidsIntro({
   id,
@@ -42,6 +33,7 @@ export default function KidsIntro({
   buttonLabelHe = '!יאללה',
   onDone,
 }) {
+  const { speak, stopSpeaking } = useSpeech();
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState('enter'); // enter → visible → exit
 
@@ -52,18 +44,33 @@ export default function KidsIntro({
       return;
     }
     setVisible(true);
-    // Animate in
     requestAnimationFrame(() => setPhase('visible'));
   }, [id]);
 
+  // Speak the intro content when it becomes visible
+  useEffect(() => {
+    if (phase !== 'visible' || !visible) return;
+
+    const isHe = uiLang === 'he';
+    const parts = [];
+    if (name) parts.push(isHe ? `היי ${name}!` : `Hi ${name}!`);
+    parts.push(isHe ? titleHe : title);
+    const d = isHe ? descHe : desc;
+    if (d) parts.push(d);
+    const fullText = parts.join(' ');
+
+    speak(fullText, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
+  }, [phase, visible]);
+
   const dismiss = useCallback(() => {
+    stopSpeaking();
     setPhase('exit');
     markSeen(id);
     setTimeout(() => {
       setVisible(false);
       if (onDone) onDone();
     }, 400);
-  }, [id, onDone]);
+  }, [id, onDone, stopSpeaking]);
 
   if (!visible) return null;
 

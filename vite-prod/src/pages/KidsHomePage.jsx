@@ -4,7 +4,6 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
-import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 
 import wordsA1 from '../data/words-a1.json';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
@@ -358,8 +357,6 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
   const { speak, speakSequence } = useSpeech();
   const [expandedVideo, setExpandedVideo] = useState(null);
   const [cardPops, setCardPops] = useState([]);
-
-  useWelcomeSpeech('kids-home', 'היי! בואו נלמד', "Hi! Let's learn!");
 
   // Stagger card pop-in animations
   useEffect(() => {

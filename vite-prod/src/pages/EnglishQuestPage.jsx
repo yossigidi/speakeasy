@@ -9,7 +9,6 @@ import { playCorrect, playWrong, playComplete, playStar, playTap } from '../util
 import { WORDS_BY_LEVEL, SENTENCES_BY_LEVEL, getWordsForLevel } from '../data/kids-vocabulary.js';
 import { QUEST_GRAMMAR } from '../data/kids-vocabulary.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
-import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 
 /* ─── Constants ─── */
 
@@ -935,7 +934,6 @@ export default function EnglishQuestPage({ onBack }) {
   const { uiLang } = useTheme();
   const { progress, updateProgress, addXP } = useUserProgress();
   const { speak, speakSequence } = useSpeech();
-  useWelcomeSpeech('quest', 'בואו למשימה!', "Let's start the quest!");
   const isHe = uiLang === 'he';
 
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
