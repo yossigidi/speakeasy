@@ -3,18 +3,41 @@ import { getFirestore, getAccessToken } from './_lib/firebase.js';
 
 const CLOUD_TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
 const CACHE_COLLECTION = 'tts-cache';
-const DEFAULT_VOICE = 'he-IL-Chirp3-HD-Kore';
 
-// Clean text for natural Hebrew pronunciation
-function cleanForTTS(text) {
-  return text
-    .replace(/\s*\/\s*/g, ' או ')     // "רופא / רופאה" → "רופא או רופאה"
-    .replace(/\s*\(([^)]+)\)/g, ', $1') // "יד (כף יד)" → "יד, כף יד"
-    .replace(/\s+/g, ' ')
-    .trim();
+// Best natural-sounding voices per language
+// speakingRate: 0.85 = slower, teacher-like pace for learners
+const VOICES = {
+  he: { name: 'he-IL-Chirp3-HD-Kore', languageCode: 'he-IL', speakingRate: 0.9 },
+  en: { name: 'en-US-Chirp3-HD-Achernar', languageCode: 'en-US', speakingRate: 0.85 },
+};
+
+// Detect language from text (simple heuristic)
+function detectLang(text) {
+  // If contains Hebrew characters → Hebrew
+  if (/[\u0590-\u05FF]/.test(text)) return 'he';
+  return 'en';
 }
 
-async function callCloudTTS(text, voiceName, accessToken) {
+// Clean text for natural pronunciation
+function cleanForTTS(text, lang) {
+  let cleaned = text;
+  if (lang === 'he') {
+    cleaned = cleaned
+      .replace(/\s*\/\s*/g, ' או ')
+      .replace(/\s*\(([^)]+)\)/g, ', $1');
+  }
+  return cleaned.replace(/\s+/g, ' ').trim();
+}
+
+async function callCloudTTS(text, voiceConfig, accessToken) {
+  const audioConfig = {
+    audioEncoding: 'MP3',
+  };
+  // Add speaking rate if configured (slower = more teacher-like)
+  if (voiceConfig.speakingRate) {
+    audioConfig.speakingRate = voiceConfig.speakingRate;
+  }
+
   const response = await fetch(CLOUD_TTS_URL, {
     method: 'POST',
     headers: {
@@ -24,12 +47,10 @@ async function callCloudTTS(text, voiceName, accessToken) {
     body: JSON.stringify({
       input: { text },
       voice: {
-        languageCode: 'he-IL',
-        name: voiceName,
+        languageCode: voiceConfig.languageCode,
+        name: voiceConfig.name,
       },
-      audioConfig: {
-        audioEncoding: 'MP3',
-      },
+      audioConfig,
     }),
   });
 
@@ -49,14 +70,21 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { text, voice } = req.body || {};
+  const { text, voice, lang } = req.body || {};
   if (!text || typeof text !== 'string' || text.length > 500) {
     return res.status(400).json({ error: 'Invalid text (required, max 500 chars)' });
   }
 
   const trimmed = text.trim();
-  const voiceName = voice || DEFAULT_VOICE;
-  const cacheKey = Buffer.from(`${trimmed}__${voiceName}`).toString('base64url');
+
+  // Determine language and voice
+  const detectedLang = lang || detectLang(trimmed);
+  const voiceConfig = voice
+    ? { name: voice, languageCode: detectedLang === 'he' ? 'he-IL' : 'en-US' }
+    : VOICES[detectedLang] || VOICES.en;
+
+  const rateStr = voiceConfig.speakingRate ? `_r${voiceConfig.speakingRate}` : '';
+  const cacheKey = Buffer.from(`${trimmed}__${voiceConfig.name}${rateStr}`).toString('base64url');
 
   // 1. Check Firestore cache
   try {
@@ -76,7 +104,7 @@ export default async function handler(req, res) {
   // 2. Generate via Google Cloud TTS
   try {
     const token = await getAccessToken();
-    const audioBase64 = await callCloudTTS(cleanForTTS(trimmed), voiceName, token);
+    const audioBase64 = await callCloudTTS(cleanForTTS(trimmed, detectedLang), voiceConfig, token);
 
     if (!audioBase64) {
       return res.status(500).json({ error: 'No audio in response' });
@@ -94,7 +122,8 @@ export default async function handler(req, res) {
         audio: result.audio,
         mimeType: result.mimeType,
         text: trimmed,
-        voice: voiceName,
+        lang: detectedLang,
+        voice: voiceConfig.name,
         createdAt: new Date().toISOString(),
       }).catch(e => console.warn('Firestore cache write failed:', e.message));
     } catch (e) {

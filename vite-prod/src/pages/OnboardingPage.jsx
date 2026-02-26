@@ -6,27 +6,85 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 
 /* ───────── Placement-test questions (3 per level, A1-C1) ───────── */
+/* Each question has:
+   - question: the question text
+   - questionHe: Hebrew translation of the question (for context)
+   - options: 4 answer options
+   - correct: index of correct answer
+   - level: CEFR level
+   - hint / hintHe: optional hint for difficult questions
+   - type: 'grammar' | 'vocabulary' | 'comprehension'
+*/
 const PLACEMENT_QUESTIONS = [
-  // ─── A1 ───
-  { question: 'What is the correct greeting for the morning?', options: ['Good night', 'Good morning', 'Good luck', 'Goodbye'], correct: 1, level: 'A1' },
-  { question: 'She ___ a student.', options: ['am', 'is', 'are', 'be'], correct: 1, level: 'A1' },
-  { question: 'How do you say "תודה" in English?', options: ['Please', 'Sorry', 'Thank you', 'Excuse me'], correct: 2, level: 'A1' },
+  // ─── A1 (very basic) ───
+  { question: 'What is the correct greeting for the morning?',
+    questionHe: 'מה הברכה הנכונה לבוקר?',
+    options: ['Good night', 'Good morning', 'Good luck', 'Goodbye'],
+    correct: 1, level: 'A1', type: 'vocabulary' },
+  { question: 'She ___ a student.',
+    questionHe: 'היא ___ תלמידה.',
+    options: ['am', 'is', 'are', 'be'],
+    correct: 1, level: 'A1', type: 'grammar' },
+  { question: 'What does "Thank you" mean?',
+    questionHe: 'מה המשמעות של "Thank you"?',
+    options: ['בבקשה', 'סליחה', 'תודה', 'שלום'],
+    correct: 2, level: 'A1', type: 'vocabulary' },
   // ─── A2 ───
-  { question: 'I ___ to the store yesterday.', options: ['go', 'goes', 'went', 'going'], correct: 2, level: 'A2' },
-  { question: 'Which sentence is correct?', options: ['She don\'t like coffee.', 'She doesn\'t likes coffee.', 'She doesn\'t like coffee.', 'She not like coffee.'], correct: 2, level: 'A2' },
-  { question: 'There are ___ apples on the table.', options: ['much', 'a', 'some', 'any'], correct: 2, level: 'A2' },
+  { question: 'I ___ to the store yesterday.',
+    questionHe: 'אני ___ לחנות אתמול.',
+    options: ['go', 'goes', 'went', 'going'],
+    correct: 2, level: 'A2', type: 'grammar',
+    hint: 'Yesterday = past tense', hintHe: 'אתמול = זמן עבר' },
+  { question: 'What does "Delicious" mean?',
+    questionHe: 'מה המשמעות של "Delicious"?',
+    options: ['יפה', 'טעים', 'גדול', 'מהיר'],
+    correct: 1, level: 'A2', type: 'vocabulary' },
+  { question: 'There are ___ apples on the table.',
+    questionHe: 'יש ___ תפוחים על השולחן.',
+    options: ['much', 'a', 'some', 'any'],
+    correct: 2, level: 'A2', type: 'grammar' },
   // ─── B1 ───
-  { question: 'If it rains tomorrow, I ___ at home.', options: ['stay', 'will stay', 'stayed', 'would stay'], correct: 1, level: 'B1' },
-  { question: 'She asked me ___ I had finished the report.', options: ['that', 'if', 'what', 'which'], correct: 1, level: 'B1' },
-  { question: 'The movie was ___ boring that we left early.', options: ['such', 'too', 'so', 'very'], correct: 2, level: 'B1' },
+  { question: 'If it rains tomorrow, I ___ at home.',
+    questionHe: 'אם ירד גשם מחר, אני ___ בבית.',
+    options: ['stay', 'will stay', 'stayed', 'would stay'],
+    correct: 1, level: 'B1', type: 'grammar',
+    hint: 'Future condition', hintHe: 'תנאי עתידי' },
+  { question: 'What does "Although" mean?',
+    questionHe: 'מה המשמעות של "Although"?',
+    options: ['בגלל', 'למרות', 'כאשר', 'אחרי'],
+    correct: 1, level: 'B1', type: 'vocabulary' },
+  { question: 'The movie was ___ boring that we left early.',
+    questionHe: 'הסרט היה ___ משעמם שיצאנו מוקדם.',
+    options: ['such', 'too', 'so', 'very'],
+    correct: 2, level: 'B1', type: 'grammar' },
   // ─── B2 ───
-  { question: 'Not only ___ the exam, but she also got the highest grade.', options: ['she passed', 'did she pass', 'she did pass', 'passed she'], correct: 1, level: 'B2' },
-  { question: 'I wish I ___ more time to travel last year.', options: ['have', 'had had', 'would have', 'having'], correct: 1, level: 'B2' },
-  { question: 'The report ___ by the time the meeting starts.', options: ['will have been completed', 'will complete', 'is completing', 'has completed'], correct: 0, level: 'B2' },
+  { question: 'What does "Nevertheless" mean?',
+    questionHe: 'מה המשמעות של "Nevertheless"?',
+    options: ['לעולם לא', 'בכל זאת', 'לפעמים', 'מאוחר יותר'],
+    correct: 1, level: 'B2', type: 'vocabulary' },
+  { question: 'I wish I ___ more time to travel last year.',
+    questionHe: 'הלוואי ש ___ יותר זמן לטייל בשנה שעברה.',
+    options: ['have', 'had had', 'would have', 'having'],
+    correct: 1, level: 'B2', type: 'grammar',
+    hint: 'Past wish = past perfect', hintHe: 'משאלה על העבר = past perfect' },
+  { question: 'The report ___ by the time the meeting starts.',
+    questionHe: 'הדוח ___ עד שהישיבה תתחיל.',
+    options: ['will have been completed', 'will complete', 'is completing', 'has completed'],
+    correct: 0, level: 'B2', type: 'grammar' },
   // ─── C1 ───
-  { question: 'Hardly ___ the station when the train departed.', options: ['I reached', 'had I reached', 'I had reached', 'did I reach'], correct: 1, level: 'C1' },
-  { question: 'The proposal, ___ merits are undeniable, was rejected on procedural grounds.', options: ['who\'s', 'whose', 'which', 'that'], correct: 1, level: 'C1' },
-  { question: 'She couldn\'t help but ___ at the absurdity of the situation.', options: ['to laugh', 'laughing', 'laugh', 'laughed'], correct: 2, level: 'C1' },
+  { question: 'What does "Ubiquitous" mean?',
+    questionHe: 'מה המשמעות של "Ubiquitous"?',
+    options: ['נדיר', 'נמצא בכל מקום', 'מסתורי', 'עתיק'],
+    correct: 1, level: 'C1', type: 'vocabulary' },
+  { question: 'Hardly ___ the station when the train departed.',
+    questionHe: 'בקושי ___ לתחנה כשהרכבת יצאה.',
+    options: ['I reached', 'had I reached', 'I had reached', 'did I reach'],
+    correct: 1, level: 'C1', type: 'grammar',
+    hint: 'Inversion after "Hardly"', hintHe: 'היפוך אחרי "Hardly"' },
+  { question: 'She couldn\'t help but ___ at the absurdity of the situation.',
+    questionHe: 'היא לא יכלה שלא ___ על האבסורד של המצב.',
+    options: ['to laugh', 'laughing', 'laugh', 'laughed'],
+    correct: 2, level: 'C1', type: 'grammar' },
 ];
 
 const LEVELS_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1'];
@@ -55,7 +113,7 @@ function calculateCefrLevel(answers) {
 /* ═══════════════════════════════════════════════
    Main OnboardingPage component
    ═══════════════════════════════════════════════ */
-export default function OnboardingPage({ onComplete }) {
+export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { uiLang, setUiLang, dir } = useTheme();
   const { signInWithGoogle, signUpWithEmail, signInWithEmail } = useAuth();
   const { updateProgress } = useUserProgress();
@@ -135,6 +193,20 @@ export default function OnboardingPage({ onComplete }) {
     }, 600);
   }, [testAnswers, testIndex]);
 
+  /* ── skip question (don't know) ── */
+  const handleSkipQuestion = useCallback(() => {
+    const newAnswers = [...testAnswers, -1]; // -1 = skipped
+    setTestAnswers(newAnswers);
+
+    if (testIndex + 1 >= PLACEMENT_QUESTIONS.length) {
+      const level = calculateCefrLevel(newAnswers);
+      setCefrLevel(level);
+      setTestFinished(true);
+    } else {
+      setTestIndex(i => i + 1);
+    }
+  }, [testAnswers, testIndex]);
+
   /* ── auth handlers ── */
   const handleGoogle = useCallback(async () => {
     setAuthError('');
@@ -204,6 +276,14 @@ export default function OnboardingPage({ onComplete }) {
         className="px-10 py-4 rounded-2xl font-bold text-white text-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 active:scale-[0.97] transition-all duration-200"
       >
         {uiLang === 'he' ? 'בוא נתחיל' : 'Get Started'}
+      </button>
+
+      {/* Child login link */}
+      <button
+        onClick={onChildLogin}
+        className="mt-6 text-sm text-gray-400 hover:text-indigo-500 transition-colors"
+      >
+        {t('orLoginAsChild', uiLang)}
       </button>
     </div>
   );
@@ -348,22 +428,44 @@ export default function OnboardingPage({ onComplete }) {
 
     if (testFinished) {
       // Result screen
+      const correctCount = testAnswers.filter((a, i) => a === PLACEMENT_QUESTIONS[i].correct).length;
+      const skippedCount = testAnswers.filter(a => a === -1).length;
+      const levelDescriptions = {
+        A1: { en: 'Beginner - Perfect for starting your journey!', he: 'מתחיל - מושלם כדי להתחיל את המסע!' },
+        A2: { en: 'Elementary - You know the basics!', he: 'בסיסי - אתה מכיר את הבסיס!' },
+        B1: { en: 'Intermediate - Nice! You can hold conversations.', he: 'בינוני - יפה! אתה יכול לנהל שיחות.' },
+        B2: { en: 'Upper Intermediate - Impressive vocabulary!', he: 'בינוני-מתקדם - אוצר מילים מרשים!' },
+        C1: { en: 'Advanced - Excellent command of English!', he: 'מתקדם - שליטה מצוינת באנגלית!' },
+      };
       return (
         <StepWrapper title={t('placementTest', uiLang)} onBack={prevStep}>
-          <div className="flex flex-col items-center mt-8 gap-6">
-            <div className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-purple-500/30">
+          <div className="flex flex-col items-center mt-8 gap-5">
+            <div className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-purple-500/30 animate-pop-in">
               <span className="text-3xl font-black text-white">{cefrLevel}</span>
             </div>
             <div className="text-center">
               <h3 className="text-xl font-bold mb-1">
                 {uiLang === 'he' ? 'הרמה שלך' : 'Your Level'}
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-indigo-500 dark:text-indigo-400 font-medium mb-2">
+                {levelDescriptions[cefrLevel]?.[uiLang] || levelDescriptions[cefrLevel]?.en}
+              </p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
                 {uiLang === 'he'
-                  ? `ענית נכון על ${testAnswers.filter((a, i) => a === PLACEMENT_QUESTIONS[i].correct).length} מתוך ${PLACEMENT_QUESTIONS.length} שאלות`
-                  : `You answered ${testAnswers.filter((a, i) => a === PLACEMENT_QUESTIONS[i].correct).length} of ${PLACEMENT_QUESTIONS.length} correctly`}
+                  ? `ענית נכון על ${correctCount} מתוך ${PLACEMENT_QUESTIONS.length} שאלות`
+                  : `You answered ${correctCount} of ${PLACEMENT_QUESTIONS.length} correctly`}
+                {skippedCount > 0 && (
+                  <span className="text-gray-400">
+                    {uiLang === 'he' ? ` (דילגת על ${skippedCount})` : ` (skipped ${skippedCount})`}
+                  </span>
+                )}
               </p>
             </div>
+            <p className="text-xs text-gray-400 dark:text-gray-500 text-center px-4">
+              {uiLang === 'he'
+                ? 'תמיד אפשר לשנות את הרמה מאוחר יותר בהגדרות'
+                : 'You can always change your level later in settings'}
+            </p>
           </div>
           <NextButton onClick={nextStep} label={t('next', uiLang)} />
         </StepWrapper>
@@ -373,29 +475,45 @@ export default function OnboardingPage({ onComplete }) {
     // Question screen
     const q = PLACEMENT_QUESTIONS[testIndex];
     const progress = ((testIndex) / PLACEMENT_QUESTIONS.length) * 100;
+    const levelColors = { A1: 'text-emerald-500', A2: 'text-blue-500', B1: 'text-amber-500', B2: 'text-orange-500', C1: 'text-red-500' };
 
     return (
-      <StepWrapper title={`${t('placementTest', uiLang)} - ${q.level}`} onBack={prevStep}>
+      <StepWrapper title={t('placementTest', uiLang)} onBack={prevStep}>
         {/* Progress bar */}
-        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-2 mb-6 overflow-hidden">
+        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-2 mb-4 overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <p className="text-xs text-gray-400 mb-4 text-center">
-          {testIndex + 1} {t('of', uiLang)} {PLACEMENT_QUESTIONS.length}
-        </p>
+        <div className="flex items-center justify-between mb-4">
+          <span className={`text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 ${levelColors[q.level] || ''}`}>
+            {q.level}
+          </span>
+          <span className="text-xs text-gray-400">
+            {testIndex + 1} {t('of', uiLang)} {PLACEMENT_QUESTIONS.length}
+          </span>
+        </div>
 
         {/* Question */}
-        <div className="glass-card p-5 mb-6">
-          <p className="font-semibold text-lg text-center leading-relaxed">{q.question}</p>
+        <div className="glass-card p-5 mb-4">
+          <p className="font-semibold text-lg text-center leading-relaxed" dir="ltr">{q.question}</p>
+          {/* Hebrew translation for context */}
+          {uiLang === 'he' && q.questionHe && (
+            <p className="text-sm text-gray-400 text-center mt-2" dir="rtl">{q.questionHe}</p>
+          )}
+          {/* Hint */}
+          {q.hint && (
+            <p className="text-xs text-indigo-500 dark:text-indigo-400 text-center mt-2 italic">
+              {uiLang === 'he' && q.hintHe ? q.hintHe : q.hint}
+            </p>
+          )}
         </div>
 
         {/* Options */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
           {q.options.map((opt, i) => {
-            let btnClass = 'glass-card p-4 text-center font-medium transition-all duration-200 active:scale-[0.97] border-2 ';
+            let btnClass = 'glass-card p-3.5 text-center font-medium transition-all duration-200 active:scale-[0.97] border-2 ';
             if (selectedOption === null) {
               btnClass += 'border-transparent hover:border-indigo-400';
             } else if (i === q.correct) {
@@ -411,11 +529,22 @@ export default function OnboardingPage({ onComplete }) {
                 disabled={selectedOption !== null}
                 onClick={() => handleTestAnswer(i)}
                 className={btnClass}
+                dir="ltr"
               >
                 {opt}
               </button>
             );
           })}
+
+          {/* Skip / I don't know button */}
+          {selectedOption === null && (
+            <button
+              onClick={handleSkipQuestion}
+              className="mt-1 py-2.5 rounded-xl text-sm font-medium text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+            >
+              {uiLang === 'he' ? 'לא יודע/ת ←' : "I don't know →"}
+            </button>
+          )}
         </div>
       </StepWrapper>
     );

@@ -8,7 +8,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = window.firebaseAuth.onAuthStateChanged(window.auth, (firebaseUser) => {
-      setUser(firebaseUser);
+      // Ignore anonymous users - they're only used for child login Firestore access
+      setUser(firebaseUser?.isAnonymous ? null : firebaseUser);
       setLoading(false);
     });
     return unsubscribe;

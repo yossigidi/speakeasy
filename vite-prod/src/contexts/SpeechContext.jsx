@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { playHebrew, playHebrewFromAPI } from '../utils/hebrewAudio';
+import { playHebrew, playFromAPI } from '../utils/hebrewAudio';
 
 const SpeechContext = createContext(null);
 
@@ -174,30 +174,30 @@ export function SpeechProvider({ children }) {
     }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
+    const apiLang = isHebrew ? 'he' : 'en';
 
-    if (isHebrew) {
-      // For Hebrew: try Cloud TTS API → pre-recorded MP3 → Web Speech API
-      setIsSpeaking(true);
-      playHebrewFromAPI(text).then(async (played) => {
-        if (played) {
-          setIsSpeaking(false);
-          if (options.onEnd) options.onEnd();
-          return;
-        }
+    // For both languages: try Cloud TTS API first (natural voice)
+    setIsSpeaking(true);
+    playFromAPI(text, apiLang).then(async (played) => {
+      if (played) {
+        setIsSpeaking(false);
+        if (options.onEnd) options.onEnd();
+        return;
+      }
+
+      // Hebrew-specific fallback: pre-recorded MP3
+      if (isHebrew) {
         const mp3Played = await playHebrew(text);
         if (mp3Played) {
           setIsSpeaking(false);
           if (options.onEnd) options.onEnd();
           return;
         }
-        // Last resort: Web Speech API
-        speakWithWebSpeech(text, { ...options, _queued: true });
-      });
-      return;
-    }
+      }
 
-    // Non-Hebrew: use Web Speech API directly
-    return speakWithWebSpeech(text, options);
+      // Last resort: Web Speech API
+      speakWithWebSpeech(text, { ...options, _queued: true });
+    });
   }, [speakWithWebSpeech]);
 
   // ── speakSequence: chain multiple texts smoothly ─────────

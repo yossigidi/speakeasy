@@ -29,6 +29,7 @@ import FamilyPage from './pages/FamilyPage.jsx';
 import ChildLoginPage from './pages/ChildLoginPage.jsx';
 import ProfilePickerPage from './pages/ProfilePickerPage.jsx';
 import ChildProgressPage from './pages/ChildProgressPage.jsx';
+import KidsTeacherPage from './pages/KidsTeacherPage.jsx';
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -146,11 +147,12 @@ function AppContent() {
     'audio-learn': null,
     family: t('myFamily', uiLang),
     'child-progress': null,
+    'kids-teacher': null,
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family', 'child-progress'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family', 'child-progress', 'kids-teacher'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family' && currentPage !== 'child-progress';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -194,6 +196,8 @@ function AppContent() {
         return <FamilyPage onNavigate={navigateTo} />;
       case 'child-progress':
         return <ChildProgressPage childId={progressChildId} onBack={() => navigateTo('family')} />;
+      case 'kids-teacher':
+        return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -256,6 +260,8 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         return <KidsAlphabetPage />;
       case 'kids-games':
         return <KidsGamesPage onBack={() => navigateTo('home')} />;
+      case 'kids-teacher':
+        return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }

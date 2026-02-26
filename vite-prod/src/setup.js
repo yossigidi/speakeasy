@@ -28,6 +28,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInAnonymously,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
@@ -74,6 +75,7 @@ window.firestore = {
 window.firebaseAuth = {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInAnonymously,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,

@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakeasy-v8';
-const STATIC_CACHE = 'speakeasy-static-v8';
+const CACHE_NAME = 'speakeasy-v13';
+const STATIC_CACHE = 'speakeasy-static-v13';
 
 const urlsToCache = [
   '/',

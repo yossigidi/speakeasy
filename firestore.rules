@@ -26,5 +26,20 @@ service cloud.firestore {
     match /tts-cache/{document} {
       allow read, write: if false;
     }
+
+    // Child profiles - any authenticated user who knows the childId can access
+    // childId is a random UUID, only discoverable via correct PIN
+    match /childProfiles/{childId} {
+      allow read, write: if request.auth != null;
+      match /dailyActivity/{date} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Parent-children directory indexed by family code
+    match /parentChildren/{familyCode} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
   }
 }
