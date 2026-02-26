@@ -23,46 +23,57 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { speak, speakSequence, ttsSupported } = useSpeech();
 
   // Welcome speech on first visit per session (mature style for adults)
-  // Triggered after first user tap (to satisfy browser autoplay policy)
+  // Uses Web Speech API directly to avoid AudioContext gesture issues
   const welcomeSpokenRef = useRef(false);
   useEffect(() => {
     if (welcomeSpokenRef.current) return;
-    if (!ttsSupported) return;
+    if (!('speechSynthesis' in window)) return;
     const key = 'home-welcome-spoken';
     if (sessionStorage.getItem(key)) {
       welcomeSpokenRef.current = true;
       return;
     }
 
-    const name = progress.displayName;
     const doSpeak = () => {
       if (welcomeSpokenRef.current) return;
       welcomeSpokenRef.current = true;
-      sessionStorage.setItem(key, '1');
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
+
+      // Small delay so the UI settles first
       setTimeout(() => {
-        if (uiLang === 'he') {
-          speak(name ? `שלום ${name}, ברוך הבא חזרה` : 'שלום, ברוך הבא חזרה', { lang: 'he', rate: 0.95 });
-        } else {
-          speak(name ? `Welcome back, ${name}!` : 'Welcome back!', { lang: 'en-US', rate: 0.9 });
-        }
-      }, 300);
+        const name = progress.displayName;
+        const isHe = uiLang === 'he';
+        const text = isHe
+          ? (name ? `שלום ${name}, ברוך הבא חזרה` : 'שלום, ברוך הבא חזרה')
+          : (name ? `Welcome back, ${name}!` : 'Welcome back!');
+
+        // Use Web Speech API directly — guaranteed to work from user gesture
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = isHe ? 'he-IL' : 'en-US';
+        utterance.rate = isHe ? 0.88 : 0.9;
+        utterance.volume = 1.0;
+        utterance.onstart = () => {
+          // Only mark as spoken once it actually starts
+          sessionStorage.setItem(key, '1');
+        };
+        utterance.onerror = () => {
+          // Reset so it can retry next time
+          welcomeSpokenRef.current = false;
+        };
+        window.speechSynthesis.speak(utterance);
+      }, 400);
     };
 
-    // Try immediately (works if user already interacted via profile picker)
-    const timer = setTimeout(doSpeak, 1200);
-
-    // Also listen for first tap as fallback
-    document.addEventListener('click', doSpeak, { once: true });
-    document.addEventListener('touchstart', doSpeak, { once: true });
+    // Fire on first user interaction (required for mobile browsers)
+    document.addEventListener('click', doSpeak);
+    document.addEventListener('touchstart', doSpeak);
 
     return () => {
-      clearTimeout(timer);
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
     };
-  }, [ttsSupported]);
+  }, [uiLang]);
 
   // Word of the Day - deterministic based on date, filtered by user level
   const wordOfDay = useMemo(() => {
