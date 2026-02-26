@@ -345,7 +345,7 @@ export default function ReadingPage() {
   return (
     <div className="pb-24 px-4 pt-4 space-y-4">
       <KidsIntro
-        id="reading"
+        id="reading-v2"
         name={progress.displayName}
         emoji="📖"
         title="Read Stories!"

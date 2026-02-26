@@ -1103,7 +1103,7 @@ export default function VocabularyPage() {
   return (
     <div className="pb-24 px-4 pt-4 space-y-5">
       <KidsIntro
-        id="vocabulary"
+        id="vocabulary-v2"
         name={progress.displayName}
         emoji="📚"
         title="New Words!"

@@ -373,7 +373,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-home"
+        id="kids-home-v2"
         name={progress.displayName}
         emoji="🦉"
         title="Welcome back!"

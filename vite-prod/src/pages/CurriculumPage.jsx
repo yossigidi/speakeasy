@@ -118,7 +118,7 @@ export default function CurriculumPage({ onBack }) {
       background: 'linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%)',
     }}>
       <KidsIntro
-        id="kids-curriculum"
+        id="curriculum-v2"
         name={progress.displayName}
         emoji="📚"
         title="Your Lessons!"

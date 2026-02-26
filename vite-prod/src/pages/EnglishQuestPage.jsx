@@ -1129,7 +1129,7 @@ export default function EnglishQuestPage({ onBack }) {
   return (
     <div className="min-h-screen">
       <KidsIntro
-        id="english-quest"
+        id="english-quest-v2"
         name={progress.displayName}
         emoji="⚔️"
         title="English Quest!"

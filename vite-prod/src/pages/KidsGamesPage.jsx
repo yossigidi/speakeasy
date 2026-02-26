@@ -1022,7 +1022,7 @@ function GameSelector({ onSelectGame, onBack }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-games"
+        id="kids-games-v2"
         name={progress.displayName}
         emoji="🎮"
         title="Game Time!"

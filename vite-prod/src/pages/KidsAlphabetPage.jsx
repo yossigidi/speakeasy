@@ -69,7 +69,7 @@ function LetterGrid({ onSelect, completedLetters }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-alphabet"
+        id="kids-alphabet-v2"
         name={progress.displayName}
         emoji="🔤"
         title="Learn the Letters!"
