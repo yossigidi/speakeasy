@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Play, Pencil, Trash2, Plus, Flame, Zap } from 'lucide-react';
+import { ChevronLeft, Play, Pencil, Trash2, Plus, Flame, Zap, Copy, Check, Share2, Key, BarChart3 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
+import { LEVEL_INFO } from '../data/kids-vocabulary.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AddChildModal from '../components/family/AddChildModal.jsx';
+import Modal from '../components/shared/Modal.jsx';
 
 function formatLastActive(dateStr, uiLang) {
   if (!dateStr) return t('notYetActive', uiLang);
@@ -18,10 +20,16 @@ function formatLastActive(dateStr, uiLang) {
 
 export default function FamilyPage({ onNavigate }) {
   const { uiLang, dir } = useTheme();
-  const { children, switchToChild, addChild, updateChild, deleteChild } = useUserProgress();
+  const { children, switchToChild, addChild, updateChild, deleteChild, familyCode, generateFamilyCode, resetChildPin, updateChildLevel } = useUserProgress();
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingChild, setEditingChild] = useState(null);
   const [deletingChild, setDeletingChild] = useState(null);
+  const [copied, setCopied] = useState(false);
+  const [resetPinChild, setResetPinChild] = useState(null);
+  const [newPin, setNewPin] = useState('');
+  const [confirmNewPin, setConfirmNewPin] = useState('');
+  const [pinResetError, setPinResetError] = useState('');
+  const [pinResetSuccess, setPinResetSuccess] = useState(false);
 
   const handlePlay = (childId) => {
     switchToChild(childId);
@@ -44,6 +52,57 @@ export default function FamilyPage({ onNavigate }) {
     setDeletingChild(null);
   };
 
+  const handleCopyCode = async () => {
+    let code = familyCode;
+    if (!code) {
+      code = await generateFamilyCode();
+    }
+    if (code) {
+      navigator.clipboard.writeText(code).catch(() => {});
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleShareCode = async () => {
+    let code = familyCode;
+    if (!code) {
+      code = await generateFamilyCode();
+    }
+    if (code && navigator.share) {
+      try {
+        await navigator.share({
+          title: 'SpeakEasy',
+          text: `${t('familyCodeDesc', uiLang)}: ${code}`,
+          url: `${window.location.origin}?childJoin=${code}`,
+        });
+      } catch { /* user cancelled */ }
+    } else {
+      handleCopyCode();
+    }
+  };
+
+  const handleResetPin = async () => {
+    if (newPin.length !== 4) return;
+    if (newPin !== confirmNewPin) {
+      setPinResetError(t('pinMismatch', uiLang));
+      return;
+    }
+    try {
+      await resetChildPin(resetPinChild.id, resetPinChild.name, newPin);
+      setPinResetSuccess(true);
+      setTimeout(() => {
+        setResetPinChild(null);
+        setNewPin('');
+        setConfirmNewPin('');
+        setPinResetError('');
+        setPinResetSuccess(false);
+      }, 1500);
+    } catch (e) {
+      setPinResetError(e.message);
+    }
+  };
+
   return (
     <div className="pb-24 px-4 pt-2 space-y-4">
       {/* Header */}
@@ -59,6 +118,43 @@ export default function FamilyPage({ onNavigate }) {
         </h1>
       </div>
 
+      {/* Family Code Section */}
+      <GlassCard variant="strong" className="!p-4">
+        <div className="text-center space-y-3">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {t('yourFamilyCode', uiLang)}
+          </p>
+          {familyCode ? (
+            <div className="text-3xl font-black tracking-[0.3em] text-indigo-600 dark:text-indigo-400">
+              {familyCode}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400 italic">
+              {uiLang === 'he' ? 'הקוד ייווצר כשתוסיף ילד' : 'Code will be created when you add a child'}
+            </p>
+          )}
+          <p className="text-xs text-gray-400 dark:text-gray-500">
+            {t('familyCodeDesc', uiLang)}
+          </p>
+          <div className="flex gap-2 justify-center">
+            <button
+              onClick={handleCopyCode}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 text-sm font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors"
+            >
+              {copied ? <Check size={16} /> : <Copy size={16} />}
+              {copied ? t('copied', uiLang) : t('copyCode', uiLang)}
+            </button>
+            <button
+              onClick={handleShareCode}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 text-sm font-medium hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
+            >
+              <Share2 size={16} />
+              {t('shareCode', uiLang)}
+            </button>
+          </div>
+        </div>
+      </GlassCard>
+
       {/* Children Cards */}
       {children.map(child => (
         <GlassCard key={child.id} variant="strong" className="!p-0 overflow-hidden">
@@ -73,6 +169,9 @@ export default function FamilyPage({ onNavigate }) {
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
                   {child.name}
+                  {child.age && (
+                    <span className="text-sm font-normal text-gray-400 mr-1 ml-1">({child.age})</span>
+                  )}
                 </h3>
                 <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center gap-1">
@@ -93,6 +192,20 @@ export default function FamilyPage({ onNavigate }) {
               {/* Actions */}
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button
+                  onClick={() => onNavigate('child-progress', child.id)}
+                  className="p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors text-gray-400 hover:text-indigo-500"
+                  title={t('viewProgress', uiLang)}
+                >
+                  <BarChart3 size={16} />
+                </button>
+                <button
+                  onClick={() => setResetPinChild(child)}
+                  className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-400"
+                  title={t('resetPin', uiLang)}
+                >
+                  <Key size={16} />
+                </button>
+                <button
                   onClick={() => setEditingChild(child)}
                   className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-400"
                 >
@@ -107,6 +220,37 @@ export default function FamilyPage({ onNavigate }) {
               </div>
             </div>
           </div>
+
+          {/* Child Level Selector */}
+          {child.age && parseInt(child.age, 10) < 10 && (
+            <div className="px-4 pb-3 pt-1">
+              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">
+                {t('childLevel', uiLang)}
+              </p>
+              <div className="flex gap-1.5">
+                {[1, 2, 3, 4].map(lvl => {
+                  const info = LEVEL_INFO[lvl];
+                  const isActive = (child.childLevel || 1) === lvl;
+                  return (
+                    <button
+                      key={lvl}
+                      onClick={() => updateChildLevel(child.id, lvl)}
+                      className={`flex-1 py-1.5 px-1 rounded-lg text-center transition-all text-xs font-bold ${
+                        isActive
+                          ? `bg-gradient-to-r ${info.color} text-white shadow-md scale-105`
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <span className="block text-sm">{info.emoji}</span>
+                      <span className="block leading-tight" style={{ fontSize: '9px' }}>
+                        {uiLang === 'he' ? info.name : info.nameEn}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Play Button */}
           <button
@@ -180,6 +324,104 @@ export default function FamilyPage({ onNavigate }) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Reset PIN Modal */}
+      {resetPinChild && (
+        <Modal
+          isOpen={true}
+          onClose={() => {
+            setResetPinChild(null);
+            setNewPin('');
+            setConfirmNewPin('');
+            setPinResetError('');
+            setPinResetSuccess(false);
+          }}
+          title={`${t('resetPin', uiLang)} - ${resetPinChild.name}`}
+        >
+          <div className="space-y-4">
+            {pinResetSuccess ? (
+              <div className="text-center py-4">
+                <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-3">
+                  <Check size={32} className="text-green-500" />
+                </div>
+                <p className="font-semibold text-green-600 dark:text-green-400">
+                  {t('pinResetSuccess', uiLang)}
+                </p>
+              </div>
+            ) : (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                    {t('setPin', uiLang)}
+                  </label>
+                  <div className="flex justify-center gap-3" dir="ltr">
+                    {[0, 1, 2, 3].map(i => (
+                      <input
+                        key={`rpin-${i}`}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={newPin[i] || ''}
+                        onChange={e => {
+                          const val = e.target.value.replace(/\D/g, '');
+                          const p = newPin.split('');
+                          p[i] = val;
+                          setNewPin(p.join('').slice(0, 4));
+                          if (val && i < 3) e.target.nextElementSibling?.focus();
+                        }}
+                        onKeyDown={e => {
+                          if (e.key === 'Backspace' && !newPin[i] && i > 0) e.target.previousElementSibling?.focus();
+                        }}
+                        className="w-14 h-14 text-center text-2xl font-bold rounded-xl bg-white/50 dark:bg-white/5 border-2 border-gray-200 dark:border-gray-700 focus:border-brand-500 outline-none transition-colors"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                    {t('confirmPin', uiLang)}
+                  </label>
+                  <div className="flex justify-center gap-3" dir="ltr">
+                    {[0, 1, 2, 3].map(i => (
+                      <input
+                        key={`rcpin-${i}`}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={confirmNewPin[i] || ''}
+                        onChange={e => {
+                          const val = e.target.value.replace(/\D/g, '');
+                          const p = confirmNewPin.split('');
+                          p[i] = val;
+                          setConfirmNewPin(p.join('').slice(0, 4));
+                          if (val && i < 3) e.target.nextElementSibling?.focus();
+                        }}
+                        onKeyDown={e => {
+                          if (e.key === 'Backspace' && !confirmNewPin[i] && i > 0) e.target.previousElementSibling?.focus();
+                        }}
+                        className="w-14 h-14 text-center text-2xl font-bold rounded-xl bg-white/50 dark:bg-white/5 border-2 border-gray-200 dark:border-gray-700 focus:border-brand-500 outline-none transition-colors"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {pinResetError && (
+                  <p className="text-red-500 text-sm text-center">{pinResetError}</p>
+                )}
+
+                <button
+                  onClick={handleResetPin}
+                  disabled={newPin.length !== 4}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-purple-600 text-white font-bold shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  {t('resetPin', uiLang)}
+                </button>
+              </>
+            )}
+          </div>
+        </Modal>
       )}
     </div>
   );

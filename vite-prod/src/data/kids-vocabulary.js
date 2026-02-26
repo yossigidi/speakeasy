@@ -1,0 +1,267 @@
+// Kids vocabulary organized by level, following Israel Ministry of Education curriculum
+// Level 1: Pre-A1 Beginner (ages 4-5) — 20 simple words
+// Level 2: Pre-A1+ Explorer (ages 6-7) — adds 15 more words
+// Level 3: Pre-A1→A1 Reader (ages 7-8) — adds 15 more words
+// Level 4: A1 Champion (ages 9-10) — adds 20+ more words
+
+export const WORDS_BY_LEVEL = {
+  1: [
+    // Greetings
+    { word: 'hello', emoji: '👋', translation: 'שלום' },
+    { word: 'bye', emoji: '👋', translation: 'ביי' },
+    { word: 'yes', emoji: '✅', translation: 'כן' },
+    { word: 'no', emoji: '❌', translation: 'לא' },
+    // Numbers
+    { word: 'one', emoji: '1️⃣', translation: 'אחד' },
+    { word: 'two', emoji: '2️⃣', translation: 'שניים' },
+    // Colors
+    { word: 'red', emoji: '🔴', translation: 'אדום' },
+    { word: 'blue', emoji: '🔵', translation: 'כחול' },
+    { word: 'green', emoji: '🟢', translation: 'ירוק' },
+    // Animals
+    { word: 'cat', emoji: '🐱', translation: 'חתול' },
+    { word: 'dog', emoji: '🐶', translation: 'כלב' },
+    { word: 'fish', emoji: '🐟', translation: 'דג' },
+    { word: 'bird', emoji: '🐦', translation: 'ציפור' },
+    // Food
+    { word: 'apple', emoji: '🍎', translation: 'תפוח' },
+    { word: 'banana', emoji: '🍌', translation: 'בננה' },
+    { word: 'milk', emoji: '🥛', translation: 'חלב' },
+    // Basic objects
+    { word: 'sun', emoji: '☀️', translation: 'שמש' },
+    { word: 'star', emoji: '⭐', translation: 'כוכב' },
+    { word: 'ball', emoji: '⚽', translation: 'כדור' },
+    { word: 'cake', emoji: '🎂', translation: 'עוגה' },
+  ],
+  2: [
+    // Family
+    { word: 'mom', emoji: '👩', translation: 'אמא' },
+    { word: 'dad', emoji: '👨', translation: 'אבא' },
+    { word: 'baby', emoji: '👶', translation: 'תינוק' },
+    // Body
+    { word: 'hand', emoji: '✋', translation: 'יד' },
+    { word: 'head', emoji: '🗣️', translation: 'ראש' },
+    { word: 'eye', emoji: '👁️', translation: 'עין' },
+    // Classroom
+    { word: 'book', emoji: '📖', translation: 'ספר' },
+    { word: 'pen', emoji: '🖊️', translation: 'עט' },
+    // More colors
+    { word: 'yellow', emoji: '🟡', translation: 'צהוב' },
+    { word: 'pink', emoji: '💗', translation: 'ורוד' },
+    // More animals
+    { word: 'duck', emoji: '🦆', translation: 'ברווז' },
+    { word: 'frog', emoji: '🐸', translation: 'צפרדע' },
+    // Adjectives
+    { word: 'big', emoji: '🐘', translation: 'גדול' },
+    { word: 'small', emoji: '🐁', translation: 'קטן' },
+    { word: 'happy', emoji: '😊', translation: 'שמח' },
+  ],
+  3: [
+    // Food
+    { word: 'orange', emoji: '🍊', translation: 'תפוז' },
+    { word: 'grape', emoji: '🍇', translation: 'ענבים' },
+    { word: 'water', emoji: '💧', translation: 'מים' },
+    // Weather
+    { word: 'rain', emoji: '🌧️', translation: 'גשם' },
+    { word: 'moon', emoji: '🌙', translation: 'ירח' },
+    // Home
+    { word: 'house', emoji: '🏠', translation: 'בית' },
+    { word: 'door', emoji: '🚪', translation: 'דלת' },
+    { word: 'bed', emoji: '🛏️', translation: 'מיטה' },
+    // Clothing
+    { word: 'hat', emoji: '🎩', translation: 'כובע' },
+    { word: 'shoe', emoji: '👟', translation: 'נעל' },
+    // Transport
+    { word: 'car', emoji: '🚗', translation: 'מכונית' },
+    { word: 'bus', emoji: '🚌', translation: 'אוטובוס' },
+    // Nature
+    { word: 'tree', emoji: '🌳', translation: 'עץ' },
+    { word: 'flower', emoji: '🌸', translation: 'פרח' },
+    // More adjectives
+    { word: 'hot', emoji: '🔥', translation: 'חם' },
+  ],
+  4: [
+    // Bigger animals
+    { word: 'elephant', emoji: '🐘', translation: 'פיל' },
+    { word: 'horse', emoji: '🐎', translation: 'סוס' },
+    { word: 'bear', emoji: '🐻', translation: 'דוב' },
+    { word: 'whale', emoji: '🐋', translation: 'לווייתן' },
+    { word: 'butterfly', emoji: '🦋', translation: 'פרפר' },
+    // Verbs
+    { word: 'run', emoji: '🏃', translation: 'לרוץ' },
+    { word: 'eat', emoji: '🍽️', translation: 'לאכול' },
+    { word: 'read', emoji: '📖', translation: 'לקרוא' },
+    { word: 'play', emoji: '🎮', translation: 'לשחק' },
+    { word: 'sing', emoji: '🎤', translation: 'לשיר' },
+    // Places
+    { word: 'school', emoji: '🏫', translation: 'בית ספר' },
+    { word: 'park', emoji: '🌳', translation: 'פארק' },
+    // More objects
+    { word: 'cup', emoji: '🥤', translation: 'כוס' },
+    { word: 'heart', emoji: '❤️', translation: 'לב' },
+    // Adjectives
+    { word: 'cold', emoji: '🥶', translation: 'קר' },
+    { word: 'fast', emoji: '⚡', translation: 'מהיר' },
+    { word: 'slow', emoji: '🐢', translation: 'איטי' },
+    // More food
+    { word: 'bread', emoji: '🍞', translation: 'לחם' },
+    { word: 'egg', emoji: '🥚', translation: 'ביצה' },
+    { word: 'rice', emoji: '🍚', translation: 'אורז' },
+  ],
+};
+
+export const SENTENCES_BY_LEVEL = {
+  1: [
+    { sentence: 'Hello friend', words: ['Hello', 'friend'], emoji: '👋', translationHe: 'שלום חבר' },
+    { sentence: 'Red apple', words: ['Red', 'apple'], emoji: '🍎', translationHe: 'תפוח אדום' },
+    { sentence: 'Blue ball', words: ['Blue', 'ball'], emoji: '⚽', translationHe: 'כדור כחול' },
+    { sentence: 'Big dog', words: ['Big', 'dog'], emoji: '🐶', translationHe: 'כלב גדול' },
+    { sentence: 'Bye bye', words: ['Bye', 'bye'], emoji: '👋', translationHe: 'ביי ביי' },
+    { sentence: 'Yes please', words: ['Yes', 'please'], emoji: '✅', translationHe: 'כן בבקשה' },
+  ],
+  2: [
+    { sentence: 'I like cats', words: ['I', 'like', 'cats'], emoji: '🐱', translationHe: 'אני אוהב חתולים' },
+    { sentence: 'I am happy', words: ['I', 'am', 'happy'], emoji: '😊', translationHe: 'אני שמח' },
+    { sentence: 'Big red ball', words: ['Big', 'red', 'ball'], emoji: '🔴', translationHe: 'כדור אדום גדול' },
+    { sentence: 'Mom and dad', words: ['Mom', 'and', 'dad'], emoji: '👨‍👩‍👦', translationHe: 'אמא ואבא' },
+    { sentence: 'My blue book', words: ['My', 'blue', 'book'], emoji: '📖', translationHe: 'הספר הכחול שלי' },
+    { sentence: 'I see fish', words: ['I', 'see', 'fish'], emoji: '🐟', translationHe: 'אני רואה דג' },
+  ],
+  3: [
+    { sentence: 'The sun is hot', words: ['The', 'sun', 'is', 'hot'], emoji: '☀️', translationHe: 'השמש חמה' },
+    { sentence: 'I like apples', words: ['I', 'like', 'apples'], emoji: '🍎', translationHe: 'אני אוהב תפוחים' },
+    { sentence: 'The cat is small', words: ['The', 'cat', 'is', 'small'], emoji: '🐱', translationHe: 'החתול קטן' },
+    { sentence: 'She has a dog', words: ['She', 'has', 'a', 'dog'], emoji: '🐶', translationHe: 'יש לה כלב' },
+    { sentence: 'The bird can fly', words: ['The', 'bird', 'can', 'fly'], emoji: '🐦', translationHe: 'הציפור יכולה לעוף' },
+    { sentence: 'He reads a book', words: ['He', 'reads', 'a', 'book'], emoji: '📖', translationHe: 'הוא קורא ספר' },
+  ],
+  4: [
+    { sentence: 'She has a big dog', words: ['She', 'has', 'a', 'big', 'dog'], emoji: '🐶', translationHe: 'יש לה כלב גדול' },
+    { sentence: 'We go to school', words: ['We', 'go', 'to', 'school'], emoji: '🏫', translationHe: 'אנחנו הולכים לבית ספר' },
+    { sentence: 'The fish is blue', words: ['The', 'fish', 'is', 'blue'], emoji: '🐟', translationHe: 'הדג כחול' },
+    { sentence: 'They eat cake now', words: ['They', 'eat', 'cake', 'now'], emoji: '🎂', translationHe: 'הם אוכלים עוגה עכשיו' },
+    { sentence: 'I can run fast', words: ['I', 'can', 'run', 'fast'], emoji: '🏃', translationHe: 'אני יכול לרוץ מהר' },
+    { sentence: 'The ball is red', words: ['The', 'ball', 'is', 'red'], emoji: '🔴', translationHe: 'הכדור אדום' },
+  ],
+};
+
+export const CATEGORIES_BY_LEVEL = {
+  1: [
+    {
+      categories: [
+        { name: 'Animals', nameHe: 'חיות', emoji: '🐾', color: 'from-amber-400 to-orange-500' },
+        { name: 'Food', nameHe: 'אוכל', emoji: '🍽️', color: 'from-green-400 to-emerald-500' },
+      ],
+      items: [
+        { word: 'cat', emoji: '🐱', translation: 'חתול', category: 0 },
+        { word: 'dog', emoji: '🐶', translation: 'כלב', category: 0 },
+        { word: 'apple', emoji: '🍎', translation: 'תפוח', category: 1 },
+        { word: 'cake', emoji: '🎂', translation: 'עוגה', category: 1 },
+      ],
+    },
+  ],
+  2: [
+    {
+      categories: [
+        { name: 'Animals', nameHe: 'חיות', emoji: '🐾', color: 'from-amber-400 to-orange-500' },
+        { name: 'Food', nameHe: 'אוכל', emoji: '🍽️', color: 'from-green-400 to-emerald-500' },
+      ],
+      items: [
+        { word: 'cat', emoji: '🐱', translation: 'חתול', category: 0 },
+        { word: 'dog', emoji: '🐶', translation: 'כלב', category: 0 },
+        { word: 'fish', emoji: '🐟', translation: 'דג', category: 0 },
+        { word: 'apple', emoji: '🍎', translation: 'תפוח', category: 1 },
+        { word: 'cake', emoji: '🎂', translation: 'עוגה', category: 1 },
+        { word: 'banana', emoji: '🍌', translation: 'בננה', category: 1 },
+      ],
+    },
+  ],
+  3: [
+    {
+      categories: [
+        { name: 'Animals', nameHe: 'חיות', emoji: '🐾', color: 'from-amber-400 to-orange-500' },
+        { name: 'Food', nameHe: 'אוכל', emoji: '🍽️', color: 'from-green-400 to-emerald-500' },
+      ],
+      items: [
+        { word: 'cat', emoji: '🐱', translation: 'חתול', category: 0 },
+        { word: 'dog', emoji: '🐶', translation: 'כלב', category: 0 },
+        { word: 'fish', emoji: '🐟', translation: 'דג', category: 0 },
+        { word: 'bird', emoji: '🐦', translation: 'ציפור', category: 0 },
+        { word: 'apple', emoji: '🍎', translation: 'תפוח', category: 1 },
+        { word: 'cake', emoji: '🎂', translation: 'עוגה', category: 1 },
+        { word: 'banana', emoji: '🍌', translation: 'בננה', category: 1 },
+        { word: 'milk', emoji: '🥛', translation: 'חלב', category: 1 },
+      ],
+    },
+    {
+      categories: [
+        { name: 'Nature', nameHe: 'טבע', emoji: '🌿', color: 'from-green-400 to-teal-500' },
+        { name: 'Things', nameHe: 'דברים', emoji: '📦', color: 'from-blue-400 to-indigo-500' },
+      ],
+      items: [
+        { word: 'sun', emoji: '☀️', translation: 'שמש', category: 0 },
+        { word: 'moon', emoji: '🌙', translation: 'ירח', category: 0 },
+        { word: 'tree', emoji: '🌳', translation: 'עץ', category: 0 },
+        { word: 'flower', emoji: '🌸', translation: 'פרח', category: 0 },
+        { word: 'book', emoji: '📖', translation: 'ספר', category: 1 },
+        { word: 'ball', emoji: '⚽', translation: 'כדור', category: 1 },
+        { word: 'car', emoji: '🚗', translation: 'מכונית', category: 1 },
+        { word: 'house', emoji: '🏠', translation: 'בית', category: 1 },
+      ],
+    },
+  ],
+  4: [
+    {
+      categories: [
+        { name: 'Animals', nameHe: 'חיות', emoji: '🐾', color: 'from-amber-400 to-orange-500' },
+        { name: 'Food', nameHe: 'אוכל', emoji: '🍽️', color: 'from-green-400 to-emerald-500' },
+      ],
+      items: [
+        { word: 'cat', emoji: '🐱', translation: 'חתול', category: 0 },
+        { word: 'dog', emoji: '🐶', translation: 'כלב', category: 0 },
+        { word: 'fish', emoji: '🐟', translation: 'דג', category: 0 },
+        { word: 'bird', emoji: '🐦', translation: 'ציפור', category: 0 },
+        { word: 'apple', emoji: '🍎', translation: 'תפוח', category: 1 },
+        { word: 'cake', emoji: '🎂', translation: 'עוגה', category: 1 },
+        { word: 'banana', emoji: '🍌', translation: 'בננה', category: 1 },
+        { word: 'milk', emoji: '🥛', translation: 'חלב', category: 1 },
+      ],
+    },
+    {
+      categories: [
+        { name: 'Big', nameHe: 'גדולים', emoji: '🐘', color: 'from-purple-400 to-violet-500' },
+        { name: 'Small', nameHe: 'קטנים', emoji: '🐁', color: 'from-pink-400 to-rose-500' },
+      ],
+      items: [
+        { word: 'elephant', emoji: '🐘', translation: 'פיל', category: 0 },
+        { word: 'whale', emoji: '🐋', translation: 'לווייתן', category: 0 },
+        { word: 'horse', emoji: '🐎', translation: 'סוס', category: 0 },
+        { word: 'bear', emoji: '🐻', translation: 'דוב', category: 0 },
+        { word: 'mouse', emoji: '🐭', translation: 'עכבר', category: 1 },
+        { word: 'ant', emoji: '🐜', translation: 'נמלה', category: 1 },
+        { word: 'bee', emoji: '🐝', translation: 'דבורה', category: 1 },
+        { word: 'butterfly', emoji: '🦋', translation: 'פרפר', category: 1 },
+      ],
+    },
+  ],
+};
+
+// Returns words for the given level (includes all lower levels)
+export function getWordsForLevel(level) {
+  const words = [];
+  for (let l = 1; l <= level; l++) {
+    if (WORDS_BY_LEVEL[l]) {
+      words.push(...WORDS_BY_LEVEL[l]);
+    }
+  }
+  return words;
+}
+
+// Level metadata for display
+export const LEVEL_INFO = [
+  null, // index 0 unused
+  { name: 'צעדים ראשונים', nameEn: 'First Steps', emoji: '🌱', color: 'from-green-400 to-emerald-500', textColor: 'text-green-600 dark:text-green-400' },
+  { name: 'חוקר', nameEn: 'Explorer', emoji: '🔭', color: 'from-blue-400 to-indigo-500', textColor: 'text-blue-600 dark:text-blue-400' },
+  { name: 'קורא', nameEn: 'Reader', emoji: '📖', color: 'from-purple-400 to-violet-500', textColor: 'text-purple-600 dark:text-purple-400' },
+  { name: 'אלוף', nameEn: 'Champion', emoji: '🏆', color: 'from-orange-400 to-amber-500', textColor: 'text-orange-600 dark:text-orange-400' },
+];

@@ -4,6 +4,8 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { playSequence, playHebrew, preloadHebrewAudio } from '../utils/hebrewAudio.js';
+import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
+import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -100,6 +102,7 @@ function BubblePopGame({ onComplete, onBack }) {
     if (round >= TOTAL_ROUNDS) {
       setGameOver(true);
       setShowConfetti(true);
+      playComplete();
       return;
     }
     const target = rounds[round];
@@ -183,16 +186,20 @@ function BubblePopGame({ onComplete, onBack }) {
     speak(bubble.letter, { rate: 0.8 });
 
     if (bubble.isTarget) {
+      playPop();
+      playCorrect();
       setPopped(prev => {
         const next = [...prev, bubble.id];
         if (next.length >= 2) {
           // Round complete
           setScore(s => s + 1);
+          playStar();
           setTimeout(() => setRound(r => r + 1), 800);
         }
         return next;
       });
     } else {
+      playWrong();
       setWrongId(bubble.id);
       setTimeout(() => setWrongId(null), 500);
     }
@@ -342,7 +349,7 @@ const MEMORY_WORDS = [
   { word: 'cake', emoji: '🎂', translation: 'עוגה', bg: 'from-pink-200 to-pink-400' },
 ];
 
-function MemoryMatchGame({ onComplete, onBack }) {
+function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak, speakSequence } = useSpeech();
   const [cards, setCards] = useState([]);
@@ -353,9 +360,10 @@ function MemoryMatchGame({ onComplete, onBack }) {
   const [gameOver, setGameOver] = useState(false);
   const lockRef = useRef(false);
 
-  const PAIRS = 4; // Only 4 pairs = 8 cards = big cards in 2 columns
+  // Pairs by level: 1→3, 2→4, 3→5, 4→6
+  const PAIRS = childLevel === 1 ? 3 : childLevel === 2 ? 4 : childLevel === 3 ? 5 : 6;
 
-  // Pick 4 simple words
+  // Pick words based on level
   const wordPairs = useMemo(() => {
     return [...MEMORY_WORDS].sort(() => Math.random() - 0.5).slice(0, PAIRS);
   }, []);
@@ -388,6 +396,7 @@ function MemoryMatchGame({ onComplete, onBack }) {
 
   const handleFlip = (card) => {
     if (lockRef.current || flipped.includes(card.id) || matched.includes(card.pairId)) return;
+    playTap();
 
     // Speak the English word clearly, then Hebrew (pre-recorded)
     playSequence([
@@ -407,6 +416,7 @@ function MemoryMatchGame({ onComplete, onBack }) {
 
       if (first.pairId === second.pairId) {
         // Match found!
+        playCorrect();
         setTimeout(() => {
           playSequence([
             { text: 'יופי!', lang: 'he' },
@@ -419,6 +429,7 @@ function MemoryMatchGame({ onComplete, onBack }) {
             const next = [...prev, first.pairId];
             if (next.length >= PAIRS) {
               setShowConfetti(true);
+              playComplete();
               setTimeout(() => setGameOver(true), 800);
             }
             return next;
@@ -428,6 +439,7 @@ function MemoryMatchGame({ onComplete, onBack }) {
         }, 700);
       } else {
         // No match
+        playWrong();
         setTimeout(() => {
           setFlipped([]);
           lockRef.current = false;
@@ -477,33 +489,33 @@ function MemoryMatchGame({ onComplete, onBack }) {
   }
 
   return (
-    <div className="kids-bg min-h-screen pb-6 relative">
+    <div className="kids-bg h-[100dvh] overflow-hidden relative flex flex-col">
       <FloatingDecorations />
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 pt-3 pb-2">
-          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2.5 backdrop-blur-sm">
-            <ArrowLeft size={20} />
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Header - compact */}
+        <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
+          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
+            <ArrowLeft size={18} />
           </button>
           <div className="text-center">
-            <h2 className="text-xl font-black text-gray-800 dark:text-white flex items-center gap-2">
+            <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
               <span className="animate-wiggle inline-block">🧠</span>
               {uiLang === 'he' ? 'משחק זיכרון' : 'Memory Match'}
             </h2>
           </div>
-          <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1.5">
-            <span className="text-sm font-bold text-gray-600 dark:text-gray-300">
+          <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-2.5 py-1">
+            <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
               {moves}
             </span>
           </div>
         </div>
 
-        {/* Progress stars */}
-        <div className="flex justify-center gap-3 mb-4 px-4">
+        {/* Progress stars - compact */}
+        <div className="flex justify-center gap-2 mb-1 px-4 shrink-0">
           {[...Array(PAIRS)].map((_, i) => (
             <Star
               key={i}
-              size={22}
+              size={18}
               className={`transition-all duration-500 ${
                 i < matched.length
                   ? 'text-yellow-400 fill-yellow-400 scale-125'
@@ -513,8 +525,8 @@ function MemoryMatchGame({ onComplete, onBack }) {
           ))}
         </div>
 
-        {/* Card grid - 2 columns, big cards */}
-        <div className="grid grid-cols-2 gap-3 px-4">
+        {/* Card grid - fills remaining space, 2 cols x 4 rows on phone, 4 cols x 2 rows on tablet+ */}
+        <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-2 px-3 pb-2 auto-rows-fr">
           {cards.map(card => {
             const isFlipped = flipped.includes(card.id) || matched.includes(card.pairId);
             const isMatched = matched.includes(card.pairId);
@@ -523,39 +535,38 @@ function MemoryMatchGame({ onComplete, onBack }) {
               <button
                 key={card.id}
                 onClick={() => handleFlip(card)}
-                className={`rounded-2xl transition-all duration-300 relative overflow-hidden ${
+                className={`rounded-xl sm:rounded-2xl transition-all duration-300 relative overflow-hidden min-h-0 ${
                   isMatched
-                    ? 'border-3 border-emerald-400 scale-[0.97] animate-success-flash'
+                    ? 'border-2 sm:border-3 border-emerald-400 scale-[0.97] animate-success-flash'
                     : isFlipped
-                      ? 'border-3 border-blue-400 shadow-2xl scale-[1.03]'
-                      : 'shadow-lg active:scale-[0.93] hover:scale-[1.02]'
+                      ? 'border-2 sm:border-3 border-blue-400 shadow-xl scale-[1.02]'
+                      : 'shadow-md active:scale-[0.93] hover:scale-[1.02]'
                 }`}
-                style={{ aspectRatio: '1 / 1.1' }}
               >
                 {isFlipped ? (
-                  <div className={`flex flex-col items-center justify-center h-full p-2 animate-pop-in rounded-2xl bg-gradient-to-br ${card.bg}`}>
+                  <div className={`flex flex-col items-center justify-center h-full p-1.5 animate-pop-in rounded-xl sm:rounded-2xl bg-gradient-to-br ${card.bg}`}>
                     {card.type === 'picture' ? (
                       <>
-                        <span className="text-6xl mb-2 drop-shadow-lg">{card.emoji}</span>
-                        <span className="text-lg font-black text-white drop-shadow-md">{card.word}</span>
+                        <span className="text-3xl sm:text-5xl mb-0.5 drop-shadow-lg">{card.emoji}</span>
+                        <span className="text-sm sm:text-base font-black text-white drop-shadow-md leading-tight">{card.word}</span>
                       </>
                     ) : (
                       <>
-                        <span className="text-3xl font-black text-white drop-shadow-md mb-1" dir="ltr">{card.word}</span>
-                        <span className="text-base font-bold text-white/80" dir="rtl">{card.translation}</span>
-                        <span className="text-3xl mt-1">{card.emoji}</span>
+                        <span className="text-lg sm:text-2xl font-black text-white drop-shadow-md leading-tight" dir="ltr">{card.word}</span>
+                        <span className="text-xs sm:text-sm font-bold text-white/80 leading-tight" dir="rtl">{card.translation}</span>
+                        <span className="text-xl sm:text-2xl mt-0.5">{card.emoji}</span>
                       </>
                     )}
                     {isMatched && (
-                      <div className="absolute top-2 right-2 animate-pop-in">
-                        <Star size={20} className="text-yellow-300 fill-yellow-300 drop-shadow-md" />
+                      <div className="absolute top-1 right-1 animate-pop-in">
+                        <Star size={14} className="text-yellow-300 fill-yellow-300 drop-shadow-md" />
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-2xl">
-                    <span className="text-5xl text-white/60 drop-shadow-md mb-1">❓</span>
-                    <span className="text-sm font-bold text-white/40">
+                  <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-xl sm:rounded-2xl">
+                    <span className="text-3xl sm:text-4xl text-white/60 drop-shadow-md">❓</span>
+                    <span className="text-xs font-bold text-white/40">
                       {uiLang === 'he' ? 'לחץ!' : 'Tap!'}
                     </span>
                   </div>
@@ -599,7 +610,7 @@ const BUILDER_WORDS = [
   { word: 'hand', emoji: '✋', translation: 'יד' },
 ];
 
-function WordBuilderGame({ onComplete, onBack }) {
+function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak, speakSequence } = useSpeech();
   const [round, setRound] = useState(0);
@@ -618,8 +629,15 @@ function WordBuilderGame({ onComplete, onBack }) {
 
   const TOTAL_ROUNDS = 6;
 
+  // Filter words by level: 1→3 letters, 2→3-4, 3→4, 4→4-5
+  const maxLen = childLevel >= 4 ? 5 : childLevel >= 3 ? 4 : 4;
+  const minLen = childLevel <= 1 ? 3 : 3;
+  // Distractors by level: 1→1, 2→2, 3→3, 4→3
+  const numDistractors = childLevel === 1 ? 1 : childLevel === 2 ? 2 : 3;
+
   const words = useMemo(() => {
-    return [...BUILDER_WORDS].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
+    const filtered = BUILDER_WORDS.filter(w => w.word.length >= minLen && w.word.length <= maxLen);
+    return [...filtered].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
   }, []);
 
   const currentWord = words[round] || words[0];
@@ -629,16 +647,17 @@ function WordBuilderGame({ onComplete, onBack }) {
     if (round >= TOTAL_ROUNDS) {
       setGameOver(true);
       setShowConfetti(true);
+      playComplete();
       return;
     }
     const w = words[round];
     const letters = w.word.split('');
-    // Add 2-3 extra random letters as distractors
+    // Add extra random letters as distractors based on level
     const extras = 'abcdefghijklmnopqrstuvwxyz'
       .split('')
       .filter(l => !letters.includes(l))
       .sort(() => Math.random() - 0.5)
-      .slice(0, Math.min(3, 6 - letters.length));
+      .slice(0, numDistractors);
 
     const all = [...letters, ...extras].sort(() => Math.random() - 0.5).map((l, i) => ({
       id: i,
@@ -676,6 +695,7 @@ function WordBuilderGame({ onComplete, onBack }) {
 
     if (letterObj.letter === expectedLetter) {
       // Correct!
+      playTap();
       speak(letterObj.letter, { rate: 0.8 });
       const newPlaced = [...placed, letterObj.letter];
       setPlaced(newPlaced);
@@ -683,6 +703,7 @@ function WordBuilderGame({ onComplete, onBack }) {
 
       if (newPlaced.length === currentWord.word.length) {
         // Word complete!
+        playCorrect();
         setRoundComplete(true);
         setScore(s => s + 1);
         setTimeout(() => {
@@ -697,6 +718,7 @@ function WordBuilderGame({ onComplete, onBack }) {
       }
     } else {
       // Wrong letter
+      playWrong();
       setWrongSlot(nextIndex);
       setTimeout(() => setWrongSlot(null), 500);
     }
@@ -896,6 +918,16 @@ function WordBuilderGame({ onComplete, onBack }) {
    ══════════════════════════════════════════════════════ */
 const GAMES = [
   {
+    id: 'listen-pop',
+    emoji: '🎧',
+    titleHe: 'שמע ולחץ',
+    titleEn: 'Listen & Pop',
+    descHe: 'הקשב ומצא את התמונה!',
+    descEn: 'Listen and find the picture!',
+    gradient: 'from-cyan-400 via-sky-400 to-blue-500',
+    component: ListenPopGame,
+  },
+  {
     id: 'bubble-pop',
     emoji: '🫧',
     titleHe: 'פוצץ בועות',
@@ -904,6 +936,16 @@ const GAMES = [
     descEn: 'Find the right letter!',
     gradient: 'from-cyan-400 via-blue-400 to-indigo-400',
     component: BubblePopGame,
+  },
+  {
+    id: 'missing-letter',
+    emoji: '🔤',
+    titleHe: 'אות חסרה',
+    titleEn: 'Missing Letter',
+    descHe: 'מצא את האות שחסרה!',
+    descEn: 'Find the missing letter!',
+    gradient: 'from-violet-400 via-purple-400 to-fuchsia-400',
+    component: MissingLetterGame,
   },
   {
     id: 'memory',
@@ -916,6 +958,16 @@ const GAMES = [
     component: MemoryMatchGame,
   },
   {
+    id: 'category-sort',
+    emoji: '📦',
+    titleHe: 'מיין נכון',
+    titleEn: 'Category Sort',
+    descHe: 'מיין פריטים לקטגוריות!',
+    descEn: 'Sort items into categories!',
+    gradient: 'from-green-400 via-emerald-400 to-teal-400',
+    component: CategorySortGame,
+  },
+  {
     id: 'word-builder',
     emoji: '🏗️',
     titleHe: 'בונה מילים',
@@ -925,6 +977,16 @@ const GAMES = [
     gradient: 'from-orange-400 via-amber-400 to-yellow-400',
     component: WordBuilderGame,
   },
+  {
+    id: 'sentence-builder',
+    emoji: '📝',
+    titleHe: 'בנה משפט',
+    titleEn: 'Sentence Builder',
+    descHe: 'סדר מילים למשפט!',
+    descEn: 'Arrange words into a sentence!',
+    gradient: 'from-indigo-400 via-blue-400 to-sky-400',
+    component: SentenceBuilderGame,
+  },
 ];
 
 function GameSelector({ onSelectGame, onBack }) {
@@ -933,7 +995,7 @@ function GameSelector({ onSelectGame, onBack }) {
 
   useEffect(() => {
     const timers = GAMES.map((_, i) =>
-      setTimeout(() => setCardPops(prev => [...prev, i]), 100 + i * 150)
+      setTimeout(() => setCardPops(prev => [...prev, i]), 80 + i * 100)
     );
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -943,51 +1005,48 @@ function GameSelector({ onSelectGame, onBack }) {
       <FloatingDecorations />
       <div className="relative z-10 px-4 pt-3">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-4">
-          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
+        <div className="flex items-center gap-3 mb-3">
+          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform">
             <ArrowLeft size={18} />
           </button>
           <h1 className="text-2xl font-black rainbow-text py-1 flex-1 text-center">
-            {uiLang === 'he' ? 'משחקי אותיות ומילים' : 'Letter & Word Games'}
+            {uiLang === 'he' ? 'משחקים' : 'Games'}
           </h1>
           <div className="w-9" />
         </div>
 
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">
-          {uiLang === 'he' ? 'בחר משחק וכיף!' : 'Pick a game and have fun!'}
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+          {uiLang === 'he' ? 'בחר משחק ותתחיל לשחק!' : 'Pick a game and play!'}
         </p>
 
-        {/* Game cards */}
-        <div className="space-y-4">
+        {/* Game cards - 2 column grid */}
+        <div className="grid grid-cols-2 gap-3">
           {GAMES.map((game, i) => (
             <button
               key={game.id}
-              onClick={() => onSelectGame(game)}
-              className={`w-full rounded-3xl overflow-hidden active:scale-[0.97] transition-all duration-300 shadow-xl ${
+              onClick={() => { playTap(); onSelectGame(game); }}
+              className={`rounded-2xl overflow-hidden active:scale-[0.95] transition-all duration-300 shadow-lg ${
                 cardPops.includes(i) ? 'animate-pop-in' : 'opacity-0 scale-0'
               }`}
+              style={{ animationDelay: `${i * 0.05}s` }}
             >
-              <div className={`bg-gradient-to-r ${game.gradient} p-6 relative overflow-hidden`}>
-                {/* Decorative circles */}
-                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10" />
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-white/10" />
-                <div className="absolute top-1/2 right-1/4 w-8 h-8 rounded-full bg-white/5" />
+              <div className={`bg-gradient-to-br ${game.gradient} p-4 relative overflow-hidden h-full`}
+                style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)' }}
+              >
+                {/* Decorative circle */}
+                <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
+                <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-white/10" />
 
-                <div className="relative flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl shrink-0">
+                <div className="relative flex flex-col items-center text-center gap-1.5">
+                  <div className="w-14 h-14 rounded-2xl bg-white/25 flex items-center justify-center text-3xl">
                     {game.emoji}
                   </div>
-                  <div className="flex-1 text-left" dir={uiLang === 'he' ? 'rtl' : 'ltr'}>
-                    <h3 className="text-xl font-black text-white drop-shadow-md">
-                      {uiLang === 'he' ? game.titleHe : game.titleEn}
-                    </h3>
-                    <p className="text-sm text-white/80 font-medium mt-0.5">
-                      {uiLang === 'he' ? game.descHe : game.descEn}
-                    </p>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-white/25 flex items-center justify-center shrink-0">
-                    <span className="text-white text-xl">▸</span>
-                  </div>
+                  <h3 className="text-sm font-black text-white drop-shadow-md leading-tight">
+                    {uiLang === 'he' ? game.titleHe : game.titleEn}
+                  </h3>
+                  <p className="text-[11px] text-white/75 font-medium leading-tight">
+                    {uiLang === 'he' ? game.descHe : game.descEn}
+                  </p>
                 </div>
               </div>
             </button>
@@ -1002,8 +1061,9 @@ function GameSelector({ onSelectGame, onBack }) {
    KIDS GAMES PAGE - Main orchestrator
    ══════════════════════════════════════════════════════ */
 export default function KidsGamesPage({ onBack }) {
-  const { addXP } = useUserProgress();
+  const { addXP, progress } = useUserProgress();
   const [selectedGame, setSelectedGame] = useState(null);
+  const childLevel = progress.childLevel || 1;
 
   // Preload all game instruction audio on mount for seamless playback
   useEffect(() => {
@@ -1019,7 +1079,7 @@ export default function KidsGamesPage({ onBack }) {
 
   if (selectedGame) {
     const GameComponent = selectedGame.component;
-    return <GameComponent onComplete={handleComplete} onBack={handleGameBack} />;
+    return <GameComponent onComplete={handleComplete} onBack={handleGameBack} childLevel={childLevel} />;
   }
 
   return <GameSelector onSelectGame={setSelectedGame} onBack={onBack} />;

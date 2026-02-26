@@ -19,11 +19,29 @@ const DEFAULT_PROGRESS = {
   motivation: 'fun',
   streakFreezes: 0,
   onboardingComplete: false,
-  ageGroup: null, // 'kids' (4-7), 'children' (8-12), 'teens' (13-17), 'adults' (18+)
-  lettersCompleted: [], // for kids mode - track which letters are done
+  ageGroup: null,
+  lettersCompleted: [],
 };
 
 const CHILD_LS_KEY = 'speakeasy_activeChildId';
+
+// Generate random 6-char alphanumeric code
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0,O,1,I for clarity
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
+}
+
+// SHA-256 hash
+async function hashCredentials(name, pin, familyCode) {
+  const normalized = name.trim().toLowerCase();
+  const data = new TextEncoder().encode(normalized + pin + familyCode);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 export function UserProgressProvider({ children: reactChildren }) {
   const { user } = useAuth();
@@ -31,6 +49,7 @@ export function UserProgressProvider({ children: reactChildren }) {
   const [loading, setLoading] = useState(true);
   const [activeChildId, setActiveChildId] = useState(() => localStorage.getItem(CHILD_LS_KEY) || null);
   const [childrenList, setChildrenList] = useState([]);
+  const [familyCode, setFamilyCode] = useState(null);
 
   const isChildMode = !!activeChildId;
 
@@ -43,28 +62,165 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
   }, [activeChildId]);
 
-  // Subscribe to children collection
+  // Subscribe to user doc (for familyCode and childrenIds)
+  useEffect(() => {
+    if (!user) {
+      setFamilyCode(null);
+      return;
+    }
+
+    const userRef = window.firestore.doc(window.db, 'users', user.uid);
+    const unsub = window.firestore.onSnapshot(userRef, (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setFamilyCode(data.familyCode || null);
+      }
+    });
+
+    return unsub;
+  }, [user]);
+
+  // Subscribe to children via childProfiles (by childrenIds from user doc)
   useEffect(() => {
     if (!user) {
       setChildrenList([]);
       return;
     }
 
-    const childrenRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
-    const unsub = window.firestore.onSnapshot(childrenRef, (snap) => {
-      const kids = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // First try the new top-level childProfiles collection
+    const userRef = window.firestore.doc(window.db, 'users', user.uid);
+
+    const unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
+      if (!userSnap.exists()) {
+        setChildrenList([]);
+        return;
+      }
+
+      const userData = userSnap.data();
+      const childrenIds = userData.childrenIds || [];
+
+      if (childrenIds.length === 0) {
+        // Check for legacy subcollection children and migrate
+        try {
+          const legacyRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
+          const legacySnap = await window.firestore.getDocs(legacyRef);
+          if (!legacySnap.empty) {
+            // Lazy migration from subcollection to top-level
+            await migrateChildren(user.uid, legacySnap.docs, userData.familyCode);
+            return; // The migration will trigger this listener again
+          }
+        } catch (e) {
+          console.warn('Legacy children check failed:', e);
+        }
+        setChildrenList([]);
+        return;
+      }
+
+      // Fetch all child profiles
+      const kids = [];
+      for (const cid of childrenIds) {
+        try {
+          const childSnap = await window.firestore.getDoc(
+            window.firestore.doc(window.db, 'childProfiles', cid)
+          );
+          if (childSnap.exists()) {
+            const childData = childSnap.data();
+            // Lazy migration: assign childLevel if missing
+            if (childData.childLevel == null) {
+              let defaultLevel = 1;
+              if (childData.age) {
+                const age = parseInt(childData.age, 10);
+                if (age >= 9) defaultLevel = 4;
+                else if (age >= 7) defaultLevel = 3;
+                else if (age >= 6) defaultLevel = 2;
+              }
+              childData.childLevel = defaultLevel;
+              // Also fix ageGroup if needed (old threshold was 8, new is 10)
+              if (childData.age) {
+                const age = parseInt(childData.age, 10);
+                childData.ageGroup = age >= 10 ? 'teens' : 'kids';
+              }
+              window.firestore.setDoc(
+                window.firestore.doc(window.db, 'childProfiles', cid),
+                { childLevel: defaultLevel, ageGroup: childData.ageGroup },
+                { merge: true }
+              ).catch(e => console.warn('Lazy migration failed:', cid, e));
+            }
+            kids.push({ id: childSnap.id, ...childData });
+          }
+        } catch (e) {
+          console.warn('Failed to fetch child:', cid, e);
+        }
+      }
       setChildrenList(kids);
 
-      // If activeChildId no longer exists in the list, switch to parent
+      // If activeChildId no longer exists, switch to parent
       if (activeChildId && !kids.find(k => k.id === activeChildId)) {
         setActiveChildId(null);
       }
-    }, (err) => {
-      console.error('Children collection onSnapshot error:', err);
     });
 
     return unsub;
   }, [user]);
+
+  // Lazy migration helper
+  async function migrateChildren(parentUid, legacyDocs, existingFamilyCode) {
+    try {
+      let code = existingFamilyCode;
+      if (!code) {
+        code = generateCode();
+        await window.firestore.setDoc(
+          window.firestore.doc(window.db, 'users', parentUid),
+          { familyCode: code },
+          { merge: true }
+        );
+      }
+
+      const childrenIds = [];
+      const childrenEntries = [];
+
+      for (const legDoc of legacyDocs) {
+        const data = legDoc.data();
+        const childId = legDoc.id;
+        childrenIds.push(childId);
+
+        // Write to top-level childProfiles
+        await window.firestore.setDoc(
+          window.firestore.doc(window.db, 'childProfiles', childId),
+          {
+            ...data,
+            parentUid,
+            pinHash: null, // No PIN yet for migrated children
+            createdAt: data.createdAt || window.firestore.serverTimestamp(),
+          }
+        );
+
+        childrenEntries.push({
+          childId,
+          name: data.name,
+          avatar: data.avatar,
+          avatarColor: data.avatarColor,
+        });
+      }
+
+      // Update parentChildren directory
+      await window.firestore.setDoc(
+        window.firestore.doc(window.db, 'parentChildren', code),
+        { children: childrenEntries, parentUid }
+      );
+
+      // Update user doc with childrenIds
+      await window.firestore.setDoc(
+        window.firestore.doc(window.db, 'users', parentUid),
+        { childrenIds },
+        { merge: true }
+      );
+
+      console.log('Migration complete for', childrenIds.length, 'children');
+    } catch (e) {
+      console.error('Migration failed:', e);
+    }
+  }
 
   // Subscribe to the active document (parent or child)
   useEffect(() => {
@@ -76,8 +232,9 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     setLoading(true);
 
+    // Child profiles are now in top-level collection
     const docRef = activeChildId
-      ? window.firestore.doc(window.db, 'users', user.uid, 'children', activeChildId)
+      ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
       : window.firestore.doc(window.db, 'users', user.uid);
 
     const unsub = window.firestore.onSnapshot(docRef, (snap) => {
@@ -106,7 +263,7 @@ export function UserProgressProvider({ children: reactChildren }) {
   const updateProgress = useCallback(async (updates) => {
     if (!user) return;
     const docRef = activeChildId
-      ? window.firestore.doc(window.db, 'users', user.uid, 'children', activeChildId)
+      ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
       : window.firestore.doc(window.db, 'users', user.uid);
     await window.firestore.setDoc(docRef, updates, { merge: true });
   }, [user, activeChildId]);
@@ -152,7 +309,7 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     // Log daily activity — route to correct subcollection
     const activityPath = activeChildId
-      ? ['users', user.uid, 'children', activeChildId, 'dailyActivity', today]
+      ? ['childProfiles', activeChildId, 'dailyActivity', today]
       : ['users', user.uid, 'dailyActivity', today];
     const activityRef = window.firestore.doc(window.db, ...activityPath);
     const activitySnap = await window.firestore.getDoc(activityRef);
@@ -175,6 +332,18 @@ export function UserProgressProvider({ children: reactChildren }) {
 
   // --- Family management functions ---
 
+  const generateFamilyCode = useCallback(async () => {
+    if (!user) return null;
+    const code = generateCode();
+    await window.firestore.setDoc(
+      window.firestore.doc(window.db, 'users', user.uid),
+      { familyCode: code },
+      { merge: true }
+    );
+    setFamilyCode(code);
+    return code;
+  }, [user]);
+
   const switchToChild = useCallback((childId) => {
     setActiveChildId(childId);
   }, []);
@@ -184,38 +353,117 @@ export function UserProgressProvider({ children: reactChildren }) {
   }, []);
 
   const addChild = useCallback(async (data) => {
+    // data = { name, avatar, avatarColor, age, pin }
     if (!user) return null;
-    const childrenRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
-    const childDoc = window.firestore.doc(childrenRef);
-    await window.firestore.setDoc(childDoc, {
-      name: data.name,
-      avatar: data.avatar,
-      avatarColor: data.avatarColor,
-      createdAt: window.firestore.serverTimestamp(),
-      xp: 0,
-      level: 1,
-      cefrLevel: 'A1',
-      streak: 0,
-      lastActiveDate: null,
-      dailyGoalMinutes: 10,
-      dailyXP: 0,
-      dailyMinutes: 0,
-      totalWordsLearned: 0,
-      totalLessonsCompleted: 0,
-      longestStreak: 0,
-      streakFreezes: 0,
-      ageGroup: 'kids',
-      onboardingComplete: true,
-      lettersCompleted: [],
+
+    // Ensure family code exists
+    let code = familyCode;
+    if (!code) {
+      code = await generateFamilyCode();
+    }
+
+    // Generate child ID
+    const childId = crypto.randomUUID ? crypto.randomUUID() :
+      'child_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+    // Hash PIN if provided
+    let pinHash = null;
+    if (data.pin) {
+      pinHash = await hashCredentials(data.name, data.pin, code);
+    }
+
+    // Determine age group from age — kids (<10) vs teens (10+)
+    let ageGroup = 'kids';
+    if (data.age) {
+      const age = parseInt(data.age, 10);
+      if (age >= 10) ageGroup = 'teens';
+    }
+
+    // Determine child level (1-4) based on age
+    let childLevel = 1;
+    if (data.age) {
+      const age = parseInt(data.age, 10);
+      if (age >= 9) childLevel = 4;
+      else if (age >= 7) childLevel = 3;
+      else if (age >= 6) childLevel = 2;
+    }
+
+    // Write to childProfiles/{childId}
+    await window.firestore.setDoc(
+      window.firestore.doc(window.db, 'childProfiles', childId),
+      {
+        name: data.name,
+        avatar: data.avatar,
+        avatarColor: data.avatarColor,
+        age: data.age || null,
+        parentUid: user.uid,
+        pinHash,
+        createdAt: window.firestore.serverTimestamp(),
+        xp: 0,
+        level: 1,
+        cefrLevel: 'A1',
+        streak: 0,
+        lastActiveDate: null,
+        dailyGoalMinutes: 10,
+        dailyXP: 0,
+        dailyMinutes: 0,
+        totalWordsLearned: 0,
+        totalLessonsCompleted: 0,
+        longestStreak: 0,
+        streakFreezes: 0,
+        ageGroup,
+        childLevel,
+        onboardingComplete: true,
+        lettersCompleted: [],
+      }
+    );
+
+    // Update parentChildren/{familyCode}
+    const parentChildrenRef = window.firestore.doc(window.db, 'parentChildren', code);
+    const parentChildrenSnap = await window.firestore.getDoc(parentChildrenRef);
+    const existingChildren = parentChildrenSnap.exists() ? (parentChildrenSnap.data().children || []) : [];
+
+    await window.firestore.setDoc(parentChildrenRef, {
+      children: [...existingChildren, {
+        childId,
+        name: data.name,
+        avatar: data.avatar,
+        avatarColor: data.avatarColor,
+      }],
+      parentUid: user.uid,
     });
-    return childDoc.id;
-  }, [user]);
+
+    // Update users/{uid}.childrenIds
+    await window.firestore.setDoc(
+      window.firestore.doc(window.db, 'users', user.uid),
+      { childrenIds: window.firestore.arrayUnion(childId) },
+      { merge: true }
+    );
+
+    return childId;
+  }, [user, familyCode, generateFamilyCode]);
 
   const updateChild = useCallback(async (childId, data) => {
     if (!user) return;
-    const childRef = window.firestore.doc(window.db, 'users', user.uid, 'children', childId);
+    const childRef = window.firestore.doc(window.db, 'childProfiles', childId);
     await window.firestore.setDoc(childRef, data, { merge: true });
-  }, [user]);
+
+    // Update parentChildren directory if name/avatar changed
+    if (data.name || data.avatar || data.avatarColor) {
+      if (familyCode) {
+        const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
+        const pcSnap = await window.firestore.getDoc(pcRef);
+        if (pcSnap.exists()) {
+          const children = (pcSnap.data().children || []).map(c =>
+            c.childId === childId
+              ? { ...c, ...(data.name && { name: data.name }), ...(data.avatar && { avatar: data.avatar }), ...(data.avatarColor && { avatarColor: data.avatarColor }) }
+              : c
+          );
+          await window.firestore.setDoc(pcRef, { children }, { merge: true });
+        }
+      }
+    }
+  }, [user, familyCode]);
 
   const deleteChild = useCallback(async (childId) => {
     if (!user) return;
@@ -223,9 +471,48 @@ export function UserProgressProvider({ children: reactChildren }) {
     if (activeChildId === childId) {
       setActiveChildId(null);
     }
-    const childRef = window.firestore.doc(window.db, 'users', user.uid, 'children', childId);
-    await window.firestore.deleteDoc(childRef);
-  }, [user, activeChildId]);
+
+    // Delete from childProfiles
+    await window.firestore.deleteDoc(
+      window.firestore.doc(window.db, 'childProfiles', childId)
+    );
+
+    // Remove from parentChildren
+    if (familyCode) {
+      const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
+      const pcSnap = await window.firestore.getDoc(pcRef);
+      if (pcSnap.exists()) {
+        const children = (pcSnap.data().children || []).filter(c => c.childId !== childId);
+        await window.firestore.setDoc(pcRef, { children }, { merge: true });
+      }
+    }
+
+    // Remove from users/{uid}.childrenIds
+    await window.firestore.setDoc(
+      window.firestore.doc(window.db, 'users', user.uid),
+      { childrenIds: window.firestore.arrayRemove(childId) },
+      { merge: true }
+    );
+  }, [user, activeChildId, familyCode]);
+
+  const resetChildPin = useCallback(async (childId, childName, newPin) => {
+    if (!user || !familyCode) return;
+    const pinHash = await hashCredentials(childName, newPin, familyCode);
+    await window.firestore.setDoc(
+      window.firestore.doc(window.db, 'childProfiles', childId),
+      { pinHash },
+      { merge: true }
+    );
+  }, [user, familyCode]);
+
+  const updateChildLevel = useCallback(async (childId, newLevel) => {
+    if (!user) return;
+    await window.firestore.setDoc(
+      window.firestore.doc(window.db, 'childProfiles', childId),
+      { childLevel: newLevel },
+      { merge: true }
+    );
+  }, [user]);
 
   const activeChild = useMemo(() => {
     if (!activeChildId) return null;
@@ -243,11 +530,15 @@ export function UserProgressProvider({ children: reactChildren }) {
     activeChild,
     isChildMode,
     children: childrenList,
+    familyCode,
     switchToChild,
     switchToParent,
     addChild,
     updateChild,
     deleteChild,
+    generateFamilyCode,
+    resetChildPin,
+    updateChildLevel,
   };
 
   return <UserProgressContext.Provider value={value}>{reactChildren}</UserProgressContext.Provider>;

@@ -5,6 +5,8 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 
 import wordsA1 from '../data/words-a1.json';
+import { LEVEL_INFO } from '../data/kids-vocabulary.js';
+import { t } from '../utils/translations.js';
 
 /* ── Floating background decorations ── */
 function FloatingDecorations() {
@@ -71,6 +73,23 @@ function KidsStatsBar({ progress, uiLang }) {
           {uiLang === 'he' ? `שלב ${progress.level || 1}` : `Lvl ${progress.level || 1}`}
         </span>
       </div>
+    </div>
+  );
+}
+
+/* ── Level badge ── */
+function LevelBadge({ childLevel, uiLang }) {
+  const info = LEVEL_INFO[childLevel] || LEVEL_INFO[1];
+  return (
+    <div className={`flex items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r ${info.color} shadow-md mx-auto`}
+      style={{ maxWidth: '280px' }}
+    >
+      <span className="text-xl">{info.emoji}</span>
+      <span className="text-sm font-black text-white drop-shadow-sm">
+        {uiLang === 'he'
+          ? `רמה ${childLevel}: ${info.name}`
+          : `Level ${childLevel}: ${info.nameEn}`}
+      </span>
     </div>
   );
 }
@@ -325,6 +344,9 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
 
         {/* Stats bar */}
         <KidsStatsBar progress={progress} uiLang={uiLang} />
+
+        {/* Level badge */}
+        <LevelBadge childLevel={progress.childLevel || 1} uiLang={uiLang} />
 
         {/* Progress bar for letters */}
         <div className="relative">

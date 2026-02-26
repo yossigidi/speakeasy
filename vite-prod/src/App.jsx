@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext.jsx';
+import { ChildAuthProvider, useChildAuth } from './contexts/ChildAuthContext.jsx';
 import { UserProgressProvider, useUserProgress } from './contexts/UserProgressContext.jsx';
 import { SpeechProvider } from './contexts/SpeechContext.jsx';
 import useSpacedRepetition from './hooks/useSpacedRepetition.js';
@@ -25,23 +26,39 @@ import AudioLearningPage from './pages/AudioLearningPage.jsx';
 import KidsHomePage from './pages/KidsHomePage.jsx';
 import KidsGamesPage from './pages/KidsGamesPage.jsx';
 import FamilyPage from './pages/FamilyPage.jsx';
+import ChildLoginPage from './pages/ChildLoginPage.jsx';
+import ProfilePickerPage from './pages/ProfilePickerPage.jsx';
+import ChildProgressPage from './pages/ChildProgressPage.jsx';
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
+import MathGateModal from './components/family/MathGateModal.jsx';
 
 import { t } from './utils/translations.js';
 
 function AppContent() {
   const { user, loading: authLoading } = useAuth();
-  const { progress, loading: progressLoading } = useUserProgress();
+  const { childUser, logoutChild } = useChildAuth();
+  const { progress, loading: progressLoading, children } = useUserProgress();
   const { uiLang } = useTheme();
   const { dueCount } = useSpacedRepetition();
   const [currentPage, setCurrentPage] = useState('home');
   const [lessonData, setLessonData] = useState(null);
+  const [showChildLogin, setShowChildLogin] = useState(false);
+  const [showMathGate, setShowMathGate] = useState(false);
+  const [profileSelected, setProfileSelected] = useState(false);
+  const [progressChildId, setProgressChildId] = useState(null);
   const isPopstateRef = useRef(false);
+
+  // Check URL for childJoin parameter
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('childJoin')) {
+      setShowChildLogin(true);
+    }
+  }, []);
 
   // Browser back/forward button support
   useEffect(() => {
-    // Set initial state
     window.history.replaceState({ page: 'home' }, '', '');
 
     const handlePopState = (e) => {
@@ -49,8 +66,6 @@ function AppContent() {
         isPopstateRef.current = true;
         setCurrentPage(e.state.page);
       } else {
-        // No state = user went back past the app's first page
-        // Push home state to prevent leaving the app
         isPopstateRef.current = true;
         setCurrentPage('home');
         window.history.replaceState({ page: 'home' }, '', '');
@@ -73,16 +88,48 @@ function AppContent() {
     );
   }
 
+  // Child login page (standalone, from separate device)
+  if (showChildLogin && !user && !childUser) {
+    return <ChildLoginPage onBack={() => setShowChildLogin(false)} />;
+  }
+
+  // Remote child mode (child logged in from separate device)
+  if (!user && childUser) {
+    return (
+      <RemoteChildAppContent
+        childUser={childUser}
+        onLogout={() => setShowMathGate(true)}
+        showMathGate={showMathGate}
+        onMathSuccess={() => {
+          setShowMathGate(false);
+          logoutChild();
+        }}
+        onMathClose={() => setShowMathGate(false)}
+      />
+    );
+  }
+
   // Show onboarding if not authenticated or not completed
   if (!user || (user && !progress.onboardingComplete)) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
-        <OnboardingPage onComplete={() => setCurrentPage('home')} />
+        <OnboardingPage
+          onComplete={() => {
+            setProfileSelected(false);
+            setCurrentPage('home');
+          }}
+          onChildLogin={() => setShowChildLogin(true)}
+        />
       </div>
     );
   }
 
-  const isKids = progress.ageGroup === 'kids';
+  // Show profile picker on every app load (after onboarding)
+  if (!profileSelected && children.length > 0) {
+    return <ProfilePickerPage onSelect={() => setProfileSelected(true)} />;
+  }
+
+  const isKids = progress.ageGroup === 'kids' || progress.ageGroup === 'children';
 
   const pageTitles = {
     home: null,
@@ -98,16 +145,19 @@ function AppContent() {
     'kids-games': null,
     'audio-learn': null,
     family: t('myFamily', uiLang),
+    'child-progress': null,
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family', 'child-progress'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family' && currentPage !== 'child-progress';
 
-  const navigateTo = (page) => {
+  const navigateTo = (page, data) => {
+    if (page === 'child-progress' && data) {
+      setProgressChildId(data);
+    }
     setCurrentPage(page);
     window.scrollTo(0, 0);
-    // Only push state if this navigation is NOT from the browser back/forward button
     if (!isPopstateRef.current) {
       window.history.pushState({ page }, '', '');
     }
@@ -142,6 +192,8 @@ function AppContent() {
         return <AudioLearningPage onBack={() => navigateTo('home')} />;
       case 'family':
         return <FamilyPage onNavigate={navigateTo} />;
+      case 'child-progress':
+        return <ChildProgressPage childId={progressChildId} onBack={() => navigateTo('family')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -175,16 +227,91 @@ function AppContent() {
   );
 }
 
+// Simplified app content for remote child (logged in from separate device)
+function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSuccess, onMathClose }) {
+  const { uiLang } = useTheme();
+  const [currentPage, setCurrentPage] = useState('home');
+  const { dueCount } = useSpacedRepetition();
+
+  // Guard: children can't access family or profile pages
+  const navigateTo = (page) => {
+    if (page === 'family') return;
+    setCurrentPage(page);
+    window.scrollTo(0, 0);
+  };
+
+  const isKids = childUser.age && parseInt(childUser.age, 10) < 10;
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return isKids
+          ? <KidsHomePage onNavigate={navigateTo} reviewCount={dueCount} />
+          : <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
+      case 'lessons':
+        return <LessonPage onComplete={() => navigateTo('home')} onBack={() => navigateTo('home')} />;
+      case 'vocabulary':
+        return <VocabularyPage />;
+      case 'alphabet':
+        return <KidsAlphabetPage />;
+      case 'kids-games':
+        return <KidsGamesPage onBack={() => navigateTo('home')} />;
+      default:
+        return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
+      {/* Child banner with logout */}
+      <div className={`sticky top-0 z-40 bg-gradient-to-r ${childUser.avatarColor || 'from-indigo-400 to-purple-500'} px-4 py-2 flex items-center justify-between shadow-md`}>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">{childUser.avatar}</span>
+          <span className="text-white font-semibold text-sm">
+            {t('playingAs', uiLang)} {childUser.name}
+          </span>
+        </div>
+        <button
+          onClick={onLogout}
+          className="flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium hover:bg-white/30 transition-colors"
+        >
+          {t('backToLogin', uiLang)}
+        </button>
+      </div>
+
+      <main className="pt-4">
+        <PageTransition pageKey={currentPage}>
+          {renderPage()}
+        </PageTransition>
+      </main>
+
+      <BottomNav
+        currentPage={currentPage}
+        onNavigate={navigateTo}
+        reviewCount={dueCount}
+      />
+
+      <MathGateModal
+        isOpen={showMathGate}
+        onClose={onMathClose}
+        onSuccess={onMathSuccess}
+      />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <ErrorBoundary title="Oops!" description="Something went wrong. Please refresh.">
       <ThemeProvider>
         <AuthProvider>
-          <UserProgressProvider>
-            <SpeechProvider>
-              <AppContent />
-            </SpeechProvider>
-          </UserProgressProvider>
+          <ChildAuthProvider>
+            <UserProgressProvider>
+              <SpeechProvider>
+                <AppContent />
+              </SpeechProvider>
+            </UserProgressProvider>
+          </ChildAuthProvider>
         </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
