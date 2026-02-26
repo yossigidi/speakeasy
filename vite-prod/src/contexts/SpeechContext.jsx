@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { playHebrew, playFromAPI, stopAllAudio } from '../utils/hebrewAudio';
+import { playHebrew, playFromAPI, stopAllAudio, unlockAudioContext } from '../utils/hebrewAudio';
 
 const SpeechContext = createContext(null);
 
@@ -101,6 +101,21 @@ export function SpeechProvider({ children }) {
       window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
       return () => window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
     }
+  }, []);
+
+  // Unlock AudioContext on first user gesture (iOS requirement)
+  useEffect(() => {
+    const unlock = () => {
+      unlockAudioContext();
+      window.removeEventListener('click', unlock, true);
+      window.removeEventListener('touchstart', unlock, true);
+    };
+    window.addEventListener('click', unlock, true);
+    window.addEventListener('touchstart', unlock, true);
+    return () => {
+      window.removeEventListener('click', unlock, true);
+      window.removeEventListener('touchstart', unlock, true);
+    };
   }, []);
 
   const preferredVoiceRef = useRef(null);

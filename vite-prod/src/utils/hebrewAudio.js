@@ -60,6 +60,29 @@ function getAudioContext() {
   return audioCtx;
 }
 
+/**
+ * Unlock AudioContext on first user gesture.
+ * Must be called from a click/touchstart handler so iOS Safari allows audio.
+ * Safe to call multiple times — no-ops after first unlock.
+ */
+let audioUnlocked = false;
+export function unlockAudioContext() {
+  if (audioUnlocked) return;
+  const ctx = getAudioContext();
+  if (ctx.state === 'suspended') {
+    ctx.resume().catch(() => {});
+  }
+  // Play a silent buffer to fully unlock on iOS
+  try {
+    const buf = ctx.createBuffer(1, 1, 22050);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.start(0);
+  } catch (e) { /* ignore */ }
+  audioUnlocked = true;
+}
+
 function cacheKey(text, lang) {
   return `${lang || 'auto'}::${text.trim()}`;
 }

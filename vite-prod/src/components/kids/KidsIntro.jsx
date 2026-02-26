@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
+import { unlockAudioContext } from '../../utils/hebrewAudio.js';
 
 const SESSION_KEY = 'kids-intro-seen';
 
@@ -47,20 +49,35 @@ export default function KidsIntro({
     requestAnimationFrame(() => setPhase('visible'));
   }, [id]);
 
-  // Speak the intro content when it becomes visible
-  useEffect(() => {
-    if (phase !== 'visible' || !visible) return;
+  const spokenRef = useRef(false);
 
+  // Build the text to speak
+  const getSpeechText = useCallback(() => {
     const isHe = uiLang === 'he';
     const parts = [];
     if (name) parts.push(isHe ? `היי ${name}!` : `Hi ${name}!`);
     parts.push(isHe ? titleHe : title);
     const d = isHe ? descHe : desc;
     if (d) parts.push(d);
-    const fullText = parts.join(' ');
+    return { text: parts.join(' '), lang: isHe ? 'he' : 'en-US' };
+  }, [uiLang, name, title, titleHe, desc, descHe]);
 
-    speak(fullText, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
-  }, [phase, visible]);
+  // Try to speak when visible (works on desktop/Android where AudioContext is already unlocked)
+  useEffect(() => {
+    if (phase !== 'visible' || !visible || spokenRef.current) return;
+    const { text, lang } = getSpeechText();
+    speak(text, { lang, rate: 0.9 });
+    spokenRef.current = true;
+  }, [phase, visible, getSpeechText, speak]);
+
+  // Fallback: if user taps on the overlay card, unlock audio + speak (iOS)
+  const handleCardTouch = useCallback(() => {
+    if (spokenRef.current) return;
+    unlockAudioContext();
+    const { text, lang } = getSpeechText();
+    speak(text, { lang, rate: 0.9 });
+    spokenRef.current = true;
+  }, [getSpeechText, speak]);
 
   const dismiss = useCallback(() => {
     stopSpeaking();
@@ -76,7 +93,9 @@ export default function KidsIntro({
 
   const isHe = uiLang === 'he';
 
-  return (
+  // Use React Portal to render at body level — bypasses parent CSS
+  // (transform, filter, backdrop-filter) that breaks position: fixed
+  const overlay = (
     <div
       className={`fixed inset-0 z-[100] flex items-center justify-center p-6 transition-all duration-300 ${
         phase === 'exit' ? 'opacity-0 scale-95' : phase === 'visible' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
@@ -91,7 +110,8 @@ export default function KidsIntro({
     >
       <div
         className={`relative w-full max-w-sm rounded-[2rem] bg-gradient-to-br ${gradient} p-1 shadow-2xl`}
-        onClick={e => e.stopPropagation()}
+        onClick={e => { e.stopPropagation(); handleCardTouch(); }}
+        onTouchStart={handleCardTouch}
       >
         {/* Inner card */}
         <div className="rounded-[1.8rem] bg-white/95 dark:bg-gray-900/95 p-6 text-center relative overflow-hidden">
@@ -134,4 +154,6 @@ export default function KidsIntro({
       </div>
     </div>
   );
+
+  return createPortal(overlay, document.body);
 }
