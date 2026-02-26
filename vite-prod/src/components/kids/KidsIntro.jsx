@@ -101,7 +101,7 @@ export default function KidsIntro({
   // (transform, filter, backdrop-filter) that breaks position: fixed
   const overlay = (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center p-6 transition-all duration-300 ${
+      className={`fixed inset-0 z-[100] flex items-start justify-center p-6 transition-all duration-300 ${
         phase === 'exit' ? 'opacity-0 scale-95' : phase === 'visible' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
       }`}
       style={{
