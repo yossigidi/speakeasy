@@ -51,14 +51,18 @@ export default function KidsIntro({
 
   const spokenRef = useRef(false);
 
-  // Build the text to speak
+  // Build the text to speak (only first sentence of description)
   const getSpeechText = useCallback(() => {
     const isHe = uiLang === 'he';
     const parts = [];
     if (name) parts.push(isHe ? `היי ${name}!` : `Hi ${name}!`);
     parts.push(isHe ? titleHe : title);
     const d = isHe ? descHe : desc;
-    if (d) parts.push(d);
+    if (d) {
+      // Only speak the first sentence
+      const firstSentence = d.split(/[.!?。]\s*/)[0];
+      if (firstSentence) parts.push(firstSentence);
+    }
     return { text: parts.join(' '), lang: isHe ? 'he' : 'en-US' };
   }, [uiLang, name, title, titleHe, desc, descHe]);
 
