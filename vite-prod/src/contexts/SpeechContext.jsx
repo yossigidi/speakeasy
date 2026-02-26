@@ -240,12 +240,12 @@ export function SpeechProvider({ children }) {
       }
     });
 
-    // Timeout: abort the API request and fall back
+    // Timeout: abort the API fetch and fall back to local TTS
+    // Do NOT call stopAllAudio() here — it would cancel other queued items
     const timeoutId = setTimeout(() => {
       if (!settled) {
         settled = true;
         abortCtrl.abort();
-        stopAllAudio();
         fallbackToLocal();
       }
     }, API_TIMEOUT);
