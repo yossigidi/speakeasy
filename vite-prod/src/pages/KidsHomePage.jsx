@@ -154,7 +154,7 @@ const GAME_CARDS = [
   },
   {
     id: 'lessons',
-    emoji: '🎮',
+    emoji: '📖',
     titleHe: 'שיעורים',
     titleEn: 'Lessons',
     descHe: 'משחקים ותרגילים',

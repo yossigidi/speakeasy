@@ -193,6 +193,13 @@ export function SpeechProvider({ children }) {
 
     setIsSpeaking(true);
 
+    // For long texts (>200 chars), skip Cloud TTS — go directly to Web Speech
+    // Cloud TTS has limits and long texts cause timeout race conditions
+    if (text.length > 200) {
+      speakWithWebSpeech(text, { ...options, _queued: true });
+      return;
+    }
+
     const abortCtrl = new AbortController();
     const API_TIMEOUT = 2000;
     let settled = false;
