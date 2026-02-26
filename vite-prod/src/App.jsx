@@ -44,7 +44,7 @@ import { t } from './utils/translations.js';
 function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const { childUser, logoutChild } = useChildAuth();
-  const { progress, loading: progressLoading, children } = useUserProgress();
+  const { progress, loading: progressLoading, children, isChildMode } = useUserProgress();
   const { uiLang } = useTheme();
   const { dueCount } = useSpacedRepetition();
   const [currentPage, setCurrentPage] = useState('home');
@@ -135,7 +135,7 @@ function AppContent() {
     return <ProfilePickerPage onSelect={() => setProfileSelected(true)} />;
   }
 
-  const isKids = !progress.curriculumLevel || progress.curriculumLevel <= 2;
+  const isKids = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
 
   const pageTitles = {
     home: null,
