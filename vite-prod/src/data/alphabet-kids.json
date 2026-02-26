@@ -10,21 +10,21 @@
     "words": [
       {
         "word": "apple",
-        "translation": "תפוח",
+        "translation": "תַּפּוּחַ",
         "emoji": "🍎",
         "sentence": "I eat a red apple.",
         "sentenceHe": "אני אוכל תפוח אדום."
       },
       {
         "word": "ant",
-        "translation": "נמלה",
+        "translation": "נְמָלָה",
         "emoji": "🐜",
         "sentence": "The ant is small.",
         "sentenceHe": "הנמלה קטנה."
       },
       {
         "word": "airplane",
-        "translation": "מטוס",
+        "translation": "מָטוֹס",
         "emoji": "✈️",
         "sentence": "The airplane flies high.",
         "sentenceHe": "המטוס טס גבוה."
@@ -44,21 +44,21 @@
     "words": [
       {
         "word": "ball",
-        "translation": "כדור",
+        "translation": "כַּדּוּר",
         "emoji": "🏀",
         "sentence": "I throw the ball.",
         "sentenceHe": "אני זורק את הכדור."
       },
       {
         "word": "bear",
-        "translation": "דוב",
+        "translation": "דֹּב",
         "emoji": "🐻",
         "sentence": "The bear is big.",
         "sentenceHe": "הדוב גדול."
       },
       {
         "word": "butterfly",
-        "translation": "פרפר",
+        "translation": "פַּרְפַּר",
         "emoji": "🦋",
         "sentence": "The butterfly is pretty.",
         "sentenceHe": "הפרפר יפה."
@@ -78,21 +78,21 @@
     "words": [
       {
         "word": "cat",
-        "translation": "חתול",
+        "translation": "חָתוּל",
         "emoji": "🐱",
         "sentence": "The cat is soft.",
         "sentenceHe": "החתול רך."
       },
       {
         "word": "cake",
-        "translation": "עוגה",
+        "translation": "עוּגָה",
         "emoji": "🎂",
         "sentence": "I love chocolate cake.",
         "sentenceHe": "אני אוהב עוגת שוקולד."
       },
       {
         "word": "car",
-        "translation": "מכונית",
+        "translation": "מְכוֹנִית",
         "emoji": "🚗",
         "sentence": "The car is fast.",
         "sentenceHe": "המכונית מהירה."
@@ -112,21 +112,21 @@
     "words": [
       {
         "word": "dog",
-        "translation": "כלב",
+        "translation": "כֶּלֶב",
         "emoji": "🐶",
         "sentence": "The dog wags its tail.",
         "sentenceHe": "הכלב מכשכש בזנב."
       },
       {
         "word": "duck",
-        "translation": "ברווז",
+        "translation": "בַּרְוָז",
         "emoji": "🦆",
         "sentence": "The duck swims in water.",
         "sentenceHe": "הברווז שוחה במים."
       },
       {
         "word": "drum",
-        "translation": "תוף",
+        "translation": "תֹּף",
         "emoji": "🥁",
         "sentence": "I play the drum.",
         "sentenceHe": "אני מנגן בתוף."
@@ -146,21 +146,21 @@
     "words": [
       {
         "word": "egg",
-        "translation": "ביצה",
+        "translation": "בֵּיצָה",
         "emoji": "🥚",
         "sentence": "I eat an egg.",
         "sentenceHe": "אני אוכל ביצה."
       },
       {
         "word": "elephant",
-        "translation": "פיל",
+        "translation": "פִּיל",
         "emoji": "🐘",
         "sentence": "The elephant is huge.",
         "sentenceHe": "הפיל ענק."
       },
       {
         "word": "ear",
-        "translation": "אוזן",
+        "translation": "אֹזֶן",
         "emoji": "👂",
         "sentence": "I hear with my ear.",
         "sentenceHe": "אני שומע עם האוזן."
@@ -180,21 +180,21 @@
     "words": [
       {
         "word": "fish",
-        "translation": "דג",
+        "translation": "דָּג",
         "emoji": "🐟",
         "sentence": "The fish swims fast.",
         "sentenceHe": "הדג שוחה מהר."
       },
       {
         "word": "flower",
-        "translation": "פרח",
+        "translation": "פֶּרַח",
         "emoji": "🌸",
         "sentence": "The flower smells nice.",
         "sentenceHe": "הפרח מריח טוב."
       },
       {
         "word": "frog",
-        "translation": "צפרדע",
+        "translation": "צְפַרְדֵּעַ",
         "emoji": "🐸",
         "sentence": "The frog jumps high.",
         "sentenceHe": "הצפרדע קופצת גבוה."
@@ -214,21 +214,21 @@
     "words": [
       {
         "word": "grape",
-        "translation": "ענב",
+        "translation": "עֵנָב",
         "emoji": "🍇",
         "sentence": "I eat purple grapes.",
         "sentenceHe": "אני אוכל ענבים סגולים."
       },
       {
         "word": "giraffe",
-        "translation": "ג'ירפה",
+        "translation": "ג'ִירָפָה",
         "emoji": "🦒",
         "sentence": "The giraffe is tall.",
         "sentenceHe": "הג'ירפה גבוהה."
       },
       {
         "word": "guitar",
-        "translation": "גיטרה",
+        "translation": "גִּיטָרָה",
         "emoji": "🎸",
         "sentence": "I play the guitar.",
         "sentenceHe": "אני מנגן בגיטרה."
@@ -248,21 +248,21 @@
     "words": [
       {
         "word": "hat",
-        "translation": "כובע",
+        "translation": "כּוֹבַע",
         "emoji": "🎩",
         "sentence": "I wear a hat.",
         "sentenceHe": "אני חובש כובע."
       },
       {
         "word": "horse",
-        "translation": "סוס",
+        "translation": "סוּס",
         "emoji": "🐴",
         "sentence": "The horse runs fast.",
         "sentenceHe": "הסוס רץ מהר."
       },
       {
         "word": "house",
-        "translation": "בית",
+        "translation": "בַּיִת",
         "emoji": "🏠",
         "sentence": "I live in a house.",
         "sentenceHe": "אני גר בבית."
@@ -282,21 +282,21 @@
     "words": [
       {
         "word": "igloo",
-        "translation": "איגלו",
+        "translation": "אִיגְלוּ",
         "emoji": "🏠",
         "sentence": "The igloo is cold.",
         "sentenceHe": "האיגלו קר."
       },
       {
         "word": "ice cream",
-        "translation": "גלידה",
+        "translation": "גְּלִידָה",
         "emoji": "🍦",
         "sentence": "I like ice cream.",
         "sentenceHe": "אני אוהב גלידה."
       },
       {
         "word": "insect",
-        "translation": "חרק",
+        "translation": "חֶרֶק",
         "emoji": "🐛",
         "sentence": "The insect is tiny.",
         "sentenceHe": "החרק זעיר."
@@ -316,21 +316,21 @@
     "words": [
       {
         "word": "juice",
-        "translation": "מיץ",
+        "translation": "מִיץ",
         "emoji": "🧃",
         "sentence": "I drink orange juice.",
         "sentenceHe": "אני שותה מיץ תפוזים."
       },
       {
         "word": "jellyfish",
-        "translation": "מדוזה",
+        "translation": "מֶדוּזָה",
         "emoji": "🪼",
         "sentence": "The jellyfish is in the sea.",
         "sentenceHe": "המדוזה בים."
       },
       {
         "word": "jump",
-        "translation": "קפיצה",
+        "translation": "קְפִיצָה",
         "emoji": "🤸",
         "sentence": "I can jump high.",
         "sentenceHe": "אני יכול לקפוץ גבוה."
@@ -350,21 +350,21 @@
     "words": [
       {
         "word": "kite",
-        "translation": "עפיפון",
+        "translation": "עֲפִיפוֹן",
         "emoji": "🪁",
         "sentence": "The kite flies in the sky.",
         "sentenceHe": "העפיפון עף בשמיים."
       },
       {
         "word": "king",
-        "translation": "מלך",
+        "translation": "מֶלֶךְ",
         "emoji": "🤴",
         "sentence": "The king wears a crown.",
         "sentenceHe": "המלך חובש כתר."
       },
       {
         "word": "kangaroo",
-        "translation": "קנגורו",
+        "translation": "קֶנְגּוּרוּ",
         "emoji": "🦘",
         "sentence": "The kangaroo can jump.",
         "sentenceHe": "הקנגורו יכול לקפוץ."
@@ -384,21 +384,21 @@
     "words": [
       {
         "word": "lion",
-        "translation": "אריה",
+        "translation": "אַרְיֵה",
         "emoji": "🦁",
         "sentence": "The lion is strong.",
         "sentenceHe": "האריה חזק."
       },
       {
         "word": "lemon",
-        "translation": "לימון",
+        "translation": "לִימוֹן",
         "emoji": "🍋",
         "sentence": "The lemon is sour.",
         "sentenceHe": "הלימון חמוץ."
       },
       {
         "word": "leaf",
-        "translation": "עלה",
+        "translation": "עָלֶה",
         "emoji": "🍃",
         "sentence": "The leaf is green.",
         "sentenceHe": "העלה ירוק."
@@ -418,21 +418,21 @@
     "words": [
       {
         "word": "moon",
-        "translation": "ירח",
+        "translation": "יָרֵחַ",
         "emoji": "🌙",
         "sentence": "The moon shines at night.",
         "sentenceHe": "הירח מאיר בלילה."
       },
       {
         "word": "monkey",
-        "translation": "קוף",
+        "translation": "קוֹף",
         "emoji": "🐒",
         "sentence": "The monkey eats bananas.",
         "sentenceHe": "הקוף אוכל בננות."
       },
       {
         "word": "milk",
-        "translation": "חלב",
+        "translation": "חָלָב",
         "emoji": "🥛",
         "sentence": "I drink cold milk.",
         "sentenceHe": "אני שותה חלב קר."
@@ -452,21 +452,21 @@
     "words": [
       {
         "word": "nose",
-        "translation": "אף",
+        "translation": "אַף",
         "emoji": "👃",
         "sentence": "I smell with my nose.",
         "sentenceHe": "אני מריח עם האף."
       },
       {
         "word": "nest",
-        "translation": "קן",
+        "translation": "קֵן",
         "emoji": "🪺",
         "sentence": "The bird has a nest.",
         "sentenceHe": "לציפור יש קן."
       },
       {
         "word": "nut",
-        "translation": "אגוז",
+        "translation": "אֱגוֹז",
         "emoji": "🥜",
         "sentence": "The squirrel eats a nut.",
         "sentenceHe": "הסנאי אוכל אגוז."
@@ -486,21 +486,21 @@
     "words": [
       {
         "word": "orange",
-        "translation": "תפוז",
+        "translation": "תַּפּוּז",
         "emoji": "🍊",
         "sentence": "The orange is sweet.",
         "sentenceHe": "התפוז מתוק."
       },
       {
         "word": "owl",
-        "translation": "ינשוף",
+        "translation": "יַנְשׁוּף",
         "emoji": "🦉",
         "sentence": "The owl sees at night.",
         "sentenceHe": "הינשוף רואה בלילה."
       },
       {
         "word": "octopus",
-        "translation": "תמנון",
+        "translation": "תְּמָנוֹן",
         "emoji": "🐙",
         "sentence": "The octopus has eight arms.",
         "sentenceHe": "לתמנון יש שמונה זרועות."
@@ -520,21 +520,21 @@
     "words": [
       {
         "word": "penguin",
-        "translation": "פינגווין",
+        "translation": "פִּינְגְּוִין",
         "emoji": "🐧",
         "sentence": "The penguin likes the cold.",
         "sentenceHe": "הפינגווין אוהב קור."
       },
       {
         "word": "pizza",
-        "translation": "פיצה",
+        "translation": "פִּיצָה",
         "emoji": "🍕",
         "sentence": "I love eating pizza.",
         "sentenceHe": "אני אוהב לאכול פיצה."
       },
       {
         "word": "parrot",
-        "translation": "תוכי",
+        "translation": "תּוּכִּי",
         "emoji": "🦜",
         "sentence": "The parrot can talk.",
         "sentenceHe": "התוכי יכול לדבר."
@@ -554,21 +554,21 @@
     "words": [
       {
         "word": "queen",
-        "translation": "מלכה",
+        "translation": "מַלְכָּה",
         "emoji": "👑",
         "sentence": "The queen wears a crown.",
         "sentenceHe": "המלכה חובשת כתר."
       },
       {
         "word": "quilt",
-        "translation": "שמיכה",
+        "translation": "שְׂמִיכָה",
         "emoji": "🛏️",
         "sentence": "The quilt is warm.",
         "sentenceHe": "השמיכה חמה."
       },
       {
         "word": "question",
-        "translation": "שאלה",
+        "translation": "שְׁאֵלָה",
         "emoji": "❓",
         "sentence": "I ask a question.",
         "sentenceHe": "אני שואל שאלה."
@@ -588,21 +588,21 @@
     "words": [
       {
         "word": "rainbow",
-        "translation": "קשת",
+        "translation": "קֶשֶׁת",
         "emoji": "🌈",
         "sentence": "The rainbow has many colors.",
         "sentenceHe": "לקשת יש הרבה צבעים."
       },
       {
         "word": "rabbit",
-        "translation": "ארנב",
+        "translation": "אַרְנָב",
         "emoji": "🐰",
         "sentence": "The rabbit hops around.",
         "sentenceHe": "הארנב מקפץ מסביב."
       },
       {
         "word": "rocket",
-        "translation": "טיל",
+        "translation": "טִיל",
         "emoji": "🚀",
         "sentence": "The rocket goes to space.",
         "sentenceHe": "הטיל טס לחלל."
@@ -622,21 +622,21 @@
     "words": [
       {
         "word": "sun",
-        "translation": "שמש",
+        "translation": "שֶׁמֶשׁ",
         "emoji": "☀️",
         "sentence": "The sun is bright.",
         "sentenceHe": "השמש בוהקת."
       },
       {
         "word": "star",
-        "translation": "כוכב",
+        "translation": "כּוֹכָב",
         "emoji": "⭐",
         "sentence": "I see a star.",
         "sentenceHe": "אני רואה כוכב."
       },
       {
         "word": "snake",
-        "translation": "נחש",
+        "translation": "נָחָשׁ",
         "emoji": "🐍",
         "sentence": "The snake is long.",
         "sentenceHe": "הנחש ארוך."
@@ -656,21 +656,21 @@
     "words": [
       {
         "word": "tree",
-        "translation": "עץ",
+        "translation": "עֵץ",
         "emoji": "🌳",
         "sentence": "The tree is very tall.",
         "sentenceHe": "העץ מאוד גבוה."
       },
       {
         "word": "turtle",
-        "translation": "צב",
+        "translation": "צָב",
         "emoji": "🐢",
         "sentence": "The turtle walks slowly.",
         "sentenceHe": "הצב הולך לאט."
       },
       {
         "word": "train",
-        "translation": "רכבת",
+        "translation": "רַכֶּבֶת",
         "emoji": "🚂",
         "sentence": "The train goes fast.",
         "sentenceHe": "הרכבת נוסעת מהר."
@@ -690,21 +690,21 @@
     "words": [
       {
         "word": "umbrella",
-        "translation": "מטריה",
+        "translation": "מִטְרִיָּה",
         "emoji": "☂️",
         "sentence": "I use an umbrella.",
         "sentenceHe": "אני משתמש במטריה."
       },
       {
         "word": "unicorn",
-        "translation": "חד קרן",
+        "translation": "חַד קֶרֶן",
         "emoji": "🦄",
         "sentence": "The unicorn is magical.",
         "sentenceHe": "חד הקרן קסום."
       },
       {
         "word": "up",
-        "translation": "למעלה",
+        "translation": "לְמַעְלָה",
         "emoji": "⬆️",
         "sentence": "The balloon goes up.",
         "sentenceHe": "הבלון עולה למעלה."
@@ -724,21 +724,21 @@
     "words": [
       {
         "word": "violin",
-        "translation": "כינור",
+        "translation": "כִּינּוֹר",
         "emoji": "🎻",
         "sentence": "I play the violin.",
         "sentenceHe": "אני מנגן בכינור."
       },
       {
         "word": "volcano",
-        "translation": "הר געש",
+        "translation": "הַר גַּעַשׁ",
         "emoji": "🌋",
         "sentence": "The volcano is hot.",
         "sentenceHe": "הר הגעש חם."
       },
       {
         "word": "vegetable",
-        "translation": "ירק",
+        "translation": "יָרָק",
         "emoji": "🥦",
         "sentence": "I eat vegetables every day.",
         "sentenceHe": "אני אוכל ירקות כל יום."
@@ -758,21 +758,21 @@
     "words": [
       {
         "word": "water",
-        "translation": "מים",
+        "translation": "מַיִם",
         "emoji": "💧",
         "sentence": "I drink cold water.",
         "sentenceHe": "אני שותה מים קרים."
       },
       {
         "word": "whale",
-        "translation": "לווייתן",
+        "translation": "לִוְיָתָן",
         "emoji": "🐳",
         "sentence": "The whale is very big.",
         "sentenceHe": "הלווייתן מאוד גדול."
       },
       {
         "word": "watermelon",
-        "translation": "אבטיח",
+        "translation": "אֲבַטִּיחַ",
         "emoji": "🍉",
         "sentence": "The watermelon is sweet.",
         "sentenceHe": "האבטיח מתוק."
@@ -792,21 +792,21 @@
     "words": [
       {
         "word": "fox",
-        "translation": "שועל",
+        "translation": "שׁוּעָל",
         "emoji": "🦊",
         "sentence": "The fox is clever.",
         "sentenceHe": "השועל חכם."
       },
       {
         "word": "box",
-        "translation": "קופסה",
+        "translation": "קוּפְסָה",
         "emoji": "📦",
         "sentence": "I open the box.",
         "sentenceHe": "אני פותח את הקופסה."
       },
       {
         "word": "xylophone",
-        "translation": "קסילופון",
+        "translation": "קְסִילוֹפוֹן",
         "emoji": "🎵",
         "sentence": "I play the xylophone.",
         "sentenceHe": "אני מנגן בקסילופון."
@@ -826,21 +826,21 @@
     "words": [
       {
         "word": "yellow",
-        "translation": "צהוב",
+        "translation": "צָהֹב",
         "emoji": "💛",
         "sentence": "The sun is yellow.",
         "sentenceHe": "השמש צהובה."
       },
       {
         "word": "yogurt",
-        "translation": "יוגורט",
+        "translation": "יוֹגוּרְט",
         "emoji": "🥛",
         "sentence": "I eat strawberry yogurt.",
         "sentenceHe": "אני אוכל יוגורט תות."
       },
       {
         "word": "yarn",
-        "translation": "חוט",
+        "translation": "חוּט",
         "emoji": "🧶",
         "sentence": "The cat plays with yarn.",
         "sentenceHe": "החתול משחק עם חוט."
@@ -860,21 +860,21 @@
     "words": [
       {
         "word": "zebra",
-        "translation": "זברה",
+        "translation": "זֶבְּרָה",
         "emoji": "🦓",
         "sentence": "The zebra has stripes.",
         "sentenceHe": "לזברה יש פסים."
       },
       {
         "word": "zoo",
-        "translation": "גן חיות",
+        "translation": "גַּן חַיּוֹת",
         "emoji": "🦁",
         "sentence": "I go to the zoo.",
         "sentenceHe": "אני הולך לגן החיות."
       },
       {
         "word": "zipper",
-        "translation": "רוכסן",
+        "translation": "רוּכְסָן",
         "emoji": "🧥",
         "sentence": "I close the zipper.",
         "sentenceHe": "אני סוגר את הרוכסן."

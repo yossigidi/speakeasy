@@ -223,7 +223,6 @@ function LetterDetail({ letter, onBack, onStartGame }) {
               <Volume2 size={20} />
               {uiLang === 'he' ? 'השמע!' : 'Listen!'}
             </button>
-            <p className="text-white/80 text-lg mt-3 font-mono">{letter.phonetic}</p>
           </div>
         </div>
 
