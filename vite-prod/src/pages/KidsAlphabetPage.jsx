@@ -86,7 +86,7 @@ function LetterGrid({ onSelect, completedLetters }) {
         {/* Header */}
         <div className="text-center mb-4">
           <h1 className="text-3xl font-black rainbow-text py-1">
-            {uiLang === 'he' ? 'האלפבית שלי' : 'My Alphabet'}
+            {uiLang === 'he' ? 'האותיות שלי' : 'My Letters'}
           </h1>
           <div className="flex justify-center gap-1 mt-1">
             {['🌈', '🔤', '🎉'].map((e, i) => (

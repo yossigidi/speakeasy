@@ -194,8 +194,8 @@ const KIDS_VIDEOS = [
     videoId: 'hq3yfQnllfQ',
     titleHe: 'שיר ה-ABC',
     titleEn: 'ABC Song',
-    descHe: 'למד את האלפבית בשירה!',
-    descEn: 'Learn the alphabet with a song!',
+    descHe: 'למד את האותיות בשירה!',
+    descEn: 'Learn the letters with a song!',
     emoji: '🎵',
   },
   {
