@@ -185,7 +185,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
     speak(wordObj.word, {
       rate: 0.75,
       onEnd: () => {
-        setTimeout(() => speak(wordObj.translation, { lang: 'he', rate: 0.9 }), 300);
+        setTimeout(() => speak(wordObj.translation, { lang: 'he', rate: 0.9, _queued: true }), 300);
       }
     });
   };
@@ -635,7 +635,7 @@ function ListenChooseGame({ letter, onComplete }) {
       speak(opt.word, {
         rate: 0.75,
         onEnd: () => {
-          setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9 }), 200);
+          setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9, _queued: true }), 200);
         }
       });
       setTimeout(() => {
