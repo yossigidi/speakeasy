@@ -1,7 +1,7 @@
 const translations = {
   he: {
     // App
-    appName: 'SpeakEasy',
+    appName: 'Speakly',
     appTagline: 'למד אנגלית בקלות',
 
     // Navigation
@@ -335,7 +335,7 @@ const translations = {
     tryHarder: 'ננסה שוב!',
   },
   en: {
-    appName: 'SpeakEasy',
+    appName: 'Speakly',
     appTagline: 'Learn English the Easy Way',
     home: 'Home',
     lessons: 'Lessons',

@@ -83,7 +83,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <h1 className="text-3xl font-bold gradient-text mb-4">SpeakEasy</h1>
+          <h1 className="text-3xl font-bold gradient-text mb-4">Speakly</h1>
           <LoadingSpinner />
         </div>
       </div>

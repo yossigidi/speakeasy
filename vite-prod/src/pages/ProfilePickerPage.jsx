@@ -33,7 +33,7 @@ export default function ProfilePickerPage({ onSelect }) {
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
         {t('whoIsLearning', uiLang)}
       </h1>
-      <p className="text-sm text-gray-400 dark:text-gray-500 mb-8">SpeakEasy</p>
+      <p className="text-sm text-gray-400 dark:text-gray-500 mb-8">Speakly</p>
 
       <div className="w-full max-w-sm space-y-3">
         {/* Parent Card */}

@@ -72,7 +72,7 @@ export default function FamilyPage({ onNavigate }) {
     if (code && navigator.share) {
       try {
         await navigator.share({
-          title: 'SpeakEasy',
+          title: 'Speakly',
           text: `${t('familyCodeDesc', uiLang)}: ${code}`,
           url: `${window.location.origin}?childJoin=${code}`,
         });

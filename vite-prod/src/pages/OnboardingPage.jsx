@@ -263,10 +263,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const renderWelcome = () => (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-6 animate-fade-in">
       <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/30">
-        <span className="text-4xl font-black text-white">SE</span>
+        <img src="/icons/icon-96.png" alt="Speakly" className="w-16 h-16 rounded-xl" />
       </div>
-      <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
-        SpeakEasy
+      <h1 className="text-4xl font-extrabold bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 bg-clip-text text-transparent mb-3">
+        Speakly
       </h1>
       <p className="text-lg text-gray-500 dark:text-gray-400 mb-10 max-w-xs">
         {t('appTagline', uiLang)}

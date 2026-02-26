@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakeasy-v14';
-const STATIC_CACHE = 'speakeasy-static-v13';
+const CACHE_NAME = 'speakly-v15';
+const STATIC_CACHE = 'speakly-static-v15';
 
 const urlsToCache = [
   '/',
@@ -11,7 +11,7 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('SpeakEasy: Caching app shell v7');
+      console.log('Speakly: Caching app shell');
       return cache.addAll(urlsToCache);
     }).then(() => self.skipWaiting())
   );
@@ -25,7 +25,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (!currentCaches.includes(cacheName)) {
-            console.log('SpeakEasy: Deleting old cache:', cacheName);
+            console.log('Speakly: Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -85,14 +85,14 @@ self.addEventListener('push', event => {
   } catch (e) {
     data = { body: event.data ? event.data.text() : 'Time to practice English!' };
   }
-  const title = data.title || 'SpeakEasy';
+  const title = data.title || 'Speakly';
   const options = {
     body: data.body || 'Time to practice English!',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
+    icon: '/icons/icon-192.png',
+    badge: '/icons/icon-72.png',
     dir: data.lang === 'he' ? 'rtl' : 'ltr',
     lang: data.lang || 'he',
-    tag: data.tag || 'speakeasy-push',
+    tag: data.tag || 'speakly-push',
     vibrate: [200, 100, 200]
   };
   event.waitUntil(self.registration.showNotification(title, options));

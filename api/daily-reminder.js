@@ -1,4 +1,4 @@
-// SpeakEasy Daily Learning Reminder Push API
+// Speakly Daily Learning Reminder Push API
 // Vercel Serverless Function - Cron Job
 // Runs daily at 6:00 UTC (8:00 AM Israel time)
 
@@ -27,11 +27,11 @@ function getFirestoreAdmin() {
 
 const REMINDER_MESSAGES = {
     he: {
-        title: 'SpeakEasy - זמן ללמוד! 📚',
+        title: 'Speakly - זמן ללמוד! 📚',
         body: 'אל תשבור את הרצף! בוא לתרגל אנגלית היום 🔥'
     },
     en: {
-        title: 'SpeakEasy - Time to learn! 📚',
+        title: 'Speakly - Time to learn! 📚',
         body: "Don't break your streak! Practice English today 🔥"
     }
 };

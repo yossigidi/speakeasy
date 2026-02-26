@@ -1,5 +1,5 @@
 // Setup global variables that the production app code expects
-// Firebase initialization for SpeakEasy English learning app
+// Firebase initialization for Speakly English learning app
 
 import { initializeApp } from 'firebase/app';
 import {
