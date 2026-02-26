@@ -31,6 +31,10 @@ import ProfilePickerPage from './pages/ProfilePickerPage.jsx';
 import ChildProgressPage from './pages/ChildProgressPage.jsx';
 import KidsTeacherPage from './pages/KidsTeacherPage.jsx';
 import CurriculumPage from './pages/CurriculumPage.jsx';
+import SupportPage from './pages/SupportPage.jsx';
+import SupportFAQPage from './pages/SupportFAQPage.jsx';
+import SupportContactPage from './pages/SupportContactPage.jsx';
+import SupportTicketsPage from './pages/SupportTicketsPage.jsx';
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -83,7 +87,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <h1 className="text-3xl font-bold gradient-text mb-4">Speakly</h1>
+          <h1 className="text-3xl font-bold gradient-text mb-4">Speakli</h1>
           <LoadingSpinner />
         </div>
       </div>
@@ -131,7 +135,7 @@ function AppContent() {
     return <ProfilePickerPage onSelect={() => setProfileSelected(true)} />;
   }
 
-  const isKids = progress.ageGroup === 'kids' || progress.ageGroup === 'children';
+  const isKids = !progress.curriculumLevel || progress.curriculumLevel <= 2;
 
   const pageTitles = {
     home: null,
@@ -150,11 +154,15 @@ function AppContent() {
     'child-progress': null,
     'kids-teacher': null,
     'curriculum': null,
+    'support': t('helpCenter', uiLang),
+    'support-faq': t('faq', uiLang),
+    'support-contact': t('contactSupport', uiLang),
+    'support-tickets': t('myTickets', uiLang),
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family', 'child-progress', 'kids-teacher', 'curriculum'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -202,6 +210,14 @@ function AppContent() {
         return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       case 'curriculum':
         return <CurriculumPage onBack={() => navigateTo('home')} />;
+      case 'support':
+        return <SupportPage onNavigate={navigateTo} onBack={() => navigateTo('profile')} />;
+      case 'support-faq':
+        return <SupportFAQPage onBack={() => navigateTo('support')} />;
+      case 'support-contact':
+        return <SupportContactPage onBack={() => navigateTo('support')} />;
+      case 'support-tickets':
+        return <SupportTicketsPage onBack={() => navigateTo('support')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff } from 'lucide-react';
+import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { getLevelTitle } from '../utils/levelSystem.js';
+import { LEVEL_META } from '../data/curriculum/curriculum-index.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import LevelBadge from '../components/gamification/LevelBadge.jsx';
 import XPBar from '../components/gamification/XPBar.jsx';
@@ -106,7 +107,7 @@ export default function ProfilePage({ onNavigate }) {
               {isChildMode && activeChild ? activeChild.name : (user?.displayName || user?.email?.split('@')[0] || 'User')}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {getLevelTitle(levelInfo.level, uiLang)} · {progress.cefrLevel || 'A1'}
+              {getLevelTitle(levelInfo.level, uiLang)} · {uiLang === 'he' ? `רמה ${progress.curriculumLevel || 1}` : `Level ${progress.curriculumLevel || 1}`}
             </p>
           </div>
         </div>
@@ -163,6 +164,22 @@ export default function ProfilePage({ onNavigate }) {
         </GlassCard>
       )}
 
+      {/* Help Center */}
+      {!isChildMode && (
+        <GlassCard className="cursor-pointer" onClick={() => onNavigate('support')}>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center">
+              <HelpCircle size={20} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-gray-900 dark:text-white">{t('helpCenter', uiLang)}</h3>
+              <p className="text-xs text-gray-500">{uiLang === 'he' ? 'שאלות נפוצות, יצירת קשר ופניות' : 'FAQ, contact us & tickets'}</p>
+            </div>
+            <Star size={18} className="text-teal-500" fill="currentColor" />
+          </div>
+        </GlassCard>
+      )}
+
       {/* Settings */}
       <div>
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
@@ -210,39 +227,35 @@ export default function ProfilePage({ onNavigate }) {
             </GlassCard>
           )}
 
-          {/* Age Group / Mode */}
-          <GlassCard
-            className="!p-3 cursor-pointer"
-            onClick={() => {
-              const next = progress.ageGroup === 'kids' ? 'adults' : 'kids';
-              updateProgress({ ageGroup: next });
-            }}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Users size={20} className="text-pink-500" />
-                <span className="font-medium text-gray-900 dark:text-white">
-                  {uiLang === 'he' ? 'מצב' : 'Mode'}
-                </span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400">
-                {progress.ageGroup === 'kids'
-                  ? (uiLang === 'he' ? 'ילדים' : 'Kids')
-                  : (uiLang === 'he' ? 'מבוגרים' : 'Adults')}
-              </span>
-            </div>
-          </GlassCard>
-
-          {/* CEFR Level */}
+          {/* Curriculum Level Selector */}
           <GlassCard className="!p-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <BarChart3 size={20} className="text-emerald-500" />
-                <span className="font-medium text-gray-900 dark:text-white">{t('currentLevel', uiLang)}</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
-                {progress.cefrLevel || 'A1'}
-              </span>
+            <div className="flex items-center gap-3 mb-3">
+              <BarChart3 size={20} className="text-emerald-500" />
+              <span className="font-medium text-gray-900 dark:text-white">{t('currentLevel', uiLang)}</span>
+            </div>
+            <div className="flex gap-2">
+              {LEVEL_META.map(meta => {
+                const isActive = (progress.curriculumLevel || 1) === meta.id;
+                return (
+                  <button
+                    key={meta.id}
+                    onClick={() => updateProgress({
+                      curriculumLevel: meta.id,
+                      cefrLevel: ['A1', 'A2', 'B1', 'B2', 'C1'][meta.id - 1],
+                    })}
+                    className={`flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all text-xs ${
+                      isActive
+                        ? 'bg-indigo-100 dark:bg-indigo-900/40 ring-2 ring-indigo-500 font-bold'
+                        : 'bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    <span className="text-lg">{meta.emoji}</span>
+                    <span className={isActive ? 'text-indigo-700 dark:text-indigo-300' : 'text-gray-500 dark:text-gray-400'}>
+                      {uiLang === 'he' ? meta.nameHe : meta.name}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </GlassCard>
 
