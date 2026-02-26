@@ -97,15 +97,15 @@ function LevelBadge({ childLevel, uiLang }) {
 /* ── Game cards data ── */
 const GAME_CARDS = [
   {
-    id: 'kids-teacher',
-    emoji: '👩‍🏫',
-    titleHe: 'שיעור עם המורה!',
-    titleEn: 'Teacher Time!',
-    descHe: 'למד עם המורה הווירטואלית',
-    descEn: 'Learn with the virtual teacher',
-    gradient: 'from-violet-400 via-purple-400 to-fuchsia-400',
-    shadowColor: 'shadow-violet-400/30',
-    page: 'kids-teacher',
+    id: 'curriculum',
+    emoji: '📚',
+    titleHe: 'שיעורים מובנים!',
+    titleEn: 'Structured Lessons!',
+    descHe: 'למד שלב אחר שלב',
+    descEn: 'Learn step by step',
+    gradient: 'from-red-400 via-coral-400 to-orange-400',
+    shadowColor: 'shadow-red-400/30',
+    page: 'curriculum',
   },
   {
     id: 'alphabet',

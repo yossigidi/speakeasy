@@ -1,4 +1,4 @@
-const CACHE_NAME = 'speakeasy-v13';
+const CACHE_NAME = 'speakeasy-v14';
 const STATIC_CACHE = 'speakeasy-static-v13';
 
 const urlsToCache = [

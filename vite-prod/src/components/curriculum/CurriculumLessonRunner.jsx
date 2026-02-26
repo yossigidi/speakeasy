@@ -1,0 +1,347 @@
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import TeacherCharacter from '../teacher/TeacherCharacter.jsx';
+import CurriculumExerciseRenderer from './CurriculumExerciseRenderer.jsx';
+import LessonCompleteScreen from './LessonCompleteScreen.jsx';
+import { getLesson, calculateStars, calculateXP, LESSON_TYPES } from '../../data/curriculum/curriculum-index.js';
+import { generateExercises } from '../../data/curriculum/exercise-generator.js';
+import useCurriculumProgress from '../../hooks/useCurriculumProgress.js';
+import { useSpeech } from '../../contexts/SpeechContext.jsx';
+import { playCorrect, playWrong } from '../../utils/gameSounds.js';
+import { t } from '../../utils/translations.js';
+
+export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, uiLang }) {
+  const [phase, setPhase] = useState('intro'); // 'intro' | 'exercise' | 'complete'
+  const [exercises, setExercises] = useState([]);
+  const [currentExercise, setCurrentExercise] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [hearts, setHearts] = useState(3);
+  const [streak, setStreak] = useState(0);
+  const [teacherState, setTeacherState] = useState('idle');
+  const [lessonData, setLessonData] = useState(null);
+
+  const curriculum = useCurriculumProgress();
+  const { speak } = useSpeech();
+  const introTimerRef = useRef(null);
+
+  // Load lesson data and generate exercises
+  useEffect(() => {
+    const data = getLesson(lessonId);
+    if (!data) return;
+
+    setLessonData(data);
+    const exs = generateExercises(data.unit, data.lesson);
+    setExercises(exs);
+  }, [lessonId]);
+
+  // Intro phase: auto-advance after 3 seconds
+  const handleStartLesson = useCallback(() => {
+    setPhase('exercise');
+    setTeacherState('idle');
+  }, []);
+
+  // Handle exercise answer
+  const handleAnswer = useCallback((isCorrect, wordData) => {
+    if (isCorrect) {
+      playCorrect();
+      setCorrectCount(prev => prev + 1);
+      setStreak(prev => prev + 1);
+      // Teacher reactions based on streak
+      setTeacherState(prev => {
+        const newStreak = streak + 1;
+        if (newStreak >= 3) return 'celebrating';
+        return 'happy';
+      });
+    } else {
+      playWrong();
+      setWrongCount(prev => prev + 1);
+      setHearts(prev => Math.max(0, prev - 1));
+      setStreak(0);
+      setTeacherState('encouraging');
+    }
+
+    setAnswers(prev => [...prev, { isCorrect, wordData }]);
+
+    // Reset teacher state after a moment
+    setTimeout(() => setTeacherState('idle'), 1500);
+
+    // Advance to next exercise
+    setTimeout(() => {
+      if (currentExercise + 1 >= exercises.length) {
+        // Lesson complete
+        handleLessonComplete();
+      } else {
+        setCurrentExercise(prev => prev + 1);
+      }
+    }, 200);
+  }, [currentExercise, exercises.length, streak]);
+
+  // Lesson complete handler
+  const handleLessonComplete = useCallback(async () => {
+    const totalCount = exercises.length;
+    const finalCorrect = correctCount + 1; // +1 because handleAnswer hasn't updated yet
+    // Recalculate from answers array + current
+    const acc = ((finalCorrect) / totalCount) * 100;
+    const stars = calculateStars(acc);
+    const xp = calculateXP(stars);
+
+    try {
+      await curriculum.completeLesson(lessonId, stars, acc);
+    } catch (err) {
+      console.error('Failed to save lesson progress:', err);
+    }
+
+    setPhase('complete');
+  }, [exercises.length, correctCount, lessonId, curriculum]);
+
+  // Calculate final stats for complete screen
+  const totalCount = exercises.length;
+  const finalAccuracy = totalCount > 0 ? (correctCount / totalCount) * 100 : 0;
+  const finalStars = calculateStars(finalAccuracy);
+  const finalXP = calculateXP(finalStars);
+
+  // Collect unique words learned
+  const wordsLearned = answers
+    .filter(a => a.wordData)
+    .reduce((acc, a) => {
+      if (!acc.find(w => w.word === a.wordData.word)) {
+        acc.push(a.wordData);
+      }
+      return acc;
+    }, []);
+
+  const lessonTypeInfo = lessonData?.lesson
+    ? LESSON_TYPES[lessonData.lesson.type] || LESSON_TYPES.mixed
+    : LESSON_TYPES.mixed;
+
+  const lessonTitle = lessonData?.lesson
+    ? (uiLang === 'he' ? lessonData.lesson.titleHe : lessonData.lesson.title) || lessonData.lesson.title
+    : '';
+
+  // ── Intro Phase ──
+  if (phase === 'intro') {
+    return (
+      <div style={{
+        position: 'fixed', inset: 0, zIndex: 100,
+        background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        padding: 24,
+      }}>
+        {/* Teacher character - centered, normal size */}
+        <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
+          <TeacherCharacter state="talking" size="normal" />
+        </div>
+
+        {/* Lesson type icon + title */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12,
+          background: 'white', padding: '10px 20px', borderRadius: 16,
+          boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        }}>
+          <span style={{ fontSize: 24 }}>{lessonTypeInfo.icon}</span>
+          <span style={{ fontSize: 16, fontWeight: 700, color: lessonTypeInfo.color }}>
+            {uiLang === 'he' ? lessonTypeInfo.nameHe : lessonTypeInfo.nameEn}
+          </span>
+        </div>
+
+        <div style={{
+          fontSize: 24, fontWeight: 800, color: '#374151', textAlign: 'center',
+          marginBottom: 8, maxWidth: 300,
+        }}>
+          {lessonTitle}
+        </div>
+
+        <div style={{ fontSize: 16, color: '#6B7280', marginBottom: 32 }}>
+          {exercises.length} {t('exercises', uiLang)}
+        </div>
+
+        {/* Ready button */}
+        <button
+          onClick={handleStartLesson}
+          style={{
+            padding: '16px 48px', borderRadius: 20, fontSize: 20, fontWeight: 800,
+            background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)',
+            color: 'white', border: 'none', cursor: 'pointer',
+            boxShadow: '0 6px 20px rgba(255,107,107,0.35), 0 3px 0 #E5533A',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
+            minHeight: 56,
+          }}
+        >
+          {t('letsStart', uiLang)}
+        </button>
+
+        {/* Back button */}
+        <button
+          onClick={onBack}
+          style={{
+            marginTop: 16, padding: '10px 20px', borderRadius: 12,
+            fontSize: 14, fontWeight: 600, background: 'transparent',
+            color: '#9CA3AF', border: 'none', cursor: 'pointer',
+          }}
+        >
+          {t('back', uiLang)}
+        </button>
+      </div>
+    );
+  }
+
+  // ── Complete Phase ──
+  if (phase === 'complete') {
+    return (
+      <LessonCompleteScreen
+        stars={finalStars}
+        accuracy={finalAccuracy}
+        correctCount={correctCount}
+        totalCount={totalCount}
+        xpEarned={finalXP}
+        wordsLearned={wordsLearned}
+        onNext={() => onComplete && onComplete({ stars: finalStars, accuracy: finalAccuracy, xp: finalXP })}
+        onHome={onBack}
+        onRetry={finalStars === 0 ? () => {
+          // Reset and restart
+          setPhase('intro');
+          setCurrentExercise(0);
+          setCorrectCount(0);
+          setWrongCount(0);
+          setAnswers([]);
+          setHearts(3);
+          setStreak(0);
+          setTeacherState('idle');
+          // Regenerate exercises
+          if (lessonData) {
+            setExercises(generateExercises(lessonData.unit, lessonData.lesson));
+          }
+        } : null}
+        uiLang={uiLang}
+        lessonType={lessonData?.lesson?.type}
+      />
+    );
+  }
+
+  // ── Exercise Phase ──
+  const exercise = exercises[currentExercise];
+  const progress = totalCount > 0 ? ((currentExercise) / totalCount) * 100 : 0;
+  const isLastExercise = currentExercise === exercises.length - 1;
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 100,
+      background: '#FAFAFA',
+      display: 'flex', flexDirection: 'column',
+    }}>
+      {/* Top Bar: Back + Progress + Hearts */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+        background: 'white', borderBottom: '1px solid #F3F4F6',
+        position: 'relative', zIndex: 10,
+      }}>
+        {/* Close button */}
+        <button
+          onClick={onBack}
+          style={{
+            width: 36, height: 36, borderRadius: '50%', border: 'none',
+            background: '#F3F4F6', fontSize: 16, fontWeight: 700,
+            color: '#9CA3AF', cursor: 'pointer', display: 'flex',
+            alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          }}
+        >
+          {'\u2715'}
+        </button>
+
+        {/* Progress bar */}
+        <div style={{
+          flex: 1, height: 10, background: '#E5E7EB', borderRadius: 5,
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            height: '100%', borderRadius: 5,
+            background: 'linear-gradient(90deg, #FF6B6B, #0EA5E9)',
+            width: `${progress}%`,
+            transition: 'width 0.5s ease',
+          }} />
+        </div>
+
+        {/* Exercise counter */}
+        <span style={{ fontSize: 13, fontWeight: 600, color: '#9CA3AF', flexShrink: 0 }}>
+          {currentExercise + 1}/{totalCount}
+        </span>
+
+        {/* Hearts */}
+        <div style={{ display: 'flex', gap: 2, flexShrink: 0 }}>
+          {[1, 2, 3].map(h => (
+            <span key={h} style={{
+              fontSize: 18,
+              opacity: h <= hearts ? 1 : 0.25,
+              transition: 'all 0.3s',
+              transform: h <= hearts ? 'scale(1)' : 'scale(0.8)',
+            }}>
+              {'\u2764\uFE0F'}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Main content area */}
+      <div style={{
+        flex: 1, display: 'flex', flexDirection: 'column',
+        overflow: 'auto', position: 'relative',
+      }}>
+        {/* Teacher character - small, top-right corner */}
+        <div style={{
+          position: 'absolute', top: 8, right: 12, zIndex: 5,
+          transition: 'all 0.3s',
+        }}>
+          <TeacherCharacter state={teacherState} size="small" />
+        </div>
+
+        {/* Last exercise indicator */}
+        {isLastExercise && (
+          <div style={{
+            textAlign: 'center', padding: '8px 0', fontSize: 13,
+            fontWeight: 700, color: '#FF6B6B',
+            animation: 'curriculum-fade-in 0.5s ease',
+          }}>
+            {t('lastExercise', uiLang)}
+          </div>
+        )}
+
+        {/* Streak display */}
+        {streak >= 3 && (
+          <div style={{
+            textAlign: 'center', padding: '4px 0', fontSize: 13,
+            fontWeight: 700, color: '#F59E0B',
+            animation: 'curriculum-fade-in 0.3s ease',
+          }}>
+            {'\uD83D\uDD25'} {streak} {t('streakMessage', uiLang)}
+          </div>
+        )}
+
+        {/* Exercise renderer */}
+        <div style={{
+          flex: 1, display: 'flex', flexDirection: 'column',
+          justifyContent: 'center', padding: '20px 20px 32px',
+        }}>
+          {exercise && (
+            <CurriculumExerciseRenderer
+              key={`${exercise.lessonId}-${exercise.index}-${currentExercise}`}
+              exercise={exercise}
+              onAnswer={handleAnswer}
+              uiLang={uiLang}
+              speak={speak}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Inline styles */}
+      <style>{`
+        @keyframes curriculum-fade-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
+}
