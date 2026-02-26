@@ -62,8 +62,8 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
         <XPBar />
       </div>
 
-      {/* Kids Alphabet Card - shown for kids age group */}
-      {progress.ageGroup === 'kids' && (
+      {/* Kids Alphabet Card - shown for kids curriculum level */}
+      {(!progress.curriculumLevel || progress.curriculumLevel <= 2) && (
         <GlassCard
           variant="strong"
           className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-pink-50/80 to-purple-50/80 dark:from-pink-950/30 dark:to-purple-950/30"
@@ -89,8 +89,8 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
         </GlassCard>
       )}
 
-      {/* Audio Learning Card - shown for adults */}
-      {progress.ageGroup !== 'kids' && (
+      {/* Audio Learning Card - shown for higher levels */}
+      {progress.curriculumLevel && progress.curriculumLevel > 2 && (
         <GlassCard
           variant="strong"
           className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-violet-50/80 to-indigo-50/80 dark:from-violet-950/30 dark:to-indigo-950/30"
@@ -125,7 +125,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-500/10 to-transparent rounded-bl-full" />
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-brand-500/25">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-brand-500/25">
               <BookOpen size={22} className="text-white" />
             </div>
             <div>
@@ -189,8 +189,8 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
 
       {/* Word of the Day */}
       {wordOfDay && (
-        <GlassCard variant="strong" className="!bg-gradient-to-br from-brand-50/80 to-purple-50/80 dark:from-brand-950/30 dark:to-purple-950/30 relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-purple-400 to-pink-400" />
+        <GlassCard variant="strong" className="!bg-gradient-to-br from-brand-50/80 to-emerald-50/80 dark:from-brand-950/30 dark:to-emerald-950/30 relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-emerald-400 to-teal-400" />
           <div className="flex items-center gap-2 mb-3">
             <span className="text-lg">✨</span>
             <h3 className="text-sm font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">

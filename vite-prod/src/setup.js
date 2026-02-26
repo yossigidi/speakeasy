@@ -1,5 +1,5 @@
 // Setup global variables that the production app code expects
-// Firebase initialization for Speakly English learning app
+// Firebase initialization for Speakli English learning app
 
 import { initializeApp } from 'firebase/app';
 import {
@@ -30,7 +30,10 @@ import {
   signInWithEmailAndPassword,
   signInAnonymously,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
+  OAuthProvider,
   signOut,
   onAuthStateChanged,
   updateProfile,
@@ -77,7 +80,10 @@ window.firebaseAuth = {
   signInWithEmailAndPassword,
   signInAnonymously,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
+  OAuthProvider,
   signOut,
   onAuthStateChanged,
   updateProfile

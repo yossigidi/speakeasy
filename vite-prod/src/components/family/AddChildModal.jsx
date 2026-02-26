@@ -218,7 +218,7 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
         <button
           onClick={handleSubmit}
           disabled={!name.trim() || (!editData && pin.length !== 4)}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-purple-600 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {editData ? t('save', uiLang) : t('addChild', uiLang)}
         </button>

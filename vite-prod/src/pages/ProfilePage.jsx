@@ -79,7 +79,7 @@ export default function ProfilePage({ onNavigate }) {
   const stats = [
     { icon: Zap, label: t('totalXP', uiLang), value: progress.xp, color: 'text-brand-500' },
     { icon: BookA, label: t('wordsLearned', uiLang), value: progress.totalWordsLearned || 0, color: 'text-emerald-500' },
-    { icon: BookOpen, label: t('lessonsCompleted', uiLang), value: progress.totalLessonsCompleted || 0, color: 'text-purple-500' },
+    { icon: BookOpen, label: t('lessonsCompleted', uiLang), value: progress.totalLessonsCompleted || 0, color: 'text-teal-500' },
     { icon: Flame, label: t('longestStreak', uiLang), value: `${progress.longestStreak || 0} ${t('days', uiLang)}`, color: 'text-orange-500' },
   ];
 
@@ -94,7 +94,7 @@ export default function ProfilePage({ onNavigate }) {
                 {activeChild.avatar}
               </div>
             ) : (
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-brand-400 to-purple-600 flex items-center justify-center text-3xl font-bold text-white shadow-lg">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-400 to-emerald-600 flex items-center justify-center text-3xl font-bold text-white shadow-lg">
                 {(user?.displayName || user?.email || '?')[0].toUpperCase()}
               </div>
             )}
@@ -245,12 +245,12 @@ export default function ProfilePage({ onNavigate }) {
                     })}
                     className={`flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all text-xs ${
                       isActive
-                        ? 'bg-indigo-100 dark:bg-indigo-900/40 ring-2 ring-indigo-500 font-bold'
+                        ? 'bg-teal-100 dark:bg-teal-900/40 ring-2 ring-teal-500 font-bold'
                         : 'bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                   >
                     <span className="text-lg">{meta.emoji}</span>
-                    <span className={isActive ? 'text-indigo-700 dark:text-indigo-300' : 'text-gray-500 dark:text-gray-400'}>
+                    <span className={isActive ? 'text-teal-700 dark:text-teal-300' : 'text-gray-500 dark:text-gray-400'}>
                       {uiLang === 'he' ? meta.nameHe : meta.name}
                     </span>
                   </button>

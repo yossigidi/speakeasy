@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================
-   Speakly - Custom Styles
+   Speakli - Custom Styles
    ============================================ */
 
 /* --- Base & Reset --- */
@@ -16,15 +16,14 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #ffffff;
   }
 
   body {
     font-family: 'Inter', 'Heebo', sans-serif;
     overscroll-behavior-y: contain;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    background: #ffffff;
+    margin: 0;
   }
 
   /* RTL support for Hebrew UI */
@@ -137,7 +136,7 @@
 
   /* --- Gradient Text Utility --- */
   .gradient-text {
-    background: linear-gradient(135deg, #4263eb 0%, #7c3aed 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #14b8a6 0%, #10b981 50%, #06b6d4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -160,18 +159,18 @@
   /* --- Primary Button --- */
   .btn-primary {
     @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200;
-    background: linear-gradient(135deg, #4263eb 0%, #5b4cdb 100%);
-    box-shadow: 0 4px 14px rgba(66, 99, 235, 0.35);
+    background: linear-gradient(135deg, #0d9488 0%, #10b981 100%);
+    box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
   }
 
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(66, 99, 235, 0.45);
+    box-shadow: 0 6px 20px rgba(13, 148, 136, 0.45);
   }
 
   .btn-primary:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(66, 99, 235, 0.3);
+    box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
   }
 
   /* --- Secondary Button --- */
@@ -179,13 +178,13 @@
     @apply px-6 py-3 rounded-xl font-semibold transition-all duration-200;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(66, 99, 235, 0.2);
-    color: #4263eb;
+    border: 1px solid rgba(13, 148, 136, 0.2);
+    color: #0d9488;
   }
 
   .btn-secondary:hover {
-    background: rgba(66, 99, 235, 0.08);
-    border-color: rgba(66, 99, 235, 0.35);
+    background: rgba(13, 148, 136, 0.08);
+    border-color: rgba(13, 148, 136, 0.35);
     transform: translateY(-1px);
   }
 }
@@ -471,7 +470,7 @@ body[dir="rtl"] .flip-card.flipped .flip-card-inner {
 }
 
 .toast-info {
-  background: rgba(66, 99, 235, 0.92);
+  background: rgba(20, 184, 166, 0.92);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
@@ -519,7 +518,7 @@ body[dir="rtl"] .flip-card.flipped .flip-card-inner {
 .progress-bar-fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #4263eb, #7c3aed);
+  background: linear-gradient(90deg, #14b8a6, #10b981);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -566,13 +565,13 @@ body[dir="rtl"] .flip-card.flipped .flip-card-inner {
 
 /* --- Level Badge Glow --- */
 .badge-glow {
-  box-shadow: 0 0 12px rgba(66, 99, 235, 0.4), 0 0 24px rgba(66, 99, 235, 0.2);
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.4), 0 0 24px rgba(20, 184, 166, 0.2);
   animation: badgePulse 2s ease-in-out infinite;
 }
 
 @keyframes badgePulse {
-  0%, 100% { box-shadow: 0 0 12px rgba(66, 99, 235, 0.4), 0 0 24px rgba(66, 99, 235, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(66, 99, 235, 0.6), 0 0 40px rgba(66, 99, 235, 0.3); }
+  0%, 100% { box-shadow: 0 0 12px rgba(20, 184, 166, 0.4), 0 0 24px rgba(20, 184, 166, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 0 0 40px rgba(20, 184, 166, 0.3); }
 }
 
 /* --- Skeleton Loading --- */
@@ -634,8 +633,8 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(66, 99, 235, 0.2);
-  border-color: #4263eb;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+  border-color: #14b8a6;
 }
 
 /* --- Tooltip --- */
@@ -993,8 +992,8 @@ select:focus {
 }
 
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(99, 102, 241, 0.3); }
-  50% { box-shadow: 0 0 24px rgba(99, 102, 241, 0.6), 0 0 48px rgba(99, 102, 241, 0.2); }
+  0%, 100% { box-shadow: 0 0 8px rgba(20, 184, 166, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(20, 184, 166, 0.6), 0 0 48px rgba(20, 184, 166, 0.2); }
 }
 
 /* Category bucket drop animation */

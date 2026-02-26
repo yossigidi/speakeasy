@@ -145,6 +145,14 @@ export function ChildAuthProvider({ children }) {
       const docSnap = await window.firestore.getDoc(docRef);
 
       if (!docSnap.exists()) {
+        console.warn('parentChildren doc not found for code:', familyCode);
+        // Also try lowercase in case of mismatch
+        const lowerRef = window.firestore.doc(window.db, 'parentChildren', familyCode.toLowerCase());
+        const lowerSnap = await window.firestore.getDoc(lowerRef);
+        if (lowerSnap.exists()) {
+          const data = lowerSnap.data();
+          return { success: true, children: data.children || [] };
+        }
         return { success: false, error: 'invalidFamilyCode' };
       }
 
@@ -152,7 +160,7 @@ export function ChildAuthProvider({ children }) {
       return { success: true, children: data.children || [] };
     } catch (error) {
       console.error('Fetch children error:', error);
-      return { success: false, error: 'fetchFailed' };
+      return { success: false, error: 'authFailed' };
     }
   }, [ensureAuth]);
 

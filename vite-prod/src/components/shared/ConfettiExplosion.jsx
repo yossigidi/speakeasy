@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const COLORS = ['#4263eb', '#7c3aed', '#ec4899', '#f59e0b', '#10b981', '#ef4444', '#06b6d4'];
+const COLORS = ['#14b8a6', '#10b981', '#06b6d4', '#f59e0b', '#ec4899', '#ef4444', '#0d9488'];
 
 export default function ConfettiExplosion({ trigger, duration = 2000 }) {
   const [pieces, setPieces] = useState([]);

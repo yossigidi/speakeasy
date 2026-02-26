@@ -39,6 +39,8 @@ export default function ChildLoginPage({ onBack }) {
         setChildrenList(result.children);
         setStep(2);
       }
+    } else if (result.error === 'authFailed') {
+      setError(uiLang === 'he' ? 'שגיאת חיבור. נסה שוב.' : 'Connection error. Try again.');
     } else {
       setError(t('invalidFamilyCode', uiLang));
     }
@@ -95,7 +97,7 @@ export default function ChildLoginPage({ onBack }) {
   const isRTL = dir === 'rtl';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950 flex flex-col">
+    <div className="min-h-[100dvh] bg-gradient-to-br from-teal-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-teal-950 flex flex-col">
       {/* Top bar */}
       <div className="p-4">
         <button
@@ -111,7 +113,7 @@ export default function ChildLoginPage({ onBack }) {
         {/* Step 1: Family Code */}
         {step === 1 && (
           <div className="w-full max-w-sm animate-fade-in text-center">
-            <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-6 shadow-xl">
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center mb-6 shadow-xl">
               <span className="text-3xl">👨‍👩‍👧‍👦</span>
             </div>
             <h2 className="text-2xl font-bold mb-2">{t('enterFamilyCode', uiLang)}</h2>
@@ -136,7 +138,7 @@ export default function ChildLoginPage({ onBack }) {
             <button
               onClick={handleCodeSubmit}
               disabled={familyCode.length !== 6 || loading}
-              className="w-full mt-6 py-4 rounded-2xl font-bold text-white text-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg shadow-purple-500/25 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
+              className="w-full mt-6 py-4 rounded-2xl font-bold text-white text-lg bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 shadow-lg shadow-teal-500/25 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
             >
               {loading ? t('loading', uiLang) : t('continue', uiLang)}
             </button>

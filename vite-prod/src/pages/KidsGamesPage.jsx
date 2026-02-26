@@ -1078,7 +1078,7 @@ function GameSelector({ onSelectGame, onBack }) {
 export default function KidsGamesPage({ onBack }) {
   const { addXP, progress } = useUserProgress();
   const [selectedGame, setSelectedGame] = useState(null);
-  const childLevel = progress.childLevel || 1;
+  const childLevel = progress.curriculumLevel || progress.childLevel || 1;
 
   // Preload all game instruction audio on mount for seamless playback
   useEffect(() => {

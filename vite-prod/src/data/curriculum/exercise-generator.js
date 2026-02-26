@@ -1,4 +1,4 @@
-// Exercise Generation Engine for Speakly Kids English Learning App
+// Exercise Generation Engine for Speakli Kids English Learning App
 // Takes a unit's word/sentence data and a lesson definition, generates exercises.
 //
 // Unit data shape:

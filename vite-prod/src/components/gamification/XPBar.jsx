@@ -11,7 +11,7 @@ export default function XPBar({ compact = false }) {
         <Zap size={14} className="text-brand-500" fill="currentColor" />
         <div className="flex-1 h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-brand-500 to-purple-500 transition-all duration-700"
+            className="h-full rounded-full bg-gradient-to-r from-brand-500 to-emerald-500 transition-all duration-700"
             style={{ width: `${levelInfo.progressPercent}%` }}
           />
         </div>
@@ -26,7 +26,7 @@ export default function XPBar({ compact = false }) {
     <div className="glass-card-subtle p-3">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-emerald-600 flex items-center justify-center">
             <span className="text-xs font-bold text-white">{levelInfo.level}</span>
           </div>
           <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
@@ -42,7 +42,7 @@ export default function XPBar({ compact = false }) {
       </div>
       <div className="h-2.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-brand-500 to-purple-500 transition-all duration-700 ease-out"
+          className="h-full rounded-full bg-gradient-to-r from-brand-500 to-emerald-500 transition-all duration-700 ease-out"
           style={{ width: `${levelInfo.progressPercent}%` }}
         />
       </div>

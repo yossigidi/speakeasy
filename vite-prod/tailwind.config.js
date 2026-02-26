@@ -9,16 +9,16 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#f0f4ff',
-          100: '#dbe4ff',
-          200: '#bac8ff',
-          300: '#91a7ff',
-          400: '#748ffc',
-          500: '#5c7cfa',
-          600: '#4c6ef5',
-          700: '#4263eb',
-          800: '#3b5bdb',
-          900: '#364fc7',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
         },
         accent: {
           50: '#fff3e0',
@@ -51,8 +51,8 @@ export default {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(92, 124, 250, 0.3)' },
-          '50%': { boxShadow: '0 0 20px rgba(92, 124, 250, 0.6)' },
+          '0%, 100%': { boxShadow: '0 0 5px rgba(20, 184, 166, 0.3)' },
+          '50%': { boxShadow: '0 0 20px rgba(20, 184, 166, 0.6)' },
         },
         slideUp: {
           from: { transform: 'translateY(20px)', opacity: '0' },

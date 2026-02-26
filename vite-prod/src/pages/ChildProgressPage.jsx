@@ -227,6 +227,7 @@ export default function ChildProgressPage({ childId, onBack }) {
           stats: {
             level: child.level || 1,
             cefrLevel: child.cefrLevel || 'A1',
+            curriculumLevel: child.curriculumLevel || child.childLevel || 1,
             xp: child.xp || 0,
             totalWordsLearned: child.totalWordsLearned || 0,
             totalLessonsCompleted: child.totalLessonsCompleted || 0,
@@ -297,7 +298,7 @@ export default function ChildProgressPage({ childId, onBack }) {
             {/* Level progress bar */}
             <div className="mt-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500"
                 style={{ width: `${levelInfo.progressPercent}%` }}
               />
             </div>
@@ -432,9 +433,9 @@ export default function ChildProgressPage({ childId, onBack }) {
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600 dark:text-gray-400">CEFR</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">{uiLang === 'he' ? 'רמה' : 'Level'}</span>
             <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
-              {child.cefrLevel || 'A1'}
+              {child.curriculumLevel || child.childLevel || 1}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -450,13 +451,13 @@ export default function ChildProgressPage({ childId, onBack }) {
       <GlassCard variant="strong" className="!p-4">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <Brain size={18} className="text-purple-500" />
+            <Brain size={18} className="text-teal-500" />
             {t('aiAdvice', uiLang)}
           </h3>
           <button
             onClick={fetchAdvice}
             disabled={loadingAdvice}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs font-bold hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs font-bold hover:bg-teal-100 dark:hover:bg-teal-900/50 transition-colors disabled:opacity-50"
           >
             <RefreshCw size={12} className={loadingAdvice ? 'animate-spin' : ''} />
             {loadingAdvice

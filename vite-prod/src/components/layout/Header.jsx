@@ -55,7 +55,7 @@ export default function Header({ title, showBack = false, onBack, showStats = tr
                   {progress.xp}
                 </span>
               </div>
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-emerald-600 flex items-center justify-center">
                 <span className="text-xs font-bold text-white">{levelInfo.level}</span>
               </div>
             </div>

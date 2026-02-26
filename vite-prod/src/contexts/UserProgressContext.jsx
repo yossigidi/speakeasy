@@ -8,6 +8,7 @@ const DEFAULT_PROGRESS = {
   xp: 0,
   level: 1,
   cefrLevel: 'A1',
+  curriculumLevel: 1,
   streak: 0,
   lastActiveDate: null,
   dailyGoalMinutes: 10,
@@ -79,6 +80,24 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     return unsub;
   }, [user]);
+
+  // Ensure parentChildren doc exists when familyCode + children are loaded
+  useEffect(() => {
+    if (!user || !familyCode || childrenList.length === 0) return;
+    const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
+    window.firestore.getDoc(pcRef).then(snap => {
+      if (!snap.exists()) {
+        const entries = childrenList.map(c => ({
+          childId: c.id,
+          name: c.name,
+          avatar: c.avatar,
+          avatarColor: c.avatarColor,
+        }));
+        window.firestore.setDoc(pcRef, { children: entries, parentUid: user.uid })
+          .catch(e => console.warn('Auto-sync parentChildren failed:', e));
+      }
+    }).catch(() => {});
+  }, [user, familyCode, childrenList]);
 
   // Subscribe to children via childProfiles (by childrenIds from user doc)
   useEffect(() => {
@@ -237,9 +256,20 @@ export function UserProgressProvider({ children: reactChildren }) {
       ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
       : window.firestore.doc(window.db, 'users', user.uid);
 
+    const cefrToLevel = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
+
     const unsub = window.firestore.onSnapshot(docRef, (snap) => {
       if (snap.exists()) {
-        setProgress({ ...DEFAULT_PROGRESS, ...snap.data() });
+        const data = snap.data();
+        // Backward-compat migration: cefrLevel → curriculumLevel
+        if (data.cefrLevel && !data.curriculumLevel) {
+          const mapped = cefrToLevel[data.cefrLevel] || 1;
+          data.curriculumLevel = mapped;
+          // Persist the migration
+          window.firestore.setDoc(docRef, { curriculumLevel: mapped }, { merge: true })
+            .catch(e => console.warn('curriculumLevel migration failed:', e));
+        }
+        setProgress({ ...DEFAULT_PROGRESS, ...data });
       } else if (!activeChildId) {
         // Create initial parent user doc
         window.firestore.setDoc(docRef, {
@@ -341,8 +371,23 @@ export function UserProgressProvider({ children: reactChildren }) {
       { merge: true }
     );
     setFamilyCode(code);
+
+    // Also create/update parentChildren document so child login works
+    if (childrenList.length > 0) {
+      const childrenEntries = childrenList.map(c => ({
+        childId: c.id,
+        name: c.name,
+        avatar: c.avatar,
+        avatarColor: c.avatarColor,
+      }));
+      await window.firestore.setDoc(
+        window.firestore.doc(window.db, 'parentChildren', code),
+        { children: childrenEntries, parentUid: user.uid }
+      );
+    }
+
     return code;
-  }, [user]);
+  }, [user, childrenList]);
 
   const switchToChild = useCallback((childId) => {
     setActiveChildId(childId);
@@ -413,6 +458,7 @@ export function UserProgressProvider({ children: reactChildren }) {
         streakFreezes: 0,
         ageGroup,
         childLevel,
+        curriculumLevel: childLevel,
         onboardingComplete: true,
         lettersCompleted: [],
       }

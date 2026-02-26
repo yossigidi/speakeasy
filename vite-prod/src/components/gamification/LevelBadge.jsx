@@ -15,7 +15,7 @@ export default function LevelBadge({ size = 'md' }) {
   const s = sizes[size];
 
   return (
-    <div className={`${s.outer} rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center badge-glow`}>
+    <div className={`${s.outer} rounded-full bg-gradient-to-br from-brand-500 to-emerald-600 flex items-center justify-center badge-glow`}>
       <span className={`${s.text} font-bold text-white`}>{levelInfo.level}</span>
     </div>
   );

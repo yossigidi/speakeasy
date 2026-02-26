@@ -54,6 +54,15 @@ function AppContent() {
   const [profileSelected, setProfileSelected] = useState(false);
   const [progressChildId, setProgressChildId] = useState(null);
   const isPopstateRef = useRef(false);
+  const prevUserRef = useRef(user?.uid);
+
+  // Reset profile picker when user changes (logout/login)
+  useEffect(() => {
+    if (user?.uid !== prevUserRef.current) {
+      setProfileSelected(false);
+      prevUserRef.current = user?.uid;
+    }
+  }, [user]);
 
   // Check URL for childJoin parameter
   useEffect(() => {
@@ -82,12 +91,25 @@ function AppContent() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Dynamic body background: dark for auth/profile-picker, white for app
+  useEffect(() => {
+    const showingAuth = !user || (user && !progress.onboardingComplete);
+    const showingPicker = !profileSelected && children.length > 0;
+    if (showingAuth || showingPicker) {
+      document.body.style.background = '#030712';
+      document.documentElement.style.background = '#030712';
+    } else {
+      document.body.style.background = '#ffffff';
+      document.documentElement.style.background = '#ffffff';
+    }
+  }, [user, progress.onboardingComplete, profileSelected, children.length]);
+
   // Show loading while auth initializes
   if (authLoading || (user && progressLoading)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)' }}>
         <div className="text-center">
-          <h1 className="text-3xl font-bold gradient-text mb-4">Speakli</h1>
+          <img src="/icons/icon-192.png" alt="Speakli" style={{ width: '64px', height: '64px', borderRadius: '16px', margin: '0 auto 16px', boxShadow: '0 8px 32px rgba(20,184,166,0.3)' }} />
           <LoadingSpinner />
         </div>
       </div>
@@ -118,7 +140,7 @@ function AppContent() {
   // Show onboarding if not authenticated or not completed
   if (!user || (user && !progress.onboardingComplete)) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      <div style={{ minHeight: '100dvh', background: '#030712' }}>
         <OnboardingPage
           onComplete={() => {
             setProfileSelected(false);
@@ -224,7 +246,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
       <ChildModeBanner />
       {showHeader && (
         <Header
@@ -290,9 +312,9 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
       {/* Child banner with logout */}
-      <div className={`sticky top-0 z-40 bg-gradient-to-r ${childUser.avatarColor || 'from-indigo-400 to-purple-500'} px-4 py-2 flex items-center justify-between shadow-md`}>
+      <div className={`sticky top-0 z-40 bg-gradient-to-r ${childUser.avatarColor || 'from-teal-400 to-emerald-500'} px-4 py-2 flex items-center justify-between shadow-md`}>
         <div className="flex items-center gap-2">
           <span className="text-lg">{childUser.avatar}</span>
           <span className="text-white font-semibold text-sm">

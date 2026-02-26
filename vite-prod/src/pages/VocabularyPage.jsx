@@ -42,14 +42,14 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
             <span className="px-2.5 py-0.5 text-xs rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 font-medium">
               {word.partOfSpeech}
             </span>
-            <span className="px-2.5 py-0.5 text-xs rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium">
+            <span className="px-2.5 py-0.5 text-xs rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 font-medium">
               {word.cefrLevel}
             </span>
           </div>
         </div>
 
         {/* Translation & Definition */}
-        <div className="bg-gradient-to-r from-brand-50 to-purple-50 dark:from-brand-950/30 dark:to-purple-950/30 rounded-2xl p-4">
+        <div className="bg-gradient-to-r from-brand-50 to-emerald-50 dark:from-brand-950/30 dark:to-emerald-950/30 rounded-2xl p-4">
           <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400 text-center mb-1">{word.translation}</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300 text-center">{word.definition}</p>
           {word.definitionHe && (
@@ -291,7 +291,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           </div>
 
           <GlassCard variant="strong" className="text-center py-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-purple-400 to-pink-400" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-emerald-400 to-teal-400" />
 
             <button
               onClick={() => speakWordPair(word.word, word.translation)}
@@ -392,8 +392,8 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 
           {/* Synonyms if any */}
           {word.synonyms?.length > 0 && (
-            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-4">
-              <p className="text-xs font-semibold text-purple-500 uppercase tracking-wider mb-2">
+            <div className="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-4">
+              <p className="text-xs font-semibold text-teal-500 uppercase tracking-wider mb-2">
                 {isHe ? 'מילים דומות' : 'Similar Words'}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -401,7 +401,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                   <button
                     key={i}
                     onClick={() => speak(syn)}
-                    className="px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full text-sm font-medium text-purple-700 dark:text-purple-300 shadow-sm"
+                    className="px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full text-sm font-medium text-teal-700 dark:text-teal-300 shadow-sm"
                   >
                     {syn}
                   </button>
@@ -498,7 +498,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
       {phase === 'practice' && (
         <div className="space-y-4 animate-fade-in">
           <div className="text-center py-2">
-            <p className="text-xs uppercase tracking-widest text-purple-500 font-semibold mb-1">
+            <p className="text-xs uppercase tracking-widest text-teal-500 font-semibold mb-1">
               {isHe ? 'תרגול' : 'Practice'}
             </p>
             <h3 className="text-lg text-gray-600 dark:text-gray-300 mb-2">
@@ -1047,7 +1047,7 @@ export default function VocabularyPage() {
       {/* Quick Learn - Random 5 Words (level-appropriate) */}
       <GlassCard
         variant="strong"
-        className="!bg-gradient-to-r from-brand-50 to-purple-50 dark:from-brand-950/30 dark:to-purple-950/30 border-brand-200 dark:border-brand-800 cursor-pointer hover:shadow-lg transition-all"
+        className="!bg-gradient-to-r from-brand-50 to-emerald-50 dark:from-brand-950/30 dark:to-emerald-950/30 border-brand-200 dark:border-brand-800 cursor-pointer hover:shadow-lg transition-all"
         onClick={() => {
           // Prioritize words at user's current level, mix in some from lower levels
           const currentLevelWords = availableWords.filter(w => w.cefrLevel === userLevel);
@@ -1064,7 +1064,7 @@ export default function VocabularyPage() {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-400 to-purple-500 flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-400 to-emerald-500 flex items-center justify-center shadow-lg">
               <Sparkles size={22} className="text-white" />
             </div>
             <div>
@@ -1121,7 +1121,7 @@ export default function VocabularyPage() {
           <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'הרמה שלך' : 'Your Level'}</p>
         </div>
         <div className="text-center p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
-          <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{ALL_WORDS.length}</p>
+          <p className="text-2xl font-bold text-teal-600 dark:text-teal-400">{ALL_WORDS.length}</p>
           <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'סה"כ' : 'Total'}</p>
         </div>
       </div>

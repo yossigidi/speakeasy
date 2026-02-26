@@ -660,7 +660,11 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       }, 500);
       return () => clearTimeout(t);
     } else {
-      speak(current.word, { rate: 0.7 });
+      // Small delay so previous audio is fully stopped
+      const t = setTimeout(() => {
+        speak(current.word, { rate: 0.7 });
+      }, 300);
+      return () => clearTimeout(t);
     }
   }, [round]);
 
@@ -670,19 +674,9 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
     playTap();
 
     const isCorrect = letter === current.missingLetter;
-    if (isCorrect) {
-      playCorrect();
-      setScore(s => s + 1);
-      playSequence([
-        { text: current.word, lang: 'en-US', rate: 0.75 },
-        { pause: 100 },
-        { text: current.translation, lang: 'he' },
-      ], speak);
-    } else {
-      playWrong();
-    }
 
-    setTimeout(() => {
+    const advanceToNext = () => {
+      stopAllAudio();
       setSelectedLetter(null);
       if (round + 1 >= TOTAL_ROUNDS) {
         setGameOver(true);
@@ -690,7 +684,35 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       } else {
         setRound(r => r + 1);
       }
-    }, 1000);
+    };
+
+    if (isCorrect) {
+      playCorrect();
+      setScore(s => s + 1);
+      // Play English word, short pause, then Hebrew translation
+      // Wait for audio to finish before advancing
+      let audioDone = false;
+      let timerDone = false;
+      const tryAdvance = () => {
+        if (audioDone && timerDone) advanceToNext();
+      };
+      playSequence([
+        { text: current.word, lang: 'en-US', rate: 0.75 },
+        { pause: 500 },
+        { text: current.translation, lang: 'he' },
+      ], speak, () => {
+        audioDone = true;
+        tryAdvance();
+      });
+      // Minimum visual delay of 1.5s so user sees the green feedback
+      setTimeout(() => {
+        timerDone = true;
+        tryAdvance();
+      }, 1500);
+    } else {
+      playWrong();
+      setTimeout(advanceToNext, 1000);
+    }
   };
 
   if (gameOver) {

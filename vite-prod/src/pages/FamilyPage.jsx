@@ -72,7 +72,7 @@ export default function FamilyPage({ onNavigate }) {
     if (code && navigator.share) {
       try {
         await navigator.share({
-          title: 'Speakly',
+          title: 'Speakli',
           text: `${t('familyCodeDesc', uiLang)}: ${code}`,
           url: `${window.location.origin}?childJoin=${code}`,
         });
@@ -146,7 +146,7 @@ export default function FamilyPage({ onNavigate }) {
             </button>
             <button
               onClick={handleShareCode}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 text-sm font-medium hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 text-sm font-medium hover:bg-teal-100 dark:hover:bg-teal-900/40 transition-colors"
             >
               <Share2 size={16} />
               {t('shareCode', uiLang)}
@@ -230,7 +230,7 @@ export default function FamilyPage({ onNavigate }) {
               <div className="flex gap-1.5">
                 {[1, 2, 3, 4].map(lvl => {
                   const info = LEVEL_INFO[lvl];
-                  const isActive = (child.childLevel || 1) === lvl;
+                  const isActive = (child.curriculumLevel || child.childLevel || 1) === lvl;
                   return (
                     <button
                       key={lvl}
@@ -255,7 +255,7 @@ export default function FamilyPage({ onNavigate }) {
           {/* Play Button */}
           <button
             onClick={() => handlePlay(child.id)}
-            className="w-full py-2.5 bg-gradient-to-r from-brand-500/10 to-purple-500/10 dark:from-brand-500/20 dark:to-purple-500/20 border-t border-gray-200/50 dark:border-gray-700/50 flex items-center justify-center gap-2 text-brand-600 dark:text-brand-400 font-semibold text-sm hover:from-brand-500/20 hover:to-purple-500/20 transition-all"
+            className="w-full py-2.5 bg-gradient-to-r from-brand-500/10 to-emerald-500/10 dark:from-brand-500/20 dark:to-emerald-500/20 border-t border-gray-200/50 dark:border-gray-700/50 flex items-center justify-center gap-2 text-brand-600 dark:text-brand-400 font-semibold text-sm hover:from-brand-500/20 hover:to-emerald-500/20 transition-all"
           >
             <Play size={16} fill="currentColor" />
             {t('playAs', uiLang)} {child.name}
@@ -414,7 +414,7 @@ export default function FamilyPage({ onNavigate }) {
                 <button
                   onClick={handleResetPin}
                   disabled={newPin.length !== 4}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-purple-600 text-white font-bold shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 text-white font-bold shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {t('resetPin', uiLang)}
                 </button>

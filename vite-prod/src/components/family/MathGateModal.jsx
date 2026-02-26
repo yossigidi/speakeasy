@@ -90,7 +90,7 @@ export default function MathGateModal({ isOpen, onClose, onSuccess }) {
         <button
           onClick={handleCheck}
           disabled={!answer}
-          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-purple-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {t('checkAnswer', uiLang)}
         </button>

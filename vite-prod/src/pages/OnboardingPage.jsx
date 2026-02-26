@@ -281,29 +281,43 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* Step 0 — Auth Screen (Welcome + Login/Register) */
   const renderAuth = () => (
-    <div className="flex flex-col items-center justify-center min-h-[100vh] text-center px-6 pt-0" style={{ background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)' }}>
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      padding: '24px',
+      paddingTop: 'calc(24px + env(safe-area-inset-top, 0px))',
+      paddingBottom: 'calc(24px + env(safe-area-inset-bottom, 0px))',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+    }}>
       {/* Glow effect behind icon */}
-      <div className="relative mb-6">
+      <div className="relative" style={{ marginBottom: '20px', flexShrink: 0 }}>
         <div className="absolute inset-0 w-32 h-32 mx-auto rounded-full" style={{ background: 'radial-gradient(circle, rgba(13,148,136,0.35) 0%, transparent 70%)', filter: 'blur(20px)', transform: 'scale(1.5)' }} />
-        <img src="/icons/icon-192.png" alt="Speakli" className="relative w-28 h-28 rounded-[28px] shadow-2xl shadow-teal-500/20" />
+        <img src="/icons/icon-192.png" alt="Speakli" style={{ position: 'relative', width: 'min(28vw, 112px)', height: 'min(28vw, 112px)', borderRadius: '24px', boxShadow: '0 16px 48px rgba(20,184,166,0.25)' }} />
       </div>
 
-      <h1 className="text-4xl font-black mb-1" style={{ background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      <h1 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: 900, marginBottom: '2px', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
         Speakli
       </h1>
-      <p className="text-base font-medium mb-8" style={{ background: 'linear-gradient(135deg, #14b8a6, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      <p style={{ fontSize: 'clamp(14px, 3.5vw, 16px)', fontWeight: 500, marginBottom: 'clamp(16px, 4vh, 32px)', background: 'linear-gradient(135deg, #14b8a6, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
         {uiLang === 'he' ? 'למד אנגלית בקלות' : 'Learn English the Easy Way'}
       </p>
 
-      <div className="w-full max-w-sm flex flex-col gap-3">
+      <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0 }}>
         {/* Apple Sign-In */}
         <button
           onClick={handleApple}
           disabled={authLoading}
-          className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl font-semibold text-white active:scale-[0.97] transition-all disabled:opacity-50"
-          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)' }}
+          className="active:scale-[0.97] transition-all disabled:opacity-50"
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: 'clamp(12px, 2.5vh, 14px) 0', borderRadius: '16px', fontWeight: 600, color: '#fff', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', cursor: 'pointer', fontSize: 'clamp(14px, 3.5vw, 16px)' }}
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
           </svg>
           {t('signInApple', uiLang)}
@@ -313,10 +327,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         <button
           onClick={handleGoogle}
           disabled={authLoading}
-          className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl font-semibold text-white active:scale-[0.97] transition-all disabled:opacity-50"
-          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)' }}
+          className="active:scale-[0.97] transition-all disabled:opacity-50"
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: 'clamp(12px, 2.5vh, 14px) 0', borderRadius: '16px', fontWeight: 600, color: '#fff', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', cursor: 'pointer', fontSize: 'clamp(14px, 3.5vw, 16px)' }}
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
+          <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -326,22 +340,22 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         </button>
 
         {/* Divider */}
-        <div className="flex items-center gap-3 my-1">
-          <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
-          <span className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>{t('orDivider', uiLang)}</span>
-          <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '4px 0' }}>
+          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.3)' }}>{t('orDivider', uiLang)}</span>
+          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
         </div>
 
         {/* Email form */}
-        <form onSubmit={handleEmailSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleEmailSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {authMode === 'signup' && (
             <input
               type="text"
               placeholder={t('displayName', uiLang)}
               value={displayName}
               onChange={e => setDisplayName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl outline-none transition-all text-white placeholder-white/30"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', outline: 'none', color: '#fff', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '16px', boxSizing: 'border-box' }}
+              className="placeholder-white/30"
             />
           )}
           <input
@@ -350,10 +364,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl outline-none transition-all text-white placeholder-white/30"
-            style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+            style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', outline: 'none', color: '#fff', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '16px', boxSizing: 'border-box' }}
+            className="placeholder-white/30"
           />
-          <div className="relative">
+          <div style={{ position: 'relative' }}>
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder={t('password', uiLang)}
@@ -361,28 +375,27 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               onChange={e => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-4 py-3 rounded-xl outline-none transition-all text-white placeholder-white/30"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', outline: 'none', color: '#fff', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '16px', boxSizing: 'border-box' }}
+              className="placeholder-white/30"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 -translate-y-1/2 transition-colors"
-              style={{ color: 'rgba(255,255,255,0.3)', [isRTL ? 'left' : 'right']: '12px' }}
+              style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer', padding: '4px', [isRTL ? 'left' : 'right']: '12px' }}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
 
           {authError && (
-            <p className="text-sm text-red-400 text-center">{authError}</p>
+            <p style={{ fontSize: '14px', color: '#f87171', textAlign: 'center', margin: 0 }}>{authError}</p>
           )}
 
           <button
             type="submit"
             disabled={authLoading}
-            className="w-full py-3.5 rounded-2xl font-bold text-white active:scale-[0.97] transition-all disabled:opacity-50"
-            style={{ background: 'linear-gradient(135deg, #0d9488, #10b981)', boxShadow: '0 8px 32px rgba(13,148,136,0.35)' }}
+            className="active:scale-[0.97] transition-all disabled:opacity-50"
+            style={{ width: '100%', padding: 'clamp(12px, 2.5vh, 14px) 0', borderRadius: '16px', fontWeight: 700, color: '#fff', background: 'linear-gradient(135deg, #0d9488, #10b981)', boxShadow: '0 8px 32px rgba(13,148,136,0.35)', border: 'none', cursor: 'pointer', fontSize: 'clamp(14px, 3.5vw, 16px)' }}
           >
             {authLoading
               ? t('loading', uiLang)
@@ -393,13 +406,12 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         </form>
 
         {/* Toggle auth mode */}
-        <p className="text-center text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
+        <p style={{ textAlign: 'center', fontSize: '14px', color: 'rgba(255,255,255,0.4)', margin: 0 }}>
           {authMode === 'signup' ? t('alreadyHaveAccount', uiLang) : t('dontHaveAccount', uiLang)}{' '}
           <button
             type="button"
             onClick={() => { setAuthMode(m => m === 'signup' ? 'signin' : 'signup'); setAuthError(''); }}
-            className="font-semibold hover:underline"
-            style={{ color: '#14b8a6' }}
+            style={{ fontWeight: 600, color: '#14b8a6', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', fontSize: '14px' }}
           >
             {authMode === 'signup' ? t('signIn', uiLang) : t('signUp', uiLang)}
           </button>
@@ -408,8 +420,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         {/* Child login link */}
         <button
           onClick={onChildLogin}
-          className="mt-2 text-sm transition-colors"
-          style={{ color: 'rgba(255,255,255,0.3)' }}
+          style={{ marginTop: '8px', fontSize: '14px', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer' }}
         >
           {t('loginAsChild', uiLang)}
         </button>

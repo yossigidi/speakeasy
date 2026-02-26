@@ -46,8 +46,8 @@ export default function DailyGoalRing({ size = 80 }) {
           />
           <defs>
             <linearGradient id="goalGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={isComplete ? '#10b981' : '#4263eb'} />
-              <stop offset="100%" stopColor={isComplete ? '#06b6d4' : '#7c3aed'} />
+              <stop offset="0%" stopColor={isComplete ? '#10b981' : '#14b8a6'} />
+              <stop offset="100%" stopColor={isComplete ? '#06b6d4' : '#10b981'} />
             </linearGradient>
           </defs>
         </svg>

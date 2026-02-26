@@ -15,9 +15,33 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  // Handle redirect result (for Apple Sign-In on iOS/Safari)
+  useEffect(() => {
+    window.firebaseAuth.getRedirectResult(window.auth).catch((err) => {
+      if (err.code !== 'auth/null-user') {
+        console.warn('Redirect sign-in error:', err);
+      }
+    });
+  }, []);
+
   const signInWithGoogle = async () => {
     const provider = new window.firebaseAuth.GoogleAuthProvider();
     return window.firebaseAuth.signInWithPopup(window.auth, provider);
+  };
+
+  const signInWithApple = async () => {
+    const provider = new window.firebaseAuth.OAuthProvider('apple.com');
+    provider.addScope('email');
+    provider.addScope('name');
+    try {
+      return await window.firebaseAuth.signInWithPopup(window.auth, provider);
+    } catch (err) {
+      // Popup blocked (common on iOS Safari) — fall back to redirect
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+        return window.firebaseAuth.signInWithRedirect(window.auth, provider);
+      }
+      throw err;
+    }
   };
 
   const signUpWithEmail = async (email, password, displayName) => {
@@ -40,6 +64,7 @@ export function AuthProvider({ children }) {
     user,
     loading,
     signInWithGoogle,
+    signInWithApple,
     signUpWithEmail,
     signInWithEmail,
     signOut,

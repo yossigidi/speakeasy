@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakly-v16';
-const STATIC_CACHE = 'speakly-static-v16';
+const CACHE_NAME = 'speakli-v18';
+const STATIC_CACHE = 'speakli-static-v18';
 
 const urlsToCache = [
   '/',
@@ -11,7 +11,7 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Speakly: Caching app shell');
+      console.log('Speakli: Caching app shell');
       return cache.addAll(urlsToCache);
     }).then(() => self.skipWaiting())
   );
@@ -25,7 +25,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (!currentCaches.includes(cacheName)) {
-            console.log('Speakly: Deleting old cache:', cacheName);
+            console.log('Speakli: Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -85,14 +85,14 @@ self.addEventListener('push', event => {
   } catch (e) {
     data = { body: event.data ? event.data.text() : 'Time to practice English!' };
   }
-  const title = data.title || 'Speakly';
+  const title = data.title || 'Speakli';
   const options = {
     body: data.body || 'Time to practice English!',
     icon: '/icons/icon-192.png',
     badge: '/icons/icon-72.png',
     dir: data.lang === 'he' ? 'rtl' : 'ltr',
     lang: data.lang || 'he',
-    tag: data.tag || 'speakly-push',
+    tag: data.tag || 'speakli-push',
     vibrate: [200, 100, 200]
   };
   event.waitUntil(self.registration.showNotification(title, options));

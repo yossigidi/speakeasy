@@ -357,7 +357,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         <KidsStatsBar progress={progress} uiLang={uiLang} />
 
         {/* Level badge */}
-        <LevelBadge childLevel={progress.childLevel || 1} uiLang={uiLang} />
+        <LevelBadge childLevel={progress.curriculumLevel || progress.childLevel || 1} uiLang={uiLang} />
 
         {/* Progress bar for letters */}
         <div className="relative">

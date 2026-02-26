@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Flame } from 'lucide-react';
+import { Zap, Flame, Crown, Star } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -20,41 +20,197 @@ export default function ProfilePickerPage({ onSelect }) {
     onSelect();
   };
 
-  // Parent display info
   const parentName = user?.displayName || user?.email?.split('@')[0] || t('parentProfile', uiLang);
   const parentInitial = parentName.charAt(0).toUpperCase();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950 flex flex-col items-center justify-center px-6 py-12">
-      {/* Logo */}
-      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center mb-4 shadow-xl shadow-purple-500/20">
-        <span className="text-2xl font-black text-white">SE</span>
+    <div style={{
+      minHeight: '100dvh',
+      background: 'linear-gradient(180deg, #030712 0%, #0f172a 50%, #0d3b3a 100%)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '48px 24px',
+      paddingTop: 'max(48px, env(safe-area-inset-top, 48px))',
+      paddingBottom: 'max(48px, env(safe-area-inset-bottom, 48px))',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Background glow orbs */}
+      <div style={{
+        position: 'absolute',
+        top: '-20%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '500px',
+        height: '500px',
+        background: 'radial-gradient(circle, rgba(20,184,166,0.12) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '-10%',
+        right: '-10%',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Icon with glow */}
+      <div style={{ position: 'relative', marginBottom: '24px' }}>
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '120px',
+          height: '120px',
+          background: 'radial-gradient(circle, rgba(20,184,166,0.3) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }} />
+        <img
+          src="/icons/icon-192.png"
+          alt="Speakli"
+          style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '20px',
+            position: 'relative',
+            zIndex: 1,
+            boxShadow: '0 8px 32px rgba(20,184,166,0.3)',
+          }}
+        />
       </div>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+
+      {/* Title */}
+      <h1 style={{
+        fontSize: '26px',
+        fontWeight: 700,
+        color: '#ffffff',
+        marginBottom: '4px',
+        textAlign: 'center',
+      }}>
         {t('whoIsLearning', uiLang)}
       </h1>
-      <p className="text-sm text-gray-400 dark:text-gray-500 mb-8">Speakly</p>
+      <p style={{
+        fontSize: '14px',
+        color: 'rgba(255,255,255,0.4)',
+        marginBottom: '36px',
+        letterSpacing: '2px',
+        textTransform: 'uppercase',
+      }}>
+        Speakli
+      </p>
 
-      <div className="w-full max-w-sm space-y-3">
+      {/* Profile Cards */}
+      <div style={{
+        width: '100%',
+        maxWidth: '380px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px',
+      }}>
         {/* Parent Card */}
         <button
           onClick={handleParent}
-          className="w-full flex items-center gap-4 p-4 rounded-2xl glass-card border-2 border-transparent hover:border-indigo-400 active:scale-[0.97] transition-all"
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            padding: '18px 20px',
+            borderRadius: '20px',
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            textAlign: 'start',
+            outline: 'none',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+            e.currentTarget.style.borderColor = 'rgba(20,184,166,0.5)';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(20,184,166,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+            e.currentTarget.style.boxShadow = 'none';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+          onTouchStart={e => {
+            e.currentTarget.style.transform = 'scale(0.97)';
+          }}
+          onTouchEnd={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
         >
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white shadow-lg flex-shrink-0">
+          {/* Parent Avatar */}
+          <div style={{
+            width: '56px',
+            height: '56px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #14b8a6, #059669)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '24px',
+            fontWeight: 700,
+            color: '#fff',
+            flexShrink: 0,
+            boxShadow: '0 4px 16px rgba(20,184,166,0.3)',
+            position: 'relative',
+          }}>
             {parentInitial}
+            <div style={{
+              position: 'absolute',
+              top: '-4px',
+              right: '-4px',
+              width: '22px',
+              height: '22px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 2px 8px rgba(245,158,11,0.4)',
+            }}>
+              <Crown size={12} color="#fff" />
+            </div>
           </div>
-          <div className="flex-1 text-start min-w-0">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
+
+          {/* Parent Info */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <h3 style={{
+              fontSize: '18px',
+              fontWeight: 700,
+              color: '#ffffff',
+              margin: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>
               {parentName}
             </h3>
-            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-              <span className="flex items-center gap-1">
-                <Zap size={14} className="text-indigo-500" />
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              marginTop: '4px',
+              fontSize: '13px',
+              color: 'rgba(255,255,255,0.5)',
+            }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Zap size={14} color="#14b8a6" />
                 {progress.xp || 0} XP
               </span>
-              <span className="flex items-center gap-1">
-                <Flame size={14} className={progress.streak > 0 ? 'text-orange-500' : 'text-gray-400'} />
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Flame size={14} color={(progress.streak > 0) ? '#f97316' : 'rgba(255,255,255,0.3)'} />
                 {progress.streak || 0}
               </span>
               <span>{t('level', uiLang)} {progress.level || 1}</span>
@@ -63,29 +219,117 @@ export default function ProfilePickerPage({ onSelect }) {
         </button>
 
         {/* Children Cards */}
-        {children.map(child => (
+        {children.map((child, idx) => (
           <button
             key={child.id}
             onClick={() => handleChild(child.id)}
-            className="w-full flex items-center gap-4 p-4 rounded-2xl glass-card border-2 border-transparent hover:border-indigo-400 active:scale-[0.97] transition-all"
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '16px',
+              padding: '18px 20px',
+              borderRadius: '20px',
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              textAlign: 'start',
+              outline: 'none',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.borderColor = 'rgba(20,184,166,0.5)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(20,184,166,0.15)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+            onTouchStart={e => {
+              e.currentTarget.style.transform = 'scale(0.97)';
+            }}
+            onTouchEnd={e => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
-            <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${child.avatarColor} flex items-center justify-center text-2xl shadow-lg flex-shrink-0`}>
+            {/* Child Avatar */}
+            <div style={{
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              background: child.avatarColor
+                ? `linear-gradient(135deg, ${getGradientColors(child.avatarColor)})`
+                : 'linear-gradient(135deg, #8b5cf6, #6d28d9)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '28px',
+              flexShrink: 0,
+              boxShadow: '0 4px 16px rgba(139,92,246,0.25)',
+              position: 'relative',
+            }}>
               {child.avatar}
+              <div style={{
+                position: 'absolute',
+                top: '-4px',
+                right: '-4px',
+                width: '22px',
+                height: '22px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #60a5fa, #3b82f6)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(96,165,250,0.4)',
+              }}>
+                <Star size={12} color="#fff" fill="#fff" />
+              </div>
             </div>
-            <div className="flex-1 text-start min-w-0">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
+
+            {/* Child Info */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h3 style={{
+                fontSize: '18px',
+                fontWeight: 700,
+                color: '#ffffff',
+                margin: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}>
                 {child.name}
                 {child.age && (
-                  <span className="text-sm font-normal text-gray-400 mr-1 ml-1">({child.age})</span>
+                  <span style={{
+                    fontSize: '13px',
+                    fontWeight: 400,
+                    color: 'rgba(255,255,255,0.35)',
+                    marginRight: '6px',
+                    marginLeft: '6px',
+                  }}>
+                    ({child.age})
+                  </span>
                 )}
               </h3>
-              <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-                <span className="flex items-center gap-1">
-                  <Zap size={14} className="text-brand-500" />
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                marginTop: '4px',
+                fontSize: '13px',
+                color: 'rgba(255,255,255,0.5)',
+              }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <Zap size={14} color="#a78bfa" />
                   {child.xp || 0} XP
                 </span>
-                <span className="flex items-center gap-1">
-                  <Flame size={14} className={child.streak > 0 ? 'text-orange-500' : 'text-gray-400'} />
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <Flame size={14} color={(child.streak > 0) ? '#f97316' : 'rgba(255,255,255,0.3)'} />
                   {child.streak || 0}
                 </span>
                 <span>{t('level', uiLang)} {child.level || 1}</span>
@@ -96,4 +340,18 @@ export default function ProfilePickerPage({ onSelect }) {
       </div>
     </div>
   );
+}
+
+function getGradientColors(tailwindClass) {
+  const colorMap = {
+    'from-purple-500 to-violet-600': '#8b5cf6, #7c3aed',
+    'from-pink-500 to-rose-600': '#ec4899, #e11d48',
+    'from-blue-500 to-indigo-600': '#3b82f6, #4f46e5',
+    'from-green-500 to-emerald-600': '#22c55e, #059669',
+    'from-orange-500 to-amber-600': '#f97316, #d97706',
+    'from-cyan-500 to-teal-600': '#06b6d4, #0d9488',
+    'from-red-500 to-rose-600': '#ef4444, #e11d48',
+    'from-yellow-500 to-amber-600': '#eab308, #d97706',
+  };
+  return colorMap[tailwindClass] || '#8b5cf6, #6d28d9';
 }
