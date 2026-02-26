@@ -1,6 +1,26 @@
 import React, { useState, useCallback } from 'react';
 import { t } from '../../utils/translations.js';
 
+// Guidance bubble component - shows Hebrew instructions above each exercise
+function GuidanceBubble({ text, uiLang }) {
+  return (
+    <div style={{
+      background: 'linear-gradient(135deg, #FFF7ED, #FEF3C7)',
+      border: '2px solid #FDE68A',
+      borderRadius: 16,
+      padding: '10px 16px',
+      marginBottom: 16,
+      textAlign: 'center',
+      direction: uiLang === 'he' ? 'rtl' : 'ltr',
+      animation: 'curriculum-fade-in 0.4s ease',
+    }}>
+      <span style={{ fontSize: 14, fontWeight: 600, color: '#92400E', lineHeight: 1.5 }}>
+        {text}
+      </span>
+    </div>
+  );
+}
+
 export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang, speak }) {
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
@@ -59,6 +79,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'emoji-pick') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideEmojiPick', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('pickTheEmoji', uiLang)}
         </div>
@@ -72,7 +93,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
             fontSize: 14, cursor: 'pointer', marginBottom: 16, color: '#FF6B6B', fontWeight: 600,
           }}
         >
-          {'\uD83D\uDD0A'} {t('listenAndPick', uiLang)}
+          {'\uD83D\uDD0A'} {t('hearTheWord', uiLang)}
         </button>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 280, margin: '0 auto' }}>
           {exercise.options.map((opt, i) => {
@@ -108,6 +129,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'word-to-hebrew') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideWordToHebrew', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('translateToHebrew', uiLang)}
         </div>
@@ -141,6 +163,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'listen-pick') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideListenPick', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#374151' }}>
           {t('listenAndPick', uiLang)}
         </div>
@@ -155,6 +178,9 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         >
           {'\uD83D\uDD0A'}
         </button>
+        <div style={{ fontSize: 13, color: '#9CA3AF', marginBottom: 12, fontWeight: 500 }}>
+          {t('hearTheWord', uiLang)}
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 300, margin: '0 auto' }}>
           {exercise.options.map((opt, i) => {
             const isCorrect = opt === exercise.correctAnswer;
@@ -181,6 +207,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'fill-letter') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideFillLetter', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('fillMissingLetter', uiLang)}
         </div>
@@ -250,6 +277,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
 
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideSpeakWord', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('sayTheWord', uiLang)}
         </div>
@@ -264,7 +292,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
             padding: '8px 20px', fontSize: 16, cursor: 'pointer', marginBottom: 16,
           }}
         >
-          {'\uD83D\uDD0A'}
+          {'\uD83D\uDD0A'} {t('hearTheWord', uiLang)}
         </button>
         <br />
         <button
@@ -284,7 +312,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         >
           {listening ? '\uD83D\uDC42' : speakResult === 'correct' ? '\u2705' : speakResult === 'wrong' ? '\u274C' : '\uD83C\uDFA4'}
         </button>
-        <div style={{ marginTop: 12, fontSize: 14, color: '#9CA3AF' }}>
+        <div style={{ marginTop: 12, fontSize: 14, color: '#9CA3AF', fontWeight: 500 }}>
           {listening ? t('listening', uiLang) : speakResult ? '' : t('tapToSpeak', uiLang)}
         </div>
       </div>
@@ -297,9 +325,11 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'multiple-choice') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideMultipleChoice', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
-          {exercise.emoji && <span style={{ fontSize: 32, display: 'block', marginBottom: 8 }}>{exercise.emoji}</span>}
+          {t('chooseAnswer', uiLang)}
         </div>
+        {exercise.emoji && <span style={{ fontSize: 32, display: 'block', marginBottom: 8 }}>{exercise.emoji}</span>}
         <div style={{ fontSize: 18, fontWeight: 600, color: '#1F2937', marginBottom: 20, lineHeight: 1.5 }}>
           {exercise.question}
         </div>
@@ -329,6 +359,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'fill-blank') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideFillBlank', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('fillBlank', uiLang)}
         </div>
@@ -401,8 +432,9 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
 
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideWordArrange', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
-          {t('arrange', uiLang)}
+          {t('arrangeWords', uiLang)}
         </div>
         {/* Hint: Hebrew translation or question */}
         <div style={{
@@ -425,7 +457,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         }}>
           {arrangedWords.length === 0 && (
             <span style={{ color: '#9CA3AF', fontSize: 14 }}>
-              {uiLang === 'he' ? '\u05DC\u05D7\u05E6\u05D5 \u05E2\u05DC \u05DE\u05D9\u05DC\u05D9\u05DD \u05DC\u05E1\u05D9\u05D3\u05D5\u05E8' : 'Tap words to arrange'}
+              {t('tapWordsToArrange', uiLang)}
             </span>
           )}
           {arrangedWords.map((word, idx) => (
@@ -474,8 +506,9 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'translation') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guideTranslation', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
-          {t('translate', uiLang)}
+          {t('translateSentence', uiLang)}
         </div>
         {exercise.emoji && <div style={{ fontSize: 32, marginBottom: 8 }}>{exercise.emoji}</div>}
         <div style={{
@@ -560,8 +593,12 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
 
     return (
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#374151' }}>
-          {t('match', uiLang)}
+        <GuidanceBubble text={t('guideMatchPairs', uiLang)} uiLang={uiLang} />
+        <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
+          {t('matchThePairs', uiLang)}
+        </div>
+        <div style={{ fontSize: 12, color: '#9CA3AF', marginBottom: 12, fontWeight: 500 }}>
+          {t('matchInstructions', uiLang)}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 340, margin: '0 auto' }}>
           {/* English column */}
@@ -634,8 +671,9 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'picture-sentence') {
     return (
       <div style={{ textAlign: 'center' }}>
+        <GuidanceBubble text={t('guidePictureSentence', uiLang)} uiLang={uiLang} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#374151' }}>
-          {uiLang === 'he' ? '\u05D1\u05D7\u05E8\u05D5 \u05D0\u05EA \u05D4\u05DE\u05E9\u05E4\u05D8 \u05D4\u05E0\u05DB\u05D5\u05DF' : 'Pick the correct sentence'}
+          {t('pickTheSentence', uiLang)}
         </div>
         <div style={{ fontSize: 72, marginBottom: 20 }}>{exercise.question}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 340, margin: '0 auto' }}>
@@ -671,7 +709,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       <div style={{ textAlign: 'center', padding: 40 }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDEA7'}</div>
         <div style={{ fontSize: 18, fontWeight: 600, color: '#6B7280' }}>
-          {exercise.message || (uiLang === 'he' ? '\u05D1\u05E7\u05E8\u05D5\u05D1...' : 'Coming soon...')}
+          {t('comingSoon', uiLang)}
         </div>
       </div>
     );
@@ -687,7 +725,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       <div style={{ textAlign: 'center', padding: 40 }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDEA7'}</div>
         <div style={{ fontSize: 18, fontWeight: 600, color: '#6B7280' }}>
-          {exercise.message || (uiLang === 'he' ? '\u05D1\u05E7\u05E8\u05D5\u05D1...' : 'Coming soon...')}
+          {t('comingSoon', uiLang)}
         </div>
       </div>
     );

@@ -24,37 +24,41 @@ export default function UnitIsland({
 
   return (
     <div
-      className={`relative rounded-2xl p-4 transition-all duration-300 ${
-        isUnlocked
-          ? 'bg-white/80 dark:bg-gray-800/80 shadow-lg'
-          : 'bg-gray-100/60 dark:bg-gray-800/40 opacity-60'
-      }`}
       style={{
+        position: 'relative',
+        borderRadius: 16,
+        padding: 16,
+        transition: 'all 0.3s',
+        background: isUnlocked ? 'rgba(255,255,255,0.85)' : 'rgba(243,244,246,0.6)',
+        opacity: isUnlocked ? 1 : 0.6,
         border: isUnlocked ? `2px solid ${levelColor}22` : '2px solid transparent',
-        backdropFilter: 'blur(8px)',
+        boxShadow: isUnlocked ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
       }}
     >
       {/* Unit Header */}
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-2xl">{unit.emoji}</span>
-        <div className="flex-1 min-w-0">
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+        <span style={{ fontSize: 24 }}>{unit.emoji}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <h3
-            className="font-bold text-sm truncate"
-            style={{ color: isUnlocked ? levelColor : '#9CA3AF' }}
+            style={{
+              fontWeight: 700, fontSize: 14, margin: 0,
+              color: isUnlocked ? levelColor : '#9CA3AF',
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}
           >
             {unitName}
           </h3>
-          <span className="text-[10px] text-gray-400">
+          <span style={{ fontSize: 10, color: '#9CA3AF' }}>
             {completedCount}/{totalCount} {uiLang === 'he' ? '\u05E9\u05D9\u05E2\u05D5\u05E8\u05D9\u05DD' : 'lessons'}
           </span>
         </div>
-        {!isUnlocked && <span className="text-lg">{'\u{1F512}'}</span>}
+        {!isUnlocked && <span style={{ fontSize: 18 }}>{'\u{1F512}'}</span>}
       </div>
 
       {/* Lesson Nodes Grid: 2 rows of 3 */}
-      <div className="flex flex-col items-center gap-3">
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
         {/* Row 1 */}
-        <div className="flex items-center gap-4 justify-center">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, justifyContent: 'center' }}>
           {row1.map((lesson) => (
             <LessonNode
               key={lesson.id}
@@ -70,7 +74,7 @@ export default function UnitIsland({
         </div>
         {/* Row 2 */}
         {row2.length > 0 && (
-          <div className="flex items-center gap-4 justify-center">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, justifyContent: 'center' }}>
             {row2.map((lesson) => (
               <LessonNode
                 key={lesson.id}
@@ -88,13 +92,14 @@ export default function UnitIsland({
       </div>
 
       {/* Progress Bar */}
-      <div className="mt-3">
-        <div className="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div style={{ marginTop: 12 }}>
+        <div style={{ height: 6, background: '#E5E7EB', borderRadius: 3, overflow: 'hidden' }}>
           <div
-            className="h-full rounded-full transition-all duration-500 ease-out"
             style={{
+              height: '100%', borderRadius: 3,
               width: `${progressPercent}%`,
               background: levelColor,
+              transition: 'width 0.5s ease-out',
             }}
           />
         </div>

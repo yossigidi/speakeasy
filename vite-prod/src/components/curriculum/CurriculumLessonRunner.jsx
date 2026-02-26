@@ -116,7 +116,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     : LESSON_TYPES.mixed;
 
   const lessonTitle = lessonData?.lesson
-    ? (uiLang === 'he' ? lessonData.lesson.titleHe : lessonData.lesson.title) || lessonData.lesson.title
+    ? (uiLang === 'he' ? lessonData.lesson.titleHe : lessonData.lesson.titleEn) || lessonData.lesson.titleEn || ''
     : '';
 
   // ── Intro Phase ──
@@ -152,8 +152,26 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           {lessonTitle}
         </div>
 
-        <div style={{ fontSize: 16, color: '#6B7280', marginBottom: 32 }}>
-          {exercises.length} {t('exercises', uiLang)}
+        {/* Lesson type description in Hebrew */}
+        <div style={{
+          fontSize: 15, color: '#6B7280', marginBottom: 12, textAlign: 'center',
+          maxWidth: 280, lineHeight: 1.5,
+          direction: uiLang === 'he' ? 'rtl' : 'ltr',
+        }}>
+          {lessonData?.lesson?.type === 'speaking' ? t('introSpeakingDesc', uiLang) :
+           lessonData?.lesson?.type === 'vocabulary' ? t('introVocabDesc', uiLang) :
+           lessonData?.lesson?.type === 'reading' ? t('introReadingDesc', uiLang) :
+           lessonData?.lesson?.type === 'writing' ? t('introWritingDesc', uiLang) :
+           lessonData?.lesson?.type === 'test' ? t('introTestDesc', uiLang) :
+           t('introMixedDesc', uiLang)}
+        </div>
+
+        <div style={{
+          fontSize: 14, color: '#9CA3AF', marginBottom: 32,
+          background: 'white', padding: '8px 16px', borderRadius: 12,
+          boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+        }}>
+          {exercises.length} {t('exercisesCount', uiLang)}
         </div>
 
         {/* Ready button */}
@@ -288,12 +306,27 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         flex: 1, display: 'flex', flexDirection: 'column',
         overflow: 'auto', position: 'relative',
       }}>
-        {/* Teacher character - small, top-right corner */}
+        {/* Teacher character - small, top-right corner with speech bubble */}
         <div style={{
           position: 'absolute', top: 8, right: 12, zIndex: 5,
           transition: 'all 0.3s',
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
         }}>
           <TeacherCharacter state={teacherState} size="small" />
+          {teacherState !== 'idle' && (
+            <div style={{
+              marginTop: 2, padding: '3px 8px', borderRadius: 8,
+              background: teacherState === 'encouraging' ? '#FEF3C7' : '#D1FAE5',
+              fontSize: 11, fontWeight: 700,
+              color: teacherState === 'encouraging' ? '#92400E' : '#065F46',
+              animation: 'curriculum-fade-in 0.3s ease',
+              whiteSpace: 'nowrap',
+            }}>
+              {teacherState === 'happy' ? t('teacherEncourage1', uiLang) :
+               teacherState === 'celebrating' ? t('teacherEncourage3', uiLang) :
+               t('teacherWrong', uiLang)}
+            </div>
+          )}
         </div>
 
         {/* Last exercise indicator */}

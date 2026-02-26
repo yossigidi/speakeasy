@@ -10,35 +10,64 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
   const stars = lessonResult?.stars || 0;
   const icon = TYPE_ICONS[lesson.type] || '\u{1F4DD}';
 
+  const handleTap = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUnlocked && onTap) {
+      onTap(lesson);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
       <button
-        onClick={() => isUnlocked && onTap(lesson)}
-        disabled={!isUnlocked}
-        className={`w-14 h-14 rounded-full flex items-center justify-center text-xl transition-all duration-300 ${
-          !isUnlocked ? 'bg-gray-200 dark:bg-gray-700 cursor-not-allowed opacity-60' :
-          isCompleted ? 'shadow-lg cursor-pointer active:scale-90' :
-          isCurrent ? 'bg-white shadow-xl cursor-pointer active:scale-90 curriculum-node-pulse' :
-          'bg-white shadow-md cursor-pointer active:scale-90'
-        }`}
+        onClick={handleTap}
+        onTouchEnd={handleTap}
         style={{
-          ...(isCompleted ? { background: levelColor, border: `3px solid ${levelColor}` } : {}),
-          ...(isCurrent && !isCompleted ? { border: `3px solid ${levelColor}` } : {}),
-          ...(!isUnlocked ? {} : !isCompleted && !isCurrent ? { border: '2px solid #E5E7EB' } : {}),
+          width: 56,
+          height: 56,
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 20,
+          transition: 'all 0.3s',
+          cursor: isUnlocked ? 'pointer' : 'not-allowed',
+          opacity: !isUnlocked ? 0.6 : 1,
+          background: !isUnlocked ? '#E5E7EB'
+            : isCompleted ? levelColor
+            : 'white',
+          border: isCompleted ? `3px solid ${levelColor}`
+            : isCurrent && !isCompleted ? `3px solid ${levelColor}`
+            : !isUnlocked ? '2px solid #D1D5DB'
+            : '2px solid #E5E7EB',
+          boxShadow: isCurrent && !isCompleted
+            ? `0 0 0 4px ${levelColor}33, 0 4px 16px rgba(0,0,0,0.1)`
+            : isCompleted
+            ? '0 4px 12px rgba(0,0,0,0.12)'
+            : isUnlocked
+            ? '0 2px 8px rgba(0,0,0,0.08)'
+            : 'none',
+          animation: isCurrent && !isCompleted ? 'curriculum-node-pulse 2s ease-in-out infinite' : 'none',
+          WebkitTapHighlightColor: 'transparent',
+          touchAction: 'manipulation',
+          userSelect: 'none',
+          outline: 'none',
+          padding: 0,
         }}
       >
         {!isUnlocked ? '\u{1F512}' : icon}
       </button>
       {/* Stars */}
       {isCompleted && (
-        <div className="flex gap-0.5">
+        <div style={{ display: 'flex', gap: 2 }}>
           {[1, 2, 3].map(s => (
-            <span key={s} className="text-xs" style={{ opacity: s <= stars ? 1 : 0.2 }}>{'\u2B50'}</span>
+            <span key={s} style={{ fontSize: 10, opacity: s <= stars ? 1 : 0.2 }}>{'\u2B50'}</span>
           ))}
         </div>
       )}
       {isCurrent && !isCompleted && (
-        <span className="text-[10px] font-bold" style={{ color: levelColor }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: levelColor }}>
           {uiLang === 'he' ? '\u05D4\u05D1\u05D0' : 'Next'}
         </span>
       )}

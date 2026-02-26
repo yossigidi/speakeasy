@@ -232,8 +232,8 @@ export default function CurriculumPage({ onBack }) {
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 18, fontWeight: 700, color: '#374151' }}>
                   {uiLang === 'he'
-                    ? (selectedLessonInfo.lesson.titleHe || selectedLessonInfo.lesson.title)
-                    : selectedLessonInfo.lesson.title
+                    ? (selectedLessonInfo.lesson.titleHe || selectedLessonInfo.lesson.titleEn)
+                    : selectedLessonInfo.lesson.titleEn
                   }
                 </div>
                 <div style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 600 }}>
