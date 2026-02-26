@@ -2,9 +2,18 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Check } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
-import { playSequence, playHebrew } from '../../utils/hebrewAudio.js';
+import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../../utils/gameSounds.js';
 import { getWordsForLevel, SENTENCES_BY_LEVEL, CATEGORIES_BY_LEVEL } from '../../data/kids-vocabulary.js';
+
+// Hebrew instruction phrases for new games — preloaded on mount
+const NEW_GAME_PHRASES = [
+  'הקשיבו למילה ומצאו את התמונה הנכונה',
+  'מיינו את הפריטים לקטגוריה הנכונה!',
+  'מצאו את האות שחסרה במילה!',
+  'סדרו את המילים למשפט נכון!',
+  'יופי!', 'נכון!', 'מצוין!', 'כל הכבוד!', 'מדהים!', 'נסו שוב',
+];
 
 /* ── Shared components ── */
 function ConfettiBurst({ show }) {
@@ -142,10 +151,16 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   const [gameOver, setGameOver] = useState(false);
   const speakRef = useRef(speak);
   speakRef.current = speak;
+  const instructionsGiven = useRef(false);
 
   const TOTAL_ROUNDS = 6;
   // Options count by level: 1→4, 2→6, 3→6, 4→8
   const NUM_OPTIONS = childLevel === 1 ? 4 : childLevel <= 3 ? 6 : 8;
+
+  // Preload Hebrew instruction phrases on mount
+  useEffect(() => {
+    preloadHebrewAudio(NEW_GAME_PHRASES);
+  }, []);
 
   // Use level-based vocabulary (with fallback to built-in words)
   const levelWords = useMemo(() => {
@@ -157,6 +172,11 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   const words = useMemo(() => {
     return [...levelWords].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
   }, [levelWords]);
+
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
 
   useEffect(() => {
     if (round >= TOTAL_ROUNDS) {
@@ -181,13 +201,25 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     }));
     setOptions(all);
 
-    // Speak the word after a short delay
-    const t = setTimeout(() => {
-      playSequence([
-        { text: tgt.word, lang: 'en-US', rate: 0.7 },
-      ], speakRef.current);
-    }, 500);
-    return () => clearTimeout(t);
+    // Voice instructions on first round, then just the word
+    if (round === 0 && !instructionsGiven.current) {
+      instructionsGiven.current = true;
+      const t = setTimeout(() => {
+        playSequence([
+          { text: 'הקשיבו למילה ומצאו את התמונה הנכונה', lang: 'he' },
+          { pause: 300 },
+          { text: tgt.word, lang: 'en-US', rate: 0.7 },
+        ], speakRef.current);
+      }, 500);
+      return () => clearTimeout(t);
+    } else {
+      const t = setTimeout(() => {
+        playSequence([
+          { text: tgt.word, lang: 'en-US', rate: 0.7 },
+        ], speakRef.current);
+      }, 500);
+      return () => clearTimeout(t);
+    }
   }, [round, words]);
 
   const handlePop = (opt) => {
@@ -363,6 +395,19 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
 
   // Sets by level: 1-2→1 set, 3-4→2 sets
   const TOTAL_SETS = childLevel >= 3 ? 2 : 1;
+  const speakRef = useRef(speak);
+  speakRef.current = speak;
+  const instructionsGiven = useRef(false);
+
+  // Preload Hebrew instruction phrases on mount
+  useEffect(() => {
+    preloadHebrewAudio(NEW_GAME_PHRASES);
+  }, []);
+
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
 
   // Use level-specific categories
   const sets = useMemo(() => {
@@ -380,7 +425,19 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   const totalItems = TOTAL_SETS * currentSet.items.length;
 
   useEffect(() => {
-    if (item) {
+    if (!item) return;
+    // Voice instructions on first item
+    if (!instructionsGiven.current) {
+      instructionsGiven.current = true;
+      const t = setTimeout(() => {
+        playSequence([
+          { text: 'מיינו את הפריטים לקטגוריה הנכונה!', lang: 'he' },
+          { pause: 300 },
+          { text: item.word, lang: 'en-US', rate: 0.75 },
+        ], speakRef.current);
+      }, 500);
+      return () => clearTimeout(t);
+    } else {
       speak(item.word, { rate: 0.75 });
     }
   }, [currentItem, setIndex]);
@@ -544,12 +601,25 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const [score, setScore] = useState(0);
   const [selectedLetter, setSelectedLetter] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const speakRef = useRef(speak);
+  speakRef.current = speak;
+  const instructionsGiven = useRef(false);
 
   const TOTAL_ROUNDS = 8;
   // Options by level: 1→2, 2→3, 3→4, 4→4
   const NUM_OPTIONS = childLevel === 1 ? 2 : childLevel === 2 ? 3 : 4;
   // Word length by level: 1→3, 2→3-4, 3→4-5, 4→4+
   const maxWordLen = childLevel === 1 ? 3 : childLevel === 2 ? 4 : 5;
+
+  // Preload Hebrew instruction phrases on mount
+  useEffect(() => {
+    preloadHebrewAudio(NEW_GAME_PHRASES);
+  }, []);
+
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
 
   const rounds = useMemo(() => {
     // Filter words by length based on level
@@ -578,7 +648,18 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const current = rounds[round];
 
   useEffect(() => {
-    if (current) {
+    if (!current) return;
+    if (!instructionsGiven.current) {
+      instructionsGiven.current = true;
+      const t = setTimeout(() => {
+        playSequence([
+          { text: 'מצאו את האות שחסרה במילה!', lang: 'he' },
+          { pause: 300 },
+          { text: current.word, lang: 'en-US', rate: 0.7 },
+        ], speakRef.current);
+      }, 500);
+      return () => clearTimeout(t);
+    } else {
       speak(current.word, { rate: 0.7 });
     }
   }, [round]);
@@ -743,9 +824,22 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const [available, setAvailable] = useState([]);
   const [isCorrect, setIsCorrect] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const speakRef = useRef(speak);
+  speakRef.current = speak;
+  const instructionsGiven = useRef(false);
 
   // Rounds by level: 1→4, 2→5, 3→6, 4→6
   const TOTAL_ROUNDS = childLevel === 1 ? 4 : childLevel === 2 ? 5 : 6;
+
+  // Preload Hebrew instruction phrases on mount
+  useEffect(() => {
+    preloadHebrewAudio(NEW_GAME_PHRASES);
+  }, []);
+
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
 
   // Use level-specific sentences
   const sentences = useMemo(() => {
@@ -768,11 +862,23 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     // Shuffle the words
     setAvailable(current.words.map((w, i) => ({ id: i, word: w, used: false })).sort(() => Math.random() - 0.5));
 
-    // Speak the sentence
-    const t = setTimeout(() => {
-      speak(current.sentence, { rate: 0.7 });
-    }, 400);
-    return () => clearTimeout(t);
+    // Voice instructions on first round, then just the sentence
+    if (!instructionsGiven.current) {
+      instructionsGiven.current = true;
+      const t = setTimeout(() => {
+        playSequence([
+          { text: 'סדרו את המילים למשפט נכון!', lang: 'he' },
+          { pause: 300 },
+          { text: current.sentence, lang: 'en-US', rate: 0.7 },
+        ], speakRef.current);
+      }, 500);
+      return () => clearTimeout(t);
+    } else {
+      const t = setTimeout(() => {
+        speak(current.sentence, { rate: 0.7 });
+      }, 400);
+      return () => clearTimeout(t);
+    }
   }, [round]);
 
   const handleWordTap = (wordObj) => {

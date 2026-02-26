@@ -3,7 +3,7 @@ import { ArrowLeft, Volume2, Star, Zap, RotateCcw } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
-import { playSequence, playHebrew, preloadHebrewAudio } from '../utils/hebrewAudio.js';
+import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 
@@ -90,6 +90,11 @@ function BubblePopGame({ onComplete, onBack }) {
 
   const TOTAL_ROUNDS = 6;
   const BUBBLES_PER_ROUND = 8;
+
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
 
   // Pick random letters for each round
   const rounds = useMemo(() => {
@@ -363,6 +368,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   // Pairs by level: 1→3, 2→4, 3→5, 4→6
   const PAIRS = childLevel === 1 ? 3 : childLevel === 2 ? 4 : childLevel === 3 ? 5 : 6;
 
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
+
   // Pick words based on level
   const wordPairs = useMemo(() => {
     return [...MEMORY_WORDS].sort(() => Math.random() - 0.5).slice(0, PAIRS);
@@ -628,6 +638,11 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const instructionsGiven = useRef(false);
 
   const TOTAL_ROUNDS = 6;
+
+  // Stop all audio on unmount (back button)
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, []);
 
   // Filter words by level: 1→3 letters, 2→3-4, 3→4, 4→4-5
   const maxLen = childLevel >= 4 ? 5 : childLevel >= 3 ? 4 : 4;

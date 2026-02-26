@@ -46,25 +46,36 @@ const PHRASE_MAP = {
 // Audio cache - reuse Audio objects
 const audioCache = {};
 
-// API TTS cache - stores decoded AudioBuffers by text
+// API TTS cache - stores decoded AudioBuffers by text+lang key
 const apiAudioCache = new Map();
 let audioCtx = null;
+
+// Track active AudioBufferSourceNodes for stopping
+const activeSources = new Set();
+// Flag to cancel a running playSequence
+let sequenceCancelled = false;
 
 function getAudioContext() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
 }
 
+function cacheKey(text, lang) {
+  return `${lang || 'auto'}::${text.trim()}`;
+}
+
 /**
- * Preload Hebrew audio for a list of texts.
- * Fetches all from API in parallel and caches AudioBuffers.
- * Call this on game mount so playback is instant.
+ * Preload audio for a list of texts via Cloud TTS API.
+ * Fetches all in parallel and caches AudioBuffers.
+ * Call this on component mount so playback is instant.
+ * @param {string[]} texts - texts to preload
+ * @param {string} [lang] - 'he' or 'en' (auto-detected if omitted)
  */
-export async function preloadHebrewAudio(texts) {
+export async function preloadHebrewAudio(texts, lang) {
   const ctx = getAudioContext();
   if (ctx.state === 'suspended') await ctx.resume();
 
-  const toLoad = texts.filter(t => t && !apiAudioCache.has(t.trim()));
+  const toLoad = texts.filter(t => t && !apiAudioCache.has(cacheKey(t, lang)));
   if (toLoad.length === 0) return;
 
   await Promise.allSettled(toLoad.map(async (text) => {
@@ -73,7 +84,7 @@ export async function preloadHebrewAudio(texts) {
       const res = await fetch('/api/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: trimmed }),
+        body: JSON.stringify({ text: trimmed, lang }),
       });
       if (!res.ok) return;
       const { audio } = await res.json();
@@ -83,16 +94,23 @@ export async function preloadHebrewAudio(texts) {
       const bytes = new Uint8Array(buf);
       for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
       const audioBuffer = await ctx.decodeAudioData(buf);
-      apiAudioCache.set(trimmed, audioBuffer);
+      apiAudioCache.set(cacheKey(trimmed, lang), audioBuffer);
     } catch (e) { /* skip failed */ }
   }));
 }
 
+/** Preload English audio */
+export async function preloadEnglishAudio(texts) {
+  return preloadHebrewAudio(texts, 'en');
+}
+
 /**
- * Play Hebrew text via Google Cloud TTS API.
+ * Play text via Google Cloud TTS API (supports both Hebrew and English).
  * Returns Promise<boolean> - true if played successfully.
+ * @param {string} text - text to speak
+ * @param {string} [lang] - 'he' or 'en' (auto-detected if omitted)
  */
-export async function playHebrewFromAPI(text) {
+export async function playFromAPI(text, lang) {
   try {
     const trimmed = text.trim();
     if (!trimmed) return false;
@@ -100,24 +118,26 @@ export async function playHebrewFromAPI(text) {
     const ctx = getAudioContext();
     if (ctx.state === 'suspended') await ctx.resume();
 
+    const key = cacheKey(trimmed, lang);
+
     // Check cache first
-    if (apiAudioCache.has(trimmed)) {
-      const cached = apiAudioCache.get(trimmed);
+    if (apiAudioCache.has(key)) {
+      const cached = apiAudioCache.get(key);
       const source = ctx.createBufferSource();
       source.buffer = cached;
       source.connect(ctx.destination);
+      activeSources.add(source);
       return new Promise(resolve => {
-        source.onended = () => resolve(true);
+        source.onended = () => { activeSources.delete(source); resolve(true); };
         source.start(0);
       });
     }
 
     // Fetch from API
-    console.log('TTS API: fetching', trimmed);
     const res = await fetch('/api/tts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: trimmed }),
+      body: JSON.stringify({ text: trimmed, lang }),
     });
 
     if (!res.ok) {
@@ -125,12 +145,11 @@ export async function playHebrewFromAPI(text) {
       return false;
     }
 
-    const { audio, mimeType } = await res.json();
+    const { audio } = await res.json();
     if (!audio) {
       console.warn('TTS API: no audio in response');
       return false;
     }
-    console.log('TTS API: got audio', audio.length, 'chars, type:', mimeType);
 
     // Decode base64 MP3 → ArrayBuffer → AudioBuffer
     const raw = atob(audio);
@@ -140,20 +159,31 @@ export async function playHebrewFromAPI(text) {
     const audioBuffer = await ctx.decodeAudioData(buf);
 
     // Cache for reuse
-    apiAudioCache.set(trimmed, audioBuffer);
+    apiAudioCache.set(key, audioBuffer);
 
     // Play
     const source = ctx.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(ctx.destination);
+    activeSources.add(source);
     return new Promise(resolve => {
-      source.onended = () => resolve(true);
+      source.onended = () => { activeSources.delete(source); resolve(true); };
       source.start(0);
     });
   } catch (e) {
-    console.warn('Hebrew TTS API failed:', e.message);
+    console.warn('TTS API failed:', e.message);
     return false;
   }
+}
+
+/** Play Hebrew text via Cloud TTS (backward-compatible alias) */
+export async function playHebrewFromAPI(text) {
+  return playFromAPI(text, 'he');
+}
+
+/** Play English text via Cloud TTS */
+export async function playEnglishFromAPI(text) {
+  return playFromAPI(text, 'en');
 }
 
 function getAudio(filename) {
@@ -208,8 +238,10 @@ export function playHebrew(text) {
  */
 export function playSequence(items, speakEnglish, onDone) {
   let index = 0;
+  sequenceCancelled = false;
 
   const playNext = () => {
+    if (sequenceCancelled) return;
     if (index >= items.length) {
       if (onDone) onDone();
       return;
@@ -226,44 +258,37 @@ export function playSequence(items, speakEnglish, onDone) {
 
     const isHebrew = item.lang === 'he' || item.lang === 'he-IL';
 
-    if (isHebrew) {
-      // Try Cloud TTS API first (natural voice from Firestore cache)
-      playHebrewFromAPI(item.text).then(async (played) => {
-        if (played) {
-          playNext();
-          return;
-        }
-        // Fallback: pre-recorded MP3
+    // Try Cloud TTS API first for both languages (natural voice)
+    const apiLang = isHebrew ? 'he' : 'en';
+    playFromAPI(item.text, apiLang).then(async (played) => {
+      if (sequenceCancelled) return;
+      if (played) {
+        playNext();
+        return;
+      }
+
+      if (isHebrew) {
+        // Hebrew fallback: pre-recorded MP3
         const mp3Played = await playHebrew(item.text);
+        if (sequenceCancelled) return;
         if (mp3Played) {
           playNext();
           return;
         }
-        // Last resort: Web Speech API
-        if (speakEnglish) {
-          speakEnglish(item.text, {
-            lang: 'he',
-            rate: item.rate || 0.88,
-            _queued: true,
-            onEnd: playNext,
-          });
-        } else {
-          playNext();
-        }
-      });
-    } else {
-      // English - use Web Speech API (which sounds good)
+      }
+
+      // Last resort: Web Speech API
       if (speakEnglish) {
         speakEnglish(item.text, {
-          lang: item.lang || 'en-US',
-          rate: item.rate || 0.92,
+          lang: isHebrew ? 'he' : (item.lang || 'en-US'),
+          rate: item.rate || (isHebrew ? 0.88 : 0.92),
           _queued: true,
           onEnd: playNext,
         });
       } else {
         playNext();
       }
-    }
+    });
   };
 
   // Cancel any current speech before starting
@@ -289,4 +314,29 @@ export function stopHebrew() {
     audio.pause();
     audio.currentTime = 0;
   });
+}
+
+/**
+ * Stop ALL audio: Web Speech, pre-recorded MP3s, AudioContext sources, and cancel sequences.
+ */
+export function stopAllAudio() {
+  // Cancel any running sequence
+  sequenceCancelled = true;
+
+  // Stop Web Speech API
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+
+  // Stop pre-recorded MP3s
+  Object.values(audioCache).forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  // Stop all active AudioBufferSource nodes (Cloud TTS)
+  activeSources.forEach(source => {
+    try { source.stop(); } catch (e) { /* already stopped */ }
+  });
+  activeSources.clear();
 }
