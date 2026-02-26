@@ -349,6 +349,16 @@ export function stopHebrew() {
 }
 
 /**
+ * Stop only Cloud TTS AudioBuffer sources (not Web Speech or sequences).
+ */
+export function stopCloudTTS() {
+  activeSources.forEach(source => {
+    try { source.stop(); } catch (e) { /* already stopped */ }
+  });
+  activeSources.clear();
+}
+
+/**
  * Stop ALL audio: Web Speech, pre-recorded MP3s, AudioContext sources, and cancel sequences.
  */
 export function stopAllAudio() {

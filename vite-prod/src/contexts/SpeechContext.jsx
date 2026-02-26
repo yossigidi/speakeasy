@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { playHebrew, playFromAPI, stopAllAudio, unlockAudioContext } from '../utils/hebrewAudio';
+import { playHebrew, playFromAPI, stopAllAudio, stopCloudTTS, unlockAudioContext } from '../utils/hebrewAudio';
 
 const SpeechContext = createContext(null);
 
@@ -247,12 +247,12 @@ export function SpeechProvider({ children }) {
       }
     });
 
-    // Timeout: abort the API fetch and fall back to local TTS
-    // Do NOT call stopAllAudio() here — it would cancel other queued items
+    // Timeout: abort the API fetch, stop any Cloud TTS that started, fall back
     const timeoutId = setTimeout(() => {
       if (!settled) {
         settled = true;
         abortCtrl.abort();
+        stopCloudTTS(); // stop Cloud TTS audio that may have started
         fallbackToLocal();
       }
     }, API_TIMEOUT);
