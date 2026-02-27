@@ -286,7 +286,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
           setSpeakResult(null);
         }, 800);
       };
-      recognition.onerror = () => { setListening(false); onAnswer(true, exercise.wordData); };
+      recognition.onerror = () => { setListening(false); };
       recognition.onend = () => setListening(false);
       recognition.start();
     };
@@ -719,14 +719,22 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   // 12. category-sort (stub)
   // ====================================================================
   if (exercise.type === 'category-sort') {
-    // Auto-pass stubs
-    setTimeout(() => onAnswer(true, exercise.wordData), 500);
     return (
       <div style={{ textAlign: 'center', padding: 40 }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDEA7'}</div>
-        <div style={{ fontSize: 18, fontWeight: 600, color: '#6B7280' }}>
+        <div style={{ fontSize: 18, fontWeight: 600, color: '#6B7280', marginBottom: 20 }}>
           {t('comingSoon', uiLang)}
         </div>
+        <button
+          onClick={() => onAnswer(false, exercise.wordData)}
+          style={{
+            padding: '12px 32px', borderRadius: 16, fontSize: 16, fontWeight: 600,
+            background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)', color: 'white',
+            border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(255,107,107,0.3)',
+          }}
+        >
+          {t('continue', uiLang)}
+        </button>
       </div>
     );
   }
@@ -735,14 +743,22 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   // 13. sentence-correction (stub)
   // ====================================================================
   if (exercise.type === 'sentence-correction') {
-    // Auto-pass stubs
-    setTimeout(() => onAnswer(true, exercise.wordData), 500);
     return (
       <div style={{ textAlign: 'center', padding: 40 }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDEA7'}</div>
-        <div style={{ fontSize: 18, fontWeight: 600, color: '#6B7280' }}>
+        <div style={{ fontSize: 18, fontWeight: 600, color: '#6B7280', marginBottom: 20 }}>
           {t('comingSoon', uiLang)}
         </div>
+        <button
+          onClick={() => onAnswer(false, exercise.wordData)}
+          style={{
+            padding: '12px 32px', borderRadius: 16, fontSize: 16, fontWeight: 600,
+            background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)', color: 'white',
+            border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(255,107,107,0.3)',
+          }}
+        >
+          {t('continue', uiLang)}
+        </button>
       </div>
     );
   }

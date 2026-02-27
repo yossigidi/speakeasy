@@ -1,22 +1,13 @@
 // Game sound effects using Web Audio API - no external files needed
 // All sounds are synthesized programmatically
+// Uses shared AudioContext from hebrewAudio.js (unlocked on iOS via user gesture)
 
-let audioCtx = null;
-
-function getAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  // Resume if suspended (browser autoplay policy)
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-  return audioCtx;
-}
+import { getAudioContext } from './hebrewAudio.js';
 
 function playTone(frequency, duration, type = 'sine', volume = 0.3, delay = 0) {
   try {
     const ctx = getAudioContext();
+    if (ctx.state === 'suspended') ctx.resume();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = type;

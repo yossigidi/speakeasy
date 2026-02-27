@@ -55,7 +55,7 @@ const activeSources = new Set();
 // Flag to cancel a running playSequence
 let sequenceCancelled = false;
 
-function getAudioContext() {
+export function getAudioContext() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
 }

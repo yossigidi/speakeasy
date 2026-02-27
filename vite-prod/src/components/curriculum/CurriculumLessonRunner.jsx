@@ -99,7 +99,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     // Advance to next exercise
     setTimeout(() => {
       if (currentExercise + 1 >= exercises.length) {
-        handleLessonComplete();
+        handleLessonComplete(isCorrect);
       } else {
         setCurrentExercise(prev => prev + 1);
       }
@@ -107,9 +107,9 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   }, [currentExercise, exercises.length, streak]);
 
   // Lesson complete handler
-  const handleLessonComplete = useCallback(async () => {
+  const handleLessonComplete = useCallback(async (lastWasCorrect) => {
     const totalCount = exercises.length;
-    const finalCorrect = correctCount + 1;
+    const finalCorrect = correctCount + (lastWasCorrect ? 1 : 0);
     const acc = ((finalCorrect) / totalCount) * 100;
     const stars = calculateStars(acc);
     const xp = calculateXP(stars);

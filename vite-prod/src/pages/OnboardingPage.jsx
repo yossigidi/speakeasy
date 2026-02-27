@@ -682,7 +682,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         </button>
       </div>
 
-      <NextButton onClick={handleFinish} label={t('letsGo', uiLang)} />
+      <NextButton onClick={handleFinish} label={t('letsGoStart', uiLang)} />
 
       {childrenToAdd.length === 0 && (
         <button
