@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { unlockAudioContext } from '../../utils/hebrewAudio.js';
+import SpeakliAvatar from './SpeakliAvatar.jsx';
 
 const SESSION_KEY = 'kids-intro-seen';
 
@@ -126,16 +127,8 @@ export default function KidsIntro({
           <div className="absolute bottom-4 left-6 text-sm animate-sparkle" style={{ animationDelay: '0.6s' }}>💫</div>
           <div className="absolute bottom-3 right-4 text-lg animate-sparkle" style={{ animationDelay: '0.9s' }}>🌟</div>
 
-          {/* Mascot — use Speakli avatar image if available, emoji fallback */}
-          <div className="mb-3 animate-jelly inline-block">
-            <img
-              src="/images/speakli-avatar.png"
-              alt="Speakli"
-              className="w-24 h-24 mx-auto drop-shadow-lg"
-              onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
-            />
-            <span className="text-7xl hidden">{emoji}</span>
-          </div>
+          {/* Speakli mascot — animated, alive! */}
+          <SpeakliAvatar mode="wave" size="xl" glow />
 
           {/* Greeting with name */}
           {name && (

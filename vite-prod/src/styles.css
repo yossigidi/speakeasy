@@ -1231,6 +1231,224 @@ select:focus {
   background: currentColor;
 }
 
+/* ═══════════════════════════════════════
+   SPEAKLI AVATAR — Lifelike Animations
+   ═══════════════════════════════════════ */
+
+/* Container — centres the character + shadow */
+.speakli-avatar-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* The image itself */
+.speakli-img {
+  position: relative;
+  z-index: 2;
+  image-rendering: auto;
+  will-change: transform;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  transition: filter 0.3s ease;
+}
+
+/* Blink effect — quick squish on the Y axis */
+.speakli-blink {
+  animation: speakliBlink 0.15s ease-in-out !important;
+}
+
+@keyframes speakliBlink {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(0.92); }
+}
+
+/* Ground shadow that follows the character */
+.speakli-shadow {
+  width: 60%;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.18) 0%, transparent 70%);
+  margin-top: -4px;
+  z-index: 1;
+  animation: speakliShadowPulse 3s ease-in-out infinite;
+}
+
+@keyframes speakliShadowPulse {
+  0%, 100% { transform: scaleX(1);   opacity: 0.7; }
+  50%      { transform: scaleX(0.85); opacity: 0.4; }
+}
+
+/* Glow ring behind avatar */
+.speakli-glow {
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(37,99,235,0.25) 0%, rgba(6,182,212,0.1) 50%, transparent 70%);
+  animation: speakliGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes speakliGlow {
+  0%, 100% { transform: scale(1);   opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+
+/* ── IDLE: gentle floating + breathing + subtle tilt ── */
+.speakli-idle .speakli-img {
+  animation:
+    speakliFloat    3s   ease-in-out infinite,
+    speakliBreathe  4s   ease-in-out infinite,
+    speakliTilt     6s   ease-in-out infinite;
+}
+
+@keyframes speakliFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes speakliBreathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+@keyframes speakliTilt {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(3deg); }
+  75%      { transform: rotate(-3deg); }
+}
+
+/* Composite idle — combines float + breathe + tilt into one smooth motion */
+.speakli-idle .speakli-img {
+  animation: speakliIdleComposite 4s ease-in-out infinite;
+}
+
+@keyframes speakliIdleComposite {
+  0%   { transform: translateY(0)    scale(1)    rotate(0deg); }
+  15%  { transform: translateY(-4px) scale(1.02) rotate(2deg); }
+  30%  { transform: translateY(-8px) scale(1.04) rotate(0deg); }
+  50%  { transform: translateY(-6px) scale(1.02) rotate(-2deg); }
+  70%  { transform: translateY(-2px) scale(1)    rotate(-1deg); }
+  85%  { transform: translateY(2px)  scale(0.99) rotate(1deg); }
+  100% { transform: translateY(0)    scale(1)    rotate(0deg); }
+}
+
+/* ── WAVE: hello greeting ── */
+.speakli-wave .speakli-img {
+  animation: speakliWave 1.2s ease-in-out;
+  transform-origin: bottom center;
+}
+
+@keyframes speakliWave {
+  0%   { transform: rotate(0deg) scale(1); }
+  10%  { transform: rotate(-8deg) scale(1.05); }
+  20%  { transform: rotate(14deg) scale(1.08); }
+  30%  { transform: rotate(-10deg) scale(1.06); }
+  40%  { transform: rotate(12deg) scale(1.04); }
+  50%  { transform: rotate(-6deg) scale(1.02); }
+  60%  { transform: rotate(8deg) scale(1); }
+  70%  { transform: rotate(-4deg); }
+  80%  { transform: rotate(4deg); }
+  90%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ── CELEBRATE: excited jumping + spin ── */
+.speakli-celebrate .speakli-img {
+  animation: speakliCelebrate 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
+@keyframes speakliCelebrate {
+  0%   { transform: translateY(0)    scale(1)   rotate(0deg); }
+  20%  { transform: translateY(-24px) scale(1.15) rotate(-8deg); }
+  40%  { transform: translateY(-30px) scale(1.1)  rotate(10deg); }
+  55%  { transform: translateY(-18px) scale(1.05) rotate(-5deg); }
+  70%  { transform: translateY(-8px)  scale(1.08) rotate(3deg); }
+  85%  { transform: translateY(4px)   scale(0.95) rotate(-1deg); }
+  100% { transform: translateY(0)     scale(1)    rotate(0deg); }
+}
+
+.speakli-celebrate .speakli-shadow {
+  animation: speakliShadowJump 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
+@keyframes speakliShadowJump {
+  0%, 100% { transform: scaleX(1);   opacity: 0.6; }
+  30%      { transform: scaleX(0.5); opacity: 0.2; }
+  70%      { transform: scaleX(0.7); opacity: 0.3; }
+}
+
+/* ── FLY: entrance from offscreen ── */
+.speakli-fly .speakli-img {
+  animation: speakliFlyIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes speakliFlyIn {
+  0%   { transform: translate(120vw, -40vh) rotate(20deg) scale(0.3); opacity: 0; }
+  40%  { transform: translate(10vw, 5vh)    rotate(-10deg) scale(1.1); opacity: 1; }
+  60%  { transform: translate(-5vw, -2vh)   rotate(5deg)   scale(0.95); }
+  80%  { transform: translate(2vw, 1vh)     rotate(-2deg)  scale(1.02); }
+  100% { transform: translate(0, 0)         rotate(0deg)   scale(1); }
+}
+
+/* ── TALK: subtle bounce while speaking ── */
+.speakli-talk .speakli-img {
+  animation: speakliTalk 0.4s ease-in-out infinite;
+}
+
+@keyframes speakliTalk {
+  0%, 100% { transform: translateY(0)    scaleY(1)    rotate(0deg); }
+  25%      { transform: translateY(-3px) scaleY(1.03) rotate(1deg); }
+  50%      { transform: translateY(-5px) scaleY(0.97) rotate(-1deg); }
+  75%      { transform: translateY(-2px) scaleY(1.02) rotate(0.5deg); }
+}
+
+/* ── SLEEP: slow breathing, tilted ── */
+.speakli-sleep .speakli-img {
+  animation: speakliSleep 5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)) brightness(0.92);
+}
+
+@keyframes speakliSleep {
+  0%, 100% { transform: rotate(8deg)  scale(1); }
+  50%      { transform: rotate(10deg) scale(1.03); }
+}
+
+/* ── BOUNCE: playful hopping ── */
+.speakli-bounce .speakli-img {
+  animation: speakliBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
+@keyframes speakliBounce {
+  0%, 100% { transform: translateY(0)     scaleX(1)    scaleY(1); }
+  30%      { transform: translateY(-20px)  scaleX(0.92) scaleY(1.1); }
+  50%      { transform: translateY(-22px)  scaleX(0.95) scaleY(1.05); }
+  70%      { transform: translateY(-5px)   scaleX(1.05) scaleY(0.95); }
+  90%      { transform: translateY(3px)    scaleX(1.02) scaleY(0.98); }
+}
+
+.speakli-bounce .speakli-shadow {
+  animation: speakliShadowBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
+@keyframes speakliShadowBounce {
+  0%, 100% { transform: scaleX(1);   opacity: 0.6; }
+  30%      { transform: scaleX(0.6); opacity: 0.25; }
+  70%      { transform: scaleX(1.1); opacity: 0.5; }
+}
+
+/* ── Hover interactivity — squish on press ── */
+.speakli-avatar-wrap[onclick],
+.speakli-avatar-wrap[role="button"] {
+  cursor: pointer;
+}
+
+.speakli-avatar-wrap:active .speakli-img {
+  transform: scale(0.9) !important;
+  transition: transform 0.1s ease;
+}
+
 /* --- Print styles --- */
 @media print {
   .no-print {

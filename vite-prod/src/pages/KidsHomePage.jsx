@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 
 import wordsA1 from '../data/words-a1.json';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
@@ -35,24 +36,10 @@ function FloatingDecorations() {
 
 /* ── Animated Speakli mascot character ── */
 function MascotGreeting({ name, uiLang }) {
-  const [bounce, setBounce] = useState(true);
-  useEffect(() => {
-    const t = setInterval(() => setBounce(b => !b), 2000);
-    return () => clearInterval(t);
-  }, []);
-
   return (
     <div className="text-center mb-2">
-      <div className={`mb-2 inline-block transition-transform duration-500 ${bounce ? 'scale-110 -rotate-3' : 'scale-100 rotate-3'}`}>
-        <img
-          src="/images/speakli-avatar.png"
-          alt="Speakli"
-          className="w-20 h-20 mx-auto drop-shadow-lg"
-          onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
-        />
-        <span className="text-6xl hidden">🦉</span>
-      </div>
-      <h1 className="text-3xl font-black py-1" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      <SpeakliAvatar mode="idle" size="lg" glow />
+      <h1 className="text-3xl font-black py-1 mt-1" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
         {uiLang === 'he' ? `היי ${name || ''}!` : `Hi ${name || ''}!`}
       </h1>
       <p className="text-sm font-bold text-blue-600 dark:text-sky-400 mt-1 animate-pop-in">
@@ -329,8 +316,8 @@ function KidsWordOfDay({ speak, speakSequence, uiLang }) {
       <div className="absolute top-2 right-3 text-lg animate-sparkle">✨</div>
       <div className="absolute bottom-2 left-3 text-sm animate-sparkle" style={{ animationDelay: '0.5s' }}>⭐</div>
       {/* Mini Speakli avatar */}
-      <div className="absolute top-2 left-3">
-        <img src="/images/speakli-avatar.png" alt="" className="w-8 h-8 opacity-40" onError={(e) => { e.target.style.display = 'none'; }} />
+      <div className="absolute top-1 left-2 opacity-40">
+        <SpeakliAvatar mode="idle" size="xs" shadow={false} glow={false} />
       </div>
 
       <p className="text-xs font-bold text-white/70 uppercase tracking-wider mb-1">
@@ -439,8 +426,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         {/* Game cards grid */}
         <div>
           <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 flex items-center gap-2">
-            <img src="/images/speakli-avatar.png" alt="" className="w-8 h-8 animate-wiggle inline-block" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline-block'; }} />
-            <span className="animate-wiggle hidden">🎮</span>
+            <SpeakliAvatar mode="bounce" size="xs" shadow={false} />
             {uiLang === 'he' ? 'בואו נשחק עם ספיקלי!' : "Let's Play with Speakli!"}
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -533,8 +519,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
           }}
         >
           <div className="flex items-center gap-3">
-            <img src="/images/speakli-avatar.png" alt="" className="w-10 h-10" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
-            <span className="text-3xl hidden">📖</span>
+            <SpeakliAvatar mode="idle" size="sm" shadow={false} glow={false} />
             <div className="text-left">
               <h3 className="text-white font-extrabold text-sm">
                 {uiLang === 'he' ? 'הסיפורים של ספיקלי' : "Speakli's Stories"}

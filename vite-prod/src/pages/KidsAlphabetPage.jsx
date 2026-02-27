@@ -5,6 +5,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import alphabetData from '../data/alphabet-kids.json';
 import { shuffle } from '../utils/shuffle.js';
 
@@ -743,10 +744,8 @@ function GameFlow({ letter, onComplete, onBack }) {
         <FloatingDecorations />
         <ConfettiBurst show={true} />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-          <div className="mb-4 animate-jelly">
-            <img src="/images/speakli-avatar.png" alt="Speakli" className="w-24 h-24 mx-auto drop-shadow-lg" onError={(e) => { e.target.outerHTML = '<span class="text-7xl">🎉</span>'; }} />
-          </div>
-          <h2 className="text-4xl font-black py-2 mb-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <SpeakliAvatar mode="celebrate" size="xl" glow />
+          <h2 className="text-4xl font-black py-2 mb-2 mt-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             {uiLang === 'he' ? 'ספיקלי גאה בך!' : 'Speakli is proud!'}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-4 font-medium">
