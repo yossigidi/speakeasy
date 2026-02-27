@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { t } from '../../utils/translations.js';
 
 // Guidance bubble component - shows Hebrew instructions and reads them aloud
@@ -42,6 +42,17 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   const [showResult, setShowResult] = useState(false);
   const [listening, setListening] = useState(false);
   const [speakResult, setSpeakResult] = useState(null);
+  const recognitionRef = useRef(null);
+
+  // Cleanup SpeechRecognition on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.abort(); } catch (e) {}
+        recognitionRef.current = null;
+      }
+    };
+  }, []);
 
   // -- word-arrange state --
   const [arrangedWords, setArrangedWords] = useState([]);
@@ -268,8 +279,14 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
     const startListening = () => {
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SR) { onAnswer(true, exercise.wordData); return; }
+      // Stop any previous recognition instance
+      if (recognitionRef.current) {
+        try { recognitionRef.current.abort(); } catch (e) {}
+        recognitionRef.current = null;
+      }
       setListening(true);
       const recognition = new SR();
+      recognitionRef.current = recognition;
       recognition.lang = 'en-US';
       recognition.interimResults = false;
       recognition.maxAlternatives = 3;
@@ -280,14 +297,15 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
           exercise.correctAnswer.toLowerCase().includes(s)
         );
         setListening(false);
+        recognitionRef.current = null;
         setSpeakResult(correct ? 'correct' : 'wrong');
         setTimeout(() => {
           onAnswer(correct, exercise.wordData);
           setSpeakResult(null);
         }, 800);
       };
-      recognition.onerror = () => { setListening(false); };
-      recognition.onend = () => setListening(false);
+      recognition.onerror = () => { setListening(false); recognitionRef.current = null; };
+      recognition.onend = () => { setListening(false); recognitionRef.current = null; };
       recognition.start();
     };
 

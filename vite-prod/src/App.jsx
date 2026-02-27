@@ -186,7 +186,7 @@ function AppContent() {
 
   const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {

@@ -85,10 +85,18 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     } else {
       playWrong();
       setWrongCount(prev => prev + 1);
-      setHearts(prev => Math.max(0, prev - 1));
+      const newHearts = Math.max(0, hearts - 1);
+      setHearts(newHearts);
       setStreak(0);
       setTeacherState('encouraging');
       speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95 });
+
+      // If hearts reach 0, end the lesson immediately
+      if (newHearts === 0) {
+        setAnswers(prev => [...prev, { isCorrect, wordData }]);
+        setTimeout(() => handleLessonComplete(isCorrect), 1200);
+        return;
+      }
     }
 
     setAnswers(prev => [...prev, { isCorrect, wordData }]);

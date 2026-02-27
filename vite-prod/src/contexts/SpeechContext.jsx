@@ -141,7 +141,11 @@ export function SpeechProvider({ children }) {
   }, []);
 
   const speakWithWebSpeech = useCallback((text, options = {}) => {
-    if (!('speechSynthesis' in window) || !text) return;
+    if (!('speechSynthesis' in window) || !text) {
+      setIsSpeaking(false);
+      if (options.onEnd) options.onEnd();
+      return;
+    }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
     const utterance = new SpeechSynthesisUtterance(text);
@@ -181,7 +185,10 @@ export function SpeechProvider({ children }) {
   }, [startKeepAlive, stopKeepAlive]);
 
   const speak = useCallback((text, options = {}) => {
-    if (!text) return;
+    if (!text) {
+      if (options.onEnd) options.onEnd();
+      return;
+    }
 
     // Cancel ALL audio from all channels (not just WebSpeech)
     if (!options._queued) {

@@ -308,63 +308,72 @@ export function UserProgressProvider({ children: reactChildren }) {
   const addXP = useCallback(async (amount, source = 'unknown') => {
     if (!user || amount <= 0) return;
 
-    const today = new Date().toISOString().split('T')[0];
-    const newXP = progress.xp + amount;
-    const newDailyXP = (progress.lastActiveDate === today ? progress.dailyXP : 0) + amount;
-    const levelInfo = getLevelInfo(newXP);
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const newXP = progress.xp + amount;
+      const newDailyXP = (progress.lastActiveDate === today ? progress.dailyXP : 0) + amount;
+      const levelInfo = getLevelInfo(newXP);
 
-    // Streak logic
-    let newStreak = progress.streak;
-    let newLongest = progress.longestStreak;
-    if (progress.lastActiveDate !== today) {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayStr = yesterday.toISOString().split('T')[0];
+      // Streak logic
+      let newStreak = progress.streak;
+      let newLongest = progress.longestStreak;
+      if (progress.lastActiveDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-      if (progress.lastActiveDate === yesterdayStr) {
-        newStreak = progress.streak + 1;
-      } else if (progress.lastActiveDate !== today) {
-        if (progress.streakFreezes > 0) {
-          newStreak = progress.streak;
-        } else {
-          newStreak = 1;
+        if (progress.lastActiveDate === yesterdayStr) {
+          newStreak = progress.streak + 1;
+        } else if (progress.lastActiveDate !== today) {
+          if (progress.streakFreezes > 0) {
+            newStreak = progress.streak;
+          } else {
+            newStreak = 1;
+          }
         }
+        newLongest = Math.max(newLongest, newStreak);
       }
-      newLongest = Math.max(newLongest, newStreak);
+
+      const updates = {
+        xp: newXP,
+        level: levelInfo.level,
+        dailyXP: newDailyXP,
+        streak: newStreak,
+        longestStreak: newLongest,
+        lastActiveDate: today,
+      };
+
+      await updateProgress(updates);
+
+      // Log daily activity — route to correct subcollection
+      try {
+        const activityPath = activeChildId
+          ? ['childProfiles', activeChildId, 'dailyActivity', today]
+          : ['users', user.uid, 'dailyActivity', today];
+        const activityRef = window.firestore.doc(window.db, ...activityPath);
+        const activitySnap = await window.firestore.getDoc(activityRef);
+        if (activitySnap.exists()) {
+          await window.firestore.updateDoc(activityRef, {
+            xp: window.firestore.increment(amount),
+            [`sources.${source}`]: window.firestore.increment(amount),
+          });
+        } else {
+          await window.firestore.setDoc(activityRef, {
+            date: today,
+            xp: amount,
+            minutes: 0,
+            sources: { [source]: amount },
+          });
+        }
+      } catch (activityErr) {
+        console.warn('Failed to log daily activity:', activityErr);
+      }
+
+      return { leveledUp: levelInfo.level > progress.level, newLevel: levelInfo.level };
+    } catch (err) {
+      console.error('addXP failed:', err);
+      return { leveledUp: false, newLevel: progress.level };
     }
-
-    const updates = {
-      xp: newXP,
-      level: levelInfo.level,
-      dailyXP: newDailyXP,
-      streak: newStreak,
-      longestStreak: newLongest,
-      lastActiveDate: today,
-    };
-
-    await updateProgress(updates);
-
-    // Log daily activity — route to correct subcollection
-    const activityPath = activeChildId
-      ? ['childProfiles', activeChildId, 'dailyActivity', today]
-      : ['users', user.uid, 'dailyActivity', today];
-    const activityRef = window.firestore.doc(window.db, ...activityPath);
-    const activitySnap = await window.firestore.getDoc(activityRef);
-    if (activitySnap.exists()) {
-      await window.firestore.updateDoc(activityRef, {
-        xp: window.firestore.increment(amount),
-        [`sources.${source}`]: window.firestore.increment(amount),
-      });
-    } else {
-      await window.firestore.setDoc(activityRef, {
-        date: today,
-        xp: amount,
-        minutes: 0,
-        sources: { [source]: amount },
-      });
-    }
-
-    return { leveledUp: levelInfo.level > progress.level, newLevel: levelInfo.level };
   }, [user, progress, updateProgress, activeChildId]);
 
   // --- Family management functions ---
@@ -397,10 +406,13 @@ export function UserProgressProvider({ children: reactChildren }) {
   }, [user, childrenList]);
 
   const switchToChild = useCallback((childId) => {
+    // Clear session-scoped state so new child gets fresh intro/welcome
+    sessionStorage.clear();
     setActiveChildId(childId);
   }, []);
 
   const switchToParent = useCallback(() => {
+    sessionStorage.clear();
     setActiveChildId(null);
   }, []);
 
@@ -572,12 +584,14 @@ export function UserProgressProvider({ children: reactChildren }) {
     return childrenList.find(c => c.id === activeChildId) || null;
   }, [activeChildId, childrenList]);
 
-  const value = {
+  const levelInfo = useMemo(() => getLevelInfo(progress.xp), [progress.xp]);
+
+  const value = useMemo(() => ({
     progress,
     loading,
     updateProgress,
     addXP,
-    levelInfo: getLevelInfo(progress.xp),
+    levelInfo,
     // Family
     activeChildId,
     activeChild,
@@ -593,7 +607,9 @@ export function UserProgressProvider({ children: reactChildren }) {
     generateFamilyCode,
     resetChildPin,
     updateChildLevel,
-  };
+  }), [progress, loading, updateProgress, addXP, levelInfo, activeChildId, activeChild,
+       isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
+       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel]);
 
   return <UserProgressContext.Provider value={value}>{reactChildren}</UserProgressContext.Provider>;
 }

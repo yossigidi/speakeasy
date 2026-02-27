@@ -222,10 +222,12 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     }
   }, [round, words]);
 
+  const poppingRef = useRef(false);
   const handlePop = (opt) => {
-    if (popped !== null) return;
+    if (popped !== null || poppingRef.current) return;
 
     if (opt.isTarget) {
+      poppingRef.current = true;
       setPopped(opt.id);
       setScore(s => s + 1);
       playCorrect();
@@ -234,7 +236,10 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
         { pause: 100 },
         { text: opt.translation, lang: 'he' },
       ], speak);
-      setTimeout(() => setRound(r => r + 1), 1200);
+      setTimeout(() => {
+        setRound(r => r + 1);
+        poppingRef.current = false;
+      }, 1200);
     } else {
       setWrongId(opt.id);
       playWrong();
@@ -842,6 +847,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const { speak } = useSpeech();
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
+  const [wrongTapId, setWrongTapId] = useState(null);
   const [placed, setPlaced] = useState([]);
   const [available, setAvailable] = useState([]);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -925,8 +931,10 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         ], speak);
       }
     } else {
-      // Wrong word - flash and ignore
+      // Wrong word - flash red and shake
       playWrong();
+      setWrongTapId(wordObj.id);
+      setTimeout(() => setWrongTapId(null), 500);
     }
   };
 
@@ -1028,7 +1036,9 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
                 className={`px-5 py-3 rounded-xl text-base font-bold transition-all duration-200 ${
                   wordObj.used
                     ? 'opacity-20 scale-90 bg-gray-200 dark:bg-gray-700 text-gray-400'
-                    : 'game-option-btn hover:scale-105 active:scale-90'
+                    : wrongTapId === wordObj.id
+                      ? 'bg-red-100 dark:bg-red-900/40 border-2 border-red-400 text-red-600 dark:text-red-300 animate-shake'
+                      : 'game-option-btn hover:scale-105 active:scale-90'
                 }`}
               >
                 {wordObj.word}
