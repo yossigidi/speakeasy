@@ -9,7 +9,7 @@ export default function Header({ title, showBack = false, onBack, showStats = tr
   const { progress, levelInfo, isChildMode, activeChild } = useUserProgress();
 
   return (
-    <header className="sticky top-0 z-30 glass-card-strong rounded-none border-b border-white/20 dark:border-white/5">
+    <header className="sticky top-0 z-30 glass-card-strong rounded-none border-b border-white/20 dark:border-white/5" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
       <div className="flex items-center justify-between px-4 py-3">
         {/* Left: Back button or title */}
         <div className="flex items-center gap-2 min-w-0 flex-1">

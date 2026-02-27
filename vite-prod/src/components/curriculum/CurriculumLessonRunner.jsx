@@ -170,7 +170,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         position: 'fixed', inset: 0, zIndex: 100,
         background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        padding: 24,
+        padding: '24px', paddingTop: 'calc(env(safe-area-inset-top, 0px) + 24px)',
       }}>
         {/* Teacher character - centered, normal size */}
         <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
@@ -295,7 +295,8 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     }}>
       {/* Top Bar: Back + Progress + Hearts */}
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+        display: 'flex', alignItems: 'center', gap: 12,
+        padding: 'calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px 16px',
         background: 'white', borderBottom: '1px solid #F3F4F6',
         position: 'relative', zIndex: 10,
       }}>

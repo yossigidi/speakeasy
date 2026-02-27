@@ -260,7 +260,7 @@ function AppContent() {
         />
       )}
 
-      <main className={showHeader ? '' : 'pt-4'}>
+      <main className={showHeader ? '' : 'pt-4'} style={!showHeader ? { paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)' } : undefined}>
         <PageTransition pageKey={currentPage}>
           {renderPage()}
         </PageTransition>

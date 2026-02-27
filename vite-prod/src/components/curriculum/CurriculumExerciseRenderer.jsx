@@ -54,9 +54,11 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
     };
   }, []);
 
-  // -- word-arrange state --
+  // -- word-arrange state (initialize synchronously from exercise prop) --
   const [arrangedWords, setArrangedWords] = useState([]);
-  const [availableWords, setAvailableWords] = useState(null);
+  const [availableWords, setAvailableWords] = useState(
+    () => exercise.type === 'word-arrange' ? [...(exercise.options || [])] : null
+  );
 
   // -- match-pairs state --
   const [matchedPairs, setMatchedPairs] = useState([]);
@@ -64,24 +66,21 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   const [selectedRight, setSelectedRight] = useState(null);
   const [matchFlash, setMatchFlash] = useState(null); // 'correct' | 'wrong'
 
-  // A1 fix: Initialize word-arrange state via useEffect (not in render body)
-  // Also reset shared state for each new exercise
-  useEffect(() => {
-    if (exercise.type === 'word-arrange') {
-      setAvailableWords([...exercise.options]);
-      setArrangedWords([]);
-    } else {
-      setAvailableWords(null);
-      setArrangedWords([]);
-    }
+  // Reset all state when exercise changes (handles case where component is NOT remounted)
+  const exerciseIdRef = useRef(exercise);
+  if (exerciseIdRef.current !== exercise) {
+    exerciseIdRef.current = exercise;
+    // Synchronous reset during render — safe in React 18 concurrent mode
     setSelected(null);
     setShowResult(false);
+    setArrangedWords([]);
+    setAvailableWords(exercise.type === 'word-arrange' ? [...(exercise.options || [])] : null);
     setMatchedPairs([]);
     setSelectedLeft(null);
     setSelectedRight(null);
     setMatchFlash(null);
     setSpeakResult(null);
-  }, [exercise]);
+  }
 
   // A2: Auto-speak the exercise question/word after guidance finishes
   useEffect(() => {
@@ -470,8 +469,8 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       setAvailableWords(newAvailable);
 
       // Check if all words placed
-      if (newArranged.length === correctOrder.length) {
-        const isCorrect = newArranged.every((w, i) => w.toLowerCase() === correctOrder[i].toLowerCase());
+      if (correctOrder.length > 0 && newArranged.length === correctOrder.length) {
+        const isCorrect = newArranged.every((w, i) => correctOrder[i] && w.toLowerCase() === correctOrder[i].toLowerCase());
         setShowResult(true);
         setTimeout(() => {
           onAnswer(isCorrect, exercise.wordData);
@@ -491,7 +490,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       setAvailableWords([...(availableWords || []), word]);
     };
 
-    const isCorrectSoFar = isComplete && arrangedWords.every((w, i) => w.toLowerCase() === correctOrder[i].toLowerCase());
+    const isCorrectSoFar = isComplete && correctOrder.length > 0 && arrangedWords.every((w, i) => correctOrder[i] && w.toLowerCase() === correctOrder[i].toLowerCase());
 
     return (
       <div style={{ textAlign: 'center' }}>

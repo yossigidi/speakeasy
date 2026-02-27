@@ -22,7 +22,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { uiLang, dir } = useTheme();
   const { progress } = useUserProgress();
   const { speak, speakSequence, ttsSupported } = useSpeech();
-  useWelcomeSpeech('home', 'שלום, ברוך הבא חזרה', 'Welcome back!');
+  useWelcomeSpeech('home', 'ברוכים הבאים לספיקלי, המורה שלכם לאנגלית!', 'Welcome to Speakli, your English teacher!');
 
   // Word of the Day - deterministic based on date, filtered by user level
   const wordOfDay = useMemo(() => {

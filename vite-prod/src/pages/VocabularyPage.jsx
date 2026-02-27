@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { shuffle } from '../utils/shuffle.js';
+import { preloadEnglishAudio, preloadHebrewAudio } from '../utils/hebrewAudio.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
@@ -894,6 +895,14 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
   const { uiLang } = useTheme();
   const isHe = uiLang === 'he';
   const words = ALL_WORDS.filter(w => w.category === category);
+
+  // Preload audio for all words in this category for instant playback
+  useEffect(() => {
+    const englishTexts = words.map(w => w.word);
+    const hebrewTexts = words.map(w => w.translation.replace(/\s*\([^)]*\)/g, '').trim());
+    preloadEnglishAudio(englishTexts);
+    preloadHebrewAudio(hebrewTexts, 'he');
+  }, [category]);
 
   const categoryInfo = {
     greetings: { emoji: '👋', labelHe: 'ברכות' },

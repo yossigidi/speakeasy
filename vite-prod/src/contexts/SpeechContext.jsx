@@ -71,6 +71,25 @@ function pickBestVoice(voices, langPrefix) {
   return best;
 }
 
+// Disambiguation map for ambiguous Hebrew words
+// Maps words to their nikud-annotated forms for correct TTS pronunciation
+const HEBREW_PRONUNCIATION_MAP = {
+  'פה': 'פֶּה',   // pe (mouth), not po (here)
+};
+
+// Clean Hebrew text for TTS: strip parentheses, fix ambiguous words
+function cleanHebrewForTTS(text) {
+  let cleaned = text;
+  // Remove parenthetical content (e.g. "יד (כף יד)" → "יד")
+  cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
+  cleaned = cleaned.trim();
+  // Fix ambiguous single words
+  if (HEBREW_PRONUNCIATION_MAP[cleaned]) {
+    return HEBREW_PRONUNCIATION_MAP[cleaned];
+  }
+  return cleaned;
+}
+
 export function SpeechProvider({ children }) {
   const [sttSupported, setSttSupported] = useState(false);
   const [ttsSupported, setTtsSupported] = useState(false);
@@ -148,7 +167,8 @@ export function SpeechProvider({ children }) {
     }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
-    const utterance = new SpeechSynthesisUtterance(text);
+    const cleanedText = isHebrew ? cleanHebrewForTTS(text) : text;
+    const utterance = new SpeechSynthesisUtterance(cleanedText);
     utterance.lang = isHebrew ? 'he-IL' : (options.lang || 'en-US');
 
     utterance.rate = options.rate || (isHebrew ? 0.9 : 1.0);
@@ -198,14 +218,19 @@ export function SpeechProvider({ children }) {
       stopAllAudio();
     }
 
+    // Ensure AudioContext is resumed (required after user gesture on mobile)
+    try { unlockAudioContext(); } catch (e) {}
+
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
     const apiLang = isHebrew ? 'he' : 'en';
+    // Clean Hebrew text (strip parentheses etc.) before sending to TTS
+    const ttsText = isHebrew ? cleanHebrewForTTS(text) : text;
 
     setIsSpeaking(true);
 
     // For long texts (>450 chars), split into sentences and speak via Cloud TTS sequentially
     // This avoids falling back to Web Speech which sounds robotic
-    if (text.length > 450) {
+    if (ttsText.length > 450) {
       const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
       const items = sentences.map(s => ({ text: s.trim(), lang: options.lang, rate: options.rate }));
       // Use speakSequenceInner directly (avoid circular dependency)
@@ -214,25 +239,25 @@ export function SpeechProvider({ children }) {
     }
 
     const abortCtrl = new AbortController();
-    const API_TIMEOUT = 2000;
+    const API_TIMEOUT = 4000;
     let settled = false;
 
     const fallbackToLocal = async () => {
-      // Hebrew-specific fallback: pre-recorded MP3
+      // Hebrew-specific fallback: pre-recorded MP3 (use cleaned text for lookup too)
       if (isHebrew) {
-        const mp3Played = await playHebrew(text);
+        const mp3Played = await playHebrew(ttsText) || await playHebrew(text);
         if (mp3Played) {
           setIsSpeaking(false);
           if (options.onEnd) options.onEnd();
           return;
         }
       }
-      // Last resort: Web Speech API
-      speakWithWebSpeech(text, { ...options, _queued: true });
+      // Last resort: Web Speech API (uses cleaned text via speakWithWebSpeech)
+      speakWithWebSpeech(ttsText, { ...options, _queued: true });
     };
 
-    // Try Cloud TTS with abort signal
-    const apiPromise = playFromAPI(text, apiLang, abortCtrl.signal);
+    // Try Cloud TTS with abort signal (send cleaned text)
+    const apiPromise = playFromAPI(ttsText, apiLang, abortCtrl.signal);
 
     apiPromise.then(async (result) => {
       if (settled) return;

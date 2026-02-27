@@ -21,9 +21,9 @@ function detectLang(text) {
 function cleanForTTS(text, lang) {
   let cleaned = text;
   if (lang === 'he') {
-    cleaned = cleaned
-      .replace(/\s*\/\s*/g, ' או ')
-      .replace(/\s*\(([^)]+)\)/g, ', $1');
+    // Remove parenthetical content (e.g. "יד (כף יד)" → "יד")
+    cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
+    cleaned = cleaned.replace(/\s*\/\s*/g, ' או ');
   }
   return cleaned.replace(/\s+/g, ' ').trim();
 }
