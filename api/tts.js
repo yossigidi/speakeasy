@@ -1,18 +1,15 @@
 import { handleCors } from './_lib/cors.js';
-import { getFirestore, getAccessToken } from './_lib/firebase.js';
+import { getFirestore } from './_lib/firebase.js';
 
-const CLOUD_TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
+const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 const CACHE_COLLECTION = 'tts-cache';
 
-// Best natural-sounding voices per language
-const VOICES = {
-  he: { name: 'he-IL-Chirp3-HD-Kore', languageCode: 'he-IL', speakingRate: 0.92 },
-  en: { name: 'en-US-Chirp3-HD-Achernar', languageCode: 'en-US', speakingRate: 0.95 },
-};
+// Multilingual voice for both Hebrew and English
+const VOICE_ID = 'XJ2fW4ybq7HouelYYGcL';
+const MODEL_ID = 'eleven_multilingual_v2';
 
 // Detect language from text (simple heuristic)
 function detectLang(text) {
-  // If contains Hebrew characters → Hebrew
   if (/[\u0590-\u05FF]/.test(text)) return 'he';
   return 'en';
 }
@@ -28,38 +25,32 @@ function cleanForTTS(text, lang) {
   return cleaned.replace(/\s+/g, ' ').trim();
 }
 
-async function callCloudTTS(text, voiceConfig, accessToken) {
-  const audioConfig = {
-    audioEncoding: 'MP3',
-  };
-  // Add speaking rate if configured (slower = more teacher-like)
-  if (voiceConfig.speakingRate) {
-    audioConfig.speakingRate = voiceConfig.speakingRate;
-  }
-
-  const response = await fetch(CLOUD_TTS_URL, {
+async function callElevenLabsTTS(text, voiceId) {
+  const response = await fetch(`${ELEVENLABS_API_URL}/${voiceId}`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      'xi-api-key': process.env.ELEVENLABS_API_KEY,
       'Content-Type': 'application/json',
+      'Accept': 'audio/mpeg',
     },
     body: JSON.stringify({
-      input: { text },
-      voice: {
-        languageCode: voiceConfig.languageCode,
-        name: voiceConfig.name,
+      text,
+      model_id: MODEL_ID,
+      voice_settings: {
+        stability: 0.5,
+        similarity_boost: 0.75,
       },
-      audioConfig,
     }),
   });
 
   if (!response.ok) {
     const err = await response.text();
-    throw new Error(`Cloud TTS ${response.status}: ${err}`);
+    throw new Error(`ElevenLabs TTS ${response.status}: ${err}`);
   }
 
-  const data = await response.json();
-  return data.audioContent; // base64 MP3
+  // ElevenLabs returns raw binary MP3
+  const arrayBuffer = await response.arrayBuffer();
+  return Buffer.from(arrayBuffer).toString('base64');
 }
 
 export default async function handler(req, res) {
@@ -69,21 +60,16 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { text, voice, lang } = req.body || {};
+  const { text, lang } = req.body || {};
   if (!text || typeof text !== 'string' || text.length > 500) {
     return res.status(400).json({ error: 'Invalid text (required, max 500 chars)' });
   }
 
   const trimmed = text.trim();
-
-  // Determine language and voice
   const detectedLang = lang || detectLang(trimmed);
-  const voiceConfig = voice
-    ? { name: voice, languageCode: detectedLang === 'he' ? 'he-IL' : 'en-US' }
-    : VOICES[detectedLang] || VOICES.en;
+  const voiceId = VOICE_ID;
 
-  const rateStr = voiceConfig.speakingRate ? `_r${voiceConfig.speakingRate}` : '';
-  const cacheKey = Buffer.from(`${trimmed}__${voiceConfig.name}${rateStr}`).toString('base64url');
+  const cacheKey = Buffer.from(`${trimmed}__el_${voiceId}`).toString('base64url');
 
   // 1. Check Firestore cache
   try {
@@ -100,10 +86,9 @@ export default async function handler(req, res) {
     console.warn('Firestore cache read failed:', e.message);
   }
 
-  // 2. Generate via Google Cloud TTS
+  // 2. Generate via ElevenLabs TTS
   try {
-    const token = await getAccessToken();
-    const audioBase64 = await callCloudTTS(cleanForTTS(trimmed, detectedLang), voiceConfig, token);
+    const audioBase64 = await callElevenLabsTTS(cleanForTTS(trimmed, detectedLang), voiceId);
 
     if (!audioBase64) {
       return res.status(500).json({ error: 'No audio in response' });
@@ -122,7 +107,8 @@ export default async function handler(req, res) {
         mimeType: result.mimeType,
         text: trimmed,
         lang: detectedLang,
-        voice: voiceConfig.name,
+        voice: voiceId,
+        provider: 'elevenlabs',
         createdAt: new Date().toISOString(),
       }).catch(e => console.warn('Firestore cache write failed:', e.message));
     } catch (e) {

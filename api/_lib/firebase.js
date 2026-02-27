@@ -18,9 +18,3 @@ export function getFirestore() {
   db = admin.firestore();
   return db;
 }
-
-export async function getAccessToken() {
-  ensureApp();
-  const token = await admin.app().options.credential.getAccessToken();
-  return token.access_token;
-}
