@@ -65,7 +65,7 @@ export default function KidsIntro({
     return { text: d, lang: isHe ? 'he' : 'en-US' };
   }, [uiLang, desc, descHe]);
 
-  // Fire speech after wave phase (1.8s) with Speakli's unique voice
+  // Fire speech after wave phase (1.8s) — Cloud TTS only, no Web Speech fallback
   useEffect(() => {
     if (phase !== 'visible' || !visible || spokenRef.current) return;
     const speechTimer = setTimeout(() => {
@@ -75,6 +75,7 @@ export default function KidsIntro({
       speak(text, {
         lang,
         rate: 0.9,
+        noWebSpeechFallback: true,
         onEnd: () => setAvatarMode('idle'),
       });
       spokenRef.current = true;
@@ -91,6 +92,7 @@ export default function KidsIntro({
     speak(text, {
       lang,
       rate: 0.9,
+      noWebSpeechFallback: true,
       onEnd: () => setAvatarMode('idle'),
     });
     spokenRef.current = true;
