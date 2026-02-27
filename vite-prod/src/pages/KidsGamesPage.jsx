@@ -12,10 +12,10 @@ import { shuffle } from '../utils/shuffle.js';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
-  'היי! מצאו את הבועה עם האות הנכונה ולחצו עליה',
-  'משחק זיכרון! לחצו על קלף ומצאו את הזוג שלו. בהצלחה!',
-  'בונים מילה! הקשיבו למילה ולחצו על האותיות בסדר הנכון',
-  'איפה האות','יופי!','נכון!','מצוין!','כל הכבוד!','מדהים!','נסו שוב',
+  'הַיי! מִצְאוּ אֶת הַבּוּעָה עִם הָאוֹת הַנְּכוֹנָה וְלִחֲצוּ עָלֶיהָ',
+  'מִשְׂחַק זִכָּרוֹן! לִחֲצוּ עַל קָלָף וּמִצְאוּ אֶת הַזּוּג שֶׁלּוֹ. בְּהַצְלָחָה!',
+  'בּוֹנִים מִלָּה! הַקְשִׁיבוּ לַמִּלָּה וְלִחֲצוּ עַל הָאוֹתִיּוֹת בַּסֵּדֶר הַנָּכוֹן',
+  'אֵיפֹה הָאוֹת','יוֹפִי!','נָכוֹן!','מְצוּיָּן!','כׇּל הַכָּבוֹד!','מַדְהִים!','נַסּוּ שׁוּב',
 ];
 import alphabetData from '../data/alphabet-kids.json';
 import wordsA1 from '../data/words-a1.json';
@@ -332,27 +332,27 @@ function BubblePopGame({ onComplete, onBack }) {
 // Simple, visual words kids already know
 const MEMORY_WORDS = [
   // Fruits
-  { word: 'apple', emoji: '🍎', translation: 'תפוח', bg: 'from-red-300 to-red-400' },
-  { word: 'banana', emoji: '🍌', translation: 'בננה', bg: 'from-yellow-200 to-yellow-400' },
-  { word: 'orange', emoji: '🍊', translation: 'תפוז', bg: 'from-orange-300 to-orange-400' },
-  { word: 'grape', emoji: '🍇', translation: 'ענבים', bg: 'from-purple-300 to-purple-400' },
+  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', bg: 'from-red-300 to-red-400' },
+  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', bg: 'from-yellow-200 to-yellow-400' },
+  { word: 'orange', emoji: '🍊', translation: 'תַּפּוּז', bg: 'from-orange-300 to-orange-400' },
+  { word: 'grape', emoji: '🍇', translation: 'עֲנָבִים', bg: 'from-purple-300 to-purple-400' },
   // Animals
-  { word: 'cat', emoji: '🐱', translation: 'חתול', bg: 'from-amber-200 to-amber-400' },
-  { word: 'dog', emoji: '🐶', translation: 'כלב', bg: 'from-yellow-300 to-amber-400' },
-  { word: 'fish', emoji: '🐟', translation: 'דג', bg: 'from-blue-200 to-blue-400' },
-  { word: 'bird', emoji: '🐦', translation: 'ציפור', bg: 'from-sky-200 to-sky-400' },
+  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', bg: 'from-amber-200 to-amber-400' },
+  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', bg: 'from-yellow-300 to-amber-400' },
+  { word: 'fish', emoji: '🐟', translation: 'דָּג', bg: 'from-blue-200 to-blue-400' },
+  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', bg: 'from-sky-200 to-sky-400' },
   // Colors
-  { word: 'red', emoji: '🔴', translation: 'אדום', bg: 'from-red-300 to-red-500' },
-  { word: 'blue', emoji: '🔵', translation: 'כחול', bg: 'from-blue-300 to-blue-500' },
-  { word: 'green', emoji: '🟢', translation: 'ירוק', bg: 'from-green-300 to-green-500' },
-  { word: 'yellow', emoji: '🟡', translation: 'צהוב', bg: 'from-yellow-200 to-yellow-400' },
+  { word: 'red', emoji: '🔴', translation: 'אָדֹם', bg: 'from-red-300 to-red-500' },
+  { word: 'blue', emoji: '🔵', translation: 'כָּחֹל', bg: 'from-blue-300 to-blue-500' },
+  { word: 'green', emoji: '🟢', translation: 'יָרֹק', bg: 'from-green-300 to-green-500' },
+  { word: 'yellow', emoji: '🟡', translation: 'צָהֹב', bg: 'from-yellow-200 to-yellow-400' },
   // Simple things
-  { word: 'sun', emoji: '☀️', translation: 'שמש', bg: 'from-yellow-200 to-orange-300' },
-  { word: 'moon', emoji: '🌙', translation: 'ירח', bg: 'from-indigo-200 to-indigo-400' },
-  { word: 'star', emoji: '⭐', translation: 'כוכב', bg: 'from-yellow-200 to-yellow-400' },
-  { word: 'heart', emoji: '❤️', translation: 'לב', bg: 'from-pink-300 to-rose-400' },
-  { word: 'ball', emoji: '⚽', translation: 'כדור', bg: 'from-green-200 to-emerald-400' },
-  { word: 'cake', emoji: '🎂', translation: 'עוגה', bg: 'from-pink-200 to-pink-400' },
+  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', bg: 'from-yellow-200 to-orange-300' },
+  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', bg: 'from-indigo-200 to-indigo-400' },
+  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', bg: 'from-yellow-200 to-yellow-400' },
+  { word: 'heart', emoji: '❤️', translation: 'לֵב', bg: 'from-pink-300 to-rose-400' },
+  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', bg: 'from-green-200 to-emerald-400' },
+  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', bg: 'from-pink-200 to-pink-400' },
 ];
 
 function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
@@ -599,26 +599,26 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
 
 // Simple words data for word builder (3-5 letters, kids-friendly)
 const BUILDER_WORDS = [
-  { word: 'cat', emoji: '🐱', translation: 'חתול' },
-  { word: 'dog', emoji: '🐕', translation: 'כלב' },
-  { word: 'sun', emoji: '☀️', translation: 'שמש' },
-  { word: 'hat', emoji: '🎩', translation: 'כובע' },
-  { word: 'cup', emoji: '🥤', translation: 'כוס' },
-  { word: 'bed', emoji: '🛏️', translation: 'מיטה' },
-  { word: 'bus', emoji: '🚌', translation: 'אוטובוס' },
-  { word: 'fish', emoji: '🐟', translation: 'דג' },
-  { word: 'bird', emoji: '🐦', translation: 'ציפור' },
-  { word: 'star', emoji: '⭐', translation: 'כוכב' },
-  { word: 'moon', emoji: '🌙', translation: 'ירח' },
-  { word: 'tree', emoji: '🌳', translation: 'עץ' },
-  { word: 'book', emoji: '📖', translation: 'ספר' },
-  { word: 'ball', emoji: '⚽', translation: 'כדור' },
-  { word: 'cake', emoji: '🎂', translation: 'עוגה' },
-  { word: 'frog', emoji: '🐸', translation: 'צפרדע' },
-  { word: 'duck', emoji: '🦆', translation: 'ברווז' },
-  { word: 'rain', emoji: '🌧️', translation: 'גשם' },
-  { word: 'milk', emoji: '🥛', translation: 'חלב' },
-  { word: 'hand', emoji: '✋', translation: 'יד' },
+  { word: 'cat', emoji: '🐱', translation: 'חָתוּל' },
+  { word: 'dog', emoji: '🐕', translation: 'כֶּלֶב' },
+  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ' },
+  { word: 'hat', emoji: '🎩', translation: 'כּוֹבַע' },
+  { word: 'cup', emoji: '🥤', translation: 'כּוֹס' },
+  { word: 'bed', emoji: '🛏️', translation: 'מִטָּה' },
+  { word: 'bus', emoji: '🚌', translation: 'אוֹטוֹבּוּס' },
+  { word: 'fish', emoji: '🐟', translation: 'דָּג' },
+  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר' },
+  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב' },
+  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ' },
+  { word: 'tree', emoji: '🌳', translation: 'עֵץ' },
+  { word: 'book', emoji: '📖', translation: 'סֵפֶר' },
+  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר' },
+  { word: 'cake', emoji: '🎂', translation: 'עוּגָה' },
+  { word: 'frog', emoji: '🐸', translation: 'צְפַרְדֵּעַ' },
+  { word: 'duck', emoji: '🦆', translation: 'בַּרְוָז' },
+  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם' },
+  { word: 'milk', emoji: '🥛', translation: 'חָלָב' },
+  { word: 'hand', emoji: '✋', translation: 'יָד' },
 ];
 
 function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
