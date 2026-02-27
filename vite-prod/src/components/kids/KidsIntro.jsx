@@ -74,8 +74,7 @@ export default function KidsIntro({
       setAvatarMode('talk');
       speak(text, {
         lang,
-        pitch: 1.3,
-        rate: 0.82,
+        rate: 0.9,
         onEnd: () => setAvatarMode('idle'),
       });
       spokenRef.current = true;
@@ -91,8 +90,7 @@ export default function KidsIntro({
     setAvatarMode('talk');
     speak(text, {
       lang,
-      pitch: 1.3,
-      rate: 0.82,
+      rate: 0.9,
       onEnd: () => setAvatarMode('idle'),
     });
     spokenRef.current = true;
