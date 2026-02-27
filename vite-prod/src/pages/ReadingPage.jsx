@@ -470,17 +470,17 @@ export default function ReadingPage() {
   return (
     <div className="pb-24 px-4 pt-4 space-y-4">
       <KidsIntro
-        id="reading-v2"
+        id="reading-v3"
         name={progress.displayName}
         emoji="📖"
-        title="Read Stories!"
-        titleHe="קריאת סיפורים!"
-        desc="Read fun stories and learn new words along the way!"
-        descHe="קרא סיפורים כיפיים ולמד מילים חדשות בדרך!"
+        title="Speakli's Stories!"
+        titleHe="הסיפורים של ספיקלי!"
+        desc="Read Speakli's stories and learn new words along the way!"
+        descHe="קראו את הסיפורים של ספיקלי ולמדו מילים חדשות בדרך!"
         uiLang={uiLang}
-        gradient="from-rose-500 via-pink-500 to-fuchsia-500"
-        buttonLabel="Let's read!"
-        buttonLabelHe="בואו נקרא!"
+        gradient="from-blue-500 via-sky-500 to-cyan-500"
+        buttonLabel="Let's read with Speakli!"
+        buttonLabelHe="בואו נקרא עם ספיקלי!"
       />
       <h2 className="text-xl font-bold text-gray-900 dark:text-white">
         {t('stories', uiLang)}

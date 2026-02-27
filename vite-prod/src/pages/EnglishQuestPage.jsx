@@ -19,7 +19,24 @@ const QUEST_SCENES = [
   { id: 'ocean', emoji: '🌊', nameEn: 'Deep Ocean', nameHe: 'מעמקי הים', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameEn: 'Octopus', bossNameHe: 'תמנון' },
 ];
 
-const HEROES = ['🧙‍♂️', '🦸‍♀️', '🧝‍♂️', '🥷', '🧑‍🚀', '🦹‍♀️'];
+// First hero is Speakli (avatar image), rest are emoji heroes
+const HEROES = ['speakli', '🧙‍♂️', '🦸‍♀️', '🧝‍♂️', '🥷', '🧑‍🚀', '🦹‍♀️'];
+
+/** Renders a hero — Speakli avatar for index 0, emoji for others */
+function HeroDisplay({ heroIdx, size = 'text-8xl', imgClass = 'w-24 h-24' }) {
+  const hero = HEROES[heroIdx || 0];
+  if (hero === 'speakli') {
+    return (
+      <img
+        src="/images/speakli-avatar.png"
+        alt="Speakli"
+        className={`${imgClass} drop-shadow-lg mx-auto`}
+        onError={(e) => { e.target.outerHTML = '<span class="' + size + '">🦉</span>'; }}
+      />
+    );
+  }
+  return <span className={size}>{hero}</span>;
+}
 const OUTFITS = ['⚔️', '🛡️', '🪄', '👑', '🎩', '🦸'];
 const PETS = ['🐉', '🦄', '🐺', '🦅', '🐱', '🤖'];
 const OUTFIT_COST = 30;
@@ -139,7 +156,7 @@ function QuestHeader({ scene, onBack, missionIndex, isHe }) {
    QUEST INTRO — Scene selection + hero display
    ══════════════════════════════════════════════════════ */
 function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe }) {
-  const heroEmoji = HEROES[hero?.character || 0];
+  const heroIdx = hero?.character || 0;
   const outfitEmoji = OUTFITS[hero?.outfit || 0];
   const petEmoji = hero?.pet != null ? PETS[hero.pet] : null;
 
@@ -166,7 +183,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
       <div className="relative z-10 text-center space-y-4 max-w-sm w-full">
         {/* Hero display */}
         <div className="relative inline-block">
-          <div className="text-8xl animate-jelly">{heroEmoji}</div>
+          <div className="animate-jelly"><HeroDisplay heroIdx={heroIdx} /></div>
           <div className="absolute -top-1 -right-2 text-3xl">{outfitEmoji}</div>
           {petEmoji && <div className="absolute -bottom-1 -left-2 text-3xl animate-wiggle">{petEmoji}</div>}
         </div>
@@ -175,7 +192,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
           <Shield size={16} className="text-yellow-300" />
           <span className="text-white font-bold text-sm">
-            {isHe ? `רמת גיבור ${questLevel}` : `Hero Level ${questLevel}`}
+            {isHe ? `גיבור ספיקלי רמה ${questLevel}` : `Speakli Hero Level ${questLevel}`}
           </span>
         </div>
 
@@ -792,7 +809,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
    ══════════════════════════════════════════════════════ */
 function HeroCustomizer({ hero, questCoins, onBuy, onBack, isHe }) {
   const [tab, setTab] = useState('heroes'); // heroes | outfits | pets
-  const heroEmoji = HEROES[hero?.character || 0];
+  const heroIdx = hero?.character || 0;
   const outfitEmoji = OUTFITS[hero?.outfit || 0];
   const petEmoji = hero?.pet != null ? PETS[hero.pet] : null;
 
@@ -803,7 +820,7 @@ function HeroCustomizer({ hero, questCoins, onBuy, onBack, isHe }) {
     if (tab === 'heroes') {
       return HEROES.map((h, i) => {
         const isCurrent = (hero?.character || 0) === i;
-        // First 2 heroes free, rest cost 20 coins each
+        // First 2 heroes free (Speakli + wizard), rest cost 20 coins each
         const cost = i < 2 ? 0 : 20;
         const unlocked = i < 2 || (hero?.unlockedHeroes || [0, 1]).includes(i);
         return (
@@ -820,7 +837,7 @@ function HeroCustomizer({ hero, questCoins, onBuy, onBack, isHe }) {
               isCurrent ? 'bg-yellow-400/30 ring-2 ring-yellow-400' : unlocked ? 'bg-white/15' : 'bg-white/5 opacity-60'
             }`}
           >
-            <span className="text-4xl">{h}</span>
+            <HeroDisplay heroIdx={i} size="text-4xl" imgClass="w-12 h-12" />
             {!unlocked && <span className="text-xs text-yellow-300">🪙 {cost}</span>}
             {isCurrent && <span className="text-xs text-green-400 font-bold">✓</span>}
           </button>
@@ -890,7 +907,7 @@ function HeroCustomizer({ hero, questCoins, onBuy, onBack, isHe }) {
       {/* Hero preview */}
       <div className="text-center mb-6">
         <div className="relative inline-block">
-          <div className="text-8xl">{heroEmoji}</div>
+          <HeroDisplay heroIdx={heroIdx} />
           <div className="absolute -top-1 -right-2 text-3xl">{outfitEmoji}</div>
           {petEmoji && <div className="absolute -bottom-1 -left-2 text-3xl animate-wiggle">{petEmoji}</div>}
         </div>
@@ -1131,17 +1148,17 @@ export default function EnglishQuestPage({ onBack }) {
   return (
     <div className="min-h-screen">
       <KidsIntro
-        id="english-quest-v2"
+        id="english-quest-v3"
         name={progress.displayName}
         emoji="⚔️"
-        title="English Quest!"
-        titleHe="משימת גיבורים!"
-        desc="Become a hero! Complete missions to defeat monsters using your English skills!"
-        descHe="הפוך לגיבור! השלם משימות כדי להביס מפלצות עם כישורי האנגלית שלך!"
+        title="Speakli's Quest!"
+        titleHe="המשימה של ספיקלי!"
+        desc="Join Speakli on an adventure! Defeat monsters using your English skills!"
+        descHe="הצטרפו לספיקלי להרפתקה! הביסו מפלצות עם כישורי האנגלית שלכם!"
         uiLang={uiLang}
-        gradient="from-amber-400 via-orange-500 to-red-500"
-        buttonLabel="Let's go!"
-        buttonLabelHe="בואו נלחם!"
+        gradient="from-blue-500 via-sky-500 to-cyan-500"
+        buttonLabel="Let's go with Speakli!"
+        buttonLabelHe="יאללה עם ספיקלי!"
       />
 
       {phase === 'intro' && (

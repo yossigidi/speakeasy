@@ -70,17 +70,17 @@ function LetterGrid({ onSelect, completedLetters }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-alphabet-v2"
+        id="kids-alphabet-v3"
         name={progress.displayName}
         emoji="🔤"
-        title="Learn the Letters!"
-        titleHe="למד את האותיות!"
-        desc="Tap on any letter to hear it and learn words."
-        descHe="לחץ על כל אות כדי לשמוע וללמוד אותה."
+        title="Speakli's Letters!"
+        titleHe="האותיות של ספיקלי!"
+        desc="Speakli will teach you all the letters! Tap any letter to hear it."
+        descHe="ספיקלי ילמד אותך את כל האותיות! לחץ על אות כדי לשמוע אותה."
         uiLang={uiLang}
-        gradient="from-pink-500 via-rose-500 to-red-500"
-        buttonLabel="Let's start!"
-        buttonLabelHe="בואו נתחיל!"
+        gradient="from-blue-500 via-sky-500 to-cyan-500"
+        buttonLabel="Let's learn with Speakli!"
+        buttonLabelHe="בואו נלמד עם ספיקלי!"
       />
 
       <div className="relative z-10 stagger-children">
@@ -743,9 +743,11 @@ function GameFlow({ letter, onComplete, onBack }) {
         <FloatingDecorations />
         <ConfettiBurst show={true} />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-          <div className="text-7xl mb-4 animate-jelly">🎉</div>
-          <h2 className="text-4xl font-black rainbow-text py-2 mb-2">
-            {uiLang === 'he' ? '!מדהים' : 'Amazing!'}
+          <div className="mb-4 animate-jelly">
+            <img src="/images/speakli-avatar.png" alt="Speakli" className="w-24 h-24 mx-auto drop-shadow-lg" onError={(e) => { e.target.outerHTML = '<span class="text-7xl">🎉</span>'; }} />
+          </div>
+          <h2 className="text-4xl font-black py-2 mb-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            {uiLang === 'he' ? 'ספיקלי גאה בך!' : 'Speakli is proud!'}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-4 font-medium">
             {uiLang === 'he'

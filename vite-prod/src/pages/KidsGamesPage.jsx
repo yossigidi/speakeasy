@@ -216,9 +216,11 @@ function BubblePopGame({ onComplete, onBack }) {
         <FloatingDecorations />
         <ConfettiBurst show={showConfetti} />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-          <div className="text-7xl mb-4 animate-jelly">🫧</div>
-          <h2 className="text-4xl font-black rainbow-text py-2 mb-2">
-            {uiLang === 'he' ? '!כל הכבוד' : 'Great Job!'}
+          <div className="mb-4 animate-jelly">
+            <img src="/images/speakli-avatar.png" alt="Speakli" className="w-20 h-20 mx-auto drop-shadow-lg" onError={(e) => { e.target.outerHTML = '<span class="text-7xl">🫧</span>'; }} />
+          </div>
+          <h2 className="text-4xl font-black py-2 mb-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            {uiLang === 'he' ? 'ספיקלי גאה בך!' : 'Speakli is proud!'}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-2 font-medium">
             {uiLang === 'he' ? `פוצצת ${score} בועות!` : `You popped ${score} bubbles!`}
@@ -472,9 +474,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         <FloatingDecorations />
         <ConfettiBurst show={showConfetti} />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-          <div className="text-7xl mb-4 animate-jelly">🧠</div>
-          <h2 className="text-4xl font-black rainbow-text py-2 mb-2">
-            {uiLang === 'he' ? '!מצוין' : 'Excellent!'}
+          <div className="mb-4 animate-jelly">
+            <img src="/images/speakli-avatar.png" alt="Speakli" className="w-20 h-20 mx-auto drop-shadow-lg" onError={(e) => { e.target.outerHTML = '<span class="text-7xl">🧠</span>'; }} />
+          </div>
+          <h2 className="text-4xl font-black py-2 mb-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            {uiLang === 'he' ? 'מצוין! ספיקלי שמח!' : 'Excellent! Speakli is happy!'}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-1 font-medium">
             {uiLang === 'he' ? `סיימת ב-${moves} מהלכים!` : `Done in ${moves} moves!`}
@@ -760,9 +764,11 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         <FloatingDecorations />
         <ConfettiBurst show={showConfetti} />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-          <div className="text-7xl mb-4 animate-jelly">🏗️</div>
-          <h2 className="text-4xl font-black rainbow-text py-2 mb-2">
-            {uiLang === 'he' ? '!בנאי מילים מעולה' : 'Word Builder Pro!'}
+          <div className="mb-4 animate-jelly">
+            <img src="/images/speakli-avatar.png" alt="Speakli" className="w-20 h-20 mx-auto drop-shadow-lg" onError={(e) => { e.target.outerHTML = '<span class="text-7xl">🏗️</span>'; }} />
+          </div>
+          <h2 className="text-4xl font-black py-2 mb-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            {uiLang === 'he' ? 'ספיקלי אומר: מעולה!' : 'Speakli says: Amazing!'}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-2 font-medium">
             {uiLang === 'he' ? `בנית ${score} מילים!` : `You built ${score} words!`}
@@ -902,9 +908,9 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         {roundComplete && (
           <div className="text-center mt-6 animate-pop-in">
             <div className="inline-block bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl px-8 py-6 shadow-2xl">
-              <span className="text-5xl block mb-2">🎉</span>
-              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mb-1">
-                {uiLang === 'he' ? '!נכון' : 'Correct!'}
+              <img src="/images/speakli-avatar.png" alt="" className="w-14 h-14 mx-auto mb-2" onError={(e) => { e.target.outerHTML = '<span class="text-5xl block mb-2">🎉</span>'; }} />
+              <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mb-1">
+                {uiLang === 'he' ? 'ספיקלי אומר: נכון!' : 'Speakli says: Correct!'}
               </p>
               <p className="text-lg font-bold text-gray-700 dark:text-gray-300 mb-1" dir="ltr">
                 {currentWord.word} = {currentWord.emoji}
@@ -1020,17 +1026,17 @@ function GameSelector({ onSelectGame, onBack }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-games-v2"
+        id="kids-games-v3"
         name={progress.displayName}
         emoji="🎮"
-        title="Game Time!"
-        titleHe="זמן משחקים!"
-        desc="Choose a game and practice English while having fun! Each game gives you XP points."
-        descHe="בחר משחק ותרגל אנגלית תוך כדי כיף! כל משחק נותן לך נקודות XP."
+        title="Speakli's Games!"
+        titleHe="המשחקים של ספיקלי!"
+        desc="Welcome to Speakli's game world! Play games and learn English!"
+        descHe="ברוכים הבאים לעולם המשחקים של ספיקלי! שחקו ולמדו אנגלית!"
         uiLang={uiLang}
-        gradient="from-cyan-500 via-blue-500 to-indigo-500"
-        buttonLabel="Let's play!"
-        buttonLabelHe="בואו נשחק!"
+        gradient="from-blue-500 via-sky-500 to-cyan-500"
+        buttonLabel="Let's play with Speakli!"
+        buttonLabelHe="בואו נשחק עם ספיקלי!"
       />
 
       <div className="relative z-10 px-4 pt-3">
@@ -1039,14 +1045,21 @@ function GameSelector({ onSelectGame, onBack }) {
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform">
             <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
           </button>
-          <h1 className="text-2xl font-black rainbow-text py-1 flex-1 text-center">
-            {uiLang === 'he' ? 'משחקים' : 'Games'}
+          <h1 className="text-2xl font-black py-1 flex-1 text-center" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            {uiLang === 'he' ? 'המשחקים של ספיקלי' : "Speakli's Games"}
           </h1>
           <div className="w-9" />
         </div>
 
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-          {uiLang === 'he' ? 'בחר משחק ותתחיל לשחק!' : 'Pick a game and play!'}
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <img src="/images/speakli-avatar.png" alt="" className="w-10 h-10" onError={(e) => { e.target.style.display = 'none'; }} />
+          <p className="text-center text-sm font-bold text-blue-600 dark:text-sky-400">
+            {uiLang === 'he' ? 'ספיקלי אומר: בחרו משחק ובואו נשחק!' : 'Speakli says: Pick a game and play!'}
+          </p>
+        </div>
+
+        <p className="text-center text-xs text-gray-500 dark:text-gray-400 mb-3">
+          {uiLang === 'he' ? 'כל משחק נותן נקודות XP!' : 'Each game gives you XP points!'}
         </p>
 
         {/* Game cards - 2 column grid */}

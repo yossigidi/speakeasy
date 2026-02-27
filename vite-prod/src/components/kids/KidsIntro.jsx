@@ -20,6 +20,7 @@ function markSeen(id) {
 /**
  * KidsIntro — fun animated intro overlay for kids pages.
  * Speaks the greeting + description aloud when shown.
+ * Always mentions "ספיקלי" to build brand recognition in kids' minds.
  */
 export default function KidsIntro({
   id,
@@ -30,7 +31,7 @@ export default function KidsIntro({
   desc = '',
   descHe = '',
   uiLang = 'en',
-  gradient = 'from-indigo-500 via-purple-500 to-pink-500',
+  gradient = 'from-blue-500 via-sky-500 to-cyan-500',
   buttonLabel = "Let's go!",
   buttonLabelHe = 'יאללה!',
   onDone,
@@ -125,8 +126,16 @@ export default function KidsIntro({
           <div className="absolute bottom-4 left-6 text-sm animate-sparkle" style={{ animationDelay: '0.6s' }}>💫</div>
           <div className="absolute bottom-3 right-4 text-lg animate-sparkle" style={{ animationDelay: '0.9s' }}>🌟</div>
 
-          {/* Mascot emoji */}
-          <div className="text-7xl mb-3 animate-jelly inline-block">{emoji}</div>
+          {/* Mascot — use Speakli avatar image if available, emoji fallback */}
+          <div className="mb-3 animate-jelly inline-block">
+            <img
+              src="/images/speakli-avatar.png"
+              alt="Speakli"
+              className="w-24 h-24 mx-auto drop-shadow-lg"
+              onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
+            />
+            <span className="text-7xl hidden">{emoji}</span>
+          </div>
 
           {/* Greeting with name */}
           {name && (

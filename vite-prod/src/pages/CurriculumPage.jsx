@@ -118,17 +118,17 @@ export default function CurriculumPage({ onBack }) {
       background: 'linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%)',
     }}>
       <KidsIntro
-        id="curriculum-v2"
+        id="curriculum-v3"
         name={progress.displayName}
         emoji="📚"
-        title="Your Lessons!"
-        titleHe="השיעורים שלך!"
-        desc="Follow the path and complete lessons to earn stars. Each lesson teaches you something new!"
-        descHe="עקוב אחרי המסלול והשלם שיעורים כדי לצבור כוכבים. כל שיעור מלמד אותך משהו חדש!"
+        title="Speakli's Lessons!"
+        titleHe="השיעורים של ספיקלי!"
+        desc="Follow Speakli's path and complete lessons to earn stars!"
+        descHe="עקבו אחרי המסלול של ספיקלי והשלימו שיעורים כדי לצבור כוכבים!"
         uiLang={uiLang}
-        gradient="from-red-500 via-orange-500 to-amber-500"
-        buttonLabel="Let's learn!"
-        buttonLabelHe="בואו נלמד!"
+        gradient="from-blue-500 via-sky-500 to-cyan-500"
+        buttonLabel="Let's learn with Speakli!"
+        buttonLabelHe="בואו נלמד עם ספיקלי!"
       />
 
       {/* Header */}

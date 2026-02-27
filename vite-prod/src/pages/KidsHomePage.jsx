@@ -9,9 +9,9 @@ import wordsA1 from '../data/words-a1.json';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
 import { t } from '../utils/translations.js';
 
-/* ── Floating background decorations ── */
+/* ── Floating background decorations (Speakli-themed) ── */
 function FloatingDecorations() {
-  const items = ['⭐', '🌈', '🎈', '🦋', '🌸', '✨', '🎵', '💫', '🌟', '🎨', '🦄', '🍭'];
+  const items = ['⭐', '🌟', '✨', '💫', '🎵', '📖', '🔤', '🎮', '🌈', '⭐', '✨', '💫'];
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {items.map((e, i) => (
@@ -33,7 +33,7 @@ function FloatingDecorations() {
   );
 }
 
-/* ── Animated mascot character ── */
+/* ── Animated Speakli mascot character ── */
 function MascotGreeting({ name, uiLang }) {
   const [bounce, setBounce] = useState(true);
   useEffect(() => {
@@ -43,34 +43,40 @@ function MascotGreeting({ name, uiLang }) {
 
   return (
     <div className="text-center mb-2">
-      <div className={`text-6xl mb-2 inline-block transition-transform duration-500 ${bounce ? 'scale-110 -rotate-3' : 'scale-100 rotate-3'}`}>
-        🦉
+      <div className={`mb-2 inline-block transition-transform duration-500 ${bounce ? 'scale-110 -rotate-3' : 'scale-100 rotate-3'}`}>
+        <img
+          src="/images/speakli-avatar.png"
+          alt="Speakli"
+          className="w-20 h-20 mx-auto drop-shadow-lg"
+          onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
+        />
+        <span className="text-6xl hidden">🦉</span>
       </div>
-      <h1 className="text-3xl font-black rainbow-text py-1">
+      <h1 className="text-3xl font-black py-1" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
         {uiLang === 'he' ? `היי ${name || ''}!` : `Hi ${name || ''}!`}
       </h1>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 animate-pop-in">
-        {uiLang === 'he' ? 'בוא נלמד אנגלית היום!' : "Let's learn English today!"}
+      <p className="text-sm font-bold text-blue-600 dark:text-sky-400 mt-1 animate-pop-in">
+        {uiLang === 'he' ? 'ספיקלי כאן! בוא נלמד אנגלית!' : "Speakli is here! Let's learn English!"}
       </p>
     </div>
   );
 }
 
-/* ── Stats bar for kids ── */
+/* ── Stats bar for kids (Speakli colors) ── */
 function KidsStatsBar({ progress, uiLang }) {
   return (
     <div className="flex justify-center gap-4 mb-4">
-      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm shadow-sm">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-sm shadow-sm border border-orange-200/50">
         <Flame size={18} className="text-orange-500" />
         <span className="text-sm font-bold text-orange-600 dark:text-orange-400">{progress.streak || 0}</span>
       </div>
-      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm shadow-sm">
-        <Zap size={18} className="text-yellow-500" />
-        <span className="text-sm font-bold text-yellow-600 dark:text-yellow-400">{progress.xp || 0} XP</span>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-sm shadow-sm border border-amber-200/50">
+        <Zap size={18} className="text-amber-500" />
+        <span className="text-sm font-bold text-amber-600 dark:text-amber-400">{progress.xp || 0} XP</span>
       </div>
-      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm shadow-sm">
-        <Star size={18} className="text-purple-500" fill="currentColor" />
-        <span className="text-sm font-bold text-purple-600 dark:text-purple-400">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-sm shadow-sm border border-blue-200/50">
+        <Star size={18} className="text-blue-500" fill="currentColor" />
+        <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
           {uiLang === 'he' ? `שלב ${progress.level || 1}` : `Lvl ${progress.level || 1}`}
         </span>
       </div>
@@ -95,94 +101,94 @@ function LevelBadge({ childLevel, uiLang }) {
   );
 }
 
-/* ── Game cards data ── */
+/* ── Game cards data (Speakli character colors: blue, cyan, orange, green, red) ── */
 const GAME_CARDS = [
   {
     id: 'english-quest',
     emoji: '⚔️',
-    titleHe: 'משימת גיבורים!',
-    titleEn: 'English Quest!',
+    titleHe: 'המשימה של ספיקלי!',
+    titleEn: "Speakli's Quest!",
     descHe: 'הצל את העולם עם אנגלית',
     descEn: 'Save the world with English',
-    gradient: 'from-amber-400 via-orange-500 to-red-500',
+    gradient: 'from-orange-400 via-amber-500 to-yellow-500',
     shadowColor: 'shadow-orange-400/30',
     page: 'english-quest',
   },
   {
     id: 'curriculum',
     emoji: '📚',
-    titleHe: 'שיעורים מובנים!',
-    titleEn: 'Structured Lessons!',
+    titleHe: 'השיעורים של ספיקלי!',
+    titleEn: "Speakli's Lessons!",
     descHe: 'למד שלב אחר שלב',
     descEn: 'Learn step by step',
-    gradient: 'from-red-400 via-coral-400 to-orange-400',
-    shadowColor: 'shadow-red-400/30',
+    gradient: 'from-blue-400 via-blue-500 to-sky-500',
+    shadowColor: 'shadow-blue-400/30',
     page: 'curriculum',
   },
   {
     id: 'alphabet',
     emoji: '🔤',
-    titleHe: 'למד אותיות!',
-    titleEn: 'Learn Letters!',
+    titleHe: 'האותיות של ספיקלי!',
+    titleEn: "Speakli's Letters!",
     descHe: 'לחץ ולמד את ה-ABC',
     descEn: 'Tap & learn your ABCs',
-    gradient: 'from-pink-400 via-rose-400 to-red-400',
-    shadowColor: 'shadow-pink-400/30',
+    gradient: 'from-sky-400 via-cyan-400 to-teal-400',
+    shadowColor: 'shadow-sky-400/30',
     page: 'alphabet',
   },
   {
     id: 'kids-games',
-    emoji: '🫧',
-    titleHe: 'משחקים!',
-    titleEn: 'Fun Games!',
+    emoji: '🎮',
+    titleHe: 'המשחקים של ספיקלי!',
+    titleEn: "Speakli's Games!",
     descHe: 'בועות, זיכרון, בנה מילים',
     descEn: 'Bubbles, Memory & more',
-    gradient: 'from-cyan-400 via-blue-400 to-indigo-400',
-    shadowColor: 'shadow-cyan-400/30',
+    gradient: 'from-green-400 via-emerald-400 to-teal-400',
+    shadowColor: 'shadow-green-400/30',
     page: 'kids-games',
   },
   {
     id: 'vocabulary',
-    emoji: '📚',
-    titleHe: 'מילים חדשות!',
-    titleEn: 'New Words!',
+    emoji: '📖',
+    titleHe: 'המילים של ספיקלי!',
+    titleEn: "Speakli's Words!",
     descHe: 'למד מילים באנגלית',
     descEn: 'Learn English words',
-    gradient: 'from-emerald-400 via-green-400 to-teal-400',
-    shadowColor: 'shadow-emerald-400/30',
+    gradient: 'from-red-400 via-rose-400 to-pink-400',
+    shadowColor: 'shadow-red-400/30',
     page: 'vocabulary',
   },
   {
     id: 'lessons',
-    emoji: '📖',
-    titleHe: 'שיעורים',
-    titleEn: 'Lessons',
+    emoji: '🎯',
+    titleHe: 'תרגול עם ספיקלי!',
+    titleEn: 'Practice with Speakli!',
     descHe: 'משחקים ותרגילים',
     descEn: 'Games & exercises',
-    gradient: 'from-blue-400 via-indigo-400 to-violet-400',
-    shadowColor: 'shadow-blue-400/30',
+    gradient: 'from-indigo-400 via-blue-400 to-sky-400',
+    shadowColor: 'shadow-indigo-400/30',
     page: 'lessons',
   },
   {
     id: 'pronunciation',
     emoji: '🎤',
-    titleHe: 'דבר אנגלית!',
-    titleEn: 'Speak English!',
-    descHe: 'תרגל דיבור',
+    titleHe: 'דבר עם ספיקלי!',
+    titleEn: 'Talk to Speakli!',
+    descHe: 'תרגל דיבור באנגלית',
     descEn: 'Practice speaking',
-    gradient: 'from-orange-400 via-amber-400 to-yellow-400',
-    shadowColor: 'shadow-orange-400/30',
+    gradient: 'from-amber-400 via-orange-400 to-red-400',
+    shadowColor: 'shadow-amber-400/30',
     page: 'pronunciation',
   },
   {
     id: 'reading',
-    emoji: '📖',
-    titleHe: 'קריאת סיפורים!',
-    titleEn: 'Read Stories!',
+    emoji: '📚',
+    titleHe: 'הסיפורים של ספיקלי!',
+    titleEn: "Speakli's Stories!",
     descHe: 'קרא ולמד מילים חדשות',
     descEn: 'Read & learn new words',
-    gradient: 'from-rose-400 via-pink-400 to-fuchsia-400',
-    shadowColor: 'shadow-rose-400/30',
+    gradient: 'from-cyan-400 via-sky-400 to-blue-400',
+    shadowColor: 'shadow-cyan-400/30',
     page: 'reading',
   },
 ];
@@ -301,7 +307,7 @@ function VideoCard({ video, uiLang, isExpanded, onToggle }) {
   );
 }
 
-/* ── Word of the day for kids ── */
+/* ── Speakli's Word of the day for kids ── */
 function KidsWordOfDay({ speak, speakSequence, uiLang }) {
   const word = useMemo(() => {
     const today = new Date();
@@ -315,16 +321,20 @@ function KidsWordOfDay({ speak, speakSequence, uiLang }) {
     <div
       className="rounded-3xl p-4 relative overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 50%, #6366f1 100%)',
-        boxShadow: '0 8px 30px rgba(99, 102, 241, 0.3)',
+        background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 50%, #06B6D4 100%)',
+        boxShadow: '0 8px 30px rgba(37, 99, 235, 0.3)',
       }}
     >
       {/* Sparkles */}
       <div className="absolute top-2 right-3 text-lg animate-sparkle">✨</div>
       <div className="absolute bottom-2 left-3 text-sm animate-sparkle" style={{ animationDelay: '0.5s' }}>⭐</div>
+      {/* Mini Speakli avatar */}
+      <div className="absolute top-2 left-3">
+        <img src="/images/speakli-avatar.png" alt="" className="w-8 h-8 opacity-40" onError={(e) => { e.target.style.display = 'none'; }} />
+      </div>
 
       <p className="text-xs font-bold text-white/70 uppercase tracking-wider mb-1">
-        {uiLang === 'he' ? 'המילה של היום' : 'Word of the Day'}
+        {uiLang === 'he' ? 'המילה של ספיקלי להיום' : "Speakli's Word of the Day"}
       </p>
       <div className="flex items-center gap-3">
         <div className="flex-1">
@@ -373,17 +383,17 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-home-v2"
+        id="kids-home-v3"
         name={progress.displayName}
         emoji="🦉"
-        title="Welcome back!"
-        titleHe="ברוכים הבאים!"
-        desc="This is your learning home! Pick any activity to start learning English. Have fun!"
-        descHe="זה הבית שלך ללמידה! בחר פעילות ותתחיל ללמוד אנגלית. בהצלחה!"
+        title="Welcome to Speakli!"
+        titleHe="ברוכים הבאים לספיקלי!"
+        desc="Speakli is your English teacher! Pick any activity and let's learn together!"
+        descHe="ספיקלי הוא המורה שלך לאנגלית! בחר פעילות ובואו נלמד ביחד!"
         uiLang={uiLang}
-        gradient="from-purple-500 via-pink-500 to-rose-500"
-        buttonLabel="Let's learn!"
-        buttonLabelHe="בואו נלמד!"
+        gradient="from-blue-500 via-sky-500 to-cyan-500"
+        buttonLabel="Let's learn with Speakli!"
+        buttonLabelHe="בואו נלמד עם ספיקלי!"
       />
 
       <div className="relative z-10 px-4 pt-4 space-y-5">
@@ -402,7 +412,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
             <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
               {uiLang === 'he' ? 'התקדמות אותיות' : 'Letter Progress'}
             </span>
-            <span className="text-xs font-bold text-purple-600 dark:text-purple-400">
+            <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
               {lettersDone}/26 ⭐
             </span>
           </div>
@@ -411,7 +421,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
               className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
               style={{
                 width: `${(lettersDone / 26) * 100}%`,
-                background: 'linear-gradient(90deg, #f472b6, #a78bfa, #60a5fa, #34d399)',
+                background: 'linear-gradient(90deg, #2563EB, #0EA5E9, #06B6D4, #10B981)',
                 minWidth: lettersDone > 0 ? '12%' : '0%',
               }}
             >
@@ -429,8 +439,9 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         {/* Game cards grid */}
         <div>
           <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 flex items-center gap-2">
-            <span className="animate-wiggle inline-block">🎮</span>
-            {uiLang === 'he' ? 'בוא נשחק!' : "Let's Play!"}
+            <img src="/images/speakli-avatar.png" alt="" className="w-8 h-8 animate-wiggle inline-block" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline-block'; }} />
+            <span className="animate-wiggle hidden">🎮</span>
+            {uiLang === 'he' ? 'בואו נשחק עם ספיקלי!' : "Let's Play with Speakli!"}
           </h2>
           <div className="grid grid-cols-2 gap-3">
             {GAME_CARDS.map((card, i) => (
@@ -497,7 +508,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         <div>
           <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 flex items-center gap-2">
             <span className="text-xl">🎬</span>
-            {uiLang === 'he' ? 'סרטונים ללמידה' : 'Learning Videos'}
+            {uiLang === 'he' ? 'הסרטונים של ספיקלי' : "Speakli's Videos"}
           </h2>
           <div className="grid grid-cols-2 gap-3">
             {KIDS_VIDEOS.map((video) => (
@@ -517,15 +528,16 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
           onClick={() => onNavigate('reading')}
           className="w-full rounded-3xl p-4 active:scale-95 transition-transform relative overflow-hidden"
           style={{
-            background: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%)',
-            boxShadow: '0 6px 20px rgba(8, 145, 178, 0.3)',
+            background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 50%, #06B6D4 100%)',
+            boxShadow: '0 6px 20px rgba(37, 99, 235, 0.3)',
           }}
         >
           <div className="flex items-center gap-3">
-            <span className="text-3xl">📖</span>
+            <img src="/images/speakli-avatar.png" alt="" className="w-10 h-10" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
+            <span className="text-3xl hidden">📖</span>
             <div className="text-left">
               <h3 className="text-white font-extrabold text-sm">
-                {uiLang === 'he' ? 'סיפורים באנגלית' : 'English Stories'}
+                {uiLang === 'he' ? 'הסיפורים של ספיקלי' : "Speakli's Stories"}
               </h3>
               <p className="text-white/80 text-xs">
                 {uiLang === 'he' ? 'קרא סיפורים קצרים ולמד!' : 'Read short stories & learn!'}
