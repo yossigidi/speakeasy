@@ -40,6 +40,7 @@ export default function KidsIntro({
   const { speak, stopSpeaking } = useSpeech();
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState('enter'); // enter → visible → exit
+  const [avatarMode, setAvatarMode] = useState('fly');
 
   useEffect(() => {
     const seen = getSeenSet();
@@ -49,31 +50,37 @@ export default function KidsIntro({
     }
     setVisible(true);
     requestAnimationFrame(() => setPhase('visible'));
+
+    // Avatar animation sequence: fly → wave → (talk starts with speech)
+    const waveTimer = setTimeout(() => setAvatarMode('wave'), 800);
+    return () => clearTimeout(waveTimer);
   }, [id]);
 
   const spokenRef = useRef(false);
 
-  // Build the text to speak (only first sentence of description)
+  // Build the full description text to speak (Speakli's unique voice)
   const getSpeechText = useCallback(() => {
     const isHe = uiLang === 'he';
-    const parts = [];
-    if (name) parts.push(isHe ? `היי ${name}!` : `Hi ${name}!`);
-    parts.push(isHe ? titleHe : title);
     const d = isHe ? descHe : desc;
-    if (d) {
-      // Only speak the first sentence
-      const firstSentence = d.split(/[.!?。]\s*/)[0];
-      if (firstSentence) parts.push(firstSentence);
-    }
-    return { text: parts.join(' '), lang: isHe ? 'he' : 'en-US' };
-  }, [uiLang, name, title, titleHe, desc, descHe]);
+    return { text: d, lang: isHe ? 'he' : 'en-US' };
+  }, [uiLang, desc, descHe]);
 
-  // Try to speak when visible (works on desktop/Android where AudioContext is already unlocked)
+  // Fire speech after wave phase (1.8s) with Speakli's unique voice
   useEffect(() => {
     if (phase !== 'visible' || !visible || spokenRef.current) return;
-    const { text, lang } = getSpeechText();
-    speak(text, { lang, rate: 0.9 });
-    spokenRef.current = true;
+    const speechTimer = setTimeout(() => {
+      if (spokenRef.current) return;
+      const { text, lang } = getSpeechText();
+      setAvatarMode('talk');
+      speak(text, {
+        lang,
+        pitch: 1.3,
+        rate: 0.82,
+        onEnd: () => setAvatarMode('idle'),
+      });
+      spokenRef.current = true;
+    }, 1800);
+    return () => clearTimeout(speechTimer);
   }, [phase, visible, getSpeechText, speak]);
 
   // Fallback: if user taps on the overlay card, unlock audio + speak (iOS)
@@ -81,7 +88,13 @@ export default function KidsIntro({
     if (spokenRef.current) return;
     unlockAudioContext();
     const { text, lang } = getSpeechText();
-    speak(text, { lang, rate: 0.9 });
+    setAvatarMode('talk');
+    speak(text, {
+      lang,
+      pitch: 1.3,
+      rate: 0.82,
+      onEnd: () => setAvatarMode('idle'),
+    });
     spokenRef.current = true;
   }, [getSpeechText, speak]);
 
@@ -128,7 +141,7 @@ export default function KidsIntro({
           <div className="absolute bottom-3 right-4 text-lg animate-sparkle" style={{ animationDelay: '0.9s' }}>🌟</div>
 
           {/* Speakli mascot — animated, alive! */}
-          <SpeakliAvatar mode="wave" size="xl" glow />
+          <SpeakliAvatar mode={avatarMode} size="xl" glow />
 
           {/* Greeting with name */}
           {name && (

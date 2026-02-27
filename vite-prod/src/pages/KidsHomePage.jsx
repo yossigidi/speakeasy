@@ -370,17 +370,17 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-home-v3"
+        id="kids-home-v4"
         name={progress.displayName}
         emoji="🦉"
-        title="Welcome to Speakli!"
-        titleHe="ברוכים הבאים לספיקלי!"
-        desc="Speakli is your English teacher! Pick any activity and let's learn together!"
-        descHe="ספיקלי הוא המורה שלך לאנגלית! בחר פעילות ובואו נלמד ביחד!"
+        title="Speakli is here!"
+        titleHe="ספיקלי כאן!"
+        desc="Hi! I'm Speakli! So glad you're here! Let's learn and play together!"
+        descHe="היי! אני ספיקלי! איזה כיף שבאתם! בואו נלמד ונשחק ביחד!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
-        buttonLabel="Let's learn with Speakli!"
-        buttonLabelHe="בואו נלמד עם ספיקלי!"
+        buttonLabel="Let's go!"
+        buttonLabelHe="יאללה, בואו!"
       />
 
       <div className="relative z-10 px-4 pt-4 space-y-5">
