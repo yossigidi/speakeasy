@@ -81,10 +81,14 @@ export default function useCurriculumProgress() {
       ? (curriculum.totalLessonsCompleted || 0) + 1
       : curriculum.totalLessonsCompleted || 0;
 
-    // Check if unit is completed (test lesson = lesson 6, the last one)
+    // Check if unit is completed (test lesson = the last lesson of the unit)
     // lessonId format: L1U1-1 → unitId: L1U1
     const unitId = lessonId.split('-')[0];
-    const testLessonId = unitId + '-6';
+    // Find the unit to determine the actual last lesson
+    const levelId = parseInt(unitId.charAt(1));
+    const unitData = getLevel(levelId)?.units?.find(u => u.id === unitId);
+    const lastLessonIndex = unitData ? unitData.lessons.length : 6;
+    const testLessonId = unitId + '-' + lastLessonIndex;
     const unitCompleted = lessonId === testLessonId && stars > 0;
 
     const unitUpdate = unitCompleted ? {
@@ -119,11 +123,14 @@ export default function useCurriculumProgress() {
     return { isNewCompletion, isBetterScore };
   }
 
-  // Get unit progress (how many lessons completed out of 6)
+  // Get unit progress (how many lessons completed — dynamically counts)
   function getUnitProgress(unitId) {
+    const levelId = parseInt(unitId.charAt(1));
+    const unitData = getLevel(levelId)?.units?.find(u => u.id === unitId);
+    const totalLessons = unitData ? unitData.lessons.length : 6;
     let completed = 0;
     let totalStars = 0;
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= totalLessons; i++) {
       const lid = `${unitId}-${i}`;
       const result = curriculum.lessons[lid];
       if (result?.completed) {
@@ -131,7 +138,7 @@ export default function useCurriculumProgress() {
         totalStars += result.stars || 0;
       }
     }
-    return { completed, total: 6, totalStars, maxStars: 18, isComplete: completed === 6 };
+    return { completed, total: totalLessons, totalStars, maxStars: totalLessons * 3, isComplete: completed === totalLessons };
   }
 
   return {

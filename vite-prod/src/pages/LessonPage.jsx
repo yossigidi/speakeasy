@@ -296,7 +296,10 @@ function ListeningExercise({ exercise, onAnswer, speak, uiLang }) {
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
 
-  useEffect(() => { speak(exercise.text); }, []);
+  useEffect(() => {
+    const t = setTimeout(() => speak(exercise.text), 300);
+    return () => clearTimeout(t);
+  }, []);
 
   const check = () => {
     setAnswered(true);

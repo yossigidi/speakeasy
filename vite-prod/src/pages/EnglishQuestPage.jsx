@@ -443,7 +443,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
       setIsCorrect(false);
       playWrong();
       onBossHPChange(Math.min(bossMaxHP, bossHP + 5));
-      setBossAnim('scale-110');
+      setBossAnim('scale-110 animate-shake');
 
       setTimeout(() => {
         setBossAnim('');
@@ -968,17 +968,18 @@ export default function EnglishQuestPage({ onBack }) {
   }, []);
 
   const handleMissionComplete = useCallback((xp, correctCount) => {
-    setTotalXp(prev => prev + xp);
+    const newTotalXp = totalXp + xp;
+    setTotalXp(newTotalXp);
 
     const nextMission = missionIndex + 1;
     if (nextMission >= 3) {
       // All missions done → quest complete
-      const coinsEarned = Math.floor((totalXp + xp) / 5);
+      const coinsEarned = Math.floor(newTotalXp / 5);
       const newQuestsCompleted = questsCompleted + 1;
       const newQuestLevel = Math.floor(newQuestsCompleted / 3) + 1;
 
       // Save progress
-      addXP(totalXp + xp, 'english-quest');
+      addXP(newTotalXp, 'english-quest');
       updateProgress({
         questCoins: questCoins + coinsEarned,
         questsCompleted: newQuestsCompleted,
@@ -1028,6 +1029,7 @@ export default function EnglishQuestPage({ onBack }) {
     updateProgress({ questHero: newHero, questCoins: newCoins });
   }, [questHero, questCoins, updateProgress]);
 
+  // Use same formula as handleMissionComplete for consistency
   const coinsEarned = Math.floor(totalXp / 5);
 
   const renderContent = () => {

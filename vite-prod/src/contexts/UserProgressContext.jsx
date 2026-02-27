@@ -317,6 +317,7 @@ export function UserProgressProvider({ children: reactChildren }) {
       // Streak logic
       let newStreak = progress.streak;
       let newLongest = progress.longestStreak;
+      let usedFreeze = false;
       if (progress.lastActiveDate !== today) {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
@@ -326,7 +327,9 @@ export function UserProgressProvider({ children: reactChildren }) {
           newStreak = progress.streak + 1;
         } else if (progress.lastActiveDate !== today) {
           if (progress.streakFreezes > 0) {
+            // Use one streak freeze to preserve the streak
             newStreak = progress.streak;
+            usedFreeze = true;
           } else {
             newStreak = 1;
           }
@@ -341,6 +344,7 @@ export function UserProgressProvider({ children: reactChildren }) {
         streak: newStreak,
         longestStreak: newLongest,
         lastActiveDate: today,
+        ...(usedFreeze ? { streakFreezes: Math.max(0, (progress.streakFreezes || 0) - 1) } : {}),
       };
 
       await updateProgress(updates);
@@ -420,144 +424,157 @@ export function UserProgressProvider({ children: reactChildren }) {
     // data = { name, avatar, avatarColor, age, pin }
     if (!user) return null;
 
-    // Ensure family code exists
-    let code = familyCode;
-    if (!code) {
-      code = await generateFamilyCode();
-    }
-
-    // Generate child ID
-    const childId = crypto.randomUUID ? crypto.randomUUID() :
-      'child_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-
-    // Hash PIN if provided
-    let pinHash = null;
-    if (data.pin) {
-      pinHash = await hashCredentials(data.name, data.pin, code);
-    }
-
-    // Determine age group from age — kids (<10) vs teens (10+)
-    let ageGroup = 'kids';
-    if (data.age) {
-      const age = parseInt(data.age, 10);
-      if (age >= 10) ageGroup = 'teens';
-    }
-
-    // Determine child level (1-4) based on age
-    let childLevel = 1;
-    if (data.age) {
-      const age = parseInt(data.age, 10);
-      if (age >= 9) childLevel = 4;
-      else if (age >= 7) childLevel = 3;
-      else if (age >= 6) childLevel = 2;
-    }
-
-    // Write to childProfiles/{childId}
-    await window.firestore.setDoc(
-      window.firestore.doc(window.db, 'childProfiles', childId),
-      {
-        name: data.name,
-        avatar: data.avatar,
-        avatarColor: data.avatarColor,
-        age: data.age || null,
-        parentUid: user.uid,
-        pinHash,
-        createdAt: window.firestore.serverTimestamp(),
-        xp: 0,
-        level: 1,
-        cefrLevel: 'A1',
-        streak: 0,
-        lastActiveDate: null,
-        dailyGoalMinutes: 10,
-        dailyXP: 0,
-        dailyMinutes: 0,
-        totalWordsLearned: 0,
-        totalLessonsCompleted: 0,
-        longestStreak: 0,
-        streakFreezes: 0,
-        ageGroup,
-        childLevel,
-        curriculumLevel: childLevel,
-        onboardingComplete: true,
-        lettersCompleted: [],
+    try {
+      // Ensure family code exists
+      let code = familyCode;
+      if (!code) {
+        code = await generateFamilyCode();
       }
-    );
 
-    // Update parentChildren/{familyCode}
-    const parentChildrenRef = window.firestore.doc(window.db, 'parentChildren', code);
-    const parentChildrenSnap = await window.firestore.getDoc(parentChildrenRef);
-    const existingChildren = parentChildrenSnap.exists() ? (parentChildrenSnap.data().children || []) : [];
+      // Generate child ID
+      const childId = crypto.randomUUID ? crypto.randomUUID() :
+        'child_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-    await window.firestore.setDoc(parentChildrenRef, {
-      children: [...existingChildren, {
-        childId,
-        name: data.name,
-        avatar: data.avatar,
-        avatarColor: data.avatarColor,
-      }],
-      parentUid: user.uid,
-    });
+      // Hash PIN if provided
+      let pinHash = null;
+      if (data.pin) {
+        pinHash = await hashCredentials(data.name, data.pin, code);
+      }
 
-    // Update users/{uid}.childrenIds
-    await window.firestore.setDoc(
-      window.firestore.doc(window.db, 'users', user.uid),
-      { childrenIds: window.firestore.arrayUnion(childId) },
-      { merge: true }
-    );
+      // Determine age group from age — kids (<10) vs teens (10+)
+      let ageGroup = 'kids';
+      if (data.age) {
+        const age = parseInt(data.age, 10);
+        if (age >= 10) ageGroup = 'teens';
+      }
 
-    return childId;
+      // Determine child level (1-4) based on age
+      let childLevel = 1;
+      if (data.age) {
+        const age = parseInt(data.age, 10);
+        if (age >= 9) childLevel = 4;
+        else if (age >= 7) childLevel = 3;
+        else if (age >= 6) childLevel = 2;
+      }
+
+      // Write to childProfiles/{childId}
+      await window.firestore.setDoc(
+        window.firestore.doc(window.db, 'childProfiles', childId),
+        {
+          name: data.name,
+          avatar: data.avatar,
+          avatarColor: data.avatarColor,
+          age: data.age || null,
+          parentUid: user.uid,
+          pinHash,
+          createdAt: window.firestore.serverTimestamp(),
+          xp: 0,
+          level: 1,
+          cefrLevel: 'A1',
+          streak: 0,
+          lastActiveDate: null,
+          dailyGoalMinutes: 10,
+          dailyXP: 0,
+          dailyMinutes: 0,
+          totalWordsLearned: 0,
+          totalLessonsCompleted: 0,
+          longestStreak: 0,
+          streakFreezes: 0,
+          ageGroup,
+          childLevel,
+          curriculumLevel: childLevel,
+          onboardingComplete: true,
+          lettersCompleted: [],
+        }
+      );
+
+      // Update parentChildren/{familyCode}
+      const parentChildrenRef = window.firestore.doc(window.db, 'parentChildren', code);
+      const parentChildrenSnap = await window.firestore.getDoc(parentChildrenRef);
+      const existingChildren = parentChildrenSnap.exists() ? (parentChildrenSnap.data().children || []) : [];
+
+      await window.firestore.setDoc(parentChildrenRef, {
+        children: [...existingChildren, {
+          childId,
+          name: data.name,
+          avatar: data.avatar,
+          avatarColor: data.avatarColor,
+        }],
+        parentUid: user.uid,
+      });
+
+      // Update users/{uid}.childrenIds
+      await window.firestore.setDoc(
+        window.firestore.doc(window.db, 'users', user.uid),
+        { childrenIds: window.firestore.arrayUnion(childId) },
+        { merge: true }
+      );
+
+      return childId;
+    } catch (err) {
+      console.error('addChild failed:', err);
+      return null;
+    }
   }, [user, familyCode, generateFamilyCode]);
 
   const updateChild = useCallback(async (childId, data) => {
     if (!user) return;
-    const childRef = window.firestore.doc(window.db, 'childProfiles', childId);
-    await window.firestore.setDoc(childRef, data, { merge: true });
+    try {
+      const childRef = window.firestore.doc(window.db, 'childProfiles', childId);
+      await window.firestore.setDoc(childRef, data, { merge: true });
 
-    // Update parentChildren directory if name/avatar changed
-    if (data.name || data.avatar || data.avatarColor) {
-      if (familyCode) {
-        const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
-        const pcSnap = await window.firestore.getDoc(pcRef);
-        if (pcSnap.exists()) {
-          const children = (pcSnap.data().children || []).map(c =>
-            c.childId === childId
-              ? { ...c, ...(data.name && { name: data.name }), ...(data.avatar && { avatar: data.avatar }), ...(data.avatarColor && { avatarColor: data.avatarColor }) }
-              : c
-          );
-          await window.firestore.setDoc(pcRef, { children }, { merge: true });
+      // Update parentChildren directory if name/avatar changed
+      if (data.name || data.avatar || data.avatarColor) {
+        if (familyCode) {
+          const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
+          const pcSnap = await window.firestore.getDoc(pcRef);
+          if (pcSnap.exists()) {
+            const children = (pcSnap.data().children || []).map(c =>
+              c.childId === childId
+                ? { ...c, ...(data.name && { name: data.name }), ...(data.avatar && { avatar: data.avatar }), ...(data.avatarColor && { avatarColor: data.avatarColor }) }
+                : c
+            );
+            await window.firestore.setDoc(pcRef, { children }, { merge: true });
+          }
         }
       }
+    } catch (err) {
+      console.error('updateChild failed:', err);
     }
   }, [user, familyCode]);
 
   const deleteChild = useCallback(async (childId) => {
     if (!user) return;
-    // If deleting the active child, switch to parent first
-    if (activeChildId === childId) {
-      setActiveChildId(null);
-    }
-
-    // Delete from childProfiles
-    await window.firestore.deleteDoc(
-      window.firestore.doc(window.db, 'childProfiles', childId)
-    );
-
-    // Remove from parentChildren
-    if (familyCode) {
-      const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
-      const pcSnap = await window.firestore.getDoc(pcRef);
-      if (pcSnap.exists()) {
-        const children = (pcSnap.data().children || []).filter(c => c.childId !== childId);
-        await window.firestore.setDoc(pcRef, { children }, { merge: true });
+    try {
+      // If deleting the active child, switch to parent first
+      if (activeChildId === childId) {
+        setActiveChildId(null);
       }
-    }
 
-    // Remove from users/{uid}.childrenIds
-    await window.firestore.setDoc(
-      window.firestore.doc(window.db, 'users', user.uid),
-      { childrenIds: window.firestore.arrayRemove(childId) },
-      { merge: true }
-    );
+      // Delete from childProfiles
+      await window.firestore.deleteDoc(
+        window.firestore.doc(window.db, 'childProfiles', childId)
+      );
+
+      // Remove from parentChildren
+      if (familyCode) {
+        const pcRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
+        const pcSnap = await window.firestore.getDoc(pcRef);
+        if (pcSnap.exists()) {
+          const children = (pcSnap.data().children || []).filter(c => c.childId !== childId);
+          await window.firestore.setDoc(pcRef, { children }, { merge: true });
+        }
+      }
+
+      // Remove from users/{uid}.childrenIds
+      await window.firestore.setDoc(
+        window.firestore.doc(window.db, 'users', user.uid),
+        { childrenIds: window.firestore.arrayRemove(childId) },
+        { merge: true }
+      );
+    } catch (err) {
+      console.error('deleteChild failed:', err);
+    }
   }, [user, activeChildId, familyCode]);
 
   const resetChildPin = useCallback(async (childId, childName, newPin) => {

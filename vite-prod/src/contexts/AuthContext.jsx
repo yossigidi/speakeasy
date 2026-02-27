@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -24,12 +24,12 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = useCallback(async () => {
     const provider = new window.firebaseAuth.GoogleAuthProvider();
     return window.firebaseAuth.signInWithPopup(window.auth, provider);
-  };
+  }, []);
 
-  const signInWithApple = async () => {
+  const signInWithApple = useCallback(async () => {
     const provider = new window.firebaseAuth.OAuthProvider('apple.com');
     provider.addScope('email');
     provider.addScope('name');
@@ -42,25 +42,25 @@ export function AuthProvider({ children }) {
       }
       throw err;
     }
-  };
+  }, []);
 
-  const signUpWithEmail = async (email, password, displayName) => {
+  const signUpWithEmail = useCallback(async (email, password, displayName) => {
     const cred = await window.firebaseAuth.createUserWithEmailAndPassword(window.auth, email, password);
     if (displayName) {
       await window.firebaseAuth.updateProfile(cred.user, { displayName });
     }
     return cred;
-  };
+  }, []);
 
-  const signInWithEmail = async (email, password) => {
+  const signInWithEmail = useCallback(async (email, password) => {
     return window.firebaseAuth.signInWithEmailAndPassword(window.auth, email, password);
-  };
+  }, []);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     return window.firebaseAuth.signOut(window.auth);
-  };
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     user,
     loading,
     signInWithGoogle,
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
     signInWithEmail,
     signOut,
     isAuthenticated: !!user,
-  };
+  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, signOut]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

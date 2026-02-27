@@ -132,7 +132,14 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     setPhase('complete');
   }, [exercises.length, correctCount, lessonId, curriculum]);
 
-  // Calculate final stats for complete screen
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => {
+      stopSpeaking && stopSpeaking();
+    };
+  }, [stopSpeaking]);
+
+  // Calculate final stats for complete screen (use same formula as handleLessonComplete)
   const totalCount = exercises.length;
   const finalAccuracy = totalCount > 0 ? (correctCount / totalCount) * 100 : 0;
   const finalStars = calculateStars(finalAccuracy);

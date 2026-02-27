@@ -443,7 +443,9 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       }, 500);
       return () => clearTimeout(t);
     } else {
-      speak(item.word, { rate: 0.75 });
+      // Delay to let previous answer's game sound finish
+      const t2 = setTimeout(() => speak(item.word, { rate: 0.75 }), 400);
+      return () => clearTimeout(t2);
     }
   }, [currentItem, setIndex]);
 
