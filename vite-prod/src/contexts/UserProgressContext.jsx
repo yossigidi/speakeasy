@@ -23,6 +23,13 @@ const DEFAULT_PROGRESS = {
   ageGroup: null,
   lettersCompleted: [],
   curriculum: null,
+  simulation: {
+    industry: null,
+    careerXP: 0,
+    careerLevel: 'junior',
+    completedScenarios: {},
+    totalSimulations: 0,
+  },
 };
 
 const CHILD_LS_KEY = 'speakeasy_activeChildId';

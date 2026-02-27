@@ -15,7 +15,7 @@ import ErrorBoundary from './components/shared/ErrorBoundary.jsx';
 import HomePage from './pages/HomePage.jsx';
 import OnboardingPage from './pages/OnboardingPage.jsx';
 import LessonPage from './pages/LessonPage.jsx';
-import ConversationPage from './pages/ConversationPage.jsx';
+import SimulationPage from './pages/SimulationPage.jsx';
 import VocabularyPage from './pages/VocabularyPage.jsx';
 import ReadingPage from './pages/ReadingPage.jsx';
 import PronunciationPage from './pages/PronunciationPage.jsx';
@@ -209,7 +209,7 @@ function AppContent() {
       case 'lessons':
         return <LessonPage onComplete={() => navigateTo('home')} onBack={() => navigateTo('home')} lesson={lessonData} />;
       case 'conversation':
-        return <ConversationPage />;
+        return <SimulationPage />;
       case 'vocabulary':
         return <VocabularyPage />;
       case 'pronunciation':

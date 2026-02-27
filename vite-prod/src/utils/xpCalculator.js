@@ -12,6 +12,10 @@ export const XP_REWARDS = {
   dailyGoalBonus: 10,
   streakBonusPerDay: 2,
   streakBonusMax: 30,
+  simulationBase: 20,
+  simulationMax: 60,
+  simulationPerfectBonus: 30,
+  careerPromotion: 100,
 };
 
 export function calcLessonXP(accuracy, exerciseCount) {
@@ -36,4 +40,14 @@ export function calcStreakBonus(streakDays) {
 export function calcConversationXP(messageCount) {
   // Base XP + small bonus for longer conversations
   return XP_REWARDS.conversation + Math.min(Math.floor(messageCount / 5) * 3, 15);
+}
+
+export function calcSimulationXP(avgScore, stepCount) {
+  // avgScore: 0-100, stepCount: number of completed steps
+  const scoreRatio = avgScore / 100;
+  const base = XP_REWARDS.simulationBase + Math.round(scoreRatio * (XP_REWARDS.simulationMax - XP_REWARDS.simulationBase));
+  const stepsBonus = Math.min(stepCount * 2, 10);
+  const perfectBonus = avgScore >= 90 ? XP_REWARDS.simulationPerfectBonus : 0;
+  const total = base + stepsBonus + perfectBonus;
+  return { base, stepsBonus, perfectBonus, total };
 }
