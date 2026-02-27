@@ -269,7 +269,6 @@ export function playHebrew(text) {
  */
 export function playSequence(items, _speakEnglishUnused, onDone) {
   let index = 0;
-  sequenceCancelled = false;
 
   const playNext = () => {
     if (sequenceCancelled) return;
@@ -323,10 +322,9 @@ export function playSequence(items, _speakEnglishUnused, onDone) {
     });
   };
 
-  // Cancel any current speech before starting
-  if (window.speechSynthesis) {
-    window.speechSynthesis.cancel();
-  }
+  // Cancel ALL audio before starting (WebSpeech + MP3s + Cloud TTS)
+  stopAllAudio();
+  sequenceCancelled = false; // reset after stopAllAudio sets it to true
 
   playNext();
 }
