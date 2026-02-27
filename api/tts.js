@@ -5,10 +5,9 @@ const CLOUD_TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
 const CACHE_COLLECTION = 'tts-cache';
 
 // Best natural-sounding voices per language
-// speakingRate: 0.85 = slower, teacher-like pace for learners
 const VOICES = {
-  he: { name: 'he-IL-Chirp3-HD-Kore', languageCode: 'he-IL', speakingRate: 0.9 },
-  en: { name: 'en-US-Chirp3-HD-Achernar', languageCode: 'en-US', speakingRate: 0.85 },
+  he: { name: 'he-IL-Chirp3-HD-Kore', languageCode: 'he-IL', speakingRate: 0.92 },
+  en: { name: 'en-US-Chirp3-HD-Achernar', languageCode: 'en-US', speakingRate: 0.95 },
 };
 
 // Detect language from text (simple heuristic)

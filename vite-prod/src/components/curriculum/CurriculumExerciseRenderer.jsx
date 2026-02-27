@@ -64,21 +64,50 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   const [selectedRight, setSelectedRight] = useState(null);
   const [matchFlash, setMatchFlash] = useState(null); // 'correct' | 'wrong'
 
-  // Initialize available words for word-arrange on first render of that type
-  if (exercise.type === 'word-arrange' && availableWords === null) {
-    setAvailableWords([...exercise.options]);
-    setArrangedWords([]);
-  }
+  // A1 fix: Initialize word-arrange state via useEffect (not in render body)
+  // Also reset shared state for each new exercise
+  useEffect(() => {
+    if (exercise.type === 'word-arrange') {
+      setAvailableWords([...exercise.options]);
+      setArrangedWords([]);
+    } else {
+      setAvailableWords(null);
+      setArrangedWords([]);
+    }
+    setSelected(null);
+    setShowResult(false);
+    setMatchedPairs([]);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    setMatchFlash(null);
+    setSpeakResult(null);
+  }, [exercise]);
+
+  // A2: Auto-speak the exercise question/word after guidance finishes
+  useEffect(() => {
+    if (!speak || !exercise) return;
+    const delay = setTimeout(() => {
+      if (['emoji-pick','word-to-hebrew','listen-pick','fill-letter','speak-word'].includes(exercise.type)) {
+        speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true });
+      }
+    }, 800);
+    return () => clearTimeout(delay);
+  }, [exercise]);
 
   const handleSelect = (answer, isCorrect) => {
     if (selected !== null) return;
     setSelected(answer);
     setShowResult(true);
+    // A3: Speak the correct answer word
+    if (isCorrect && speak) {
+      const wordToSpeak = exercise.wordData?.word || exercise.correctAnswer || answer;
+      speak(wordToSpeak, { lang: 'en', rate: 0.9, _queued: true });
+    }
     setTimeout(() => {
       onAnswer(isCorrect, exercise.wordData);
       setSelected(null);
       setShowResult(false);
-    }, 800);
+    }, 1200);
   };
 
   const btnStyle = (isCorrect, isThis) => ({

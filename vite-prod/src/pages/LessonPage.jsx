@@ -57,16 +57,23 @@ function MultipleChoice({ exercise, onAnswer, uiLang }) {
   );
 }
 
-function FillInBlank({ exercise, onAnswer, uiLang }) {
+function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
   const [input, setInput] = useState('');
   const [answered, setAnswered] = useState(false);
   const [correct, setCorrect] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   const check = () => {
     const isCorrect = fuzzyMatch(exercise.answer, input) ||
       (exercise.alternatives || []).some(alt => fuzzyMatch(alt, input));
     setCorrect(isCorrect);
     setAnswered(true);
+    if (isCorrect && speak) {
+      speak(exercise.answer, { rate: 0.85, onEnd: () => {
+        const fullSentence = exercise.sentence.replace('___', exercise.answer);
+        speak(fullSentence, { rate: 0.9, _queued: true });
+      }});
+    }
     onAnswer(isCorrect);
   };
 
@@ -90,15 +97,30 @@ function FillInBlank({ exercise, onAnswer, uiLang }) {
       {exercise.hint && <p className="text-sm text-gray-500 dark:text-gray-400" dir={uiLang === 'he' ? 'rtl' : 'ltr'}>💡 {exercise.hint}</p>}
       {!answered && (
         <>
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && input.trim() && check()}
-            placeholder="..."
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-center text-lg"
-            autoFocus
-          />
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && input.trim() && check()}
+              placeholder="..."
+              className="flex-1 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-center text-lg"
+              autoFocus
+            />
+            {!showHelp && (
+              <button
+                onClick={() => { setShowHelp(true); if (speak) speak(exercise.answer, { rate: 0.7 }); }}
+                className="px-3 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-700 text-amber-600 font-medium text-sm whitespace-nowrap"
+              >
+                💡 {t('hint', uiLang)}
+              </button>
+            )}
+          </div>
+          {showHelp && (
+            <p className="text-sm text-amber-600 dark:text-amber-400 text-center font-medium">
+              {uiLang === 'he' ? 'מתחיל ב:' : 'Starts with:'} "{exercise.answer[0]}..."
+            </p>
+          )}
           <AnimatedButton onClick={check} disabled={!input.trim()} size="full">
             {t('check', uiLang)}
           </AnimatedButton>
@@ -178,16 +200,20 @@ function WordArrange({ exercise, onAnswer }) {
   );
 }
 
-function TranslationExercise({ exercise, onAnswer, uiLang }) {
+function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
   const [input, setInput] = useState('');
   const [answered, setAnswered] = useState(false);
   const [correct, setCorrect] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   const check = () => {
     const isCorrect = fuzzyMatch(exercise.target, input, 0.75) ||
       (exercise.alternatives || []).some(alt => fuzzyMatch(alt, input, 0.75));
     setCorrect(isCorrect);
     setAnswered(true);
+    if (isCorrect && speak) {
+      speak(exercise.target, { rate: 0.9 });
+    }
     onAnswer(isCorrect);
   };
 
@@ -199,15 +225,30 @@ function TranslationExercise({ exercise, onAnswer, uiLang }) {
       </div>
       {!answered && (
         <>
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && input.trim() && check()}
-            placeholder="Type in English..."
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-center"
-            autoFocus
-          />
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && input.trim() && check()}
+              placeholder="Type in English..."
+              className="flex-1 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-center"
+              autoFocus
+            />
+            {!showHelp && (
+              <button
+                onClick={() => { setShowHelp(true); if (speak) speak(exercise.target, { rate: 0.7 }); }}
+                className="px-3 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-700 text-amber-600 font-medium text-sm whitespace-nowrap"
+              >
+                💡 {t('hint', uiLang)}
+              </button>
+            )}
+          </div>
+          {showHelp && (
+            <p className="text-sm text-amber-600 dark:text-amber-400 text-center font-medium">
+              {uiLang === 'he' ? 'מתחיל ב:' : 'Starts with:'} "{exercise.target.substring(0, 2)}..."
+            </p>
+          )}
           <AnimatedButton onClick={check} disabled={!input.trim()} size="full">{t('check', uiLang)}</AnimatedButton>
         </>
       )}
@@ -459,9 +500,9 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
   const renderExercise = () => {
     switch (exercise.type) {
       case 'multiple-choice': return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
-      case 'fill-blank': return <FillInBlank exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
+      case 'fill-blank': return <FillInBlank exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
       case 'word-arrange': return <WordArrange exercise={exercise} onAnswer={handleAnswer} />;
-      case 'translation': return <TranslationExercise exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
+      case 'translation': return <TranslationExercise exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
       case 'match-pairs': return <MatchPairs exercise={exercise} onAnswer={handleAnswer} />;
       case 'listening': return <ListeningExercise exercise={exercise} onAnswer={handleAnswer} speak={speak} uiLang={uiLang} />;
       default: return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;

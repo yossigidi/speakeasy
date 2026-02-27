@@ -151,8 +151,8 @@ export function SpeechProvider({ children }) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = isHebrew ? 'he-IL' : (options.lang || 'en-US');
 
-    utterance.rate = options.rate || (isHebrew ? 0.88 : 0.92);
-    utterance.pitch = options.pitch || (isHebrew ? 1.08 : 1.0);
+    utterance.rate = options.rate || (isHebrew ? 0.9 : 1.0);
+    utterance.pitch = options.pitch || (isHebrew ? 1.02 : 1.0);
     utterance.volume = options.volume || 1.0;
 
     if (isHebrew && hebrewVoiceRef.current) {
@@ -184,6 +184,9 @@ export function SpeechProvider({ children }) {
     return utterance;
   }, [startKeepAlive, stopKeepAlive]);
 
+  // Use a ref so speakSequence and speak can reference each other without circular deps
+  const speakRef = useRef(null);
+
   const speak = useCallback((text, options = {}) => {
     if (!text) {
       if (options.onEnd) options.onEnd();
@@ -200,10 +203,13 @@ export function SpeechProvider({ children }) {
 
     setIsSpeaking(true);
 
-    // For long texts (>450 chars), skip Cloud TTS — go directly to Web Speech
-    // Cloud TTS server supports up to 500 chars
+    // For long texts (>450 chars), split into sentences and speak via Cloud TTS sequentially
+    // This avoids falling back to Web Speech which sounds robotic
     if (text.length > 450) {
-      speakWithWebSpeech(text, { ...options, _queued: true });
+      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+      const items = sentences.map(s => ({ text: s.trim(), lang: options.lang, rate: options.rate }));
+      // Use speakSequenceInner directly (avoid circular dependency)
+      speakSequenceInner(items, options.onEnd);
       return;
     }
 
@@ -265,16 +271,15 @@ export function SpeechProvider({ children }) {
     }, API_TIMEOUT);
   }, [speakWithWebSpeech]);
 
-  // ── speakSequence: chain multiple texts smoothly ─────────
-  // Plays an array of { text, lang, rate, pause } items in order.
-  // Much smoother than calling speak() repeatedly with timeouts.
-  const speakSequence = useCallback((items, onAllDone) => {
-    if (!('speechSynthesis' in window) || !items || items.length === 0) {
+  // Keep speakRef updated
+  speakRef.current = speak;
+
+  // Inner sequence function that uses speakRef to avoid circular deps
+  const speakSequenceInner = useCallback((items, onAllDone) => {
+    if (!items || items.length === 0) {
       if (onAllDone) onAllDone();
       return;
     }
-
-    stopAllAudio();
 
     let index = 0;
 
@@ -287,23 +292,34 @@ export function SpeechProvider({ children }) {
       const item = items[index];
       index++;
 
-      // If it's a pause item, wait then continue
       if (item.pause) {
         setTimeout(playNext, item.pause);
         return;
       }
 
-      speak(item.text, {
+      speakRef.current(item.text, {
         lang: item.lang,
         rate: item.rate,
         pitch: item.pitch,
-        _queued: true, // don't cancel previous
+        _queued: true,
         onEnd: playNext,
       });
     };
 
     playNext();
-  }, [speak]);
+  }, []);
+
+  // ── speakSequence: chain multiple texts smoothly ─────────
+  // Plays an array of { text, lang, rate, pause } items in order.
+  const speakSequence = useCallback((items, onAllDone) => {
+    if (!items || items.length === 0) {
+      if (onAllDone) onAllDone();
+      return;
+    }
+
+    stopAllAudio();
+    speakSequenceInner(items, onAllDone);
+  }, [speakSequenceInner]);
 
   const stopSpeaking = useCallback(() => {
     stopAllAudio();
