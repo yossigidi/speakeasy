@@ -24,18 +24,20 @@ const HEROES = ['speakli', '🧙‍♂️', '🦸‍♀️', '🧝‍♂️', '�
 
 /** Renders a hero — Speakli avatar for index 0, emoji for others */
 function HeroDisplay({ heroIdx, size = 'text-8xl', imgClass = 'w-24 h-24' }) {
+  const [imgError, setImgError] = React.useState(false);
   const hero = HEROES[heroIdx || 0];
-  if (hero === 'speakli') {
+  if (hero === 'speakli' && !imgError) {
     return (
       <img
         src="/images/speakli-avatar.png"
         alt="Speakli"
         className={`${imgClass} drop-shadow-lg mx-auto`}
-        onError={(e) => { e.target.outerHTML = '<span class="' + size + '">🦉</span>'; }}
+        onError={() => setImgError(true)}
       />
     );
   }
-  return <span className={size}>{hero}</span>;
+  const display = hero === 'speakli' ? '🦉' : hero;
+  return <span className={size}>{display}</span>;
 }
 const OUTFITS = ['⚔️', '🛡️', '🪄', '👑', '🎩', '🦸'];
 const PETS = ['🐉', '🦄', '🐺', '🦅', '🐱', '🤖'];

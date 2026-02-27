@@ -33,6 +33,7 @@ export default function SpeakliAvatar({
   shadow = true,
 }) {
   const [blinking, setBlinking] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const imgRef = useRef(null);
 
   // Random blink every 2-5 seconds (simulates alive feeling)
@@ -81,16 +82,18 @@ export default function SpeakliAvatar({
       )}
 
       {/* The character image */}
-      <img
-        ref={imgRef}
-        src="/images/speakli-avatar.png"
-        alt="Speakli"
-        className={`speakli-img ${sizeClass} ${blinking ? 'speakli-blink' : ''}`}
-        draggable={false}
-        onError={(e) => {
-          e.target.outerHTML = '<span class="text-6xl">🦉</span>';
-        }}
-      />
+      {imgError ? (
+        <span className="text-6xl">🦉</span>
+      ) : (
+        <img
+          ref={imgRef}
+          src="/images/speakli-avatar.png"
+          alt="Speakli"
+          className={`speakli-img ${sizeClass} ${blinking ? 'speakli-blink' : ''}`}
+          draggable={false}
+          onError={() => setImgError(true)}
+        />
+      )}
     </div>
   );
 }
