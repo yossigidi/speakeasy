@@ -77,11 +77,11 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         if (newStreak >= 3) return 'celebrating';
         return 'happy';
       });
-      // Voice feedback
+      // Voice feedback (queued so it doesn't cancel playCorrect)
       const msg = streak + 1 >= 3
         ? t('teacherEncourage3', uiLang)
         : t('teacherEncourage1', uiLang);
-      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0 });
+      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
     } else {
       playWrong();
       setWrongCount(prev => prev + 1);
@@ -89,7 +89,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       setHearts(newHearts);
       setStreak(0);
       setTeacherState('encouraging');
-      speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95 });
+      speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
 
       // If hearts reach 0, end the lesson immediately
       if (newHearts === 0) {

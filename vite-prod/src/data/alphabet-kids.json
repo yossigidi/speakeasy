@@ -278,12 +278,12 @@
     "sound": "ɪ",
     "soundWord": "igloo",
     "color": "from-cyan-400 to-sky-500",
-    "emoji": "🏠",
+    "emoji": "🏔️",
     "words": [
       {
         "word": "igloo",
         "translation": "אִיגְלוּ",
-        "emoji": "🏠",
+        "emoji": "🏔️",
         "sentence": "The igloo is cold.",
         "sentenceHe": "האיגלו קר."
       },

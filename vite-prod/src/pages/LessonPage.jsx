@@ -5,6 +5,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { calcLessonXP } from '../utils/xpCalculator.js';
 import { fuzzyMatch } from '../utils/stringDistance.js';
+import { shuffle } from '../utils/shuffle.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import useAudio from '../hooks/useAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
@@ -115,7 +116,7 @@ function FillInBlank({ exercise, onAnswer, uiLang }) {
 
 function WordArrange({ exercise, onAnswer }) {
   const [selected, setSelected] = useState([]);
-  const [available, setAvailable] = useState(() => [...exercise.words].sort(() => Math.random() - 0.5));
+  const [available, setAvailable] = useState(() => shuffle(exercise.words));
   const [answered, setAnswered] = useState(false);
 
   const addWord = (word, i) => {
@@ -229,7 +230,7 @@ function MatchPairs({ exercise, onAnswer }) {
   const pairs = exercise.pairs;
 
   const leftItems = pairs.map(p => p[0]);
-  const rightItems = [...pairs.map(p => p[1])].sort(() => Math.random() - 0.5);
+  const rightItems = shuffle(pairs.map(p => p[1]));
 
   const handleTap = (side, item) => {
     if (matched.includes(item)) return;

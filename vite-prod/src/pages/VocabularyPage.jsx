@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
+import { shuffle } from '../utils/shuffle.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
@@ -1124,12 +1125,12 @@ export default function VocabularyPage() {
           const currentLevelWords = availableWords.filter(w => w.cefrLevel === userLevel);
           const lowerLevelWords = availableWords.filter(w => w.cefrLevel !== userLevel);
           // Pick 3-4 from current level, 1-2 from lower levels for review
-          const shuffledCurrent = [...currentLevelWords].sort(() => Math.random() - 0.5);
-          const shuffledLower = [...lowerLevelWords].sort(() => Math.random() - 0.5);
-          const picked = [
+          const shuffledCurrent = shuffle(currentLevelWords);
+          const shuffledLower = shuffle(lowerLevelWords);
+          const picked = shuffle([
             ...shuffledCurrent.slice(0, lowerLevelWords.length > 0 ? 4 : 5),
             ...shuffledLower.slice(0, 1)
-          ].sort(() => Math.random() - 0.5);
+          ]);
           handleStartLearn(picked.slice(0, 5));
         }}
       >

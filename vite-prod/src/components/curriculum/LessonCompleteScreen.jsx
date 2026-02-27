@@ -3,19 +3,19 @@ import StarAnimation from './StarAnimation.jsx';
 import { t } from '../../utils/translations.js';
 
 // -- Confetti piece component --
-function ConfettiPiece({ delay, color, left }) {
+function ConfettiPiece({ delay, color, left, width, height, round, duration }) {
   return (
     <div
       style={{
         position: 'absolute',
         top: -10,
         left: `${left}%`,
-        width: 8 + Math.random() * 6,
-        height: 8 + Math.random() * 6,
+        width,
+        height,
         background: color,
-        borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+        borderRadius: round ? '50%' : '2px',
         opacity: 0,
-        animation: `confetti-fall ${1.8 + Math.random() * 1.2}s ease-out ${delay}s forwards`,
+        animation: `confetti-fall ${duration}s ease-out ${delay}s forwards`,
         pointerEvents: 'none',
       }}
     />
@@ -58,9 +58,10 @@ export default function LessonCompleteScreen({
       : stars >= 1
       ? (uiLang === 'he' ? 'כל הכבוד! סיימתם את השיעור!' : 'Great job! You finished the lesson!')
       : (uiLang === 'he' ? 'לא נורא, בואו ננסה שוב!' : "That's okay, let's try again!");
-    setTimeout(() => {
+    const tid = setTimeout(() => {
       speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
     }, 400);
+    return () => clearTimeout(tid);
   }, []);
 
   // Generate confetti pieces for 3 stars
@@ -71,6 +72,10 @@ export default function LessonCompleteScreen({
       color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
       left: Math.random() * 100,
       delay: Math.random() * 0.8,
+      width: 8 + Math.random() * 6,
+      height: 8 + Math.random() * 6,
+      round: Math.random() > 0.5,
+      duration: 1.8 + Math.random() * 1.2,
     }));
   }, [stars]);
 
@@ -91,7 +96,7 @@ export default function LessonCompleteScreen({
       {confettiPieces.length > 0 && (
         <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
           {confettiPieces.map((piece) => (
-            <ConfettiPiece key={piece.id} color={piece.color} left={piece.left} delay={piece.delay} />
+            <ConfettiPiece key={piece.id} color={piece.color} left={piece.left} delay={piece.delay} width={piece.width} height={piece.height} round={piece.round} duration={piece.duration} />
           ))}
         </div>
       )}

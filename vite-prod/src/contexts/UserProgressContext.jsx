@@ -22,6 +22,7 @@ const DEFAULT_PROGRESS = {
   onboardingComplete: false,
   ageGroup: null,
   lettersCompleted: [],
+  curriculum: null,
 };
 
 const CHILD_LS_KEY = 'speakeasy_activeChildId';
@@ -299,10 +300,14 @@ export function UserProgressProvider({ children: reactChildren }) {
 
   const updateProgress = useCallback(async (updates) => {
     if (!user) return;
-    const docRef = activeChildId
-      ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
-      : window.firestore.doc(window.db, 'users', user.uid);
-    await window.firestore.setDoc(docRef, updates, { merge: true });
+    try {
+      const docRef = activeChildId
+        ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
+        : window.firestore.doc(window.db, 'users', user.uid);
+      await window.firestore.setDoc(docRef, updates, { merge: true });
+    } catch (err) {
+      console.error('updateProgress failed (offline?):', err);
+    }
   }, [user, activeChildId]);
 
   const addXP = useCallback(async (amount, source = 'unknown') => {

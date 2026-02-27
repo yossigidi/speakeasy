@@ -5,6 +5,7 @@ import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../../utils/gameSounds.js';
 import { getWordsForLevel, SENTENCES_BY_LEVEL, CATEGORIES_BY_LEVEL } from '../../data/kids-vocabulary.js';
+import { shuffle } from '../../utils/shuffle.js';
 
 // Hebrew instruction phrases for new games — preloaded on mount
 const NEW_GAME_PHRASES = [
@@ -170,7 +171,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   }, [childLevel]);
 
   const words = useMemo(() => {
-    return [...levelWords].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
+    return shuffle(levelWords).slice(0, TOTAL_ROUNDS);
   }, [levelWords]);
 
   // Stop all audio on unmount (back button)
@@ -191,12 +192,10 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     setWrongId(null);
 
     // Create options: 1 correct + (NUM_OPTIONS-1) wrong
-    const others = levelWords
-      .filter(w => w.word !== tgt.word)
-      .sort(() => Math.random() - 0.5)
+    const others = shuffle(levelWords.filter(w => w.word !== tgt.word))
       .slice(0, NUM_OPTIONS - 1);
 
-    const all = [tgt, ...others].sort(() => Math.random() - 0.5).map((w, i) => ({
+    const all = shuffle([tgt, ...others]).map((w, i) => ({
       id: i, ...w, isTarget: w.word === tgt.word,
     }));
     setOptions(all);
@@ -417,13 +416,13 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   // Use level-specific categories
   const sets = useMemo(() => {
     const lvlCategories = CATEGORIES_BY_LEVEL[childLevel] || CATEGORIES_BY_LEVEL[1];
-    const available = [...lvlCategories].sort(() => Math.random() - 0.5);
+    const available = shuffle(lvlCategories);
     return available.slice(0, TOTAL_SETS);
   }, [childLevel]);
 
   const currentSet = sets[setIndex] || sets[0];
   const shuffledItems = useMemo(() => {
-    return [...currentSet.items].sort(() => Math.random() - 0.5);
+    return shuffle(currentSet.items);
   }, [setIndex]);
 
   const item = shuffledItems[currentItem];
@@ -636,7 +635,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       w.word.length <= 5
     );
     const source = filtered.length >= TOTAL_ROUNDS ? filtered : MISSING_LETTER_WORDS;
-    const picked = [...source].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
+    const picked = shuffle(source).slice(0, TOTAL_ROUNDS);
     return picked.map(w => {
       // Pick a random position to remove
       const pos = Math.floor(Math.random() * w.word.length);
@@ -645,8 +644,8 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
 
       // Generate options: correct + (NUM_OPTIONS-1) wrong
       const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(l => l !== missingLetter);
-      const wrongLetters = allLetters.sort(() => Math.random() - 0.5).slice(0, NUM_OPTIONS - 1);
-      const options = [missingLetter, ...wrongLetters].sort(() => Math.random() - 0.5);
+      const wrongLetters = shuffle(allLetters).slice(0, NUM_OPTIONS - 1);
+      const options = shuffle([missingLetter, ...wrongLetters]);
 
       return { ...w, pos, missingLetter, displayed, options };
     });
@@ -880,7 +879,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       if (SENTENCES_BY_LEVEL[l]) allSentences.push(...SENTENCES_BY_LEVEL[l]);
     }
     const source = allSentences.length >= TOTAL_ROUNDS ? allSentences : SENTENCE_DATA;
-    return [...source].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
+    return shuffle(source).slice(0, TOTAL_ROUNDS);
   }, [childLevel]);
 
   const current = sentences[round];
@@ -890,7 +889,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     setPlaced([]);
     setIsCorrect(null);
     // Shuffle the words
-    setAvailable(current.words.map((w, i) => ({ id: i, word: w, used: false })).sort(() => Math.random() - 0.5));
+    setAvailable(shuffle(current.words.map((w, i) => ({ id: i, word: w, used: false }))));
 
     // Voice instructions on first round, then just the sentence
     if (!instructionsGiven.current) {

@@ -6,6 +6,7 @@ import { useSpeech } from '../contexts/SpeechContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import alphabetData from '../data/alphabet-kids.json';
+import { shuffle } from '../utils/shuffle.js';
 
 /* ── Confetti burst helper ── */
 function ConfettiBurst({ show }) {
@@ -322,9 +323,7 @@ function FindLetterGame({ letter, onComplete }) {
   const [showConfetti, setShowConfetti] = useState(false);
 
   const letters = useMemo(() => {
-    const others = alphabetData
-      .filter(l => l.letter !== letter.letter)
-      .sort(() => Math.random() - 0.5)
+    const others = shuffle(alphabetData.filter(l => l.letter !== letter.letter))
       .slice(0, 6)
       .map(l => ({ char: Math.random() > 0.5 ? l.letter : l.lower, isTarget: false, color: l.color }));
     const targets = [
@@ -332,7 +331,7 @@ function FindLetterGame({ letter, onComplete }) {
       { char: letter.lower, isTarget: true, color: letter.color },
       { char: letter.letter, isTarget: true, color: letter.color },
     ];
-    return [...others, ...targets].sort(() => Math.random() - 0.5);
+    return shuffle([...others, ...targets]);
   }, [letter]);
 
   const totalTargets = letters.filter(l => l.isTarget).length;
@@ -412,9 +411,14 @@ function MatchWordGame({ letter, onComplete }) {
   const [wrongPair, setWrongPair] = useState(null);
 
   const words = useMemo(() => letter.words.map((w, i) => ({ ...w, id: i })), [letter]);
-  const shuffledEmojis = useMemo(() => [...words].sort(() => Math.random() - 0.5), [words]);
+  const shuffledEmojis = useMemo(() => shuffle(words), [words]);
 
   const handleWordTap = (w) => {
+    // Allow deselecting by tapping same word again
+    if (selectedWord === w.id) {
+      setSelectedWord(null);
+      return;
+    }
     speak(w.word, { rate: 0.75 });
     setSelectedWord(w.id);
     setWrongPair(null);
@@ -500,9 +504,9 @@ function CaseMatchGame({ letter, onComplete }) {
   const [showConfetti, setShowConfetti] = useState(false);
 
   const pairs = useMemo(() => {
-    const pool = [...alphabetData].sort(() => Math.random() - 0.5).slice(0, 4);
+    const pool = shuffle(alphabetData).slice(0, 4);
     if (!pool.find(p => p.letter === letter.letter)) pool[0] = letter;
-    return pool.sort(() => Math.random() - 0.5).map(l => ({
+    return shuffle(pool).map(l => ({
       upper: l.letter, lower: l.lower, color: l.color,
       isTarget: l.letter === letter.letter,
     }));
@@ -513,7 +517,7 @@ function CaseMatchGame({ letter, onComplete }) {
       prompt: p.upper,
       correct: p.lower,
       color: p.color,
-      options: pairs.map(pp => pp.lower).sort(() => Math.random() - 0.5),
+      options: shuffle(pairs.map(pp => pp.lower)),
     }));
   }, [pairs]);
 
@@ -606,16 +610,14 @@ function ListenChooseGame({ letter, onComplete }) {
 
   const questions = useMemo(() => {
     return letter.words.map(w => {
-      const wrongs = alphabetData
-        .filter(l => l.letter !== letter.letter)
-        .sort(() => Math.random() - 0.5)
+      const wrongs = shuffle(alphabetData.filter(l => l.letter !== letter.letter))
         .slice(0, 2)
         .map(l => l.words[Math.floor(Math.random() * 3)]);
-      const options = [
+      const options = shuffle([
         { ...w, isCorrect: true },
         { ...wrongs[0], isCorrect: false },
         { ...wrongs[1], isCorrect: false },
-      ].sort(() => Math.random() - 0.5);
+      ]);
       return { targetWord: w.word, targetTranslation: w.translation, options };
     });
   }, [letter]);

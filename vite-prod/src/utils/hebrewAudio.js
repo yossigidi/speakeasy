@@ -351,7 +351,7 @@ export function stopHebrew() {
  */
 export function stopCloudTTS() {
   activeSources.forEach(source => {
-    try { source.stop(); } catch (e) { /* already stopped */ }
+    try { source.stop(); source.disconnect(); } catch (e) { /* already stopped */ }
   });
   activeSources.clear();
 }
@@ -376,7 +376,7 @@ export function stopAllAudio() {
 
   // Stop all active AudioBufferSource nodes (Cloud TTS)
   activeSources.forEach(source => {
-    try { source.stop(); } catch (e) { /* already stopped */ }
+    try { source.stop(); source.disconnect(); } catch (e) { /* already stopped */ }
   });
   activeSources.clear();
 }

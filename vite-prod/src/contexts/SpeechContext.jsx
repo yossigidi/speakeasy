@@ -200,9 +200,9 @@ export function SpeechProvider({ children }) {
 
     setIsSpeaking(true);
 
-    // For long texts (>200 chars), skip Cloud TTS — go directly to Web Speech
-    // Cloud TTS has limits and long texts cause timeout race conditions
-    if (text.length > 200) {
+    // For long texts (>450 chars), skip Cloud TTS — go directly to Web Speech
+    // Cloud TTS server supports up to 500 chars
+    if (text.length > 450) {
       speakWithWebSpeech(text, { ...options, _queued: true });
       return;
     }

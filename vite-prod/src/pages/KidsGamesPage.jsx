@@ -7,6 +7,7 @@ import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../u
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import { shuffle } from '../utils/shuffle.js';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -99,7 +100,7 @@ function BubblePopGame({ onComplete, onBack }) {
 
   // Pick random letters for each round
   const rounds = useMemo(() => {
-    const shuffled = [...alphabetData].sort(() => Math.random() - 0.5);
+    const shuffled = shuffle(alphabetData);
     return shuffled.slice(0, TOTAL_ROUNDS);
   }, []);
 
@@ -117,12 +118,10 @@ function BubblePopGame({ onComplete, onBack }) {
     setWrongId(null);
 
     // Create bubbles: 2 correct + 6 wrong
-    const others = alphabetData
-      .filter(l => l.letter !== target.letter)
-      .sort(() => Math.random() - 0.5)
+    const others = shuffle(alphabetData.filter(l => l.letter !== target.letter))
       .slice(0, BUBBLES_PER_ROUND - 2);
 
-    const allBubbles = [
+    const allBubbles = shuffle([
       { id: 0, letter: target.letter, isTarget: true, color: target.color, emoji: target.emoji },
       { id: 1, letter: target.lower, isTarget: true, color: target.color, emoji: target.emoji },
       ...others.map((l, i) => ({
@@ -132,7 +131,7 @@ function BubblePopGame({ onComplete, onBack }) {
         color: l.color,
         emoji: l.emoji,
       })),
-    ].sort(() => Math.random() - 0.5).map((b, i) => ({
+    ]).map((b, i) => ({
       ...b,
       x: 8 + (i % 4) * 23 + (Math.random() * 8 - 4),
       y: 100 + Math.random() * 20,
@@ -376,7 +375,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
 
   // Pick words based on level
   const wordPairs = useMemo(() => {
-    return [...MEMORY_WORDS].sort(() => Math.random() - 0.5).slice(0, PAIRS);
+    return shuffle(MEMORY_WORDS).slice(0, PAIRS);
   }, []);
 
   // Create card deck: "picture" card + "word" card per pair
@@ -392,7 +391,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         emoji: w.emoji, word: w.word, translation: w.translation, bg: w.bg,
       });
     });
-    setCards(deck.sort(() => Math.random() - 0.5));
+    setCards(shuffle(deck));
   }, [wordPairs]);
 
   // Voice instructions on game start - pre-recorded Hebrew audio
@@ -653,7 +652,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
 
   const words = useMemo(() => {
     const filtered = BUILDER_WORDS.filter(w => w.word.length >= minLen && w.word.length <= maxLen);
-    return [...filtered].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS);
+    return shuffle(filtered).slice(0, TOTAL_ROUNDS);
   }, []);
 
   const currentWord = words[round] || words[0];
@@ -669,13 +668,12 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     const w = words[round];
     const letters = w.word.split('');
     // Add extra random letters as distractors based on level
-    const extras = 'abcdefghijklmnopqrstuvwxyz'
+    const extras = shuffle('abcdefghijklmnopqrstuvwxyz'
       .split('')
-      .filter(l => !letters.includes(l))
-      .sort(() => Math.random() - 0.5)
+      .filter(l => !letters.includes(l)))
       .slice(0, numDistractors);
 
-    const all = [...letters, ...extras].sort(() => Math.random() - 0.5).map((l, i) => ({
+    const all = shuffle([...letters, ...extras]).map((l, i) => ({
       id: i,
       letter: l,
       used: false,
