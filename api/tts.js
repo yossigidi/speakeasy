@@ -4,9 +4,9 @@ import { getFirestore } from './_lib/firebase.js';
 const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 const CACHE_COLLECTION = 'tts-cache';
 
-// Multilingual voice for both Hebrew and English
-const VOICE_ID = 'XJ2fW4ybq7HouelYYGcL';
-const MODEL_ID = 'eleven_multilingual_v2';
+// Jessica - Playful, Bright, Warm (works great with Hebrew on v3)
+const VOICE_ID = 'cgSgspJ2msm6clMCkdW9';
+const MODEL_ID = 'eleven_v3';
 
 // Detect language from text (simple heuristic)
 function detectLang(text) {
