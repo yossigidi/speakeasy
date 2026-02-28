@@ -53,9 +53,9 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       // Speak title then description
       setTimeout(() => {
         speak(title, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, onEnd: () => {
-          setTimeout(() => speak(desc, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, _queued: true }), 300);
+          setTimeout(() => speak(desc, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, _queued: true }), 200);
         }});
-      }, 500);
+      }, 200);
     }
   }, [phase, lessonData]);
 

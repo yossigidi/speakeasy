@@ -51,8 +51,8 @@ export default function KidsIntro({
     setVisible(true);
     requestAnimationFrame(() => setPhase('visible'));
 
-    // Avatar animation sequence: fly → wave → (talk starts with speech)
-    const waveTimer = setTimeout(() => setAvatarMode('wave'), 800);
+    // Avatar animation sequence: fly → talk (immediate speech)
+    const waveTimer = setTimeout(() => setAvatarMode('talk'), 300);
     return () => clearTimeout(waveTimer);
   }, [id]);
 
@@ -65,7 +65,7 @@ export default function KidsIntro({
     return { text: d, lang: isHe ? 'he' : 'en-US' };
   }, [uiLang, desc, descHe]);
 
-  // Fire speech after wave phase (1.8s) — Cloud TTS only, no Web Speech fallback
+  // Fire speech immediately when overlay appears
   useEffect(() => {
     if (phase !== 'visible' || !visible || spokenRef.current) return;
     const speechTimer = setTimeout(() => {
@@ -79,7 +79,7 @@ export default function KidsIntro({
         onEnd: () => setAvatarMode('idle'),
       });
       spokenRef.current = true;
-    }, 1800);
+    }, 300);
     return () => clearTimeout(speechTimer);
   }, [phase, visible, getSpeechText, speak]);
 
