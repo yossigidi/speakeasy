@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 
 const TYPE_ICONS = {
   speaking: '\u{1F5E3}\uFE0F', vocabulary: '\u{1F4DA}', reading: '\u{1F4D6}',
@@ -9,17 +9,33 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
   const isCompleted = lessonResult?.completed;
   const stars = lessonResult?.stars || 0;
   const icon = TYPE_ICONS[lesson.type] || '\u{1F4DD}';
+  const tappedRef = useRef(false);
 
-  const handleTap = () => {
+  const fireTap = useCallback(() => {
+    if (tappedRef.current) return;
+    tappedRef.current = true;
+    setTimeout(() => { tappedRef.current = false; }, 400);
     if (isUnlocked && onTap) {
       onTap(lesson);
     }
+  }, [isUnlocked, onTap, lesson]);
+
+  const handleClick = () => {
+    fireTap();
+  };
+
+  const handleTouchEnd = (e) => {
+    e.preventDefault();
+    fireTap();
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-      <button
-        onClick={handleTap}
+      <div
+        role="button"
+        tabIndex={isUnlocked ? 0 : -1}
+        onClick={handleClick}
+        onTouchEnd={handleTouchEnd}
         style={{
           width: 56,
           height: 56,
@@ -28,7 +44,7 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: 20,
-          transition: 'all 0.3s',
+          transition: 'box-shadow 0.3s, background 0.3s, border 0.3s',
           cursor: isUnlocked ? 'pointer' : 'not-allowed',
           opacity: !isUnlocked ? 0.6 : 1,
           background: !isUnlocked ? '#E5E7EB'
@@ -45,16 +61,18 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
             : isUnlocked
             ? '0 2px 8px rgba(0,0,0,0.08)'
             : 'none',
-          animation: isCurrent && !isCompleted ? 'curriculum-node-pulse 2s ease-in-out infinite' : 'none',
+          animation: isCurrent && !isCompleted ? 'curriculumNodePulse 2s ease-in-out infinite' : 'none',
           WebkitTapHighlightColor: 'transparent',
           touchAction: 'manipulation',
           userSelect: 'none',
           outline: 'none',
           padding: 0,
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {!isUnlocked ? '\u{1F512}' : icon}
-      </button>
+      </div>
       {/* Stars */}
       {isCompleted && (
         <div style={{ display: 'flex', gap: 2 }}>
