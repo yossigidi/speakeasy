@@ -6,19 +6,19 @@ import { t } from '../../utils/translations.js';
 function generateMathQuestion() {
   const type = Math.floor(Math.random() * 3);
   if (type === 0) {
-    // Multiplication: 10-99 x 2-9
-    const a = Math.floor(Math.random() * 90) + 10;
+    // Multiplication: 2-9 x 2-9
+    const a = Math.floor(Math.random() * 8) + 2;
     const b = Math.floor(Math.random() * 8) + 2;
     return { question: `${a} × ${b} = ?`, answer: a * b };
   } else if (type === 1) {
-    // Division: result 10-49
+    // Subtraction: a - b where a is 10-30, b is 2-9
     const b = Math.floor(Math.random() * 8) + 2;
-    const result = Math.floor(Math.random() * 40) + 10;
-    return { question: `${result * b} ÷ ${b} = ?`, answer: result };
+    const a = Math.floor(Math.random() * 21) + 10;
+    return { question: `${a} - ${b} = ?`, answer: a - b };
   } else {
-    // Addition: 50-99 + 30-99
-    const a = Math.floor(Math.random() * 50) + 50;
-    const b = Math.floor(Math.random() * 70) + 30;
+    // Addition: 10-30 + 5-20
+    const a = Math.floor(Math.random() * 21) + 10;
+    const b = Math.floor(Math.random() * 16) + 5;
     return { question: `${a} + ${b} = ?`, answer: a + b };
   }
 }
