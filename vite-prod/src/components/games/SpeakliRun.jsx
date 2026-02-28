@@ -143,11 +143,20 @@ function CoinAnimation({ show }) {
 }
 
 // ── WorldSelector ──
-function WorldSelector({ onSelect, childLevel, uiLang }) {
+function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
   const availableWorlds = WORLDS.filter(w => !w.minLevel || childLevel >= w.minLevel);
 
   return (
     <div className="kids-bg min-h-screen relative flex flex-col">
+      {/* Back button */}
+      <div className="absolute top-3 left-3 z-20">
+        <button
+          onClick={onBack}
+          className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform"
+        >
+          <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+        </button>
+      </div>
       <div className="relative z-10 flex flex-col items-center px-4 pt-6 pb-4 flex-1">
         <div className="mb-4">
           <SpeakliAvatar mode="bounce" size="lg" />
@@ -312,7 +321,7 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
   return (
     <div
       className={`relative w-full h-full overflow-hidden ${isPowerMode ? 'runner-power' : ''} ${isPaused ? 'runner-paused' : ''}`}
-      style={{ background: world.skyGradient }}
+      style={{ background: world.skyGradient, minHeight: '100vh' }}
     >
       {/* Far BG layer */}
       <div
@@ -653,7 +662,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
   // World selection screen
   if (phase === 'world-select') {
-    return <WorldSelector onSelect={handleWorldSelect} childLevel={childLevel} uiLang={uiLang} />;
+    return <WorldSelector onSelect={handleWorldSelect} onBack={onBack} childLevel={childLevel} uiLang={uiLang} />;
   }
 
   // Game over screen
@@ -677,7 +686,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   const isPaused = phase === 'word-challenge' || phase === 'countdown';
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ touchAction: 'manipulation' }}>
+    <div className="h-screen relative overflow-hidden" style={{ touchAction: 'manipulation' }}>
       <RunnerViewport
         world={world}
         isPaused={isPaused}
