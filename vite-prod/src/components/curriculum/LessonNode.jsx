@@ -10,9 +10,7 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
   const stars = lessonResult?.stars || 0;
   const icon = TYPE_ICONS[lesson.type] || '\u{1F4DD}';
 
-  const handleTap = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleTap = () => {
     if (isUnlocked && onTap) {
       onTap(lesson);
     }
@@ -22,7 +20,6 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
       <button
         onClick={handleTap}
-        onTouchEnd={handleTap}
         style={{
           width: 56,
           height: 56,
