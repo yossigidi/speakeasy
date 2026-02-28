@@ -84,19 +84,26 @@ export default function CurriculumPage({ onBack }) {
     setSelectedLessonInfo(null);
   }, []);
 
-  // Close bottom sheet on outside tap
+  // Close bottom sheet on outside tap (delayed to avoid race with the tap that opened it)
   useEffect(() => {
     if (!showBottomSheet) return;
+    let listeners = false;
     const handleClickOutside = (e) => {
       if (bottomSheetRef.current && !bottomSheetRef.current.contains(e.target)) {
         handleCloseSheet();
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
+    const timerId = setTimeout(() => {
+      listeners = true;
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }, 200);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      clearTimeout(timerId);
+      if (listeners) {
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('touchstart', handleClickOutside);
+      }
     };
   }, [showBottomSheet, handleCloseSheet]);
 
@@ -214,10 +221,13 @@ export default function CurriculumPage({ onBack }) {
       {showBottomSheet && selectedLessonInfo && (
         <>
           {/* Backdrop */}
-          <div style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
-            zIndex: 50, animation: 'curriculum-fade-in 0.2s ease',
-          }} />
+          <div
+            onClick={handleCloseSheet}
+            style={{
+              position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
+              zIndex: 50, animation: 'curriculum-fade-in 0.2s ease',
+            }}
+          />
 
           {/* Bottom Sheet */}
           <div
