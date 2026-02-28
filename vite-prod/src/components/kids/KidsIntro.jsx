@@ -65,22 +65,18 @@ export default function KidsIntro({
     return { text: d, lang: isHe ? 'he' : 'en-US' };
   }, [uiLang, desc, descHe]);
 
-  // Fire speech immediately when overlay appears
+  // Fire speech immediately when overlay appears — no delay
   useEffect(() => {
     if (phase !== 'visible' || !visible || spokenRef.current) return;
-    const speechTimer = setTimeout(() => {
-      if (spokenRef.current) return;
-      const { text, lang } = getSpeechText();
-      setAvatarMode('talk');
-      speak(text, {
-        lang,
-        rate: 0.9,
-        noWebSpeechFallback: true,
-        onEnd: () => setAvatarMode('idle'),
-      });
-      spokenRef.current = true;
-    }, 300);
-    return () => clearTimeout(speechTimer);
+    spokenRef.current = true;
+    const { text, lang } = getSpeechText();
+    setAvatarMode('talk');
+    speak(text, {
+      lang,
+      rate: 0.9,
+      noWebSpeechFallback: true,
+      onEnd: () => setAvatarMode('idle'),
+    });
   }, [phase, visible, getSpeechText, speak]);
 
   // Fallback: if user taps on the overlay card, unlock audio + speak (iOS)

@@ -1113,13 +1113,13 @@ export default function VocabularyPage() {
   return (
     <div className="pb-24 px-4 pt-4 space-y-5">
       <KidsIntro
-        id="vocabulary-v3"
+        id="vocabulary-v4"
         name={progress.displayName}
         emoji="📚"
         title="Speakli's Words!"
         titleHe="המילים של ספיקלי!"
-        desc="Speakli will teach you new English words! Let's learn together!"
-        descHe="ספיקלי ילמד אותך מילים חדשות באנגלית! בואו נלמד ביחד!"
+        desc="Hi! Let's learn new words together! Let's start!"
+        descHe="היי! בואו נלמד יחד מילים חדשות! בואו נתחיל!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's learn with Speakli!"

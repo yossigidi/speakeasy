@@ -71,13 +71,13 @@ function LetterGrid({ onSelect, completedLetters }) {
       <FloatingDecorations />
 
       <KidsIntro
-        id="kids-alphabet-v3"
+        id="kids-alphabet-v4"
         name={progress.displayName}
         emoji="🔤"
         title="Speakli's Letters!"
         titleHe="האותיות של ספיקלי!"
-        desc="Speakli will teach you all the letters! Tap any letter to hear it."
-        descHe="ספיקלי ילמד אותך את כל האותיות! לחץ על אות כדי לשמוע אותה."
+        desc="Hi! Let's learn the letters with Speakli! Tap the letters to learn!"
+        descHe="היי! בואו נלמד את האותיות עם ספיקלי! לחצו על האותיות כדי ללמוד!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's learn with Speakli!"
@@ -187,7 +187,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
     speak(wordObj.word, {
       rate: 0.75,
       onEnd: () => {
-        setTimeout(() => speak(wordObj.translation, { lang: 'he', rate: 0.9, _queued: true }), 300);
+        setTimeout(() => speak(wordObj.translation, { lang: 'he', rate: 0.9, _queued: true }), 100);
       }
     });
   };
@@ -638,7 +638,7 @@ function ListenChooseGame({ letter, onComplete }) {
       speak(opt.word, {
         rate: 0.75,
         onEnd: () => {
-          setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9, _queued: true }), 200);
+          setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9, _queued: true }), 100);
         }
       });
       setTimeout(() => {
