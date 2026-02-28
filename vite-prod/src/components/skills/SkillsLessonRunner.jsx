@@ -21,6 +21,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
   const [wrongCount, setWrongCount] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [hearts, setHearts] = useState(3);
+  const [savedAccuracy, setSavedAccuracy] = useState(null);
   const [streak, setStreak] = useState(0);
   const [teacherState, setTeacherState] = useState('idle');
   const [lessonInfo, setLessonInfo] = useState(null);
@@ -136,6 +137,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     } catch (err) {
       console.error('Failed to save skill lesson progress:', err);
     }
+    setSavedAccuracy(accuracy);
     playComplete && playComplete();
     setPhase('complete');
   }, [lessonId, skillsProgress]);
@@ -145,9 +147,11 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     return () => { stopSpeaking && stopSpeaking(); };
   }, [stopSpeaking]);
 
-  // Calculate final stats
+  // Calculate final stats — use savedAccuracy (set at save time) for consistent display
   const totalCount = exercises.length || 1;
-  const finalAccuracy = simulationAccuracy != null
+  const finalAccuracy = savedAccuracy != null
+    ? savedAccuracy
+    : simulationAccuracy != null
     ? simulationAccuracy
     : (totalCount > 0 ? (correctCount / (exercises.length || 1)) * 100 : 100);
   const finalStars = calculateStars(finalAccuracy);
@@ -255,6 +259,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     return (
       <DialogueViewer
         dialogue={lessonInfo.skill.dialogue}
+        phrases={lessonInfo.skill.phrases}
         uiLang={uiLang}
         speak={speak}
         onComplete={handleDialogueComplete}
@@ -296,6 +301,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
           setStreak(0);
           setTeacherState('idle');
           setSimulationAccuracy(null);
+          setSavedAccuracy(null);
           if (lessonInfo) {
             const data = getSkillLesson(lessonId);
             if (data && data.lesson.exerciseTypes?.length > 0) {

@@ -87,13 +87,14 @@ export default function SkillSimulationRunner({ simulation, onComplete, uiLang }
         }
       }
 
-      // Update metrics (running average)
+      // Update metrics (true arithmetic average)
       if (data.metrics) {
+        const count = currentStep + 1;
         setMetrics(prev => ({
-          clarity: prev.clarity ? Math.round((prev.clarity + data.metrics.clarity) / 2) : data.metrics.clarity,
-          grammar: prev.grammar ? Math.round((prev.grammar + data.metrics.grammar) / 2) : data.metrics.grammar,
-          vocabulary: prev.vocabulary ? Math.round((prev.vocabulary + data.metrics.vocabulary) / 2) : data.metrics.vocabulary,
-          confidence: prev.confidence ? Math.round((prev.confidence + data.metrics.confidence) / 2) : data.metrics.confidence,
+          clarity: Math.round(((prev.clarity * currentStep) + data.metrics.clarity) / count),
+          grammar: Math.round(((prev.grammar * currentStep) + data.metrics.grammar) / count),
+          vocabulary: Math.round(((prev.vocabulary * currentStep) + data.metrics.vocabulary) / count),
+          confidence: Math.round(((prev.confidence * currentStep) + data.metrics.confidence) / count),
         }));
       }
 

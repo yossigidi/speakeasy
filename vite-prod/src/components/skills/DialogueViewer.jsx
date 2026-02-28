@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Volume2 } from 'lucide-react';
 import { t } from '../../utils/translations.js';
 
-export default function DialogueViewer({ dialogue, uiLang, speak, onComplete }) {
+export default function DialogueViewer({ dialogue, phrases, uiLang, speak, onComplete }) {
   const [visibleLines, setVisibleLines] = useState(0);
   const [tooltip, setTooltip] = useState(null);
   const scrollRef = useRef(null);
   const autoPlayRef = useRef(null);
+  const tooltipTimerRef = useRef(null);
 
   const { speakers, lines } = dialogue;
 
@@ -42,16 +43,26 @@ export default function DialogueViewer({ dialogue, uiLang, speak, onComplete }) 
     }
   };
 
-  const handlePhraseTap = (phrase) => {
-    // Find Hebrew translation from skill phrases (search for matching key phrase)
-    setTooltip(tooltip === phrase ? null : phrase);
-    setTimeout(() => setTooltip(null), 3000);
+  const findHebrewForPhrase = (phrase) => {
+    if (!phrases) return phrase;
+    const match = phrases.find(p => p.en.toLowerCase().includes(phrase.toLowerCase()));
+    return match ? match.he : phrase;
   };
+
+  const handlePhraseTap = (phrase) => {
+    clearTimeout(tooltipTimerRef.current);
+    setTooltip(tooltip === phrase ? null : phrase);
+    tooltipTimerRef.current = setTimeout(() => setTooltip(null), 3000);
+  };
+
+  // Cleanup tooltip timer on unmount
+  useEffect(() => {
+    return () => clearTimeout(tooltipTimerRef.current);
+  }, []);
 
   const renderLineText = (text, keyPhrases = []) => {
     if (!keyPhrases || keyPhrases.length === 0) return text;
 
-    let result = text;
     const parts = [];
     let remaining = text;
 
@@ -89,7 +100,7 @@ export default function DialogueViewer({ dialogue, uiLang, speak, onComplete }) 
               fontSize: 12, whiteSpace: 'nowrap', zIndex: 10,
               animation: 'curriculum-fade-in 0.2s ease',
             }}>
-              {part.phrase}
+              {findHebrewForPhrase(part.phrase)}
             </span>
           )}
         </span>

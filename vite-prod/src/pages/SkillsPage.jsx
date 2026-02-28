@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Lock, Star, ChevronRight, X } from 'lucide-react';
+import { ArrowLeft, Lock, Star, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
-import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { t } from '../utils/translations.js';
 import { SKILLS, SKILL_LEVELS } from '../data/skills/skills-data.js';
 import { LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
@@ -10,7 +9,6 @@ import SkillsLessonRunner from '../components/skills/SkillsLessonRunner.jsx';
 
 export default function SkillsPage({ onBack }) {
   const { uiLang, dir } = useTheme();
-  const { speak } = useSpeech();
   const { skills, isSkillLessonUnlocked, getLessonResult, getSkillProgress } = useSkillsProgress();
   const isHe = uiLang === 'he';
 
