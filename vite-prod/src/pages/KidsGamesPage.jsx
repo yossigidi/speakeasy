@@ -6,6 +6,7 @@ import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
+import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { shuffle } from '../utils/shuffle.js';
@@ -1001,6 +1002,16 @@ const GAMES = [
     descEn: 'Arrange words into a sentence!',
     gradient: 'from-indigo-400 via-blue-400 to-sky-400',
     component: SentenceBuilderGame,
+  },
+  {
+    id: 'speakli-run',
+    emoji: '🏃',
+    titleHe: 'מרוץ המילים',
+    titleEn: 'Speakli Run',
+    descHe: 'רוצו ולמדו מילים!',
+    descEn: 'Run and learn words!',
+    gradient: 'from-green-400 via-emerald-400 to-teal-400',
+    component: SpeakliRunGame,
   },
 ];
 

@@ -1465,3 +1465,107 @@ select:focus {
     background: rgba(17, 24, 39, 0.97) !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   SPEAKLI RUN — Runner game animations
+   ═══════════════════════════════════════════════════════ */
+
+/* Infinite parallax scroll — layer moves left 50% then resets */
+@keyframes runnerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Character bobbing run cycle */
+@keyframes speakliRun {
+  0%, 100% { transform: translateY(0) scaleX(1) scaleY(1); }
+  25%  { transform: translateY(-10px) scaleX(0.95) scaleY(1.08); }
+  50%  { transform: translateY(-2px) scaleX(1.05) scaleY(0.95); }
+  75%  { transform: translateY(-8px) scaleX(0.97) scaleY(1.05); }
+}
+
+/* Speed lines flying left */
+@keyframes speedLine {
+  0%   { transform: translateX(100vw); opacity: 0.7; }
+  100% { transform: translateX(-20vw); opacity: 0; }
+}
+
+/* Word boxes slide in from right with bounce */
+@keyframes wordBoxSlideIn {
+  0%   { transform: translateX(120%) scale(0.8); opacity: 0; }
+  60%  { transform: translateX(-5%) scale(1.05); opacity: 1; }
+  80%  { transform: translateX(2%) scale(0.98); }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* Correct answer — scale up and float away */
+@keyframes wordBoxCorrect {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1.5) translateY(-30px); opacity: 0; }
+}
+
+/* Wrong answer — shake and shrink */
+@keyframes wordBoxBreak {
+  0%   { transform: rotate(0) scale(1); }
+  20%  { transform: rotate(-8deg) scale(0.95); }
+  40%  { transform: rotate(8deg) scale(0.9); }
+  60%  { transform: rotate(-5deg) scale(0.85); }
+  80%  { transform: rotate(3deg) scale(0.8); opacity: 0.5; }
+  100% { transform: rotate(0) scale(0.7); opacity: 0.3; }
+}
+
+/* Coin flies up to HUD */
+@keyframes coinFly {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  50%  { transform: translateY(-60px) scale(1.2); opacity: 0.8; }
+  100% { transform: translateY(-120px) scale(0.5); opacity: 0; }
+}
+
+/* Power mode golden glow */
+@keyframes powerModeGlow {
+  0%, 100% { box-shadow: inset 0 0 30px rgba(255, 200, 0, 0.3); }
+  50%      { box-shadow: inset 0 0 60px rgba(255, 200, 0, 0.5); }
+}
+
+/* Countdown 3-2-1-Go! pop in */
+@keyframes countdownPop {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1.3); opacity: 1; }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Sparkle burst particles */
+@keyframes sparkleBurst {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--sx, 20px), var(--sy, -20px)) scale(0); opacity: 0; }
+}
+
+/* Paused state — stops all layer animations */
+.runner-paused .runner-layer {
+  animation-play-state: paused !important;
+}
+
+/* Power mode — speeds up layers + golden glow */
+.runner-power {
+  animation: powerModeGlow 1s ease-in-out infinite;
+}
+.runner-power .runner-layer {
+  animation-duration: 2s !important;
+}
+
+/* Speakli run character animation class */
+.speakli-run .speakli-img {
+  animation: speakliRun 0.4s ease-in-out infinite;
+}
+.speakli-run.runner-paused-char .speakli-img {
+  animation: none;
+  transform: scaleX(1) scaleY(1);
+}
+
+/* Ground dash decorations */
+@keyframes groundDash {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
