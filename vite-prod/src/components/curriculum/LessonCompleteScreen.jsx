@@ -50,7 +50,7 @@ export default function LessonCompleteScreen({
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
-  // Speak congratulations/encouragement
+  // Speak congratulations/encouragement — delay enough for playComplete sound to finish
   useEffect(() => {
     if (!speak) return;
     const msg = stars === 3
@@ -60,7 +60,7 @@ export default function LessonCompleteScreen({
       : (uiLang === 'he' ? 'לא נורא, בואו ננסה שוב!' : "That's okay, let's try again!");
     const tid = setTimeout(() => {
       speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
-    }, 400);
+    }, 1800);
     return () => clearTimeout(tid);
   }, []);
 

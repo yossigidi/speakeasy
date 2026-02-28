@@ -30,8 +30,12 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
 
-      const isHe = uiLang === 'he';
-      speak(isHe ? textHe : textEn, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
+      // Small delay + cancel ongoing speech to avoid race condition with other click-triggered speech
+      setTimeout(() => {
+        window.speechSynthesis?.cancel();
+        const isHe = uiLang === 'he';
+        speak(isHe ? textHe : textEn, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
+      }, 300);
     };
 
     document.addEventListener('click', doSpeak);

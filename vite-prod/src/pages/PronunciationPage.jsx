@@ -152,7 +152,7 @@ export default function PronunciationPage() {
           {uiLang === 'he' ? 'זיהוי דיבור לא נתמך' : 'Speech Recognition Not Supported'}
         </h2>
         <p className="text-sm text-gray-500 text-center">
-          {uiLang === 'he' ? 'נסה להשתמש ב-Chrome במחשב או באנדרואיד' : 'Try using Chrome on desktop or Android'}
+          {uiLang === 'he' ? 'נסו להשתמש ב-Chrome במחשב או באנדרואיד' : 'Try using Chrome on desktop or Android'}
         </p>
       </div>
     );

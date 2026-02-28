@@ -36,7 +36,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U1-1',
           type: 'speaking',
-          titleHe: 'אמור שלום!',
+          titleHe: 'אמרו שלום!',
           titleEn: 'Say Hello!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -113,7 +113,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U2-1',
           type: 'speaking',
-          titleHe: 'אמור את הצבע!',
+          titleHe: 'אמרו את הצבע!',
           titleEn: 'Say the Color!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -190,7 +190,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U3-1',
           type: 'speaking',
-          titleHe: 'ספור בקול!',
+          titleHe: 'ספרו בקול!',
           titleEn: 'Count Out Loud!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -265,7 +265,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U4-1',
           type: 'speaking',
-          titleHe: 'אמור את שם החיה!',
+          titleHe: 'אמרו את שם החיה!',
           titleEn: 'Say the Animal!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -338,7 +338,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U5-1',
           type: 'speaking',
-          titleHe: 'אמור את שם הפרי!',
+          titleHe: 'אמרו את שם הפרי!',
           titleEn: 'Say the Fruit!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -411,7 +411,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U6-1',
           type: 'speaking',
-          titleHe: 'אמור את חלקי הפנים!',
+          titleHe: 'אמרו את חלקי הפנים!',
           titleEn: 'Say the Face Parts!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -483,7 +483,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U7-1',
           type: 'speaking',
-          titleHe: 'אמור מי זה!',
+          titleHe: 'אמרו מי זה!',
           titleEn: 'Say Who It Is!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -556,7 +556,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U8-1',
           type: 'speaking',
-          titleHe: 'אמור את ההפכים!',
+          titleHe: 'אמרו את ההפכים!',
           titleEn: 'Say the Opposites!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -629,7 +629,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U9-1',
           type: 'speaking',
-          titleHe: 'אמור את שם הצעצוע!',
+          titleHe: 'אמרו את שם הצעצוע!',
           titleEn: 'Say the Toy!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -702,7 +702,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U10-1',
           type: 'speaking',
-          titleHe: 'אמור מה אתה אוכל!',
+          titleHe: 'אמרו מה אתם אוכלים!',
           titleEn: 'Say What You Eat!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -774,7 +774,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U11-1',
           type: 'speaking',
-          titleHe: 'אמור מה מזג האוויר!',
+          titleHe: 'אמרו מה מזג האוויר!',
           titleEn: 'Say the Weather!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -846,7 +846,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U12-1',
           type: 'speaking',
-          titleHe: 'אמור את שם הצורה!',
+          titleHe: 'אמרו את שם הצורה!',
           titleEn: 'Say the Shape!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -919,7 +919,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U13-1',
           type: 'speaking',
-          titleHe: 'אמור מה לעשות!',
+          titleHe: 'אמרו מה לעשות!',
           titleEn: 'Say the Action!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -992,7 +992,7 @@ export const LEVEL_1 = {
         {
           id: 'L1U14-1',
           type: 'speaking',
-          titleHe: 'אמור מה אתה לובש!',
+          titleHe: 'אמרו מה אתם לובשים!',
           titleEn: 'Say What You Wear!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],

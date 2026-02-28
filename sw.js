@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakli-v51';
-const STATIC_CACHE = 'speakli-static-v51';
+const CACHE_NAME = 'speakli-v52';
+const STATIC_CACHE = 'speakli-static-v52';
 
 const urlsToCache = [
   '/',

@@ -237,7 +237,13 @@ export default function KidsTeacherPage({ onBack }) {
 
   useEffect(() => {
     setSpeechText(t('teacherGreeting', uiLang));
-    speak(uiLang === 'he' ? 'שלום! בואו נלמד ביחד!' : 'Hello! Let\'s learn together!', { lang: uiLang === 'he' ? 'he' : 'en-US' });
+    // Only speak greeting if KidsIntro popup was already seen (otherwise KidsIntro handles speech)
+    try {
+      const seen = JSON.parse(sessionStorage.getItem('kids-intro-seen') || '[]');
+      if (seen.includes('kids-teacher-v1')) {
+        speak(uiLang === 'he' ? 'שלום! בואו נלמד ביחד!' : 'Hello! Let\'s learn together!', { lang: uiLang === 'he' ? 'he' : 'en-US' });
+      }
+    } catch (e) {}
   }, []);
 
   const handleTopicSelect = (topic) => {

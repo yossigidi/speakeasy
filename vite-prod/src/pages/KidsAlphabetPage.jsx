@@ -96,7 +96,7 @@ function LetterGrid({ onSelect, completedLetters }) {
             ))}
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {uiLang === 'he' ? 'לחץ על אות כדי ללמוד!' : 'Tap a letter to learn!'}
+            {uiLang === 'he' ? 'לחצו על אות כדי ללמוד!' : 'Tap a letter to learn!'}
           </p>
         </div>
 
@@ -302,7 +302,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
           <div className="absolute inset-0 bg-white/10 animate-pulse" style={{ animationDuration: '2s' }} />
           <span className="relative flex items-center gap-3">
             <span className="text-2xl">🎮</span>
-            {uiLang === 'he' ? '!בוא נשחק' : "Let's Play!"}
+            {uiLang === 'he' ? '!בואו נשחק' : "Let's Play!"}
             <Sparkles size={22} className="animate-sparkle" />
           </span>
         </button>
@@ -625,7 +625,11 @@ function ListenChooseGame({ letter, onComplete }) {
 
   useEffect(() => {
     if (current < questions.length) {
-      const t = setTimeout(() => speakRef.current(questions[current].targetWord, { rate: 0.7 }), 400);
+      const t = setTimeout(() => {
+        // Cancel any ongoing speech (e.g. previous answer's translation) before speaking next question
+        window.speechSynthesis?.cancel();
+        speakRef.current(questions[current].targetWord, { rate: 0.7 });
+      }, 600);
       return () => clearTimeout(t);
     }
   }, [current, questions]);

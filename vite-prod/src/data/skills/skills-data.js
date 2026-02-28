@@ -19,7 +19,7 @@ export const SKILLS = [
     titleEn: 'Introduce Yourself',
     titleHe: 'הצג את עצמך',
     descEn: 'Learn to introduce yourself confidently in English',
-    descHe: 'למד להציג את עצמך בביטחון באנגלית',
+    descHe: 'למדו להציג את עצמכם בביטחון באנגלית',
     words: [
       { word: 'name', emoji: '📛', translation: 'שם', example: "My name is David." },
       { word: 'from', emoji: '📍', translation: 'מ-', example: "I'm from Israel." },
@@ -131,7 +131,7 @@ export const SKILLS = [
     titleEn: 'Small Talk — Weekends',
     titleHe: 'שיחת חולין — סופי שבוע',
     descEn: 'Make small talk about weekends and free time',
-    descHe: 'נהל שיחת חולין על סופי שבוע וזמן פנוי',
+    descHe: 'נהלו שיחת חולין על סופי שבוע וזמן פנוי',
     words: [
       { word: 'weekend', emoji: '🗓️', translation: 'סוף שבוע', example: "How was your weekend?" },
       { word: 'trip', emoji: '✈️', translation: 'טיול', example: "I went on a short trip." },
@@ -244,7 +244,7 @@ export const SKILLS = [
     titleEn: 'Handling Complaints',
     titleHe: 'טיפול בתלונות',
     descEn: 'Learn to handle complaints politely and professionally',
-    descHe: 'למד לטפל בתלונות בנימוס ובמקצועיות',
+    descHe: 'למדו לטפל בתלונות בנימוס ובמקצועיות',
     words: [
       { word: 'problem', emoji: '⚠️', translation: 'בעיה', example: "There seems to be a problem." },
       { word: 'sorry', emoji: '😔', translation: 'מצטער', example: "I'm sorry about that." },

@@ -43,7 +43,7 @@ function MascotGreeting({ name, uiLang }) {
         {uiLang === 'he' ? `היי ${name || ''}!` : `Hi ${name || ''}!`}
       </h1>
       <p className="text-sm font-bold text-blue-600 dark:text-sky-400 mt-1 animate-pop-in">
-        {uiLang === 'he' ? 'ספיקלי כאן! בוא נלמד אנגלית!' : "Speakli is here! Let's learn English!"}
+        {uiLang === 'he' ? 'ספיקלי כאן! בואו נלמד אנגלית!' : "Speakli is here! Let's learn English!"}
       </p>
     </div>
   );
@@ -106,7 +106,7 @@ const GAME_CARDS = [
     emoji: '📚',
     titleHe: 'השיעורים של ספיקלי!',
     titleEn: "Speakli's Lessons!",
-    descHe: 'למד שלב אחר שלב',
+    descHe: 'למדו שלב אחר שלב',
     descEn: 'Learn step by step',
     gradient: 'from-blue-400 via-blue-500 to-sky-500',
     shadowColor: 'shadow-blue-400/30',
@@ -117,7 +117,7 @@ const GAME_CARDS = [
     emoji: '🔤',
     titleHe: 'האותיות של ספיקלי!',
     titleEn: "Speakli's Letters!",
-    descHe: 'לחץ ולמד את ה-ABC',
+    descHe: 'לחצו ולמדו את ה-ABC',
     descEn: 'Tap & learn your ABCs',
     gradient: 'from-sky-400 via-cyan-400 to-teal-400',
     shadowColor: 'shadow-sky-400/30',
@@ -139,7 +139,7 @@ const GAME_CARDS = [
     emoji: '📖',
     titleHe: 'המילים של ספיקלי!',
     titleEn: "Speakli's Words!",
-    descHe: 'למד מילים באנגלית',
+    descHe: 'למדו מילים באנגלית',
     descEn: 'Learn English words',
     gradient: 'from-red-400 via-rose-400 to-pink-400',
     shadowColor: 'shadow-red-400/30',
@@ -159,9 +159,9 @@ const GAME_CARDS = [
   {
     id: 'pronunciation',
     emoji: '🎤',
-    titleHe: 'דבר עם ספיקלי!',
+    titleHe: 'דברו עם ספיקלי!',
     titleEn: 'Talk to Speakli!',
-    descHe: 'תרגל דיבור באנגלית',
+    descHe: 'תרגלו דיבור באנגלית',
     descEn: 'Practice speaking',
     gradient: 'from-amber-400 via-orange-400 to-red-400',
     shadowColor: 'shadow-amber-400/30',
@@ -172,7 +172,7 @@ const GAME_CARDS = [
     emoji: '📚',
     titleHe: 'הסיפורים של ספיקלי!',
     titleEn: "Speakli's Stories!",
-    descHe: 'קרא ולמד מילים חדשות',
+    descHe: 'קראו ולמדו מילים חדשות',
     descEn: 'Read & learn new words',
     gradient: 'from-cyan-400 via-sky-400 to-blue-400',
     shadowColor: 'shadow-cyan-400/30',
@@ -187,14 +187,14 @@ const KIDS_VIDEOS = [
     videoId: 'hq3yfQnllfQ',
     titleHe: 'שיר ה-ABC',
     titleEn: 'ABC Song',
-    descHe: 'למד את האותיות בשירה!',
+    descHe: 'למדו את האותיות בשירה!',
     descEn: 'Learn the letters with a song!',
     emoji: '🎵',
   },
   {
     id: 'colors',
     videoId: 'jYAWf8Y91hA',
-    titleHe: 'למד צבעים',
+    titleHe: 'למדו צבעים',
     titleEn: 'Learn Colors',
     descHe: 'צבעים באנגלית לילדים',
     descEn: 'Colors in English for kids',
@@ -205,7 +205,7 @@ const KIDS_VIDEOS = [
     videoId: 'zXEq-QO3xTg',
     titleHe: 'חיות באנגלית',
     titleEn: 'Animal Names',
-    descHe: 'למד שמות של חיות!',
+    descHe: 'למדו שמות של חיות!',
     descEn: 'Learn animal names!',
     emoji: '🐾',
   },
@@ -483,7 +483,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
                   {uiLang === 'he' ? 'מילים לחזרה!' : 'Words to Review!'}
                 </h3>
                 <p className="text-white/80 text-xs">
-                  {reviewCount} {uiLang === 'he' ? 'מילים מחכות לך' : 'words waiting for you'}
+                  {reviewCount} {uiLang === 'he' ? 'מילים מחכות לכם' : 'words waiting for you'}
                 </p>
               </div>
             </div>
@@ -525,7 +525,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
                 {uiLang === 'he' ? 'הסיפורים של ספיקלי' : "Speakli's Stories"}
               </h3>
               <p className="text-white/80 text-xs">
-                {uiLang === 'he' ? 'קרא סיפורים קצרים ולמד!' : 'Read short stories & learn!'}
+                {uiLang === 'he' ? 'קראו סיפורים קצרים ולמדו!' : 'Read short stories & learn!'}
               </p>
             </div>
           </div>

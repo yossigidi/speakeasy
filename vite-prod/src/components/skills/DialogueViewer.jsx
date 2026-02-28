@@ -15,6 +15,14 @@ export default function DialogueViewer({ dialogue, phrases, uiLang, speak, onCom
   useEffect(() => {
     if (visibleLines >= lines.length) return;
 
+    // Dynamic delay based on previous line's word count (300ms per word + 1000ms base, min 2500ms)
+    let delay = 500;
+    if (visibleLines > 0) {
+      const prevText = lines[visibleLines - 1]?.text || '';
+      const wordCount = prevText.split(/\s+/).filter(Boolean).length;
+      delay = Math.max(2500, 1000 + wordCount * 300);
+    }
+
     autoPlayRef.current = setTimeout(() => {
       const nextIndex = visibleLines;
       setVisibleLines(nextIndex + 1);
@@ -23,7 +31,7 @@ export default function DialogueViewer({ dialogue, phrases, uiLang, speak, onCom
       if (speak && lines[nextIndex]) {
         speak(lines[nextIndex].text, { lang: 'en', rate: 0.9 });
       }
-    }, visibleLines === 0 ? 500 : 2500);
+    }, delay);
 
     return () => clearTimeout(autoPlayRef.current);
   }, [visibleLines, lines.length]);

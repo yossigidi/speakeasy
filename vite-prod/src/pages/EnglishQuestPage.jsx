@@ -236,7 +236,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
           onClick={onStart}
           className="w-full py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-black text-xl shadow-xl active:scale-95 transition-transform"
         >
-          {isHe ? '!התחל משימה' : 'Start Quest!'}
+          {isHe ? '!התחילו משימה' : 'Start Quest!'}
         </button>
 
         {/* Hero button */}
@@ -642,7 +642,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
       {/* Instruction */}
       <div className="text-center mb-6">
         <p className="text-white/70 text-sm mb-2">
-          {isHe ? '!אמור את המשפט' : 'Say the phrase!'}
+          {isHe ? '!אמרו את המשפט' : 'Say the phrase!'}
         </p>
 
         {/* Target phrase */}
@@ -672,7 +672,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
           <div className={`text-xl font-black mb-3 animate-pop-in ${result === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
             {result === 'correct'
               ? (isHe ? '!מדהים! נכון' : 'Amazing! Correct!')
-              : (isHe ? 'נסה שוב...' : 'Try again...')}
+              : (isHe ? 'נסו שוב...' : 'Try again...')}
           </div>
         )}
 

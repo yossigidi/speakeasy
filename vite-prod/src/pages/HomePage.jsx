@@ -90,7 +90,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
               </div>
               <div>
                 <h3 className="font-bold text-gray-900 dark:text-white">
-                  {uiLang === 'he' ? 'למד אותיות!' : 'Learn Letters!'}
+                  {uiLang === 'he' ? 'למדו אותיות!' : 'Learn Letters!'}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {(progress.lettersCompleted || []).length}/26 {uiLang === 'he' ? 'אותיות' : 'letters'} ⭐
@@ -120,7 +120,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
                   {uiLang === 'he' ? 'למידה בשמיעה' : 'Audio Learning'}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {uiLang === 'he' ? 'למד בזמן נהיגה' : 'Learn while driving'}
+                  {uiLang === 'he' ? 'למדו בזמן נהיגה' : 'Learn while driving'}
                 </p>
               </div>
             </div>
@@ -259,7 +259,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
               onClick={() => onNavigate('vocabulary')}
               className="shrink-0 ml-3 px-3 py-2 rounded-xl bg-brand-500 text-white text-xs font-semibold hover:bg-brand-600 transition-colors"
             >
-              {uiLang === 'he' ? 'למד עוד' : 'Learn More'}
+              {uiLang === 'he' ? 'למדו עוד' : 'Learn More'}
             </button>
           </div>
         </GlassCard>

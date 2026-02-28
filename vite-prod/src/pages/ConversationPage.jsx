@@ -11,7 +11,7 @@ import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 
 const SCENARIOS = [
-  { id: 'free', emoji: '💬', label: 'Free Chat', labelHe: 'שיחה חופשית', desc: 'Talk about anything', descHe: 'דבר על מה שתרצה' },
+  { id: 'free', emoji: '💬', label: 'Free Chat', labelHe: 'שיחה חופשית', desc: 'Talk about anything', descHe: 'דברו על מה שתרצו' },
   { id: 'restaurant', emoji: '🍽️', label: 'Restaurant', labelHe: 'מסעדה', desc: 'Order food & drinks', descHe: 'הזמנת אוכל ושתייה' },
   { id: 'airport', emoji: '✈️', label: 'Airport', labelHe: 'שדה תעופה', desc: 'Navigate the airport', descHe: 'ניווט בשדה התעופה' },
   { id: 'job-interview', emoji: '💼', label: 'Job Interview', labelHe: 'ראיון עבודה', desc: 'Practice interviews', descHe: 'תרגול ראיונות' },
@@ -156,7 +156,7 @@ export default function ConversationPage() {
           {t('scenarios', uiLang)}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          {uiLang === 'he' ? 'בחר תרחיש לתרגול שיחה באנגלית' : 'Choose a scenario to practice English conversation'}
+          {uiLang === 'he' ? 'בחרו תרחיש לתרגול שיחה באנגלית' : 'Choose a scenario to practice English conversation'}
         </p>
         <div className="space-y-3">
           {SCENARIOS.map(s => (

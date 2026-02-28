@@ -4,7 +4,7 @@
     "title": "First Step",
     "titleHe": "צעד ראשון",
     "description": "Complete your first lesson",
-    "descriptionHe": "השלם את השיעור הראשון שלך",
+    "descriptionHe": "השלימו את השיעור הראשון שלכם",
     "icon": "👣",
     "category": "lessons",
     "condition": { "type": "lessonsCompleted", "value": 1 }
@@ -14,7 +14,7 @@
     "title": "Getting Started",
     "titleHe": "מתחילים",
     "description": "Complete 5 lessons",
-    "descriptionHe": "השלם 5 שיעורים",
+    "descriptionHe": "השלימו 5 שיעורים",
     "icon": "📚",
     "category": "lessons",
     "condition": { "type": "lessonsCompleted", "value": 5 }
@@ -24,7 +24,7 @@
     "title": "Dedicated Learner",
     "titleHe": "לומד מסור",
     "description": "Complete 10 lessons",
-    "descriptionHe": "השלם 10 שיעורים",
+    "descriptionHe": "השלימו 10 שיעורים",
     "icon": "📖",
     "category": "lessons",
     "condition": { "type": "lessonsCompleted", "value": 10 }
@@ -34,7 +34,7 @@
     "title": "Knowledge Seeker",
     "titleHe": "מחפש ידע",
     "description": "Complete 25 lessons",
-    "descriptionHe": "השלם 25 שיעורים",
+    "descriptionHe": "השלימו 25 שיעורים",
     "icon": "🎯",
     "category": "lessons",
     "condition": { "type": "lessonsCompleted", "value": 25 }
@@ -44,7 +44,7 @@
     "title": "Lesson Master",
     "titleHe": "מאסטר שיעורים",
     "description": "Complete 50 lessons",
-    "descriptionHe": "השלם 50 שיעורים",
+    "descriptionHe": "השלימו 50 שיעורים",
     "icon": "🏅",
     "category": "lessons",
     "condition": { "type": "lessonsCompleted", "value": 50 }
@@ -54,7 +54,7 @@
     "title": "Century Scholar",
     "titleHe": "חוקר המאה",
     "description": "Complete 100 lessons",
-    "descriptionHe": "השלם 100 שיעורים",
+    "descriptionHe": "השלימו 100 שיעורים",
     "icon": "💯",
     "category": "lessons",
     "condition": { "type": "lessonsCompleted", "value": 100 }
@@ -64,7 +64,7 @@
     "title": "Perfect Score",
     "titleHe": "ציון מושלם",
     "description": "Get 100% accuracy in a lesson",
-    "descriptionHe": "קבל 100% דיוק בשיעור",
+    "descriptionHe": "קבלו 100% דיוק בשיעור",
     "icon": "⭐",
     "category": "lessons",
     "condition": { "type": "perfectLesson", "value": 1 }
@@ -74,7 +74,7 @@
     "title": "Perfectionist",
     "titleHe": "פרפקציוניסט",
     "description": "Get 100% accuracy in 5 lessons",
-    "descriptionHe": "קבל 100% דיוק ב-5 שיעורים",
+    "descriptionHe": "קבלו 100% דיוק ב-5 שיעורים",
     "icon": "🌟",
     "category": "lessons",
     "condition": { "type": "perfectLesson", "value": 5 }
@@ -84,7 +84,7 @@
     "title": "Word Beginner",
     "titleHe": "מתחיל מילים",
     "description": "Learn 10 new words",
-    "descriptionHe": "למד 10 מילים חדשות",
+    "descriptionHe": "למדו 10 מילים חדשות",
     "icon": "🔤",
     "category": "vocabulary",
     "condition": { "type": "wordsLearned", "value": 10 }
@@ -94,7 +94,7 @@
     "title": "Word Collector",
     "titleHe": "אספן מילים",
     "description": "Learn 50 new words",
-    "descriptionHe": "למד 50 מילים חדשות",
+    "descriptionHe": "למדו 50 מילים חדשות",
     "icon": "📝",
     "category": "vocabulary",
     "condition": { "type": "wordsLearned", "value": 50 }
@@ -104,7 +104,7 @@
     "title": "Vocabulary Builder",
     "titleHe": "בונה אוצר מילים",
     "description": "Learn 100 new words",
-    "descriptionHe": "למד 100 מילים חדשות",
+    "descriptionHe": "למדו 100 מילים חדשות",
     "icon": "📕",
     "category": "vocabulary",
     "condition": { "type": "wordsLearned", "value": 100 }
@@ -114,7 +114,7 @@
     "title": "Word Enthusiast",
     "titleHe": "חובב מילים",
     "description": "Learn 250 new words",
-    "descriptionHe": "למד 250 מילים חדשות",
+    "descriptionHe": "למדו 250 מילים חדשות",
     "icon": "📗",
     "category": "vocabulary",
     "condition": { "type": "wordsLearned", "value": 250 }
@@ -124,7 +124,7 @@
     "title": "Lexicon Master",
     "titleHe": "מאסטר לקסיקון",
     "description": "Learn 500 new words",
-    "descriptionHe": "למד 500 מילים חדשות",
+    "descriptionHe": "למדו 500 מילים חדשות",
     "icon": "📘",
     "category": "vocabulary",
     "condition": { "type": "wordsLearned", "value": 500 }
@@ -134,7 +134,7 @@
     "title": "Walking Dictionary",
     "titleHe": "מילון מהלך",
     "description": "Learn 1000 new words",
-    "descriptionHe": "למד 1000 מילים חדשות",
+    "descriptionHe": "למדו 1000 מילים חדשות",
     "icon": "📙",
     "category": "vocabulary",
     "condition": { "type": "wordsLearned", "value": 1000 }
@@ -144,7 +144,7 @@
     "title": "Review Rookie",
     "titleHe": "טירון חזרות",
     "description": "Review 50 vocabulary cards",
-    "descriptionHe": "חזור על 50 כרטיסיות",
+    "descriptionHe": "חזרו על 50 כרטיסיות",
     "icon": "🔁",
     "category": "vocabulary",
     "condition": { "type": "vocabReviews", "value": 50 }
@@ -154,7 +154,7 @@
     "title": "Review Pro",
     "titleHe": "מקצוען חזרות",
     "description": "Review 200 vocabulary cards",
-    "descriptionHe": "חזור על 200 כרטיסיות",
+    "descriptionHe": "חזרו על 200 כרטיסיות",
     "icon": "🔄",
     "category": "vocabulary",
     "condition": { "type": "vocabReviews", "value": 200 }
@@ -164,7 +164,7 @@
     "title": "On a Roll",
     "titleHe": "ברצף",
     "description": "Maintain a 3-day streak",
-    "descriptionHe": "שמור על רצף של 3 ימים",
+    "descriptionHe": "שמרו על רצף של 3 ימים",
     "icon": "🔥",
     "category": "streaks",
     "condition": { "type": "streak", "value": 3 }
@@ -174,7 +174,7 @@
     "title": "Streak Master",
     "titleHe": "מאסטר רצף",
     "description": "Maintain a 7-day streak",
-    "descriptionHe": "שמור על רצף של 7 ימים",
+    "descriptionHe": "שמרו על רצף של 7 ימים",
     "icon": "🔥",
     "category": "streaks",
     "condition": { "type": "streak", "value": 7 }
@@ -184,7 +184,7 @@
     "title": "Two Week Warrior",
     "titleHe": "לוחם שבועיים",
     "description": "Maintain a 14-day streak",
-    "descriptionHe": "שמור על רצף של 14 ימים",
+    "descriptionHe": "שמרו על רצף של 14 ימים",
     "icon": "💪",
     "category": "streaks",
     "condition": { "type": "streak", "value": 14 }
@@ -194,7 +194,7 @@
     "title": "Monthly Champion",
     "titleHe": "אלוף חודשי",
     "description": "Maintain a 30-day streak",
-    "descriptionHe": "שמור על רצף של 30 ימים",
+    "descriptionHe": "שמרו על רצף של 30 ימים",
     "icon": "🏆",
     "category": "streaks",
     "condition": { "type": "streak", "value": 30 }
@@ -204,7 +204,7 @@
     "title": "Unstoppable",
     "titleHe": "בלתי ניתן לעצירה",
     "description": "Maintain a 60-day streak",
-    "descriptionHe": "שמור על רצף של 60 ימים",
+    "descriptionHe": "שמרו על רצף של 60 ימים",
     "icon": "⚡",
     "category": "streaks",
     "condition": { "type": "streak", "value": 60 }
@@ -214,7 +214,7 @@
     "title": "Century Streak",
     "titleHe": "רצף מאה",
     "description": "Maintain a 100-day streak",
-    "descriptionHe": "שמור על רצף של 100 ימים",
+    "descriptionHe": "שמרו על רצף של 100 ימים",
     "icon": "👑",
     "category": "streaks",
     "condition": { "type": "streak", "value": 100 }
@@ -224,7 +224,7 @@
     "title": "Year of Dedication",
     "titleHe": "שנה של מסירות",
     "description": "Maintain a 365-day streak",
-    "descriptionHe": "שמור על רצף של 365 ימים",
+    "descriptionHe": "שמרו על רצף של 365 ימים",
     "icon": "🎆",
     "category": "streaks",
     "condition": { "type": "streak", "value": 365 }
@@ -234,7 +234,7 @@
     "title": "First Chat",
     "titleHe": "שיחה ראשונה",
     "description": "Complete your first conversation",
-    "descriptionHe": "השלם את השיחה הראשונה שלך",
+    "descriptionHe": "השלימו את השיחה הראשונה שלכם",
     "icon": "💬",
     "category": "conversations",
     "condition": { "type": "conversationsCompleted", "value": 1 }
@@ -244,7 +244,7 @@
     "title": "Chatterbox",
     "titleHe": "פטפטן",
     "description": "Complete 10 conversations",
-    "descriptionHe": "השלם 10 שיחות",
+    "descriptionHe": "השלימו 10 שיחות",
     "icon": "🗣️",
     "category": "conversations",
     "condition": { "type": "conversationsCompleted", "value": 10 }
@@ -254,7 +254,7 @@
     "title": "Smooth Talker",
     "titleHe": "דובר חלק",
     "description": "Complete 25 conversations",
-    "descriptionHe": "השלם 25 שיחות",
+    "descriptionHe": "השלימו 25 שיחות",
     "icon": "🎙️",
     "category": "conversations",
     "condition": { "type": "conversationsCompleted", "value": 25 }
@@ -264,7 +264,7 @@
     "title": "Conversation King",
     "titleHe": "מלך השיחות",
     "description": "Complete 50 conversations",
-    "descriptionHe": "השלם 50 שיחות",
+    "descriptionHe": "השלימו 50 שיחות",
     "icon": "👄",
     "category": "conversations",
     "condition": { "type": "conversationsCompleted", "value": 50 }
@@ -274,7 +274,7 @@
     "title": "Social Butterfly",
     "titleHe": "פרפר חברתי",
     "description": "Complete 100 conversations",
-    "descriptionHe": "השלם 100 שיחות",
+    "descriptionHe": "השלימו 100 שיחות",
     "icon": "🦋",
     "category": "conversations",
     "condition": { "type": "conversationsCompleted", "value": 100 }
@@ -284,7 +284,7 @@
     "title": "World Traveler",
     "titleHe": "מטייל עולמי",
     "description": "Complete all conversation scenarios",
-    "descriptionHe": "השלם את כל תרחישי השיחה",
+    "descriptionHe": "השלימו את כל תרחישי השיחה",
     "icon": "🌍",
     "category": "conversations",
     "condition": { "type": "allScenarios", "value": 1 }
@@ -294,7 +294,7 @@
     "title": "Finding My Voice",
     "titleHe": "מוצא את הקול שלי",
     "description": "Complete 10 pronunciation exercises",
-    "descriptionHe": "השלם 10 תרגילי הגייה",
+    "descriptionHe": "השלימו 10 תרגילי הגייה",
     "icon": "🎤",
     "category": "pronunciation",
     "condition": { "type": "pronunciationExercises", "value": 10 }
@@ -304,7 +304,7 @@
     "title": "Voice Master",
     "titleHe": "מאסטר קול",
     "description": "Complete 50 pronunciation exercises",
-    "descriptionHe": "השלם 50 תרגילי הגייה",
+    "descriptionHe": "השלימו 50 תרגילי הגייה",
     "icon": "🎵",
     "category": "pronunciation",
     "condition": { "type": "pronunciationExercises", "value": 50 }
@@ -314,7 +314,7 @@
     "title": "Silver Tongue",
     "titleHe": "לשון חלקה",
     "description": "Complete 100 pronunciation exercises",
-    "descriptionHe": "השלם 100 תרגילי הגייה",
+    "descriptionHe": "השלימו 100 תרגילי הגייה",
     "icon": "🗣️",
     "category": "pronunciation",
     "condition": { "type": "pronunciationExercises", "value": 100 }
@@ -324,7 +324,7 @@
     "title": "Accent Ace",
     "titleHe": "אלוף מבטא",
     "description": "Score 95%+ on a pronunciation exercise",
-    "descriptionHe": "קבל 95%+ בתרגיל הגייה",
+    "descriptionHe": "קבלו 95%+ בתרגיל הגייה",
     "icon": "🏅",
     "category": "pronunciation",
     "condition": { "type": "pronunciationScore", "value": 95 }
@@ -334,7 +334,7 @@
     "title": "Vocal Streak",
     "titleHe": "רצף קולי",
     "description": "Score 80%+ on 10 pronunciation exercises in a row",
-    "descriptionHe": "קבל 80%+ ב-10 תרגילי הגייה ברצף",
+    "descriptionHe": "קבלו 80%+ ב-10 תרגילי הגייה ברצף",
     "icon": "🔊",
     "category": "pronunciation",
     "condition": { "type": "pronunciationStreak", "value": 10 }
@@ -344,7 +344,7 @@
     "title": "A2 Achiever",
     "titleHe": "משיג A2",
     "description": "Reach CEFR level A2",
-    "descriptionHe": "הגע לרמת CEFR A2",
+    "descriptionHe": "הגיעו לרמת CEFR A2",
     "icon": "📈",
     "category": "milestones",
     "condition": { "type": "cefrLevel", "value": "A2" }
@@ -354,7 +354,7 @@
     "title": "B1 Breakthrough",
     "titleHe": "פריצת דרך B1",
     "description": "Reach CEFR level B1",
-    "descriptionHe": "הגע לרמת CEFR B1",
+    "descriptionHe": "הגיעו לרמת CEFR B1",
     "icon": "📊",
     "category": "milestones",
     "condition": { "type": "cefrLevel", "value": "B1" }
@@ -364,7 +364,7 @@
     "title": "B2 Boss",
     "titleHe": "בוס B2",
     "description": "Reach CEFR level B2",
-    "descriptionHe": "הגע לרמת CEFR B2",
+    "descriptionHe": "הגיעו לרמת CEFR B2",
     "icon": "🚀",
     "category": "milestones",
     "condition": { "type": "cefrLevel", "value": "B2" }
@@ -374,7 +374,7 @@
     "title": "C1 Champion",
     "titleHe": "אלוף C1",
     "description": "Reach CEFR level C1",
-    "descriptionHe": "הגע לרמת CEFR C1",
+    "descriptionHe": "הגיעו לרמת CEFR C1",
     "icon": "🏆",
     "category": "milestones",
     "condition": { "type": "cefrLevel", "value": "C1" }
@@ -384,7 +384,7 @@
     "title": "XP Starter",
     "titleHe": "מתחיל XP",
     "description": "Earn 100 XP",
-    "descriptionHe": "צבור 100 XP",
+    "descriptionHe": "צברו 100 XP",
     "icon": "✨",
     "category": "milestones",
     "condition": { "type": "totalXP", "value": 100 }
@@ -394,7 +394,7 @@
     "title": "XP Hunter",
     "titleHe": "צייד XP",
     "description": "Earn 500 XP",
-    "descriptionHe": "צבור 500 XP",
+    "descriptionHe": "צברו 500 XP",
     "icon": "💎",
     "category": "milestones",
     "condition": { "type": "totalXP", "value": 500 }
@@ -404,7 +404,7 @@
     "title": "XP Warrior",
     "titleHe": "לוחם XP",
     "description": "Earn 1,000 XP",
-    "descriptionHe": "צבור 1,000 XP",
+    "descriptionHe": "צברו 1,000 XP",
     "icon": "⚔️",
     "category": "milestones",
     "condition": { "type": "totalXP", "value": 1000 }
@@ -414,7 +414,7 @@
     "title": "XP Legend",
     "titleHe": "אגדת XP",
     "description": "Earn 5,000 XP",
-    "descriptionHe": "צבור 5,000 XP",
+    "descriptionHe": "צברו 5,000 XP",
     "icon": "🌟",
     "category": "milestones",
     "condition": { "type": "totalXP", "value": 5000 }
@@ -424,7 +424,7 @@
     "title": "XP Titan",
     "titleHe": "טיטאן XP",
     "description": "Earn 10,000 XP",
-    "descriptionHe": "צבור 10,000 XP",
+    "descriptionHe": "צברו 10,000 XP",
     "icon": "👑",
     "category": "milestones",
     "condition": { "type": "totalXP", "value": 10000 }
@@ -434,7 +434,7 @@
     "title": "Goal Getter",
     "titleHe": "משיג יעדים",
     "description": "Reach your daily goal 7 days in a row",
-    "descriptionHe": "השג את היעד היומי 7 ימים ברצף",
+    "descriptionHe": "השיגו את היעד היומי 7 ימים ברצף",
     "icon": "🎯",
     "category": "streaks",
     "condition": { "type": "dailyGoalStreak", "value": 7 }
@@ -444,7 +444,7 @@
     "title": "Consistent Champion",
     "titleHe": "אלוף עקביות",
     "description": "Reach your daily goal 30 days in a row",
-    "descriptionHe": "השג את היעד היומי 30 ימים ברצף",
+    "descriptionHe": "השיגו את היעד היומי 30 ימים ברצף",
     "icon": "🏅",
     "category": "streaks",
     "condition": { "type": "dailyGoalStreak", "value": 30 }
@@ -454,7 +454,7 @@
     "title": "Bookworm",
     "titleHe": "תולעת ספרים",
     "description": "Read 5 stories",
-    "descriptionHe": "קרא 5 סיפורים",
+    "descriptionHe": "קראו 5 סיפורים",
     "icon": "📖",
     "category": "milestones",
     "condition": { "type": "storiesRead", "value": 5 }
@@ -464,7 +464,7 @@
     "title": "Literary Lion",
     "titleHe": "אריה ספרותי",
     "description": "Read 20 stories",
-    "descriptionHe": "קרא 20 סיפורים",
+    "descriptionHe": "קראו 20 סיפורים",
     "icon": "🦁",
     "category": "milestones",
     "condition": { "type": "storiesRead", "value": 20 }
@@ -474,7 +474,7 @@
     "title": "Night Owl",
     "titleHe": "ינשוף לילה",
     "description": "Complete a lesson after 11 PM",
-    "descriptionHe": "השלם שיעור אחרי 23:00",
+    "descriptionHe": "השלימו שיעור אחרי 23:00",
     "icon": "🦉",
     "category": "milestones",
     "condition": { "type": "lateNightLesson", "value": 1 }
@@ -484,7 +484,7 @@
     "title": "Early Bird",
     "titleHe": "ציפור מוקדמת",
     "description": "Complete a lesson before 7 AM",
-    "descriptionHe": "השלם שיעור לפני 07:00",
+    "descriptionHe": "השלימו שיעור לפני 07:00",
     "icon": "🐦",
     "category": "milestones",
     "condition": { "type": "earlyMorningLesson", "value": 1 }
@@ -494,7 +494,7 @@
     "title": "Unit Champion",
     "titleHe": "אלוף יחידה",
     "description": "Complete an entire unit",
-    "descriptionHe": "השלם יחידה שלמה",
+    "descriptionHe": "השלימו יחידה שלמה",
     "icon": "🎓",
     "category": "lessons",
     "condition": { "type": "unitsCompleted", "value": 1 }

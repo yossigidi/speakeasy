@@ -22,7 +22,7 @@
             {
               "type": "match-pairs",
               "instruction": "Match the English greeting to its Hebrew translation",
-              "instructionHe": "התאם את הברכה באנגלית לתרגום בעברית",
+              "instructionHe": "התאימו את הברכה באנגלית לתרגום בעברית",
               "pairs": [
                 ["Hello", "שלום"],
                 ["Goodbye", "להתראות"],
@@ -71,13 +71,13 @@
               "text": "Good evening",
               "options": ["Good morning", "Good afternoon", "Good evening", "Good night"],
               "correct": 2,
-              "instructionHe": "הקשב ובחר את מה ששמעת"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
             },
             {
               "type": "speaking",
               "text": "Hello, good morning!",
               "translation": "שלום, בוקר טוב!",
-              "instructionHe": "אמור את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית"
             },
             {
               "type": "fill-blank",
@@ -134,7 +134,7 @@
             {
               "type": "match-pairs",
               "instruction": "Match the question to the correct answer",
-              "instructionHe": "התאם את השאלה לתשובה הנכונה",
+              "instructionHe": "התאימו את השאלה לתשובה הנכונה",
               "pairs": [
                 ["What is your name?", "My name is Dan."],
                 ["How are you?", "I'm fine, thanks."],
@@ -154,7 +154,7 @@
               "type": "speaking",
               "text": "My name is David. Nice to meet you.",
               "translation": "השם שלי דוד. נעים להכיר.",
-              "instructionHe": "אמור את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית"
             },
             {
               "type": "word-arrange",
@@ -167,7 +167,7 @@
               "text": "What is your name?",
               "options": ["What is your name?", "Where is your home?", "What is your job?", "How is your day?"],
               "correct": 0,
-              "instructionHe": "הקשב ובחר את מה ששמעת"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
             }
           ]
         },
@@ -195,7 +195,7 @@
             {
               "type": "match-pairs",
               "instruction": "Match the feeling to its meaning",
-              "instructionHe": "התאם את ההרגשה לפירוש שלה",
+              "instructionHe": "התאימו את ההרגשה לפירוש שלה",
               "pairs": [
                 ["Happy", "שמח"],
                 ["Sad", "עצוב"],
@@ -237,14 +237,14 @@
               "type": "speaking",
               "text": "I'm fine, thank you. And you?",
               "translation": "אני בסדר, תודה. ואתה?",
-              "instructionHe": "אמור את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית"
             },
             {
               "type": "listening",
               "text": "I'm great, thank you!",
               "options": ["I'm great, thank you!", "I'm late, thank you!", "I'm eight, thank you!", "I'm gray, thank you!"],
               "correct": 0,
-              "instructionHe": "הקשב ובחר את מה ששמעת"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
             }
           ]
         },
@@ -272,7 +272,7 @@
             {
               "type": "match-pairs",
               "instruction": "Match the country to its nationality",
-              "instructionHe": "התאם את המדינה ללאום",
+              "instructionHe": "התאימו את המדינה ללאום",
               "pairs": [
                 ["Israel", "Israeli"],
                 ["America", "American"],
@@ -314,7 +314,7 @@
               "type": "speaking",
               "text": "I am from Israel. I live in Tel Aviv.",
               "translation": "אני מישראל. אני גר בתל אביב.",
-              "instructionHe": "אמור את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית"
             },
             {
               "type": "word-arrange",
@@ -327,7 +327,7 @@
               "text": "I am from Israel.",
               "options": ["I am from Israel.", "I am from Italy.", "I am from Ireland.", "I am from Iceland."],
               "correct": 0,
-              "instructionHe": "הקשב ובחר את מה ששמעת"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
             }
           ]
         },
@@ -339,7 +339,7 @@
             {
               "type": "match-pairs",
               "instruction": "Match the number to its word",
-              "instructionHe": "התאם את המספר למילה",
+              "instructionHe": "התאימו את המספר למילה",
               "pairs": [
                 ["1", "one"],
                 ["2", "two"],
@@ -396,7 +396,7 @@
             {
               "type": "match-pairs",
               "instruction": "Match the number word to its numeral",
-              "instructionHe": "התאם את מילת המספר למספר",
+              "instructionHe": "התאימו את מילת המספר למספר",
               "pairs": [
                 ["twelve", "12"],
                 ["twenty", "20"],
@@ -408,14 +408,14 @@
               "type": "speaking",
               "text": "I am twenty-five years old.",
               "translation": "אני בן עשרים וחמש.",
-              "instructionHe": "אמור את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית"
             },
             {
               "type": "listening",
               "text": "I am twenty years old.",
               "options": ["I am twelve years old.", "I am twenty years old.", "I am thirty years old.", "I am thirteen years old."],
               "correct": 1,
-              "instructionHe": "הקשב ובחר את מה ששמעת"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
             }
           ]
         }

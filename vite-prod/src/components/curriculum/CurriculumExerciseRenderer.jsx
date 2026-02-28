@@ -85,11 +85,12 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   // A2: Auto-speak the exercise question/word after guidance finishes
   useEffect(() => {
     if (!speak || !exercise) return;
+    // Delay must be long enough for GuidanceBubble speech (300ms start + ~1.5s speech) to finish
     const delay = setTimeout(() => {
       if (['emoji-pick','word-to-hebrew','listen-pick','fill-letter','speak-word'].includes(exercise.type)) {
         speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true });
       }
-    }, 800);
+    }, 2200);
     return () => clearTimeout(delay);
   }, [exercise]);
 
