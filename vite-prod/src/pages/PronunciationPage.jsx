@@ -108,7 +108,7 @@ export default function PronunciationPage() {
   const { uiLang } = useTheme();
   const { addXP } = useUserProgress();
   const { speak } = useSpeechSynthesis();
-  const { transcript, confidence, isListening, startListening, stopListening, supported } = useSpeechRecognition();
+  const { transcript, confidence, isListening, startListening, stopListening, sttSupported: supported } = useSpeechRecognition();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(null);

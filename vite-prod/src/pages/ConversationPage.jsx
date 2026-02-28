@@ -64,7 +64,7 @@ export default function ConversationPage() {
   const { user } = useAuth();
   const { progress, addXP } = useUserProgress();
   const { speak } = useSpeechSynthesis();
-  const { transcript, isListening, startListening, stopListening, supported: sttSupported } = useSpeechRecognition();
+  const { transcript, isListening, startListening, stopListening, sttSupported } = useSpeechRecognition();
   const [scenario, setScenario] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');

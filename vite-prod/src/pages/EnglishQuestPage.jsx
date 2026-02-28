@@ -543,7 +543,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
     return shuffle(lvl).slice(0, 3);
   }, [childLevel]);
 
-  const { transcript, isListening, startListening, stopListening, supported } = useSpeechRecognition();
+  const { transcript, isListening, startListening, stopListening, sttSupported: supported } = useSpeechRecognition();
 
   // Stop mic on unmount or when leaving this mission
   useEffect(() => {

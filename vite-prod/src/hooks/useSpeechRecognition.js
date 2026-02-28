@@ -75,6 +75,6 @@ export default function useSpeechRecognition() {
     isListening: isActive,
     startListening,
     stopListening,
-    supported: sttSupported,
+    sttSupported,
   };
 }
