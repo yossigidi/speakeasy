@@ -30,6 +30,7 @@ const DEFAULT_PROGRESS = {
     completedScenarios: {},
     totalSimulations: 0,
   },
+  skills: null,
 };
 
 const CHILD_LS_KEY = 'speakeasy_activeChildId';

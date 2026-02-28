@@ -129,6 +129,33 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
         </GlassCard>
       )}
 
+      {/* Skills Card - shown for adults */}
+      {progress.curriculumLevel && progress.curriculumLevel > 2 && (
+        <GlassCard
+          variant="strong"
+          className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-amber-50/80 to-orange-50/80 dark:from-amber-950/30 dark:to-orange-950/30"
+          onClick={() => onNavigate('skills')}
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-500/10 to-transparent rounded-bl-full" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/25 text-2xl">
+                🎯
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900 dark:text-white">
+                  {uiLang === 'he' ? 'מיומנויות שיחה' : 'Conversation Skills'}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {uiLang === 'he' ? 'תרגול מצבים מהחיים' : 'Practice real-life situations'}
+                </p>
+              </div>
+            </div>
+            <ChevronRight size={20} className={`text-gray-400 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
+          </div>
+        </GlassCard>
+      )}
+
       {/* Continue Lesson Card */}
       <GlassCard
         variant="strong"

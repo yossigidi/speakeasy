@@ -450,6 +450,22 @@ const translations = {
     faqBrowserSupport: 'אילו דפדפנים נתמכים?',
     faqBrowserSupportA: 'Speakli עובדת במיטבה ב-Chrome, Edge ו-Safari (גרסאות עדכניות). לחוויה מלאה כולל דיבור, מומלץ Chrome בגרסה אחרונה.',
 
+    // Skills
+    skillsTitle: 'מיומנויות שיחה',
+    skillsSubtitle: 'תרגול מצבים מהחיים',
+    skillsLocked: 'נעול — סיימו את המיומנות הקודמת',
+    skillLessons: 'שיעורים',
+    skillComplete: 'מיומנות הושלמה!',
+    skillTest: 'מבחן מיומנות',
+    playAgain: 'שחק שוב',
+    dialogue: 'דיאלוג',
+    dialogueInstructions: 'הקשיבו לשיחה, לחצו על שורה לשמוע שוב',
+    speakWithAI: 'דיבור עם AI',
+    simulationHint: 'רמז',
+    foundation: 'בסיס',
+    confidence: 'ביטחון',
+    advanced: 'מתקדם',
+
     // Simulations
     simulations: 'סימולציות',
     careerLevel: 'רמת קריירה',
@@ -897,6 +913,22 @@ const translations = {
     faqAppSlowA: 'Try refreshing the page, clearing the browser cache, or trying a different browser. Make sure your internet connection is stable. If the problem persists, contact us.',
     faqBrowserSupport: 'Which browsers are supported?',
     faqBrowserSupportA: 'Speakli works best on Chrome, Edge, and Safari (latest versions). For the full experience including speech, Chrome latest version is recommended.',
+
+    // Skills
+    skillsTitle: 'Conversation Skills',
+    skillsSubtitle: 'Practice real-life situations',
+    skillsLocked: 'Locked — complete the previous skill first',
+    skillLessons: 'Lessons',
+    skillComplete: 'Skill Complete!',
+    skillTest: 'Skill Test',
+    playAgain: 'Play Again',
+    dialogue: 'Dialogue',
+    dialogueInstructions: 'Listen to the conversation, tap a line to replay',
+    speakWithAI: 'Speak with AI',
+    simulationHint: 'Hint',
+    foundation: 'Foundation',
+    confidence: 'Confidence',
+    advanced: 'Advanced',
 
     // Simulations
     simulations: 'Simulations',
