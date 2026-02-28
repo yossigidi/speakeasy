@@ -1,4 +1,4 @@
-const CACHE_NAME = 'speakli-v49';
+const CACHE_NAME = 'speakli-v50';
 const STATIC_CACHE = 'speakli-static-v45';
 
 const urlsToCache = [

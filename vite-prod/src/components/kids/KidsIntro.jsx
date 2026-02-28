@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
-import { unlockAudioContext } from '../../utils/hebrewAudio.js';
+import { unlockAudioContext, stopAllAudio } from '../../utils/hebrewAudio.js';
 import SpeakliAvatar from './SpeakliAvatar.jsx';
 
 const SESSION_KEY = 'kids-intro-seen';
@@ -65,10 +65,11 @@ export default function KidsIntro({
     return { text: d, lang: isHe ? 'he' : 'en-US' };
   }, [uiLang, desc, descHe]);
 
-  // Fire speech immediately when overlay appears — no delay
+  // Fire speech once when overlay appears — no delay, guarded by ref
   useEffect(() => {
     if (phase !== 'visible' || !visible || spokenRef.current) return;
     spokenRef.current = true;
+    stopAllAudio();
     const { text, lang } = getSpeechText();
     setAvatarMode('talk');
     speak(text, {
@@ -77,12 +78,13 @@ export default function KidsIntro({
       noWebSpeechFallback: true,
       onEnd: () => setAvatarMode('idle'),
     });
-  }, [phase, visible, getSpeechText, speak]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, visible]);
 
-  // Fallback: if user taps on the overlay card, unlock audio + speak (iOS)
+  // Fallback: if auto-speak didn't fire (iOS audio lock), speak on tap
   const handleCardTouch = useCallback(() => {
-    if (spokenRef.current) return;
     unlockAudioContext();
+    stopAllAudio();
     const { text, lang } = getSpeechText();
     setAvatarMode('talk');
     speak(text, {
@@ -91,7 +93,6 @@ export default function KidsIntro({
       noWebSpeechFallback: true,
       onEnd: () => setAvatarMode('idle'),
     });
-    spokenRef.current = true;
   }, [getSpeechText, speak]);
 
   const dismiss = useCallback(() => {
@@ -126,7 +127,6 @@ export default function KidsIntro({
       <div
         className={`relative w-full max-w-sm rounded-[2rem] bg-gradient-to-br ${gradient} p-1 shadow-2xl`}
         onClick={e => { e.stopPropagation(); handleCardTouch(); }}
-        onTouchStart={handleCardTouch}
       >
         {/* Inner card */}
         <div className="rounded-[1.8rem] bg-white/95 dark:bg-gray-900/95 p-6 text-center relative overflow-hidden">

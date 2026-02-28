@@ -7,6 +7,7 @@ import TeacherCharacter from '../components/teacher/TeacherCharacter.jsx';
 import SpeechBubble from '../components/teacher/SpeechBubble.jsx';
 import ExerciseRenderer from '../components/teacher/ExerciseRenderer.jsx';
 import ConfettiExplosion from '../components/shared/ConfettiExplosion.jsx';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { playCorrect, playWrong, playComplete, playStar } from '../utils/gameSounds.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { WORDS_BY_LEVEL } from '../data/kids-vocabulary.js';
@@ -217,7 +218,7 @@ function generateExercises(topicId) {
 
 export default function KidsTeacherPage({ onBack }) {
   const { uiLang } = useTheme();
-  const { addXP } = useUserProgress();
+  const { addXP, progress: userProgress } = useUserProgress();
   const { speak, speakSequence } = useSpeech();
   const { speakWordPair } = useSpeechSynthesis();
   const isRTL = uiLang === 'he' || uiLang === 'ar';
@@ -307,6 +308,19 @@ export default function KidsTeacherPage({ onBack }) {
   if (phase === 'topic-select') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 pb-24">
+        <KidsIntro
+          id="kids-teacher-v1"
+          name={userProgress.displayName}
+          emoji="📝"
+          title="Practice with Speakli!"
+          titleHe="תרגול עם ספיקלי!"
+          desc="Hi! Let's practice English together! Let's start!"
+          descHe="היי! בואו נתרגל יחד אנגלית! בואו נתחיל!"
+          uiLang={uiLang}
+          gradient="from-purple-500 via-violet-500 to-fuchsia-500"
+          buttonLabel="Let's practice!"
+          buttonLabelHe="בואו נתרגל!"
+        />
         <div className="flex items-center gap-3 mb-4" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
           <button onClick={goBack} className="glass-card w-10 h-10 rounded-xl flex items-center justify-center text-xl">{isRTL ? '→' : '←'}</button>
           <h1 className="text-xl font-bold text-gray-800 dark:text-white">{t('teacherTime', uiLang)}</h1>
