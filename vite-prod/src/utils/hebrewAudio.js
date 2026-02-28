@@ -308,17 +308,8 @@ export function playSequence(items, _speakEnglishUnused, onDone) {
         }
       }
 
-      // Last resort: Web Speech API directly (no Cloud TTS retry)
-      if ('speechSynthesis' in window) {
-        const utt = new SpeechSynthesisUtterance(item.text);
-        utt.lang = isHebrew ? 'he-IL' : (item.lang || 'en-US');
-        utt.rate = item.rate || (isHebrew ? 0.9 : 1.0);
-        utt.onend = () => { if (!sequenceCancelled) playNext(); };
-        utt.onerror = () => { if (!sequenceCancelled) playNext(); };
-        window.speechSynthesis.speak(utt);
-      } else {
-        playNext();
-      }
+      // No Web Speech fallback — skip to next item
+      if (!sequenceCancelled) playNext();
     });
   };
 

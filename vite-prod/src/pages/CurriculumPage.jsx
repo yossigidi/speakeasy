@@ -84,28 +84,7 @@ export default function CurriculumPage({ onBack }) {
     setSelectedLessonInfo(null);
   }, []);
 
-  // Close bottom sheet on outside tap (delayed to avoid race with the tap that opened it)
-  useEffect(() => {
-    if (!showBottomSheet) return;
-    let listeners = false;
-    const handleClickOutside = (e) => {
-      if (bottomSheetRef.current && !bottomSheetRef.current.contains(e.target)) {
-        handleCloseSheet();
-      }
-    };
-    const timerId = setTimeout(() => {
-      listeners = true;
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside);
-    }, 200);
-    return () => {
-      clearTimeout(timerId);
-      if (listeners) {
-        document.removeEventListener('mousedown', handleClickOutside);
-        document.removeEventListener('touchstart', handleClickOutside);
-      }
-    };
-  }, [showBottomSheet, handleCloseSheet]);
+  // Bottom sheet closes via backdrop onClick (no document listener needed)
 
   // ── Full-screen Lesson Runner ──
   if (activeLesson) {

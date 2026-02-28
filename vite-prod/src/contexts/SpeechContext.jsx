@@ -252,14 +252,9 @@ export function SpeechProvider({ children }) {
           return;
         }
       }
-      // Skip Web Speech fallback if caller explicitly opted out (avoids dual-voice)
-      if (options.noWebSpeechFallback) {
-        setIsSpeaking(false);
-        if (options.onEnd) options.onEnd();
-        return;
-      }
-      // Last resort: Web Speech API (uses cleaned text via speakWithWebSpeech)
-      speakWithWebSpeech(ttsText, { ...options, _queued: true });
+      // No Web Speech fallback — only use ElevenLabs API voice
+      setIsSpeaking(false);
+      if (options.onEnd) options.onEnd();
     };
 
     // Try Cloud TTS with abort signal (send cleaned text)
