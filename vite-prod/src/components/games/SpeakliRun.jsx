@@ -488,13 +488,19 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
   // Refs
   const wordPoolRef = useRef([]);
-  const roundTimerRef = useRef(null);
+  const roundTimersRef = useRef([]);
   const diff = DIFFICULTY[childLevel] || DIFFICULTY[1];
+
+  const clearRoundTimers = () => {
+    roundTimersRef.current.forEach(clearTimeout);
+    roundTimersRef.current = [];
+  };
+  const pushTimer = (id) => { roundTimersRef.current.push(id); return id; };
 
   // Preload Hebrew audio + cleanup
   useEffect(() => {
     preloadHebrewAudio(RUN_PHRASES);
-    return () => { stopAllAudio(); clearTimeout(roundTimerRef.current); };
+    return () => { stopAllAudio(); clearRoundTimers(); };
   }, []);
 
   // Build word pool when world is selected
@@ -557,10 +563,11 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   // Handle countdown done → start running
   const handleCountdownDone = useCallback(() => {
     setPhase('running');
+    clearRoundTimers();
     // After 2-3s of running, show first challenge
-    roundTimerRef.current = setTimeout(() => {
+    pushTimer(setTimeout(() => {
       startChallenge(wordPoolRef.current, 0);
-    }, 2500);
+    }, 2500));
   }, [startChallenge]);
 
   // Handle word tap
@@ -607,7 +614,8 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
       // Next round after delay
       const nextRound = round + 1;
-      roundTimerRef.current = setTimeout(() => {
+      clearRoundTimers();
+      pushTimer(setTimeout(() => {
         setAvatarMode('idle');
         setShowSparkle(false);
         setShowCoin(false);
@@ -615,10 +623,10 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         setPhase('running');
 
         // Run for 2-3s then next challenge
-        roundTimerRef.current = setTimeout(() => {
+        pushTimer(setTimeout(() => {
           startChallenge(wordPoolRef.current, nextRound);
-        }, 2000 + Math.random() * 1000);
-      }, 1500);
+        }, 2000 + Math.random() * 1000));
+      }, 1500));
 
     } else {
       // Wrong answer
@@ -640,13 +648,14 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
         // Move on after showing correct
         const nextRound = round + 1;
-        roundTimerRef.current = setTimeout(() => {
+        clearRoundTimers();
+        pushTimer(setTimeout(() => {
           setRound(nextRound);
           setPhase('running');
-          roundTimerRef.current = setTimeout(() => {
+          pushTimer(setTimeout(() => {
             startChallenge(wordPoolRef.current, nextRound);
-          }, 2000 + Math.random() * 1000);
-        }, 2000);
+          }, 2000 + Math.random() * 1000));
+        }, 2000));
       }
     }
   }, [target, streak, isPowerMode, attempts, round, options, diff, speak, startChallenge, challengeDisabled]);

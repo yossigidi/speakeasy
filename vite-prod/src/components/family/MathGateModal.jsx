@@ -28,6 +28,7 @@ export default function MathGateModal({ isOpen, onClose, onSuccess }) {
   const [question, setQuestion] = useState(() => generateMathQuestion());
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState(false);
+  const errorTimerRef = React.useRef(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -35,6 +36,7 @@ export default function MathGateModal({ isOpen, onClose, onSuccess }) {
       setAnswer('');
       setError(false);
     }
+    return () => clearTimeout(errorTimerRef.current);
   }, [isOpen]);
 
   const handleCheck = useCallback(() => {
@@ -42,7 +44,8 @@ export default function MathGateModal({ isOpen, onClose, onSuccess }) {
       onSuccess();
     } else {
       setError(true);
-      setTimeout(() => {
+      clearTimeout(errorTimerRef.current);
+      errorTimerRef.current = setTimeout(() => {
         setQuestion(generateMathQuestion());
         setAnswer('');
         setError(false);

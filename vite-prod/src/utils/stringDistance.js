@@ -36,6 +36,7 @@ export function compareWords(target, spoken) {
 
     const dist = levenshteinDistance(word, spokenWord);
     const maxLen = Math.max(word.length, spokenWord.length);
+    if (maxLen === 0) return { word, status: 'correct', spoken: spokenWord };
     const similarity = 1 - dist / maxLen;
 
     if (similarity >= 0.7) return { word, status: 'close', spoken: spokenWord };
@@ -52,6 +53,7 @@ export function pronunciationScore(target, spoken, confidence = 0.5) {
 
   const dist = levenshteinDistance(targetClean, spokenClean);
   const maxLen = Math.max(targetClean.length, spokenClean.length);
+  if (maxLen === 0) return 100;
   const textScore = 1 - dist / maxLen;
 
   // Weighted: 60% text accuracy, 40% speech recognition confidence
@@ -66,5 +68,6 @@ export function fuzzyMatch(target, input, threshold = 0.8) {
 
   const dist = levenshteinDistance(a, b);
   const maxLen = Math.max(a.length, b.length);
+  if (maxLen === 0) return true;
   return (1 - dist / maxLen) >= threshold;
 }

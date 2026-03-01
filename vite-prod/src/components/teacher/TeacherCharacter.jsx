@@ -4,11 +4,12 @@ export default function TeacherCharacter({ state = 'idle', size = 'normal' }) {
   const [blink, setBlink] = useState(false);
 
   useEffect(() => {
+    let blinkTimer;
     const interval = setInterval(() => {
       setBlink(true);
-      setTimeout(() => setBlink(false), 200);
+      blinkTimer = setTimeout(() => setBlink(false), 200);
     }, 3000 + Math.random() * 2000);
-    return () => clearInterval(interval);
+    return () => { clearInterval(interval); clearTimeout(blinkTimer); };
   }, []);
 
   const s = size === 'small' ? 80 : 140;

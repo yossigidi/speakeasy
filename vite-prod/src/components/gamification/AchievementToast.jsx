@@ -7,11 +7,12 @@ export default function AchievementToast({ achievement, onDismiss }) {
   useEffect(() => {
     if (achievement) {
       setVisible(true);
+      let dismissTimer;
       const timer = setTimeout(() => {
         setVisible(false);
-        setTimeout(onDismiss, 300);
+        dismissTimer = setTimeout(onDismiss, 300);
       }, 4000);
-      return () => clearTimeout(timer);
+      return () => { clearTimeout(timer); clearTimeout(dismissTimer); };
     }
   }, [achievement, onDismiss]);
 

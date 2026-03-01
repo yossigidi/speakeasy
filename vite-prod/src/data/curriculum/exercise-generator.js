@@ -330,9 +330,12 @@ function generateMatchPairs(_wordData, allWords, _sentences, lessonWords) {
   // Pick up to 4 words from the lesson, padding from allWords if needed
   let pairWords = shuffleArray(lessonWords).slice(0, 4);
   if (pairWords.length < 4) {
-    const extras = pickDistractors(allWords, pairWords[0], 4 - pairWords.length, 'word');
+    const anchor = pairWords[0] || allWords[0];
+    if (!anchor) return null; // No words available
+    const extras = pickDistractors(allWords, anchor, 4 - pairWords.length, 'word');
     pairWords = [...pairWords, ...extras].slice(0, 4);
   }
+  if (pairWords.length === 0) return null;
 
   const pairs = pairWords.map((w) => ({
     en: w.word,

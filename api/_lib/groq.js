@@ -28,5 +28,8 @@ export async function callGroq(messages, options = {}) {
   }
 
   const data = await response.json();
+  if (!data?.choices?.[0]?.message?.content) {
+    throw new Error('Invalid Groq API response: missing choices or content');
+  }
   return data.choices[0].message.content;
 }
