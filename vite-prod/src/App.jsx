@@ -123,7 +123,7 @@ function AppContent() {
     return (
       <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)' }}>
         <div className="text-center">
-          <img src="/icons/icon-192.png" alt="Speakli" style={{ width: '64px', height: '64px', borderRadius: '16px', margin: '0 auto 16px', boxShadow: '0 8px 32px rgba(20,184,166,0.3)' }} />
+          <img src="/images/speakli-icon.webp" alt="Speakli" style={{ width: '120px', height: 'auto', margin: '0 auto 16px', filter: 'drop-shadow(0 8px 32px rgba(20,184,166,0.3))' }} />
           <LoadingSpinner />
         </div>
       </div>

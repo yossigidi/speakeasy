@@ -37,7 +37,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
-  indexedDBLocalPersistence,
+  browserLocalPersistence,
   setPersistence
 } from 'firebase/auth';
 
@@ -62,10 +62,10 @@ window.db = initializeFirestore(app, {
 window.auth = getAuth(app);
 
 // Set explicit persistence for PWA / TWA compatibility
-setPersistence(window.auth, indexedDBLocalPersistence).then(() => {
-  console.log('Firebase Auth persistence set to IndexedDB');
+setPersistence(window.auth, browserLocalPersistence).then(() => {
+  console.log('Firebase Auth persistence set to localStorage');
 }).catch((err) => {
-  console.warn('Could not set IndexedDB persistence, using default:', err);
+  console.warn('Could not set localStorage persistence, using default:', err);
 });
 
 window.firestore = {
