@@ -279,88 +279,65 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* ─────────────── Step renderers ─────────────── */
 
-  /* Step 0 — Auth Screen (Welcome + Login/Register) */
+  /* Step 0 — Auth Screen (Beautiful Landing + Login/Register) */
   const renderAuth = () => (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      padding: '24px',
-      paddingTop: 'calc(24px + env(safe-area-inset-top, 0px))',
-      paddingBottom: 'calc(24px + env(safe-area-inset-bottom, 0px))',
-      overflowY: 'auto',
-      WebkitOverflowScrolling: 'touch',
-    }}>
-      {/* Floating decorative emojis */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        {['✨', '🌟', '📚', '🎓', '💫', '🌈'].map((e, i) => (
-          <div key={i} style={{
-            position: 'absolute',
-            left: `${10 + (i * 15) % 80}%`,
-            top: `${5 + (i * 18) % 75}%`,
-            fontSize: `${14 + (i % 3) * 4}px`,
-            opacity: 0.15,
-            animation: `onboarding-float ${3 + i * 0.5}s ease-in-out infinite`,
-            animationDelay: `${i * 0.4}s`,
-          }}>{e}</div>
+    <div className="landing-root">
+      {/* Animated background blobs */}
+      <div className="landing-bg-blobs">
+        <div className="landing-blob landing-blob-1" />
+        <div className="landing-blob landing-blob-2" />
+        <div className="landing-blob landing-blob-3" />
+      </div>
+
+      {/* Floating sparkle particles */}
+      <div className="landing-particles">
+        {['✨','⭐','💫','🌟','✨','⭐','💫','🌟','✨','⭐'].map((s, i) => (
+          <span key={i} className="landing-particle" style={{
+            left: `${8 + (i * 9.5) % 84}%`,
+            top: `${4 + (i * 11.3) % 70}%`,
+            fontSize: `${10 + (i % 4) * 3}px`,
+            animationDelay: `${i * 0.6}s`,
+            animationDuration: `${4 + (i % 3) * 1.5}s`,
+          }}>{s}</span>
         ))}
       </div>
 
-      {/* Glow effect behind character */}
-      <div className="relative" style={{ marginBottom: '16px', flexShrink: 0 }}>
-        <div style={{
-          position: 'absolute', inset: '-30%',
-          background: 'radial-gradient(circle, rgba(13,148,136,0.45) 0%, rgba(16,185,129,0.2) 40%, transparent 70%)',
-          filter: 'blur(30px)',
-          animation: 'onboarding-glow-pulse 3s ease-in-out infinite',
-        }} />
+      {/* Hero: Speakli character with logo */}
+      <div className="landing-hero">
+        <div className="landing-glow" />
+        <div className="landing-ring" />
         <img
-          src="/images/speakli-avatar.webp"
+          src="/images/speakli-icon.webp"
           alt="Speakli"
-          style={{
-            position: 'relative',
-            width: 'min(50vw, 200px)',
-            height: 'min(50vw, 200px)',
-            animation: 'onboarding-character-float 3s ease-in-out infinite',
-            filter: 'drop-shadow(0 16px 40px rgba(20,184,166,0.35))',
-          }}
+          className="landing-character"
+          onError={e => { e.target.src = '/images/speakli-avatar.webp'; }}
         />
       </div>
 
-      <h1 style={{ fontSize: 'clamp(32px, 7vw, 44px)', fontWeight: 900, marginBottom: '4px', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
-        Speakli
-      </h1>
-      <p style={{ fontSize: 'clamp(15px, 3.8vw, 18px)', fontWeight: 600, marginBottom: 'clamp(16px, 4vh, 32px)', background: 'linear-gradient(135deg, #14b8a6, #5eead4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0, letterSpacing: '0.5px' }}>
-        {uiLang === 'he' ? '🎯 למדו אנגלית בכיף!' : '🎯 Learn English with Fun!'}
+      {/* Tagline */}
+      <p className="landing-tagline">
+        {uiLang === 'he'
+          ? 'המורה הכי כיף לאנגלית!'
+          : 'The most fun English teacher!'}
+      </p>
+      <p className="landing-sub">
+        {uiLang === 'he'
+          ? 'משחקים, שיעורים ואוצר מילים - הכל במקום אחד'
+          : 'Games, lessons & vocabulary — all in one place'}
       </p>
 
-      <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0 }}>
-        {/* Apple Sign-In */}
-        <button
-          onClick={handleApple}
-          disabled={authLoading}
-          className="active:scale-[0.97] transition-all disabled:opacity-50"
-          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: 'clamp(12px, 2.5vh, 14px) 0', borderRadius: '16px', fontWeight: 600, color: '#fff', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', cursor: 'pointer', fontSize: 'clamp(14px, 3.5vw, 16px)' }}
-        >
-          <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24" fill="currentColor">
+      {/* Auth card */}
+      <div className="landing-card">
+        {/* Social buttons */}
+        <button onClick={handleApple} disabled={authLoading} className="landing-social-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
           </svg>
           {t('signInApple', uiLang)}
         </button>
 
-        {/* Google Sign-In */}
-        <button
-          onClick={handleGoogle}
-          disabled={authLoading}
-          className="active:scale-[0.97] transition-all disabled:opacity-50"
-          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: 'clamp(12px, 2.5vh, 14px) 0', borderRadius: '16px', fontWeight: 600, color: '#fff', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', cursor: 'pointer', fontSize: 'clamp(14px, 3.5vw, 16px)' }}
-        >
-          <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24">
+        <button onClick={handleGoogle} disabled={authLoading} className="landing-social-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -370,22 +347,21 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         </button>
 
         {/* Divider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '4px 0' }}>
-          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.3)' }}>{t('orDivider', uiLang)}</span>
-          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+        <div className="landing-divider">
+          <div className="landing-divider-line" />
+          <span>{t('orDivider', uiLang)}</span>
+          <div className="landing-divider-line" />
         </div>
 
         {/* Email form */}
-        <form onSubmit={handleEmailSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <form onSubmit={handleEmailSubmit} className="landing-form">
           {authMode === 'signup' && (
             <input
               type="text"
               placeholder={t('displayName', uiLang)}
               value={displayName}
               onChange={e => setDisplayName(e.target.value)}
-              style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', outline: 'none', color: '#fff', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '16px', boxSizing: 'border-box' }}
-              className="placeholder-white/30"
+              className="landing-input"
             />
           )}
           <input
@@ -394,8 +370,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', outline: 'none', color: '#fff', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '16px', boxSizing: 'border-box' }}
-            className="placeholder-white/30"
+            className="landing-input"
           />
           <div style={{ position: 'relative' }}>
             <input
@@ -405,28 +380,23 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               onChange={e => setPassword(e.target.value)}
               required
               minLength={6}
-              style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', outline: 'none', color: '#fff', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '16px', boxSizing: 'border-box' }}
-              className="placeholder-white/30"
+              className="landing-input"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer', padding: '4px', [isRTL ? 'left' : 'right']: '12px' }}
+              className="landing-eye-btn"
+              style={{ [isRTL ? 'left' : 'right']: '14px' }}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
 
           {authError && (
-            <p style={{ fontSize: '14px', color: '#f87171', textAlign: 'center', margin: 0 }}>{authError}</p>
+            <p className="landing-error">{authError}</p>
           )}
 
-          <button
-            type="submit"
-            disabled={authLoading}
-            className="active:scale-[0.97] transition-all disabled:opacity-50"
-            style={{ width: '100%', padding: 'clamp(12px, 2.5vh, 14px) 0', borderRadius: '16px', fontWeight: 700, color: '#fff', background: 'linear-gradient(135deg, #0d9488, #10b981)', boxShadow: '0 8px 32px rgba(13,148,136,0.35)', border: 'none', cursor: 'pointer', fontSize: 'clamp(14px, 3.5vw, 16px)' }}
-          >
+          <button type="submit" disabled={authLoading} className="landing-submit-btn">
             {authLoading
               ? t('loading', uiLang)
               : authMode === 'signup'
@@ -436,39 +406,198 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         </form>
 
         {/* Toggle auth mode */}
-        <p style={{ textAlign: 'center', fontSize: '14px', color: 'rgba(255,255,255,0.4)', margin: 0 }}>
+        <p className="landing-toggle">
           {authMode === 'signup' ? t('alreadyHaveAccount', uiLang) : t('dontHaveAccount', uiLang)}{' '}
           <button
             type="button"
             onClick={() => { setAuthMode(m => m === 'signup' ? 'signin' : 'signup'); setAuthError(''); }}
-            style={{ fontWeight: 600, color: '#14b8a6', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', fontSize: '14px' }}
+            className="landing-toggle-btn"
           >
             {authMode === 'signup' ? t('signIn', uiLang) : t('signUp', uiLang)}
           </button>
         </p>
 
-        {/* Child login link */}
-        <button
-          onClick={onChildLogin}
-          style={{ marginTop: '8px', fontSize: '14px', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer' }}
-        >
+        {/* Child login */}
+        <button onClick={onChildLogin} className="landing-child-btn">
           {t('loginAsChild', uiLang)}
         </button>
       </div>
 
       <style>{`
-        @keyframes onboarding-character-float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-12px); }
+        .landing-root {
+          position: fixed; inset: 0;
+          background: linear-gradient(160deg, #021a1a 0%, #0a2e2e 30%, #0f3d3a 60%, #0d2847 100%);
+          display: flex; flex-direction: column; align-items: center;
+          text-align: center;
+          padding: calc(env(safe-area-inset-top, 0px) + 16px) 20px calc(env(safe-area-inset-bottom, 0px) + 20px);
+          overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
-        @keyframes onboarding-glow-pulse {
-          0%, 100% { opacity: 0.7; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.1); }
+
+        /* Animated background blobs */
+        .landing-bg-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .landing-blob {
+          position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
         }
-        @keyframes onboarding-float {
+        .landing-blob-1 {
+          width: 300px; height: 300px; top: -80px; right: -60px;
+          background: radial-gradient(circle, #0d9488 0%, transparent 70%);
+          animation: blob-drift 8s ease-in-out infinite;
+        }
+        .landing-blob-2 {
+          width: 250px; height: 250px; bottom: 10%; left: -40px;
+          background: radial-gradient(circle, #10b981 0%, transparent 70%);
+          animation: blob-drift 10s ease-in-out infinite reverse;
+        }
+        .landing-blob-3 {
+          width: 200px; height: 200px; top: 40%; right: -30px;
+          background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+          animation: blob-drift 12s ease-in-out infinite 2s;
+        }
+        @keyframes blob-drift {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -20px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Floating sparkles */
+        .landing-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .landing-particle {
+          position: absolute; opacity: 0;
+          animation: sparkle-float linear infinite;
+        }
+        @keyframes sparkle-float {
+          0% { opacity: 0; transform: translateY(0) scale(0.5); }
+          15% { opacity: 0.4; }
+          50% { opacity: 0.2; transform: translateY(-30px) scale(1); }
+          85% { opacity: 0.3; }
+          100% { opacity: 0; transform: translateY(-60px) scale(0.5) rotate(180deg); }
+        }
+
+        /* Hero section */
+        .landing-hero {
+          position: relative; flex-shrink: 0;
+          margin-bottom: 8px; margin-top: 8px;
+        }
+        .landing-glow {
+          position: absolute; inset: -40%;
+          background: radial-gradient(circle, rgba(13,148,136,0.5) 0%, rgba(16,185,129,0.25) 35%, rgba(6,182,212,0.1) 55%, transparent 70%);
+          filter: blur(35px);
+          animation: glow-breathe 4s ease-in-out infinite;
+        }
+        .landing-ring {
+          position: absolute; inset: -15%;
+          border: 2px solid rgba(20,184,166,0.15);
+          border-radius: 50%;
+          animation: ring-spin 20s linear infinite;
+        }
+        .landing-ring::before {
+          content: ''; position: absolute; top: -4px; left: 50%;
+          width: 8px; height: 8px; border-radius: 50%;
+          background: #14b8a6; box-shadow: 0 0 12px #14b8a6;
+        }
+        .landing-character {
+          position: relative;
+          width: min(55vw, 220px); height: auto;
+          animation: hero-float 4s ease-in-out infinite;
+          filter: drop-shadow(0 20px 50px rgba(13,148,136,0.4));
+        }
+        @keyframes hero-float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(5deg); }
+          25% { transform: translateY(-10px) rotate(1deg); }
+          75% { transform: translateY(4px) rotate(-1deg); }
         }
+        @keyframes glow-breathe {
+          0%, 100% { opacity: 0.7; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.08); }
+        }
+        @keyframes ring-spin { to { transform: rotate(360deg); } }
+
+        /* Tagline */
+        .landing-tagline {
+          font-size: clamp(18px, 4.5vw, 22px); font-weight: 800;
+          background: linear-gradient(135deg, #5eead4, #14b8a6, #10b981);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          margin: 0 0 4px; flex-shrink: 0; letter-spacing: 0.3px;
+        }
+        .landing-sub {
+          font-size: clamp(12px, 3vw, 14px); color: rgba(148,163,184,0.7);
+          margin: 0 0 clamp(12px, 3vh, 24px); flex-shrink: 0; max-width: 300px;
+        }
+
+        /* Auth card */
+        .landing-card {
+          width: 100%; max-width: 380px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 24px; padding: 20px;
+          backdrop-filter: blur(20px);
+          display: flex; flex-direction: column; gap: 10px;
+          flex-shrink: 0;
+        }
+
+        /* Social buttons */
+        .landing-social-btn {
+          width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+          padding: 13px 0; border-radius: 14px; font-weight: 600; font-size: 15px;
+          color: #fff; background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.1);
+          cursor: pointer; transition: all 0.2s;
+        }
+        .landing-social-btn:active { transform: scale(0.97); }
+        .landing-social-btn:disabled { opacity: 0.5; }
+        .landing-social-btn:hover { background: rgba(255,255,255,0.12); }
+
+        /* Divider */
+        .landing-divider {
+          display: flex; align-items: center; gap: 12px; margin: 2px 0;
+        }
+        .landing-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+        .landing-divider span { font-size: 13px; color: rgba(255,255,255,0.25); }
+
+        /* Form */
+        .landing-form { display: flex; flex-direction: column; gap: 10px; }
+        .landing-input {
+          width: 100%; padding: 13px 16px; border-radius: 14px;
+          outline: none; color: #fff; font-size: 16px;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.08);
+          box-sizing: border-box; transition: border-color 0.2s;
+        }
+        .landing-input::placeholder { color: rgba(255,255,255,0.25); }
+        .landing-input:focus { border-color: rgba(20,184,166,0.5); }
+        .landing-eye-btn {
+          position: absolute; top: 50%; transform: translateY(-50%);
+          color: rgba(255,255,255,0.3); background: none; border: none; cursor: pointer; padding: 4px;
+        }
+
+        .landing-error { font-size: 13px; color: #f87171; text-align: center; margin: 0; }
+
+        .landing-submit-btn {
+          width: 100%; padding: 14px 0; border-radius: 14px;
+          font-weight: 700; font-size: 16px; color: #fff;
+          background: linear-gradient(135deg, #0d9488, #10b981);
+          border: none; cursor: pointer;
+          box-shadow: 0 8px 30px rgba(13,148,136,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+          transition: all 0.2s;
+        }
+        .landing-submit-btn:active { transform: scale(0.97); }
+        .landing-submit-btn:disabled { opacity: 0.5; }
+        .landing-submit-btn:hover { box-shadow: 0 12px 40px rgba(13,148,136,0.5); }
+
+        .landing-toggle {
+          text-align: center; font-size: 13px; color: rgba(255,255,255,0.35); margin: 2px 0 0;
+        }
+        .landing-toggle-btn {
+          font-weight: 600; color: #14b8a6; background: none;
+          border: none; cursor: pointer; font-size: 13px;
+        }
+        .landing-toggle-btn:hover { color: #5eead4; }
+
+        .landing-child-btn {
+          margin-top: 4px; font-size: 13px; color: rgba(255,255,255,0.2);
+          background: none; border: none; cursor: pointer;
+        }
+        .landing-child-btn:hover { color: rgba(255,255,255,0.4); }
       `}</style>
     </div>
   );
