@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakli-v58';
-const STATIC_CACHE = 'speakli-static-v58';
+const CACHE_NAME = 'speakli-v59';
+const STATIC_CACHE = 'speakli-static-v59';
 
 const urlsToCache = [
   '/',
@@ -17,7 +17,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate event - delete ALL old caches and claim clients
+// Activate event - delete ALL old caches, claim clients, force reload
 self.addEventListener('activate', event => {
   const currentCaches = [CACHE_NAME, STATIC_CACHE];
   event.waitUntil(
@@ -30,17 +30,21 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(() => self.clients.claim())
-      .then(() => {
-        // Notify all clients to refresh
-        self.clients.matchAll().then(clients => {
-          clients.forEach(client => client.postMessage({ type: 'SW_UPDATED' }));
-        });
-      })
+    })
+    .then(() => self.clients.claim())
+    .then(() => {
+      // Force ALL open clients to reload with fresh content
+      return self.clients.matchAll({ type: 'window' });
+    })
+    .then(windowClients => {
+      windowClients.forEach(client => {
+        client.navigate(client.url);
+      });
+    })
   );
 });
 
-// Fetch event - NETWORK FIRST for everything (prevents stale cache issues)
+// Fetch event - NETWORK FIRST with cache-busting for HTML
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
@@ -49,14 +53,31 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network first with cache fallback for ALL requests
+  // For navigation requests (HTML pages): bypass HTTP cache entirely
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match('/index.html') || new Response('Offline', { status: 503 });
+        })
+    );
+    return;
+  }
+
+  // For all other requests: network first with cache fallback
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Cache a copy of successful responses (skip partial 206 responses)
         if (response.ok && response.status !== 206) {
           const clone = response.clone();
-          const cacheName = url.pathname.match(/\.(js|css|png|jpg|svg|woff2?|mp3)$/)
+          const cacheName = url.pathname.match(/\.(js|css|png|jpg|webp|svg|woff2?|mp3)$/)
             ? STATIC_CACHE
             : CACHE_NAME;
           caches.open(cacheName).then(cache => cache.put(event.request, clone));
@@ -64,20 +85,15 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // Offline fallback
         return caches.match(event.request).then(cached => {
           if (cached) return cached;
-          // For navigation requests, serve cached index.html
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
-          }
           return new Response('Offline', { status: 503 });
         });
       })
   );
 });
 
-// Push notification handler - works even when app is closed
+// Push notification handler
 self.addEventListener('push', event => {
   let data = {};
   try {
@@ -98,7 +114,7 @@ self.addEventListener('push', event => {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-// Notification click handler - opens app when user taps notification
+// Notification click handler
 self.addEventListener('notificationclick', event => {
   event.notification.close();
   event.waitUntil(
