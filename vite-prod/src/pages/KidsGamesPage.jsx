@@ -237,7 +237,7 @@ function BubblePopGame({ onComplete, onBack }) {
             </div>
           </div>
           <button onClick={() => onComplete(score * 3)} className="px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-cyan-400 to-blue-500 shadow-2xl active:scale-[0.97] transition-all">
-            {uiLang === 'he' ? 'המשך' : 'Continue'} ✨
+            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
           </button>
         </div>
       </div>
@@ -274,7 +274,7 @@ function BubblePopGame({ onComplete, onBack }) {
               className="inline-flex items-center gap-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg"
             >
               <span className="text-sm font-bold text-gray-600 dark:text-gray-300">
-                {uiLang === 'he' ? '!מצא את האות' : 'Find the letter'}
+                {uiLang === 'he' ? '!מצאו את האות' : 'Find the letter'}
               </span>
               <span className={`text-4xl font-black bg-gradient-to-r ${targetLetter.color} bg-clip-text text-transparent animate-jelly`}>
                 {targetLetter.letter}
@@ -495,7 +495,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
             </div>
           </div>
           <button onClick={() => onComplete(xp)} className="px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-purple-400 to-pink-500 shadow-2xl active:scale-[0.97] transition-all">
-            {uiLang === 'he' ? 'המשך' : 'Continue'} ✨
+            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
           </button>
         </div>
       </div>
@@ -581,7 +581,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
                   <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-xl sm:rounded-2xl">
                     <span className="text-3xl sm:text-4xl text-white/60 drop-shadow-md">❓</span>
                     <span className="text-xs font-bold text-white/40">
-                      {uiLang === 'he' ? 'לחץ!' : 'Tap!'}
+                      {uiLang === 'he' ? 'לחצו!' : 'Tap!'}
                     </span>
                   </div>
                 )}
@@ -783,7 +783,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             </div>
           </div>
           <button onClick={() => onComplete(xp)} className="px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-orange-400 to-red-500 shadow-2xl active:scale-[0.97] transition-all">
-            {uiLang === 'he' ? 'המשך' : 'Continue'} ✨
+            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
           </button>
         </div>
       </div>
@@ -836,7 +836,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             onClick={() => speak(currentWord.word, { rate: 0.7 })}
             className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-blue-500 active:scale-95 transition-transform"
           >
-            <Volume2 size={16} /> {uiLang === 'he' ? 'השמע' : 'Listen'}
+            <Volume2 size={16} /> {uiLang === 'he' ? 'השמיעו' : 'Listen'}
           </button>
         </div>
 
@@ -897,7 +897,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
               onClick={handleReset}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-gray-500 active:scale-95 transition-transform"
             >
-              <RotateCcw size={14} /> {uiLang === 'he' ? 'התחל מחדש' : 'Reset'}
+              <RotateCcw size={14} /> {uiLang === 'he' ? 'התחילו מחדש' : 'Reset'}
             </button>
           </div>
         )}
@@ -938,9 +938,9 @@ const GAMES = [
   {
     id: 'listen-pop',
     emoji: '🎧',
-    titleHe: 'שמע ולחץ',
+    titleHe: 'שמעו ולחצו',
     titleEn: 'Listen & Pop',
-    descHe: 'הקשב ומצא את התמונה!',
+    descHe: 'הקשיבו ומצאו את התמונה!',
     descEn: 'Listen and find the picture!',
     gradient: 'from-cyan-400 via-sky-400 to-blue-500',
     component: ListenPopGame,
@@ -948,9 +948,9 @@ const GAMES = [
   {
     id: 'bubble-pop',
     emoji: '🫧',
-    titleHe: 'פוצץ בועות',
+    titleHe: 'פוצצו בועות',
     titleEn: 'Bubble Pop ABCs',
-    descHe: 'מצא את האות הנכונה!',
+    descHe: 'מצאו את האות הנכונה!',
     descEn: 'Find the right letter!',
     gradient: 'from-cyan-400 via-blue-400 to-indigo-400',
     component: BubblePopGame,
@@ -960,7 +960,7 @@ const GAMES = [
     emoji: '🔤',
     titleHe: 'אות חסרה',
     titleEn: 'Missing Letter',
-    descHe: 'מצא את האות שחסרה!',
+    descHe: 'מצאו את האות שחסרה!',
     descEn: 'Find the missing letter!',
     gradient: 'from-violet-400 via-purple-400 to-fuchsia-400',
     component: MissingLetterGame,
@@ -970,7 +970,7 @@ const GAMES = [
     emoji: '🧠',
     titleHe: 'משחק זיכרון',
     titleEn: 'Memory Match',
-    descHe: 'התאם מילים לתמונות!',
+    descHe: 'התאימו מילים לתמונות!',
     descEn: 'Match words to pictures!',
     gradient: 'from-purple-400 via-pink-400 to-rose-400',
     component: MemoryMatchGame,
@@ -990,7 +990,7 @@ const GAMES = [
     emoji: '🏗️',
     titleHe: 'בונה מילים',
     titleEn: 'Word Builder',
-    descHe: 'בנה מילים מאותיות!',
+    descHe: 'בנו מילים מאותיות!',
     descEn: 'Build words from letters!',
     gradient: 'from-orange-400 via-amber-400 to-yellow-400',
     component: WordBuilderGame,
@@ -998,9 +998,9 @@ const GAMES = [
   {
     id: 'sentence-builder',
     emoji: '📝',
-    titleHe: 'בנה משפט',
+    titleHe: 'בנו משפט',
     titleEn: 'Sentence Builder',
-    descHe: 'סדר מילים למשפט!',
+    descHe: 'סדרו מילים למשפט!',
     descEn: 'Arrange words into a sentence!',
     gradient: 'from-indigo-400 via-blue-400 to-sky-400',
     component: SentenceBuilderGame,

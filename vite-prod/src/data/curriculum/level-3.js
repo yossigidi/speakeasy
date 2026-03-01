@@ -36,7 +36,7 @@ export const LEVEL_3 = {
         {
           id: 'L3U1-1',
           type: 'speaking',
-          titleHe: 'אמור משפט!',
+          titleHe: 'אמרו משפט!',
           titleEn: 'Say a Sentence!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -1025,7 +1025,7 @@ export const LEVEL_3 = {
         {
           id: 'L3U14-1',
           type: 'speaking',
-          titleHe: 'ספר על היום שלך!',
+          titleHe: 'ספרו על היום שלכם!',
           titleEn: 'Tell About Your Day!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -1177,7 +1177,7 @@ export const LEVEL_3 = {
         {
           id: 'L3U16-1',
           type: 'speaking',
-          titleHe: 'בוא נכתוב!',
+          titleHe: 'בואו נכתוב!',
           titleEn: "Let's Write!",
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],
@@ -1255,7 +1255,7 @@ export const LEVEL_3 = {
         {
           id: 'L3U17-1',
           type: 'speaking',
-          titleHe: 'בוא נדבר!',
+          titleHe: 'בואו נדבר!',
           titleEn: "Let's Talk!",
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],

@@ -391,7 +391,7 @@
               "answer": "eighteen",
               "alternatives": ["eighteen"],
               "hint": "Write the number 18 in words",
-              "hintHe": "כתוב את המספר 18 במילים"
+              "hintHe": "כתבו את המספר 18 במילים"
             },
             {
               "type": "match-pairs",

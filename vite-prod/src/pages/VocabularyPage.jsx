@@ -177,7 +177,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
             className="w-full"
           >
             <Bookmark size={16} className="mr-2" />
-            {isHe ? 'הוסף לאוצר המילים שלי' : 'Add to My Vocabulary'}
+            {isHe ? 'הוסיפו לאוצר המילים שלי' : 'Add to My Vocabulary'}
           </AnimatedButton>
         )}
       </div>
@@ -337,7 +337,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                 className="flex items-center justify-center gap-2 mx-auto text-brand-500 hover:text-brand-600 transition-colors"
               >
                 <Eye size={18} />
-                <span className="font-medium">{isHe ? 'לחץ לתרגום' : 'Tap for translation'}</span>
+                <span className="font-medium">{isHe ? 'לחצו לתרגום' : 'Tap for translation'}</span>
               </button>
             )}
           </GlassCard>
@@ -356,7 +356,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 
           {showTranslation && (
             <AnimatedButton onClick={nextPhase} variant="primary" className="w-full">
-              {isHe ? 'המשך' : 'Continue'}
+              {isHe ? 'המשיכו' : 'Continue'}
               <ArrowRight size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
             </AnimatedButton>
           )}
@@ -416,7 +416,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           )}
 
           <AnimatedButton onClick={nextPhase} variant="primary" className="w-full">
-            {isHe ? 'המשך' : 'Continue'}
+            {isHe ? 'המשיכו' : 'Continue'}
             <ArrowRight size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
           </AnimatedButton>
         </div>
@@ -593,7 +593,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
           {isHe ? 'כל המילים נסקרו!' : 'All words reviewed!'}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          {isHe ? 'חזור מאוחר יותר לחזרה נוספת' : 'Come back later for more review'}
+          {isHe ? 'חזרו מאוחר יותר לחזרה נוספת' : 'Come back later for more review'}
         </p>
         <AnimatedButton onClick={onBack} variant="secondary">
           {t('back', uiLang)}
@@ -987,7 +987,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
         className="w-full"
       >
         <GraduationCap size={18} className="mr-2" />
-        {isHe ? `למד ${words.length} מילים` : `Learn ${words.length} Words`}
+        {isHe ? `למדו ${words.length} מילים` : `Learn ${words.length} Words`}
       </AnimatedButton>
 
       {/* Word List */}
@@ -1150,7 +1150,7 @@ export default function VocabularyPage() {
             </div>
             <div>
               <h3 className="font-bold text-gray-900 dark:text-white">
-                {isHe ? 'למד מילים חדשות' : 'Learn New Words'}
+                {isHe ? 'למדו מילים חדשות' : 'Learn New Words'}
               </h3>
               <p className="text-sm text-brand-600 dark:text-brand-400">
                 {isHe ? `5 מילים ברמת ${userLevel} עם הסברים` : `5 ${userLevel}-level words with explanations`}
@@ -1199,7 +1199,7 @@ export default function VocabularyPage() {
         </div>
         <div className="text-center p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
           <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{userLevel}</p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'הרמה שלך' : 'Your Level'}</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'הרמה שלכם' : 'Your Level'}</p>
         </div>
         <div className="text-center p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
           <p className="text-2xl font-bold text-teal-600 dark:text-teal-400">{ALL_WORDS.length}</p>

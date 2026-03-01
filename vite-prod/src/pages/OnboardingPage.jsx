@@ -260,11 +260,11 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     } catch (err) {
       const code = err.code || '';
       if (code === 'auth/email-already-in-use') {
-        setAuthError(uiLang === 'he' ? 'האימייל כבר רשום. נסה להתחבר במקום להירשם.' : 'Email already in use. Try signing in instead.');
+        setAuthError(uiLang === 'he' ? 'האימייל כבר רשום. נסו להתחבר במקום להירשם.' : 'Email already in use. Try signing in instead.');
       } else if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
-        setAuthError(uiLang === 'he' ? 'סיסמה שגויה. נסה שוב.' : 'Wrong password. Try again.');
+        setAuthError(uiLang === 'he' ? 'סיסמה שגויה. נסו שוב.' : 'Wrong password. Try again.');
       } else if (code === 'auth/user-not-found') {
-        setAuthError(uiLang === 'he' ? 'משתמש לא נמצא. נסה להירשם.' : 'User not found. Try signing up.');
+        setAuthError(uiLang === 'he' ? 'משתמש לא נמצא. נסו להירשם.' : 'User not found. Try signing up.');
       } else if (code === 'auth/invalid-email') {
         setAuthError(uiLang === 'he' ? 'כתובת אימייל לא תקינה.' : 'Invalid email address.');
       } else if (code === 'auth/weak-password') {
@@ -306,7 +306,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         Speakli
       </h1>
       <p style={{ fontSize: 'clamp(14px, 3.5vw, 16px)', fontWeight: 500, marginBottom: 'clamp(16px, 4vh, 32px)', background: 'linear-gradient(135deg, #14b8a6, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
-        {uiLang === 'he' ? 'למד אנגלית בקלות' : 'Learn English the Easy Way'}
+        {uiLang === 'he' ? 'למדו אנגלית בקלות' : 'Learn English the Easy Way'}
       </p>
 
       <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0 }}>
@@ -622,10 +622,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   };
 
   const renderAddChildren = () => (
-    <StepWrapper title={uiLang === 'he' ? 'הוסף ילדים' : 'Add Children'} onBack={prevStep}>
+    <StepWrapper title={uiLang === 'he' ? 'הוסיפו ילדים' : 'Add Children'} onBack={prevStep}>
       <p className="text-gray-500 dark:text-gray-400 text-center text-sm mt-1 mb-6">
         {uiLang === 'he'
-          ? 'הוסף את הילדים שלך כדי שיוכלו ללמוד בנפרד'
+          ? 'הוסיפו את הילדים שלכם כדי שיוכלו ללמוד בנפרד'
           : 'Add your children so they can learn separately'}
       </p>
 
@@ -678,7 +678,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           disabled={!newChildName.trim()}
           className="w-full py-3 rounded-xl font-semibold border-2 border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/30 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
         >
-          {uiLang === 'he' ? '+ הוסף ילד/ה' : '+ Add Child'}
+          {uiLang === 'he' ? '+ הוסיפו ילד/ה' : '+ Add Child'}
         </button>
       </div>
 
@@ -689,7 +689,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           onClick={handleFinish}
           className="w-full mt-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-all"
         >
-          {uiLang === 'he' ? 'דלג, אוסיף מאוחר יותר' : 'Skip, add later'}
+          {uiLang === 'he' ? 'דלגו, נוסיף מאוחר יותר' : 'Skip, add later'}
         </button>
       )}
     </StepWrapper>

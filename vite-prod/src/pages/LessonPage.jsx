@@ -407,7 +407,7 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
     { type: 'word-arrange', words: ['are', 'How', 'you', '?'], correct: 'How are you ?', translation: 'מה שלומך?' },
     { type: 'translation', source: 'תודה רבה', target: 'Thank you very much', alternatives: ['Thanks a lot', 'Thank you so much'] },
     { type: 'match-pairs', pairs: [['Hello', 'שלום'], ['Goodbye', 'להתראות'], ['Please', 'בבקשה'], ['Thank you', 'תודה']] },
-    { type: 'multiple-choice', question: 'Choose the correct greeting for the morning:', questionHe: 'בחר את הברכה הנכונה לבוקר:', options: ['Good morning', 'Good evening', 'Good night', 'Goodbye'], correct: 0, explanation: uiLang === 'he' ? 'Good morning = בוקר טוב. משתמשים בברכה הזו עד הצהריים.' : 'Good morning is used until around noon.' },
+    { type: 'multiple-choice', question: 'Choose the correct greeting for the morning:', questionHe: 'בחרו את הברכה הנכונה לבוקר:', options: ['Good morning', 'Good evening', 'Good night', 'Goodbye'], correct: 0, explanation: uiLang === 'he' ? 'Good morning = בוקר טוב. משתמשים בברכה הזו עד הצהריים.' : 'Good morning is used until around noon.' },
     { type: 'fill-blank', sentence: 'My ___ is David.', answer: 'name', hint: uiLang === 'he' ? 'כשמציגים את עצמנו - "השם שלי הוא..."' : 'When introducing yourself - "My ... is"' },
     { type: 'listening', text: 'Where are you from?', options: ['Where are you from?', 'How old are you?', 'What is your name?', 'Where do you live?'], correct: 0 },
   ];

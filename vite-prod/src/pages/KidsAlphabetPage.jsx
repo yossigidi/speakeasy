@@ -223,7 +223,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/25 backdrop-blur-sm text-white font-bold text-base active:scale-95 transition-all hover:bg-white/35 shadow-lg"
             >
               <Volume2 size={20} />
-              {uiLang === 'he' ? 'השמע!' : 'Listen!'}
+              {uiLang === 'he' ? 'השמיעו!' : 'Listen!'}
             </button>
           </div>
         </div>
@@ -358,7 +358,7 @@ function FindLetterGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-950/30 dark:to-pink-950/30 rounded-2xl p-4 mb-4">
         <p className="text-lg font-black mb-1">
-          {uiLang === 'he' ? '🔍 מצא את האות!' : '🔍 Find the letter!'}
+          {uiLang === 'he' ? '🔍 מצאו את האות!' : '🔍 Find the letter!'}
         </p>
         <div className="flex items-center justify-center gap-4">
           <span className={`text-5xl font-black bg-gradient-to-r ${letter.color} bg-clip-text text-transparent animate-jelly`}>
@@ -449,7 +449,7 @@ function MatchWordGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? '🧩 התאם מילה לתמונה!' : '🧩 Match word to picture!'} {letter.emoji}
+          {uiLang === 'he' ? '🧩 התאימו מילה לתמונה!' : '🧩 Match word to picture!'} {letter.emoji}
         </p>
       </div>
       <div className="flex gap-4 justify-center">
@@ -546,7 +546,7 @@ function CaseMatchGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-orange-100 to-yellow-100 dark:from-orange-950/30 dark:to-yellow-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? '🔠 מצא את האות הקטנה!' : '🔠 Find the lowercase!'}
+          {uiLang === 'he' ? '🔠 מצאו את האות הקטנה!' : '🔠 Find the lowercase!'}
         </p>
       </div>
 
@@ -668,7 +668,7 @@ function ListenChooseGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-green-100 to-teal-100 dark:from-green-950/30 dark:to-teal-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? '🎧 הקשב ובחר!' : '🎧 Listen & Choose!'}
+          {uiLang === 'he' ? '🎧 הקשיבו ובחרו!' : '🎧 Listen & Choose!'}
         </p>
       </div>
 
@@ -727,10 +727,10 @@ function GameFlow({ letter, onComplete, onBack }) {
   const [showComplete, setShowComplete] = useState(false);
 
   const games = [
-    { component: FindLetterGame, name: uiLang === 'he' ? '🔍 מצא את האות' : '🔍 Find Letter', color: 'from-purple-500 to-pink-500' },
-    { component: MatchWordGame, name: uiLang === 'he' ? '🧩 התאם מילה' : '🧩 Match Words', color: 'from-blue-500 to-cyan-500' },
+    { component: FindLetterGame, name: uiLang === 'he' ? '🔍 מצאו את האות' : '🔍 Find Letter', color: 'from-purple-500 to-pink-500' },
+    { component: MatchWordGame, name: uiLang === 'he' ? '🧩 התאימו מילה' : '🧩 Match Words', color: 'from-blue-500 to-cyan-500' },
     { component: CaseMatchGame, name: uiLang === 'he' ? '🔠 גדולה וקטנה' : '🔠 Big & Small', color: 'from-orange-500 to-yellow-500' },
-    { component: ListenChooseGame, name: uiLang === 'he' ? '🎧 הקשב ובחר' : '🎧 Listen & Pick', color: 'from-green-500 to-teal-500' },
+    { component: ListenChooseGame, name: uiLang === 'he' ? '🎧 הקשיבו ובחרו' : '🎧 Listen & Pick', color: 'from-green-500 to-teal-500' },
   ];
 
   const handleGameComplete = useCallback(() => {
@@ -779,7 +779,7 @@ function GameFlow({ letter, onComplete, onBack }) {
             onClick={() => onComplete(letter.letter)}
             className={`px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r ${letter.color} shadow-2xl active:scale-[0.97] transition-all`}
           >
-            {uiLang === 'he' ? 'המשך' : 'Continue'} ✨
+            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
           </button>
         </div>
       </div>

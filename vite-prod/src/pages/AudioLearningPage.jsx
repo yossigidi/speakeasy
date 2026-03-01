@@ -591,7 +591,7 @@ export default function AudioLearningPage({ onBack }) {
           <div className="text-center">
             <p className="text-white/30 text-xs">
               {isHe
-                ? 'מצב נהיגה - הקשב ולמד בזמן הנסיעה'
+                ? 'מצב נהיגה - הקשיבו ולמדו בזמן הנסיעה'
                 : 'Drive Mode - Listen & learn on the go'
               }
             </p>

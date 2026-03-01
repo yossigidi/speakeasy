@@ -242,7 +242,7 @@ export default function ChildProgressPage({ childId, onBack }) {
       setAdvice(data.advice || '');
     } catch (e) {
       console.error('Failed to get advice:', e);
-      setAdvice(uiLang === 'he' ? 'לא ניתן לטעון עצות כרגע. נסה שוב מאוחר יותר.' : 'Could not load advice right now. Try again later.');
+      setAdvice(uiLang === 'he' ? 'לא ניתן לטעון עצות כרגע. נסו שוב מאוחר יותר.' : 'Could not load advice right now. Try again later.');
     }
     setLoadingAdvice(false);
   };
@@ -476,7 +476,7 @@ export default function ChildProgressPage({ childId, onBack }) {
         ) : (
           <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-4">
             {uiLang === 'he'
-              ? 'לחץ "קבל עצות" כדי לקבל המלצות מותאמות אישית'
+              ? 'לחצו "קבלו עצות" כדי לקבל המלצות מותאמות אישית'
               : 'Click "Get Advice" for personalized recommendations'}
           </p>
         )}

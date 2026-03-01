@@ -486,7 +486,7 @@ export default function ReadingPage() {
         {t('stories', uiLang)}
       </h2>
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        {uiLang === 'he' ? 'קרא סיפורים ולמד מילים חדשות' : 'Read stories and learn new words'}
+        {uiLang === 'he' ? 'קראו סיפורים ולמדו מילים חדשות' : 'Read stories and learn new words'}
       </p>
 
       {/* B4: Level filter tabs */}

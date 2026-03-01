@@ -140,7 +140,7 @@ export default function ProfilePage({ onNavigate }) {
           </div>
           <div className="flex-1">
             <h3 className="font-bold text-gray-900 dark:text-white">{t('achievements', uiLang)}</h3>
-            <p className="text-xs text-gray-500">{uiLang === 'he' ? 'צפה בהישגים שלך' : 'View your achievements'}</p>
+            <p className="text-xs text-gray-500">{uiLang === 'he' ? 'צפו בהישגים שלכם' : 'View your achievements'}</p>
           </div>
           <Star size={18} className="text-amber-500" fill="currentColor" />
         </div>

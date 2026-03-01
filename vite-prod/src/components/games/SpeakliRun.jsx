@@ -449,7 +449,7 @@ function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, 
           className="btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl"
           style={{ background: world.skyGradient, boxShadow: 'none' }}
         >
-          {uiLang === 'he' ? 'המשך' : 'Continue'} ✨
+          {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
         </button>
       </div>
     </div>

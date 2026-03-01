@@ -40,7 +40,7 @@ export default function ChildLoginPage({ onBack }) {
         setStep(2);
       }
     } else if (result.error === 'authFailed') {
-      setError(uiLang === 'he' ? 'שגיאת חיבור. נסה שוב.' : 'Connection error. Try again.');
+      setError(uiLang === 'he' ? 'שגיאת חיבור. נסו שוב.' : 'Connection error. Try again.');
     } else {
       setError(t('invalidFamilyCode', uiLang));
     }

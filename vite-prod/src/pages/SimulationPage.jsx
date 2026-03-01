@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ArrowLeft, Volume2, Mic, MicOff, Send, Lock, ChevronRight, RotateCcw, Play, MessageCircle, Timer, Star, AlertTriangle, Check, X } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, Volume2, Mic, MicOff, Send, Lock, ChevronRight, RotateCcw, Play, MessageCircle, Timer, AlertTriangle, Check } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -10,7 +10,6 @@ import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
-import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 
 // ── Metric Bar ──────────────────────────────────────────
 function MetricBar({ label, value, color }) {
@@ -78,10 +77,10 @@ function CorrectionCard({ correction, mistakes, uiLang }) {
 // ══════════════════════════════════════════════════════════
 export default function SimulationPage() {
   const { uiLang } = useTheme();
-  const { user } = useAuth();
+  useAuth();
   const { progress, updateProgress, addXP } = useUserProgress();
-  const { speak, isSpeaking } = useSpeechSynthesis();
-  const { transcript, isActive: isListening, startListening, stopListening, sttSupported } = useSpeechRecognition();
+  const { speak } = useSpeechSynthesis();
+  const { transcript, isListening, startListening, stopListening, sttSupported } = useSpeechRecognition();
   const isHe = uiLang === 'he';
 
   // ── State ──
@@ -505,7 +504,7 @@ export default function SimulationPage() {
         {/* Choice buttons (for choice responseType) */}
         {step?.responseType === 'choice' && step.choices && !isLoading && currentStep < totalSteps && (
           <div className="px-4 py-2 space-y-2 border-t border-gray-200/30 dark:border-gray-700/30">
-            <p className="text-xs text-gray-500 dark:text-gray-400">{isHe ? 'בחר תשובה:' : 'Choose a response:'}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{isHe ? 'בחרו תשובה:' : 'Choose a response:'}</p>
             {step.choices.map((choice, i) => (
               <button key={i} onClick={() => handleChoiceSelect(choice)}
                 className="w-full text-left px-4 py-2.5 rounded-xl glass-card text-sm text-gray-800 dark:text-gray-200 hover:bg-brand-50 dark:hover:bg-brand-900/20 transition-colors active:scale-[0.98]">

@@ -720,7 +720,7 @@ export const LEVEL_4 = {
         {
           id: 'L4U10-1',
           type: 'speaking',
-          titleHe: 'בוא נכתוב!',
+          titleHe: 'בואו נכתוב!',
           titleEn: 'Let\'s Write!',
           exerciseTypes: ['listen-pick', 'speak-word', 'emoji-pick', 'listen-pick', 'speak-word', 'emoji-pick', 'speak-word', 'listen-pick'],
           wordIndices: [0, 1, 2, 3],

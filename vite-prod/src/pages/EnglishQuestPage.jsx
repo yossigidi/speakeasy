@@ -311,7 +311,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
     // Voice instruction
     setTimeout(() => {
       speakSequence([
-        { text: isHe ? 'מצא את ה' : 'Find the', lang: isHe ? 'he' : 'en-US', rate: 0.9 },
+        { text: isHe ? 'מצאו את ה' : 'Find the', lang: isHe ? 'he' : 'en-US', rate: 0.9 },
         { pause: 200 },
         { text: targetWord.word, lang: 'en-US', rate: 0.85 },
       ]);
@@ -371,7 +371,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
       {/* Instruction */}
       <div className="text-center mb-6">
         <p className="text-white/70 text-sm font-medium mb-1">
-          {isHe ? '!מצא את' : 'Find the'}
+          {isHe ? '!מצאו את' : 'Find the'}
         </p>
         <h2 className="text-white font-black text-3xl">{target?.word || ''}</h2>
         <p className="text-white/50 text-xs mt-1" dir="rtl">{target?.translation || ''}</p>
@@ -799,7 +799,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
           onClick={onContinue}
           className="w-full py-4 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-black text-xl shadow-xl active:scale-95 transition-transform"
         >
-          {isHe ? '!המשך' : 'Continue!'}
+          {isHe ? '!המשיכו' : 'Continue!'}
         </button>
       </div>
     </div>

@@ -88,7 +88,7 @@ function GameOverScreen({ emoji, title, subtitle, score, total, xp, onContinue, 
           className={`btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl bg-gradient-to-r ${gradient} box-shadow-none`}
           style={{ boxShadow: 'none' }}
         >
-          {uiLang === 'he' ? 'המשך' : 'Continue'} ✨
+          {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
         </button>
       </div>
     </div>
@@ -270,7 +270,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       <FloatingDecorations />
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="🎧"
-          title={uiLang === 'he' ? 'שמע ולחץ' : 'Listen & Pop'}
+          title={uiLang === 'he' ? 'שמעו ולחצו' : 'Listen & Pop'}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
@@ -296,7 +296,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
             className="inline-flex items-center gap-3 btn-3d-blue rounded-2xl px-8 py-4 text-lg animate-glow-pulse"
           >
             <Volume2 size={24} />
-            {uiLang === 'he' ? 'הקשב שוב' : 'Listen Again'}
+            {uiLang === 'he' ? 'הקשיבו שוב' : 'Listen Again'}
           </button>
         </div>
 
@@ -568,7 +568,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
 
         {/* Instruction */}
         <p className="text-center text-sm text-gray-400 dark:text-gray-500 mt-4 px-4">
-          {uiLang === 'he' ? 'לחץ על הקטגוריה הנכונה!' : 'Tap the right category!'}
+          {uiLang === 'he' ? 'לחצו על הקטגוריה הנכונה!' : 'Tap the right category!'}
         </p>
       </div>
     </div>
@@ -796,7 +796,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
           <button onClick={() => speak(current.word, { rate: 0.7 })}
             className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-500 active:scale-95 transition-transform"
           >
-            <Volume2 size={14} /> {uiLang === 'he' ? 'השמע' : 'Listen'}
+            <Volume2 size={14} /> {uiLang === 'he' ? 'השמיעו' : 'Listen'}
           </button>
         </div>
 
@@ -980,7 +980,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       <FloatingDecorations />
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="📝"
-          title={uiLang === 'he' ? 'בנה משפט' : 'Sentence Builder'}
+          title={uiLang === 'he' ? 'בנו משפט' : 'Sentence Builder'}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{round + 1}/{TOTAL_ROUNDS}</span>
@@ -1006,7 +1006,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
           <button onClick={() => speak(current.sentence, { rate: 0.7 })}
             className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-500 active:scale-95"
           >
-            <Volume2 size={14} /> {uiLang === 'he' ? 'השמע' : 'Listen'}
+            <Volume2 size={14} /> {uiLang === 'he' ? 'השמיעו' : 'Listen'}
           </button>
         </div>
 
@@ -1060,7 +1060,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             <button onClick={handleReset}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-gray-500 active:scale-95"
             >
-              <RotateCcw size={14} /> {uiLang === 'he' ? 'התחל מחדש' : 'Reset'}
+              <RotateCcw size={14} /> {uiLang === 'he' ? 'התחילו מחדש' : 'Reset'}
             </button>
           </div>
         )}
