@@ -160,7 +160,7 @@ export default function KidsIntro({
 
           {/* CTA Button */}
           <button
-            onClick={dismiss}
+            onClick={e => { e.stopPropagation(); dismiss(); }}
             className={`w-full py-3.5 rounded-2xl bg-gradient-to-r ${gradient} text-white font-black text-lg shadow-lg active:scale-95 transition-transform`}
           >
             {isHe ? buttonLabelHe : buttonLabel}
