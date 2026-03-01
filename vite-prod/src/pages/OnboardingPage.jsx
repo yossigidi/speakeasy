@@ -296,17 +296,47 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
       overflowY: 'auto',
       WebkitOverflowScrolling: 'touch',
     }}>
-      {/* Glow effect behind icon */}
-      <div className="relative" style={{ marginBottom: '20px', flexShrink: 0 }}>
-        <div className="absolute inset-0 w-32 h-32 mx-auto rounded-full" style={{ background: 'radial-gradient(circle, rgba(13,148,136,0.35) 0%, transparent 70%)', filter: 'blur(20px)', transform: 'scale(1.5)' }} />
-        <img src="/icons/icon-192.png" alt="Speakli" style={{ position: 'relative', width: 'min(28vw, 112px)', height: 'min(28vw, 112px)', borderRadius: '24px', boxShadow: '0 16px 48px rgba(20,184,166,0.25)' }} />
+      {/* Floating decorative emojis */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+        {['✨', '🌟', '📚', '🎓', '💫', '🌈'].map((e, i) => (
+          <div key={i} style={{
+            position: 'absolute',
+            left: `${10 + (i * 15) % 80}%`,
+            top: `${5 + (i * 18) % 75}%`,
+            fontSize: `${14 + (i % 3) * 4}px`,
+            opacity: 0.15,
+            animation: `onboarding-float ${3 + i * 0.5}s ease-in-out infinite`,
+            animationDelay: `${i * 0.4}s`,
+          }}>{e}</div>
+        ))}
       </div>
 
-      <h1 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: 900, marginBottom: '2px', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
+      {/* Glow effect behind character */}
+      <div className="relative" style={{ marginBottom: '16px', flexShrink: 0 }}>
+        <div style={{
+          position: 'absolute', inset: '-30%',
+          background: 'radial-gradient(circle, rgba(13,148,136,0.45) 0%, rgba(16,185,129,0.2) 40%, transparent 70%)',
+          filter: 'blur(30px)',
+          animation: 'onboarding-glow-pulse 3s ease-in-out infinite',
+        }} />
+        <img
+          src="/images/speakli-avatar.png"
+          alt="Speakli"
+          style={{
+            position: 'relative',
+            width: 'min(50vw, 200px)',
+            height: 'min(50vw, 200px)',
+            animation: 'onboarding-character-float 3s ease-in-out infinite',
+            filter: 'drop-shadow(0 16px 40px rgba(20,184,166,0.35))',
+          }}
+        />
+      </div>
+
+      <h1 style={{ fontSize: 'clamp(32px, 7vw, 44px)', fontWeight: 900, marginBottom: '4px', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
         Speakli
       </h1>
-      <p style={{ fontSize: 'clamp(14px, 3.5vw, 16px)', fontWeight: 500, marginBottom: 'clamp(16px, 4vh, 32px)', background: 'linear-gradient(135deg, #14b8a6, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0 }}>
-        {uiLang === 'he' ? 'למדו אנגלית בקלות' : 'Learn English the Easy Way'}
+      <p style={{ fontSize: 'clamp(15px, 3.8vw, 18px)', fontWeight: 600, marginBottom: 'clamp(16px, 4vh, 32px)', background: 'linear-gradient(135deg, #14b8a6, #5eead4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', flexShrink: 0, letterSpacing: '0.5px' }}>
+        {uiLang === 'he' ? '🎯 למדו אנגלית בכיף!' : '🎯 Learn English with Fun!'}
       </p>
 
       <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0 }}>
@@ -425,6 +455,21 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           {t('loginAsChild', uiLang)}
         </button>
       </div>
+
+      <style>{`
+        @keyframes onboarding-character-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-12px); }
+        }
+        @keyframes onboarding-glow-pulse {
+          0%, 100% { opacity: 0.7; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.1); }
+        }
+        @keyframes onboarding-float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(5deg); }
+        }
+      `}</style>
     </div>
   );
 
