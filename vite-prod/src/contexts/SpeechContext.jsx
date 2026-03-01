@@ -147,6 +147,10 @@ export function SpeechProvider({ children }) {
   // preventing stale callbacks from triggering new speech when audio is force-stopped.
   const speakGenRef = useRef(0);
 
+  // Track the current AbortController so we can abort in-flight API calls
+  // when a new non-queued speak() call starts.
+  const currentAbortRef = useRef(null);
+
   // Chrome has a bug where long utterances stop after ~15s.
   // This keeps the synth alive by poking it periodically.
   const keepAliveRef = useRef(null);
@@ -220,6 +224,10 @@ export function SpeechProvider({ children }) {
 
     // Cancel ALL audio from all channels (not just WebSpeech)
     if (!options._queued) {
+      // Abort any in-flight API fetch from a previous speak() call
+      if (currentAbortRef.current) {
+        try { currentAbortRef.current.abort(); } catch (e) {}
+      }
       stopAllAudio();
       speakGenRef.current++;
     }
@@ -246,6 +254,7 @@ export function SpeechProvider({ children }) {
     }
 
     const abortCtrl = new AbortController();
+    currentAbortRef.current = abortCtrl;
     const API_TIMEOUT = 4000;
     let settled = false;
 
@@ -268,7 +277,7 @@ export function SpeechProvider({ children }) {
     const apiPromise = playFromAPI(ttsText, apiLang, abortCtrl.signal);
 
     apiPromise.then(async (result) => {
-      if (settled) return;
+      if (settled || gen !== speakGenRef.current) return;
       if (result.started) {
         // Audio is playing — cancel timeout, mark settled
         settled = true;
@@ -279,14 +288,14 @@ export function SpeechProvider({ children }) {
         if (gen === speakGenRef.current && options.onEnd) options.onEnd();
       } else {
         // API failed — fall back
-        if (!settled) {
+        if (!settled && gen === speakGenRef.current) {
           settled = true;
           clearTimeout(timeoutId);
           fallbackToLocal();
         }
       }
     }).catch(() => {
-      if (!settled) {
+      if (!settled && gen === speakGenRef.current) {
         settled = true;
         clearTimeout(timeoutId);
         fallbackToLocal();
@@ -295,7 +304,7 @@ export function SpeechProvider({ children }) {
 
     // Timeout: abort the API fetch, stop any Cloud TTS that started, fall back
     const timeoutId = setTimeout(() => {
-      if (!settled) {
+      if (!settled && gen === speakGenRef.current) {
         settled = true;
         abortCtrl.abort();
         stopCloudTTS(); // stop Cloud TTS audio that may have started
