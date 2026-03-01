@@ -8,8 +8,6 @@ import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import alphabetData from '../data/alphabet-kids.json';
 import { shuffle } from '../utils/shuffle.js';
-import { stopAllAudio } from '../utils/hebrewAudio.js';
-import { playWrong } from '../utils/gameSounds.js';
 
 /* ── Confetti burst helper ── */
 function ConfettiBurst({ show }) {
@@ -499,21 +497,12 @@ function MatchWordGame({ letter, onComplete }) {
 }
 
 /* Game 3: Uppercase/Lowercase Match */
-const ENCOURAGEMENT_PHRASES = [
-  'לא נורא, נסו שוב!',
-  'כמעט! בואו ננסה שוב',
-  'בואו ננסה פעם נוספת!',
-  'לא קרה כלום, נסו שוב!',
-];
-
 function CaseMatchGame({ letter, onComplete }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
   const [answers, setAnswers] = useState([]);
   const [current, setCurrent] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [wrongAnswer, setWrongAnswer] = useState(null); // the wrong option picked
-  const [encourageMsg, setEncourageMsg] = useState('');
 
   const pairs = useMemo(() => {
     const pool = shuffle(alphabetData).slice(0, 4);
@@ -536,35 +525,21 @@ function CaseMatchGame({ letter, onComplete }) {
   const handleAnswer = (opt) => {
     speak(opt, { rate: 0.8 });
     const isCorrect = opt === questions[current].correct;
+    const newAnswers = [...answers, isCorrect];
+    setAnswers(newAnswers);
 
-    if (isCorrect) {
-      // Clear any wrong state and advance
-      setWrongAnswer(null);
-      setEncourageMsg('');
-      const newAnswers = [...answers, true];
-      setAnswers(newAnswers);
-
-      setTimeout(() => {
-        if (current + 1 >= questions.length) {
-          setShowConfetti(true);
-          setTimeout(onComplete, 800);
-        } else {
-          setCurrent(c => c + 1);
-        }
-      }, 600);
-    } else {
-      // Wrong answer — show feedback, don't advance
-      playWrong();
-      setWrongAnswer(opt);
-      const phrase = ENCOURAGEMENT_PHRASES[Math.floor(Math.random() * ENCOURAGEMENT_PHRASES.length)];
-      setEncourageMsg(phrase);
-      setTimeout(() => speak(phrase, { lang: 'he', rate: 0.95, _queued: true }), 300);
-    }
+    setTimeout(() => {
+      if (current + 1 >= questions.length) {
+        setShowConfetti(true);
+        setTimeout(onComplete, 800);
+      } else {
+        setCurrent(c => c + 1);
+      }
+    }, 600);
   };
 
   if (current >= questions.length) return null;
   const q = questions[current];
-  const isAnswered = answers.length > current;
 
   return (
     <div className="text-center">
@@ -583,26 +558,20 @@ function CaseMatchGame({ letter, onComplete }) {
 
       <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto">
         {q.options.map((opt, i) => {
-          const isCorrectOpt = opt === q.correct;
-          const isWrongPick = wrongAnswer === opt;
-          const showCorrectHighlight = isAnswered && isCorrectOpt;
-          const showWrongHighlight = wrongAnswer && isWrongPick;
-          const showCorrectHint = wrongAnswer && isCorrectOpt;
+          const isAnswered = answers.length > current;
+          const isCorrect = opt === q.correct;
+          const wasChosen = isAnswered && answers[current] === false && !isCorrect;
           return (
             <button
               key={i}
               onClick={() => !isAnswered && handleAnswer(opt)}
               disabled={isAnswered}
               className={`py-5 rounded-2xl text-4xl font-black transition-all duration-300 border-2 ${
-                showCorrectHighlight
+                isAnswered && isCorrect
                   ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 border-emerald-400 scale-110 animate-success-flash'
-                  : showWrongHighlight
-                    ? 'bg-red-100 dark:bg-red-900/40 text-red-500 border-red-400 animate-shake'
-                    : showCorrectHint
-                      ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-300 ring-2 ring-emerald-300'
-                      : wrongAnswer && !isCorrectOpt
-                        ? 'opacity-30 border-transparent'
-                        : 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-white/50 dark:border-gray-700 shadow-lg hover:scale-110 active:scale-90'
+                  : isAnswered && !isCorrect
+                    ? 'opacity-30 border-transparent'
+                    : 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-white/50 dark:border-gray-700 shadow-lg hover:scale-110 active:scale-90'
               }`}
             >
               {opt}
@@ -610,13 +579,6 @@ function CaseMatchGame({ letter, onComplete }) {
           );
         })}
       </div>
-
-      {/* Encouragement message */}
-      {encourageMsg && !isAnswered && (
-        <div className="mt-3 px-4 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 animate-fade-in">
-          <p className="text-sm font-bold text-amber-700 dark:text-amber-300" dir="rtl">{encourageMsg}</p>
-        </div>
-      )}
 
       {/* Progress dots */}
       <div className="flex justify-center gap-2 mt-5">
@@ -651,7 +613,7 @@ function ListenChooseGame({ letter, onComplete }) {
     return letter.words.map(w => {
       const wrongs = shuffle(alphabetData.filter(l => l.letter !== letter.letter))
         .slice(0, 2)
-        .map(l => l.words[Math.floor(Math.random() * l.words.length)]);
+        .map(l => l.words[Math.floor(Math.random() * 3)]);
       const options = shuffle([
         { ...w, isCorrect: true },
         { ...wrongs[0], isCorrect: false },
@@ -758,37 +720,11 @@ function ListenChooseGame({ letter, onComplete }) {
 /* ══════════════════════════════════════════
    GAME FLOW - Manages 4 games sequentially
    ══════════════════════════════════════════ */
-const COMPLETION_PHRASES_HE = [
-  'כל הכבוד! הצלחתם לצבור כוכבים! בואו נמשיך',
-  'מדהים! עשיתם עבודה נהדרת!',
-  'ספיקלי גאה בכם! המשיכו כך!',
-  'יופי! סיימתם בהצלחה!',
-];
-const COMPLETION_PHRASES_EN = [
-  'Great job! You earned stars! Let\'s continue!',
-  'Amazing! You did a great job!',
-  'Speakli is proud of you! Keep it up!',
-  'Awesome! You finished successfully!',
-];
-
 function GameFlow({ letter, onComplete, onBack }) {
   const { uiLang } = useTheme();
-  const { speak } = useSpeech();
   const [gameIndex, setGameIndex] = useState(0);
   const [stars, setStars] = useState(0);
   const [showComplete, setShowComplete] = useState(false);
-
-  // Speak congratulations when completing all games
-  useEffect(() => {
-    if (showComplete) {
-      const phrases = uiLang === 'he' ? COMPLETION_PHRASES_HE : COMPLETION_PHRASES_EN;
-      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
-      const timer = setTimeout(() => {
-        speak(phrase, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [showComplete]);
 
   const games = [
     { component: FindLetterGame, name: uiLang === 'he' ? '🔍 מצאו את האות' : '🔍 Find Letter', color: 'from-purple-500 to-pink-500' },
@@ -910,11 +846,6 @@ export default function KidsAlphabetPage() {
   const { progress, updateProgress, addXP } = useUserProgress();
   const [view, setView] = useState('grid');
   const [selectedLetter, setSelectedLetter] = useState(null);
-
-  // Stop any lingering audio on unmount
-  useEffect(() => {
-    return () => stopAllAudio();
-  }, []);
 
   const completedLetters = progress.lettersCompleted || [];
 

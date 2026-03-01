@@ -27,52 +27,15 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   const introTimerRef = useRef(null);
   const spokenRef = useRef(false);
 
-  const [loadError, setLoadError] = useState(false);
-
   // Load lesson data and generate exercises
   useEffect(() => {
     const data = getLesson(lessonId);
-    if (!data) {
-      console.error('Lesson not found:', lessonId);
-      setLoadError(true);
-      return;
-    }
+    if (!data) return;
 
     setLessonData(data);
     const exs = generateExercises(data.unit, data.lesson);
     setExercises(exs);
   }, [lessonId]);
-
-  // Error state — lesson not found
-  if (loadError) {
-    return (
-      <div style={{
-        position: 'fixed', inset: 0, zIndex: 100,
-        background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        padding: '24px', textAlign: 'center',
-      }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>😕</div>
-        <div style={{ fontSize: 20, fontWeight: 700, color: '#374151', marginBottom: 8 }}>
-          {uiLang === 'he' ? 'לא הצלחנו לטעון את השיעור' : "Couldn't load lesson"}
-        </div>
-        <div style={{ fontSize: 14, color: '#9CA3AF', marginBottom: 24 }}>
-          {uiLang === 'he' ? 'נסו שוב מאוחר יותר' : 'Please try again later'}
-        </div>
-        <button
-          onClick={onBack}
-          style={{
-            padding: '12px 32px', borderRadius: 16, fontSize: 16, fontWeight: 700,
-            background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)', color: 'white',
-            border: 'none', cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(255,107,107,0.3)',
-          }}
-        >
-          {t('back', uiLang)}
-        </button>
-      </div>
-    );
-  }
 
   // Speak intro when entering intro phase
   useEffect(() => {
