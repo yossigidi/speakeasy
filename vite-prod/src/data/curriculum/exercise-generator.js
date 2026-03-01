@@ -173,7 +173,8 @@ function generateMultipleChoice(wordData, allWords, sentences) {
       (s) => s.he
     );
     // If not enough sentence distractors, pad with word translations
-    while (distractors.length < 3) {
+    let _mc_safety = 0;
+    while (distractors.length < 3 && _mc_safety++ < 50) {
       const extra = allWords[Math.floor(Math.random() * allWords.length)];
       if (!distractors.includes(extra.translation) && extra.translation !== relatedSentence.he) {
         distractors.push(extra.translation);
@@ -292,7 +293,8 @@ function generateTranslation(wordData, allWords, sentences) {
       (s) => s.he
     );
     // Pad if not enough sentence distractors
-    while (distractors.length < 3) {
+    let _tr_safety = 0;
+    while (distractors.length < 3 && _tr_safety++ < 50) {
       const extra = allWords[Math.floor(Math.random() * allWords.length)];
       if (!distractors.includes(extra.translation) && extra.translation !== relatedSentence.he) {
         distractors.push(extra.translation);
@@ -370,7 +372,8 @@ function generatePictureSentence(wordData, _allWords, sentences) {
       (s) => s.en
     );
     // Pad with generated alternatives if needed
-    while (distractors.length < 3) {
+    let _ps_safety = 0;
+    while (distractors.length < 3 && _ps_safety++ < 10) {
       distractors.push(`I see a ${wordData.word}`);
     }
     return {

@@ -20,7 +20,7 @@ const kidsTabs = [
 ];
 
 export default function BottomNav({ currentPage, onNavigate, reviewCount = 0 }) {
-  const { uiLang } = useTheme();
+  const { uiLang, isDark } = useTheme();
   const { progress, isChildMode } = useUserProgress();
   const tabs = (isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2)) ? kidsTabs : adultTabs;
 
@@ -29,7 +29,7 @@ export default function BottomNav({ currentPage, onNavigate, reviewCount = 0 }) 
       className="fixed bottom-0 left-0 right-0 z-40"
       style={{
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-        background: 'rgba(255, 255, 255, 0.97)',
+        background: isDark ? 'rgba(17, 24, 39, 0.97)' : 'rgba(255, 255, 255, 0.97)',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
       }}

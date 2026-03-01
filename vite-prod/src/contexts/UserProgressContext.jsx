@@ -440,12 +440,17 @@ export function UserProgressProvider({ children: reactChildren }) {
 
   const switchToChild = useCallback((childId) => {
     // Clear session-scoped state so new child gets fresh intro/welcome
+    // Preserve profile selection flag so picker doesn't reappear
+    const profileFlag = sessionStorage.getItem('speakeasy_profileSelected');
     sessionStorage.clear();
+    if (profileFlag) sessionStorage.setItem('speakeasy_profileSelected', profileFlag);
     setActiveChildId(childId);
   }, []);
 
   const switchToParent = useCallback(() => {
+    const profileFlag = sessionStorage.getItem('speakeasy_profileSelected');
     sessionStorage.clear();
+    if (profileFlag) sessionStorage.setItem('speakeasy_profileSelected', profileFlag);
     setActiveChildId(null);
   }, []);
 

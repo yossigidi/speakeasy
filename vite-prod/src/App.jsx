@@ -161,7 +161,8 @@ function AppContent() {
       <div style={{ minHeight: '100dvh', background: '#030712' }}>
         <OnboardingPage
           onComplete={() => {
-            setProfileSelected(false);
+            setProfileSelected(true);
+            sessionStorage.setItem('speakeasy_profileSelected', '1');
             setCurrentPage('home');
           }}
           onChildLogin={() => setShowChildLogin(true)}
