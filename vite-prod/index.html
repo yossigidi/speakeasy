@@ -36,18 +36,54 @@
         navigator.serviceWorker.register('/sw.js')
           .then(reg => {
             console.log('SW registered:', reg.scope);
+            // Check for updates every 60 seconds
+            setInterval(() => reg.update().catch(() => {}), 60000);
             reg.addEventListener('updatefound', () => {
               const newWorker = reg.installing;
               newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'activated') {
-                  console.log('New SW activated, refresh for updates');
+                  console.log('New SW activated, reloading...');
+                  window.location.reload();
                 }
               });
             });
           })
           .catch(err => console.warn('SW registration failed:', err));
       });
+      // Listen for SW_UPDATED message from service worker
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('SW sent update signal, reloading...');
+          window.location.reload();
+        }
+      });
     }
+    // Fallback: version check on every page load
+    // Fetches sw.js header to detect changes even without SW support
+    (function() {
+      var KNOWN_VER_KEY = 'speakli-sw-ver';
+      fetch('/sw.js', { cache: 'no-store' }).then(function(r) { return r.text(); }).then(function(txt) {
+        var m = txt.match(/CACHE_NAME\s*=\s*'([^']+)'/);
+        if (!m) return;
+        var ver = m[1];
+        var prev = localStorage.getItem(KNOWN_VER_KEY);
+        localStorage.setItem(KNOWN_VER_KEY, ver);
+        if (prev && prev !== ver) {
+          console.log('Version changed:', prev, '->', ver, 'reloading...');
+          // Unregister old SW, clear caches, then reload
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              regs.forEach(function(r) { r.unregister(); });
+            });
+          }
+          caches.keys().then(function(names) {
+            names.forEach(function(n) { caches.delete(n); });
+          }).then(function() {
+            window.location.reload();
+          });
+        }
+      }).catch(function() {});
+    })();
   </script>
 </body>
 </html>
