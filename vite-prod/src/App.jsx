@@ -37,6 +37,7 @@ import SupportContactPage from './pages/SupportContactPage.jsx';
 import SupportTicketsPage from './pages/SupportTicketsPage.jsx';
 import EnglishQuestPage from './pages/EnglishQuestPage.jsx';
 import SkillsPage from './pages/SkillsPage.jsx';
+import BarcodeComparisonPage from './pages/BarcodeComparisonPage.jsx';
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -184,11 +185,12 @@ function AppContent() {
     'support-tickets': t('myTickets', uiLang),
     'english-quest': null,
     'skills': null,
+    'barcode': null,
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'barcode'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'barcode';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -248,6 +250,8 @@ function AppContent() {
         return <SupportTicketsPage onBack={() => navigateTo('support')} />;
       case 'skills':
         return <SkillsPage onBack={() => navigateTo('home')} />;
+      case 'barcode':
+        return <BarcodeComparisonPage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
