@@ -66,6 +66,9 @@ export default async function handler(req, res) {
   }
 
   const trimmed = text.trim();
+  if (!trimmed) {
+    return res.status(400).json({ error: 'Text cannot be empty' });
+  }
   const detectedLang = lang || detectLang(trimmed);
   const voiceId = VOICE_ID;
 

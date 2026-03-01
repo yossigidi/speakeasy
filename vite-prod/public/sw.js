@@ -14,6 +14,9 @@ self.addEventListener('install', event => {
       console.log('Speakli: Caching app shell');
       return cache.addAll(urlsToCache);
     }).then(() => self.skipWaiting())
+    .catch(err => {
+      console.error('Speakli: SW install failed:', err);
+    })
   );
 });
 

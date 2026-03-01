@@ -11,6 +11,10 @@ export default async function handler(req, res) {
   try {
     const { childName, age, stats, lang = 'he' } = req.body;
 
+    if (!childName || !stats) {
+      return res.status(400).json({ error: 'childName and stats are required' });
+    }
+
     const systemPrompt = lang === 'he'
       ? `אתה יועץ חינוכי מומחה ללמידת אנגלית לילדים. אתה נותן עצות להורים על איך לעזור לילד שלהם להתקדם בלמידת אנגלית.
          כתוב בעברית. היה חיובי, מעודד ומעשי. תן 3-4 עצות קצרות וספציפיות.

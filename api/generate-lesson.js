@@ -11,6 +11,10 @@ export default async function handler(req, res) {
   try {
     const { cefrLevel, topic, grammarFocus } = req.body;
 
+    if (!cefrLevel || !topic) {
+      return res.status(400).json({ error: 'cefrLevel and topic are required' });
+    }
+
     const prompt = `Generate an English lesson for ${cefrLevel} level learners about "${topic}"${grammarFocus ? ` with grammar focus on ${grammarFocus}` : ''}.
 
 Create exactly 8 exercises as a JSON array. Mix these types:

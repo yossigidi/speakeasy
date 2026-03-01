@@ -3,6 +3,11 @@ import { getFirestore } from './_lib/firebase.js';
 
 const ADMIN_EMAIL = process.env.SUPPORT_ADMIN_EMAIL || 'support@speakli.co.il';
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 async function sendBrevoEmail({ to, subject, htmlContent }) {
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
@@ -58,6 +63,11 @@ export default async function handler(req, res) {
     // Send email to admin (fire-and-forget)
     const categoryLabel = { bug: 'Bug', feature: 'Feature Request', account: 'Account', billing: 'Billing', other: 'Other' }[category] || 'Other';
 
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message);
+
     sendBrevoEmail({
       to: ADMIN_EMAIL,
       subject: `[Speakli] ${categoryLabel}: ${subject}`,
@@ -66,14 +76,14 @@ export default async function handler(req, res) {
           <h2 style="color: #0d9488;">New Support Ticket</h2>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="padding: 8px; font-weight: bold; color: #666;">Ticket ID</td><td style="padding: 8px;">${ticketId}</td></tr>
-            <tr><td style="padding: 8px; font-weight: bold; color: #666;">From</td><td style="padding: 8px;">${name} (${email})</td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; color: #666;">From</td><td style="padding: 8px;">${safeName} (${safeEmail})</td></tr>
             <tr><td style="padding: 8px; font-weight: bold; color: #666;">Category</td><td style="padding: 8px;">${categoryLabel}</td></tr>
-            <tr><td style="padding: 8px; font-weight: bold; color: #666;">Subject</td><td style="padding: 8px;">${subject}</td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; color: #666;">Subject</td><td style="padding: 8px;">${safeSubject}</td></tr>
           </table>
           <div style="margin-top: 16px; padding: 16px; background: #f0fdfa; border-radius: 8px;">
-            <p style="margin: 0; white-space: pre-wrap;">${message}</p>
+            <p style="margin: 0; white-space: pre-wrap;">${safeMessage}</p>
           </div>
-          <p style="margin-top: 16px; color: #999; font-size: 12px;">User ID: ${userId}</p>
+          <p style="margin-top: 16px; color: #999; font-size: 12px;">User ID: ${escapeHtml(userId)}</p>
         </div>
       `,
     }).catch(err => console.error('Admin email failed:', err));
@@ -85,11 +95,11 @@ export default async function handler(req, res) {
         subject: 'קיבלנו את הפנייה שלך - Speakli',
         htmlContent: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; direction: rtl; text-align: right;">
-            <h2 style="color: #0d9488;">שלום ${name},</h2>
+            <h2 style="color: #0d9488;">שלום ${safeName},</h2>
             <p>קיבלנו את הפנייה שלך ונחזור אליך בהקדם.</p>
             <div style="margin: 16px 0; padding: 16px; background: #f0fdfa; border-radius: 8px;">
-              <p style="margin: 0; font-weight: bold; color: #666;">נושא: ${subject}</p>
-              <p style="margin: 8px 0 0; color: #444; white-space: pre-wrap;">${message}</p>
+              <p style="margin: 0; font-weight: bold; color: #666;">נושא: ${safeSubject}</p>
+              <p style="margin: 8px 0 0; color: #444; white-space: pre-wrap;">${safeMessage}</p>
             </div>
             <p style="color: #999; font-size: 12px;">מזהה פנייה: ${ticketId}</p>
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />

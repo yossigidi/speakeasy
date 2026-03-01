@@ -11,6 +11,10 @@ export default async function handler(req, res) {
   try {
     const { cefrLevel, topic } = req.body;
 
+    if (!cefrLevel) {
+      return res.status(400).json({ error: 'cefrLevel is required' });
+    }
+
     const wordCount = cefrLevel === 'A1' ? '100-150' : cefrLevel === 'A2' ? '150-200' : '200-300';
 
     const prompt = `Write an English reading passage for ${cefrLevel} level learners about "${topic || 'daily life'}".

@@ -365,13 +365,18 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const lockRef = useRef(false);
+  const matchTimersRef = useRef([]);
 
   // Pairs by level: 1→3, 2→4, 3→5, 4→6
   const PAIRS = childLevel === 1 ? 3 : childLevel === 2 ? 4 : childLevel === 3 ? 5 : 6;
 
-  // Stop all audio on unmount (back button)
+  // Stop all audio + clear timers on unmount (back button)
   useEffect(() => {
-    return () => stopAllAudio();
+    return () => {
+      stopAllAudio();
+      matchTimersRef.current.forEach(clearTimeout);
+      lockRef.current = false;
+    };
   }, []);
 
   // Pick words based on level
@@ -428,7 +433,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
       if (first.pairId === second.pairId) {
         // Match found!
         playCorrect();
-        setTimeout(() => {
+        const t1 = setTimeout(() => {
           playSequence([
             { text: 'יופי!', lang: 'he' },
             { pause: 100 },
@@ -437,26 +442,30 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
             { text: first.translation, lang: 'he' },
           ], speak);
         }, 400);
-        setTimeout(() => {
+        matchTimersRef.current.push(t1);
+        const t2 = setTimeout(() => {
           setMatched(prev => {
             const next = [...prev, first.pairId];
             if (next.length >= PAIRS) {
               setShowConfetti(true);
               playComplete();
-              setTimeout(() => setGameOver(true), 800);
+              const t3 = setTimeout(() => setGameOver(true), 800);
+              matchTimersRef.current.push(t3);
             }
             return next;
           });
           setFlipped([]);
           lockRef.current = false;
         }, 700);
+        matchTimersRef.current.push(t2);
       } else {
         // No match
         playWrong();
-        setTimeout(() => {
+        const t1 = setTimeout(() => {
           setFlipped([]);
           lockRef.current = false;
         }, 1200);
+        matchTimersRef.current.push(t1);
       }
     }
   };
