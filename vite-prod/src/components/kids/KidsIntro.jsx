@@ -83,6 +83,8 @@ export default function KidsIntro({
 
   // Fallback: if auto-speak didn't fire (iOS audio lock), speak on tap
   const handleCardTouch = useCallback(() => {
+    if (spokenRef.current) return; // Already spoken, don't repeat
+    spokenRef.current = true;
     unlockAudioContext();
     stopAllAudio();
     const { text, lang } = getSpeechText();
