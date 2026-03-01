@@ -14,7 +14,14 @@ import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 import Modal from '../components/shared/Modal.jsx';
 
-import { loadWordData } from '../utils/lazyData.js';
+import wordsA1 from '../data/words-a1.json';
+import wordsA2 from '../data/words-a2.json';
+import wordsBusiness from '../data/words-business.json';
+import wordsB2 from '../data/words-b2.json';
+import wordsC1 from '../data/words-c1.json';
+
+const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsBusiness, ...wordsB2, ...wordsC1];
+const CATEGORIES = [...new Set(ALL_WORDS.map(w => w.category))];
 
 // ── Word Detail Modal ────────────────────────────────────
 function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVocab }) {
@@ -568,7 +575,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 }
 
 // ── Enhanced Review Session ──────────────────────────────
-function ReviewSession({ dueWords, onReview, onBack, ALL_WORDS = [] }) {
+function ReviewSession({ dueWords, onReview, onBack }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -736,7 +743,7 @@ function ReviewSession({ dueWords, onReview, onBack, ALL_WORDS = [] }) {
 }
 
 // ── Category Browser ─────────────────────────────────────
-function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1', ALL_WORDS = [], CATEGORIES = [] }) {
+function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }) {
   const { uiLang } = useTheme();
   const isHe = uiLang === 'he';
 
@@ -883,7 +890,7 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1', 
 }
 
 // ── Category Words View ──────────────────────────────────
-function CategoryWordsView({ category, onBack, onSelectWord, onLearn, ALL_WORDS = [] }) {
+function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
   const { speak, speakWordPair } = useSpeechSynthesis();
   const { uiLang } = useTheme();
   const isHe = uiLang === 'he';
@@ -1032,32 +1039,9 @@ export default function VocabularyPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedWord, setSelectedWord] = useState(null);
   const [learnWords, setLearnWords] = useState([]);
-  const [ALL_WORDS, setAllWords] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
   const isHe = uiLang === 'he';
   const userLevel = progress.cefrLevel || 'A1';
-
-  // Lazy-load word data
-  useEffect(() => {
-    Promise.all([
-      loadWordData('a1'), loadWordData('a2'),
-      loadWordData('business'), loadWordData('b2'), loadWordData('c1')
-    ]).then(([a1, a2, biz, b2, c1]) => {
-      setAllWords([...a1, ...a2, ...biz, ...b2, ...c1]);
-      setDataLoaded(true);
-    }).catch(() => setDataLoaded(true));
-  }, []);
-
-  const CATEGORIES = React.useMemo(() => [...new Set(ALL_WORDS.map(w => w.category))], [ALL_WORDS]);
   const availableWords = getWordsForLevel(userLevel, ALL_WORDS);
-
-  if (!dataLoaded) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
-        <LoadingSpinner />
-      </div>
-    );
-  }
 
   const handleAddToVocab = useCallback(async (word) => {
     try {
@@ -1096,7 +1080,7 @@ export default function VocabularyPage() {
   if (view === 'review') {
     return (
       <div className="pb-24 px-4 pt-4">
-        <ReviewSession dueWords={dueWords} onReview={reviewWord} onBack={() => setView('main')} ALL_WORDS={ALL_WORDS} />
+        <ReviewSession dueWords={dueWords} onReview={reviewWord} onBack={() => setView('main')} />
       </div>
     );
   }
@@ -1110,7 +1094,6 @@ export default function VocabularyPage() {
           onBack={() => { setView('main'); setSelectedCategory(null); }}
           onSelectWord={(word) => setSelectedWord(word)}
           onLearn={(words) => handleStartLearn(words)}
-          ALL_WORDS={ALL_WORDS}
         />
         {selectedWord && (
           <WordDetailModal
@@ -1233,8 +1216,6 @@ export default function VocabularyPage() {
           onSelectCategory={(cat) => { setSelectedCategory(cat); setView('browse'); }}
           onLearnCategory={(words) => handleStartLearn(words)}
           userLevel={userLevel}
-          ALL_WORDS={ALL_WORDS}
-          CATEGORIES={CATEGORIES}
         />
       </div>
 
