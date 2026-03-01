@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { BookOpen, MessageCircle, BookA, Mic, ChevronRight, Clock, Volume2, Lightbulb, GraduationCap, Headphones, ScanBarcode } from 'lucide-react';
+import { BookOpen, MessageCircle, BookA, Mic, ChevronRight, Clock, Volume2, Lightbulb, GraduationCap, Headphones } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
@@ -155,31 +155,6 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
           </div>
         </GlassCard>
       )}
-
-      {/* Barcode Price Comparison Card */}
-      <GlassCard
-        variant="strong"
-        className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-cyan-50/80 to-teal-50/80 dark:from-cyan-950/30 dark:to-teal-950/30"
-        onClick={() => onNavigate('barcode')}
-      >
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyan-500/10 to-transparent rounded-bl-full" />
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center shadow-lg shadow-cyan-500/25">
-              <ScanBarcode size={22} className="text-white" />
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900 dark:text-white">
-                {t('scanBarcode', uiLang)}
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t('scanBarcodeDesc', uiLang)}
-              </p>
-            </div>
-          </div>
-          <ChevronRight size={20} className={`text-gray-400 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
-        </div>
-      </GlassCard>
 
       {/* Continue Lesson Card */}
       <GlassCard
