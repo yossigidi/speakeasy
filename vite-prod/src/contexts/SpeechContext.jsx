@@ -100,12 +100,20 @@ export function SpeechProvider({ children }) {
   const [hebrewVoice, setHebrewVoice] = useState(null);
   const recognitionRef = useRef(null);
 
+  // Promise that resolves when voices are loaded (or times out)
+  const voicesReadyRef = useRef(null);
+
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     setSttSupported(!!SpeechRecognition);
     setTtsSupported('speechSynthesis' in window);
 
     if ('speechSynthesis' in window) {
+      let resolveVoices;
+      voicesReadyRef.current = new Promise((resolve) => { resolveVoices = resolve; });
+      // Timeout so speak() never hangs if voices never load
+      const voiceTimeout = setTimeout(() => resolveVoices(), 2000);
+
       const loadVoices = () => {
         const v = window.speechSynthesis.getVoices();
         if (v.length === 0) return; // voices not loaded yet
@@ -114,6 +122,8 @@ export function SpeechProvider({ children }) {
         // Pick best voices using quality ranking
         setPreferredVoice(pickBestVoice(v, 'en'));
         setHebrewVoice(pickBestVoice(v, 'he'));
+        clearTimeout(voiceTimeout);
+        resolveVoices();
       };
 
       loadVoices();
@@ -168,11 +178,16 @@ export function SpeechProvider({ children }) {
     clearInterval(keepAliveRef.current);
   }, []);
 
-  const speakWithWebSpeech = useCallback((text, options = {}) => {
+  const speakWithWebSpeech = useCallback(async (text, options = {}) => {
     if (!('speechSynthesis' in window) || !text) {
       setIsSpeaking(false);
       if (options.onEnd) options.onEnd();
       return;
+    }
+
+    // Wait for voices to be loaded before speaking
+    if (voicesReadyRef.current) {
+      await voicesReadyRef.current;
     }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';

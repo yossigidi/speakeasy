@@ -10,6 +10,15 @@ export function ChildAuthProvider({ children }) {
   const [childUser, setChildUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check if current session is still valid
+  const checkSessionExpiry = useCallback(() => {
+    if (!childUser) return;
+    if (childUser.expiresAt && new Date(childUser.expiresAt) <= new Date()) {
+      localStorage.removeItem('speakeasy_childSession');
+      setChildUser(null);
+    }
+  }, [childUser]);
+
   // Load child session from localStorage on mount
   useEffect(() => {
     try {
@@ -27,6 +36,13 @@ export function ChildAuthProvider({ children }) {
     }
     setLoading(false);
   }, []);
+
+  // Periodically check session expiry (every 5 minutes)
+  useEffect(() => {
+    if (!childUser) return;
+    const interval = setInterval(checkSessionExpiry, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [childUser, checkSessionExpiry]);
 
   // SHA-256 hash for PIN verification
   const hashCredentials = useCallback(async (name, pin, familyCode) => {

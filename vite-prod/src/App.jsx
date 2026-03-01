@@ -65,7 +65,10 @@ function AppContent() {
   const [lessonData, setLessonData] = useState(null);
   const [showChildLogin, setShowChildLogin] = useState(false);
   const [showMathGate, setShowMathGate] = useState(false);
-  const [profileSelected, setProfileSelected] = useState(false);
+  // Skip profile picker if a child/parent was already selected in a previous session
+  const [profileSelected, setProfileSelected] = useState(() => {
+    return !!localStorage.getItem('speakeasy_activeChildId') || !!sessionStorage.getItem('speakeasy_profileSelected');
+  });
   const [progressChildId, setProgressChildId] = useState(null);
   const isPopstateRef = useRef(false);
   const prevUserRef = useRef(user?.uid);
@@ -74,6 +77,7 @@ function AppContent() {
   useEffect(() => {
     if (user?.uid !== prevUserRef.current) {
       setProfileSelected(false);
+      sessionStorage.removeItem('speakeasy_profileSelected');
       prevUserRef.current = user?.uid;
     }
   }, [user]);
@@ -168,7 +172,10 @@ function AppContent() {
 
   // Show profile picker on every app load (after onboarding)
   if (!profileSelected && children.length > 0) {
-    return <Suspense fallback={<PageLoader />}><ProfilePickerPage onSelect={() => setProfileSelected(true)} /></Suspense>;
+    return <Suspense fallback={<PageLoader />}><ProfilePickerPage onSelect={() => {
+      setProfileSelected(true);
+      sessionStorage.setItem('speakeasy_profileSelected', '1');
+    }} /></Suspense>;
   }
 
   const isKids = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
@@ -205,6 +212,9 @@ function AppContent() {
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
       setProgressChildId(data);
+    }
+    if (page === 'lessons' && data) {
+      setLessonData(data);
     }
     setCurrentPage(page);
     window.scrollTo(0, 0);

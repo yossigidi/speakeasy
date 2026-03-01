@@ -1,6 +1,18 @@
 import { useRef, useCallback } from 'react';
 
+const MAX_CACHE_SIZE = 20;
 const audioCache = {};
+const accessOrder = [];
+
+function evictOldest() {
+  while (accessOrder.length > MAX_CACHE_SIZE) {
+    const oldest = accessOrder.shift();
+    if (audioCache[oldest]) {
+      audioCache[oldest].src = ''; // release resource
+      delete audioCache[oldest];
+    }
+  }
+}
 
 export default function useAudio() {
   const audioRef = useRef(null);
@@ -9,6 +21,13 @@ export default function useAudio() {
     try {
       if (!audioCache[src]) {
         audioCache[src] = new Audio(src);
+        accessOrder.push(src);
+        evictOldest();
+      } else {
+        // Move to end of access order
+        const idx = accessOrder.indexOf(src);
+        if (idx > -1) accessOrder.splice(idx, 1);
+        accessOrder.push(src);
       }
       const audio = audioCache[src];
       audio.currentTime = 0;

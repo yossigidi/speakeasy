@@ -49,44 +49,49 @@ export default function useSkillsProgress() {
 
   // Complete a lesson
   async function completeLesson(lessonId, stars, accuracy) {
-    const existing = skills.lessons[lessonId];
-    const isNewCompletion = !existing?.completed;
-    const isBetterScore = !existing || stars > (existing.stars || 0);
+    try {
+      const existing = skills.lessons[lessonId];
+      const isNewCompletion = !existing?.completed;
+      const isBetterScore = !existing || stars > (existing.stars || 0);
 
-    const lessonUpdate = {
-      completed: true,
-      completedAt: new Date().toISOString(),
-      ...(isBetterScore ? { stars, bestAccuracy: accuracy } : {}),
-    };
+      const lessonUpdate = {
+        completed: true,
+        completedAt: new Date().toISOString(),
+        ...(isBetterScore ? { stars, bestAccuracy: accuracy } : {}),
+      };
 
-    let newTotalStars = skills.totalStars || 0;
-    if (isBetterScore) {
-      newTotalStars = newTotalStars - (existing?.stars || 0) + stars;
-    }
+      let newTotalStars = skills.totalStars || 0;
+      if (isBetterScore) {
+        newTotalStars = newTotalStars - (existing?.stars || 0) + stars;
+      }
 
-    const newTotalLessons = isNewCompletion
-      ? (skills.totalLessonsCompleted || 0) + 1
-      : skills.totalLessonsCompleted || 0;
+      const newTotalLessons = isNewCompletion
+        ? (skills.totalLessonsCompleted || 0) + 1
+        : skills.totalLessonsCompleted || 0;
 
-    await updateProgress({
-      skills: {
-        ...skills,
-        lessons: {
-          ...skills.lessons,
-          [lessonId]: { ...(skills.lessons[lessonId] || {}), ...lessonUpdate },
+      await updateProgress({
+        skills: {
+          ...skills,
+          lessons: {
+            ...skills.lessons,
+            [lessonId]: { ...(skills.lessons[lessonId] || {}), ...lessonUpdate },
+          },
+          totalStars: newTotalStars,
+          totalLessonsCompleted: newTotalLessons,
         },
-        totalStars: newTotalStars,
-        totalLessonsCompleted: newTotalLessons,
-      },
-    });
+      });
 
-    // Add XP for new completions
-    const xpAmount = calculateXP(stars);
-    if (xpAmount > 0 && isNewCompletion) {
-      await addXP(xpAmount, 'skills');
+      // Add XP for new completions
+      const xpAmount = calculateXP(stars);
+      if (xpAmount > 0 && isNewCompletion) {
+        await addXP(xpAmount, 'skills');
+      }
+
+      return { isNewCompletion, isBetterScore };
+    } catch (error) {
+      console.error('completeLesson (skills) failed:', error);
+      throw error;
     }
-
-    return { isNewCompletion, isBetterScore };
   }
 
   // Get progress for a specific skill

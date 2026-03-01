@@ -17,6 +17,16 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
   const isSpeakingRef = useRef(false);
   isSpeakingRef.current = isSpeaking;
 
+  // Keep fresh refs so the event handler closure always uses latest values
+  const uiLangRef = useRef(uiLang);
+  uiLangRef.current = uiLang;
+  const speakRef = useRef(speak);
+  speakRef.current = speak;
+  const textHeRef = useRef(textHe);
+  textHeRef.current = textHe;
+  const textEnRef = useRef(textEn);
+  textEnRef.current = textEn;
+
   useEffect(() => {
     if (spokenRef.current) return;
     const storageKey = `welcome-${key}`;
@@ -35,8 +45,8 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       // Wait a bit, then only speak if nothing else is playing
       setTimeout(() => {
         if (isSpeakingRef.current) return; // another click handler is already speaking
-        const isHe = uiLang === 'he';
-        speak(isHe ? textHe : textEn, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
+        const isHe = uiLangRef.current === 'he';
+        speakRef.current(isHe ? textHeRef.current : textEnRef.current, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
       }, 500);
     };
 
@@ -47,5 +57,5 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
     };
-  }, [key, textHe, textEn, uiLang, speak]);
+  }, [key]); // Only re-register on key change; refs handle stale closure
 }

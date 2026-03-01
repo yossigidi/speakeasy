@@ -206,8 +206,13 @@ export default function SimulationPage() {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) throw new Error('API error');
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
       const data = await res.json();
+
+      // Validate API response
+      if (!data.npcReply) {
+        throw new Error('Invalid API response: missing npcReply');
+      }
 
       // Update metrics (running average)
       if (data.metrics) {

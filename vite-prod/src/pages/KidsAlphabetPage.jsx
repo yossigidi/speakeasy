@@ -325,6 +325,15 @@ function FindLetterGame({ letter, onComplete }) {
   const [wrong, setWrong] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Read instruction aloud when game loads
+  useEffect(() => {
+    const instruction = uiLang === 'he'
+      ? `מצאו את כל האותיות ${letter.letter} ו-${letter.lower}!`
+      : `Find all the letters ${letter.letter} and ${letter.lower}!`;
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    return () => clearTimeout(timer);
+  }, []);
+
   const letters = useMemo(() => {
     const others = shuffle(alphabetData.filter(l => l.letter !== letter.letter))
       .slice(0, 6)
@@ -360,7 +369,12 @@ function FindLetterGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-950/30 dark:to-pink-950/30 rounded-2xl p-4 mb-4">
         <p className="text-lg font-black mb-1">
-          {uiLang === 'he' ? '🔍 מצאו את האות!' : '🔍 Find the letter!'}
+          {uiLang === 'he' ? `🔍 מצאו את האות ${letter.letter}!` : `🔍 Find the letter ${letter.letter}!`}
+        </p>
+        <p className="text-sm text-gray-500 font-medium">
+          {uiLang === 'he'
+            ? `לחצו על כל האותיות ${letter.letter} ו-${letter.lower} שאתם רואים!`
+            : `Tap every ${letter.letter} and ${letter.lower} you see!`}
         </p>
         <div className="flex items-center justify-center gap-4">
           <span className={`text-5xl font-black bg-gradient-to-r ${letter.color} bg-clip-text text-transparent animate-jelly`}>
@@ -413,7 +427,17 @@ function MatchWordGame({ letter, onComplete }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [wrongPair, setWrongPair] = useState(null);
 
-  const words = useMemo(() => letter.words.map((w, i) => ({ ...w, id: i })), [letter]);
+  // Read instruction aloud when game loads
+  useEffect(() => {
+    const instruction = uiLang === 'he'
+      ? 'לחצו קודם על מילה, ואז על התמונה שמתאימה לה!'
+      : 'Tap a word, then tap the matching picture!';
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Limit to 3 words for young kids (ages 3-8) - 5 pairs is too overwhelming
+  const words = useMemo(() => shuffle(letter.words).slice(0, 3).map((w, i) => ({ ...w, id: i })), [letter]);
   const shuffledEmojis = useMemo(() => shuffle(words), [words]);
 
   const handleWordTap = (w) => {
@@ -452,6 +476,11 @@ function MatchWordGame({ letter, onComplete }) {
       <div className="bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
           {uiLang === 'he' ? '🧩 התאימו מילה לתמונה!' : '🧩 Match word to picture!'} {letter.emoji}
+        </p>
+        <p className="text-sm text-gray-500 font-medium mt-1">
+          {uiLang === 'he'
+            ? 'לחצו קודם על מילה, ואז על התמונה שמתאימה לה!'
+            : 'Tap a word, then tap the matching picture!'}
         </p>
       </div>
       <div className="flex gap-4 justify-center">
@@ -515,23 +544,34 @@ function CaseMatchGame({ letter, onComplete }) {
   const [wrongAnswer, setWrongAnswer] = useState(null); // the wrong option picked
   const [encourageMsg, setEncourageMsg] = useState('');
 
-  const pairs = useMemo(() => {
-    const pool = shuffle(alphabetData).slice(0, 4);
-    if (!pool.find(p => p.letter === letter.letter)) pool[0] = letter;
-    return shuffle(pool).map(l => ({
-      upper: l.letter, lower: l.lower, color: l.color,
-      isTarget: l.letter === letter.letter,
-    }));
-  }, [letter]);
+  // Read instruction aloud when game loads
+  useEffect(() => {
+    const instruction = uiLang === 'he'
+      ? `זו האות הגדולה ${letter.letter}. מצאו את האות הקטנה שלה!`
+      : `This is uppercase ${letter.letter}. Find its lowercase!`;
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    return () => clearTimeout(timer);
+  }, []);
 
+  // All questions are about the SAME letter the child chose to learn.
+  // Each question shows the uppercase and asks to find the lowercase,
+  // but with different distractor options each time.
   const questions = useMemo(() => {
-    return pairs.map(p => ({
-      prompt: p.upper,
-      correct: p.lower,
-      color: p.color,
-      options: shuffle(pairs.map(pp => pp.lower)),
-    }));
-  }, [pairs]);
+    const others = alphabetData.filter(l => l.letter !== letter.letter);
+    const numQuestions = 3;
+    const qs = [];
+    for (let i = 0; i < numQuestions; i++) {
+      // Pick 3 random wrong lowercase letters as distractors
+      const distractors = shuffle(others).slice(0, 3).map(l => l.lower);
+      qs.push({
+        prompt: letter.letter,
+        correct: letter.lower,
+        color: letter.color,
+        options: shuffle([letter.lower, ...distractors]),
+      });
+    }
+    return qs;
+  }, [letter]);
 
   const handleAnswer = (opt) => {
     speak(opt, { rate: 0.8 });
@@ -571,7 +611,12 @@ function CaseMatchGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-orange-100 to-yellow-100 dark:from-orange-950/30 dark:to-yellow-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? '🔠 מצאו את האות הקטנה!' : '🔠 Find the lowercase!'}
+          {uiLang === 'he' ? `🔠 מצאו את האות הקטנה של ${letter.letter}!` : `🔠 Find the lowercase of ${letter.letter}!`}
+        </p>
+        <p className="text-sm text-gray-500 font-medium mt-1">
+          {uiLang === 'he'
+            ? `זו האות הגדולה ${letter.letter} - מצאו את האות הקטנה שלה!`
+            : `This is uppercase ${letter.letter} - find its lowercase!`}
         </p>
       </div>
 
@@ -638,7 +683,7 @@ function CaseMatchGame({ letter, onComplete }) {
 /* Game 4: Listen & Choose - hear a word, pick the right emoji */
 function ListenChooseGame({ letter, onComplete }) {
   const { uiLang } = useTheme();
-  const { speak } = useSpeech();
+  const { speak, stopSpeaking } = useSpeech();
   const [current, setCurrent] = useState(0);
   const [result, setResult] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -646,6 +691,17 @@ function ListenChooseGame({ letter, onComplete }) {
 
   const speakRef = useRef(speak);
   speakRef.current = speak;
+  const stopSpeakingRef = useRef(stopSpeaking);
+  stopSpeakingRef.current = stopSpeaking;
+
+  // Read instruction aloud with Jessica voice on mount
+  useEffect(() => {
+    const instruction = uiLang === 'he'
+      ? 'לחצו על הרמקול כדי לשמוע מילה, ואז בחרו את התמונה הנכונה!'
+      : 'Tap the speaker to hear a word, then pick the right picture!';
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    return () => clearTimeout(timer);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const questions = useMemo(() => {
     return letter.words.map(w => {
@@ -664,8 +720,8 @@ function ListenChooseGame({ letter, onComplete }) {
   useEffect(() => {
     if (current < questions.length) {
       const t = setTimeout(() => {
-        // Cancel any ongoing speech (e.g. previous answer's translation) before speaking next question
-        window.speechSynthesis?.cancel();
+        // Cancel any ongoing speech before speaking next question
+        if (stopSpeakingRef.current) stopSpeakingRef.current();
         speakRef.current(questions[current].targetWord, { rate: 0.7 });
       }, 600);
       return () => clearTimeout(t);
@@ -707,6 +763,11 @@ function ListenChooseGame({ letter, onComplete }) {
       <div className="bg-gradient-to-r from-green-100 to-teal-100 dark:from-green-950/30 dark:to-teal-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
           {uiLang === 'he' ? '🎧 הקשיבו ובחרו!' : '🎧 Listen & Choose!'}
+        </p>
+        <p className="text-sm text-gray-500 font-medium mt-1">
+          {uiLang === 'he'
+            ? 'לחצו על הרמקול כדי לשמוע מילה, ואז בחרו את התמונה הנכונה!'
+            : 'Tap the speaker to hear a word, then pick the right picture!'}
         </p>
       </div>
 

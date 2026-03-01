@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { RotateCcw, Grid3x3, Volume2, ChevronRight, ChevronLeft, Check, X, ArrowLeft, BookOpen, Lightbulb, AlertTriangle, Star, Sparkles, Eye, EyeOff, Bookmark, ArrowRight, Shuffle, Zap, GraduationCap, Brain, Trophy } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
@@ -806,27 +806,34 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
     ethics: { emoji: '⚖️', labelHe: 'אתיקה', color: 'from-violet-400 to-purple-400' },
   };
 
-  // Separate A1 and A2 categories
-  const a1Categories = CATEGORIES.filter(cat => {
-    const catWords = ALL_WORDS.filter(w => w.category === cat);
-    return catWords.some(w => w.cefrLevel === 'A1');
-  });
-  const a2Categories = CATEGORIES.filter(cat => {
-    const catWords = ALL_WORDS.filter(w => w.category === cat);
-    return catWords.every(w => w.cefrLevel === 'A2');
-  });
-  const b1Categories = CATEGORIES.filter(cat => {
-    const catWords = ALL_WORDS.filter(w => w.category === cat);
-    return catWords.some(w => w.cefrLevel === 'B1') && !catWords.some(w => w.cefrLevel === 'A1' || w.cefrLevel === 'A2');
-  });
-  const b2Categories = CATEGORIES.filter(cat => {
-    const catWords = ALL_WORDS.filter(w => w.category === cat);
-    return catWords.some(w => w.cefrLevel === 'B2') && !catWords.some(w => ['A1','A2','B1'].includes(w.cefrLevel));
-  });
-  const c1Categories = CATEGORIES.filter(cat => {
-    const catWords = ALL_WORDS.filter(w => w.category === cat);
-    return catWords.some(w => w.cefrLevel === 'C1') && !catWords.some(w => ['A1','A2','B1','B2'].includes(w.cefrLevel));
-  });
+  // Separate categories by CEFR level (memoized — data is constant)
+  const { a1Categories, a2Categories, b1Categories, b2Categories, c1Categories } = useMemo(() => {
+    // Build category→levels map in a single pass
+    const catLevels = {};
+    for (const w of ALL_WORDS) {
+      if (!catLevels[w.category]) catLevels[w.category] = new Set();
+      catLevels[w.category].add(w.cefrLevel);
+    }
+    return {
+      a1Categories: CATEGORIES.filter(cat => catLevels[cat]?.has('A1')),
+      a2Categories: CATEGORIES.filter(cat => {
+        const levels = catLevels[cat];
+        return levels && [...levels].every(l => l === 'A2');
+      }),
+      b1Categories: CATEGORIES.filter(cat => {
+        const levels = catLevels[cat];
+        return levels?.has('B1') && !levels.has('A1') && !levels.has('A2');
+      }),
+      b2Categories: CATEGORIES.filter(cat => {
+        const levels = catLevels[cat];
+        return levels?.has('B2') && !levels.has('A1') && !levels.has('A2') && !levels.has('B1');
+      }),
+      c1Categories: CATEGORIES.filter(cat => {
+        const levels = catLevels[cat];
+        return levels?.has('C1') && !levels.has('A1') && !levels.has('A2') && !levels.has('B1') && !levels.has('B2');
+      }),
+    };
+  }, []); // ALL_WORDS and CATEGORIES are module constants
 
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   const userLevelIndex = levelOrder.indexOf(userLevel || 'A1');

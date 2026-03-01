@@ -61,66 +61,71 @@ export default function useCurriculumProgress() {
 
   // Complete a lesson - save stars, accuracy, and unlock next
   async function completeLesson(lessonId, stars, accuracy) {
-    const existing = curriculum.lessons[lessonId];
-    const isNewCompletion = !existing?.completed;
-    const isBetterScore = !existing || stars > (existing.stars || 0);
+    try {
+      const existing = curriculum.lessons[lessonId];
+      const isNewCompletion = !existing?.completed;
+      const isBetterScore = !existing || stars > (existing.stars || 0);
 
-    const lessonUpdate = {
-      completed: true,
-      completedAt: new Date().toISOString(),
-      ...(isBetterScore ? { stars, bestAccuracy: accuracy } : {}),
-    };
+      const lessonUpdate = {
+        completed: true,
+        completedAt: new Date().toISOString(),
+        ...(isBetterScore ? { stars, bestAccuracy: accuracy } : {}),
+      };
 
-    // Calculate new total stars
-    let newTotalStars = curriculum.totalStars || 0;
-    if (isBetterScore) {
-      newTotalStars = newTotalStars - (existing?.stars || 0) + stars;
-    }
+      // Calculate new total stars
+      let newTotalStars = curriculum.totalStars || 0;
+      if (isBetterScore) {
+        newTotalStars = newTotalStars - (existing?.stars || 0) + stars;
+      }
 
-    const newTotalLessons = isNewCompletion
-      ? (curriculum.totalLessonsCompleted || 0) + 1
-      : curriculum.totalLessonsCompleted || 0;
+      const newTotalLessons = isNewCompletion
+        ? (curriculum.totalLessonsCompleted || 0) + 1
+        : curriculum.totalLessonsCompleted || 0;
 
-    // Check if unit is completed (test lesson = the last lesson of the unit)
-    // lessonId format: L1U1-1 → unitId: L1U1
-    const unitId = lessonId.split('-')[0];
-    // Find the unit to determine the actual last lesson
-    const levelId = parseInt(unitId.charAt(1));
-    const unitData = getLevel(levelId)?.units?.find(u => u.id === unitId);
-    const lastLessonIndex = unitData ? unitData.lessons.length : 6;
-    const testLessonId = unitId + '-' + lastLessonIndex;
-    const unitCompleted = lessonId === testLessonId && stars > 0;
+      // Check if unit is completed (test lesson = the last lesson of the unit)
+      // lessonId format: L1U1-1 → unitId: L1U1
+      const unitId = lessonId.split('-')[0];
+      // Find the unit to determine the actual last lesson
+      const levelId = parseInt(unitId.charAt(1));
+      const unitData = getLevel(levelId)?.units?.find(u => u.id === unitId);
+      const lastLessonIndex = unitData ? unitData.lessons.length : 6;
+      const testLessonId = unitId + '-' + lastLessonIndex;
+      const unitCompleted = lessonId === testLessonId && stars > 0;
 
-    const unitUpdate = unitCompleted ? {
-      completed: true,
-      testStars: stars,
-    } : undefined;
+      const unitUpdate = unitCompleted ? {
+        completed: true,
+        testStars: stars,
+      } : undefined;
 
-    await updateProgress({
-      curriculum: {
-        ...curriculum,
-        lessons: {
-          ...curriculum.lessons,
-          [lessonId]: { ...(curriculum.lessons[lessonId] || {}), ...lessonUpdate },
-        },
-        ...(unitUpdate ? {
-          units: {
-            ...curriculum.units,
-            [unitId]: { ...(curriculum.units[unitId] || {}), ...unitUpdate },
+      await updateProgress({
+        curriculum: {
+          ...curriculum,
+          lessons: {
+            ...curriculum.lessons,
+            [lessonId]: { ...(curriculum.lessons[lessonId] || {}), ...lessonUpdate },
           },
-        } : {}),
-        totalStars: newTotalStars,
-        totalLessonsCompleted: newTotalLessons,
-      },
-    });
+          ...(unitUpdate ? {
+            units: {
+              ...curriculum.units,
+              [unitId]: { ...(curriculum.units[unitId] || {}), ...unitUpdate },
+            },
+          } : {}),
+          totalStars: newTotalStars,
+          totalLessonsCompleted: newTotalLessons,
+        },
+      });
 
-    // Add XP for new completions
-    const xpAmount = calculateXP(stars);
-    if (xpAmount > 0 && isNewCompletion) {
-      await addXP(xpAmount, 'curriculum');
+      // Add XP for new completions
+      const xpAmount = calculateXP(stars);
+      if (xpAmount > 0 && isNewCompletion) {
+        await addXP(xpAmount, 'curriculum');
+      }
+
+      return { isNewCompletion, isBetterScore };
+    } catch (error) {
+      console.error('completeLesson failed:', error);
+      throw error;
     }
-
-    return { isNewCompletion, isBetterScore };
   }
 
   // Get unit progress (how many lessons completed — dynamically counts)

@@ -26,6 +26,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   const { speak, stopSpeaking } = useSpeech();
   const introTimerRef = useRef(null);
   const spokenRef = useRef(false);
+  const exerciseTimersRef = useRef([]);
 
   const [loadError, setLoadError] = useState(false);
 
@@ -111,44 +112,50 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
 
   // Handle exercise answer with voice feedback
   const handleAnswer = useCallback((isCorrect, wordData) => {
+    // Clear any pending timers from previous exercise
+    exerciseTimersRef.current.forEach(clearTimeout);
+    exerciseTimersRef.current = [];
+
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      setStreak(prev => prev + 1);
-      setTeacherState(prev => {
-        const newStreak = streak + 1;
-        if (newStreak >= 3) return 'celebrating';
-        return 'happy';
+      setStreak(prev => {
+        const newStreak = prev + 1;
+        // Set teacher state based on fresh streak value
+        setTeacherState(newStreak >= 3 ? 'celebrating' : 'happy');
+        // Voice feedback
+        const msg = newStreak >= 3
+          ? t('teacherEncourage3', uiLang)
+          : t('teacherEncourage1', uiLang);
+        speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
+        return newStreak;
       });
-      // Voice feedback (queued so it doesn't cancel playCorrect)
-      const msg = streak + 1 >= 3
-        ? t('teacherEncourage3', uiLang)
-        : t('teacherEncourage1', uiLang);
-      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
     } else {
       playWrong();
       setWrongCount(prev => prev + 1);
-      const newHearts = Math.max(0, hearts - 1);
-      setHearts(newHearts);
+      setHearts(prev => {
+        const newHearts = Math.max(0, prev - 1);
+        // If hearts reach 0, end the lesson immediately
+        if (newHearts === 0) {
+          setAnswers(a => [...a, { isCorrect, wordData }]);
+          const t1 = setTimeout(() => handleLessonComplete(isCorrect), 1200);
+          exerciseTimersRef.current.push(t1);
+        }
+        return newHearts;
+      });
       setStreak(0);
       setTeacherState('encouraging');
       speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
-
-      // If hearts reach 0, end the lesson immediately
-      if (newHearts === 0) {
-        setAnswers(prev => [...prev, { isCorrect, wordData }]);
-        setTimeout(() => handleLessonComplete(isCorrect), 1200);
-        return;
-      }
     }
 
     setAnswers(prev => [...prev, { isCorrect, wordData }]);
 
     // Reset teacher state after a moment
-    setTimeout(() => setTeacherState('idle'), 1500);
+    const t1 = setTimeout(() => setTeacherState('idle'), 1500);
+    exerciseTimersRef.current.push(t1);
 
     // Advance to next exercise — stop any ongoing speech first
-    setTimeout(() => {
+    const t2 = setTimeout(() => {
       stopAllAudio();
       if (currentExercise + 1 >= exercises.length) {
         handleLessonComplete(isCorrect);
@@ -156,12 +163,17 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         setCurrentExercise(prev => prev + 1);
       }
     }, 1200);
-  }, [currentExercise, exercises.length, streak]);
+    exerciseTimersRef.current.push(t2);
+  }, [currentExercise, exercises.length, uiLang, speak]);
+
+  // Use ref for correctCount to avoid stale closure in handleLessonComplete
+  const correctCountRef = useRef(0);
+  useEffect(() => { correctCountRef.current = correctCount; }, [correctCount]);
 
   // Lesson complete handler
   const handleLessonComplete = useCallback(async (lastWasCorrect) => {
     const totalCount = exercises.length;
-    const finalCorrect = correctCount + (lastWasCorrect ? 1 : 0);
+    const finalCorrect = correctCountRef.current + (lastWasCorrect ? 1 : 0);
     const acc = ((finalCorrect) / totalCount) * 100;
     const stars = calculateStars(acc);
     const xp = calculateXP(stars);
@@ -174,7 +186,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
 
     playComplete && playComplete();
     setPhase('complete');
-  }, [exercises.length, correctCount, lessonId, curriculum]);
+  }, [exercises.length, lessonId, curriculum]);
 
   // Cleanup speech on unmount
   useEffect(() => {

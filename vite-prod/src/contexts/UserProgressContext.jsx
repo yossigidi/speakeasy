@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useAuth } from './AuthContext.jsx';
 import { getLevelInfo, getXPForLevel } from '../utils/levelSystem.js';
 
@@ -63,6 +63,9 @@ export function UserProgressProvider({ children: reactChildren }) {
   const [familyCode, setFamilyCode] = useState(null);
 
   const isChildMode = !!activeChildId;
+
+  // Mutex for addXP to prevent race conditions from concurrent calls
+  const xpQueueRef = useRef(Promise.resolve());
 
   // Persist activeChildId to localStorage
   useEffect(() => {
@@ -318,80 +321,93 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
   }, [user, activeChildId]);
 
-  const addXP = useCallback(async (amount, source = 'unknown') => {
-    if (!user || amount <= 0) return;
+  const addXP = useCallback((amount, source = 'unknown') => {
+    if (!user || amount <= 0) return Promise.resolve({ leveledUp: false, newLevel: progress.level });
 
-    try {
-      const today = new Date().toISOString().split('T')[0];
-      const newXP = progress.xp + amount;
-      const newDailyXP = (progress.lastActiveDate === today ? progress.dailyXP : 0) + amount;
-      const levelInfo = getLevelInfo(newXP);
-
-      // Streak logic
-      let newStreak = progress.streak;
-      let newLongest = progress.longestStreak;
-      let usedFreeze = false;
-      if (progress.lastActiveDate !== today) {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        const yesterdayStr = yesterday.toISOString().split('T')[0];
-
-        if (progress.lastActiveDate === yesterdayStr) {
-          newStreak = progress.streak + 1;
-        } else if (progress.lastActiveDate !== today) {
-          if (progress.streakFreezes > 0) {
-            // Use one streak freeze to preserve the streak
-            newStreak = progress.streak;
-            usedFreeze = true;
-          } else {
-            newStreak = 1;
-          }
-        }
-        newLongest = Math.max(newLongest, newStreak);
-      }
-
-      const updates = {
-        xp: newXP,
-        level: levelInfo.level,
-        dailyXP: newDailyXP,
-        streak: newStreak,
-        longestStreak: newLongest,
-        lastActiveDate: today,
-        ...(usedFreeze ? { streakFreezes: Math.max(0, (progress.streakFreezes || 0) - 1) } : {}),
-      };
-
-      await updateProgress(updates);
-
-      // Log daily activity — route to correct subcollection
+    // Chain onto the queue so concurrent calls are serialized
+    const task = xpQueueRef.current.then(async () => {
       try {
-        const activityPath = activeChildId
-          ? ['childProfiles', activeChildId, 'dailyActivity', today]
-          : ['users', user.uid, 'dailyActivity', today];
-        const activityRef = window.firestore.doc(window.db, ...activityPath);
-        const activitySnap = await window.firestore.getDoc(activityRef);
-        if (activitySnap.exists()) {
-          await window.firestore.updateDoc(activityRef, {
-            xp: window.firestore.increment(amount),
-            [`sources.${source}`]: window.firestore.increment(amount),
-          });
-        } else {
-          await window.firestore.setDoc(activityRef, {
-            date: today,
-            xp: amount,
-            minutes: 0,
-            sources: { [source]: amount },
-          });
-        }
-      } catch (activityErr) {
-        console.warn('Failed to log daily activity:', activityErr);
-      }
+        // Re-read the doc atomically to avoid stale state
+        const docRef = activeChildId
+          ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
+          : window.firestore.doc(window.db, 'users', user.uid);
 
-      return { leveledUp: levelInfo.level > progress.level, newLevel: levelInfo.level };
-    } catch (err) {
-      console.error('addXP failed:', err);
-      return { leveledUp: false, newLevel: progress.level };
-    }
-  }, [user, progress, updateProgress, activeChildId]);
+        const freshSnap = await window.firestore.getDoc(docRef);
+        const freshData = freshSnap.exists() ? { ...DEFAULT_PROGRESS, ...freshSnap.data() } : { ...DEFAULT_PROGRESS };
+
+        const today = new Date().toISOString().split('T')[0];
+        const newXP = freshData.xp + amount;
+        const newDailyXP = (freshData.lastActiveDate === today ? freshData.dailyXP : 0) + amount;
+        const levelInfo = getLevelInfo(newXP);
+
+        // Streak logic
+        let newStreak = freshData.streak;
+        let newLongest = freshData.longestStreak;
+        let usedFreeze = false;
+        if (freshData.lastActiveDate !== today) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+          if (freshData.lastActiveDate === yesterdayStr) {
+            newStreak = freshData.streak + 1;
+          } else {
+            if (freshData.streakFreezes > 0) {
+              newStreak = freshData.streak;
+              usedFreeze = true;
+            } else {
+              newStreak = 1;
+            }
+          }
+          newLongest = Math.max(newLongest, newStreak);
+        }
+
+        const updates = {
+          xp: newXP,
+          level: levelInfo.level,
+          dailyXP: newDailyXP,
+          streak: newStreak,
+          longestStreak: newLongest,
+          lastActiveDate: today,
+          ...(usedFreeze ? { streakFreezes: Math.max(0, (freshData.streakFreezes || 0) - 1) } : {}),
+        };
+
+        await window.firestore.setDoc(docRef, updates, { merge: true });
+
+        // Log daily activity — use increment for atomic update
+        try {
+          const activityPath = activeChildId
+            ? ['childProfiles', activeChildId, 'dailyActivity', today]
+            : ['users', user.uid, 'dailyActivity', today];
+          const activityRef = window.firestore.doc(window.db, ...activityPath);
+          const activitySnap = await window.firestore.getDoc(activityRef);
+          if (activitySnap.exists()) {
+            await window.firestore.updateDoc(activityRef, {
+              xp: window.firestore.increment(amount),
+              [`sources.${source}`]: window.firestore.increment(amount),
+            });
+          } else {
+            await window.firestore.setDoc(activityRef, {
+              date: today,
+              xp: amount,
+              minutes: 0,
+              sources: { [source]: amount },
+            });
+          }
+        } catch (activityErr) {
+          console.warn('Failed to log daily activity:', activityErr);
+        }
+
+        return { leveledUp: levelInfo.level > freshData.level, newLevel: levelInfo.level };
+      } catch (err) {
+        console.error('addXP failed:', err);
+        return { leveledUp: false, newLevel: progress.level };
+      }
+    });
+
+    xpQueueRef.current = task.catch(() => {}); // keep queue alive even on error
+    return task;
+  }, [user, progress.level, activeChildId]);
 
   // --- Family management functions ---
 
