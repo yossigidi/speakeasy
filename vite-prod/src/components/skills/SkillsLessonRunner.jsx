@@ -85,36 +85,48 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     handleLessonSave(stars, accuracy);
   }, []);
 
+  const exerciseTimersRef = useRef([]);
+
   // Handle exercise answer
   const handleAnswer = useCallback((isCorrect, wordData) => {
+    // Clear any pending timers from previous exercise
+    exerciseTimersRef.current.forEach(clearTimeout);
+    exerciseTimersRef.current = [];
+
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      setStreak(prev => prev + 1);
-      setTeacherState(streak + 1 >= 3 ? 'celebrating' : 'happy');
-      const msg = streak + 1 >= 3 ? t('teacherEncourage3', uiLang) : t('teacherEncourage1', uiLang);
-      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
+      setStreak(prev => {
+        const newStreak = prev + 1;
+        setTeacherState(newStreak >= 3 ? 'celebrating' : 'happy');
+        const msg = newStreak >= 3 ? t('teacherEncourage3', uiLang) : t('teacherEncourage1', uiLang);
+        speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
+        return newStreak;
+      });
     } else {
       playWrong();
       setWrongCount(prev => prev + 1);
-      const newHearts = Math.max(0, hearts - 1);
-      setHearts(newHearts);
+      setHearts(prev => {
+        const newHearts = Math.max(0, prev - 1);
+        if (newHearts === 0) {
+          setAnswers(a => [...a, { isCorrect, wordData }]);
+          const t1 = setTimeout(() => handleLessonComplete(isCorrect), 1200);
+          exerciseTimersRef.current.push(t1);
+        }
+        return newHearts;
+      });
       setStreak(0);
       setTeacherState('encouraging');
       speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
-
-      if (newHearts === 0) {
-        setAnswers(prev => [...prev, { isCorrect, wordData }]);
-        setTimeout(() => handleLessonComplete(isCorrect), 1200);
-        return;
-      }
     }
 
     setAnswers(prev => [...prev, { isCorrect, wordData }]);
-    setTimeout(() => setTeacherState('idle'), 1500);
+
+    const t1 = setTimeout(() => setTeacherState('idle'), 1500);
+    exerciseTimersRef.current.push(t1);
 
     // Stop any ongoing speech before advancing to next exercise
-    setTimeout(() => {
+    const t2 = setTimeout(() => {
       stopAllAudio();
       if (currentExercise + 1 >= exercises.length) {
         handleLessonComplete(isCorrect);
@@ -122,16 +134,21 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
         setCurrentExercise(prev => prev + 1);
       }
     }, 1200);
-  }, [currentExercise, exercises.length, streak, hearts]);
+    exerciseTimersRef.current.push(t2);
+  }, [currentExercise, exercises.length, uiLang, speak]);
+
+  // Use ref for correctCount to avoid stale closure in handleLessonComplete
+  const correctCountRef = useRef(0);
+  useEffect(() => { correctCountRef.current = correctCount; }, [correctCount]);
 
   // Complete exercises and save
   const handleLessonComplete = useCallback(async (lastWasCorrect) => {
     const totalCount = exercises.length;
-    const finalCorrect = correctCount + (lastWasCorrect ? 1 : 0);
+    const finalCorrect = correctCountRef.current + (lastWasCorrect ? 1 : 0);
     const acc = totalCount > 0 ? ((finalCorrect) / totalCount) * 100 : 100;
     const stars = calculateStars(acc);
     await handleLessonSave(stars, acc);
-  }, [exercises.length, correctCount, lessonId]);
+  }, [exercises.length, lessonId]);
 
   // Save progress
   const handleLessonSave = useCallback(async (stars, accuracy) => {
@@ -145,9 +162,12 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     setPhase('complete');
   }, [lessonId, skillsProgress]);
 
-  // Cleanup
+  // Cleanup speech and timers on unmount
   useEffect(() => {
-    return () => { stopSpeaking && stopSpeaking(); };
+    return () => {
+      stopSpeaking && stopSpeaking();
+      exerciseTimersRef.current.forEach(clearTimeout);
+    };
   }, [stopSpeaking]);
 
   // Calculate final stats — use savedAccuracy (set at save time) for consistent display

@@ -16,18 +16,22 @@ export default function ProfilePage({ onNavigate }) {
   const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild } = useUserProgress();
 
   const [pushEnabled, setPushEnabled] = useState(false);
+  const [pushLoading, setPushLoading] = useState(false);
 
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
-      navigator.serviceWorker.ready.then(reg => {
-        reg.pushManager.getSubscription().then(sub => setPushEnabled(!!sub));
-      });
+      navigator.serviceWorker.ready
+        .then(reg => reg.pushManager.getSubscription())
+        .then(sub => setPushEnabled(!!sub))
+        .catch(() => {}); // Push not available
     }
   }, []);
 
   const togglePush = async () => {
+    if (pushLoading) return; // Prevent double-click
     try {
       if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      setPushLoading(true);
       const reg = await navigator.serviceWorker.ready;
 
       if (pushEnabled) {
@@ -36,10 +40,14 @@ export default function ProfilePage({ onNavigate }) {
           await sub.unsubscribe();
           // Remove from Firestore
           if (user) {
-            const subsRef = window.firestore.collection(window.db, 'push-subscriptions');
-            const q = window.firestore.query(subsRef, window.firestore.where('userId', '==', user.uid));
-            const snap = await window.firestore.getDocs(q);
-            snap.forEach(doc => window.firestore.deleteDoc(doc.ref));
+            try {
+              const subsRef = window.firestore.collection(window.db, 'push-subscriptions');
+              const q = window.firestore.query(subsRef, window.firestore.where('userId', '==', user.uid));
+              const snap = await window.firestore.getDocs(q);
+              snap.forEach(doc => window.firestore.deleteDoc(doc.ref));
+            } catch (err) {
+              console.error('Failed to remove push subscription from Firestore:', err);
+            }
           }
         }
         setPushEnabled(false);
@@ -57,22 +65,28 @@ export default function ProfilePage({ onNavigate }) {
         setPushEnabled(true);
 
         if (user) {
-          const subJson = sub.toJSON();
-          await window.firestore.addDoc(
-            window.firestore.collection(window.db, 'push-subscriptions'),
-            {
-              endpoint: subJson.endpoint,
-              keys: { p256dh: subJson.keys.p256dh, auth: subJson.keys.auth },
-              userId: user.uid,
-              language: uiLang,
-              createdAt: new Date(),
-              userAgent: navigator.userAgent
-            }
-          );
+          try {
+            const subJson = sub.toJSON();
+            await window.firestore.addDoc(
+              window.firestore.collection(window.db, 'push-subscriptions'),
+              {
+                endpoint: subJson.endpoint,
+                keys: { p256dh: subJson.keys.p256dh, auth: subJson.keys.auth },
+                userId: user.uid,
+                language: uiLang,
+                createdAt: new Date(),
+                userAgent: navigator.userAgent
+              }
+            );
+          } catch (err) {
+            console.error('Failed to save push subscription to Firestore:', err);
+          }
         }
       }
     } catch (e) {
       console.error('Push toggle error:', e);
+    } finally {
+      setPushLoading(false);
     }
   };
 

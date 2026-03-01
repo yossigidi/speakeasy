@@ -19,16 +19,15 @@ export default function useAudio() {
 
   const play = useCallback((src) => {
     try {
+      // Remove existing entry from access order (dedup)
+      const existingIdx = accessOrder.indexOf(src);
+      if (existingIdx > -1) accessOrder.splice(existingIdx, 1);
+
       if (!audioCache[src]) {
         audioCache[src] = new Audio(src);
-        accessOrder.push(src);
-        evictOldest();
-      } else {
-        // Move to end of access order
-        const idx = accessOrder.indexOf(src);
-        if (idx > -1) accessOrder.splice(idx, 1);
-        accessOrder.push(src);
       }
+      accessOrder.push(src);
+      evictOldest();
       const audio = audioCache[src];
       audio.currentTime = 0;
       audio.play().catch(() => {});

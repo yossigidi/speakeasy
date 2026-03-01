@@ -77,7 +77,13 @@ export default function SkillSimulationRunner({ simulation, onComplete, uiLang }
         }),
       });
 
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
+      }
       const data = await res.json();
+      if (!data.npcReply) {
+        throw new Error('Invalid API response: missing npcReply');
+      }
 
       // Add NPC reply
       if (data.npcReply) {

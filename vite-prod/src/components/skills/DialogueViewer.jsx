@@ -8,6 +8,8 @@ export default function DialogueViewer({ dialogue, phrases, uiLang, speak, onCom
   const scrollRef = useRef(null);
   const autoPlayRef = useRef(null);
   const tooltipTimerRef = useRef(null);
+  const speakRef = useRef(speak);
+  speakRef.current = speak;
 
   const { speakers, lines } = dialogue;
 
@@ -27,9 +29,9 @@ export default function DialogueViewer({ dialogue, phrases, uiLang, speak, onCom
       const nextIndex = visibleLines;
       setVisibleLines(nextIndex + 1);
 
-      // Auto-speak the new line
-      if (speak && lines[nextIndex]) {
-        speak(lines[nextIndex].text, { lang: 'en', rate: 0.9 });
+      // Auto-speak the new line (use ref to avoid stale closure)
+      if (speakRef.current && lines[nextIndex]) {
+        speakRef.current(lines[nextIndex].text, { lang: 'en', rate: 0.9 });
       }
     }, delay);
 

@@ -188,10 +188,11 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     setPhase('complete');
   }, [exercises.length, lessonId, curriculum]);
 
-  // Cleanup speech on unmount
+  // Cleanup speech and timers on unmount
   useEffect(() => {
     return () => {
       stopSpeaking && stopSpeaking();
+      exerciseTimersRef.current.forEach(clearTimeout);
     };
   }, [stopSpeaking]);
 

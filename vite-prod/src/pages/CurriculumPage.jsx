@@ -55,7 +55,6 @@ export default function CurriculumPage({ onBack }) {
 
   // Handle lesson tap from UnitIsland
   const handleLessonTap = useCallback((lesson) => {
-    console.log('handleLessonTap called:', lesson.id, lesson.type);
     const result = getLessonResult(lesson.id);
     const typeInfo = LESSON_TYPES[lesson.type] || LESSON_TYPES.mixed;
     setSelectedLessonInfo({

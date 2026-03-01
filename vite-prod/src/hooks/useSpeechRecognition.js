@@ -11,6 +11,12 @@ export default function useSpeechRecognition() {
   const startListening = useCallback((options = {}) => {
     if (!sttSupported) return;
 
+    // Abort any existing recognition instance before starting a new one
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch (_) {}
+      recognitionRef.current = null;
+    }
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
