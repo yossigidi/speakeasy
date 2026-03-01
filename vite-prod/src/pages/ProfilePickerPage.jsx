@@ -71,15 +71,14 @@ export default function ProfilePickerPage({ onSelect }) {
           borderRadius: '50%',
         }} />
         <img
-          src="/icons/icon-192.png"
+          src="/images/speakli-icon.webp"
           alt="Speakli"
           style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '20px',
+            width: '100px',
+            height: 'auto',
             position: 'relative',
             zIndex: 1,
-            boxShadow: '0 8px 32px rgba(20,184,166,0.3)',
+            filter: 'drop-shadow(0 8px 32px rgba(20,184,166,0.3))',
           }}
         />
       </div>
