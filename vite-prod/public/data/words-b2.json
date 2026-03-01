@@ -1,0 +1,4202 @@
+[
+  {
+    "id": "b2_001",
+    "word": "broadcast",
+    "ipa": "/ˈbrɔːdkæst/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "לשדר",
+    "definition": "To transmit a program or information by radio or television.",
+    "definitionHe": "לשדר תוכנית או מידע ברדיו או בטלוויזיה.",
+    "examples": [
+      "The news is broadcast live every evening.",
+      "They broadcast the concert on national television.",
+      "The speech was broadcast to millions of viewers."
+    ],
+    "audioHint": "BRAWD-kast",
+    "collocations": [
+      "broadcast live",
+      "broadcast news",
+      "broadcast a message"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They broadcasted the news",
+        "correct": "They broadcast the news",
+        "explanation": "הפועל broadcast לא משתנה בעבר - broadcast ולא broadcasted."
+      }
+    ],
+    "tip": "Unlike most verbs, 'broadcast' doesn't change in past tense: broadcast → broadcast (not broadcasted).",
+    "tipHe": "בניגוד לרוב הפעלים, broadcast לא משתנה בזמן עבר: broadcast → broadcast (לא broadcasted).",
+    "synonyms": [
+      "transmit",
+      "air"
+    ]
+  },
+  {
+    "id": "b2_002",
+    "word": "journalism",
+    "ipa": "/ˈdʒɜːrnəlɪzəm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "עיתונאות",
+    "definition": "The activity or profession of writing for newspapers, magazines, or news websites.",
+    "definitionHe": "הפעילות או המקצוע של כתיבה לעיתונים, מגזינים או אתרי חדשות.",
+    "examples": [
+      "She studied journalism at university.",
+      "Journalism plays a vital role in democracy.",
+      "Investigative journalism uncovered the scandal."
+    ],
+    "audioHint": "JUR-nuh-liz-um",
+    "collocations": [
+      "investigative journalism",
+      "citizen journalism",
+      "journalism ethics"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She works in the journalism",
+        "correct": "She works in journalism",
+        "explanation": "journalism היא מילה לא-ספירה, לא אומרים the journalism כשמדברים על התחום באופן כללי."
+      }
+    ],
+    "tip": "'Journalism' is uncountable when referring to the field. Don't use 'the' before it in general statements.",
+    "tipHe": "journalism היא מילה לא-ספירה כשמתייחסים לתחום. לא משתמשים ב-the לפניה במשפטים כלליים.",
+    "synonyms": [
+      "reporting",
+      "the press"
+    ]
+  },
+  {
+    "id": "b2_003",
+    "word": "headline",
+    "ipa": "/ˈhɛdlaɪn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "כותרת",
+    "definition": "The title of a newspaper article printed in large letters.",
+    "definitionHe": "הכותרת של כתבה בעיתון, מודפסת באותיות גדולות.",
+    "examples": [
+      "The headline grabbed everyone's attention.",
+      "She made headlines when she won the award.",
+      "The newspaper headline was misleading."
+    ],
+    "audioHint": "HED-line",
+    "collocations": [
+      "make headlines",
+      "hit the headlines",
+      "front-page headline"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Did you read the headline news?",
+        "correct": "Did you see the headlines?",
+        "explanation": "באנגלית אומרים see/read the headlines ולא headline news (שזה יותר שם של תוכנית)."
+      }
+    ],
+    "tip": "'Headlines' in plural often means the main news stories. 'Make headlines' means to become big news.",
+    "tipHe": "headlines ברבים פירושו חדשות מרכזיות. make headlines פירושו להפוך לחדשה גדולה.",
+    "synonyms": [
+      "title",
+      "banner"
+    ]
+  },
+  {
+    "id": "b2_004",
+    "word": "editorial",
+    "ipa": "/ˌɛdɪˈtɔːriəl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "מאמר מערכת",
+    "definition": "A newspaper article that expresses the editor's opinion on a topic.",
+    "definitionHe": "מאמר בעיתון שמביע את דעת העורך בנושא מסוים.",
+    "examples": [
+      "The editorial criticized the government's policy.",
+      "She wrote an editorial about climate change.",
+      "The editorial sparked a heated debate."
+    ],
+    "audioHint": "ed-ih-TOR-ee-ul",
+    "collocations": [
+      "write an editorial",
+      "editorial board",
+      "editorial policy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He wrote an editorial article",
+        "correct": "He wrote an editorial",
+        "explanation": "editorial כשם עצם כבר מתייחס למאמר, לא צריך להוסיף article."
+      }
+    ],
+    "tip": "As a noun, 'editorial' already means an opinion article. As an adjective, it relates to editing: 'editorial decision'.",
+    "tipHe": "כשם עצם, editorial כבר אומר מאמר דעה. כתואר, הוא מתייחס לעריכה: editorial decision.",
+    "synonyms": [
+      "opinion piece",
+      "commentary"
+    ]
+  },
+  {
+    "id": "b2_005",
+    "word": "coverage",
+    "ipa": "/ˈkʌvərɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "סיקור",
+    "definition": "The reporting of news and events by the media.",
+    "definitionHe": "דיווח על חדשות ואירועים על ידי התקשורת.",
+    "examples": [
+      "The media coverage of the election was extensive.",
+      "Live coverage of the event began at 8 PM.",
+      "The scandal received widespread coverage."
+    ],
+    "audioHint": "KUV-er-ij",
+    "collocations": [
+      "media coverage",
+      "live coverage",
+      "news coverage"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The coverage of the event were good",
+        "correct": "The coverage of the event was good",
+        "explanation": "coverage היא מילה יחידנית (לא-ספירה), לכן הפועל צריך להיות was ולא were."
+      }
+    ],
+    "tip": "'Coverage' is uncountable - always singular. You can't say 'coverages' or use 'were' with it.",
+    "tipHe": "coverage היא מילה לא-ספירה - תמיד ביחיד. אי אפשר לומר coverages או להשתמש עם were.",
+    "synonyms": [
+      "reporting",
+      "broadcasting"
+    ]
+  },
+  {
+    "id": "b2_006",
+    "word": "audience",
+    "ipa": "/ˈɔːdiəns/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "קהל",
+    "definition": "The group of people who watch, listen to, or read something.",
+    "definitionHe": "קבוצת האנשים שצופים, מאזינים או קוראים משהו.",
+    "examples": [
+      "The audience applauded at the end of the show.",
+      "The TV show attracted a large audience.",
+      "The speaker engaged the audience with humor."
+    ],
+    "audioHint": "AW-dee-ens",
+    "collocations": [
+      "target audience",
+      "live audience",
+      "audience engagement"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The audience were very big",
+        "correct": "The audience was very large",
+        "explanation": "בדרך כלל audience מתנהגת כיחידנית באנגלית אמריקאית. משתמשים ב-large ולא ב-big לתיאור גודל קהל."
+      }
+    ],
+    "tip": "In American English, 'audience' usually takes a singular verb. Use 'large' rather than 'big' for formal contexts.",
+    "tipHe": "באנגלית אמריקאית, audience בדרך כלל לוקחת פועל ביחיד. משתמשים ב-large ולא ב-big בהקשרים רשמיים.",
+    "synonyms": [
+      "viewers",
+      "spectators"
+    ]
+  },
+  {
+    "id": "b2_007",
+    "word": "correspondent",
+    "ipa": "/ˌkɒrɪˈspɒndənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "כתב",
+    "definition": "A journalist who reports news from a particular place or on a particular topic.",
+    "definitionHe": "עיתונאי שמדווח חדשות ממקום מסוים או על נושא מסוים.",
+    "examples": [
+      "Our correspondent in London has the latest update.",
+      "She works as a foreign correspondent.",
+      "The war correspondent risked his life for the story."
+    ],
+    "audioHint": "kor-ih-SPON-dent",
+    "collocations": [
+      "foreign correspondent",
+      "war correspondent",
+      "special correspondent"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is a correspondant",
+        "correct": "He is a correspondent",
+        "explanation": "שים לב לאיות: correspondent עם e ולא a לפני nt."
+      }
+    ],
+    "tip": "Don't confuse the spelling: it's 'correspondent' (not 'correspondant'). It comes from 'correspond'.",
+    "tipHe": "אל תבלבל באיות: correspondent עם e ולא correspondant. המילה באה מ-correspond.",
+    "synonyms": [
+      "reporter",
+      "journalist"
+    ]
+  },
+  {
+    "id": "b2_008",
+    "word": "documentary",
+    "ipa": "/ˌdɒkjʊˈmɛntəri/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "סרט תיעודי",
+    "definition": "A film or TV program that gives facts about a real subject.",
+    "definitionHe": "סרט או תוכנית טלוויזיה שמציגים עובדות על נושא אמיתי.",
+    "examples": [
+      "We watched a documentary about ocean pollution.",
+      "The documentary won several awards.",
+      "She directed a documentary on homelessness."
+    ],
+    "audioHint": "dok-yoo-MEN-tuh-ree",
+    "collocations": [
+      "watch a documentary",
+      "make a documentary",
+      "documentary film"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I saw a documentary movie",
+        "correct": "I saw a documentary",
+        "explanation": "documentary כבר מתייחס לסוג של סרט, לא צריך להוסיף movie אחרי."
+      }
+    ],
+    "tip": "'Documentary' alone is enough - no need to say 'documentary movie'. You can say 'documentary film' in formal contexts.",
+    "tipHe": "documentary לבד מספיק - אין צורך לומר documentary movie. אפשר לומר documentary film בהקשרים רשמיים.",
+    "synonyms": [
+      "docufilm",
+      "factual film"
+    ]
+  },
+  {
+    "id": "b2_009",
+    "word": "subscribe",
+    "ipa": "/səbˈskraɪb/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "להירשם כמנוי",
+    "definition": "To arrange to receive something regularly, especially a publication or service.",
+    "definitionHe": "לסדר קבלה של משהו באופן קבוע, בעיקר פרסום או שירות.",
+    "examples": [
+      "I subscribed to the magazine last month.",
+      "Subscribe to our channel for more content.",
+      "She subscribes to several streaming services."
+    ],
+    "audioHint": "sub-SKRIBE",
+    "collocations": [
+      "subscribe to",
+      "subscription service",
+      "subscribe online"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I subscribed on the newspaper",
+        "correct": "I subscribed to the newspaper",
+        "explanation": "באנגלית אומרים subscribe to ולא subscribe on."
+      }
+    ],
+    "tip": "Always use 'subscribe to' (not 'subscribe on/for'). The noun form is 'subscription'.",
+    "tipHe": "תמיד אומרים subscribe to (לא subscribe on/for). צורת שם העצם היא subscription.",
+    "synonyms": [
+      "sign up",
+      "enroll"
+    ]
+  },
+  {
+    "id": "b2_010",
+    "word": "publish",
+    "ipa": "/ˈpʌblɪʃ/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "לפרסם",
+    "definition": "To make content available to the public, especially in print or online.",
+    "definitionHe": "להפוך תוכן לזמין לציבור, בעיקר בדפוס או באינטרנט.",
+    "examples": [
+      "The author published her first novel last year.",
+      "The findings were published in a scientific journal.",
+      "He publishes a blog about technology."
+    ],
+    "audioHint": "PUB-lish",
+    "collocations": [
+      "publish a book",
+      "publish online",
+      "publish an article"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The book was published since 2020",
+        "correct": "The book has been published since 2020",
+        "explanation": "עם since משתמשים בזמן present perfect (has been published) ולא past simple."
+      }
+    ],
+    "tip": "With 'since', use present perfect: 'has been published since 2020' (not 'was published since 2020').",
+    "tipHe": "עם since משתמשים ב-present perfect: has been published since 2020 (לא was published since 2020).",
+    "synonyms": [
+      "release",
+      "issue"
+    ]
+  },
+  {
+    "id": "b2_011",
+    "word": "censor",
+    "ipa": "/ˈsɛnsər/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "לצנזר",
+    "definition": "To examine and suppress material considered offensive or a threat.",
+    "definitionHe": "לבדוק ולהסיר חומר שנחשב פוגעני או מאיים.",
+    "examples": [
+      "The government censored the news report.",
+      "Several scenes were censored from the film.",
+      "They censor content that violates their guidelines."
+    ],
+    "audioHint": "SEN-ser",
+    "collocations": [
+      "censor content",
+      "government censorship",
+      "self-censor"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The movie was censured by the government",
+        "correct": "The movie was censored by the government",
+        "explanation": "censor = לצנזר, censure = לגנות. אלו שתי מילים שונות!"
+      }
+    ],
+    "tip": "Don't confuse 'censor' (suppress content) with 'censure' (express strong disapproval). They sound similar but differ.",
+    "tipHe": "אל תבלבל בין censor (לצנזר תוכן) לבין censure (לגנות). הם נשמעים דומה אבל שונים.",
+    "synonyms": [
+      "suppress",
+      "ban"
+    ]
+  },
+  {
+    "id": "b2_012",
+    "word": "footage",
+    "ipa": "/ˈfʊtɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "צילומים, חומר מצולם",
+    "definition": "Recorded film or video material.",
+    "definitionHe": "חומר סרט או וידאו מוקלט.",
+    "examples": [
+      "Security footage showed the suspect entering the building.",
+      "The news showed dramatic footage of the storm.",
+      "They reviewed hours of footage from the event."
+    ],
+    "audioHint": "FUT-ij",
+    "collocations": [
+      "security footage",
+      "raw footage",
+      "video footage"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The police found many footages",
+        "correct": "The police found a lot of footage",
+        "explanation": "footage היא מילה לא-ספירה - אין לה צורת רבים. אומרים a lot of footage."
+      }
+    ],
+    "tip": "'Footage' is uncountable - never 'footages'. Say 'a lot of footage' or 'pieces of footage'.",
+    "tipHe": "footage היא מילה לא-ספירה - אף פעם לא footages. אומרים a lot of footage או pieces of footage.",
+    "synonyms": [
+      "video",
+      "recording"
+    ]
+  },
+  {
+    "id": "b2_013",
+    "word": "columnist",
+    "ipa": "/ˈkɒləmnɪst/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "טוּר",
+    "definition": "A journalist who writes a regular column in a newspaper or magazine.",
+    "definitionHe": "עיתונאי שכותב טור קבוע בעיתון או מגזין.",
+    "examples": [
+      "She is a well-known political columnist.",
+      "The columnist criticized the new law.",
+      "He has been a columnist for the paper for ten years."
+    ],
+    "audioHint": "KOL-um-nist",
+    "collocations": [
+      "newspaper columnist",
+      "opinion columnist",
+      "guest columnist"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is a columnest",
+        "correct": "He is a columnist",
+        "explanation": "שים לב לאיות: columnist עם ist בסוף, והאות n שקטה ב-column."
+      }
+    ],
+    "tip": "The 'n' in 'column' is silent. The word comes from Latin 'columna'. Remember: column → columnist.",
+    "tipHe": "ה-n ב-column שקטה. המילה באה מלטינית columna. זכרו: column → columnist.",
+    "synonyms": [
+      "writer",
+      "commentator"
+    ]
+  },
+  {
+    "id": "b2_014",
+    "word": "mainstream",
+    "ipa": "/ˈmeɪnstriːm/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "מרכזי, רווח",
+    "definition": "Considered normal and accepted by most people in a society.",
+    "definitionHe": "נחשב רגיל ומקובל על רוב האנשים בחברה.",
+    "examples": [
+      "The idea has entered mainstream thinking.",
+      "Mainstream media often ignores small communities.",
+      "The band went from underground to mainstream."
+    ],
+    "audioHint": "MAYN-stream",
+    "collocations": [
+      "mainstream media",
+      "mainstream culture",
+      "go mainstream"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "It's a very mainstream",
+        "correct": "It's very mainstream",
+        "explanation": "mainstream הוא תואר ולא שם עצם ספיר - אומרים it's very mainstream ולא a mainstream."
+      }
+    ],
+    "tip": "'Mainstream' as an adjective doesn't need 'a'. Say 'it's very mainstream' or 'mainstream culture'.",
+    "tipHe": "mainstream כתואר לא צריך a. אומרים it's very mainstream או mainstream culture.",
+    "synonyms": [
+      "conventional",
+      "popular"
+    ]
+  },
+  {
+    "id": "b2_015",
+    "word": "propaganda",
+    "ipa": "/ˌprɒpəˈɡændə/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "media",
+    "translation": "תעמולה",
+    "definition": "Information used to promote a political cause or point of view, often misleading.",
+    "definitionHe": "מידע המשמש לקידום מטרה פוליטית או נקודת מבט, לעתים מטעה.",
+    "examples": [
+      "The regime spread propaganda through state media.",
+      "War propaganda influenced public opinion.",
+      "She studied the effects of propaganda on society."
+    ],
+    "audioHint": "prop-uh-GAN-duh",
+    "collocations": [
+      "spread propaganda",
+      "propaganda campaign",
+      "political propaganda"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They made many propagandas",
+        "correct": "They spread a lot of propaganda",
+        "explanation": "propaganda היא מילה לא-ספירה, לא אומרים propagandas. גם משתמשים ב-spread ולא ב-make."
+      }
+    ],
+    "tip": "'Propaganda' is uncountable (no plural). Use 'spread propaganda' rather than 'make propaganda'.",
+    "tipHe": "propaganda היא מילה לא-ספירה (אין רבים). אומרים spread propaganda ולא make propaganda.",
+    "synonyms": [
+      "misinformation",
+      "indoctrination"
+    ]
+  },
+  {
+    "id": "b2_016",
+    "word": "democracy",
+    "ipa": "/dɪˈmɒkrəsi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "דמוקרטיה",
+    "definition": "A system of government in which people vote to choose their leaders.",
+    "definitionHe": "שיטת ממשל שבה העם בוחר את מנהיגיו בהצבעה.",
+    "examples": [
+      "Democracy allows citizens to have a voice.",
+      "The country transitioned to democracy in 1990.",
+      "Free elections are essential to democracy."
+    ],
+    "audioHint": "dih-MOK-ruh-see",
+    "collocations": [
+      "liberal democracy",
+      "parliamentary democracy",
+      "promote democracy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The democracy is important",
+        "correct": "Democracy is important",
+        "explanation": "כשמדברים על דמוקרטיה כמושג כללי, לא משתמשים ב-the."
+      }
+    ],
+    "tip": "When talking about democracy as a general concept, don't use 'the'. Use 'the' only for specific democracies.",
+    "tipHe": "כשמדברים על דמוקרטיה כמושג כללי, לא משתמשים ב-the. משתמשים ב-the רק לדמוקרטיות ספציפיות.",
+    "synonyms": [
+      "self-governance",
+      "republic"
+    ]
+  },
+  {
+    "id": "b2_017",
+    "word": "parliament",
+    "ipa": "/ˈpɑːrləmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "פרלמנט",
+    "definition": "The group of elected representatives who make laws in a country.",
+    "definitionHe": "קבוצת הנציגים הנבחרים שמחוקקים חוקים במדינה.",
+    "examples": [
+      "Parliament voted on the new law yesterday.",
+      "She was elected to parliament last year.",
+      "The bill was debated in parliament for weeks."
+    ],
+    "audioHint": "PAR-luh-ment",
+    "collocations": [
+      "member of parliament",
+      "dissolve parliament",
+      "parliamentary debate"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is a member in the parliament",
+        "correct": "He is a member of parliament",
+        "explanation": "באנגלית אומרים member of parliament ולא member in the parliament."
+      }
+    ],
+    "tip": "'Member of Parliament' (MP) is the correct phrase. No 'the' is needed before 'parliament' in this expression.",
+    "tipHe": "member of Parliament (MP) הוא הביטוי הנכון. אין צורך ב-the לפני parliament בביטוי הזה.",
+    "synonyms": [
+      "congress",
+      "legislature"
+    ]
+  },
+  {
+    "id": "b2_018",
+    "word": "legislation",
+    "ipa": "/ˌlɛdʒɪsˈleɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "חקיקה",
+    "definition": "Laws considered collectively; the process of making laws.",
+    "definitionHe": "חוקים כמכלול; התהליך של חקיקת חוקים.",
+    "examples": [
+      "New legislation was introduced to protect workers.",
+      "The legislation passed with a large majority.",
+      "Environmental legislation has become stricter."
+    ],
+    "audioHint": "lej-is-LAY-shun",
+    "collocations": [
+      "pass legislation",
+      "introduce legislation",
+      "new legislation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The government passed a new legislation",
+        "correct": "The government passed new legislation",
+        "explanation": "legislation היא מילה לא-ספירה - לא אומרים a legislation. אומרים a piece of legislation."
+      }
+    ],
+    "tip": "'Legislation' is uncountable. Say 'new legislation' or 'a piece of legislation' (not 'a legislation').",
+    "tipHe": "legislation היא מילה לא-ספירה. אומרים new legislation או a piece of legislation (לא a legislation).",
+    "synonyms": [
+      "laws",
+      "statutes"
+    ]
+  },
+  {
+    "id": "b2_019",
+    "word": "campaign",
+    "ipa": "/kæmˈpeɪn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "מסע, קמפיין",
+    "definition": "An organized course of action to achieve a particular goal.",
+    "definitionHe": "מהלך מאורגן של פעולות להשגת מטרה מסוימת.",
+    "examples": [
+      "The election campaign lasted three months.",
+      "She launched a campaign against poverty.",
+      "The advertising campaign was very successful."
+    ],
+    "audioHint": "kam-PAYN",
+    "collocations": [
+      "election campaign",
+      "launch a campaign",
+      "campaign trail"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He did a campaign for president",
+        "correct": "He ran a campaign for president",
+        "explanation": "באנגלית אומרים run a campaign ולא do/make a campaign."
+      }
+    ],
+    "tip": "Use 'run a campaign' or 'launch a campaign' (not 'do' or 'make' a campaign).",
+    "tipHe": "אומרים run a campaign או launch a campaign (לא do או make a campaign).",
+    "synonyms": [
+      "drive",
+      "movement"
+    ]
+  },
+  {
+    "id": "b2_020",
+    "word": "diplomat",
+    "ipa": "/ˈdɪpləmæt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "דיפלומט",
+    "definition": "A person who represents their country in negotiations with other nations.",
+    "definitionHe": "אדם שמייצג את מדינתו במשאים ומתנים עם מדינות אחרות.",
+    "examples": [
+      "The diplomat negotiated a peace agreement.",
+      "She served as a diplomat in several countries.",
+      "The diplomat was recalled after the incident."
+    ],
+    "audioHint": "DIP-loh-mat",
+    "collocations": [
+      "career diplomat",
+      "senior diplomat",
+      "diplomatic relations"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He works like a diplomat",
+        "correct": "He works as a diplomat",
+        "explanation": "באנגלית אומרים work as + מקצוע, לא work like."
+      }
+    ],
+    "tip": "Use 'work as' (not 'work like') when describing someone's job: 'He works as a diplomat'.",
+    "tipHe": "אומרים work as (לא work like) כשמתארים מקצוע: He works as a diplomat.",
+    "synonyms": [
+      "envoy",
+      "ambassador"
+    ]
+  },
+  {
+    "id": "b2_021",
+    "word": "constitution",
+    "ipa": "/ˌkɒnstɪˈtjuːʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "חוקה",
+    "definition": "The fundamental principles by which a state is governed.",
+    "definitionHe": "העקרונות הבסיסיים שלפיהם מדינה מתנהלת.",
+    "examples": [
+      "The constitution guarantees freedom of speech.",
+      "They amended the constitution last year.",
+      "The Supreme Court interprets the constitution."
+    ],
+    "audioHint": "kon-stih-TOO-shun",
+    "collocations": [
+      "written constitution",
+      "constitutional right",
+      "amend the constitution"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "According the constitution",
+        "correct": "According to the constitution",
+        "explanation": "according תמיד בא עם to - according to ולא according לבד."
+      }
+    ],
+    "tip": "Always 'according to' (never 'according' alone). This is a very common error for Hebrew speakers.",
+    "tipHe": "תמיד according to (אף פעם לא according לבד). זו טעות נפוצה מאוד בקרב דוברי עברית.",
+    "synonyms": [
+      "charter",
+      "fundamental law"
+    ]
+  },
+  {
+    "id": "b2_022",
+    "word": "amendment",
+    "ipa": "/əˈmɛndmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "תיקון (לחוק)",
+    "definition": "A change or addition to a law, constitution, or document.",
+    "definitionHe": "שינוי או תוספת לחוק, חוקה או מסמך.",
+    "examples": [
+      "The First Amendment protects free speech.",
+      "They proposed an amendment to the bill.",
+      "The amendment was ratified by all states."
+    ],
+    "audioHint": "uh-MEND-ment",
+    "collocations": [
+      "constitutional amendment",
+      "propose an amendment",
+      "pass an amendment"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They made an amendement to the law",
+        "correct": "They made an amendment to the law",
+        "explanation": "שים לב לאיות: amendment ולא amendement (אין e אחרי d)."
+      }
+    ],
+    "tip": "Watch the spelling: 'amendment' (not 'amendement'). It comes from 'amend' + '-ment'.",
+    "tipHe": "שימו לב לאיות: amendment (לא amendement). המילה באה מ-amend + -ment.",
+    "synonyms": [
+      "modification",
+      "revision"
+    ]
+  },
+  {
+    "id": "b2_023",
+    "word": "opposition",
+    "ipa": "/ˌɒpəˈzɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "אופוזיציה",
+    "definition": "The main political party opposing the government; resistance to something.",
+    "definitionHe": "המפלגה הפוליטית העיקרית שמתנגדת לממשלה; התנגדות למשהו.",
+    "examples": [
+      "The opposition criticized the new policy.",
+      "There was strong opposition to the plan.",
+      "The leader of the opposition gave a speech."
+    ],
+    "audioHint": "op-uh-ZIH-shun",
+    "collocations": [
+      "face opposition",
+      "strong opposition",
+      "the opposition party"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is in the opposition to the plan",
+        "correct": "He is in opposition to the plan",
+        "explanation": "אומרים in opposition to (ללא the) כשמדברים על התנגדות לרעיון."
+      }
+    ],
+    "tip": "Use 'in opposition to' (without 'the') when expressing disagreement with an idea or plan.",
+    "tipHe": "אומרים in opposition to (ללא the) כשמביעים אי הסכמה עם רעיון או תוכנית.",
+    "synonyms": [
+      "resistance",
+      "dissent"
+    ]
+  },
+  {
+    "id": "b2_024",
+    "word": "referendum",
+    "ipa": "/ˌrɛfəˈrɛndəm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "משאל עם",
+    "definition": "A vote in which all eligible people can decide on an important issue.",
+    "definitionHe": "הצבעה שבה כל מי שזכאי יכול להחליט בנושא חשוב.",
+    "examples": [
+      "The referendum on independence attracted high voter turnout.",
+      "They held a referendum on EU membership.",
+      "The result of the referendum surprised many."
+    ],
+    "audioHint": "ref-uh-REN-dum",
+    "collocations": [
+      "hold a referendum",
+      "national referendum",
+      "referendum result"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They made a referandum",
+        "correct": "They held a referendum",
+        "explanation": "שים לב: 1) referendum ולא referandum (שני e). 2) אומרים hold a referendum ולא make."
+      }
+    ],
+    "tip": "Spelling: 'referendum' (not 'referandum'). Use 'hold a referendum' (not 'make'). Plural: 'referendums' or 'referenda'.",
+    "tipHe": "איות: referendum (לא referandum). אומרים hold a referendum (לא make). רבים: referendums או referenda.",
+    "synonyms": [
+      "plebiscite",
+      "vote"
+    ]
+  },
+  {
+    "id": "b2_025",
+    "word": "sovereignty",
+    "ipa": "/ˈsɒvrɪnti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "ריבונות",
+    "definition": "Supreme power or authority of a state to govern itself.",
+    "definitionHe": "הסמכות או הכוח העליון של מדינה לשלוט בעצמה.",
+    "examples": [
+      "The country fought to maintain its sovereignty.",
+      "National sovereignty is a key principle in international law.",
+      "Sovereignty over the territory was disputed."
+    ],
+    "audioHint": "SOV-rin-tee",
+    "collocations": [
+      "national sovereignty",
+      "state sovereignty",
+      "sovereignty over"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The country wants to keep their sovereignty",
+        "correct": "The country wants to keep its sovereignty",
+        "explanation": "country הוא יחיד, לכן הכינוי הוא its ולא their."
+      }
+    ],
+    "tip": "A country is singular, so use 'its sovereignty' (not 'their'). This applies to all singular nouns.",
+    "tipHe": "country הוא יחיד, לכן אומרים its sovereignty (לא their). זה חל על כל שמות עצם ביחיד.",
+    "synonyms": [
+      "independence",
+      "autonomy"
+    ]
+  },
+  {
+    "id": "b2_026",
+    "word": "bureaucracy",
+    "ipa": "/bjʊˈrɒkrəsi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "בירוקרטיה",
+    "definition": "A system of government with many complicated rules and processes.",
+    "definitionHe": "מערכת ממשל עם כללים ותהליכים מורכבים רבים.",
+    "examples": [
+      "The bureaucracy slowed down the approval process.",
+      "She was frustrated by the government bureaucracy.",
+      "Reducing bureaucracy would help small businesses."
+    ],
+    "audioHint": "byoo-ROK-ruh-see",
+    "collocations": [
+      "government bureaucracy",
+      "bureaucratic process",
+      "cut through bureaucracy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "There is too much bureaucraty",
+        "correct": "There is too much bureaucracy",
+        "explanation": "שים לב לאיות: bureaucracy ולא bureaucraty - מסתיים ב-cracy."
+      }
+    ],
+    "tip": "Tricky spelling: 'bureaucracy' ends in '-cracy' (like democracy). Remember: bureau + cracy.",
+    "tipHe": "איות מורכב: bureaucracy מסתיים ב-cracy (כמו democracy). זכרו: bureau + cracy.",
+    "synonyms": [
+      "red tape",
+      "administration"
+    ]
+  },
+  {
+    "id": "b2_027",
+    "word": "coalition",
+    "ipa": "/ˌkoʊəˈlɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "קואליציה",
+    "definition": "A temporary alliance of different parties for joint action.",
+    "definitionHe": "ברית זמנית של מפלגות שונות לפעולה משותפת.",
+    "examples": [
+      "The coalition government includes three parties.",
+      "They formed a coalition to pass the law.",
+      "The coalition collapsed after disagreements."
+    ],
+    "audioHint": "koh-uh-LIH-shun",
+    "collocations": [
+      "form a coalition",
+      "coalition government",
+      "coalition partner"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They builded a coalition",
+        "correct": "They built a coalition",
+        "explanation": "הפועל build הוא לא רגיל: build-built-built. בהקשר פוליטי אומרים form a coalition."
+      }
+    ],
+    "tip": "'Build' is irregular: build-built-built. In politics, 'form a coalition' is more natural than 'build'.",
+    "tipHe": "build הוא פועל לא רגיל: build-built-built. בפוליטיקה, form a coalition טבעי יותר מ-build.",
+    "synonyms": [
+      "alliance",
+      "bloc"
+    ]
+  },
+  {
+    "id": "b2_028",
+    "word": "sanction",
+    "ipa": "/ˈsæŋkʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "סנקציה",
+    "definition": "An official penalty or restriction imposed on a country or individual.",
+    "definitionHe": "עונש רשמי או הגבלה שמוטלים על מדינה או יחיד.",
+    "examples": [
+      "Economic sanctions were imposed on the country.",
+      "The UN lifted the sanctions after negotiations.",
+      "Trade sanctions hurt the economy."
+    ],
+    "audioHint": "SANGK-shun",
+    "collocations": [
+      "impose sanctions",
+      "lift sanctions",
+      "economic sanctions"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They put sanctions on the country",
+        "correct": "They imposed sanctions on the country",
+        "explanation": "בהקשר רשמי אומרים impose sanctions ולא put sanctions."
+      }
+    ],
+    "tip": "In formal English, use 'impose sanctions' (not 'put sanctions'). Also: 'lift sanctions' means to remove them.",
+    "tipHe": "באנגלית רשמית אומרים impose sanctions (לא put sanctions). lift sanctions = להסיר סנקציות.",
+    "synonyms": [
+      "penalty",
+      "restriction"
+    ]
+  },
+  {
+    "id": "b2_029",
+    "word": "regime",
+    "ipa": "/reɪˈʒiːm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "משטר",
+    "definition": "A government, especially one that is strict or authoritarian.",
+    "definitionHe": "ממשלה, במיוחד כזו שהיא נוקשה או סמכותנית.",
+    "examples": [
+      "The regime suppressed political opposition.",
+      "The military regime lasted for two decades.",
+      "The old regime was overthrown in a revolution."
+    ],
+    "audioHint": "reh-ZHEEM",
+    "collocations": [
+      "authoritarian regime",
+      "military regime",
+      "overthrow a regime"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The regime was changed",
+        "correct": "There was a regime change",
+        "explanation": "באנגלית אומרים regime change כביטוי. לא אומרים the regime was changed (פסיבי)."
+      }
+    ],
+    "tip": "'Regime change' is a set phrase. The noun 'regime' often has negative connotations in English.",
+    "tipHe": "regime change הוא ביטוי קבוע. שם העצם regime לעתים קרובות נושא קונוטציות שליליות באנגלית.",
+    "synonyms": [
+      "government",
+      "rule"
+    ]
+  },
+  {
+    "id": "b2_030",
+    "word": "ideology",
+    "ipa": "/ˌaɪdiˈɒlədʒi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "politics",
+    "translation": "אידאולוגיה",
+    "definition": "A set of beliefs or principles, especially political ones.",
+    "definitionHe": "מערכת של אמונות או עקרונות, במיוחד פוליטיים.",
+    "examples": [
+      "Political ideology shapes how people vote.",
+      "The party's ideology appeals to young voters.",
+      "They have very different ideologies."
+    ],
+    "audioHint": "eye-dee-OL-uh-jee",
+    "collocations": [
+      "political ideology",
+      "ideological divide",
+      "ideological beliefs"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "Their ideology are different",
+        "correct": "Their ideologies are different",
+        "explanation": "כשמדברים על אידאולוגיות של כמה אנשים, צריך רבים: ideologies are."
+      }
+    ],
+    "tip": "'Ideology' is countable - plural is 'ideologies'. Use singular verb with one ideology, plural with many.",
+    "tipHe": "ideology היא מילה ספירה - הרבים הוא ideologies. פועל יחיד עם אידאולוגיה אחת, רבים עם כמה.",
+    "synonyms": [
+      "doctrine",
+      "philosophy"
+    ]
+  },
+  {
+    "id": "b2_031",
+    "word": "hypothesis",
+    "ipa": "/haɪˈpɒθəsɪs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "השערה",
+    "definition": "A proposed explanation for something that can be tested.",
+    "definitionHe": "הסבר מוצע למשהו שניתן לבדוק.",
+    "examples": [
+      "The scientist tested her hypothesis in the lab.",
+      "Our hypothesis was confirmed by the results.",
+      "They formed a hypothesis before the experiment."
+    ],
+    "audioHint": "hy-POTH-uh-sis",
+    "collocations": [
+      "test a hypothesis",
+      "form a hypothesis",
+      "working hypothesis"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The hypothesis were incorrect",
+        "correct": "The hypothesis was incorrect",
+        "explanation": "hypothesis הוא יחיד. הרבים הוא hypotheses (כמו ביוונית)."
+      }
+    ],
+    "tip": "Singular: 'hypothesis'. Plural: 'hypotheses' (from Greek). This is a commonly tested distinction.",
+    "tipHe": "יחיד: hypothesis. רבים: hypotheses (מיוונית). זהו הבדל שנבדק לעתים קרובות.",
+    "synonyms": [
+      "theory",
+      "assumption"
+    ]
+  },
+  {
+    "id": "b2_032",
+    "word": "experiment",
+    "ipa": "/ɪkˈspɛrɪmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "ניסוי",
+    "definition": "A test done to discover something new or verify a hypothesis.",
+    "definitionHe": "בדיקה שנעשית כדי לגלות משהו חדש או לאמת השערה.",
+    "examples": [
+      "The experiment produced unexpected results.",
+      "Students performed experiments in the chemistry lab.",
+      "They designed an experiment to test the theory."
+    ],
+    "audioHint": "ik-SPER-ih-ment",
+    "collocations": [
+      "conduct an experiment",
+      "scientific experiment",
+      "experiment with"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They made an experiment",
+        "correct": "They conducted an experiment",
+        "explanation": "באנגלית מדעית אומרים conduct/perform/carry out an experiment, לא make."
+      }
+    ],
+    "tip": "In scientific English, use 'conduct/perform/carry out an experiment' (not 'make an experiment').",
+    "tipHe": "באנגלית מדעית אומרים conduct/perform/carry out an experiment (לא make an experiment).",
+    "synonyms": [
+      "test",
+      "trial"
+    ]
+  },
+  {
+    "id": "b2_033",
+    "word": "molecule",
+    "ipa": "/ˈmɒlɪkjuːl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "מולקולה",
+    "definition": "The smallest unit of a substance that has all the properties of that substance.",
+    "definitionHe": "היחידה הקטנה ביותר של חומר שיש לה את כל התכונות של אותו חומר.",
+    "examples": [
+      "A water molecule consists of two hydrogen atoms and one oxygen atom.",
+      "Scientists studied the structure of the molecule.",
+      "The molecule was too small to see with a regular microscope."
+    ],
+    "audioHint": "MOL-eh-kyool",
+    "collocations": [
+      "molecule structure",
+      "organic molecule",
+      "DNA molecule"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The molecules of water is H2O",
+        "correct": "The water molecule is H2O",
+        "explanation": "כשמדברים על הרכב כללי, אומרים the water molecule (יחיד) ולא the molecules of water."
+      }
+    ],
+    "tip": "Use 'the water molecule' for general description. 'Molecule' comes from Latin 'molecula' (small mass).",
+    "tipHe": "אומרים the water molecule לתיאור כללי. molecule בא מלטינית molecula (מסה קטנה).",
+    "synonyms": [
+      "particle",
+      "compound"
+    ]
+  },
+  {
+    "id": "b2_034",
+    "word": "organism",
+    "ipa": "/ˈɔːrɡənɪzəm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "אורגניזם",
+    "definition": "A living thing, such as a plant, animal, or bacterium.",
+    "definitionHe": "יצור חי, כגון צמח, בעל חיים או חיידק.",
+    "examples": [
+      "The organism adapted to its environment.",
+      "Single-celled organisms were the first life on Earth.",
+      "They discovered a new organism in the deep sea."
+    ],
+    "audioHint": "OR-guh-niz-um",
+    "collocations": [
+      "living organism",
+      "single-celled organism",
+      "microorganism"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The organism has adapted himself",
+        "correct": "The organism has adapted itself",
+        "explanation": "organism הוא it/itself (לא he/himself), כי אורגניזמים הם ניטרליים באנגלית."
+      }
+    ],
+    "tip": "Organisms use 'it/itself' pronouns in English (not 'he/himself'), unless referring to a specific named animal.",
+    "tipHe": "אורגניזמים משתמשים בכינויים it/itself באנגלית (לא he/himself), אלא אם מתייחסים לחיה ספציפית בשם.",
+    "synonyms": [
+      "creature",
+      "life form"
+    ]
+  },
+  {
+    "id": "b2_035",
+    "word": "evolution",
+    "ipa": "/ˌiːvəˈluːʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "אבולוציה",
+    "definition": "The gradual development of species over millions of years.",
+    "definitionHe": "ההתפתחות ההדרגתית של מינים לאורך מיליוני שנים.",
+    "examples": [
+      "Darwin's theory of evolution changed biology.",
+      "Evolution occurs through natural selection.",
+      "The evolution of technology has been rapid."
+    ],
+    "audioHint": "ev-uh-LOO-shun",
+    "collocations": [
+      "theory of evolution",
+      "evolution of species",
+      "evolutionary process"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The evolution theory",
+        "correct": "The theory of evolution",
+        "explanation": "באנגלית הביטוי הנכון הוא the theory of evolution, לא the evolution theory."
+      }
+    ],
+    "tip": "The standard phrase is 'the theory of evolution' (not 'the evolution theory'). Also used metaphorically for gradual change.",
+    "tipHe": "הביטוי הסטנדרטי הוא the theory of evolution (לא the evolution theory). משמש גם מטאפורית לשינוי הדרגתי.",
+    "synonyms": [
+      "development",
+      "adaptation"
+    ]
+  },
+  {
+    "id": "b2_036",
+    "word": "phenomenon",
+    "ipa": "/fɪˈnɒmɪnən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "תופעה",
+    "definition": "A fact or event that can be observed, especially one that is remarkable.",
+    "definitionHe": "עובדה או אירוע שניתן לצפות בהם, במיוחד כזו שהיא יוצאת דופן.",
+    "examples": [
+      "The northern lights are a natural phenomenon.",
+      "Scientists studied the phenomenon for years.",
+      "Social media has become a global phenomenon."
+    ],
+    "audioHint": "fih-NOM-ih-non",
+    "collocations": [
+      "natural phenomenon",
+      "social phenomenon",
+      "cultural phenomenon"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "This phenomenons are interesting",
+        "correct": "These phenomena are interesting",
+        "explanation": "רבים של phenomenon הוא phenomena (מיוונית), לא phenomenons."
+      }
+    ],
+    "tip": "Singular: 'phenomenon'. Plural: 'phenomena' (from Greek). Never 'phenomenons'. 'These phenomena are...'",
+    "tipHe": "יחיד: phenomenon. רבים: phenomena (מיוונית). אף פעם לא phenomenons. אומרים these phenomena are...",
+    "synonyms": [
+      "occurrence",
+      "event"
+    ]
+  },
+  {
+    "id": "b2_037",
+    "word": "genome",
+    "ipa": "/ˈdʒiːnoʊm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "גנום",
+    "definition": "The complete set of genetic material in an organism.",
+    "definitionHe": "המערך המלא של חומר גנטי באורגניזם.",
+    "examples": [
+      "Scientists mapped the human genome in 2003.",
+      "The genome contains all the DNA instructions.",
+      "Genome editing raises ethical questions."
+    ],
+    "audioHint": "JEE-nohm",
+    "collocations": [
+      "human genome",
+      "genome sequencing",
+      "genome editing"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The scientists studied the genom",
+        "correct": "The scientists studied the genome",
+        "explanation": "שים לב לאיות: genome עם e בסוף."
+      }
+    ],
+    "tip": "'Genome' ends with an 'e'. Related words: genomic (adjective), genomics (field of study).",
+    "tipHe": "genome מסתיים ב-e. מילים קשורות: genomic (תואר), genomics (תחום מחקר).",
+    "synonyms": [
+      "DNA",
+      "genetic code"
+    ]
+  },
+  {
+    "id": "b2_038",
+    "word": "ecosystem",
+    "ipa": "/ˈiːkoʊsɪstəm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "מערכת אקולוגית",
+    "definition": "A community of living things interacting with their environment.",
+    "definitionHe": "קהילה של יצורים חיים המתקשרים עם סביבתם.",
+    "examples": [
+      "The rainforest ecosystem is incredibly diverse.",
+      "Pollution threatens marine ecosystems.",
+      "Each ecosystem has its own food chain."
+    ],
+    "audioHint": "EE-koh-sis-tem",
+    "collocations": [
+      "marine ecosystem",
+      "ecosystem services",
+      "fragile ecosystem"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The eco-system is in danger",
+        "correct": "The ecosystem is in danger",
+        "explanation": "ecosystem נכתבת כמילה אחת, ללא מקף."
+      }
+    ],
+    "tip": "'Ecosystem' is written as one word (no hyphen). It was coined in 1935 by combining 'ecology' and 'system'.",
+    "tipHe": "ecosystem נכתבת כמילה אחת (ללא מקף). הומצאה ב-1935 משילוב ecology ו-system.",
+    "synonyms": [
+      "habitat",
+      "biome"
+    ]
+  },
+  {
+    "id": "b2_039",
+    "word": "theorem",
+    "ipa": "/ˈθɪərəm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "משפט (מתמטי)",
+    "definition": "A statement that has been proven true based on previously established facts.",
+    "definitionHe": "הצהרה שהוכחה כנכונה על בסיס עובדות שנקבעו קודם.",
+    "examples": [
+      "The Pythagorean theorem is taught in every school.",
+      "She proved the theorem using a new method.",
+      "The theorem applies to all right triangles."
+    ],
+    "audioHint": "THEER-um",
+    "collocations": [
+      "prove a theorem",
+      "mathematical theorem",
+      "Pythagorean theorem"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He proofed the theorem",
+        "correct": "He proved the theorem",
+        "explanation": "הפועל הוא prove-proved-proved/proven, לא proof (שהוא שם עצם)."
+      }
+    ],
+    "tip": "'Prove' is the verb (proved/proven). 'Proof' is the noun. Don't use 'proof' as a verb in academic writing.",
+    "tipHe": "prove הוא הפועל (proved/proven). proof הוא שם עצם. אל תשתמשו ב-proof כפועל בכתיבה אקדמית.",
+    "synonyms": [
+      "principle",
+      "proposition"
+    ]
+  },
+  {
+    "id": "b2_040",
+    "word": "variable",
+    "ipa": "/ˈvɛəriəbl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "משתנה",
+    "definition": "A factor that can change in an experiment or mathematical equation.",
+    "definitionHe": "גורם שיכול להשתנות בניסוי או במשוואה מתמטית.",
+    "examples": [
+      "The experiment has two independent variables.",
+      "Temperature was the controlled variable.",
+      "She isolated each variable to test it separately."
+    ],
+    "audioHint": "VAIR-ee-uh-bul",
+    "collocations": [
+      "independent variable",
+      "dependent variable",
+      "control variable"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The variables was measured",
+        "correct": "The variables were measured",
+        "explanation": "variables הוא רבים, לכן הפועל צריך להיות were ולא was."
+      }
+    ],
+    "tip": "'Variables' is plural → 'were measured'. Also, 'variable' can be an adjective meaning 'changeable'.",
+    "tipHe": "variables הוא רבים → were measured. כמו כן, variable יכול להיות תואר שמשמעותו 'משתנה'.",
+    "synonyms": [
+      "factor",
+      "parameter"
+    ]
+  },
+  {
+    "id": "b2_041",
+    "word": "particle",
+    "ipa": "/ˈpɑːrtɪkl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "חלקיק",
+    "definition": "An extremely small piece of matter.",
+    "definitionHe": "פיסת חומר קטנה ביותר.",
+    "examples": [
+      "Atoms are made up of smaller particles.",
+      "The air was full of dust particles.",
+      "Scientists discovered a new subatomic particle."
+    ],
+    "audioHint": "PAR-tih-kul",
+    "collocations": [
+      "subatomic particle",
+      "particle physics",
+      "particle accelerator"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The particle are very small",
+        "correct": "The particles are very small",
+        "explanation": "particle ביחיד, particles ברבים - יש להתאים את הפועל."
+      }
+    ],
+    "tip": "Remember to match singular/plural: 'a particle is' but 'particles are'. In grammar, 'particle' also means a small word like 'up' or 'off'.",
+    "tipHe": "יש להתאים יחיד/רבים: a particle is אבל particles are. בדקדוק, particle גם אומר מילון קטנה כמו up או off.",
+    "synonyms": [
+      "fragment",
+      "speck"
+    ]
+  },
+  {
+    "id": "b2_042",
+    "word": "catalyst",
+    "ipa": "/ˈkætəlɪst/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "זרז",
+    "definition": "A substance that speeds up a chemical reaction; something that causes change.",
+    "definitionHe": "חומר שמאיץ תגובה כימית; משהו שגורם לשינוי.",
+    "examples": [
+      "The enzyme acts as a catalyst in the reaction.",
+      "Her speech was a catalyst for change.",
+      "Without a catalyst, the reaction would take years."
+    ],
+    "audioHint": "KAT-uh-list",
+    "collocations": [
+      "act as a catalyst",
+      "catalyst for change",
+      "chemical catalyst"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The catalyst made the reaction more faster",
+        "correct": "The catalyst made the reaction faster",
+        "explanation": "more faster שגוי - faster כבר בצורת ההשוואה, לא צריך more."
+      }
+    ],
+    "tip": "Never use 'more' with '-er' comparatives. It's 'faster' (not 'more faster'), 'bigger' (not 'more bigger').",
+    "tipHe": "אף פעם לא משתמשים ב-more עם השוואה של er-. אומרים faster (לא more faster), bigger (לא more bigger).",
+    "synonyms": [
+      "trigger",
+      "stimulus"
+    ]
+  },
+  {
+    "id": "b2_043",
+    "word": "synthesis",
+    "ipa": "/ˈsɪnθəsɪs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "סינתזה, מיזוג",
+    "definition": "The combination of elements to form a whole; the production of a substance.",
+    "definitionHe": "שילוב של אלמנטים ליצירת שלם; ייצור של חומר.",
+    "examples": [
+      "The synthesis of the compound took several weeks.",
+      "Her essay was a synthesis of different viewpoints.",
+      "Chemical synthesis is used to create new drugs."
+    ],
+    "audioHint": "SIN-thuh-sis",
+    "collocations": [
+      "chemical synthesis",
+      "protein synthesis",
+      "synthesis of ideas"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The synthesis of the two ideas were interesting",
+        "correct": "The synthesis of the two ideas was interesting",
+        "explanation": "synthesis הוא יחיד (הרבים: syntheses), לכן הפועל הוא was."
+      }
+    ],
+    "tip": "Singular: 'synthesis'. Plural: 'syntheses'. The verb 'synthesize' means to combine or create.",
+    "tipHe": "יחיד: synthesis. רבים: syntheses. הפועל synthesize פירושו לשלב או ליצור.",
+    "synonyms": [
+      "combination",
+      "fusion"
+    ]
+  },
+  {
+    "id": "b2_044",
+    "word": "correlation",
+    "ipa": "/ˌkɒrəˈleɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "מתאם",
+    "definition": "A mutual relationship or connection between two things.",
+    "definitionHe": "קשר הדדי או חיבור בין שני דברים.",
+    "examples": [
+      "There is a strong correlation between smoking and cancer.",
+      "Correlation does not imply causation.",
+      "The study found a positive correlation between exercise and mood."
+    ],
+    "audioHint": "kor-uh-LAY-shun",
+    "collocations": [
+      "strong correlation",
+      "positive correlation",
+      "correlation between"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "There is a correlation with the two factors",
+        "correct": "There is a correlation between the two factors",
+        "explanation": "אומרים correlation between X and Y, לא correlation with."
+      }
+    ],
+    "tip": "Use 'correlation between A and B' (not 'with'). Remember: 'correlation does not imply causation' is a key scientific principle.",
+    "tipHe": "אומרים correlation between A and B (לא with). זכרו: correlation does not imply causation הוא עיקרון מדעי חשוב.",
+    "synonyms": [
+      "connection",
+      "relationship"
+    ]
+  },
+  {
+    "id": "b2_045",
+    "word": "microscope",
+    "ipa": "/ˈmaɪkrəskoʊp/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "science",
+    "translation": "מיקרוסקופ",
+    "definition": "An instrument used to see very small objects that are invisible to the naked eye.",
+    "definitionHe": "מכשיר המשמש לראות עצמים קטנים מאוד שאינם נראים לעין בלתי מזוינת.",
+    "examples": [
+      "The bacteria were visible only under a microscope.",
+      "She examined the sample through a microscope.",
+      "Electron microscopes can magnify up to 10 million times."
+    ],
+    "audioHint": "MY-kruh-skohp",
+    "collocations": [
+      "under a microscope",
+      "electron microscope",
+      "look through a microscope"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She looked in the microscope",
+        "correct": "She looked through the microscope",
+        "explanation": "באנגלית מסתכלים through (דרך) מיקרוסקופ, לא in."
+      }
+    ],
+    "tip": "Use 'look through a microscope' or 'under a microscope' (not 'look in a microscope').",
+    "tipHe": "אומרים look through a microscope או under a microscope (לא look in a microscope).",
+    "synonyms": [
+      "magnifier",
+      "lens"
+    ]
+  },
+  {
+    "id": "b2_046",
+    "word": "investment",
+    "ipa": "/ɪnˈvɛstmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "השקעה",
+    "definition": "The act of putting money into something to make a profit.",
+    "definitionHe": "הפעולה של הכנסת כסף למשהו כדי להרוויח.",
+    "examples": [
+      "Real estate is a popular investment.",
+      "The investment paid off after five years.",
+      "They made a significant investment in technology."
+    ],
+    "audioHint": "in-VEST-ment",
+    "collocations": [
+      "make an investment",
+      "return on investment",
+      "long-term investment"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "It's a good invest",
+        "correct": "It's a good investment",
+        "explanation": "invest הוא פועל. שם העצם הוא investment."
+      }
+    ],
+    "tip": "'Invest' is the verb, 'investment' is the noun. Don't use 'invest' as a noun.",
+    "tipHe": "invest הוא הפועל, investment הוא שם העצם. אל תשתמשו ב-invest כשם עצם.",
+    "synonyms": [
+      "asset",
+      "stake"
+    ]
+  },
+  {
+    "id": "b2_047",
+    "word": "inflation",
+    "ipa": "/ɪnˈfleɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "אינפלציה",
+    "definition": "A general increase in prices and fall in the value of money.",
+    "definitionHe": "עלייה כללית במחירים וירידה בערך הכסף.",
+    "examples": [
+      "Inflation reached 5% this year.",
+      "High inflation reduces purchasing power.",
+      "The central bank raised interest rates to combat inflation."
+    ],
+    "audioHint": "in-FLAY-shun",
+    "collocations": [
+      "high inflation",
+      "inflation rate",
+      "combat inflation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The inflation is very high",
+        "correct": "Inflation is very high",
+        "explanation": "כשמדברים על אינפלציה כמושג כלכלי כללי, לא משתמשים ב-the."
+      }
+    ],
+    "tip": "When discussing inflation as a general concept, don't use 'the'. Use 'the' only when referring to specific inflation.",
+    "tipHe": "כשדנים באינפלציה כמושג כללי, לא משתמשים ב-the. משתמשים ב-the רק כשמתייחסים לאינפלציה ספציפית.",
+    "synonyms": [
+      "price increase",
+      "cost rise"
+    ]
+  },
+  {
+    "id": "b2_048",
+    "word": "revenue",
+    "ipa": "/ˈrɛvənjuː/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "הכנסות",
+    "definition": "The total income generated by a business or government.",
+    "definitionHe": "ההכנסה הכוללת שנוצרת על ידי עסק או ממשלה.",
+    "examples": [
+      "The company's revenue grew by 20%.",
+      "Tax revenue funds public services.",
+      "Advertising is their main source of revenue."
+    ],
+    "audioHint": "REV-uh-noo",
+    "collocations": [
+      "annual revenue",
+      "revenue growth",
+      "generate revenue"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The revenues of the company has grown",
+        "correct": "The company's revenue has grown",
+        "explanation": "revenue יכול להיות ביחיד או רבים, אבל הפועל צריך להתאים. גם עדיף company's revenue."
+      }
+    ],
+    "tip": "'Revenue' can be singular or plural. Use possessive: 'the company's revenue' rather than 'the revenue of the company'.",
+    "tipHe": "revenue יכול להיות יחיד או רבים. משתמשים בשייכות: the company's revenue ולא the revenue of the company.",
+    "synonyms": [
+      "income",
+      "earnings"
+    ]
+  },
+  {
+    "id": "b2_049",
+    "word": "mortgage",
+    "ipa": "/ˈmɔːrɡɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "משכנתא",
+    "definition": "A loan used to buy property, with the property as security.",
+    "definitionHe": "הלוואה לרכישת נכס, כאשר הנכס משמש כבטוחה.",
+    "examples": [
+      "They took out a mortgage to buy the house.",
+      "The mortgage rate has increased recently.",
+      "She pays her mortgage every month."
+    ],
+    "audioHint": "MOR-gij",
+    "collocations": [
+      "take out a mortgage",
+      "mortgage rate",
+      "pay off a mortgage"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They took a mortgage",
+        "correct": "They took out a mortgage",
+        "explanation": "באנגלית אומרים take out a mortgage (לא רק take a mortgage)."
+      }
+    ],
+    "tip": "The 't' in 'mortgage' is silent. Use 'take out a mortgage' (not just 'take'). From French: 'mort' (death) + 'gage' (pledge).",
+    "tipHe": "ה-t ב-mortgage שקטה. אומרים take out a mortgage (לא רק take). מצרפתית: mort (מוות) + gage (ערבות).",
+    "synonyms": [
+      "home loan",
+      "property loan"
+    ]
+  },
+  {
+    "id": "b2_050",
+    "word": "dividend",
+    "ipa": "/ˈdɪvɪdɛnd/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "דיבידנד",
+    "definition": "A payment made by a company to its shareholders from its profits.",
+    "definitionHe": "תשלום שנעשה על ידי חברה לבעלי המניות שלה מהרווחים.",
+    "examples": [
+      "The company declared a dividend of $2 per share.",
+      "Investors look for stocks that pay regular dividends.",
+      "The dividend was paid quarterly."
+    ],
+    "audioHint": "DIV-ih-dend",
+    "collocations": [
+      "pay a dividend",
+      "dividend yield",
+      "annual dividend"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The company payed dividends",
+        "correct": "The company paid dividends",
+        "explanation": "pay הוא פועל לא רגיל: pay-paid-paid (לא payed)."
+      }
+    ],
+    "tip": "'Pay' is irregular: pay-paid-paid (not 'payed'). 'Dividend' comes from Latin 'dividendum' (thing to be divided).",
+    "tipHe": "pay הוא פועל לא רגיל: pay-paid-paid (לא payed). dividend בא מלטינית dividendum (דבר שיש לחלק).",
+    "synonyms": [
+      "payout",
+      "distribution"
+    ]
+  },
+  {
+    "id": "b2_051",
+    "word": "bankruptcy",
+    "ipa": "/ˈbæŋkrʌptsi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "פשיטת רגל",
+    "definition": "The state of being unable to pay debts; legal declaration of inability to pay.",
+    "definitionHe": "מצב של חוסר יכולת לשלם חובות; הכרזה משפטית על חדלות פירעון.",
+    "examples": [
+      "The company filed for bankruptcy last month.",
+      "Bankruptcy can have lasting effects on credit scores.",
+      "Several banks faced bankruptcy during the crisis."
+    ],
+    "audioHint": "BANGK-rupt-see",
+    "collocations": [
+      "file for bankruptcy",
+      "declare bankruptcy",
+      "face bankruptcy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The company went to bankruptcy",
+        "correct": "The company went bankrupt",
+        "explanation": "אומרים go bankrupt (ללא to). או: file for bankruptcy."
+      }
+    ],
+    "tip": "'Go bankrupt' (not 'go to bankruptcy'). Alternative: 'file for bankruptcy' or 'declare bankruptcy'.",
+    "tipHe": "אומרים go bankrupt (לא go to bankruptcy). חלופות: file for bankruptcy או declare bankruptcy.",
+    "synonyms": [
+      "insolvency",
+      "financial ruin"
+    ]
+  },
+  {
+    "id": "b2_052",
+    "word": "portfolio",
+    "ipa": "/pɔːrtˈfoʊlioʊ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "תיק השקעות",
+    "definition": "A collection of investments owned by a person or organization.",
+    "definitionHe": "אוסף השקעות שבבעלות אדם או ארגון.",
+    "examples": [
+      "She manages a diverse investment portfolio.",
+      "His portfolio includes stocks and bonds.",
+      "You should diversify your portfolio to reduce risk."
+    ],
+    "audioHint": "port-FOH-lee-oh",
+    "collocations": [
+      "investment portfolio",
+      "portfolio management",
+      "diversified portfolio"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He has a portfolio of invest",
+        "correct": "He has an investment portfolio",
+        "explanation": "invest הוא פועל - שם העצם הוא investment. אומרים investment portfolio."
+      }
+    ],
+    "tip": "'Portfolio' can also mean a collection of work samples (design portfolio, art portfolio), not just investments.",
+    "tipHe": "portfolio יכול גם לאמר אוסף של דוגמאות עבודה (תיק עיצוב, תיק אמנות), לא רק השקעות.",
+    "synonyms": [
+      "holdings",
+      "collection"
+    ]
+  },
+  {
+    "id": "b2_053",
+    "word": "commodity",
+    "ipa": "/kəˈmɒdɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "סחורה",
+    "definition": "A raw material or basic product that can be bought and sold.",
+    "definitionHe": "חומר גלם או מוצר בסיסי שניתן לקנות ולמכור.",
+    "examples": [
+      "Oil is the world's most traded commodity.",
+      "Commodity prices fluctuated throughout the year.",
+      "Gold is considered a safe-haven commodity."
+    ],
+    "audioHint": "kuh-MOD-ih-tee",
+    "collocations": [
+      "commodity prices",
+      "commodity market",
+      "commodity trading"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The commodity's prices raised",
+        "correct": "Commodity prices rose",
+        "explanation": "raise הוא פועל יוצא (צריך מושא). rise הוא פועל עומד. מחירים rise (עולים מעצמם)."
+      }
+    ],
+    "tip": "'Rise' (intransitive) = go up by itself. 'Raise' (transitive) = make something go up. Prices rise (not raise).",
+    "tipHe": "rise (עומד) = עולה מעצמו. raise (יוצא) = מעלה משהו. מחירים rise (לא raise).",
+    "synonyms": [
+      "goods",
+      "product"
+    ]
+  },
+  {
+    "id": "b2_054",
+    "word": "liability",
+    "ipa": "/ˌlaɪəˈbɪlɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "התחייבות, חבות",
+    "definition": "A financial debt or obligation; legal responsibility.",
+    "definitionHe": "חוב כספי או התחייבות; אחריות משפטית.",
+    "examples": [
+      "The company's liabilities exceeded its assets.",
+      "He became a liability to the team.",
+      "They denied liability for the accident."
+    ],
+    "audioHint": "ly-uh-BIL-ih-tee",
+    "collocations": [
+      "financial liability",
+      "limited liability",
+      "legal liability"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The company has many liability",
+        "correct": "The company has many liabilities",
+        "explanation": "liability ספירה - ברבים: liabilities."
+      }
+    ],
+    "tip": "'Liability' is countable - plural: 'liabilities'. It also informally means 'a burden': 'He's a liability' (he causes problems).",
+    "tipHe": "liability ספירה - רבים: liabilities. גם אומרים בלתי רשמי he's a liability (הוא נטל).",
+    "synonyms": [
+      "debt",
+      "obligation"
+    ]
+  },
+  {
+    "id": "b2_055",
+    "word": "equity",
+    "ipa": "/ˈɛkwɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "הון עצמי",
+    "definition": "The value of an asset minus any money owed on it.",
+    "definitionHe": "ערך הנכס פחות כסף שחייבים עליו.",
+    "examples": [
+      "They have 30% equity in their home.",
+      "The startup raised capital by offering equity.",
+      "Equity investors share in the company's profits."
+    ],
+    "audioHint": "EK-wih-tee",
+    "collocations": [
+      "home equity",
+      "equity stake",
+      "equity market"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He has an equity of 50%",
+        "correct": "He has 50% equity",
+        "explanation": "equity לא צריך תמיד a/an לפניו. אומרים have equity או hold equity."
+      }
+    ],
+    "tip": "'Equity' also means fairness/justice in non-financial contexts: 'equity in education'. Same word, different meaning.",
+    "tipHe": "equity גם אומר הוגנות/צדק בהקשרים לא-פיננסיים: equity in education. אותה מילה, משמעות שונה.",
+    "synonyms": [
+      "ownership",
+      "stake"
+    ]
+  },
+  {
+    "id": "b2_056",
+    "word": "depreciation",
+    "ipa": "/dɪˌpriːʃiˈeɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "פחת",
+    "definition": "A decrease in the value of an asset over time.",
+    "definitionHe": "ירידה בערך של נכס לאורך זמן.",
+    "examples": [
+      "The car's depreciation was significant in the first year.",
+      "Depreciation is an important accounting concept.",
+      "They calculated the annual depreciation of equipment."
+    ],
+    "audioHint": "dih-pree-shee-AY-shun",
+    "collocations": [
+      "annual depreciation",
+      "asset depreciation",
+      "depreciation rate"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The depreciation of the car is high very",
+        "correct": "The depreciation of the car is very high",
+        "explanation": "very בא לפני high, לא אחרי: very high."
+      }
+    ],
+    "tip": "Word order matters: 'very high' (not 'high very'). The verb form is 'depreciate'. Opposite: 'appreciation'.",
+    "tipHe": "סדר המילים חשוב: very high (לא high very). צורת הפועל: depreciate. הפוך: appreciation.",
+    "synonyms": [
+      "decline",
+      "devaluation"
+    ]
+  },
+  {
+    "id": "b2_057",
+    "word": "transaction",
+    "ipa": "/trænˈzækʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "עסקה",
+    "definition": "An instance of buying or selling; a business deal.",
+    "definitionHe": "מקרה של קנייה או מכירה; עסקה מסחרית.",
+    "examples": [
+      "The transaction was completed online.",
+      "Each transaction is recorded in the system.",
+      "They processed thousands of transactions daily."
+    ],
+    "audioHint": "tran-ZAK-shun",
+    "collocations": [
+      "financial transaction",
+      "complete a transaction",
+      "transaction fee"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They did a transaction",
+        "correct": "They completed a transaction",
+        "explanation": "בהקשר רשמי, אומרים complete/process a transaction ולא do."
+      }
+    ],
+    "tip": "In formal/business English, use 'complete/process/conduct a transaction' rather than 'do'.",
+    "tipHe": "באנגלית עסקית/רשמית, אומרים complete/process/conduct a transaction ולא do.",
+    "synonyms": [
+      "deal",
+      "exchange"
+    ]
+  },
+  {
+    "id": "b2_058",
+    "word": "interest rate",
+    "ipa": "/ˈɪntrɪst reɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "ריבית",
+    "definition": "The percentage charged for borrowing money or earned on savings.",
+    "definitionHe": "האחוז שנגבה על הלוואת כסף או שנצבר על חיסכון.",
+    "examples": [
+      "The bank raised its interest rate to 4%.",
+      "Low interest rates encourage borrowing.",
+      "She compared interest rates before choosing a loan."
+    ],
+    "audioHint": "IN-trist rayt",
+    "collocations": [
+      "low interest rate",
+      "raise interest rates",
+      "fixed interest rate"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The interest increased",
+        "correct": "The interest rate increased",
+        "explanation": "interest לבד פירושו עניין. interest rate פירושו ריבית. צריך rate."
+      }
+    ],
+    "tip": "'Interest' alone can mean curiosity/concern. 'Interest rate' specifically means the financial percentage.",
+    "tipHe": "interest לבד יכול לאמר סקרנות/עניין. interest rate במיוחד אומר אחוז פיננסי.",
+    "synonyms": [
+      "lending rate",
+      "borrowing rate"
+    ]
+  },
+  {
+    "id": "b2_059",
+    "word": "stock market",
+    "ipa": "/stɒk ˈmɑːrkɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "שוק המניות",
+    "definition": "A place where shares of companies are bought and sold.",
+    "definitionHe": "מקום שבו קונים ומוכרים מניות של חברות.",
+    "examples": [
+      "The stock market crashed in 2008.",
+      "She invests heavily in the stock market.",
+      "Stock market prices fluctuate daily."
+    ],
+    "audioHint": "stok MAR-kit",
+    "collocations": [
+      "stock market crash",
+      "stock market index",
+      "invest in the stock market"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He plays in the stock market",
+        "correct": "He invests in the stock market",
+        "explanation": "באנגלית אומרים invest in the stock market. play לא מתאים להקשר רציני."
+      }
+    ],
+    "tip": "Use 'invest in' the stock market (not 'play'). 'Play the stock market' exists but implies gambling/risk.",
+    "tipHe": "אומרים invest in the stock market (לא play). play the stock market קיים אבל מרמז על הימורים/סיכון.",
+    "synonyms": [
+      "equity market",
+      "share market"
+    ]
+  },
+  {
+    "id": "b2_060",
+    "word": "budget deficit",
+    "ipa": "/ˈbʌdʒɪt ˈdɛfɪsɪt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "finance",
+    "translation": "גירעון תקציבי",
+    "definition": "When a government spends more money than it receives.",
+    "definitionHe": "כאשר ממשלה מוציאה יותר כסף ממה שהיא מקבלת.",
+    "examples": [
+      "The country's budget deficit has been growing.",
+      "They need to reduce the budget deficit.",
+      "A large budget deficit can lead to economic problems."
+    ],
+    "audioHint": "BUJ-it DEF-ih-sit",
+    "collocations": [
+      "reduce the deficit",
+      "budget deficit spending",
+      "growing deficit"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The deficit of the budget increased",
+        "correct": "The budget deficit increased",
+        "explanation": "אומרים budget deficit כביטוי אחד, לא deficit of the budget."
+      }
+    ],
+    "tip": "'Budget deficit' is a compound noun - keep the words together. Opposite: 'budget surplus'.",
+    "tipHe": "budget deficit הוא שם עצם מורכב - שומרים את המילים ביחד. הפוך: budget surplus.",
+    "synonyms": [
+      "shortfall",
+      "fiscal gap"
+    ]
+  },
+  {
+    "id": "b2_061",
+    "word": "anxiety",
+    "ipa": "/æŋˈzaɪəti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "חרדה",
+    "definition": "A feeling of worry, nervousness, or unease about something uncertain.",
+    "definitionHe": "תחושת דאגה, עצבנות או אי שקט לגבי משהו לא ודאי.",
+    "examples": [
+      "She suffers from anxiety before exams.",
+      "Anxiety disorders are very common.",
+      "The uncertainty caused him great anxiety."
+    ],
+    "audioHint": "ang-ZY-uh-tee",
+    "collocations": [
+      "suffer from anxiety",
+      "anxiety disorder",
+      "anxiety attack"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have anxiety from the test",
+        "correct": "I have anxiety about the test",
+        "explanation": "באנגלית אומרים anxiety about (לא from)."
+      }
+    ],
+    "tip": "Use 'anxiety about' (not 'anxiety from'). The adjective form is 'anxious': 'I'm anxious about the test'.",
+    "tipHe": "אומרים anxiety about (לא anxiety from). צורת התואר: anxious: I'm anxious about the test.",
+    "synonyms": [
+      "worry",
+      "nervousness"
+    ]
+  },
+  {
+    "id": "b2_062",
+    "word": "cognitive",
+    "ipa": "/ˈkɒɡnɪtɪv/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "קוגניטיבי",
+    "definition": "Relating to mental processes of perception, memory, and reasoning.",
+    "definitionHe": "הקשור לתהליכים מנטליים של תפיסה, זיכרון וחשיבה.",
+    "examples": [
+      "Cognitive abilities decline with age.",
+      "She studies cognitive psychology.",
+      "The test measures cognitive development in children."
+    ],
+    "audioHint": "KOG-nih-tiv",
+    "collocations": [
+      "cognitive development",
+      "cognitive function",
+      "cognitive therapy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "His cognitives are good",
+        "correct": "His cognitive abilities are good",
+        "explanation": "cognitive הוא תואר, לא שם עצם. צריך שם עצם אחריו: cognitive abilities."
+      }
+    ],
+    "tip": "'Cognitive' is only an adjective - it needs a noun after it. Say 'cognitive skills/abilities' (not 'cognitives').",
+    "tipHe": "cognitive הוא רק תואר - צריך שם עצם אחריו. אומרים cognitive skills/abilities (לא cognitives).",
+    "synonyms": [
+      "mental",
+      "intellectual"
+    ]
+  },
+  {
+    "id": "b2_063",
+    "word": "empathy",
+    "ipa": "/ˈɛmpəθi/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "אמפתיה",
+    "definition": "The ability to understand and share the feelings of another person.",
+    "definitionHe": "היכולת להבין ולחלוק את הרגשות של אדם אחר.",
+    "examples": [
+      "She showed great empathy toward the victims.",
+      "Empathy is different from sympathy.",
+      "Teaching empathy to children is important."
+    ],
+    "audioHint": "EM-puh-thee",
+    "collocations": [
+      "show empathy",
+      "lack of empathy",
+      "feel empathy"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She has empathy with the poor",
+        "correct": "She has empathy for the poor",
+        "explanation": "באנגלית אומרים empathy for/toward (לא empathy with)."
+      }
+    ],
+    "tip": "'Empathy for/toward' someone. 'Empathy' = feeling their feelings. 'Sympathy' = feeling sorry for them. Important distinction!",
+    "tipHe": "empathy for/toward מישהו. empathy = להרגיש את הרגשות שלהם. sympathy = לרחם עליהם. הבדל חשוב!",
+    "synonyms": [
+      "compassion",
+      "understanding"
+    ]
+  },
+  {
+    "id": "b2_064",
+    "word": "perception",
+    "ipa": "/pərˈsɛpʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "תפיסה",
+    "definition": "The way you understand or interpret something; awareness through the senses.",
+    "definitionHe": "הדרך שבה אתה מבין או מפרש משהו; מודעות דרך החושים.",
+    "examples": [
+      "Public perception of the company changed after the scandal.",
+      "Perception of color varies between individuals.",
+      "His perception of the situation was different from mine."
+    ],
+    "audioHint": "per-SEP-shun",
+    "collocations": [
+      "public perception",
+      "perception of reality",
+      "change perception"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The perception about the issue",
+        "correct": "The perception of the issue",
+        "explanation": "אומרים perception of (לא about)."
+      }
+    ],
+    "tip": "Use 'perception of' (not 'perception about'). The adjective is 'perceptive' (= observant and insightful).",
+    "tipHe": "אומרים perception of (לא perception about). התואר הוא perceptive (= תצפיתני ובעל תובנות).",
+    "synonyms": [
+      "awareness",
+      "understanding"
+    ]
+  },
+  {
+    "id": "b2_065",
+    "word": "subconscious",
+    "ipa": "/sʌbˈkɒnʃəs/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "תת-מודע",
+    "definition": "Existing in the mind but not immediately available to consciousness.",
+    "definitionHe": "קיים בתודעה אבל לא זמין באופן מיידי למודעות.",
+    "examples": [
+      "Subconscious fears can affect behavior.",
+      "The decision was made on a subconscious level.",
+      "Music can influence the subconscious mind."
+    ],
+    "audioHint": "sub-KON-shus",
+    "collocations": [
+      "subconscious mind",
+      "subconscious level",
+      "subconscious thoughts"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "My subconsious told me",
+        "correct": "My subconscious told me",
+        "explanation": "שים לב לאיות: subconscious (עם ci)."
+      }
+    ],
+    "tip": "'Subconscious' vs 'unconscious': subconscious = below awareness but accessible. Unconscious = completely unaware or knocked out.",
+    "tipHe": "subconscious מול unconscious: subconscious = מתחת למודעות אבל נגיש. unconscious = לגמרי לא מודע.",
+    "synonyms": [
+      "unconscious",
+      "latent"
+    ]
+  },
+  {
+    "id": "b2_066",
+    "word": "trauma",
+    "ipa": "/ˈtrɔːmə/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "טראומה",
+    "definition": "A deeply distressing or disturbing experience; emotional shock.",
+    "definitionHe": "חוויה מצערת או מטרידה עמוקות; הלם רגשי.",
+    "examples": [
+      "She experienced trauma during childhood.",
+      "The accident left lasting psychological trauma.",
+      "They provide therapy for trauma survivors."
+    ],
+    "audioHint": "TRAW-muh",
+    "collocations": [
+      "psychological trauma",
+      "trauma therapy",
+      "childhood trauma"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She has a big trauma",
+        "correct": "She has severe trauma",
+        "explanation": "עם trauma אומרים severe/deep (לא big). trauma היא גם לא-ספירה בהקשר פסיכולוגי."
+      }
+    ],
+    "tip": "Use 'severe/deep/significant trauma' (not 'big'). In medical contexts, trauma also means physical injury.",
+    "tipHe": "אומרים severe/deep/significant trauma (לא big). בהקשרים רפואיים, trauma גם אומר פציעה פיזית.",
+    "synonyms": [
+      "shock",
+      "distress"
+    ]
+  },
+  {
+    "id": "b2_067",
+    "word": "resilience",
+    "ipa": "/rɪˈzɪliəns/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "חוסן",
+    "definition": "The ability to recover quickly from difficulties.",
+    "definitionHe": "היכולת להתאושש מהר מקשיים.",
+    "examples": [
+      "Her resilience helped her overcome the challenges.",
+      "Children can show remarkable resilience.",
+      "Building emotional resilience is important for mental health."
+    ],
+    "audioHint": "rih-ZIL-ee-ens",
+    "collocations": [
+      "emotional resilience",
+      "build resilience",
+      "show resilience"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He has a lot of resiliance",
+        "correct": "He has a lot of resilience",
+        "explanation": "שים לב לאיות: resilience עם ence ולא ance."
+      }
+    ],
+    "tip": "Spelling: 'resilience' (not 'resiliance'). The adjective is 'resilient'. It's uncountable.",
+    "tipHe": "איות: resilience (לא resiliance). התואר: resilient. זו מילה לא-ספירה.",
+    "synonyms": [
+      "toughness",
+      "adaptability"
+    ]
+  },
+  {
+    "id": "b2_068",
+    "word": "disorder",
+    "ipa": "/dɪsˈɔːrdər/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "הפרעה",
+    "definition": "A medical condition that disrupts normal functioning.",
+    "definitionHe": "מצב רפואי שמשבש תפקוד תקין.",
+    "examples": [
+      "She was diagnosed with an anxiety disorder.",
+      "Eating disorders affect millions of people.",
+      "The disorder can be managed with medication."
+    ],
+    "audioHint": "dis-OR-der",
+    "collocations": [
+      "mental disorder",
+      "eating disorder",
+      "personality disorder"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He has a disorder of anxiety",
+        "correct": "He has an anxiety disorder",
+        "explanation": "באנגלית שם התואר בא לפני: anxiety disorder (לא disorder of anxiety)."
+      }
+    ],
+    "tip": "In English, the modifier comes first: 'anxiety disorder' (not 'disorder of anxiety'). This is compound noun formation.",
+    "tipHe": "באנגלית, המגדיר בא ראשון: anxiety disorder (לא disorder of anxiety). זוהי יצירת שם עצם מורכב.",
+    "synonyms": [
+      "condition",
+      "illness"
+    ]
+  },
+  {
+    "id": "b2_069",
+    "word": "stimulus",
+    "ipa": "/ˈstɪmjʊləs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "גירוי",
+    "definition": "Something that causes a reaction or response.",
+    "definitionHe": "משהו שגורם לתגובה.",
+    "examples": [
+      "The loud noise was a stimulus that triggered fear.",
+      "The brain responds to various stimuli.",
+      "Financial stimulus packages boosted the economy."
+    ],
+    "audioHint": "STIM-yoo-lus",
+    "collocations": [
+      "respond to stimulus",
+      "visual stimulus",
+      "economic stimulus"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The different stimuluses affect behavior",
+        "correct": "The different stimuli affect behavior",
+        "explanation": "הרבים של stimulus הוא stimuli (מלטינית), לא stimuluses."
+      }
+    ],
+    "tip": "Singular: 'stimulus'. Plural: 'stimuli' (Latin). Like 'focus/foci', 'fungus/fungi'.",
+    "tipHe": "יחיד: stimulus. רבים: stimuli (לטינית). כמו focus/foci, fungus/fungi.",
+    "synonyms": [
+      "trigger",
+      "prompt"
+    ]
+  },
+  {
+    "id": "b2_070",
+    "word": "instinct",
+    "ipa": "/ˈɪnstɪŋkt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "אינסטינקט",
+    "definition": "An innate pattern of behavior; a natural tendency.",
+    "definitionHe": "דפוס התנהגות מולד; נטייה טבעית.",
+    "examples": [
+      "Animals rely on instinct to survive.",
+      "Her first instinct was to run.",
+      "Maternal instinct is powerful in many species."
+    ],
+    "audioHint": "IN-stinkt",
+    "collocations": [
+      "survival instinct",
+      "gut instinct",
+      "natural instinct"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She had an instinct that something is wrong",
+        "correct": "She had an instinct that something was wrong",
+        "explanation": "אחרי had (עבר) צריך was (עבר) ולא is (הווה) - התאמת זמנים."
+      }
+    ],
+    "tip": "Sequence of tenses: 'She had an instinct that something was wrong' (not 'is'). Past → past.",
+    "tipHe": "רצף זמנים: She had an instinct that something was wrong (לא is). עבר → עבר.",
+    "synonyms": [
+      "intuition",
+      "impulse"
+    ]
+  },
+  {
+    "id": "b2_071",
+    "word": "behavioral",
+    "ipa": "/bɪˈheɪvjərəl/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "התנהגותי",
+    "definition": "Relating to the way a person or animal acts.",
+    "definitionHe": "הקשור לדרך שבה אדם או בעל חיים פועלים.",
+    "examples": [
+      "Behavioral therapy can help with anxiety.",
+      "The study focused on behavioral patterns.",
+      "Behavioral changes may indicate a problem."
+    ],
+    "audioHint": "bih-HAYV-yer-ul",
+    "collocations": [
+      "behavioral therapy",
+      "behavioral science",
+      "behavioral patterns"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The behaviorial problems of the child",
+        "correct": "The behavioral problems of the child",
+        "explanation": "שים לב לאיות: behavioral (אמריקאית) או behavioural (בריטית), לא behaviorial."
+      }
+    ],
+    "tip": "American: 'behavioral'. British: 'behavioural'. Never 'behaviorial'. From 'behavior/behaviour' + '-al'.",
+    "tipHe": "אמריקאית: behavioral. בריטית: behavioural. אף פעם לא behaviorial. מ-behavior/behaviour + al.",
+    "synonyms": [
+      "conduct-related",
+      "psychological"
+    ]
+  },
+  {
+    "id": "b2_072",
+    "word": "phobia",
+    "ipa": "/ˈfoʊbiə/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "פוביה",
+    "definition": "An extreme or irrational fear of something.",
+    "definitionHe": "פחד קיצוני או לא רציונלי ממשהו.",
+    "examples": [
+      "She has a phobia of spiders.",
+      "Social phobia prevents him from attending parties.",
+      "Many phobias can be treated with therapy."
+    ],
+    "audioHint": "FOH-bee-uh",
+    "collocations": [
+      "social phobia",
+      "develop a phobia",
+      "overcome a phobia"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She has a phobia from heights",
+        "correct": "She has a phobia of heights",
+        "explanation": "אומרים phobia of (לא phobia from). בעברית אומרים פוביה מ-, אבל באנגלית of."
+      }
+    ],
+    "tip": "Use 'phobia of' (not 'from'). Common phobias: claustrophobia (enclosed spaces), arachnophobia (spiders), acrophobia (heights).",
+    "tipHe": "אומרים phobia of (לא from). פוביות נפוצות: claustrophobia (מקומות סגורים), arachnophobia (עכבישים), acrophobia (גבהים).",
+    "synonyms": [
+      "fear",
+      "aversion"
+    ]
+  },
+  {
+    "id": "b2_073",
+    "word": "neurosis",
+    "ipa": "/njʊˈroʊsɪs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "נוירוזה",
+    "definition": "A mild mental disorder involving anxiety, depression, or obsessive behavior.",
+    "definitionHe": "הפרעה נפשית קלה הכוללת חרדה, דיכאון או התנהגות אובססיבית.",
+    "examples": [
+      "His neurosis about cleanliness dominated his life.",
+      "Neurosis is less severe than psychosis.",
+      "Many people experience some form of neurosis."
+    ],
+    "audioHint": "nyoo-ROH-sis",
+    "collocations": [
+      "anxiety neurosis",
+      "obsessive neurosis",
+      "neurotic behavior"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She suffers from neurosis since childhood",
+        "correct": "She has suffered from neurosis since childhood",
+        "explanation": "עם since צריך present perfect (has suffered), לא present simple."
+      }
+    ],
+    "tip": "With 'since', use present perfect: 'has suffered since' (not 'suffers since'). Plural: 'neuroses'.",
+    "tipHe": "עם since, משתמשים ב-present perfect: has suffered since (לא suffers since). רבים: neuroses.",
+    "synonyms": [
+      "anxiety disorder",
+      "mental distress"
+    ]
+  },
+  {
+    "id": "b2_074",
+    "word": "self-esteem",
+    "ipa": "/ˌsɛlf ɪˈstiːm/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "הערכה עצמית",
+    "definition": "Confidence in one's own worth or abilities.",
+    "definitionHe": "ביטחון בערך העצמי או ביכולות של עצמך.",
+    "examples": [
+      "Low self-esteem can lead to depression.",
+      "The program aims to boost children's self-esteem.",
+      "She has high self-esteem and believes in herself."
+    ],
+    "audioHint": "self-ih-STEEM",
+    "collocations": [
+      "low self-esteem",
+      "boost self-esteem",
+      "high self-esteem"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He needs to raise his self esteem",
+        "correct": "He needs to raise his self-esteem",
+        "explanation": "self-esteem נכתב עם מקף. גם אפשר boost/build self-esteem."
+      }
+    ],
+    "tip": "'Self-esteem' is hyphenated. Use 'boost/build/raise self-esteem'. 'Self-esteem' vs 'self-confidence' are slightly different.",
+    "tipHe": "self-esteem נכתב עם מקף. אומרים boost/build/raise self-esteem.",
+    "synonyms": [
+      "self-worth",
+      "self-confidence"
+    ]
+  },
+  {
+    "id": "b2_075",
+    "word": "introvert",
+    "ipa": "/ˈɪntrəvɜːrt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "psychology",
+    "translation": "מופנם",
+    "definition": "A person who is more focused on internal thoughts and feelings.",
+    "definitionHe": "אדם שמתמקד יותר במחשבות ורגשות פנימיים.",
+    "examples": [
+      "As an introvert, she prefers small gatherings.",
+      "Introverts recharge by spending time alone.",
+      "The world often favors extroverts over introverts."
+    ],
+    "audioHint": "IN-truh-vurt",
+    "collocations": [
+      "natural introvert",
+      "introvert personality",
+      "introvert vs extrovert"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She is very introvert",
+        "correct": "She is very introverted",
+        "explanation": "כתואר, צריך introverted (לא introvert). introvert הוא שם עצם."
+      }
+    ],
+    "tip": "As an adjective, use 'introverted' (not 'introvert'). 'Introvert' is a noun: 'She is an introvert' or 'She is introverted'.",
+    "tipHe": "כתואר, אומרים introverted (לא introvert). introvert הוא שם עצם: She is an introvert או She is introverted.",
+    "synonyms": [
+      "loner",
+      "reserved person"
+    ]
+  },
+  {
+    "id": "b2_076",
+    "word": "verdict",
+    "ipa": "/ˈvɜːrdɪkt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "פסק דין",
+    "definition": "The decision of a jury or judge in a legal case.",
+    "definitionHe": "ההחלטה של חבר מושבעים או שופט בתיק משפטי.",
+    "examples": [
+      "The jury reached a verdict of not guilty.",
+      "The verdict was announced after three days.",
+      "They appealed the verdict to a higher court."
+    ],
+    "audioHint": "VUR-dikt",
+    "collocations": [
+      "reach a verdict",
+      "deliver a verdict",
+      "guilty verdict"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The judge gave a guilty verdict",
+        "correct": "The jury delivered a guilty verdict",
+        "explanation": "בדרך כלל חבר המושבעים (jury) נותן את הverdikt, השופט (judge) נותן את הsentence."
+      }
+    ],
+    "tip": "Typically, the jury gives the 'verdict' (guilty/not guilty), while the judge gives the 'sentence' (punishment).",
+    "tipHe": "בדרך כלל, חבר המושבעים נותן את הverdict (אשם/לא אשם), ואילו השופט נותן את הsentence (עונש).",
+    "synonyms": [
+      "judgment",
+      "ruling"
+    ]
+  },
+  {
+    "id": "b2_077",
+    "word": "prosecution",
+    "ipa": "/ˌprɒsɪˈkjuːʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "תביעה",
+    "definition": "The side in a legal case that accuses someone of a crime.",
+    "definitionHe": "הצד בתיק משפטי שמאשים מישהו בפשע.",
+    "examples": [
+      "The prosecution presented strong evidence.",
+      "She works for the prosecution.",
+      "The prosecution called three witnesses."
+    ],
+    "audioHint": "pros-ih-KYOO-shun",
+    "collocations": [
+      "criminal prosecution",
+      "the prosecution's case",
+      "face prosecution"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The prosecution were very strong",
+        "correct": "The prosecution was very strong",
+        "explanation": "prosecution (כקבוצה) בדרך כלל לוקח פועל ביחיד באנגלית אמריקאית."
+      }
+    ],
+    "tip": "In American English, 'the prosecution' usually takes a singular verb. The verb form is 'prosecute'.",
+    "tipHe": "באנגלית אמריקאית, the prosecution בדרך כלל לוקח פועל יחיד. צורת הפועל: prosecute.",
+    "synonyms": [
+      "accusation",
+      "the state"
+    ]
+  },
+  {
+    "id": "b2_078",
+    "word": "defendant",
+    "ipa": "/dɪˈfɛndənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "נאשם",
+    "definition": "A person accused of a crime in a court of law.",
+    "definitionHe": "אדם שמואשם בפשע בבית משפט.",
+    "examples": [
+      "The defendant pleaded not guilty.",
+      "The defendant was released on bail.",
+      "The defendant's lawyer argued for dismissal."
+    ],
+    "audioHint": "dih-FEN-dent",
+    "collocations": [
+      "the defendant pleaded",
+      "defend a defendant",
+      "defendant's rights"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The defendant claimed that he is innocent",
+        "correct": "The defendant claimed that he was innocent",
+        "explanation": "אחרי claimed (עבר) צריך was (עבר) - התאמת זמנים."
+      }
+    ],
+    "tip": "Sequence of tenses: 'claimed that he was' (not 'is'). The opposite is 'plaintiff' (the one who sues).",
+    "tipHe": "רצף זמנים: claimed that he was (לא is). ההפך: plaintiff (התובע).",
+    "synonyms": [
+      "accused",
+      "respondent"
+    ]
+  },
+  {
+    "id": "b2_079",
+    "word": "testimony",
+    "ipa": "/ˈtɛstɪmoʊni/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "עדות",
+    "definition": "A formal statement made under oath in a court of law.",
+    "definitionHe": "הצהרה רשמית שניתנת תחת שבועה בבית משפט.",
+    "examples": [
+      "Her testimony was crucial to the case.",
+      "He gave testimony before the committee.",
+      "The witness changed his testimony during the trial."
+    ],
+    "audioHint": "TES-tih-moh-nee",
+    "collocations": [
+      "give testimony",
+      "eyewitness testimony",
+      "sworn testimony"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She gave a testimony in the court",
+        "correct": "She gave testimony in court",
+        "explanation": "testimony לא צריך a לפניו ו-court לא צריך the כשמדברים על in court."
+      }
+    ],
+    "tip": "'Give testimony' (no 'a') and 'in court' (no 'the') are standard legal phrases.",
+    "tipHe": "give testimony (ללא a) ו-in court (ללא the) הם ביטויים משפטיים סטנדרטיים.",
+    "synonyms": [
+      "statement",
+      "evidence"
+    ]
+  },
+  {
+    "id": "b2_080",
+    "word": "jurisdiction",
+    "ipa": "/ˌdʒʊrɪsˈdɪkʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "סמכות שיפוט",
+    "definition": "The official power to make legal decisions in a particular area.",
+    "definitionHe": "הסמכות הרשמית לקבל החלטות משפטיות באזור מסוים.",
+    "examples": [
+      "This crime falls under federal jurisdiction.",
+      "The court has no jurisdiction over international disputes.",
+      "The case was transferred to another jurisdiction."
+    ],
+    "audioHint": "joor-is-DIK-shun",
+    "collocations": [
+      "under jurisdiction",
+      "fall under jurisdiction",
+      "legal jurisdiction"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "This is not in our jurisdiction area",
+        "correct": "This is not within our jurisdiction",
+        "explanation": "אומרים within our jurisdiction (לא in our jurisdiction area)."
+      }
+    ],
+    "tip": "Use 'within our jurisdiction' or 'under our jurisdiction' (not 'in our jurisdiction area').",
+    "tipHe": "אומרים within our jurisdiction או under our jurisdiction (לא in our jurisdiction area).",
+    "synonyms": [
+      "authority",
+      "domain"
+    ]
+  },
+  {
+    "id": "b2_081",
+    "word": "statute",
+    "ipa": "/ˈstætʃuːt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "חוק, חיקוק",
+    "definition": "A written law passed by a legislative body.",
+    "definitionHe": "חוק כתוב שנחקק על ידי גוף מחוקק.",
+    "examples": [
+      "The statute was enacted in 2015.",
+      "According to the statute, the penalty is a fine.",
+      "The statute of limitations expired last year."
+    ],
+    "audioHint": "STAT-yoot",
+    "collocations": [
+      "statute of limitations",
+      "federal statute",
+      "statutory requirement"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He confused statue and statute",
+        "correct": "Remember: statue = פסל, statute = חוק",
+        "explanation": "statue (פסל) ו-statute (חוק) הן מילים שונות! שימו לב להבדל באיות ובהגייה."
+      }
+    ],
+    "tip": "Don't confuse 'statute' (law, STAT-yoot) with 'statue' (sculpture, STAT-yoo). Different words!",
+    "tipHe": "אל תבלבלו בין statute (חוק, STAT-yoot) לבין statue (פסל, STAT-yoo). מילים שונות!",
+    "synonyms": [
+      "law",
+      "regulation"
+    ]
+  },
+  {
+    "id": "b2_082",
+    "word": "attorney",
+    "ipa": "/əˈtɜːrni/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "עורך דין",
+    "definition": "A lawyer, especially one qualified to represent clients in court.",
+    "definitionHe": "עורך דין, במיוחד כזה שמוסמך לייצג לקוחות בבית משפט.",
+    "examples": [
+      "She hired an attorney to handle the case.",
+      "The attorney general is the chief legal officer.",
+      "His attorney advised him not to speak."
+    ],
+    "audioHint": "uh-TUR-nee",
+    "collocations": [
+      "defense attorney",
+      "attorney general",
+      "hire an attorney"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She went to an attorney's office",
+        "correct": "She went to her attorney's office",
+        "explanation": "attorney הוא ספציפי - בדרך כלל צריך לציין של מי: my/her/the attorney."
+      }
+    ],
+    "tip": "'Attorney' = formal American English for lawyer. In UK, they say 'solicitor' or 'barrister'. 'Attorney at law' is the full title.",
+    "tipHe": "attorney = אנגלית אמריקאית רשמית לעורך דין. בבריטניה אומרים solicitor או barrister.",
+    "synonyms": [
+      "lawyer",
+      "counsel"
+    ]
+  },
+  {
+    "id": "b2_083",
+    "word": "plaintiff",
+    "ipa": "/ˈpleɪntɪf/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "תובע",
+    "definition": "A person who brings a legal action against someone in court.",
+    "definitionHe": "אדם שמגיש תביעה משפטית נגד מישהו בבית משפט.",
+    "examples": [
+      "The plaintiff filed a lawsuit for damages.",
+      "The plaintiff's lawyer presented the case.",
+      "The plaintiff was awarded compensation."
+    ],
+    "audioHint": "PLAYN-tif",
+    "collocations": [
+      "the plaintiff filed",
+      "plaintiff vs defendant",
+      "plaintiff's claim"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The plaintif filed a case",
+        "correct": "The plaintiff filed a case",
+        "explanation": "שים לב לאיות: plaintiff עם ff בסוף."
+      }
+    ],
+    "tip": "Spelling: 'plaintiff' ends in '-iff'. The plaintiff sues, the defendant is sued. Remember the pair!",
+    "tipHe": "איות: plaintiff מסתיים ב-iff. התובע (plaintiff) תובע, הנתבע (defendant) נתבע. זכרו את הזוג!",
+    "synonyms": [
+      "complainant",
+      "claimant"
+    ]
+  },
+  {
+    "id": "b2_084",
+    "word": "litigation",
+    "ipa": "/ˌlɪtɪˈɡeɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "התדיינות משפטית",
+    "definition": "The process of taking a dispute to court.",
+    "definitionHe": "התהליך של הבאת סכסוך לבית משפט.",
+    "examples": [
+      "The litigation lasted for three years.",
+      "They want to avoid costly litigation.",
+      "The company faces litigation from former employees."
+    ],
+    "audioHint": "lit-ih-GAY-shun",
+    "collocations": [
+      "costly litigation",
+      "pending litigation",
+      "litigation process"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They started a litigation against the company",
+        "correct": "They started litigation against the company",
+        "explanation": "litigation היא לא-ספירה, לא אומרים a litigation."
+      }
+    ],
+    "tip": "'Litigation' is uncountable - no 'a'. Use 'start/begin litigation' or 'a piece of litigation'.",
+    "tipHe": "litigation היא לא-ספירה - ללא a. אומרים start/begin litigation או a piece of litigation.",
+    "synonyms": [
+      "lawsuit",
+      "legal action"
+    ]
+  },
+  {
+    "id": "b2_085",
+    "word": "clause",
+    "ipa": "/klɔːz/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "סעיף",
+    "definition": "A specific provision or condition in a legal document.",
+    "definitionHe": "הוראה או תנאי ספציפיים במסמך משפטי.",
+    "examples": [
+      "The contract contains a confidentiality clause.",
+      "They added a new clause to the agreement.",
+      "The escape clause allows termination."
+    ],
+    "audioHint": "klawz",
+    "collocations": [
+      "confidentiality clause",
+      "escape clause",
+      "penalty clause"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "There is a clouse in the contract",
+        "correct": "There is a clause in the contract",
+        "explanation": "שים לב לאיות: clause (לא clouse). ההגייה: klawz."
+      }
+    ],
+    "tip": "'Clause' in grammar = a group of words with subject and verb. In law = a section of a document. Same word!",
+    "tipHe": "clause בדקדוק = קבוצת מילים עם נושא ופועל. במשפט = סעיף במסמך. אותה מילה!",
+    "synonyms": [
+      "provision",
+      "section"
+    ]
+  },
+  {
+    "id": "b2_086",
+    "word": "warrant",
+    "ipa": "/ˈwɒrənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "צו",
+    "definition": "A document issued by a judge authorizing an action, such as an arrest or search.",
+    "definitionHe": "מסמך שהוצא על ידי שופט המאשר פעולה, כגון מעצר או חיפוש.",
+    "examples": [
+      "The police obtained a search warrant.",
+      "An arrest warrant was issued for the suspect.",
+      "They executed the warrant at dawn."
+    ],
+    "audioHint": "WOR-unt",
+    "collocations": [
+      "search warrant",
+      "arrest warrant",
+      "issue a warrant"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The police has a warrant",
+        "correct": "The police have a warrant",
+        "explanation": "police הוא תמיד רבים באנגלית, לכן have ולא has."
+      }
+    ],
+    "tip": "'Police' is always plural in English: 'the police have' (not 'has'). This is a key grammar point.",
+    "tipHe": "police הוא תמיד רבים באנגלית: the police have (לא has). זו נקודת דקדוק חשובה.",
+    "synonyms": [
+      "court order",
+      "authorization"
+    ]
+  },
+  {
+    "id": "b2_087",
+    "word": "acquittal",
+    "ipa": "/əˈkwɪtəl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "זיכוי",
+    "definition": "A judgment that a person is not guilty of a crime.",
+    "definitionHe": "פסיקה שאדם אינו אשם בפשע.",
+    "examples": [
+      "The acquittal surprised many people.",
+      "After the acquittal, he was set free.",
+      "The lawyer fought for his client's acquittal."
+    ],
+    "audioHint": "uh-KWIT-ul",
+    "collocations": [
+      "win an acquittal",
+      "acquittal verdict",
+      "seek acquittal"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He received an acquital",
+        "correct": "He received an acquittal",
+        "explanation": "שים לב לאיות: acquittal עם tt כפולה."
+      }
+    ],
+    "tip": "Spelling: 'acquittal' has double 't'. The verb is 'acquit' (acquitted, acquitting - also double 't').",
+    "tipHe": "איות: acquittal עם tt כפולה. הפועל הוא acquit (acquitted, acquitting - גם tt כפולה).",
+    "synonyms": [
+      "exoneration",
+      "clearing"
+    ]
+  },
+  {
+    "id": "b2_088",
+    "word": "felony",
+    "ipa": "/ˈfɛləni/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "פשע חמור",
+    "definition": "A serious crime such as murder or robbery.",
+    "definitionHe": "פשע חמור כגון רצח או שוד.",
+    "examples": [
+      "He was charged with a felony.",
+      "Felony convictions carry long prison sentences.",
+      "Armed robbery is classified as a felony."
+    ],
+    "audioHint": "FEL-uh-nee",
+    "collocations": [
+      "commit a felony",
+      "felony charge",
+      "felony conviction"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He made a felony",
+        "correct": "He committed a felony",
+        "explanation": "באנגלית אומרים commit a crime/felony, לא make."
+      }
+    ],
+    "tip": "Use 'commit a felony' (not 'make' or 'do'). A 'felony' is more serious than a 'misdemeanor'.",
+    "tipHe": "אומרים commit a felony (לא make או do). felony חמור יותר מ-misdemeanor (עבירה קלה).",
+    "synonyms": [
+      "serious crime",
+      "major offense"
+    ]
+  },
+  {
+    "id": "b2_089",
+    "word": "bail",
+    "ipa": "/beɪl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "ערבות, ערובה",
+    "definition": "Money paid to a court to allow a prisoner to be released before trial.",
+    "definitionHe": "כסף ששולם לבית המשפט כדי לאפשר שחרור אסיר לפני המשפט.",
+    "examples": [
+      "He was released on bail of $50,000.",
+      "The judge set bail at one million dollars.",
+      "She posted bail for her son."
+    ],
+    "audioHint": "bayl",
+    "collocations": [
+      "release on bail",
+      "set bail",
+      "post bail"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He paid the bail and leaved",
+        "correct": "He paid the bail and left",
+        "explanation": "leave הוא פועל לא רגיל: leave-left-left (לא leaved)."
+      }
+    ],
+    "tip": "'Leave' is irregular: leave-left-left (never 'leaved'). 'Post bail' and 'make bail' both mean to pay it.",
+    "tipHe": "leave הוא פועל לא רגיל: leave-left-left (אף פעם לא leaved). post bail ו-make bail שניהם אומרים לשלם.",
+    "synonyms": [
+      "bond",
+      "surety"
+    ]
+  },
+  {
+    "id": "b2_090",
+    "word": "appeal",
+    "ipa": "/əˈpiːl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "law",
+    "translation": "ערעור",
+    "definition": "A request to a higher court to change a lower court's decision.",
+    "definitionHe": "בקשה לבית משפט גבוה יותר לשנות החלטה של בית משפט נמוך.",
+    "examples": [
+      "They filed an appeal against the verdict.",
+      "The appeal was rejected by the Supreme Court.",
+      "She has the right to appeal the decision."
+    ],
+    "audioHint": "uh-PEEL",
+    "collocations": [
+      "file an appeal",
+      "court of appeal",
+      "appeal process"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He appealed on the decision",
+        "correct": "He appealed against the decision",
+        "explanation": "אומרים appeal against a decision (לא appeal on)."
+      }
+    ],
+    "tip": "Use 'appeal against' (British) or 'appeal' directly (American): 'appeal the decision'. Both are correct.",
+    "tipHe": "אומרים appeal against (בריטית) או appeal ישירות (אמריקאית): appeal the decision. שניהם נכונים.",
+    "synonyms": [
+      "challenge",
+      "petition"
+    ]
+  },
+  {
+    "id": "b2_091",
+    "word": "integrity",
+    "ipa": "/ɪnˈtɛɡrɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "יושרה",
+    "definition": "The quality of being honest and having strong moral principles.",
+    "definitionHe": "התכונה של להיות ישר ובעל עקרונות מוסריים חזקים.",
+    "examples": [
+      "She is known for her integrity.",
+      "The integrity of the data must be maintained.",
+      "He acted with integrity throughout his career."
+    ],
+    "audioHint": "in-TEG-rih-tee",
+    "collocations": [
+      "personal integrity",
+      "maintain integrity",
+      "integrity of data"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He has a lot of integrity",
+        "correct": "He has great integrity",
+        "explanation": "integrity היא לא-ספירה - עדיף great/strong integrity ולא a lot of."
+      }
+    ],
+    "tip": "'Integrity' is uncountable. Use 'great integrity' or 'strong integrity'. It also means 'wholeness' (data integrity).",
+    "tipHe": "integrity היא לא-ספירה. אומרים great integrity או strong integrity. גם אומר שלמות (data integrity).",
+    "synonyms": [
+      "honesty",
+      "honor"
+    ]
+  },
+  {
+    "id": "b2_092",
+    "word": "ambiguity",
+    "ipa": "/ˌæmbɪˈɡjuːɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "דו-משמעות",
+    "definition": "The quality of being open to more than one interpretation.",
+    "definitionHe": "התכונה של להיות פתוח ליותר מפירוש אחד.",
+    "examples": [
+      "The ambiguity of the law led to confusion.",
+      "She dislikes ambiguity in instructions.",
+      "There is some ambiguity in his statement."
+    ],
+    "audioHint": "am-bih-GYOO-ih-tee",
+    "collocations": [
+      "avoid ambiguity",
+      "deliberate ambiguity",
+      "moral ambiguity"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The sentence has ambiguity meanings",
+        "correct": "The sentence has ambiguous meanings",
+        "explanation": "ambiguity הוא שם עצם, ambiguous הוא תואר. צריך תואר לפני meanings."
+      }
+    ],
+    "tip": "'Ambiguity' is the noun, 'ambiguous' is the adjective. Use 'ambiguous meanings' (not 'ambiguity meanings').",
+    "tipHe": "ambiguity הוא שם עצם, ambiguous הוא תואר. אומרים ambiguous meanings (לא ambiguity meanings).",
+    "synonyms": [
+      "vagueness",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": "b2_093",
+    "word": "paradox",
+    "ipa": "/ˈpærədɒks/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "פרדוקס",
+    "definition": "A statement that seems contradictory but may be true.",
+    "definitionHe": "הצהרה שנראית סותרת אבל עשויה להיות נכונה.",
+    "examples": [
+      "It's a paradox that the more you learn, the less you know.",
+      "The situation presents an interesting paradox.",
+      "The paradox of choice suggests too many options cause anxiety."
+    ],
+    "audioHint": "PAR-uh-doks",
+    "collocations": [
+      "paradox of choice",
+      "apparent paradox",
+      "paradoxical situation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "It's a paradox situation",
+        "correct": "It's a paradoxical situation",
+        "explanation": "paradox הוא שם עצם. כתואר צריך paradoxical."
+      }
+    ],
+    "tip": "'Paradox' is a noun, 'paradoxical' is the adjective. Say 'a paradoxical situation' (not 'a paradox situation').",
+    "tipHe": "paradox הוא שם עצם, paradoxical הוא תואר. אומרים a paradoxical situation (לא a paradox situation).",
+    "synonyms": [
+      "contradiction",
+      "irony"
+    ]
+  },
+  {
+    "id": "b2_094",
+    "word": "perspective",
+    "ipa": "/pərˈspɛktɪv/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "נקודת מבט",
+    "definition": "A particular way of considering something; a point of view.",
+    "definitionHe": "דרך מסוימת לשקול משהו; נקודת מבט.",
+    "examples": [
+      "Try to see things from a different perspective.",
+      "Her perspective on the issue was refreshing.",
+      "Traveling broadens your perspective."
+    ],
+    "audioHint": "per-SPEK-tiv",
+    "collocations": [
+      "from a different perspective",
+      "gain perspective",
+      "put things in perspective"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "From my perspective view",
+        "correct": "From my perspective",
+        "explanation": "perspective כבר כוללת את המשמעות של view, לא צריך שניהם."
+      }
+    ],
+    "tip": "'Perspective' already means 'view/outlook'. Don't say 'perspective view'. Just 'from my perspective' or 'my point of view'.",
+    "tipHe": "perspective כבר אומר מבט/השקפה. אל תאמרו perspective view. רק from my perspective או my point of view.",
+    "synonyms": [
+      "viewpoint",
+      "outlook"
+    ]
+  },
+  {
+    "id": "b2_095",
+    "word": "consciousness",
+    "ipa": "/ˈkɒnʃəsnəs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "תודעה",
+    "definition": "The state of being aware of one's surroundings, thoughts, and feelings.",
+    "definitionHe": "המצב של להיות מודע לסביבה, למחשבות ולרגשות.",
+    "examples": [
+      "He lost consciousness after the accident.",
+      "Environmental consciousness is growing worldwide.",
+      "The nature of consciousness remains a mystery."
+    ],
+    "audioHint": "KON-shus-nis",
+    "collocations": [
+      "lose consciousness",
+      "raise consciousness",
+      "stream of consciousness"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He lost his conscious",
+        "correct": "He lost consciousness",
+        "explanation": "conscious הוא תואר (מודע). consciousness הוא שם עצם (תודעה). צריך שם עצם אחרי lost."
+      }
+    ],
+    "tip": "'Conscious' = adjective (aware). 'Consciousness' = noun (awareness). 'Conscience' = moral sense. Three different words!",
+    "tipHe": "conscious = תואר (מודע). consciousness = שם עצם (תודעה). conscience = מצפון. שלוש מילים שונות!",
+    "synonyms": [
+      "awareness",
+      "sentience"
+    ]
+  },
+  {
+    "id": "b2_096",
+    "word": "authenticity",
+    "ipa": "/ˌɔːθɛnˈtɪsɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "אותנטיות",
+    "definition": "The quality of being genuine, real, or true.",
+    "definitionHe": "התכונה של להיות אמיתי, מקורי או נכון.",
+    "examples": [
+      "The authenticity of the painting was questioned.",
+      "She values authenticity in relationships.",
+      "Social media often lacks authenticity."
+    ],
+    "audioHint": "aw-then-TIS-ih-tee",
+    "collocations": [
+      "question authenticity",
+      "value authenticity",
+      "sense of authenticity"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The authentity of the document",
+        "correct": "The authenticity of the document",
+        "explanation": "שים לב לאיות: authenticity (לא authentity)."
+      }
+    ],
+    "tip": "Spelling: 'authenticity' (not 'authentity'). The adjective is 'authentic'. Root: Greek 'authentikos' (genuine).",
+    "tipHe": "איות: authenticity (לא authentity). התואר: authentic. שורש: יוונית authentikos (אמיתי).",
+    "synonyms": [
+      "genuineness",
+      "originality"
+    ]
+  },
+  {
+    "id": "b2_097",
+    "word": "morality",
+    "ipa": "/məˈrælɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "מוסריות",
+    "definition": "Principles concerning right and wrong behavior.",
+    "definitionHe": "עקרונות הנוגעים להתנהגות נכונה ולא נכונה.",
+    "examples": [
+      "The morality of the decision was debated.",
+      "Personal morality varies across cultures.",
+      "The story raises questions about morality."
+    ],
+    "audioHint": "muh-RAL-ih-tee",
+    "collocations": [
+      "question of morality",
+      "public morality",
+      "moral standards"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The morality of the peoples",
+        "correct": "The morality of the people",
+        "explanation": "people כבר רבים (אנשים), לא צריך s נוסף."
+      }
+    ],
+    "tip": "'People' is already plural (no 's'). 'Peoples' means different ethnic groups/nations. Key difference!",
+    "tipHe": "people כבר רבים (ללא s). peoples אומר עמים/קבוצות אתניות שונות. הבדל חשוב!",
+    "synonyms": [
+      "ethics",
+      "virtue"
+    ]
+  },
+  {
+    "id": "b2_098",
+    "word": "conformity",
+    "ipa": "/kənˈfɔːrmɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "קונפורמיות",
+    "definition": "Behavior that matches what is expected or accepted by a group.",
+    "definitionHe": "התנהגות שתואמת למה שצפוי או מקובל על ידי קבוצה.",
+    "examples": [
+      "Social conformity can suppress individuality.",
+      "The experiment tested the limits of conformity.",
+      "In conformity with regulations, they changed the policy."
+    ],
+    "audioHint": "kun-FOR-mih-tee",
+    "collocations": [
+      "social conformity",
+      "in conformity with",
+      "pressure to conform"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He acts in conform with the rules",
+        "correct": "He acts in conformity with the rules",
+        "explanation": "conform הוא פועל. שם העצם הוא conformity. אומרים in conformity with."
+      }
+    ],
+    "tip": "'Conform' = verb. 'Conformity' = noun. Use 'in conformity with' or 'conform to/with' (verb).",
+    "tipHe": "conform = פועל. conformity = שם עצם. אומרים in conformity with או conform to/with (פועל).",
+    "synonyms": [
+      "compliance",
+      "obedience"
+    ]
+  },
+  {
+    "id": "b2_099",
+    "word": "hierarchy",
+    "ipa": "/ˈhaɪərɑːrki/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "היררכיה",
+    "definition": "A system in which people or things are ranked according to status or authority.",
+    "definitionHe": "מערכת שבה אנשים או דברים מדורגים לפי מעמד או סמכות.",
+    "examples": [
+      "The company has a strict hierarchy.",
+      "In the hierarchy of needs, food comes first.",
+      "She challenged the existing hierarchy."
+    ],
+    "audioHint": "HY-uh-rar-kee",
+    "collocations": [
+      "social hierarchy",
+      "corporate hierarchy",
+      "hierarchy of needs"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The hierarcy in the company is strict",
+        "correct": "The hierarchy in the company is strict",
+        "explanation": "שים לב לאיות: hierarchy (עם ch ו-y)."
+      }
+    ],
+    "tip": "Tricky spelling: 'hierarchy' (not 'hierarcy'). Silent 'h' in the middle. From Greek: 'hieros' (sacred) + 'archein' (to rule).",
+    "tipHe": "איות מורכב: hierarchy (לא hierarcy). h שקטה באמצע. מיוונית: hieros (קדוש) + archein (לשלוט).",
+    "synonyms": [
+      "ranking",
+      "order"
+    ]
+  },
+  {
+    "id": "b2_100",
+    "word": "diversity",
+    "ipa": "/daɪˈvɜːrsɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "גיוון",
+    "definition": "The state of having many different types of people or things.",
+    "definitionHe": "המצב של קיום סוגים רבים ושונים של אנשים או דברים.",
+    "examples": [
+      "The company promotes diversity in the workplace.",
+      "Biodiversity is essential for healthy ecosystems.",
+      "Cultural diversity enriches society."
+    ],
+    "audioHint": "dy-VUR-sih-tee",
+    "collocations": [
+      "cultural diversity",
+      "promote diversity",
+      "diversity and inclusion"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "There is a big diversity",
+        "correct": "There is great diversity",
+        "explanation": "עם diversity אומרים great/rich (לא big)."
+      }
+    ],
+    "tip": "Use 'great/rich diversity' (not 'big diversity'). 'Diverse' is the adjective: 'a diverse group'.",
+    "tipHe": "אומרים great/rich diversity (לא big diversity). diverse הוא התואר: a diverse group.",
+    "synonyms": [
+      "variety",
+      "multiculturalism"
+    ]
+  },
+  {
+    "id": "b2_101",
+    "word": "privilege",
+    "ipa": "/ˈprɪvəlɪdʒ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "זכות יתר",
+    "definition": "A special right or advantage available only to certain people.",
+    "definitionHe": "זכות או יתרון מיוחדים שזמינים רק לאנשים מסוימים.",
+    "examples": [
+      "Education is a privilege, not a right.",
+      "He grew up with privilege.",
+      "It was a privilege to meet the president."
+    ],
+    "audioHint": "PRIV-uh-lij",
+    "collocations": [
+      "social privilege",
+      "it's a privilege",
+      "privileged position"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "I have the privilege to speak",
+        "correct": "I have the privilege of speaking",
+        "explanation": "אומרים privilege of + gerund (verb-ing), לא privilege to + infinitive."
+      }
+    ],
+    "tip": "Use 'privilege of doing' (not 'to do') when expressing honor. But 'privileged to do' (adjective) is correct.",
+    "tipHe": "אומרים privilege of doing (לא to do) כשמביעים כבוד. אבל privileged to do (תואר) נכון.",
+    "synonyms": [
+      "advantage",
+      "benefit"
+    ]
+  },
+  {
+    "id": "b2_102",
+    "word": "stereotype",
+    "ipa": "/ˈstɛriətaɪp/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "סטריאוטיפ",
+    "definition": "A widely held but oversimplified idea about a type of person or thing.",
+    "definitionHe": "רעיון רווח אך פשטני מדי על סוג של אדם או דבר.",
+    "examples": [
+      "We should challenge harmful stereotypes.",
+      "Gender stereotypes limit opportunities.",
+      "The movie reinforces cultural stereotypes."
+    ],
+    "audioHint": "STER-ee-oh-type",
+    "collocations": [
+      "gender stereotype",
+      "racial stereotype",
+      "challenge stereotypes"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He has a stereotype about women",
+        "correct": "He has stereotypes about women",
+        "explanation": "כשמדברים על כמה סטריאוטיפים, צריך רבים: stereotypes."
+      }
+    ],
+    "tip": "'Stereotype' is countable. Use 'stereotypical' as the adjective: 'a stereotypical portrayal'. Verb: 'to stereotype'.",
+    "tipHe": "stereotype ספירה. משתמשים ב-stereotypical כתואר: a stereotypical portrayal. פועל: to stereotype.",
+    "synonyms": [
+      "cliché",
+      "generalization"
+    ]
+  },
+  {
+    "id": "b2_103",
+    "word": "inevitability",
+    "ipa": "/ɪnˌɛvɪtəˈbɪlɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "אי-נמנעות",
+    "definition": "The state of being certain to happen; unavoidability.",
+    "definitionHe": "המצב של להיות ודאי שיקרה; בלתי נמנע.",
+    "examples": [
+      "They accepted the inevitability of change.",
+      "There is an inevitability about aging.",
+      "The inevitability of the outcome was clear."
+    ],
+    "audioHint": "in-ev-ih-tuh-BIL-ih-tee",
+    "collocations": [
+      "accept the inevitability",
+      "sense of inevitability",
+      "historical inevitability"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The inevitability of the result was clear since long time",
+        "correct": "The inevitability of the result has been clear for a long time",
+        "explanation": "אומרים for a long time (לא since long time). since דורש נקודת זמן ספציפית."
+      }
+    ],
+    "tip": "Use 'for a long time' (duration) not 'since long time'. 'Since' needs a specific point: 'since 2020'.",
+    "tipHe": "אומרים for a long time (משך) ולא since long time. since דורש נקודה ספציפית: since 2020.",
+    "synonyms": [
+      "certainty",
+      "unavoidability"
+    ]
+  },
+  {
+    "id": "b2_104",
+    "word": "vulnerability",
+    "ipa": "/ˌvʌlnərəˈbɪlɪti/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "פגיעות",
+    "definition": "The quality of being exposed to the possibility of harm.",
+    "definitionHe": "התכונה של להיות חשוף לאפשרות של פגיעה.",
+    "examples": [
+      "Showing vulnerability requires courage.",
+      "The vulnerability of the system was exposed.",
+      "Children's vulnerability makes protection essential."
+    ],
+    "audioHint": "vul-ner-uh-BIL-ih-tee",
+    "collocations": [
+      "emotional vulnerability",
+      "security vulnerability",
+      "show vulnerability"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The system has a vulnerablity",
+        "correct": "The system has a vulnerability",
+        "explanation": "שים לב לאיות: vulnerability (לא vulnerablity)."
+      }
+    ],
+    "tip": "Spelling: 'vulnerability' (from 'vulnerable'). In tech, it specifically means a security weakness.",
+    "tipHe": "איות: vulnerability (מ-vulnerable). בטכנולוגיה, זה אומר ספציפית חולשת אבטחה.",
+    "synonyms": [
+      "weakness",
+      "exposure"
+    ]
+  },
+  {
+    "id": "b2_105",
+    "word": "bias",
+    "ipa": "/ˈbaɪəs/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "abstract-concepts",
+    "translation": "הטיה",
+    "definition": "An unfair inclination for or against a person, group, or thing.",
+    "definitionHe": "נטייה לא הוגנת בעד או נגד אדם, קבוצה או דבר.",
+    "examples": [
+      "The study found evidence of bias in hiring.",
+      "Confirmation bias affects how we interpret information.",
+      "She tried to report the story without bias."
+    ],
+    "audioHint": "BY-us",
+    "collocations": [
+      "confirmation bias",
+      "unconscious bias",
+      "media bias"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is bias against women",
+        "correct": "He is biased against women",
+        "explanation": "bias הוא שם עצם. כתואר צריך biased."
+      }
+    ],
+    "tip": "'Bias' = noun. 'Biased' = adjective. Say 'He is biased' (not 'He is bias'). Very common error!",
+    "tipHe": "bias = שם עצם. biased = תואר. אומרים He is biased (לא He is bias). טעות נפוצה מאוד!",
+    "synonyms": [
+      "prejudice",
+      "partiality"
+    ]
+  },
+  {
+    "id": "b2_106",
+    "word": "promotion",
+    "ipa": "/prəˈmoʊʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "קידום",
+    "definition": "Advancement to a higher position or rank at work.",
+    "definitionHe": "התקדמות לתפקיד או דרגה גבוהים יותר בעבודה.",
+    "examples": [
+      "She received a promotion to senior manager.",
+      "He's hoping for a promotion this year.",
+      "The promotion came with a salary increase."
+    ],
+    "audioHint": "pruh-MOH-shun",
+    "collocations": [
+      "get a promotion",
+      "deserve a promotion",
+      "promotion opportunities"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He got a promote",
+        "correct": "He got a promotion",
+        "explanation": "promote הוא פועל. שם העצם הוא promotion."
+      }
+    ],
+    "tip": "'Promote' = verb. 'Promotion' = noun. 'He was promoted' (passive) or 'He got a promotion'.",
+    "tipHe": "promote = פועל. promotion = שם עצם. He was promoted (סביל) או He got a promotion.",
+    "synonyms": [
+      "advancement",
+      "upgrade"
+    ]
+  },
+  {
+    "id": "b2_107",
+    "word": "resignation",
+    "ipa": "/ˌrɛzɪɡˈneɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "התפטרות",
+    "definition": "The act of voluntarily leaving a job or position.",
+    "definitionHe": "הפעולה של עזיבה מרצון של עבודה או תפקיד.",
+    "examples": [
+      "She handed in her resignation last week.",
+      "His sudden resignation surprised everyone.",
+      "The resignation takes effect next month."
+    ],
+    "audioHint": "rez-ig-NAY-shun",
+    "collocations": [
+      "hand in resignation",
+      "letter of resignation",
+      "accept a resignation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He gave his resign",
+        "correct": "He handed in his resignation",
+        "explanation": "resign הוא פועל. שם העצם הוא resignation."
+      }
+    ],
+    "tip": "'Resign' = verb. 'Resignation' = noun. Use 'hand in/submit/tender your resignation'.",
+    "tipHe": "resign = פועל. resignation = שם עצם. אומרים hand in/submit/tender your resignation.",
+    "synonyms": [
+      "departure",
+      "stepping down"
+    ]
+  },
+  {
+    "id": "b2_108",
+    "word": "recruitment",
+    "ipa": "/rɪˈkruːtmənt/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "גיוס עובדים",
+    "definition": "The process of finding and hiring new employees.",
+    "definitionHe": "התהליך של מציאה והעסקה של עובדים חדשים.",
+    "examples": [
+      "The company's recruitment process takes three weeks.",
+      "Online recruitment has become very popular.",
+      "They hired a recruitment agency to find candidates."
+    ],
+    "audioHint": "rih-KROOT-ment",
+    "collocations": [
+      "recruitment process",
+      "recruitment agency",
+      "staff recruitment"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The recruitment of new workers are important",
+        "correct": "The recruitment of new workers is important",
+        "explanation": "recruitment הוא יחיד, לכן הפועל is ולא are."
+      }
+    ],
+    "tip": "'Recruitment' (the process) is singular → 'is'. The verb is 'recruit': 'We're recruiting new staff'.",
+    "tipHe": "recruitment (התהליך) הוא יחיד → is. הפועל: recruit: We're recruiting new staff.",
+    "synonyms": [
+      "hiring",
+      "staffing"
+    ]
+  },
+  {
+    "id": "b2_109",
+    "word": "qualifications",
+    "ipa": "/ˌkwɒlɪfɪˈkeɪʃənz/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "כישורים",
+    "definition": "The skills, knowledge, or experience needed for a job.",
+    "definitionHe": "הכישורים, הידע או הניסיון הדרושים לעבודה.",
+    "examples": [
+      "She has the right qualifications for the job.",
+      "Academic qualifications are important in this field.",
+      "He gained new qualifications through training."
+    ],
+    "audioHint": "kwol-ih-fih-KAY-shunz",
+    "collocations": [
+      "academic qualifications",
+      "professional qualifications",
+      "required qualifications"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She has many qualification",
+        "correct": "She has many qualifications",
+        "explanation": "qualification ספירה - עם many צריך רבים: qualifications."
+      }
+    ],
+    "tip": "'Qualifications' is usually plural when referring to skills/credentials. 'Qualify' is the verb, 'qualified' the adjective.",
+    "tipHe": "qualifications בדרך כלל ברבים כשמתייחסים לכישורים. qualify הוא הפועל, qualified התואר.",
+    "synonyms": [
+      "credentials",
+      "skills"
+    ]
+  },
+  {
+    "id": "b2_110",
+    "word": "internship",
+    "ipa": "/ˈɪntɜːrnʃɪp/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "התמחות",
+    "definition": "A period of work experience, often unpaid, for training purposes.",
+    "definitionHe": "תקופת ניסיון עבודה, לעתים ללא תשלום, למטרות הכשרה.",
+    "examples": [
+      "She completed a summer internship at Google.",
+      "The internship gave her valuable experience.",
+      "Many students apply for internships abroad."
+    ],
+    "audioHint": "IN-turn-ship",
+    "collocations": [
+      "summer internship",
+      "paid internship",
+      "apply for an internship"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She made an internship",
+        "correct": "She did an internship",
+        "explanation": "באנגלית אומרים do an internship (לא make)."
+      }
+    ],
+    "tip": "Use 'do an internship' or 'complete an internship' (not 'make'). An 'intern' is the person doing it.",
+    "tipHe": "אומרים do an internship או complete an internship (לא make). intern הוא האדם שעושה את ההתמחות.",
+    "synonyms": [
+      "placement",
+      "apprenticeship"
+    ]
+  },
+  {
+    "id": "b2_111",
+    "word": "mentor",
+    "ipa": "/ˈmɛntɔːr/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "מנטור",
+    "definition": "An experienced person who advises and guides someone less experienced.",
+    "definitionHe": "אדם מנוסה שמייעץ ומנחה מישהו פחות מנוסה.",
+    "examples": [
+      "She found a mentor who helped her career.",
+      "Good mentors share their experience generously.",
+      "He has been a mentor to many young professionals."
+    ],
+    "audioHint": "MEN-tor",
+    "collocations": [
+      "find a mentor",
+      "career mentor",
+      "mentor and mentee"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She is mentoring on her colleague",
+        "correct": "She is mentoring her colleague",
+        "explanation": "mentor כפועל הוא transitivi - ישר בלי on: mentor someone."
+      }
+    ],
+    "tip": "'Mentor' can be both noun and verb. As a verb: 'mentor someone' (no preposition). The learner is a 'mentee'.",
+    "tipHe": "mentor יכול להיות שם עצם ופועל. כפועל: mentor someone (ללא מילת יחס). הלומד הוא mentee.",
+    "synonyms": [
+      "guide",
+      "advisor"
+    ]
+  },
+  {
+    "id": "b2_112",
+    "word": "freelance",
+    "ipa": "/ˈfriːlæns/",
+    "partOfSpeech": "adjective",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "עצמאי, פרילנסר",
+    "definition": "Working independently rather than being employed by a company.",
+    "definitionHe": "עובד באופן עצמאי במקום להיות מועסק על ידי חברה.",
+    "examples": [
+      "She works as a freelance designer.",
+      "Freelance work offers flexibility but less stability.",
+      "More people are choosing to go freelance."
+    ],
+    "audioHint": "FREE-lans",
+    "collocations": [
+      "freelance work",
+      "go freelance",
+      "freelance writer"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She is a freelancer worker",
+        "correct": "She is a freelance worker",
+        "explanation": "freelance הוא התואר. freelancer הוא שם עצם (האדם). לא אומרים freelancer worker."
+      }
+    ],
+    "tip": "'Freelance' = adjective (freelance writer). 'Freelancer' = noun (the person). Don't combine: 'freelancer worker'.",
+    "tipHe": "freelance = תואר (freelance writer). freelancer = שם עצם (האדם). אל תשלבו: freelancer worker.",
+    "synonyms": [
+      "independent",
+      "self-employed"
+    ]
+  },
+  {
+    "id": "b2_113",
+    "word": "entrepreneur",
+    "ipa": "/ˌɒntrəprəˈnɜːr/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "יזם",
+    "definition": "A person who starts and runs their own business.",
+    "definitionHe": "אדם שמקים ומנהל עסק משלו.",
+    "examples": [
+      "The entrepreneur raised millions for her startup.",
+      "Entrepreneurs take risks to build new businesses.",
+      "He became a successful entrepreneur at age 25."
+    ],
+    "audioHint": "on-truh-pruh-NUR",
+    "collocations": [
+      "successful entrepreneur",
+      "serial entrepreneur",
+      "entrepreneurial spirit"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He is an entreprenaur",
+        "correct": "He is an entrepreneur",
+        "explanation": "שים לב לאיות: entrepreneur (מצרפתית, איות מורכב)."
+      }
+    ],
+    "tip": "Tricky spelling from French: 'entrepreneur'. The adjective is 'entrepreneurial'. Remember: entre-pre-neur.",
+    "tipHe": "איות מורכב מצרפתית: entrepreneur. התואר: entrepreneurial. זכרו: entre-pre-neur.",
+    "synonyms": [
+      "business owner",
+      "innovator"
+    ]
+  },
+  {
+    "id": "b2_114",
+    "word": "negotiate",
+    "ipa": "/nɪˈɡoʊʃieɪt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "לנהל משא ומתן",
+    "definition": "To discuss something formally to reach an agreement.",
+    "definitionHe": "לדון במשהו באופן רשמי כדי להגיע להסכמה.",
+    "examples": [
+      "They negotiated a better salary.",
+      "The two sides are negotiating a peace deal.",
+      "She negotiated the terms of the contract."
+    ],
+    "audioHint": "nih-GOH-shee-ayt",
+    "collocations": [
+      "negotiate a deal",
+      "negotiate terms",
+      "negotiate a salary"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They negotiated about the price",
+        "correct": "They negotiated the price",
+        "explanation": "negotiate הוא transitivi ישירות - negotiate something (ללא about)."
+      }
+    ],
+    "tip": "'Negotiate' is transitive: 'negotiate a deal/price/contract' (no 'about'). The noun is 'negotiation'.",
+    "tipHe": "negotiate הוא יוצא: negotiate a deal/price/contract (ללא about). שם העצם: negotiation.",
+    "synonyms": [
+      "bargain",
+      "discuss"
+    ]
+  },
+  {
+    "id": "b2_115",
+    "word": "collaborate",
+    "ipa": "/kəˈlæbəreɪt/",
+    "partOfSpeech": "verb",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "לשתף פעולה",
+    "definition": "To work together with others on a project or task.",
+    "definitionHe": "לעבוד יחד עם אחרים על פרויקט או משימה.",
+    "examples": [
+      "The two companies collaborated on the research.",
+      "She collaborated with artists from around the world.",
+      "They collaborated to solve the problem."
+    ],
+    "audioHint": "kuh-LAB-uh-rayt",
+    "collocations": [
+      "collaborate on a project",
+      "collaborate with",
+      "close collaboration"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "They collaborated together",
+        "correct": "They collaborated",
+        "explanation": "collaborated כבר אומר לעבוד ביחד, together מיותר (pleonasm)."
+      }
+    ],
+    "tip": "'Collaborate' already means 'work together' - adding 'together' is redundant. The noun is 'collaboration'.",
+    "tipHe": "collaborate כבר אומר לעבוד ביחד - הוספת together מיותרת. שם העצם: collaboration.",
+    "synonyms": [
+      "cooperate",
+      "partner"
+    ]
+  },
+  {
+    "id": "b2_116",
+    "word": "networking",
+    "ipa": "/ˈnɛtwɜːrkɪŋ/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "נטוורקינג, יצירת קשרים",
+    "definition": "The activity of building professional relationships.",
+    "definitionHe": "הפעילות של בניית קשרים מקצועיים.",
+    "examples": [
+      "Networking is essential for career growth.",
+      "She attended the event for networking purposes.",
+      "Professional networking helped him find a new job."
+    ],
+    "audioHint": "NET-wur-king",
+    "collocations": [
+      "professional networking",
+      "networking event",
+      "social networking"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She did networkings at the conference",
+        "correct": "She did networking at the conference",
+        "explanation": "networking היא לא-ספירה - אין צורת רבים."
+      }
+    ],
+    "tip": "'Networking' is uncountable - no plural form. Use 'do networking' or better: 'network' as a verb.",
+    "tipHe": "networking היא לא-ספירה - אין צורת רבים. אומרים do networking או עדיף: network כפועל.",
+    "synonyms": [
+      "connecting",
+      "relationship building"
+    ]
+  },
+  {
+    "id": "b2_117",
+    "word": "competence",
+    "ipa": "/ˈkɒmpɪtəns/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "כשירות, מיומנות",
+    "definition": "The ability to do something successfully or efficiently.",
+    "definitionHe": "היכולת לעשות משהו בהצלחה או ביעילות.",
+    "examples": [
+      "He demonstrated competence in all areas.",
+      "Technical competence is required for this role.",
+      "Her competence was recognized by management."
+    ],
+    "audioHint": "KOM-pih-tens",
+    "collocations": [
+      "core competence",
+      "demonstrate competence",
+      "professional competence"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She has a good competence",
+        "correct": "She has strong competence",
+        "explanation": "עם competence אומרים strong/high (לא good)."
+      }
+    ],
+    "tip": "Use 'strong/high competence' (not 'good'). 'Competent' is the adjective: 'She is competent'.",
+    "tipHe": "אומרים strong/high competence (לא good). competent הוא התואר: She is competent.",
+    "synonyms": [
+      "ability",
+      "proficiency"
+    ]
+  },
+  {
+    "id": "b2_118",
+    "word": "appraisal",
+    "ipa": "/əˈpreɪzəl/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "הערכה",
+    "definition": "An assessment of the value or quality of something or someone's work.",
+    "definitionHe": "הערכת ערך או איכות של משהו או של עבודת מישהו.",
+    "examples": [
+      "The annual appraisal determines salary increases.",
+      "She received a positive performance appraisal.",
+      "Property appraisals help determine market value."
+    ],
+    "audioHint": "uh-PRAY-zul",
+    "collocations": [
+      "performance appraisal",
+      "annual appraisal",
+      "property appraisal"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "He had a good appraise",
+        "correct": "He had a good appraisal",
+        "explanation": "appraise הוא פועל. שם העצם הוא appraisal."
+      }
+    ],
+    "tip": "'Appraise' = verb (to evaluate). 'Appraisal' = noun (the evaluation). Don't confuse with 'apprise' (to inform).",
+    "tipHe": "appraise = פועל (להעריך). appraisal = שם עצם (הערכה). אל תבלבלו עם apprise (להודיע).",
+    "synonyms": [
+      "evaluation",
+      "assessment"
+    ]
+  },
+  {
+    "id": "b2_119",
+    "word": "probation",
+    "ipa": "/proʊˈbeɪʃən/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "תקופת ניסיון",
+    "definition": "A trial period during which a new employee is assessed.",
+    "definitionHe": "תקופת ניסיון שבה עובד חדש מוערך.",
+    "examples": [
+      "New employees are on probation for three months.",
+      "She passed her probation period successfully.",
+      "During probation, performance is closely monitored."
+    ],
+    "audioHint": "proh-BAY-shun",
+    "collocations": [
+      "probation period",
+      "on probation",
+      "pass probation"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "She is in probation",
+        "correct": "She is on probation",
+        "explanation": "אומרים on probation (לא in probation)."
+      }
+    ],
+    "tip": "Use 'on probation' (not 'in'). Note: 'probation' also means a period of supervised release in criminal law.",
+    "tipHe": "אומרים on probation (לא in). הערה: probation גם אומר תקופת שחרור מפוקח במשפט הפלילי.",
+    "synonyms": [
+      "trial period",
+      "test period"
+    ]
+  },
+  {
+    "id": "b2_120",
+    "word": "deadline",
+    "ipa": "/ˈdɛdlaɪn/",
+    "partOfSpeech": "noun",
+    "cefrLevel": "B2",
+    "category": "career",
+    "translation": "מועד אחרון",
+    "definition": "The latest time or date by which something must be completed.",
+    "definitionHe": "הזמן או התאריך האחרון שבו משהו חייב להיות מוגמר.",
+    "examples": [
+      "The deadline for the project is next Friday.",
+      "She always meets her deadlines.",
+      "Can we extend the deadline by a week?"
+    ],
+    "audioHint": "DED-line",
+    "collocations": [
+      "meet a deadline",
+      "miss a deadline",
+      "tight deadline"
+    ],
+    "commonMistakes": [
+      {
+        "wrong": "The deadline is in Friday",
+        "correct": "The deadline is on Friday",
+        "explanation": "באנגלית משתמשים ב-on לפני ימי השבוע (on Friday), לא in."
+      }
+    ],
+    "tip": "Use 'on' before days (on Friday, on Monday). Use 'in' for months/years (in January, in 2024).",
+    "tipHe": "משתמשים ב-on לפני ימים (on Friday, on Monday). משתמשים ב-in לחודשים/שנים (in January, in 2024).",
+    "synonyms": [
+      "due date",
+      "time limit"
+    ]
+  }
+]

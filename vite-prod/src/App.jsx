@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext.jsx';
 import { ChildAuthProvider, useChildAuth } from './contexts/ChildAuthContext.jsx';
@@ -12,34 +12,46 @@ import PageTransition from './components/layout/PageTransition.jsx';
 import LoadingSpinner from './components/shared/LoadingSpinner.jsx';
 import ErrorBoundary from './components/shared/ErrorBoundary.jsx';
 
+/* ── Eagerly loaded (critical path) ── */
 import HomePage from './pages/HomePage.jsx';
 import OnboardingPage from './pages/OnboardingPage.jsx';
-import LessonPage from './pages/LessonPage.jsx';
-import SimulationPage from './pages/SimulationPage.jsx';
-import VocabularyPage from './pages/VocabularyPage.jsx';
-import ReadingPage from './pages/ReadingPage.jsx';
-import PronunciationPage from './pages/PronunciationPage.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
-import AchievementsPage from './pages/AchievementsPage.jsx';
-import KidsAlphabetPage from './pages/KidsAlphabetPage.jsx';
-import AudioLearningPage from './pages/AudioLearningPage.jsx';
 import KidsHomePage from './pages/KidsHomePage.jsx';
-import KidsGamesPage from './pages/KidsGamesPage.jsx';
-import FamilyPage from './pages/FamilyPage.jsx';
-import ChildLoginPage from './pages/ChildLoginPage.jsx';
-import ProfilePickerPage from './pages/ProfilePickerPage.jsx';
-import ChildProgressPage from './pages/ChildProgressPage.jsx';
-import KidsTeacherPage from './pages/KidsTeacherPage.jsx';
-import CurriculumPage from './pages/CurriculumPage.jsx';
-import SupportPage from './pages/SupportPage.jsx';
-import SupportFAQPage from './pages/SupportFAQPage.jsx';
-import SupportContactPage from './pages/SupportContactPage.jsx';
-import SupportTicketsPage from './pages/SupportTicketsPage.jsx';
-import EnglishQuestPage from './pages/EnglishQuestPage.jsx';
-import SkillsPage from './pages/SkillsPage.jsx';
+
+/* ── Lazy loaded (loaded on demand) ── */
+const LessonPage = lazy(() => import('./pages/LessonPage.jsx'));
+const SimulationPage = lazy(() => import('./pages/SimulationPage.jsx'));
+const VocabularyPage = lazy(() => import('./pages/VocabularyPage.jsx'));
+const ReadingPage = lazy(() => import('./pages/ReadingPage.jsx'));
+const PronunciationPage = lazy(() => import('./pages/PronunciationPage.jsx'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
+const AchievementsPage = lazy(() => import('./pages/AchievementsPage.jsx'));
+const KidsAlphabetPage = lazy(() => import('./pages/KidsAlphabetPage.jsx'));
+const AudioLearningPage = lazy(() => import('./pages/AudioLearningPage.jsx'));
+const KidsGamesPage = lazy(() => import('./pages/KidsGamesPage.jsx'));
+const FamilyPage = lazy(() => import('./pages/FamilyPage.jsx'));
+const ChildLoginPage = lazy(() => import('./pages/ChildLoginPage.jsx'));
+const ProfilePickerPage = lazy(() => import('./pages/ProfilePickerPage.jsx'));
+const ChildProgressPage = lazy(() => import('./pages/ChildProgressPage.jsx'));
+const KidsTeacherPage = lazy(() => import('./pages/KidsTeacherPage.jsx'));
+const CurriculumPage = lazy(() => import('./pages/CurriculumPage.jsx'));
+const SupportPage = lazy(() => import('./pages/SupportPage.jsx'));
+const SupportFAQPage = lazy(() => import('./pages/SupportFAQPage.jsx'));
+const SupportContactPage = lazy(() => import('./pages/SupportContactPage.jsx'));
+const SupportTicketsPage = lazy(() => import('./pages/SupportTicketsPage.jsx'));
+const EnglishQuestPage = lazy(() => import('./pages/EnglishQuestPage.jsx'));
+const SkillsPage = lazy(() => import('./pages/SkillsPage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
+
+/* ── Lazy loading fallback ── */
+function PageLoader() {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+      <LoadingSpinner />
+    </div>
+  );
+}
 
 import { t } from './utils/translations.js';
 
@@ -120,7 +132,7 @@ function AppContent() {
 
   // Child login page (standalone, from separate device)
   if (showChildLogin && !user && !childUser) {
-    return <ChildLoginPage onBack={() => setShowChildLogin(false)} />;
+    return <Suspense fallback={<PageLoader />}><ChildLoginPage onBack={() => setShowChildLogin(false)} /></Suspense>;
   }
 
   // Remote child mode (child logged in from separate device)
@@ -156,7 +168,7 @@ function AppContent() {
 
   // Show profile picker on every app load (after onboarding)
   if (!profileSelected && children.length > 0) {
-    return <ProfilePickerPage onSelect={() => setProfileSelected(true)} />;
+    return <Suspense fallback={<PageLoader />}><ProfilePickerPage onSelect={() => setProfileSelected(true)} /></Suspense>;
   }
 
   const isKids = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
@@ -265,9 +277,11 @@ function AppContent() {
       )}
 
       <main className={showHeader ? '' : 'pt-4'} style={!showHeader ? { paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)' } : undefined}>
-        <PageTransition pageKey={currentPage}>
-          {renderPage()}
-        </PageTransition>
+        <Suspense fallback={<PageLoader />}>
+          <PageTransition pageKey={currentPage}>
+            {renderPage()}
+          </PageTransition>
+        </Suspense>
       </main>
 
       {showNav && (
@@ -340,9 +354,11 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
       </div>
 
       <main className="pt-4">
-        <PageTransition pageKey={currentPage}>
-          {renderPage()}
-        </PageTransition>
+        <Suspense fallback={<PageLoader />}>
+          <PageTransition pageKey={currentPage}>
+            {renderPage()}
+          </PageTransition>
+        </Suspense>
       </main>
 
       <BottomNav

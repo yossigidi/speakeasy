@@ -29,7 +29,7 @@ function HeroDisplay({ heroIdx, size = 'text-8xl', imgClass = 'w-24 h-24' }) {
   if (hero === 'speakli' && !imgError) {
     return (
       <img
-        src="/images/speakli-avatar.png"
+        src="/images/speakli-avatar.webp"
         alt="Speakli"
         className={`${imgClass} drop-shadow-lg mx-auto`}
         onError={() => setImgError(true)}

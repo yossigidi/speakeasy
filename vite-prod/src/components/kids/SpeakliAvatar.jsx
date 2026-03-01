@@ -87,7 +87,7 @@ export default function SpeakliAvatar({
       ) : (
         <img
           ref={imgRef}
-          src="/images/speakli-avatar.png"
+          src="/images/speakli-avatar.webp"
           alt="Speakli"
           className={`speakli-img ${sizeClass} ${blinking ? 'speakli-blink' : ''}`}
           draggable={false}

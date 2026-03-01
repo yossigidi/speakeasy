@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { BookOpen, MessageCircle, BookA, Mic, ChevronRight, Clock, Volume2, Lightbulb, GraduationCap, Headphones } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -9,14 +9,9 @@ import GlassCard from '../components/shared/GlassCard.jsx';
 import StreakDisplay from '../components/gamification/StreakDisplay.jsx';
 import XPBar from '../components/gamification/XPBar.jsx';
 import DailyGoalRing from '../components/gamification/DailyGoalRing.jsx';
+import { loadWordData } from '../utils/lazyData.js';
 
-import wordsA1 from '../data/words-a1.json';
-import wordsA2 from '../data/words-a2.json';
-import wordsB2 from '../data/words-b2.json';
-import wordsC1 from '../data/words-c1.json';
 import grammarRules from '../data/grammar-rules.json';
-
-const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsB2, ...wordsC1];
 
 export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { uiLang, dir } = useTheme();
@@ -24,20 +19,29 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { speak, speakSequence, ttsSupported } = useSpeech();
   useWelcomeSpeech('home', 'ברוכים הבאים לספיקלי, המורה שלכם לאנגלית!', 'Welcome to Speakli, your English teacher!');
 
+  // Lazy-load word data for "Word of the Day"
+  const [allWords, setAllWords] = useState([]);
+  useEffect(() => {
+    Promise.all([loadWordData('a1'), loadWordData('a2'), loadWordData('b2'), loadWordData('c1')])
+      .then(([a1, a2, b2, c1]) => setAllWords([...a1, ...a2, ...b2, ...c1]))
+      .catch(() => {});
+  }, []);
+
   // Word of the Day - deterministic based on date, filtered by user level
   const wordOfDay = useMemo(() => {
+    if (allWords.length === 0) return null;
     const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     const currLevel = progress.cefrLevel || 'A1';
     const userLevelIndex = levelOrder.indexOf(currLevel);
-    const levelWords = ALL_WORDS.filter(w => {
+    const levelWords = allWords.filter(w => {
       const wordLevelIndex = levelOrder.indexOf(w.cefrLevel || 'A1');
       return wordLevelIndex <= userLevelIndex;
     });
-    const pool = levelWords.length > 0 ? levelWords : ALL_WORDS;
+    const pool = levelWords.length > 0 ? levelWords : allWords;
     const today = new Date();
     const dayIndex = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % pool.length;
     return pool[dayIndex];
-  }, [progress.cefrLevel]);
+  }, [progress.cefrLevel, allWords]);
 
   // Grammar tip of the day
   const grammarTip = useMemo(() => {

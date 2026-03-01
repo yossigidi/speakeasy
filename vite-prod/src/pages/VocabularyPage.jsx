@@ -14,14 +14,7 @@ import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 import Modal from '../components/shared/Modal.jsx';
 
-import wordsA1 from '../data/words-a1.json';
-import wordsA2 from '../data/words-a2.json';
-import wordsBusiness from '../data/words-business.json';
-import wordsB2 from '../data/words-b2.json';
-import wordsC1 from '../data/words-c1.json';
-
-const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsBusiness, ...wordsB2, ...wordsC1];
-const CATEGORIES = [...new Set(ALL_WORDS.map(w => w.category))];
+import { loadWordData } from '../utils/lazyData.js';
 
 // ── Word Detail Modal ────────────────────────────────────
 function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVocab }) {
@@ -1019,11 +1012,11 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
 }
 
 // ── Helper: get words appropriate for user level ────────
-function getWordsForLevel(cefrLevel) {
+function getWordsForLevel(cefrLevel, allWords) {
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   const userLevelIndex = levelOrder.indexOf(cefrLevel || 'A1');
   // Include words from current level and all lower levels
-  return ALL_WORDS.filter(w => {
+  return allWords.filter(w => {
     const wordLevelIndex = levelOrder.indexOf(w.cefrLevel || 'A1');
     return wordLevelIndex <= userLevelIndex;
   });
@@ -1039,9 +1032,32 @@ export default function VocabularyPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedWord, setSelectedWord] = useState(null);
   const [learnWords, setLearnWords] = useState([]);
+  const [ALL_WORDS, setAllWords] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const isHe = uiLang === 'he';
   const userLevel = progress.cefrLevel || 'A1';
-  const availableWords = getWordsForLevel(userLevel);
+
+  // Lazy-load word data
+  useEffect(() => {
+    Promise.all([
+      loadWordData('a1'), loadWordData('a2'),
+      loadWordData('business'), loadWordData('b2'), loadWordData('c1')
+    ]).then(([a1, a2, biz, b2, c1]) => {
+      setAllWords([...a1, ...a2, ...biz, ...b2, ...c1]);
+      setDataLoaded(true);
+    }).catch(() => setDataLoaded(true));
+  }, []);
+
+  const CATEGORIES = React.useMemo(() => [...new Set(ALL_WORDS.map(w => w.category))], [ALL_WORDS]);
+  const availableWords = getWordsForLevel(userLevel, ALL_WORDS);
+
+  if (!dataLoaded) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   const handleAddToVocab = useCallback(async (word) => {
     try {

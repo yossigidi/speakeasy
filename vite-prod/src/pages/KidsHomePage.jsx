@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Volume2, Star, Zap, Flame } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -6,7 +6,7 @@ import { useSpeech } from '../contexts/SpeechContext.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 
-import wordsA1 from '../data/words-a1.json';
+import { loadWordData } from '../utils/lazyData.js';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
 import { t } from '../utils/translations.js';
 
@@ -296,10 +296,13 @@ function VideoCard({ video, uiLang, isExpanded, onToggle }) {
 
 /* ── Speakli's Word of the day for kids ── */
 function KidsWordOfDay({ speak, speakSequence, uiLang }) {
-  const word = useMemo(() => {
-    const today = new Date();
-    const idx = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % wordsA1.length;
-    return wordsA1[idx];
+  const [word, setWord] = useState(null);
+  useEffect(() => {
+    loadWordData('a1').then(data => {
+      const today = new Date();
+      const idx = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % data.length;
+      setWord(data[idx]);
+    }).catch(() => {});
   }, []);
 
   if (!word) return null;

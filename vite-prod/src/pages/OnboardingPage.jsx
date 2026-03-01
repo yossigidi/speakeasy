@@ -320,7 +320,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           animation: 'onboarding-glow-pulse 3s ease-in-out infinite',
         }} />
         <img
-          src="/images/speakli-avatar.png"
+          src="/images/speakli-avatar.webp"
           alt="Speakli"
           style={{
             position: 'relative',

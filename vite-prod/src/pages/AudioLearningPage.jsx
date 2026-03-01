@@ -8,8 +8,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 
-import wordsA1 from '../data/words-a1.json';
-import wordsA2 from '../data/words-a2.json';
+import { loadWordData } from '../utils/lazyData.js';
 
 // ── Gradient palette that cycles per word ──────────────────
 const GRADIENTS = [
@@ -39,6 +38,14 @@ export default function AudioLearningPage({ onBack }) {
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
   const isHe = uiLang === 'he';
+
+  // ── Lazy-loaded word data ──────────────────────────────
+  const [wordsA1, setWordsA1] = useState([]);
+  const [wordsA2, setWordsA2] = useState([]);
+  useEffect(() => {
+    loadWordData('a1').then(setWordsA1).catch(() => {});
+    loadWordData('a2').then(setWordsA2).catch(() => {});
+  }, []);
 
   // ── State ──────────────────────────────────────────────
   const [levelFilter, setLevelFilter] = useState('all'); // 'A1' | 'A2' | 'all'

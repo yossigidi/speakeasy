@@ -19,7 +19,6 @@ const GAME_PHRASES = [
   'אֵיפֹה הָאוֹת','יוֹפִי!','נָכוֹן!','מְצוּיָּן!','כׇּל הַכָּבוֹד!','מַדְהִים!','נַסּוּ שׁוּב',
 ];
 import alphabetData from '../data/alphabet-kids.json';
-import wordsA1 from '../data/words-a1.json';
 
 /* ── Confetti burst ── */
 function ConfettiBurst({ show }) {
