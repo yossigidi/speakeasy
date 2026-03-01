@@ -9,6 +9,7 @@ import { generateExercises } from '../../data/curriculum/exercise-generator.js';
 import { calculateStars, calculateXP, LESSON_TYPES } from '../../data/curriculum/curriculum-index.js';
 import useSkillsProgress from '../../hooks/useSkillsProgress.js';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
+import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
 import { t } from '../../utils/translations.js';
 
@@ -112,7 +113,9 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     setAnswers(prev => [...prev, { isCorrect, wordData }]);
     setTimeout(() => setTeacherState('idle'), 1500);
 
+    // Stop any ongoing speech before advancing to next exercise
     setTimeout(() => {
+      stopAllAudio();
       if (currentExercise + 1 >= exercises.length) {
         handleLessonComplete(isCorrect);
       } else {

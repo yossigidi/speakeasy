@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { t } from '../../utils/translations.js';
 
 // Guidance bubble component - shows Hebrew instructions and reads them aloud
-function GuidanceBubble({ text, uiLang, speak }) {
+function GuidanceBubble({ text, uiLang, speak, onDone }) {
   const spokenRef = useRef(false);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ function GuidanceBubble({ text, uiLang, speak }) {
     if (speak && text && !spokenRef.current) {
       spokenRef.current = true;
       setTimeout(() => {
-        speak(text, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.92 });
+        speak(text, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.92, onEnd: () => onDone && onDone() });
       }, 300);
     }
   }, [text]);
@@ -43,6 +43,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   const [listening, setListening] = useState(false);
   const [speakResult, setSpeakResult] = useState(null);
   const recognitionRef = useRef(null);
+  const guidanceDoneRef = useRef(false);
 
   // Cleanup SpeechRecognition on unmount
   useEffect(() => {
@@ -83,15 +84,16 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   }
 
   // A2: Auto-speak the exercise question/word after guidance finishes
+  const guidanceDoneCallback = useCallback(() => {
+    guidanceDoneRef.current = true;
+    if (speak && exercise && ['emoji-pick','word-to-hebrew','listen-pick','fill-letter','speak-word'].includes(exercise.type)) {
+      setTimeout(() => speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true }), 300);
+    }
+  }, [exercise, speak]);
+
+  // Reset guidanceDone flag when exercise changes
   useEffect(() => {
-    if (!speak || !exercise) return;
-    // Delay must be long enough for GuidanceBubble speech (300ms start + ~1.5s speech) to finish
-    const delay = setTimeout(() => {
-      if (['emoji-pick','word-to-hebrew','listen-pick','fill-letter','speak-word'].includes(exercise.type)) {
-        speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true });
-      }
-    }, 2200);
-    return () => clearTimeout(delay);
+    guidanceDoneRef.current = false;
   }, [exercise]);
 
   const handleSelect = (answer, isCorrect) => {
@@ -135,7 +137,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'emoji-pick') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideEmojiPick', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideEmojiPick', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('pickTheEmoji', uiLang)}
         </div>
@@ -185,7 +187,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'word-to-hebrew') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideWordToHebrew', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideWordToHebrew', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('translateToHebrew', uiLang)}
         </div>
@@ -219,7 +221,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'listen-pick') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideListenPick', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideListenPick', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#374151' }}>
           {t('listenAndPick', uiLang)}
         </div>
@@ -263,7 +265,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'fill-letter') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideFillLetter', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideFillLetter', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('fillMissingLetter', uiLang)}
         </div>
@@ -340,7 +342,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
 
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideSpeakWord', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideSpeakWord', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('sayTheWord', uiLang)}
         </div>
@@ -388,7 +390,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'multiple-choice') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideMultipleChoice', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideMultipleChoice', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('chooseAnswer', uiLang)}
         </div>
@@ -422,7 +424,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'fill-blank') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideFillBlank', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideFillBlank', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('fillBlank', uiLang)}
         </div>
@@ -495,7 +497,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
 
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideWordArrange', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideWordArrange', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('arrangeWords', uiLang)}
         </div>
@@ -569,7 +571,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'translation') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideTranslation', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideTranslation', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('translateSentence', uiLang)}
         </div>
@@ -656,7 +658,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
 
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideMatchPairs', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guideMatchPairs', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('matchThePairs', uiLang)}
         </div>
@@ -734,7 +736,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'picture-sentence') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guidePictureSentence', uiLang)} uiLang={uiLang} speak={speak} />
+        <GuidanceBubble text={t('guidePictureSentence', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#374151' }}>
           {t('pickTheSentence', uiLang)}
         </div>

@@ -6,6 +6,7 @@ import { getLesson, calculateStars, calculateXP, LESSON_TYPES } from '../../data
 import { generateExercises } from '../../data/curriculum/exercise-generator.js';
 import useCurriculumProgress from '../../hooks/useCurriculumProgress.js';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
+import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
 import { t } from '../../utils/translations.js';
 
@@ -104,8 +105,9 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     // Reset teacher state after a moment
     setTimeout(() => setTeacherState('idle'), 1500);
 
-    // Advance to next exercise
+    // Advance to next exercise — stop any ongoing speech first
     setTimeout(() => {
+      stopAllAudio();
       if (currentExercise + 1 >= exercises.length) {
         handleLessonComplete(isCorrect);
       } else {

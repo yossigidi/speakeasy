@@ -7,6 +7,7 @@ import { calcLessonXP } from '../utils/xpCalculator.js';
 import { fuzzyMatch } from '../utils/stringDistance.js';
 import { shuffle } from '../utils/shuffle.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
+import { stopAllAudio } from '../utils/hebrewAudio.js';
 import useAudio from '../hooks/useAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
@@ -417,6 +418,9 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
   const [showFeedback, setShowFeedback] = useState(null);
   const [lessonDone, setLessonDone] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+
+  // Stop all audio on unmount
+  useEffect(() => () => stopAllAudio(), []);
 
   const exercise = exercises[currentExercise];
   const progress = ((currentExercise) / exercises.length) * 100;

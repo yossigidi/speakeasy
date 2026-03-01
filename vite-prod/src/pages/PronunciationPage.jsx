@@ -5,6 +5,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
+import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { pronunciationScore, compareWords } from '../utils/stringDistance.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
@@ -114,6 +115,9 @@ export default function PronunciationPage() {
   const [score, setScore] = useState(null);
   const [wordResults, setWordResults] = useState(null);
   const [hasRecorded, setHasRecorded] = useState(false);
+
+  // Stop all audio on unmount
+  useEffect(() => () => stopAllAudio(), []);
 
   const sentence = PRACTICE_SENTENCES[currentIndex];
 

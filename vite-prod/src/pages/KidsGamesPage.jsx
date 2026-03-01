@@ -437,6 +437,8 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
             { pause: 150 },
             { text: first.translation, lang: 'he' },
           ], speak);
+        }, 400);
+        setTimeout(() => {
           setMatched(prev => {
             const next = [...prev, first.pairId];
             if (next.length >= PAIRS) {

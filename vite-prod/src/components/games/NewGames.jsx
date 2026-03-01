@@ -230,11 +230,13 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       setPopped(opt.id);
       setScore(s => s + 1);
       playCorrect();
-      playSequence([
-        { text: opt.word, lang: 'en-US', rate: 0.75 },
-        { pause: 100 },
-        { text: opt.translation, lang: 'he' },
-      ], speak);
+      setTimeout(() => {
+        playSequence([
+          { text: opt.word, lang: 'en-US', rate: 0.75 },
+          { pause: 100 },
+          { text: opt.translation, lang: 'he' },
+        ], speak);
+      }, 400);
       setTimeout(() => {
         setRound(r => r + 1);
         poppingRef.current = false;
@@ -702,14 +704,16 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       const tryAdvance = () => {
         if (audioDone && timerDone) advanceToNext();
       };
-      playSequence([
-        { text: current.word, lang: 'en-US', rate: 0.75 },
-        { pause: 500 },
-        { text: current.translation, lang: 'he' },
-      ], speak, () => {
-        audioDone = true;
-        tryAdvance();
-      });
+      setTimeout(() => {
+        playSequence([
+          { text: current.word, lang: 'en-US', rate: 0.75 },
+          { pause: 500 },
+          { text: current.translation, lang: 'he' },
+        ], speak, () => {
+          audioDone = true;
+          tryAdvance();
+        });
+      }, 400);
       // Minimum visual delay of 1.5s so user sees the green feedback
       setTimeout(() => {
         timerDone = true;
@@ -927,9 +931,11 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         setIsCorrect(true);
         setScore(s => s + 1);
         playCorrect();
-        playSequence([
-          { text: current.sentence, lang: 'en-US', rate: 0.75 },
-        ], speak);
+        setTimeout(() => {
+          playSequence([
+            { text: current.sentence, lang: 'en-US', rate: 0.75 },
+          ], speak);
+        }, 400);
       }
     } else {
       // Wrong word - flash red and shake

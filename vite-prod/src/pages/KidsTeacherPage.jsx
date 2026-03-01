@@ -235,6 +235,9 @@ export default function KidsTeacherPage({ onBack }) {
   const [showSpeech, setShowSpeech] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Stop all audio on unmount
+  useEffect(() => () => stopAllAudio(), []);
+
   useEffect(() => {
     setSpeechText(t('teacherGreeting', uiLang));
     // Only speak greeting if KidsIntro popup was already seen (otherwise KidsIntro handles speech)

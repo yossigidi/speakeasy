@@ -8,6 +8,7 @@ import { calcSimulationXP } from '../utils/xpCalculator.js';
 import { INDUSTRIES, CAREER_LEVELS, SCENARIOS, getCareerLevel, getNextCareerLevel } from '../data/simulation-scenarios.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
+import { stopAllAudio } from '../utils/hebrewAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 
@@ -100,6 +101,9 @@ export default function SimulationPage() {
   const [lastCorrection, setLastCorrection] = useState(null);
   const [lastMistakes, setLastMistakes] = useState([]);
   const timerRef = useRef(null);
+
+  // Stop all audio on unmount
+  useEffect(() => () => stopAllAudio(), []);
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -229,24 +233,29 @@ export default function SimulationPage() {
       }
 
       setMessages(prev => [...prev, { role: 'npc', content: data.npcReply }]);
-      speak(data.npcReply);
 
       // Advance step (structured scenario)
       if (activeScenario) {
         const nextStep = currentStep + 1;
         if (nextStep >= activeScenario.steps.length) {
-          // Scenario complete
+          // Scenario complete — speak reply, then finish after speech ends
+          speak(data.npcReply, { onEnd: () => setTimeout(() => finishScenario(), 500) });
           clearInterval(timerRef.current);
-          setTimeout(() => finishScenario(), 2000);
         } else {
           setCurrentStep(nextStep);
-          // Show next NPC line after a delay
-          setTimeout(() => {
-            const nextNpc = activeScenario.steps[nextStep].npc;
-            setMessages(prev => [...prev, { role: 'npc', content: nextNpc }]);
-            speak(nextNpc);
-          }, 2500);
+          // Speak reply, then show next NPC line after speech ends
+          speak(data.npcReply, {
+            onEnd: () => {
+              setTimeout(() => {
+                const nextNpc = activeScenario.steps[nextStep].npc;
+                setMessages(prev => [...prev, { role: 'npc', content: nextNpc }]);
+                speak(nextNpc);
+              }, 500);
+            }
+          });
         }
+      } else {
+        speak(data.npcReply);
       }
     } catch (err) {
       console.error('Simulation error:', err);

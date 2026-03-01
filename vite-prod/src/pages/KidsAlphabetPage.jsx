@@ -653,7 +653,7 @@ function ListenChooseGame({ letter, onComplete }) {
         } else {
           setCurrent(c => c + 1);
         }
-      }, 1500);
+      }, 2500);
     } else {
       setResult('wrong');
       setTimeout(() => setResult(null), 600);

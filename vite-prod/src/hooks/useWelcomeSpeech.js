@@ -11,9 +11,11 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
  * @param {string} textEn - English welcome text
  */
 export default function useWelcomeSpeech(key, textHe, textEn) {
-  const { speak } = useSpeech();
+  const { speak, isSpeaking } = useSpeech();
   const { uiLang } = useTheme();
   const spokenRef = useRef(false);
+  const isSpeakingRef = useRef(false);
+  isSpeakingRef.current = isSpeaking;
 
   useEffect(() => {
     if (spokenRef.current) return;
@@ -30,12 +32,12 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
 
-      // Small delay + cancel ongoing speech to avoid race condition with other click-triggered speech
+      // Wait a bit, then only speak if nothing else is playing
       setTimeout(() => {
-        window.speechSynthesis?.cancel();
+        if (isSpeakingRef.current) return; // another click handler is already speaking
         const isHe = uiLang === 'he';
         speak(isHe ? textHe : textEn, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
-      }, 300);
+      }, 500);
     };
 
     document.addEventListener('click', doSpeak);

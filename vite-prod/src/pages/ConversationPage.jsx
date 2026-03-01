@@ -6,6 +6,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
+import { stopAllAudio } from '../utils/hebrewAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
@@ -71,6 +72,9 @@ export default function ConversationPage() {
   const [loading, setLoading] = useState(false);
   const [useMic, setUseMic] = useState(false);
   const chatEndRef = useRef(null);
+
+  // Stop all audio on unmount
+  useEffect(() => () => stopAllAudio(), []);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
