@@ -8,6 +8,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { getLevel, LEVEL_META, LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import { stopAllAudio } from '../utils/hebrewAudio.js';
 
 export default function CurriculumPage({ onBack }) {
   const { uiLang } = useTheme();
@@ -24,6 +25,12 @@ export default function CurriculumPage({ onBack }) {
   const [selectedLessonInfo, setSelectedLessonInfo] = useState(null); // for bottom sheet
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const bottomSheetRef = useRef(null);
+
+  // Stop any lingering audio on mount, clean up on unmount
+  useEffect(() => {
+    stopAllAudio();
+    return () => stopAllAudio();
+  }, []);
 
   const unlockedLevels = curriculum.unlockedLevels || [1];
   const totalStars = curriculum.totalStars || 0;
@@ -215,8 +222,8 @@ export default function CurriculumPage({ onBack }) {
               position: 'fixed', bottom: 0, left: 0, right: 0,
               background: 'white', borderRadius: '24px 24px 0 0',
               padding: '24px 24px 32px', zIndex: 51,
-              boxShadow: '0 -4px 20px rgba(0,0,0,0.12)',
-              animation: 'curriculum-slide-up 0.3s ease',
+              boxShadow: '0 -8px 40px rgba(0,0,0,0.18)',
+              animation: 'curriculum-slide-up-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
               maxHeight: '60vh',
             }}
           >
@@ -304,7 +311,7 @@ export default function CurriculumPage({ onBack }) {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        @keyframes curriculum-slide-up {
+        @keyframes curriculum-slide-up-bounce {
           from { transform: translateY(100%); }
           to { transform: translateY(0); }
         }
