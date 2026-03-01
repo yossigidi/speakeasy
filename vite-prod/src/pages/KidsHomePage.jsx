@@ -168,15 +168,15 @@ const GAME_CARDS = [
     page: 'pronunciation',
   },
   {
-    id: 'reading',
-    emoji: '📚',
-    titleHe: 'הסיפורים של ספיקלי!',
-    titleEn: "Speakli's Stories!",
-    descHe: 'קראו ולמדו מילים חדשות',
-    descEn: 'Read & learn new words',
+    id: 'conversation',
+    emoji: '💬',
+    titleHe: 'דברו עם ספיקלי!',
+    titleEn: "Talk to Speakli!",
+    descHe: 'תרגלו שיחות באנגלית',
+    descEn: 'Practice English conversations',
     gradient: 'from-cyan-400 via-sky-400 to-blue-400',
     shadowColor: 'shadow-cyan-400/30',
-    page: 'reading',
+    page: 'conversation',
   },
 ];
 

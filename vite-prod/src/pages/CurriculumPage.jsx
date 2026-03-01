@@ -26,9 +26,8 @@ export default function CurriculumPage({ onBack }) {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const bottomSheetRef = useRef(null);
 
-  // Stop any lingering audio on mount, clean up on unmount
+  // Clean up audio on unmount
   useEffect(() => {
-    stopAllAudio();
     return () => stopAllAudio();
   }, []);
 
@@ -215,36 +214,52 @@ export default function CurriculumPage({ onBack }) {
             }}
           />
 
-          {/* Bottom Sheet */}
+          {/* Center Modal */}
           <div
             ref={bottomSheetRef}
             style={{
-              position: 'fixed', bottom: 0, left: 0, right: 0,
-              background: 'white', borderRadius: '24px 24px 0 0',
-              padding: '24px 24px 32px', zIndex: 51,
-              boxShadow: '0 -8px 40px rgba(0,0,0,0.18)',
-              animation: 'curriculum-slide-up-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              maxHeight: '60vh',
+              position: 'fixed', top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 'calc(100% - 48px)', maxWidth: 360,
+              background: 'white', borderRadius: 24,
+              padding: '24px', zIndex: 51,
+              boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
+              animation: 'curriculum-pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
             }}
           >
-            {/* Handle */}
-            <div style={{
-              width: 40, height: 4, background: '#D1D5DB', borderRadius: 2,
-              margin: '0 auto 20px',
-            }} />
+            {/* Start button — first so it's always visible */}
+            <button
+              onClick={handleStartLesson}
+              style={{
+                width: '100%', padding: '16px 24px', borderRadius: 18,
+                fontSize: 20, fontWeight: 800,
+                background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)',
+                color: 'white', border: 'none', cursor: 'pointer',
+                boxShadow: '0 6px 20px rgba(255,107,107,0.35), 0 3px 0 #E5533A',
+                transform: 'translateY(-2px)',
+                transition: 'all 0.2s',
+                minHeight: 56,
+                marginBottom: 16,
+              }}
+            >
+              {selectedLessonInfo.result?.completed
+                ? (uiLang === 'he' ? '\u05E0\u05E1\u05D4 \u05E9\u05D5\u05D1' : 'Try Again')
+                : t('startLesson', uiLang)
+              }
+            </button>
 
             {/* Lesson info */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
               <div style={{
-                width: 52, height: 52, borderRadius: 16,
+                width: 48, height: 48, borderRadius: 14,
                 background: `${selectedLessonInfo.typeInfo.color}15`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 28,
+                fontSize: 26,
               }}>
                 {selectedLessonInfo.typeInfo.icon}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 18, fontWeight: 700, color: '#374151' }}>
+                <div style={{ fontSize: 17, fontWeight: 700, color: '#374151' }}>
                   {uiLang === 'he'
                     ? (selectedLessonInfo.lesson.titleHe || selectedLessonInfo.lesson.titleEn)
                     : selectedLessonInfo.lesson.titleEn
@@ -261,7 +276,6 @@ export default function CurriculumPage({ onBack }) {
               <div style={{
                 display: 'flex', alignItems: 'center', gap: 8,
                 padding: '10px 16px', background: '#FFFBEB', borderRadius: 12,
-                marginBottom: 16,
               }}>
                 <span style={{ fontSize: 13, color: '#92400E', fontWeight: 600 }}>
                   {uiLang === 'he' ? '\u05E6\u05D9\u05D5\u05DF \u05E7\u05D5\u05D3\u05DD' : 'Previous score'}:
@@ -281,26 +295,6 @@ export default function CurriculumPage({ onBack }) {
                 </span>
               </div>
             )}
-
-            {/* Start button */}
-            <button
-              onClick={handleStartLesson}
-              style={{
-                width: '100%', padding: '16px 24px', borderRadius: 18,
-                fontSize: 18, fontWeight: 800,
-                background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)',
-                color: 'white', border: 'none', cursor: 'pointer',
-                boxShadow: '0 6px 20px rgba(255,107,107,0.35), 0 3px 0 #E5533A',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s',
-                minHeight: 56,
-              }}
-            >
-              {selectedLessonInfo.result?.completed
-                ? (uiLang === 'he' ? '\u05E0\u05E1\u05D4 \u05E9\u05D5\u05D1' : 'Try Again')
-                : t('startLesson', uiLang)
-              }
-            </button>
           </div>
         </>
       )}
@@ -311,9 +305,9 @@ export default function CurriculumPage({ onBack }) {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        @keyframes curriculum-slide-up-bounce {
-          from { transform: translateY(100%); }
-          to { transform: translateY(0); }
+        @keyframes curriculum-pop-in {
+          from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+          to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
       `}</style>
     </div>

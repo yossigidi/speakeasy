@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakli-v60';
-const STATIC_CACHE = 'speakli-static-v60';
+const CACHE_NAME = 'speakli-v61';
+const STATIC_CACHE = 'speakli-static-v61';
 
 const urlsToCache = [
   '/',
@@ -38,7 +38,12 @@ self.addEventListener('activate', event => {
     })
     .then(windowClients => {
       windowClients.forEach(client => {
-        client.navigate(client.url);
+        try {
+          client.navigate(client.url);
+        } catch (e) {
+          // navigate() can fail on focused clients — tell them to reload
+          client.postMessage({ type: 'SW_UPDATED' });
+        }
       });
     })
   );

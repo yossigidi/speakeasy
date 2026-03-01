@@ -10,6 +10,7 @@ import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 // ── Metric Bar ──────────────────────────────────────────
 function MetricBar({ label, value, color }) {
@@ -571,6 +572,20 @@ export default function SimulationPage() {
 
   return (
     <div className="min-h-screen pb-24 px-4">
+      <KidsIntro
+        id="simulation-v1"
+        name={progress.displayName}
+        emoji="💬"
+        title="Talk to Speakli!"
+        titleHe="דברו עם ספיקלי!"
+        desc="Hi! Let's practice speaking English together! I'll help you learn to talk!"
+        descHe="היי! בואו נתרגל לדבר אנגלית ביחד! אני אעזור לכם ללמוד לדבר!"
+        uiLang={uiLang}
+        gradient="from-amber-500 via-orange-500 to-red-500"
+        buttonLabel="Let's talk!"
+        buttonLabelHe="בואו נדבר!"
+      />
+
       {/* Header */}
       <div className="text-center pt-2 pb-4">
         <h1 className="text-xl font-black text-gray-900 dark:text-white">

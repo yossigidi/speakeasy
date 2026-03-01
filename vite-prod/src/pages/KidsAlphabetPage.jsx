@@ -187,9 +187,9 @@ function LetterDetail({ letter, onBack, onStartGame }) {
   const speakSound = () => speak(letter.soundWord, { rate: 0.7 });
   const speakWord = (wordObj) => {
     speak(wordObj.word, {
-      rate: 0.75,
+      rate: 0.85,
       onEnd: () => {
-        setTimeout(() => speak(wordObj.translation, { lang: 'he', rate: 0.9, _queued: true }), 100);
+        speak(wordObj.translation, { lang: 'he', rate: 0.9, _queued: true });
       }
     });
   };

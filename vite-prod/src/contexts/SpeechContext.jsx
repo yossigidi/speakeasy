@@ -142,6 +142,11 @@ export function SpeechProvider({ children }) {
   const hebrewVoiceRef = useRef(null);
   hebrewVoiceRef.current = hebrewVoice;
 
+  // Generation counter: each non-queued speak() call increments this.
+  // onEnd callbacks only fire if the generation hasn't changed,
+  // preventing stale callbacks from triggering new speech when audio is force-stopped.
+  const speakGenRef = useRef(0);
+
   // Chrome has a bug where long utterances stop after ~15s.
   // This keeps the synth alive by poking it periodically.
   const keepAliveRef = useRef(null);
@@ -216,7 +221,9 @@ export function SpeechProvider({ children }) {
     // Cancel ALL audio from all channels (not just WebSpeech)
     if (!options._queued) {
       stopAllAudio();
+      speakGenRef.current++;
     }
+    const gen = speakGenRef.current;
 
     // Ensure AudioContext is resumed (required after user gesture on mobile)
     try { unlockAudioContext(); } catch (e) {}
@@ -248,13 +255,13 @@ export function SpeechProvider({ children }) {
         const mp3Played = await playHebrew(ttsText) || await playHebrew(text);
         if (mp3Played) {
           setIsSpeaking(false);
-          if (options.onEnd) options.onEnd();
+          if (gen === speakGenRef.current && options.onEnd) options.onEnd();
           return;
         }
       }
       // No Web Speech fallback — only use ElevenLabs API voice
       setIsSpeaking(false);
-      if (options.onEnd) options.onEnd();
+      if (gen === speakGenRef.current && options.onEnd) options.onEnd();
     };
 
     // Try Cloud TTS with abort signal (send cleaned text)
@@ -269,7 +276,7 @@ export function SpeechProvider({ children }) {
         // Wait for audio to finish, then fire onEnd
         await result.endPromise;
         setIsSpeaking(false);
-        if (options.onEnd) options.onEnd();
+        if (gen === speakGenRef.current && options.onEnd) options.onEnd();
       } else {
         // API failed — fall back
         if (!settled) {

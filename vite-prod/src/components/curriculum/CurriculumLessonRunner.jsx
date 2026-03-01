@@ -39,15 +39,20 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     }
 
     setLessonData(data);
-    const exs = generateExercises(data.unit, data.lesson);
-    setExercises(exs);
+    try {
+      const exs = generateExercises(data.unit, data.lesson);
+      setExercises(exs);
+    } catch (err) {
+      console.error('Failed to generate exercises:', err);
+      setLoadError(true);
+    }
   }, [lessonId]);
 
   // Error state — lesson not found
   if (loadError) {
     return (
       <div style={{
-        position: 'fixed', inset: 0, zIndex: 100,
+        position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
         background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         padding: '24px', textAlign: 'center',
@@ -206,7 +211,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   if (phase === 'intro') {
     return (
       <div style={{
-        position: 'fixed', inset: 0, zIndex: 100,
+        position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
         background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         padding: '24px', paddingTop: 'calc(env(safe-area-inset-top, 0px) + 24px)',
@@ -328,7 +333,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 100,
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
       background: '#FAFAFA',
       display: 'flex', flexDirection: 'column',
     }}>
@@ -452,6 +457,32 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         @keyframes curriculum-fade-in {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes teacher-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        @keyframes teacher-jelly {
+          0%, 100% { transform: scale(1); }
+          25% { transform: scale(1.1, 0.9); }
+          50% { transform: scale(0.9, 1.1); }
+          75% { transform: scale(1.05, 0.95); }
+        }
+        @keyframes teacher-sparkle {
+          0%, 100% { opacity: 0.3; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes teacher-wave-left {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-25deg); }
+        }
+        @keyframes teacher-wave-right {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(25deg); }
+        }
+        @keyframes teacher-think-dot {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
         }
       `}</style>
     </div>

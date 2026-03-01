@@ -9,6 +9,7 @@ import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { pronunciationScore, compareWords } from '../utils/stringDistance.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 const PRACTICE_SENTENCES = [
   { text: "Hello, how are you?", level: "A1", translation: "שלום, מה שלומך?" },
@@ -107,7 +108,7 @@ function WordComparison({ results }) {
 
 export default function PronunciationPage() {
   const { uiLang } = useTheme();
-  const { addXP } = useUserProgress();
+  const { addXP, progress } = useUserProgress();
   const { speak } = useSpeechSynthesis();
   const { transcript, confidence, isListening, startListening, stopListening, sttSupported: supported } = useSpeechRecognition();
 
@@ -164,6 +165,20 @@ export default function PronunciationPage() {
 
   return (
     <div className="pb-24 px-4 pt-4 space-y-6">
+      <KidsIntro
+        id="pronunciation-v1"
+        name={progress.displayName}
+        emoji="🎤"
+        title="Talk with Speakli!"
+        titleHe="דברו עם ספיקלי!"
+        desc="Hi! Let's practice speaking English together! Listen and repeat after me!"
+        descHe="היי! בואו נתרגל לדבר אנגלית ביחד! הקשיבו וחזרו אחריי!"
+        uiLang={uiLang}
+        gradient="from-amber-500 via-orange-500 to-red-500"
+        buttonLabel="Let's talk!"
+        buttonLabelHe="בואו נדבר!"
+      />
+
       {/* Progress */}
       <div className="flex items-center justify-between">
         <span className="text-sm text-gray-500">{currentIndex + 1} / {PRACTICE_SENTENCES.length}</span>
