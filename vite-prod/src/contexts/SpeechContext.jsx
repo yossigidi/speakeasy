@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { playHebrew, playFromAPI, stopAllAudio, stopCloudTTS, unlockAudioContext } from '../utils/hebrewAudio';
+import { MusicContext } from './MusicContext.jsx';
 
 const SpeechContext = createContext(null);
 
@@ -384,6 +385,13 @@ export function SpeechProvider({ children }) {
     setIsSpeaking(false);
     stopKeepAlive();
   }, [stopKeepAlive]);
+
+  // Duck background music while TTS is speaking
+  const musicCtx = useContext(MusicContext);
+  useEffect(() => {
+    if (!musicCtx) return;
+    if (isSpeaking) { musicCtx.duck(); } else { musicCtx.unduck(); }
+  }, [isSpeaking, musicCtx]);
 
   const value = useMemo(() => ({
     sttSupported,

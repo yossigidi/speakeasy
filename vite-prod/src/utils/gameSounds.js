@@ -4,7 +4,12 @@
 
 import { getAudioContext } from './hebrewAudio.js';
 
+function isSoundEnabled() {
+  return localStorage.getItem('se-sounds') !== 'off';
+}
+
 function playTone(frequency, duration, type = 'sine', volume = 0.3, delay = 0) {
+  if (!isSoundEnabled()) return;
   try {
     const ctx = getAudioContext();
     if (ctx.state === 'suspended') ctx.resume();

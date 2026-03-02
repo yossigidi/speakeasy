@@ -486,6 +486,10 @@ const translations = {
     scenariosCompleted: 'תרחישים שהושלמו',
     overallScore: 'ציון כללי',
     step: 'שלב',
+
+    // Audio Settings
+    backgroundMusic: 'מוזיקת רקע',
+    soundEffects: 'אפקטי קול',
   },
   en: {
     appName: 'Speakli',
@@ -950,6 +954,10 @@ const translations = {
     scenariosCompleted: 'Scenarios Completed',
     overallScore: 'Overall Score',
     step: 'Step',
+
+    // Audio Settings
+    backgroundMusic: 'Background Music',
+    soundEffects: 'Sound Effects',
   }
 };
 

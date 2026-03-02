@@ -4,6 +4,7 @@ import { ThemeProvider, useTheme } from './contexts/ThemeContext.jsx';
 import { ChildAuthProvider, useChildAuth } from './contexts/ChildAuthContext.jsx';
 import { UserProgressProvider, useUserProgress } from './contexts/UserProgressContext.jsx';
 import { SpeechProvider } from './contexts/SpeechContext.jsx';
+import { MusicProvider, useMusic } from './contexts/MusicContext.jsx';
 import useSpacedRepetition from './hooks/useSpacedRepetition.js';
 
 import Header from './components/layout/Header.jsx';
@@ -178,6 +179,19 @@ function AppContent() {
       sessionStorage.setItem('speakeasy_profileSelected', '1');
     }} /></Suspense>;
   }
+
+  // ── Background music: map pages to music sections ──
+  const { setSection } = useMusic();
+  useEffect(() => {
+    if (!isChildMode) { setSection(null); return; }
+    const map = {
+      home: 'kids-home', alphabet: 'kids-home', vocabulary: 'kids-home',
+      'kids-games': 'kids-games',
+      lessons: 'kids-lessons', 'kids-teacher': 'kids-lessons', curriculum: 'kids-lessons',
+      'english-quest': 'kids-quest',
+    };
+    setSection(map[currentPage] || null);
+  }, [currentPage, isChildMode, setSection]);
 
   const isKids = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
 
@@ -394,9 +408,11 @@ export default function App() {
         <AuthProvider>
           <ChildAuthProvider>
             <UserProgressProvider>
-              <SpeechProvider>
-                <AppContent />
-              </SpeechProvider>
+              <MusicProvider>
+                <SpeechProvider>
+                  <AppContent />
+                </SpeechProvider>
+              </MusicProvider>
             </UserProgressProvider>
           </ChildAuthProvider>
         </AuthProvider>

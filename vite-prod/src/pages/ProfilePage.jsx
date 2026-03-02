@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle } from 'lucide-react';
+import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle, Music, Volume2 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import { getLevelTitle } from '../utils/levelSystem.js';
 import { LEVEL_META } from '../data/curriculum/curriculum-index.js';
+import { useMusic } from '../contexts/MusicContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import LevelBadge from '../components/gamification/LevelBadge.jsx';
 import XPBar from '../components/gamification/XPBar.jsx';
@@ -14,6 +15,7 @@ export default function ProfilePage({ onNavigate }) {
   const { uiLang, toggleLang, isDark, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
   const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild } = useUserProgress();
+  const { musicEnabled, soundsEnabled, toggleMusic, toggleSounds } = useMusic();
 
   const [pushEnabled, setPushEnabled] = useState(false);
   const [pushLoading, setPushLoading] = useState(false);
@@ -223,6 +225,32 @@ export default function ProfilePage({ onNavigate }) {
               <span className="text-sm font-medium text-brand-600 dark:text-brand-400">
                 {uiLang === 'he' ? 'עברית' : 'English'}
               </span>
+            </div>
+          </GlassCard>
+
+          {/* Background Music */}
+          <GlassCard className="!p-3 cursor-pointer" onClick={toggleMusic}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Music size={20} className="text-purple-500" />
+                <span className="font-medium text-gray-900 dark:text-white">{t('backgroundMusic', uiLang)}</span>
+              </div>
+              <div className={`w-11 h-6 rounded-full transition-colors ${musicEnabled ? 'bg-purple-500' : 'bg-gray-300'} relative`}>
+                <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${musicEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+              </div>
+            </div>
+          </GlassCard>
+
+          {/* Sound Effects */}
+          <GlassCard className="!p-3 cursor-pointer" onClick={toggleSounds}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Volume2 size={20} className="text-emerald-500" />
+                <span className="font-medium text-gray-900 dark:text-white">{t('soundEffects', uiLang)}</span>
+              </div>
+              <div className={`w-11 h-6 rounded-full transition-colors ${soundsEnabled ? 'bg-emerald-500' : 'bg-gray-300'} relative`}>
+                <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${soundsEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+              </div>
             </div>
           </GlassCard>
 
