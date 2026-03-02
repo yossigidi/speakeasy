@@ -5,7 +5,8 @@ const TRACKS = {
   'kids-home':    '/sounds/music/kids-home.mp3',
   'kids-games':   '/sounds/music/kids-games.mp3',
   'kids-lessons': '/sounds/music/kids-lessons.mp3',
-  'kids-quest':   '/sounds/music/kids-quest.mp3',
+  'kids-quest':     '/sounds/music/kids-quest.mp3',
+  'kids-adventure': '/sounds/music/kids-games.mp3',
 };
 
 const NORMAL_VOL = 0.3;

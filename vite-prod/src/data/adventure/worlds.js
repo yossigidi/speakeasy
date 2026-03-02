@@ -1,0 +1,48 @@
+/**
+ * World definitions & unlock requirements.
+ */
+export const WORLDS = [
+  {
+    id: 'forest',
+    nameEn: 'The Magic Forest',
+    nameHe: 'יער הקסמים',
+    emoji: '🌲',
+    scenes: 6,
+    gradient: ['#22c55e', '#16a34a'],
+    unlocked: true,
+    requiredLevel: 1,
+  },
+  {
+    id: 'ocean',
+    nameEn: 'Ocean World',
+    nameHe: 'עולם האוקיינוס',
+    emoji: '🌊',
+    scenes: 6,
+    gradient: ['#0ea5e9', '#0284c7'],
+    unlocked: false,
+    requiredLevel: 2,
+    requiresWorld: 'forest', // must complete forest first
+  },
+  {
+    id: 'space',
+    nameEn: 'Space World',
+    nameHe: 'עולם החלל',
+    emoji: '🚀',
+    scenes: 6,
+    gradient: ['#6366f1', '#4f46e5'],
+    unlocked: false,
+    requiredLevel: 3,
+    requiresWorld: 'ocean',
+  },
+  {
+    id: 'castle',
+    nameEn: 'Magic Castle',
+    nameHe: 'הטירה הקסומה',
+    emoji: '🏰',
+    scenes: 6,
+    gradient: ['#f59e0b', '#d97706'],
+    unlocked: false,
+    requiredLevel: 4,
+    requiresWorld: 'space',
+  },
+];

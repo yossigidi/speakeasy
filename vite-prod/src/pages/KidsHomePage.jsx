@@ -91,6 +91,17 @@ function LevelBadge({ childLevel, uiLang }) {
 /* ── Game cards data (Speakli character colors: blue, cyan, orange, green, red) ── */
 const GAME_CARDS = [
   {
+    id: 'adventure',
+    emoji: '🗺️',
+    titleHe: 'ההרפתקה של ספיקלי!',
+    titleEn: "Speakli's Adventure!",
+    descHe: 'טיילו בעולמות קסומים!',
+    descEn: 'Explore magical worlds!',
+    gradient: 'from-emerald-400 via-green-500 to-teal-500',
+    shadowColor: 'shadow-emerald-400/30',
+    page: 'adventure',
+  },
+  {
     id: 'english-quest',
     emoji: '⚔️',
     titleHe: 'המשימה של ספיקלי!',

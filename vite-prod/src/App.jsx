@@ -41,6 +41,7 @@ const SupportContactPage = lazy(() => import('./pages/SupportContactPage.jsx'));
 const SupportTicketsPage = lazy(() => import('./pages/SupportTicketsPage.jsx'));
 const EnglishQuestPage = lazy(() => import('./pages/EnglishQuestPage.jsx'));
 const SkillsPage = lazy(() => import('./pages/SkillsPage.jsx'));
+const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -189,6 +190,7 @@ function AppContent() {
       'kids-games': 'kids-games',
       lessons: 'kids-lessons', 'kids-teacher': 'kids-lessons', curriculum: 'kids-lessons',
       'english-quest': 'kids-quest',
+      'adventure': 'kids-adventure',
     };
     setSection(map[currentPage] || null);
   }, [currentPage, isChildMode, setSection]);
@@ -218,11 +220,12 @@ function AppContent() {
     'support-tickets': t('myTickets', uiLang),
     'english-quest': null,
     'skills': null,
+    'adventure': null,
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -285,6 +288,8 @@ function AppContent() {
         return <SupportTicketsPage onBack={() => navigateTo('support')} />;
       case 'skills':
         return <SkillsPage onBack={() => navigateTo('home')} />;
+      case 'adventure':
+        return <AdventurePage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -355,6 +360,8 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       case 'curriculum':
         return <CurriculumPage onBack={() => navigateTo('home')} />;
+      case 'adventure':
+        return <AdventurePage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
