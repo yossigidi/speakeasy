@@ -73,8 +73,8 @@ export default function ConversationPage() {
   const [useMic, setUseMic] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Stop all audio on unmount
-  useEffect(() => () => stopAllAudio(), []);
+  // Stop all audio and speech recognition on unmount
+  useEffect(() => () => { stopAllAudio(); stopListening(); }, []);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });

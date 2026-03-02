@@ -11,6 +11,10 @@ export default async function handler(req, res) {
   try {
     const { messages, scenario, cefrLevel, uiLang } = req.body;
 
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ error: 'messages array is required' });
+    }
+
     const scenarioContext = {
       free: 'Have a natural conversation on any topic.',
       restaurant: 'You are a waiter at a restaurant. Help the customer order food and drinks.',
@@ -42,7 +46,7 @@ Only include "correction" if there was an actual error. Reply ONLY with the JSON
 
     const apiMessages = [
       { role: 'system', content: systemPrompt },
-      ...messages.map(m => ({ role: m.role, content: m.content }))
+      ...messages.filter(m => m && m.role && m.content).map(m => ({ role: m.role, content: String(m.content) }))
     ];
 
     const rawResponse = await callGroq(apiMessages, { temperature: 0.7, max_tokens: 512 });

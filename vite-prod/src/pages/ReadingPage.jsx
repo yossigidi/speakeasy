@@ -283,14 +283,16 @@ function ReadingView({ story, onBack }) {
   };
 
   const nextQuestion = () => {
-    if (quizIndex + 1 >= story.questions.length) {
-      setQuizDone(true);
-      addXP(20, 'reading');
-    } else {
-      setQuizIndex(quizIndex + 1);
+    setQuizIndex(prev => {
+      if (prev + 1 >= story.questions.length) {
+        setQuizDone(true);
+        addXP(20, 'reading');
+        return prev;
+      }
       setQuizAnswered(false);
       setSelectedQuizAnswer(null);
-    }
+      return prev + 1;
+    });
   };
 
   if (showQuiz) {

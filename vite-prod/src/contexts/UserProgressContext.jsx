@@ -63,6 +63,8 @@ export function UserProgressProvider({ children: reactChildren }) {
   const [familyCode, setFamilyCode] = useState(null);
 
   const isChildMode = !!activeChildId;
+  const activeChildIdRef = useRef(activeChildId);
+  useEffect(() => { activeChildIdRef.current = activeChildId; }, [activeChildId]);
 
   // Mutex for addXP to prevent race conditions from concurrent calls
   const xpQueueRef = useRef(Promise.resolve());
@@ -75,24 +77,6 @@ export function UserProgressProvider({ children: reactChildren }) {
       localStorage.removeItem(CHILD_LS_KEY);
     }
   }, [activeChildId]);
-
-  // Subscribe to user doc (for familyCode and childrenIds)
-  useEffect(() => {
-    if (!user) {
-      setFamilyCode(null);
-      return;
-    }
-
-    const userRef = window.firestore.doc(window.db, 'users', user.uid);
-    const unsub = window.firestore.onSnapshot(userRef, (snap) => {
-      if (snap.exists()) {
-        const data = snap.data();
-        setFamilyCode(data.familyCode || null);
-      }
-    });
-
-    return unsub;
-  }, [user]);
 
   // Ensure parentChildren doc exists when familyCode + children are loaded
   useEffect(() => {
@@ -112,9 +96,10 @@ export function UserProgressProvider({ children: reactChildren }) {
     }).catch(() => {});
   }, [user, familyCode, childrenList]);
 
-  // Subscribe to children via childProfiles (by childrenIds from user doc)
+  // Single listener for user doc — handles both familyCode and children
   useEffect(() => {
     if (!user) {
+      setFamilyCode(null);
       setChildrenList([]);
       setChildrenLoaded(true);
       return;
@@ -122,17 +107,21 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     setChildrenLoaded(false);
 
-    // First try the new top-level childProfiles collection
     const userRef = window.firestore.doc(window.db, 'users', user.uid);
 
     const unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
       if (!userSnap.exists()) {
+        setFamilyCode(null);
         setChildrenList([]);
         setChildrenLoaded(true);
         return;
       }
 
       const userData = userSnap.data();
+
+      // Update familyCode from same snapshot
+      setFamilyCode(userData.familyCode || null);
+
       const childrenIds = userData.childrenIds || [];
 
       if (childrenIds.length === 0) {
@@ -192,8 +181,9 @@ export function UserProgressProvider({ children: reactChildren }) {
       setChildrenList(kids);
       setChildrenLoaded(true);
 
-      // If activeChildId no longer exists, switch to parent
-      if (activeChildId && !kids.find(k => k.id === activeChildId)) {
+      // Use ref to get current activeChildId (avoids stale closure)
+      const currentChildId = activeChildIdRef.current;
+      if (currentChildId && !kids.find(k => k.id === currentChildId)) {
         setActiveChildId(null);
       }
     });

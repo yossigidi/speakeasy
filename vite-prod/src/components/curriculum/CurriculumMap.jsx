@@ -40,12 +40,13 @@ export default function CurriculumMap({ levelId, onLessonTap, uiLang }) {
   // Auto-scroll to the current unit on mount
   useEffect(() => {
     if (currentUnitId && unitRefs.current[currentUnitId]) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         unitRefs.current[currentUnitId]?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
         });
       }, 300);
+      return () => clearTimeout(timer);
     }
   }, [currentUnitId, levelId]);
 

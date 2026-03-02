@@ -102,8 +102,8 @@ export default function SimulationPage() {
   const [lastMistakes, setLastMistakes] = useState([]);
   const timerRef = useRef(null);
 
-  // Stop all audio on unmount
-  useEffect(() => () => stopAllAudio(), []);
+  // Stop all audio and speech recognition on unmount
+  useEffect(() => () => { stopAllAudio(); stopListening(); }, []);
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
 

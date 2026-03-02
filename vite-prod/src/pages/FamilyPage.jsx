@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, Play, Pencil, Trash2, Plus, Flame, Zap, Copy, Check, Share2, Key, BarChart3 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -30,6 +30,10 @@ export default function FamilyPage({ onNavigate }) {
   const [confirmNewPin, setConfirmNewPin] = useState('');
   const [pinResetError, setPinResetError] = useState('');
   const [pinResetSuccess, setPinResetSuccess] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  // Cleanup timer on unmount
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const handlePlay = (childId) => {
     switchToChild(childId);
@@ -60,7 +64,8 @@ export default function FamilyPage({ onNavigate }) {
     if (code) {
       navigator.clipboard.writeText(code).catch(() => {});
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
     }
   };
 

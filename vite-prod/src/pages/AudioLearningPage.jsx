@@ -80,7 +80,7 @@ export default function AudioLearningPage({ onBack }) {
     if (levelFilter === 'A1') return wordsA1;
     if (levelFilter === 'A2') return wordsA2;
     return [...wordsA1, ...wordsA2];
-  }, [levelFilter]);
+  }, [levelFilter, wordsA1, wordsA2]);
 
   // Reset index when filter changes
   useEffect(() => {

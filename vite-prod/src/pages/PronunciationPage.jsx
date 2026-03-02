@@ -129,7 +129,7 @@ export default function PronunciationPage() {
       setWordResults(compareWords(sentence.text, transcript));
       if (s >= 50) addXP(3, 'pronunciation');
     }
-  }, [transcript, isListening, hasRecorded]);
+  }, [transcript, isListening, hasRecorded, sentence.text, confidence, addXP]);
 
   const handleRecord = () => {
     if (isListening) {
@@ -143,7 +143,7 @@ export default function PronunciationPage() {
   };
 
   const nextSentence = () => {
-    setCurrentIndex((currentIndex + 1) % PRACTICE_SENTENCES.length);
+    setCurrentIndex(prev => (prev + 1) % PRACTICE_SENTENCES.length);
     setScore(null);
     setWordResults(null);
     setHasRecorded(false);

@@ -11,9 +11,14 @@ export default async function handler(req, res) {
   try {
     const { target, spoken, score } = req.body;
 
+    if (!target || !spoken) {
+      return res.status(400).json({ error: 'target and spoken are required' });
+    }
+    const safeScore = Math.min(100, Math.max(0, parseInt(score, 10) || 0));
+
     const prompt = `A student tried to say: "${target}"
 They actually said: "${spoken}"
-Pronunciation score: ${score}/100
+Pronunciation score: ${safeScore}/100
 
 Give brief, encouraging feedback (2-3 sentences). Point out specific pronunciation issues if any.
 If Hebrew explanation helps, include one.

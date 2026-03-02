@@ -15,6 +15,10 @@ export default async function handler(req, res) {
       evaluationFocus, step, freeMode, industry,
     } = req.body;
 
+    if (!userMessage || typeof userMessage !== 'string' || !userMessage.trim()) {
+      return res.status(400).json({ error: 'userMessage is required' });
+    }
+
     const langNote = uiLang === 'he'
       ? 'Give corrections and explanations in Hebrew.'
       : 'Give corrections and explanations in English.';
