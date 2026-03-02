@@ -301,19 +301,18 @@ function WordBox({ word, emoji, translation, showEmoji, showHebrew, onClick, sta
 
 // ── RunnerViewport ──
 function RunnerViewport({ world, isPaused, isPowerMode, children }) {
-  const skySpeed = isPowerMode ? '15s' : '30s';
   const farSpeed = isPowerMode ? '8s' : '15s';
   const midSpeed = isPowerMode ? '4s' : '8s';
   const groundSpeed = isPowerMode ? '2s' : '4s';
+  const roadSpeed = isPowerMode ? '1s' : '2s';
 
-  const renderLayerContent = (emojis, spacing) => {
-    // Duplicate content for seamless loop
-    const items = [...emojis, ...emojis];
+  const renderLayerContent = (emojis, spacing, fontSize = '2rem') => {
+    const items = [...emojis, ...emojis, ...emojis];
     return items.map((e, i) => (
       <span
         key={i}
         className="inline-block"
-        style={{ marginLeft: `${spacing}px`, fontSize: '2rem' }}
+        style={{ marginLeft: `${spacing}px`, fontSize }}
       >{e}</span>
     ));
   };
@@ -323,56 +322,103 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
       className={`relative w-full h-full overflow-hidden ${isPowerMode ? 'runner-power' : ''} ${isPaused ? 'runner-paused' : ''}`}
       style={{ background: world.skyGradient, minHeight: '100vh' }}
     >
-      {/* Far BG layer */}
+      {/* Animated clouds */}
+      <div className="absolute top-[5%] w-[300%] pointer-events-none"
+        style={{ animation: `runnerScroll ${isPowerMode ? '20s' : '40s'} linear infinite`, opacity: 0.4 }}>
+        {['☁️', '☁️', '☁️', '☁️', '☁️', '☁️'].map((c, i) => (
+          <span key={i} className="inline-block" style={{
+            marginLeft: `${80 + i * 30}px`,
+            fontSize: i % 2 === 0 ? '3rem' : '2rem',
+            marginTop: `${(i * 17) % 40}px`,
+          }}>{c}</span>
+        ))}
+      </div>
+
+      {/* Far BG layer — large scenery */}
       <div
-        className="runner-layer absolute bottom-[30%] w-[200%] flex items-end"
+        className="runner-layer absolute bottom-[28%] w-[300%] flex items-end"
         style={{ animation: `runnerScroll ${farSpeed} linear infinite`, opacity: 0.5 }}
       >
-        {renderLayerContent(world.farEmojis, 80)}
+        {renderLayerContent(world.farEmojis, 100, '2.5rem')}
       </div>
 
-      {/* Mid BG layer */}
+      {/* Mid BG layer — animals/objects */}
       <div
-        className="runner-layer absolute bottom-[20%] w-[200%] flex items-end"
-        style={{ animation: `runnerScroll ${midSpeed} linear infinite`, opacity: 0.7 }}
+        className="runner-layer absolute bottom-[20%] w-[300%] flex items-end"
+        style={{ animation: `runnerScroll ${midSpeed} linear infinite`, opacity: 0.75 }}
       >
-        {renderLayerContent(world.midEmojis, 60)}
+        {renderLayerContent(world.midEmojis, 70, '2.2rem')}
       </div>
 
-      {/* Ground layer */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[20%]"
-        style={{ backgroundColor: world.groundColor }}
-      >
+      {/* Ground — elevated road surface */}
+      <div className="absolute bottom-0 left-0 right-0 h-[22%]"
+        style={{ background: `linear-gradient(180deg, ${world.groundColor}dd 0%, ${world.groundColor} 30%, ${world.groundColor}cc 100%)` }}>
+        {/* Ground emoji decorations */}
         <div
-          className="runner-layer absolute top-1 w-[200%] flex items-center"
+          className="runner-layer absolute top-1 w-[300%] flex items-center"
           style={{ animation: `runnerScroll ${groundSpeed} linear infinite` }}
         >
-          {renderLayerContent(world.groundEmojis, 50)}
+          {renderLayerContent(world.groundEmojis, 55, '1.6rem')}
+        </div>
+
+        {/* Road with dashed center line */}
+        <div className="absolute bottom-0 left-0 right-0 h-[55%] overflow-hidden"
+          style={{ background: `linear-gradient(180deg, ${world.groundColor}99 0%, #374151 20%, #4B5563 50%, #374151 80%, ${world.groundColor}99 100%)` }}>
+          {/* Road markings — dashed center line */}
+          <div className="absolute top-[48%] w-[300%] h-[4px] flex items-center gap-0"
+            style={{ animation: `runnerScroll ${roadSpeed} linear infinite` }}>
+            {Array.from({ length: 40 }).map((_, i) => (
+              <div key={i} className="shrink-0" style={{
+                width: '30px', height: '4px', marginRight: '20px',
+                background: 'rgba(255,255,255,0.5)', borderRadius: '2px',
+              }} />
+            ))}
+          </div>
+          {/* Road edge lines */}
+          <div className="absolute top-[15%] left-0 right-0 h-[2px]" style={{ background: 'rgba(255,255,255,0.15)' }} />
+          <div className="absolute bottom-[15%] left-0 right-0 h-[2px]" style={{ background: 'rgba(255,255,255,0.15)' }} />
         </div>
       </div>
 
       {/* Speed lines */}
       {!isPaused && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 7 }).map((_, i) => (
             <div
               key={i}
-              className="absolute h-0.5 bg-white/30 rounded"
+              className="absolute rounded-full"
               style={{
-                width: `${20 + Math.random() * 30}px`,
-                top: `${20 + Math.random() * 50}%`,
-                animation: `speedLine ${0.8 + Math.random() * 0.5}s linear infinite`,
-                animationDelay: `${i * 0.3}s`,
+                width: `${20 + Math.random() * 40}px`,
+                height: '2px',
+                background: `rgba(255,255,255,${0.15 + Math.random() * 0.2})`,
+                top: `${15 + Math.random() * 55}%`,
+                animation: `speedLine ${0.6 + Math.random() * 0.6}s linear infinite`,
+                animationDelay: `${i * 0.25}s`,
               }}
             />
           ))}
         </div>
       )}
 
-      {/* Speakli character */}
+      {/* Dust trail behind character */}
+      {!isPaused && (
+        <div className="absolute z-[9] pointer-events-none" style={{ left: '8%', bottom: '22%' }}>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="absolute rounded-full" style={{
+              width: `${6 + i * 3}px`, height: `${6 + i * 3}px`,
+              background: `rgba(255,255,255,${0.4 - i * 0.08})`,
+              bottom: `${-2 + i * 4}px`,
+              left: `${-8 - i * 10}px`,
+              animation: `dustPuff ${0.5 + i * 0.15}s ease-out infinite`,
+              animationDelay: `${i * 0.12}s`,
+            }} />
+          ))}
+        </div>
+      )}
+
+      {/* Speakli character — with run lean */}
       <div
-        className={`absolute z-10 speakli-run ${isPaused ? 'runner-paused-char' : ''}`}
+        className={`absolute z-10 speakli-run ${isPaused ? 'runner-paused-char' : 'runner-leaning'}`}
         style={{ left: '15%', bottom: '22%' }}
       >
         <SpeakliAvatar

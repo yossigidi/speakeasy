@@ -1467,10 +1467,10 @@ select:focus {
    SPEAKLI RUN — Runner game animations
    ═══════════════════════════════════════════════════════ */
 
-/* Infinite parallax scroll — layer moves left 50% then resets */
+/* Infinite parallax scroll — layer moves left 33.33% (for 300% width) then resets */
 @keyframes runnerScroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-33.33%); }
 }
 
 /* Character bobbing run cycle */
@@ -1559,6 +1559,23 @@ select:focus {
 .speakli-run.runner-paused-char .speakli-img {
   animation: none;
   transform: scaleX(1) scaleY(1);
+}
+
+/* Character leaning forward while running */
+.runner-leaning {
+  transform: rotate(-8deg);
+  transition: transform 0.3s ease;
+}
+.runner-paused-char.runner-leaning,
+.runner-leaning.runner-paused-char {
+  transform: rotate(0deg);
+}
+
+/* Dust puff particles behind running character */
+@keyframes dustPuff {
+  0%   { transform: scale(1) translateX(0); opacity: 0.5; }
+  50%  { transform: scale(1.5) translateX(-8px); opacity: 0.3; }
+  100% { transform: scale(2) translateX(-16px); opacity: 0; }
 }
 
 /* Ground dash decorations */

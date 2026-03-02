@@ -234,10 +234,11 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
         background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        padding: '24px', paddingTop: 'calc(env(safe-area-inset-top, 0px) + 24px)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        padding: '24px', paddingTop: 'calc(env(safe-area-inset-top, 0px) + 32px)',
+        overflow: 'auto',
       }}>
-        {/* Teacher character - centered, normal size */}
+        {/* Teacher character - at top */}
         <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
           <TeacherCharacter state="talking" size="normal" />
         </div>
@@ -462,7 +463,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           flex: 1, display: 'flex', flexDirection: 'column',
           justifyContent: 'center', padding: '20px 20px 32px',
         }}>
-          {exercise && (
+          {exercise ? (
             <CurriculumExerciseRenderer
               key={`${exercise.lessonId}-${exercise.index}-${currentExercise}`}
               exercise={exercise}
@@ -470,6 +471,13 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
               uiLang={uiLang}
               speak={speak}
             />
+          ) : (
+            <div style={{ textAlign: 'center', padding: 40 }}>
+              <div style={{ fontSize: 36, marginBottom: 12, animation: 'teacher-float 2s ease-in-out infinite' }}>📝</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: '#9CA3AF' }}>
+                {uiLang === 'he' ? 'טוען תרגיל...' : 'Loading exercise...'}
+              </div>
+            </div>
           )}
         </div>
       </div>
