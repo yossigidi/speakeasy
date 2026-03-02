@@ -101,9 +101,10 @@ export default function SimulationPage() {
   const [lastCorrection, setLastCorrection] = useState(null);
   const [lastMistakes, setLastMistakes] = useState([]);
   const timerRef = useRef(null);
+  const speechTimersRef = useRef([]);
 
   // Stop all audio and speech recognition on unmount
-  useEffect(() => () => { stopAllAudio(); stopListening(); }, []);
+  useEffect(() => () => { stopAllAudio(); stopListening(); speechTimersRef.current.forEach(clearTimeout); }, []);
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -244,18 +245,18 @@ export default function SimulationPage() {
         const nextStep = currentStep + 1;
         if (nextStep >= activeScenario.steps.length) {
           // Scenario complete — speak reply, then finish after speech ends
-          speak(data.npcReply, { onEnd: () => setTimeout(() => finishScenario(), 500) });
+          speak(data.npcReply, { onEnd: () => { speechTimersRef.current.push(setTimeout(() => finishScenario(), 500)); } });
           clearInterval(timerRef.current);
         } else {
           setCurrentStep(nextStep);
           // Speak reply, then show next NPC line after speech ends
           speak(data.npcReply, {
             onEnd: () => {
-              setTimeout(() => {
+              speechTimersRef.current.push(setTimeout(() => {
                 const nextNpc = activeScenario.steps[nextStep].npc;
                 setMessages(prev => [...prev, { role: 'npc', content: nextNpc }]);
                 speak(nextNpc);
-              }, 500);
+              }, 500));
             }
           });
         }

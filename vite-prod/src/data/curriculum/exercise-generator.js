@@ -52,6 +52,7 @@ function buildOptions(correct, distractors) {
 function randomLetterExcluding(excludeSet) {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
   const candidates = alphabet.split('').filter((l) => !excludeSet.has(l));
+  if (candidates.length === 0) return 'a';
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
@@ -502,6 +503,11 @@ export function generateExercises(unit, lesson) {
     }
 
     const exercise = generator(targetWord, allWords, sentences, lessonWords);
+
+    if (!exercise) {
+      console.warn(`[exercise-generator] Generator for "${exType}" returned null, skipping.`);
+      continue;
+    }
 
     // Attach metadata
     exercise.index = i;

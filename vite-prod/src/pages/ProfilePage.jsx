@@ -39,7 +39,7 @@ export default function ProfilePage({ onNavigate }) {
         if (sub) {
           await sub.unsubscribe();
           // Remove from Firestore
-          if (user) {
+          if (user && window.firestore && window.db) {
             try {
               const subsRef = window.firestore.collection(window.db, 'push-subscriptions');
               const q = window.firestore.query(subsRef, window.firestore.where('userId', '==', user.uid));
@@ -64,7 +64,7 @@ export default function ProfilePage({ onNavigate }) {
         });
         setPushEnabled(true);
 
-        if (user) {
+        if (user && window.firestore && window.db) {
           try {
             const subJson = sub.toJSON();
             await window.firestore.addDoc(

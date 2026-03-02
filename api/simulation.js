@@ -78,7 +78,7 @@ Reply with ONLY valid JSON:
 
     const apiMessages = [
       { role: 'system', content: systemPrompt },
-      ...(history || []).map(m => ({ role: m.role, content: m.content })),
+      ...(history || []).filter(m => m && m.role && m.content).map(m => ({ role: m.role, content: String(m.content) })),
       { role: 'user', content: userMessage },
     ];
 
