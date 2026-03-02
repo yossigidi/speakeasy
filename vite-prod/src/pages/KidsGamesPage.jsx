@@ -364,13 +364,19 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   const [flipped, setFlipped] = useState([]);
   const [matched, setMatched] = useState([]);
   const [moves, setMoves] = useState(0);
+  const [totalMoves, setTotalMoves] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [round, setRound] = useState(0);
+  const [roundStars, setRoundStars] = useState([]);
+  const [showRoundComplete, setShowRoundComplete] = useState(false);
   const lockRef = useRef(false);
   const matchTimersRef = useRef([]);
+  const usedWordsRef = useRef(new Set());
 
-  // Pairs by level: 1→3, 2→4, 3→5, 4→6
-  const PAIRS = childLevel === 1 ? 3 : childLevel === 2 ? 4 : childLevel === 3 ? 5 : 6;
+  const TOTAL_ROUNDS = 3;
+  const basePairs = childLevel === 1 ? 4 : childLevel === 2 ? 5 : 6;
+  const currentPairs = basePairs + round;
 
   // Stop all audio + clear timers on unmount (back button)
   useEffect(() => {
@@ -381,15 +387,17 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     };
   }, []);
 
-  // Pick words based on level
-  const wordPairs = useMemo(() => {
-    return shuffle(MEMORY_WORDS).slice(0, PAIRS);
-  }, []);
-
-  // Create card deck: "picture" card + "word" card per pair
+  // Build cards for current round — runs on mount and when round changes
   useEffect(() => {
+    // Pick fresh words not used in previous rounds
+    const available = MEMORY_WORDS.filter(w => !usedWordsRef.current.has(w.word));
+    // If pool is too small, allow reuse
+    const pool = available.length >= currentPairs ? available : MEMORY_WORDS;
+    const picked = shuffle(pool).slice(0, currentPairs);
+    picked.forEach(w => usedWordsRef.current.add(w.word));
+
     const deck = [];
-    wordPairs.forEach((w, i) => {
+    picked.forEach((w, i) => {
       deck.push({
         id: i * 2, pairId: i, type: 'picture',
         emoji: w.emoji, word: w.word, translation: w.translation, bg: w.bg,
@@ -400,7 +408,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
       });
     });
     setCards(shuffle(deck));
-  }, [wordPairs]);
+    setFlipped([]);
+    setMatched([]);
+    setMoves(0);
+    lockRef.current = false;
+  }, [round, currentPairs]);
 
   // Voice instructions on game start - pre-recorded Hebrew audio
   useEffect(() => {
@@ -412,8 +424,14 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     return () => clearTimeout(t);
   }, []);
 
+  const getRoundStars = (roundMoves, pairs) => {
+    if (roundMoves <= pairs + 2) return 3;
+    if (roundMoves <= pairs * 2 + 1) return 2;
+    return 1;
+  };
+
   const handleFlip = (card) => {
-    if (lockRef.current || flipped.includes(card.id) || matched.includes(card.pairId)) return;
+    if (lockRef.current || flipped.includes(card.id) || matched.includes(card.pairId) || showRoundComplete) return;
     playTap();
 
     // Speak the English word clearly, then Hebrew (pre-recorded)
@@ -429,6 +447,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     if (newFlipped.length === 2) {
       lockRef.current = true;
       setMoves(m => m + 1);
+      setTotalMoves(m => m + 1);
 
       const [first, second] = newFlipped.map(id => cards.find(c => c.id === id));
 
@@ -448,10 +467,30 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         const t2 = setTimeout(() => {
           setMatched(prev => {
             const next = [...prev, first.pairId];
-            if (next.length >= PAIRS) {
+            if (next.length >= currentPairs) {
+              // Round complete!
               setShowConfetti(true);
               playComplete();
-              const t3 = setTimeout(() => setGameOver(true), 800);
+              // Calculate stars for this round (use moves+1 since this move just happened)
+              const roundMoveCount = moves + 1;
+              const stars = getRoundStars(roundMoveCount, currentPairs);
+              setRoundStars(prev => [...prev, stars]);
+
+              const t3 = setTimeout(() => {
+                if (round < TOTAL_ROUNDS - 1) {
+                  // Show round-complete overlay then advance
+                  setShowRoundComplete(true);
+                  const t4 = setTimeout(() => {
+                    setShowRoundComplete(false);
+                    setShowConfetti(false);
+                    setRound(r => r + 1);
+                  }, 1500);
+                  matchTimersRef.current.push(t4);
+                } else {
+                  // Final round done
+                  setGameOver(true);
+                }
+              }, 800);
               matchTimersRef.current.push(t3);
             }
             return next;
@@ -472,15 +511,10 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     }
   };
 
-  const getStars = () => {
-    if (moves <= PAIRS + 2) return 3;
-    if (moves <= PAIRS * 2 + 1) return 2;
-    return 1;
-  };
-
   if (gameOver) {
-    const starCount = getStars();
-    const xp = starCount * 5 + PAIRS * 3;
+    const totalStarSum = roundStars.reduce((a, b) => a + b, 0);
+    const totalPairsPlayed = Array.from({ length: TOTAL_ROUNDS }, (_, i) => basePairs + i).reduce((a, b) => a + b, 0);
+    const xp = totalStarSum * 5 + totalPairsPlayed * 2;
     return (
       <div className="kids-bg min-h-screen relative">
         <FloatingDecorations />
@@ -491,11 +525,16 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
             {uiLang === 'he' ? 'מצוין! ספיקלי שמח!' : 'Excellent! Speakli is happy!'}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-1 font-medium">
-            {uiLang === 'he' ? `סיימת ב-${moves} מהלכים!` : `Done in ${moves} moves!`}
+            {uiLang === 'he' ? `סיימת ב-${totalMoves} מהלכים!` : `Done in ${totalMoves} moves!`}
           </p>
           <div className="flex gap-2 mb-6 mt-2">
-            {[0, 1, 2].map(i => (
-              <Star key={i} size={44} className={`${i < starCount ? 'text-yellow-400 fill-yellow-400 animate-pop-in' : 'text-gray-300'}`} style={{ animationDelay: `${i * 0.15}s` }} />
+            {roundStars.map((s, i) => (
+              <div key={i} className="flex flex-col items-center gap-0.5">
+                <Star size={40} className={`${s >= 1 ? 'text-yellow-400 fill-yellow-400 animate-pop-in' : 'text-gray-300'}`} style={{ animationDelay: `${i * 0.15}s` }} />
+                <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
+                  {uiLang === 'he' ? `סיבוב ${i + 1}` : `R${i + 1}`}
+                </span>
+              </div>
             ))}
           </div>
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl px-6 py-3 mb-6 shadow-lg">
@@ -515,6 +554,25 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   return (
     <div className="kids-bg h-[100dvh] overflow-hidden relative flex flex-col">
       <FloatingDecorations />
+      <ConfettiBurst show={showConfetti} />
+
+      {/* Round-complete overlay */}
+      {showRoundComplete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 rounded-3xl px-8 py-6 text-center shadow-2xl animate-pop-in">
+            <SpeakliAvatar mode="celebrate" size="md" />
+            <h3 className="text-2xl font-black mt-2 text-gray-800 dark:text-white">
+              {uiLang === 'he' ? `סיבוב ${round + 1} הושלם!` : `Round ${round + 1} complete!`}
+            </h3>
+            <div className="flex justify-center gap-1.5 mt-2">
+              {[0, 1, 2].map(i => (
+                <Star key={i} size={32} className={`${i < (roundStars[round] || 0) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="relative z-10 flex flex-col h-full">
         {/* Header - compact */}
         <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
@@ -526,17 +584,20 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
               <span className="animate-wiggle inline-block">🧠</span>
               {uiLang === 'he' ? 'משחק זיכרון' : 'Memory Match'}
             </h2>
+            <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
+              {uiLang === 'he' ? `סיבוב ${round + 1}/${TOTAL_ROUNDS}` : `Round ${round + 1}/${TOTAL_ROUNDS}`}
+            </span>
           </div>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-2.5 py-1">
             <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
-              {moves}
+              {totalMoves}
             </span>
           </div>
         </div>
 
         {/* Progress stars - compact */}
         <div className="flex justify-center gap-2 mb-1 px-4 shrink-0">
-          {[...Array(PAIRS)].map((_, i) => (
+          {[...Array(currentPairs)].map((_, i) => (
             <Star
               key={i}
               size={18}
@@ -549,8 +610,8 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
           ))}
         </div>
 
-        {/* Card grid - fills remaining space, 2 cols x 4 rows on phone, 4 cols x 2 rows on tablet+ */}
-        <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-2 px-3 pb-2 auto-rows-fr">
+        {/* Card grid - fills remaining space, 3 cols on phone (bigger cards), 4 cols on tablet+ */}
+        <div className="flex-1 grid grid-cols-3 sm:grid-cols-4 gap-2.5 px-3 pb-2 auto-rows-fr">
           {cards.map(card => {
             const isFlipped = flipped.includes(card.id) || matched.includes(card.pairId);
             const isMatched = matched.includes(card.pairId);
