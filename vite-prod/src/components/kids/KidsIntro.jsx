@@ -41,6 +41,8 @@ export default function KidsIntro({
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState('enter'); // enter → visible → exit
   const [avatarMode, setAvatarMode] = useState('fly');
+  const dismissTimerRef = useRef(null);
+  useEffect(() => () => clearTimeout(dismissTimerRef.current), []);
 
   useEffect(() => {
     const seen = getSeenSet();
@@ -101,7 +103,7 @@ export default function KidsIntro({
     stopSpeaking();
     setPhase('exit');
     markSeen(id);
-    setTimeout(() => {
+    dismissTimerRef.current = setTimeout(() => {
       setVisible(false);
       if (onDone) onDone();
     }, 400);

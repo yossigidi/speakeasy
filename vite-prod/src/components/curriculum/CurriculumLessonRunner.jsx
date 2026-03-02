@@ -95,9 +95,9 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       const desc = t(introKey, uiLang);
 
       // Speak title then description
-      setTimeout(() => {
+      introTimerRef.current = setTimeout(() => {
         speak(title, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, onEnd: () => {
-          setTimeout(() => speak(desc, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, _queued: true }), 200);
+          introTimerRef.current = setTimeout(() => speak(desc, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, _queued: true }), 200);
         }});
       }, 200);
     }
@@ -115,6 +115,8 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     // Clear any pending timers from previous exercise
     exerciseTimersRef.current.forEach(clearTimeout);
     exerciseTimersRef.current = [];
+
+    let heartsReachedZero = false;
 
     if (isCorrect) {
       playCorrect();
@@ -135,11 +137,8 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       setWrongCount(prev => prev + 1);
       setHearts(prev => {
         const newHearts = Math.max(0, prev - 1);
-        // If hearts reach 0, end the lesson immediately
         if (newHearts === 0) {
-          setAnswers(a => [...a, { isCorrect, wordData }]);
-          const t1 = setTimeout(() => handleLessonComplete(isCorrect), 1200);
-          exerciseTimersRef.current.push(t1);
+          heartsReachedZero = true;
         }
         return newHearts;
       });
@@ -148,7 +147,15 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
     }
 
+    // Always add the answer (once)
     setAnswers(prev => [...prev, { isCorrect, wordData }]);
+
+    // If hearts reached 0, end the lesson immediately — don't advance to next exercise
+    if (heartsReachedZero) {
+      const t1 = setTimeout(() => handleLessonComplete(isCorrect), 1200);
+      exerciseTimersRef.current.push(t1);
+      return;
+    }
 
     // Reset teacher state after a moment
     const t1 = setTimeout(() => setTeacherState('idle'), 1500);
@@ -192,6 +199,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   useEffect(() => {
     return () => {
       stopSpeaking && stopSpeaking();
+      clearTimeout(introTimerRef.current);
       exerciseTimersRef.current.forEach(clearTimeout);
     };
   }, [stopSpeaking]);

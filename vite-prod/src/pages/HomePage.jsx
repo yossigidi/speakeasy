@@ -45,6 +45,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
 
   // Grammar tip of the day
   const grammarTip = useMemo(() => {
+    if (!grammarRules || grammarRules.length === 0) return null;
     const today = new Date();
     const tipIndex = (today.getDate() + today.getMonth()) % grammarRules.length;
     return grammarRules[tipIndex];

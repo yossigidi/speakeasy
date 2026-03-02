@@ -297,6 +297,8 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
   const [correct, setCorrect] = useState(null);
   const [shakeWrong, setShakeWrong] = useState(null);
   const roundInitRef = useRef(false);
+  const xpRef = useRef(0);
+  const scoreRef = useRef(0);
 
   const setupRound = useCallback((r) => {
     const targetWord = words[Math.floor(Math.random() * words.length)];
@@ -334,13 +336,15 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
       setCorrect(idx);
       playCorrect();
       const xp = 10;
+      scoreRef.current += 1;
+      xpRef.current += xp;
       setScore(s => s + 1);
       setXpEarned(x => x + xp);
 
       setTimeout(() => {
         const nextRound = round + 1;
         if (nextRound >= TOTAL_ROUNDS) {
-          onComplete(xpEarned + xp, score + 1);
+          onComplete(xpRef.current, scoreRef.current);
         } else {
           setRound(nextRound);
           setupRound(nextRound);
@@ -428,6 +432,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
   const [isCorrect, setIsCorrect] = useState(null);
   const [bossAnim, setBossAnim] = useState('');
   const [attackAnim, setAttackAnim] = useState(false);
+  const bossXpRef = useRef(0);
 
   const current = grammar[round] || grammar[0];
 
@@ -442,6 +447,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
       playStar();
       const dmg = bossMaxHP / TOTAL_ROUNDS;
       onBossHPChange(Math.max(0, bossHP - dmg));
+      bossXpRef.current += 15;
       setXpEarned(x => x + 15);
       setBossAnim('animate-shake');
 
@@ -451,7 +457,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
         const nextRound = round + 1;
         if (nextRound >= TOTAL_ROUNDS) {
           playComplete();
-          onComplete(xpEarned + 15);
+          onComplete(bossXpRef.current);
         } else {
           setRound(nextRound);
           setSelected(null);
@@ -558,6 +564,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
   const [typeFallback, setTypeFallback] = useState(!supported);
   const [typedText, setTypedText] = useState('');
   const prevTranscript = useRef('');
+  const speechXpRef = useRef(0);
 
   const current = sentences[round] || sentences[0];
 
@@ -588,13 +595,14 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
       playCorrect();
       stopListening();
       const xp = 15;
+      speechXpRef.current += xp;
       setXpEarned(x => x + xp);
 
       setTimeout(() => {
         const nextRound = round + 1;
         if (nextRound >= TOTAL_ROUNDS) {
           stopListening();
-          onComplete(xpEarned + xp);
+          onComplete(speechXpRef.current);
         } else {
           setRound(nextRound);
           setResult(null);
