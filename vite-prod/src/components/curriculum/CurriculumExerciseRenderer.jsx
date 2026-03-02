@@ -7,12 +7,14 @@ function GuidanceBubble({ text, uiLang, speak, onDone }) {
 
   useEffect(() => {
     // Auto-speak the guidance text when the exercise loads
+    let timer;
     if (speak && text && !spokenRef.current) {
       spokenRef.current = true;
-      setTimeout(() => {
+      timer = setTimeout(() => {
         speak(text, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.92, onEnd: () => onDone && onDone() });
       }, 300);
     }
+    return () => clearTimeout(timer);
   }, [text]);
 
   return (
@@ -44,10 +46,12 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   const [speakResult, setSpeakResult] = useState(null);
   const recognitionRef = useRef(null);
   const guidanceDoneRef = useRef(false);
+  const timersRef = useRef([]);
 
-  // Cleanup SpeechRecognition on unmount
+  // Cleanup SpeechRecognition + timers on unmount
   useEffect(() => {
     return () => {
+      timersRef.current.forEach(clearTimeout);
       if (recognitionRef.current) {
         try { recognitionRef.current.abort(); } catch (e) {}
         recognitionRef.current = null;
@@ -87,7 +91,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   const guidanceDoneCallback = useCallback(() => {
     guidanceDoneRef.current = true;
     if (speak && exercise && ['emoji-pick','word-to-hebrew','listen-pick','fill-letter','speak-word'].includes(exercise.type)) {
-      setTimeout(() => speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true }), 300);
+      timersRef.current.push(setTimeout(() => speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true }), 300));
     }
   }, [exercise, speak]);
 
@@ -105,11 +109,11 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       const wordToSpeak = exercise.wordData?.word || exercise.correctAnswer || answer;
       speak(wordToSpeak, { lang: 'en', rate: 0.9, _queued: true });
     }
-    setTimeout(() => {
+    timersRef.current.push(setTimeout(() => {
       onAnswer(isCorrect, exercise.wordData);
       setSelected(null);
       setShowResult(false);
-    }, 1200);
+    }, 1200));
   };
 
   const btnStyle = (isCorrect, isThis) => ({
@@ -330,10 +334,10 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         setListening(false);
         recognitionRef.current = null;
         setSpeakResult(correct ? 'correct' : 'wrong');
-        setTimeout(() => {
+        timersRef.current.push(setTimeout(() => {
           onAnswer(correct, exercise.wordData);
           setSpeakResult(null);
-        }, 800);
+        }, 800));
       };
       recognition.onerror = () => { setListening(false); recognitionRef.current = null; };
       recognition.onend = () => { setListening(false); recognitionRef.current = null; };
@@ -475,12 +479,12 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       if (correctOrder.length > 0 && newArranged.length === correctOrder.length) {
         const isCorrect = newArranged.every((w, i) => correctOrder[i] && w.toLowerCase() === correctOrder[i].toLowerCase());
         setShowResult(true);
-        setTimeout(() => {
+        timersRef.current.push(setTimeout(() => {
           onAnswer(isCorrect, exercise.wordData);
           setArrangedWords([]);
           setAvailableWords(null);
           setShowResult(false);
-        }, 800);
+        }, 800));
       }
     };
 
@@ -635,24 +639,24 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         setSelectedLeft(null);
         setSelectedRight(null);
         setMatchFlash('correct');
-        setTimeout(() => setMatchFlash(null), 400);
+        timersRef.current.push(setTimeout(() => setMatchFlash(null), 400));
 
         // Check if all pairs matched
         if (newMatched.length === pairs.length) {
-          setTimeout(() => {
+          timersRef.current.push(setTimeout(() => {
             onAnswer(true, exercise.wordData);
             setMatchedPairs([]);
             setSelectedLeft(null);
             setSelectedRight(null);
-          }, 600);
+          }, 600));
         }
       } else {
         setMatchFlash('wrong');
-        setTimeout(() => {
+        timersRef.current.push(setTimeout(() => {
           setSelectedLeft(null);
           setSelectedRight(null);
           setMatchFlash(null);
-        }, 500);
+        }, 500));
       }
     };
 

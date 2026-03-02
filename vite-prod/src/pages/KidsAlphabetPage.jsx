@@ -324,6 +324,8 @@ function FindLetterGame({ letter, onComplete }) {
   const [found, setFound] = useState([]);
   const [wrong, setWrong] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const findTimersRef = useRef([]);
+  useEffect(() => () => { findTimersRef.current.forEach(clearTimeout); }, []);
 
   // Read instruction aloud when game loads
   useEffect(() => {
@@ -356,11 +358,11 @@ function FindLetterGame({ letter, onComplete }) {
       setFound(newFound);
       if (newFound.length >= totalTargets) {
         setShowConfetti(true);
-        setTimeout(onComplete, 1200);
+        findTimersRef.current.push(setTimeout(onComplete, 1200));
       }
     } else {
       setWrong(i);
-      setTimeout(() => setWrong(null), 500);
+      findTimersRef.current.push(setTimeout(() => setWrong(null), 500));
     }
   };
 
@@ -426,6 +428,8 @@ function MatchWordGame({ letter, onComplete }) {
   const [selectedWord, setSelectedWord] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [wrongPair, setWrongPair] = useState(null);
+  const matchTimersRef = useRef([]);
+  useEffect(() => () => { matchTimersRef.current.forEach(clearTimeout); }, []);
 
   // Read instruction aloud when game loads
   useEffect(() => {
@@ -461,12 +465,12 @@ function MatchWordGame({ letter, onComplete }) {
       speak(w.translation, { lang: 'he', rate: 0.9 });
       if (newMatched.length >= words.length) {
         setShowConfetti(true);
-        setTimeout(onComplete, 1000);
+        matchTimersRef.current.push(setTimeout(onComplete, 1000));
       }
     } else {
       setWrongPair(w.id);
       setSelectedWord(null);
-      setTimeout(() => setWrongPair(null), 500);
+      matchTimersRef.current.push(setTimeout(() => setWrongPair(null), 500));
     }
   };
 
@@ -543,6 +547,8 @@ function CaseMatchGame({ letter, onComplete }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [wrongAnswer, setWrongAnswer] = useState(null); // the wrong option picked
   const [encourageMsg, setEncourageMsg] = useState('');
+  const caseTimersRef = useRef([]);
+  useEffect(() => () => { caseTimersRef.current.forEach(clearTimeout); }, []);
 
   // Read instruction aloud when game loads
   useEffect(() => {
@@ -584,21 +590,21 @@ function CaseMatchGame({ letter, onComplete }) {
       const newAnswers = [...answers, true];
       setAnswers(newAnswers);
 
-      setTimeout(() => {
+      caseTimersRef.current.push(setTimeout(() => {
         if (current + 1 >= questions.length) {
           setShowConfetti(true);
-          setTimeout(onComplete, 800);
+          caseTimersRef.current.push(setTimeout(onComplete, 800));
         } else {
           setCurrent(c => c + 1);
         }
-      }, 600);
+      }, 600));
     } else {
       // Wrong answer — show feedback, don't advance
       playWrong();
       setWrongAnswer(opt);
       const phrase = ENCOURAGEMENT_PHRASES[Math.floor(Math.random() * ENCOURAGEMENT_PHRASES.length)];
       setEncourageMsg(phrase);
-      setTimeout(() => speak(phrase, { lang: 'he', rate: 0.95, _queued: true }), 300);
+      caseTimersRef.current.push(setTimeout(() => speak(phrase, { lang: 'he', rate: 0.95, _queued: true }), 300));
     }
   };
 
@@ -684,6 +690,8 @@ function CaseMatchGame({ letter, onComplete }) {
 function ListenChooseGame({ letter, onComplete }) {
   const { uiLang } = useTheme();
   const { speak, stopSpeaking } = useSpeech();
+  const listenTimersRef = useRef([]);
+  useEffect(() => () => { listenTimersRef.current.forEach(clearTimeout); }, []);
   const [current, setCurrent] = useState(0);
   const [result, setResult] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -736,21 +744,21 @@ function ListenChooseGame({ letter, onComplete }) {
       speak(opt.word, {
         rate: 0.75,
         onEnd: () => {
-          setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9, _queued: true }), 100);
+          listenTimersRef.current.push(setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9, _queued: true }), 100));
         }
       });
-      setTimeout(() => {
+      listenTimersRef.current.push(setTimeout(() => {
         setResult(null);
         if (current + 1 >= questions.length) {
           setShowConfetti(true);
-          setTimeout(onComplete, 500);
+          listenTimersRef.current.push(setTimeout(onComplete, 500));
         } else {
           setCurrent(c => c + 1);
         }
-      }, 2500);
+      }, 2500));
     } else {
       setResult('wrong');
-      setTimeout(() => setResult(null), 600);
+      listenTimersRef.current.push(setTimeout(() => setResult(null), 600));
     }
   };
 
@@ -838,6 +846,8 @@ function GameFlow({ letter, onComplete, onBack }) {
   const [gameIndex, setGameIndex] = useState(0);
   const [stars, setStars] = useState(0);
   const [showComplete, setShowComplete] = useState(false);
+  const flowTimersRef = useRef([]);
+  useEffect(() => () => { flowTimersRef.current.forEach(clearTimeout); }, []);
 
   // Speak congratulations when completing all games
   useEffect(() => {
@@ -863,7 +873,7 @@ function GameFlow({ letter, onComplete, onBack }) {
     if (gameIndex + 1 >= games.length) {
       setShowComplete(true);
     } else {
-      setTimeout(() => setGameIndex(i => i + 1), 600);
+      flowTimersRef.current.push(setTimeout(() => setGameIndex(i => i + 1), 600));
     }
   }, [gameIndex, games.length]);
 

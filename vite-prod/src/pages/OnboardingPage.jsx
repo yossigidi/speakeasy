@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { ArrowLeft, Check, Eye, EyeOff, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
@@ -112,6 +112,8 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { updateProgress, progress, addChild, familyCode } = useUserProgress();
 
   const [step, setStep] = useState(0);
+  const onboardTimersRef = useRef([]);
+  useEffect(() => () => { onboardTimersRef.current.forEach(clearTimeout); }, []);
 
   // Curriculum level (1-5)
   const [curriculumLevel, setCurriculumLevel] = useState(1);
@@ -175,7 +177,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   /* ── placement test answer handler ── */
   const handleTestAnswer = useCallback((optionIndex) => {
     setSelectedOption(optionIndex);
-    setTimeout(() => {
+    onboardTimersRef.current.push(setTimeout(() => {
       const newAnswers = [...testAnswers, optionIndex];
       setTestAnswers(newAnswers);
       setSelectedOption(null);
@@ -187,7 +189,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
       } else {
         setTestIndex(i => i + 1);
       }
-    }, 600);
+    }, 600));
   }, [testAnswers, testIndex]);
 
   /* ── skip question (don't know) ── */

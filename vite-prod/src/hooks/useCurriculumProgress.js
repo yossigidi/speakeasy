@@ -86,7 +86,7 @@ export default function useCurriculumProgress() {
       // lessonId format: L1U1-1 → unitId: L1U1
       const unitId = lessonId.split('-')[0];
       // Find the unit to determine the actual last lesson
-      const levelId = parseInt(unitId.charAt(1));
+      const levelId = parseInt(unitId.charAt(1)) || 1;
       const unitData = getLevel(levelId)?.units?.find(u => u.id === unitId);
       const lastLessonIndex = unitData ? unitData.lessons.length : 6;
       const testLessonId = unitId + '-' + lastLessonIndex;
