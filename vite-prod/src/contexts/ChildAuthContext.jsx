@@ -96,7 +96,8 @@ export function ChildAuthProvider({ children }) {
   }, []);
 
   // Login child from separate device
-  const loginChild = useCallback(async (familyCode, childId, childName, pin) => {
+  const loginChild = useCallback(async (rawFamilyCode, childId, childName, pin) => {
+    const familyCode = rawFamilyCode.toUpperCase();
     // Check rate limit
     const rl = checkRateLimit();
     if (rl.locked) {
@@ -160,18 +161,12 @@ export function ChildAuthProvider({ children }) {
     try {
       await ensureAuth();
 
-      const docRef = window.firestore.doc(window.db, 'parentChildren', familyCode);
+      // Codes are generated uppercase — normalize input to match
+      const normalizedCode = familyCode.toUpperCase();
+      const docRef = window.firestore.doc(window.db, 'parentChildren', normalizedCode);
       const docSnap = await window.firestore.getDoc(docRef);
 
       if (!docSnap.exists()) {
-        console.warn('parentChildren doc not found for code:', familyCode);
-        // Also try lowercase in case of mismatch
-        const lowerRef = window.firestore.doc(window.db, 'parentChildren', familyCode.toLowerCase());
-        const lowerSnap = await window.firestore.getDoc(lowerRef);
-        if (lowerSnap.exists()) {
-          const data = lowerSnap.data();
-          return { success: true, children: data.children || [] };
-        }
         return { success: false, error: 'invalidFamilyCode' };
       }
 
