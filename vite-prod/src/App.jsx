@@ -283,7 +283,7 @@ function AppContent() {
         <Header
           title={pageTitles[currentPage]}
           showBack={isSubPage}
-          onBack={() => navigateTo(isSubPage ? 'home' : 'home')}
+          onBack={() => navigateTo('home')}
         />
       )}
 

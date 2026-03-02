@@ -274,6 +274,7 @@ export function SpeechProvider({ children }) {
     let settled = false;
 
     const fallbackToLocal = async () => {
+      if (gen !== speakGenRef.current) return;
       // Hebrew-specific fallback: pre-recorded MP3 (use cleaned text for lookup too)
       if (isHebrew) {
         const mp3Played = await playHebrew(ttsText) || await playHebrew(text);
