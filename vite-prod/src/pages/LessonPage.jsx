@@ -137,7 +137,7 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
   );
 }
 
-function WordArrange({ exercise, onAnswer }) {
+function WordArrange({ exercise, onAnswer, uiLang }) {
   const [selected, setSelected] = useState([]);
   const [available, setAvailable] = useState(() => shuffle(exercise.words));
   const [answered, setAnswered] = useState(false);
@@ -505,7 +505,7 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
     switch (exercise.type) {
       case 'multiple-choice': return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
       case 'fill-blank': return <FillInBlank exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
-      case 'word-arrange': return <WordArrange exercise={exercise} onAnswer={handleAnswer} />;
+      case 'word-arrange': return <WordArrange exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
       case 'translation': return <TranslationExercise exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
       case 'match-pairs': return <MatchPairs exercise={exercise} onAnswer={handleAnswer} />;
       case 'listening': return <ListeningExercise exercise={exercise} onAnswer={handleAnswer} speak={speak} uiLang={uiLang} />;
