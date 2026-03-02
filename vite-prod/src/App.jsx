@@ -125,9 +125,9 @@ function AppContent() {
   // Show loading while auth initializes or children are loading
   if (authLoading || (user && progressLoading) || (user && progress.onboardingComplete && !childrenLoaded)) {
     return (
-      <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d3b3a 100%)' }}>
+      <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d1847 100%)' }}>
         <div className="text-center">
-          <img src="/images/speakli-icon.webp" alt="Speakli" style={{ width: '120px', height: 'auto', margin: '0 auto 16px', filter: 'drop-shadow(0 8px 32px rgba(20,184,166,0.3))' }} />
+          <img src="/images/speakli-icon.webp" alt="Speakli" style={{ width: '120px', height: 'auto', margin: '0 auto 16px', filter: 'drop-shadow(0 8px 32px rgba(59,130,246,0.3))' }} />
           <LoadingSpinner />
         </div>
       </div>

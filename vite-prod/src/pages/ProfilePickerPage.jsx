@@ -26,7 +26,7 @@ export default function ProfilePickerPage({ onSelect }) {
   return (
     <div style={{
       minHeight: '100dvh',
-      background: 'linear-gradient(180deg, #030712 0%, #0f172a 50%, #0d3b3a 100%)',
+      background: 'linear-gradient(180deg, #030712 0%, #0f172a 50%, #0d1847 100%)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -45,7 +45,7 @@ export default function ProfilePickerPage({ onSelect }) {
         transform: 'translateX(-50%)',
         width: '500px',
         height: '500px',
-        background: 'radial-gradient(circle, rgba(20,184,166,0.12) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
       <div style={{
@@ -54,7 +54,7 @@ export default function ProfilePickerPage({ onSelect }) {
         right: '-10%',
         width: '400px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -67,7 +67,7 @@ export default function ProfilePickerPage({ onSelect }) {
           transform: 'translate(-50%, -50%)',
           width: '120px',
           height: '120px',
-          background: 'radial-gradient(circle, rgba(20,184,166,0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%)',
           borderRadius: '50%',
         }} />
         <img
@@ -78,7 +78,7 @@ export default function ProfilePickerPage({ onSelect }) {
             height: 'auto',
             position: 'relative',
             zIndex: 1,
-            filter: 'drop-shadow(0 8px 32px rgba(20,184,166,0.3))',
+            filter: 'drop-shadow(0 8px 32px rgba(59,130,246,0.3))',
           }}
         />
       </div>
@@ -132,8 +132,8 @@ export default function ProfilePickerPage({ onSelect }) {
           }}
           onMouseEnter={e => {
             e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-            e.currentTarget.style.borderColor = 'rgba(20,184,166,0.5)';
-            e.currentTarget.style.boxShadow = '0 8px 32px rgba(20,184,166,0.15)';
+            e.currentTarget.style.borderColor = 'rgba(59,130,246,0.5)';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(59,130,246,0.15)';
             e.currentTarget.style.transform = 'translateY(-2px)';
           }}
           onMouseLeave={e => {
@@ -154,7 +154,7 @@ export default function ProfilePickerPage({ onSelect }) {
             width: '56px',
             height: '56px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #14b8a6, #059669)',
+            background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -162,7 +162,7 @@ export default function ProfilePickerPage({ onSelect }) {
             fontWeight: 700,
             color: '#fff',
             flexShrink: 0,
-            boxShadow: '0 4px 16px rgba(20,184,166,0.3)',
+            boxShadow: '0 4px 16px rgba(59,130,246,0.3)',
             position: 'relative',
           }}>
             {parentInitial}
@@ -205,7 +205,7 @@ export default function ProfilePickerPage({ onSelect }) {
               color: 'rgba(255,255,255,0.5)',
             }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Zap size={14} color="#14b8a6" />
+                <Zap size={14} color="#3b82f6" />
                 {progress.xp || 0} XP
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -240,8 +240,8 @@ export default function ProfilePickerPage({ onSelect }) {
             }}
             onMouseEnter={e => {
               e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-              e.currentTarget.style.borderColor = 'rgba(20,184,166,0.5)';
-              e.currentTarget.style.boxShadow = '0 8px 32px rgba(20,184,166,0.15)';
+              e.currentTarget.style.borderColor = 'rgba(59,130,246,0.5)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(59,130,246,0.15)';
               e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             onMouseLeave={e => {

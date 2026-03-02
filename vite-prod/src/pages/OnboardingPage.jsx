@@ -428,7 +428,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
       <style>{`
         .landing-root {
           position: fixed; inset: 0;
-          background: linear-gradient(160deg, #021a1a 0%, #0a2e2e 30%, #0f3d3a 60%, #0d2847 100%);
+          background: linear-gradient(160deg, #020c1b 0%, #0a1e3d 30%, #0f2d5a 60%, #0d1847 100%);
           display: flex; flex-direction: column; align-items: center;
           text-align: center;
           padding: calc(env(safe-area-inset-top, 0px) + 16px) 20px calc(env(safe-area-inset-bottom, 0px) + 20px);
@@ -442,17 +442,17 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         }
         .landing-blob-1 {
           width: 300px; height: 300px; top: -80px; right: -60px;
-          background: radial-gradient(circle, #0d9488 0%, transparent 70%);
+          background: radial-gradient(circle, #2563eb 0%, transparent 70%);
           animation: blob-drift 8s ease-in-out infinite;
         }
         .landing-blob-2 {
           width: 250px; height: 250px; bottom: 10%; left: -40px;
-          background: radial-gradient(circle, #10b981 0%, transparent 70%);
+          background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
           animation: blob-drift 10s ease-in-out infinite reverse;
         }
         .landing-blob-3 {
           width: 200px; height: 200px; top: 40%; right: -30px;
-          background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+          background: radial-gradient(circle, #f59e0b 0%, transparent 70%);
           animation: blob-drift 12s ease-in-out infinite 2s;
         }
         @keyframes blob-drift {
@@ -482,26 +482,26 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         }
         .landing-glow {
           position: absolute; inset: -40%;
-          background: radial-gradient(circle, rgba(13,148,136,0.5) 0%, rgba(16,185,129,0.25) 35%, rgba(6,182,212,0.1) 55%, transparent 70%);
+          background: radial-gradient(circle, rgba(59,130,246,0.5) 0%, rgba(37,99,235,0.25) 35%, rgba(245,158,11,0.1) 55%, transparent 70%);
           filter: blur(35px);
           animation: glow-breathe 4s ease-in-out infinite;
         }
         .landing-ring {
           position: absolute; inset: -15%;
-          border: 2px solid rgba(20,184,166,0.15);
+          border: 2px solid rgba(59,130,246,0.15);
           border-radius: 50%;
           animation: ring-spin 20s linear infinite;
         }
         .landing-ring::before {
           content: ''; position: absolute; top: -4px; left: 50%;
           width: 8px; height: 8px; border-radius: 50%;
-          background: #14b8a6; box-shadow: 0 0 12px #14b8a6;
+          background: #3b82f6; box-shadow: 0 0 12px #3b82f6;
         }
         .landing-character {
           position: relative;
           width: min(55vw, 220px); height: auto;
           animation: hero-float 4s ease-in-out infinite;
-          filter: drop-shadow(0 20px 50px rgba(13,148,136,0.4));
+          filter: drop-shadow(0 20px 50px rgba(59,130,246,0.4));
         }
         @keyframes hero-float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -517,7 +517,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         /* Tagline */
         .landing-tagline {
           font-size: clamp(18px, 4.5vw, 22px); font-weight: 800;
-          background: linear-gradient(135deg, #5eead4, #14b8a6, #10b981);
+          background: linear-gradient(135deg, #93c5fd, #3b82f6, #f59e0b);
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           margin: 0 0 4px; flex-shrink: 0; letter-spacing: 0.3px;
         }
@@ -566,7 +566,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           box-sizing: border-box; transition: border-color 0.2s;
         }
         .landing-input::placeholder { color: rgba(255,255,255,0.25); }
-        .landing-input:focus { border-color: rgba(20,184,166,0.5); }
+        .landing-input:focus { border-color: rgba(59,130,246,0.5); }
         .landing-eye-btn {
           position: absolute; top: 50%; transform: translateY(-50%);
           color: rgba(255,255,255,0.3); background: none; border: none; cursor: pointer; padding: 4px;
@@ -577,23 +577,23 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         .landing-submit-btn {
           width: 100%; padding: 14px 0; border-radius: 14px;
           font-weight: 700; font-size: 16px; color: #fff;
-          background: linear-gradient(135deg, #0d9488, #10b981);
+          background: linear-gradient(135deg, #2563eb, #3b82f6);
           border: none; cursor: pointer;
-          box-shadow: 0 8px 30px rgba(13,148,136,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+          box-shadow: 0 8px 30px rgba(37,99,235,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
           transition: all 0.2s;
         }
         .landing-submit-btn:active { transform: scale(0.97); }
         .landing-submit-btn:disabled { opacity: 0.5; }
-        .landing-submit-btn:hover { box-shadow: 0 12px 40px rgba(13,148,136,0.5); }
+        .landing-submit-btn:hover { box-shadow: 0 12px 40px rgba(37,99,235,0.5); }
 
         .landing-toggle {
           text-align: center; font-size: 13px; color: rgba(255,255,255,0.35); margin: 2px 0 0;
         }
         .landing-toggle-btn {
-          font-weight: 600; color: #14b8a6; background: none;
+          font-weight: 600; color: #3b82f6; background: none;
           border: none; cursor: pointer; font-size: 13px;
         }
-        .landing-toggle-btn:hover { color: #5eead4; }
+        .landing-toggle-btn:hover { color: #60a5fa; }
 
         .landing-child-btn {
           margin-top: 4px; font-size: 13px; color: rgba(255,255,255,0.2);
@@ -615,7 +615,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           <div className="flex flex-col gap-3">
             <button
               onClick={() => setTestStarted(true)}
-              className="w-full py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-teal-500 to-emerald-500 shadow-lg shadow-teal-500/25 active:scale-[0.97] transition-all"
+              className="w-full py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg shadow-blue-500/25 active:scale-[0.97] transition-all"
             >
               {t('startTest', uiLang)}
             </button>
@@ -651,7 +651,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         {/* Progress bar */}
         <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-2 mb-4 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-500"
+            className="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-500"
             style={{ width: `${progressPct}%` }}
           />
         </div>
@@ -671,7 +671,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
             <p className="text-sm text-gray-400 text-center mt-2" dir="rtl">{q.questionHe}</p>
           )}
           {q.hint && (
-            <p className="text-xs text-teal-500 dark:text-teal-400 text-center mt-2 italic">
+            <p className="text-xs text-blue-500 dark:text-blue-400 text-center mt-2 italic">
               {uiLang === 'he' && q.hintHe ? q.hintHe : q.hint}
             </p>
           )}
@@ -682,7 +682,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           {q.options.map((opt, i) => {
             let btnClass = 'glass-card p-3.5 text-center font-medium transition-all duration-200 active:scale-[0.97] border-2 ';
             if (selectedOption === null) {
-              btnClass += 'border-transparent hover:border-teal-400';
+              btnClass += 'border-transparent hover:border-blue-400';
             } else if (i === q.correct) {
               btnClass += 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300';
             } else if (i === selectedOption && i !== q.correct) {
@@ -729,7 +729,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               key={meta.id}
               className={`relative flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-300 ${
                 isAssigned
-                  ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30 shadow-lg shadow-teal-500/20'
+                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 shadow-lg shadow-blue-500/20'
                   : isUnlocked
                     ? 'border-emerald-300 dark:border-emerald-700 bg-white dark:bg-gray-800/50'
                     : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/30 opacity-60'
@@ -738,7 +738,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               {/* Emoji */}
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
                 isAssigned
-                  ? 'bg-gradient-to-br from-teal-500 to-emerald-500 shadow-md'
+                  ? 'bg-gradient-to-br from-blue-600 to-blue-400 shadow-md'
                   : isUnlocked
                     ? 'bg-emerald-100 dark:bg-emerald-900/30'
                     : 'bg-gray-100 dark:bg-gray-700'
@@ -749,7 +749,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               {/* Text */}
               <div className="flex-1">
                 <span className={`font-bold text-base block ${
-                  isAssigned ? 'text-teal-700 dark:text-teal-300' : ''
+                  isAssigned ? 'text-blue-700 dark:text-blue-300' : ''
                 }`}>
                   {uiLang === 'he' ? meta.nameHe : meta.name}
                 </span>
@@ -760,7 +760,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
               {/* Status indicator */}
               {isAssigned ? (
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500 text-white text-xs font-bold animate-pulse">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-bold animate-pulse">
                   {uiLang === 'he' ? 'אתה כאן!' : 'YOU'}
                 </div>
               ) : isUnlocked ? (
@@ -838,7 +838,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           placeholder={uiLang === 'he' ? 'שם הילד/ה' : "Child's name"}
           value={newChildName}
           onChange={e => setNewChildName(e.target.value)}
-          className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all"
+          className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
         />
         <input
           type="text"
@@ -847,12 +847,12 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           placeholder={uiLang === 'he' ? 'קוד כניסה (4 ספרות)' : 'Login PIN (4 digits)'}
           value={newChildPin}
           onChange={e => setNewChildPin(e.target.value.replace(/\D/g, '').slice(0, 6))}
-          className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all"
+          className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
         />
         <button
           onClick={handleAddChild}
           disabled={!newChildName.trim()}
-          className="w-full py-3 rounded-xl font-semibold border-2 border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/30 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
+          className="w-full py-3 rounded-xl font-semibold border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
         >
           {uiLang === 'he' ? '+ הוסיפו ילד/ה' : '+ Add Child'}
         </button>
@@ -880,7 +880,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   return (
     <div
       dir={dir}
-      className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-teal-950 transition-colors duration-300"
+      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950 transition-colors duration-300"
     >
       {/* Step indicator dots (hidden on auth screen) */}
       {step > 0 && (
@@ -890,9 +890,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               key={i}
               className={`h-2 rounded-full transition-all duration-300 ${
                 i === step
-                  ? 'w-8 bg-gradient-to-r from-teal-500 to-emerald-500'
+                  ? 'w-8 bg-gradient-to-r from-blue-600 to-blue-400'
                   : i < step
-                    ? 'w-2 bg-teal-400'
+                    ? 'w-2 bg-blue-400'
                     : 'w-2 bg-gray-300 dark:bg-gray-600'
               }`}
             />
@@ -933,7 +933,7 @@ function NextButton({ onClick, label, disabled }) {
     <button
       onClick={onClick}
       disabled={disabled}
-      className="w-full mt-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-teal-500 via-emerald-500 to-green-500 shadow-lg shadow-teal-500/25 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
+      className="w-full mt-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 shadow-lg shadow-blue-500/25 active:scale-[0.97] transition-all disabled:opacity-40 disabled:pointer-events-none"
     >
       {label}
     </button>
