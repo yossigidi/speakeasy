@@ -153,6 +153,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
+  const gameTimersRef = useRef([]);
 
   const TOTAL_ROUNDS = 6;
   // Options count by level: 1→4, 2→6, 3→6, 4→8
@@ -174,9 +175,9 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     return shuffle(levelWords).slice(0, TOTAL_ROUNDS);
   }, [levelWords]);
 
-  // Stop all audio on unmount (back button)
+  // Stop all audio + clear timers on unmount
   useEffect(() => {
-    return () => stopAllAudio();
+    return () => { stopAllAudio(); gameTimersRef.current.forEach(clearTimeout); };
   }, []);
 
   useEffect(() => {
@@ -230,21 +231,21 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       setPopped(opt.id);
       setScore(s => s + 1);
       playCorrect();
-      setTimeout(() => {
+      gameTimersRef.current.push(setTimeout(() => {
         playSequence([
           { text: opt.word, lang: 'en-US', rate: 0.75 },
           { pause: 100 },
           { text: opt.translation, lang: 'he' },
         ], speak);
-      }, 400);
-      setTimeout(() => {
+      }, 400));
+      gameTimersRef.current.push(setTimeout(() => {
         setRound(r => r + 1);
         poppingRef.current = false;
-      }, 1200);
+      }, 1200));
     } else {
       setWrongId(opt.id);
       playWrong();
-      setTimeout(() => setWrongId(null), 500);
+      gameTimersRef.current.push(setTimeout(() => setWrongId(null), 500));
     }
   };
 
@@ -398,6 +399,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   const [lastResult, setLastResult] = useState(null); // 'correct' | 'wrong' | null
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const sortTimersRef = useRef([]);
 
   // Sets by level: 1-2→1 set, 3-4→2 sets
   const TOTAL_SETS = childLevel >= 3 ? 2 : 1;
@@ -410,9 +412,9 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
     preloadHebrewAudio(NEW_GAME_PHRASES);
   }, []);
 
-  // Stop all audio on unmount (back button)
+  // Stop all audio + clear timers on unmount
   useEffect(() => {
-    return () => stopAllAudio();
+    return () => { stopAllAudio(); sortTimersRef.current.forEach(clearTimeout); };
   }, []);
 
   // Use level-specific categories
@@ -465,7 +467,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       playWrong();
     }
 
-    setTimeout(() => {
+    sortTimersRef.current.push(setTimeout(() => {
       setLastResult(null);
       setSorted(prev => [...prev, currentItem]);
 
@@ -482,7 +484,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       } else {
         setCurrentItem(c => c + 1);
       }
-    }, 800);
+    }, 800));
   };
 
   if (gameOver) {
@@ -612,6 +614,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
+  const huntTimersRef = useRef([]);
 
   const TOTAL_ROUNDS = 8;
   // Options by level: 1→2, 2→3, 3→4, 4→4
@@ -624,9 +627,9 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
     preloadHebrewAudio(NEW_GAME_PHRASES);
   }, []);
 
-  // Stop all audio on unmount (back button)
+  // Stop all audio + clear timers on unmount
   useEffect(() => {
-    return () => stopAllAudio();
+    return () => { stopAllAudio(); huntTimersRef.current.forEach(clearTimeout); };
   }, []);
 
   const rounds = useMemo(() => {
@@ -704,7 +707,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       const tryAdvance = () => {
         if (audioDone && timerDone) advanceToNext();
       };
-      setTimeout(() => {
+      huntTimersRef.current.push(setTimeout(() => {
         playSequence([
           { text: current.word, lang: 'en-US', rate: 0.75 },
           { pause: 500 },
@@ -713,15 +716,15 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
           audioDone = true;
           tryAdvance();
         });
-      }, 400);
+      }, 400));
       // Minimum visual delay of 1.5s so user sees the green feedback
-      setTimeout(() => {
+      huntTimersRef.current.push(setTimeout(() => {
         timerDone = true;
         tryAdvance();
-      }, 1500);
+      }, 1500));
     } else {
       playWrong();
-      setTimeout(advanceToNext, 1000);
+      huntTimersRef.current.push(setTimeout(advanceToNext, 1000));
     }
   };
 
@@ -860,6 +863,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
+  const sentenceTimersRef = useRef([]);
 
   // Rounds by level: 1→4, 2→5, 3→6, 4→6
   const TOTAL_ROUNDS = childLevel === 1 ? 4 : childLevel === 2 ? 5 : 6;
@@ -869,9 +873,9 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     preloadHebrewAudio(NEW_GAME_PHRASES);
   }, []);
 
-  // Stop all audio on unmount (back button)
+  // Stop all audio + clear timers on unmount
   useEffect(() => {
-    return () => stopAllAudio();
+    return () => { stopAllAudio(); sentenceTimersRef.current.forEach(clearTimeout); };
   }, []);
 
   // Use level-specific sentences
@@ -931,17 +935,17 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         setIsCorrect(true);
         setScore(s => s + 1);
         playCorrect();
-        setTimeout(() => {
+        sentenceTimersRef.current.push(setTimeout(() => {
           playSequence([
             { text: current.sentence, lang: 'en-US', rate: 0.75 },
           ], speak);
-        }, 400);
+        }, 400));
       }
     } else {
       // Wrong word - flash red and shake
       playWrong();
       setWrongTapId(wordObj.id);
-      setTimeout(() => setWrongTapId(null), 500);
+      sentenceTimersRef.current.push(setTimeout(() => setWrongTapId(null), 500));
     }
   };
 

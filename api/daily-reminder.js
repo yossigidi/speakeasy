@@ -79,6 +79,12 @@ module.exports = async function handler(req, res) {
                 tag: 'daily-reminder'
             });
 
+            if (!subData.endpoint || !subData.keys?.p256dh || !subData.keys?.auth) {
+                results.pushesFailed++;
+                results.errors.push({ subId: subDoc.id, error: 'Malformed subscription (missing endpoint or keys)' });
+                continue;
+            }
+
             const pushSubscription = {
                 endpoint: subData.endpoint,
                 keys: { p256dh: subData.keys.p256dh, auth: subData.keys.auth }

@@ -1,20 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function ExerciseRenderer({ exercise, onAnswer, t, uiLang, speak, speakWordPair }) {
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [listening, setListening] = useState(false);
   const [speakResult, setSpeakResult] = useState(null);
+  const timersRef = useRef([]);
+  const recognitionRef = useRef(null);
+
+  // Cleanup timers and speech recognition on unmount
+  useEffect(() => {
+    return () => {
+      timersRef.current.forEach(clearTimeout);
+      if (recognitionRef.current) {
+        try { recognitionRef.current.abort(); } catch (_) {}
+        recognitionRef.current = null;
+      }
+    };
+  }, []);
 
   const handleSelect = (answer, isCorrect) => {
     if (selected !== null) return;
     setSelected(answer);
     setShowResult(true);
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       onAnswer(isCorrect, exercise.wordData);
       setSelected(null);
       setShowResult(false);
     }, 800);
+    timersRef.current.push(t1);
   };
 
   const btnStyle = (isCorrect, isThis) => ({
@@ -138,8 +152,13 @@ export default function ExerciseRenderer({ exercise, onAnswer, t, uiLang, speak,
     const startListening = () => {
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SR) { onAnswer(true, exercise.wordData); return; }
+      // Abort previous recognition if any
+      if (recognitionRef.current) {
+        try { recognitionRef.current.abort(); } catch (_) {}
+      }
       setListening(true);
       const recognition = new SR();
+      recognitionRef.current = recognition;
       recognition.lang = 'en-US';
       recognition.interimResults = false;
       recognition.maxAlternatives = 3;
@@ -147,11 +166,13 @@ export default function ExerciseRenderer({ exercise, onAnswer, t, uiLang, speak,
         const spoken = Array.from(event.results[0]).map(r => r.transcript.toLowerCase().trim());
         const correct = spoken.some(s => s.includes(exercise.correctAnswer.toLowerCase()) || exercise.correctAnswer.toLowerCase().includes(s));
         setListening(false);
+        recognitionRef.current = null;
         setSpeakResult(correct ? 'correct' : 'wrong');
-        setTimeout(() => { onAnswer(correct, exercise.wordData); setSpeakResult(null); }, 800);
+        const t2 = setTimeout(() => { onAnswer(correct, exercise.wordData); setSpeakResult(null); }, 800);
+        timersRef.current.push(t2);
       };
-      recognition.onerror = () => { setListening(false); onAnswer(true, exercise.wordData); };
-      recognition.onend = () => setListening(false);
+      recognition.onerror = () => { setListening(false); recognitionRef.current = null; onAnswer(true, exercise.wordData); };
+      recognition.onend = () => { setListening(false); recognitionRef.current = null; };
       recognition.start();
     };
 

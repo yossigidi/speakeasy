@@ -36,7 +36,7 @@ export function getLevelInfo(totalXP) {
 
   const xpInLevel = totalXP - currentLevel.xp;
   const xpForNext = nextLevel ? nextLevel.xp - currentLevel.xp : 0;
-  const progressPercent = nextLevel ? Math.min((xpInLevel / xpForNext) * 100, 100) : 100;
+  const progressPercent = nextLevel && xpForNext > 0 ? Math.min((xpInLevel / xpForNext) * 100, 100) : 100;
 
   return {
     level: currentLevel.level,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
@@ -234,9 +234,15 @@ export default function KidsTeacherPage({ onBack }) {
   const [speechText, setSpeechText] = useState('');
   const [showSpeech, setShowSpeech] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
+  const correctCountRef = useRef(0);
+  const currentExRef = useRef(0);
+  const exerciseTimersRef = useRef([]);
 
-  // Stop all audio on unmount
-  useEffect(() => () => stopAllAudio(), []);
+  // Sync refs
+  useEffect(() => { currentExRef.current = currentExIndex; }, [currentExIndex]);
+
+  // Stop all audio + clear timers on unmount
+  useEffect(() => () => { stopAllAudio(); exerciseTimersRef.current.forEach(clearTimeout); }, []);
 
   useEffect(() => {
     setSpeechText(t('teacherGreeting', uiLang));
@@ -265,6 +271,7 @@ export default function KidsTeacherPage({ onBack }) {
     setCorrectWords([]);
     setWrongWords([]);
     setStreak(0);
+    correctCountRef.current = 0;
     setTeacherState('idle');
     setShowSpeech(false);
   };
@@ -272,13 +279,16 @@ export default function KidsTeacherPage({ onBack }) {
   const handleAnswer = (isCorrect, wordData) => {
     if (isCorrect) {
       setCorrectWords(prev => [...prev, wordData]);
-      const newStreak = streak + 1;
-      setStreak(newStreak);
+      correctCountRef.current += 1;
+      setStreak(prev => {
+        const newStreak = prev + 1;
+        if (newStreak >= 5) { setSpeechText(t('youAreAStar', uiLang)); }
+        else if (newStreak >= 3) { setSpeechText(t('threeInRow', uiLang)); }
+        else { setSpeechText(t('correct', uiLang)); }
+        return newStreak;
+      });
       setTeacherState('happy');
       playCorrect();
-      if (newStreak >= 5) { setSpeechText(t('youAreAStar', uiLang)); }
-      else if (newStreak >= 3) { setSpeechText(t('threeInRow', uiLang)); }
-      else { setSpeechText(t('correct', uiLang)); }
       setShowSpeech(true);
     } else {
       setWrongWords(prev => [...prev, wordData]);
@@ -289,26 +299,28 @@ export default function KidsTeacherPage({ onBack }) {
       setShowSpeech(true);
     }
 
-    setTimeout(() => {
-      const nextIdx = currentExIndex + 1;
+    const t1 = setTimeout(() => {
+      const nextIdx = currentExRef.current + 1;
       if (nextIdx >= exercises.length) {
         setPhase('complete');
         setTeacherState('celebrating');
         playComplete();
-        const score = correctWords.length + (isCorrect ? 1 : 0);
+        const score = correctCountRef.current;
         setSpeechText(score === exercises.length ? t('perfectScore', uiLang) : t('lessonComplete', uiLang));
         setShowSpeech(true);
         setShowConfetti(true);
-        if (addXP) addXP(10 + score * 5, 'kids-teacher');
+        if (addXP) addXP(10 + score * 5, 'kids-teacher').catch(() => {});
       } else {
         setCurrentExIndex(nextIdx);
         setTeacherState('idle');
         setShowSpeech(false);
         if (nextIdx === exercises.length - 1) {
-          setTimeout(() => { setSpeechText(t('lastExercise', uiLang)); setShowSpeech(true); }, 300);
+          const t2 = setTimeout(() => { setSpeechText(t('lastExercise', uiLang)); setShowSpeech(true); }, 300);
+          exerciseTimersRef.current.push(t2);
         }
       }
     }, 900);
+    exerciseTimersRef.current.push(t1);
   };
 
   const goBack = () => { stopAllAudio(); if (onBack) onBack(); };
