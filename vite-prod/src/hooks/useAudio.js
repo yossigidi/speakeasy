@@ -8,7 +8,8 @@ function evictOldest() {
   while (accessOrder.length > MAX_CACHE_SIZE) {
     const oldest = accessOrder.shift();
     if (audioCache[oldest]) {
-      audioCache[oldest].src = ''; // release resource
+      try { audioCache[oldest].pause(); } catch (_) {}
+      audioCache[oldest].src = '';
       delete audioCache[oldest];
     }
   }

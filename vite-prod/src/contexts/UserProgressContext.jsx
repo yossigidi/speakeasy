@@ -512,20 +512,17 @@ export function UserProgressProvider({ children: reactChildren }) {
         }
       );
 
-      // Update parentChildren/{familyCode}
+      // Update parentChildren/{familyCode} using arrayUnion to prevent race conditions
       const parentChildrenRef = window.firestore.doc(window.db, 'parentChildren', code);
-      const parentChildrenSnap = await window.firestore.getDoc(parentChildrenRef);
-      const existingChildren = parentChildrenSnap.exists() ? (parentChildrenSnap.data().children || []) : [];
-
       await window.firestore.setDoc(parentChildrenRef, {
-        children: [...existingChildren, {
+        children: window.firestore.arrayUnion({
           childId,
           name: data.name,
           avatar: data.avatar,
           avatarColor: data.avatarColor,
-        }],
+        }),
         parentUid: user.uid,
-      });
+      }, { merge: true });
 
       // Update users/{uid}.childrenIds
       await window.firestore.setDoc(

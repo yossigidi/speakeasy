@@ -39,19 +39,20 @@ export default function SpeakliAvatar({
   // Random blink every 2-5 seconds (simulates alive feeling)
   useEffect(() => {
     if (mode === 'sleep') return;
+    const timers = { schedule: null, blink: null };
     const blink = () => {
       setBlinking(true);
-      setTimeout(() => setBlinking(false), 150);
+      timers.blink = setTimeout(() => setBlinking(false), 150);
     };
     const schedule = () => {
       const delay = 2000 + Math.random() * 3000;
-      return setTimeout(() => {
+      timers.schedule = setTimeout(() => {
         blink();
-        timerRef.current = schedule();
+        schedule();
       }, delay);
     };
-    const timerRef = { current: schedule() };
-    return () => clearTimeout(timerRef.current);
+    schedule();
+    return () => { clearTimeout(timers.schedule); clearTimeout(timers.blink); };
   }, [mode]);
 
   const sizeClasses = {

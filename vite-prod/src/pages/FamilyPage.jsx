@@ -31,9 +31,10 @@ export default function FamilyPage({ onNavigate }) {
   const [pinResetError, setPinResetError] = useState('');
   const [pinResetSuccess, setPinResetSuccess] = useState(false);
   const copyTimerRef = useRef(null);
+  const pinTimerRef = useRef(null);
 
-  // Cleanup timer on unmount
-  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
+  // Cleanup timers on unmount
+  useEffect(() => () => { clearTimeout(copyTimerRef.current); clearTimeout(pinTimerRef.current); }, []);
 
   const handlePlay = (childId) => {
     switchToChild(childId);
@@ -88,6 +89,7 @@ export default function FamilyPage({ onNavigate }) {
   };
 
   const handleResetPin = async () => {
+    if (!resetPinChild) return;
     if (newPin.length !== 4) return;
     if (newPin !== confirmNewPin) {
       setPinResetError(t('pinMismatch', uiLang));
@@ -96,7 +98,7 @@ export default function FamilyPage({ onNavigate }) {
     try {
       await resetChildPin(resetPinChild.id, resetPinChild.name, newPin);
       setPinResetSuccess(true);
-      setTimeout(() => {
+      pinTimerRef.current = setTimeout(() => {
         setResetPinChild(null);
         setNewPin('');
         setConfirmNewPin('');
