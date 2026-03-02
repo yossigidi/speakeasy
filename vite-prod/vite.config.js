@@ -9,8 +9,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
-          'firebase': ['firebase/app', 'firebase/firestore', 'firebase/auth'],
-          'pixi': ['pixi.js']
+          'firebase': ['firebase/app', 'firebase/firestore', 'firebase/auth']
         }
       }
     }
