@@ -24,7 +24,7 @@ class MusicPlayer {
     this._volume = NORMAL_VOL; // target volume (before duck)
     this._ducked = false;
     this._paused = true;
-    this._fadeTimer = null;
+    this._fadeTimers = new Map();
   }
 
   /** Crossfade to a new section (or stop if section is null) */
@@ -94,26 +94,27 @@ class MusicPlayer {
   // ── Private helpers ──
 
   _fade(el, from, to, ms) {
-    if (!el || el.paused) {
-      el.volume = to;
-      return;
-    }
+    if (!el) return;
+    if (el.paused) { el.volume = Math.max(0, Math.min(1, to)); return; }
+    // Per-element timer so concurrent fades don't cancel each other
+    clearInterval(this._fadeTimers.get(el));
     const steps = 20;
     const stepMs = ms / steps;
     const delta = (to - from) / steps;
     let step = 0;
     el.volume = Math.max(0, Math.min(1, from));
 
-    clearInterval(this._fadeTimer);
-    this._fadeTimer = setInterval(() => {
+    const timer = setInterval(() => {
       step++;
       const v = from + delta * step;
       el.volume = Math.max(0, Math.min(1, v));
       if (step >= steps) {
-        clearInterval(this._fadeTimer);
+        clearInterval(timer);
+        this._fadeTimers.delete(el);
         el.volume = Math.max(0, Math.min(1, to));
       }
     }, stepMs);
+    this._fadeTimers.set(el, timer);
   }
 
   _fadeOut(el, ms) {
