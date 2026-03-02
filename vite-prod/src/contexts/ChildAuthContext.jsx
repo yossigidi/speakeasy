@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 
 const ChildAuthContext = createContext(null);
 
@@ -9,15 +9,18 @@ const LOCKOUT_MINUTES = 15;
 export function ChildAuthProvider({ children }) {
   const [childUser, setChildUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const childUserRef = useRef(childUser);
+  childUserRef.current = childUser;
 
-  // Check if current session is still valid
+  // Check if current session is still valid (uses ref to avoid stale closure in interval)
   const checkSessionExpiry = useCallback(() => {
-    if (!childUser) return;
-    if (childUser.expiresAt && new Date(childUser.expiresAt) <= new Date()) {
+    const current = childUserRef.current;
+    if (!current) return;
+    if (current.expiresAt && new Date(current.expiresAt) <= new Date()) {
       localStorage.removeItem('speakeasy_childSession');
       setChildUser(null);
     }
-  }, [childUser]);
+  }, []);
 
   // Load child session from localStorage on mount
   useEffect(() => {

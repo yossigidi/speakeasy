@@ -51,8 +51,10 @@ export default function LessonCompleteScreen({
   }, []);
 
   // Speak congratulations/encouragement — delay enough for playComplete sound to finish
+  const spokenRef = React.useRef(false);
   useEffect(() => {
-    if (!speak) return;
+    if (!speak || spokenRef.current) return;
+    spokenRef.current = true;
     const msg = stars === 3
       ? (uiLang === 'he' ? 'מושלם! בלי אף טעות! אתם כוכבים!' : 'Perfect! No mistakes! You are stars!')
       : stars >= 1
@@ -62,7 +64,7 @@ export default function LessonCompleteScreen({
       speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
     }, 1800);
     return () => clearTimeout(tid);
-  }, []);
+  }, [stars, uiLang, speak]);
 
   // Generate confetti pieces for 3 stars
   const confettiPieces = useMemo(() => {

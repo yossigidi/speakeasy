@@ -90,6 +90,8 @@ function BubblePopGame({ onComplete, onBack }) {
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
+  const popTimersRef = useRef([]);
+  useEffect(() => () => { popTimersRef.current.forEach(clearTimeout); }, []);
 
   const TOTAL_ROUNDS = 6;
   const BUBBLES_PER_ROUND = 8;
@@ -200,14 +202,14 @@ function BubblePopGame({ onComplete, onBack }) {
           // Round complete
           setScore(s => s + 1);
           playStar();
-          setTimeout(() => setRound(r => r + 1), 800);
+          popTimersRef.current.push(setTimeout(() => setRound(r => r + 1), 800));
         }
         return next;
       });
     } else {
       playWrong();
       setWrongId(bubble.id);
-      setTimeout(() => setWrongId(null), 500);
+      popTimersRef.current.push(setTimeout(() => setWrongId(null), 500));
     }
   };
 

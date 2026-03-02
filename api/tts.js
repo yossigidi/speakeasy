@@ -69,7 +69,8 @@ export default async function handler(req, res) {
   if (!trimmed) {
     return res.status(400).json({ error: 'Text cannot be empty' });
   }
-  const detectedLang = lang || detectLang(trimmed);
+  const ALLOWED_LANGS = ['he', 'en', 'en-US', 'en-GB'];
+  const detectedLang = (lang && ALLOWED_LANGS.includes(lang)) ? lang : detectLang(trimmed);
   const voiceId = VOICE_ID;
 
   const cacheKey = Buffer.from(`${trimmed}__el_${voiceId}`).toString('base64url');

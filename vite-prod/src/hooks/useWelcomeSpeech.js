@@ -14,6 +14,7 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
   const { speak, isSpeaking } = useSpeech();
   const { uiLang } = useTheme();
   const spokenRef = useRef(false);
+  const timerRef = useRef(null);
   const isSpeakingRef = useRef(false);
   isSpeakingRef.current = isSpeaking;
 
@@ -43,7 +44,7 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       document.removeEventListener('touchstart', doSpeak);
 
       // Wait a bit, then only speak if nothing else is playing
-      setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         if (isSpeakingRef.current) return; // another click handler is already speaking
         const isHe = uiLangRef.current === 'he';
         speakRef.current(isHe ? textHeRef.current : textEnRef.current, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
@@ -54,6 +55,7 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
     document.addEventListener('touchstart', doSpeak);
 
     return () => {
+      clearTimeout(timerRef.current);
       document.removeEventListener('click', doSpeak);
       document.removeEventListener('touchstart', doSpeak);
     };
