@@ -4,18 +4,16 @@ import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { unlockAudioContext, stopAllAudio } from '../../utils/hebrewAudio.js';
 import SpeakliAvatar from './SpeakliAvatar.jsx';
 
-const SESSION_KEY = 'kids-intro-seen';
+// In-memory set: resets on every app launch / page refresh.
+// (sessionStorage persists indefinitely on iOS PWA, so intros would never re-appear.)
+const seenSet = new Set();
 
 function getSeenSet() {
-  try {
-    return new Set(JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]'));
-  } catch { return new Set(); }
+  return seenSet;
 }
 
 function markSeen(id) {
-  const set = getSeenSet();
-  set.add(id);
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify([...set]));
+  seenSet.add(id);
 }
 
 /**

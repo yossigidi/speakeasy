@@ -548,7 +548,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
     // Speak the target word after a brief delay
     setTimeout(() => {
-      speak(targetWord.word, { rate: diff.ttsRate });
+      speak(targetWord.word, { lang: 'en-US', rate: diff.ttsRate });
     }, 600);
   }, [diff, speak]);
 
@@ -643,7 +643,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         const correctIdx = options.findIndex(o => o.word === target.word);
         setTimeout(() => {
           setBoxStates(prev => ({ ...prev, [correctIdx]: 'correct' }));
-          speak(target.word, { rate: diff.ttsRate });
+          speak(target.word, { lang: 'en-US', rate: diff.ttsRate });
         }, 500);
 
         // Move on after showing correct
@@ -663,7 +663,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   // Re-speak target word
   const handleReplay = useCallback(() => {
     if (target) {
-      speak(target.word, { rate: diff.ttsRate });
+      speak(target.word, { lang: 'en-US', rate: diff.ttsRate });
     }
   }, [target, speak, diff.ttsRate]);
 
