@@ -74,6 +74,20 @@ function AppContent() {
   const [progressChildId, setProgressChildId] = useState(null);
   const isPopstateRef = useRef(false);
   const prevUserRef = useRef(user?.uid);
+  const { setSection } = useMusic();
+
+  // ── Background music: map pages to music sections ──
+  useEffect(() => {
+    if (!isChildMode) { setSection(null); return; }
+    const map = {
+      home: 'kids-home', alphabet: 'kids-home', vocabulary: 'kids-home',
+      'kids-games': 'kids-games',
+      lessons: 'kids-lessons', 'kids-teacher': 'kids-lessons', curriculum: 'kids-lessons',
+      'english-quest': 'kids-quest',
+      'adventure': 'kids-adventure',
+    };
+    setSection(map[currentPage] || null);
+  }, [currentPage, isChildMode, setSection]);
 
   // Reset profile picker when user changes (logout/login)
   useEffect(() => {
@@ -180,20 +194,6 @@ function AppContent() {
       sessionStorage.setItem('speakeasy_profileSelected', '1');
     }} /></Suspense>;
   }
-
-  // ── Background music: map pages to music sections ──
-  const { setSection } = useMusic();
-  useEffect(() => {
-    if (!isChildMode) { setSection(null); return; }
-    const map = {
-      home: 'kids-home', alphabet: 'kids-home', vocabulary: 'kids-home',
-      'kids-games': 'kids-games',
-      lessons: 'kids-lessons', 'kids-teacher': 'kids-lessons', curriculum: 'kids-lessons',
-      'english-quest': 'kids-quest',
-      'adventure': 'kids-adventure',
-    };
-    setSection(map[currentPage] || null);
-  }, [currentPage, isChildMode, setSection]);
 
   const isKids = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
 
