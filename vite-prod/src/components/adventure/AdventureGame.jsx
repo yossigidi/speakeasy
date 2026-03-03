@@ -175,7 +175,7 @@ export default function AdventureGame({ onBack }) {
               const isComplete = myCompleted >= world.scenes;
 
               // Worlds with no scenes file yet (space, castle)
-              const hasContent = world.id === 'forest' || world.id === 'ocean' || world.id === 'space';
+              const hasContent = true; // All 4 worlds now have content
 
               if (isUnlocked && hasContent) {
                 return (

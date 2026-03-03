@@ -128,6 +128,41 @@ export const ADVENTURE_VOCAB = {
       { word: 'play', translation: 'לשחק', emoji: '🎮' },
     ],
   },
+  // Level 4 — Advanced (ages 9-10)
+  4: {
+    school: [
+      { word: 'book', translation: 'ספר', emoji: '📖' },
+      { word: 'pen', translation: 'עט', emoji: '🖊️' },
+      { word: 'pencil', translation: 'עיפרון', emoji: '✏️' },
+      { word: 'desk', translation: 'שולחן כתיבה', emoji: '🪑' },
+      { word: 'bag', translation: 'תיק', emoji: '🎒' },
+      { word: 'ruler', translation: 'סרגל', emoji: '📏' },
+    ],
+    nature: [
+      { word: 'flower', translation: 'פרח', emoji: '🌸' },
+      { word: 'river', translation: 'נהר', emoji: '🏞️' },
+      { word: 'mountain', translation: 'הר', emoji: '⛰️' },
+      { word: 'forest', translation: 'יער', emoji: '🌲' },
+      { word: 'sea', translation: 'ים', emoji: '🌊' },
+      { word: 'sky', translation: 'שמיים', emoji: '🌤️' },
+    ],
+    feelings: [
+      { word: 'happy', translation: 'שמח', emoji: '😊' },
+      { word: 'sad', translation: 'עצוב', emoji: '😢' },
+      { word: 'angry', translation: 'כועס', emoji: '😠' },
+      { word: 'tired', translation: 'עייף', emoji: '😴' },
+      { word: 'hungry', translation: 'רעב', emoji: '🤤' },
+      { word: 'scared', translation: 'מפוחד', emoji: '😨' },
+    ],
+    time: [
+      { word: 'morning', translation: 'בוקר', emoji: '🌅' },
+      { word: 'night', translation: 'לילה', emoji: '🌙' },
+      { word: 'today', translation: 'היום', emoji: '📅' },
+      { word: 'tomorrow', translation: 'מחר', emoji: '➡️' },
+      { word: 'day', translation: 'יום', emoji: '☀️' },
+      { word: 'week', translation: 'שבוע', emoji: '📆' },
+    ],
+  },
 };
 
 /**

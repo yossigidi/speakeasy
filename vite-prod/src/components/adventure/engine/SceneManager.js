@@ -41,6 +41,9 @@ export default class SceneManager {
       case 'space':
         scenesData = (await import('../../../data/adventure/space-scenes.js')).SPACE_SCENES;
         break;
+      case 'castle':
+        scenesData = (await import('../../../data/adventure/castle-scenes.js')).CASTLE_SCENES;
+        break;
       default:
         console.warn('Unknown world:', worldId);
         return;
@@ -124,6 +127,9 @@ export default class SceneManager {
           break;
         case 'space':
           createNPC = (await import('../characters/SpaceNPCs.js')).createNPC;
+          break;
+        case 'castle':
+          createNPC = (await import('../characters/CastleNPCs.js')).createNPC;
           break;
         default:
           createNPC = (await import('../characters/ForestNPCs.js')).createNPC;
