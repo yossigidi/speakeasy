@@ -66,17 +66,17 @@ export default class PixiEngine {
   }
 
   destroy() {
+    if (this.destroyed) return;
     this.destroyed = true;
     this.paused = true;
-    this.app.ticker.remove(this._boundUpdate);
+    try { this.app.ticker.remove(this._boundUpdate); } catch {}
 
-    // Clean up subsystems before destroying the display tree
+    // Clean up subsystems (stop intervals/timers) — do NOT destroy PixiJS display objects here.
+    // The PixiJS Application.destroy() in usePixiApp handles display tree cleanup.
     if (this.sceneManager) { this.sceneManager.destroy(); this.sceneManager = null; }
     if (this.particles) { this.particles = null; }
     if (this.touch) { this.touch = null; }
     if (this.hud) { this.hud = null; }
     if (this.speakli) { this.speakli = null; }
-
-    try { this.root.destroy({ children: true }); } catch {}
   }
 }

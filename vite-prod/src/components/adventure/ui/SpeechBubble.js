@@ -84,17 +84,17 @@ export default class SpeechBubble {
   }
 
   destroy() {
-    // Animate out then remove
+    this._destroyed = true;
+    // Animate out — don't destroy display objects, app.destroy() handles that
     const start = performance.now();
     const tick = () => {
+      if (this._destroyed && !this.container.parent) return;
       const t = Math.min((performance.now() - start) / 150, 1);
-      this.container.alpha = 1 - t;
-      this.container.scale.set(1 - 0.2 * t);
-      if (t < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        this.container.destroy({ children: true });
-      }
+      try {
+        this.container.alpha = 1 - t;
+        this.container.scale.set(1 - 0.2 * t);
+      } catch { return; }
+      if (t < 1) requestAnimationFrame(tick);
     };
     tick();
   }

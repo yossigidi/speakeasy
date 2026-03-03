@@ -196,6 +196,6 @@ export default class ExerciseBase {
 
   destroy() {
     this.destroyed = true;
-    this.container.destroy({ children: true });
+    // Don't destroy display objects — app.destroy() handles that
   }
 }

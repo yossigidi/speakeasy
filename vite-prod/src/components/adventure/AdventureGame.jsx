@@ -103,10 +103,10 @@ export default function AdventureGame({ onBack }) {
   // Cleanup
   useEffect(() => {
     return () => {
-      stopSpeaking();
+      try { stopSpeaking(); } catch {}
       if (engineRef.current) {
-        if (engineRef.current._cleanupResize) engineRef.current._cleanupResize();
-        engineRef.current.destroy();
+        try { if (engineRef.current._cleanupResize) engineRef.current._cleanupResize(); } catch {}
+        try { engineRef.current.destroy(); } catch {}
         engineRef.current = null;
       }
     };

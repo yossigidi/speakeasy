@@ -324,15 +324,13 @@ export default class SceneManager {
 
   destroy() {
     this._destroyed = true;
+    // Stop NPC intervals/timers — don't destroy display objects (app.destroy handles that)
     for (const npc of Object.values(this.npcs)) {
-      npc.destroy();
+      try { npc.destroy(); } catch {}
     }
     this.npcs = {};
-    for (const obj of this.sceneObjects) {
-      try { obj.sprite.destroy(); } catch {}
-    }
     this.sceneObjects = [];
-    if (this.currentExercise) { this.currentExercise.destroy(); this.currentExercise = null; }
-    if (this.dialogue) { this.dialogue.destroy(); this.dialogue = null; }
+    if (this.currentExercise) { try { this.currentExercise.destroy(); } catch {} this.currentExercise = null; }
+    if (this.dialogue) { try { this.dialogue.destroy(); } catch {} this.dialogue = null; }
   }
 }

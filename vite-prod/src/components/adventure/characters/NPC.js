@@ -143,8 +143,6 @@ export default class NPC {
     this._destroyed = true;
     if (this._talkInterval) { clearInterval(this._talkInterval); this._talkInterval = null; }
     if (this._sprite) this._sprite.mask = null;
-    if (this._mask) { this._mask.destroy(); this._mask = null; }
-    if (this._ring) { this._ring.destroy(); this._ring = null; }
-    try { this.container.destroy({ children: true }); } catch {}
+    // Don't destroy display objects — app.destroy() handles that
   }
 }
