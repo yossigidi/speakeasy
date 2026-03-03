@@ -79,6 +79,23 @@ export default class ParallaxBackground {
         this.layers.push(sprite);
       }
     }
+
+    // Extend last layer to fill screen if there's a gap at the bottom
+    if (this.layers.length > 0) {
+      const last = this.layers[this.layers.length - 1];
+      const lastBottom = last.y + (last.height || 0);
+      if (lastBottom < h) {
+        if (last instanceof TilingSprite) {
+          last.height = h - last.y + 20;
+        } else {
+          // For Graphics layers, redraw taller
+          const extraH = h - last.y + 20;
+          last.clear();
+          last.rect(0, 0, w * 3, extraH);
+          last.fill({ color: 0x3D6B35 }); // forest ground fallback
+        }
+      }
+    }
   }
 
   /**

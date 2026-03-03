@@ -15,12 +15,24 @@ export default class ExerciseBase {
     this.container.label = 'exercise';
     this.destroyed = false;
 
-    // Semi-transparent backdrop
+    // Light full-screen dim (click blocker)
     this.backdrop = new Graphics();
     this.backdrop.rect(0, 0, engine.width, engine.height);
-    this.backdrop.fill({ color: 0x000000, alpha: 0.5 });
+    this.backdrop.fill({ color: 0x000000, alpha: 0.25 });
     this.backdrop.eventMode = 'static'; // Block clicks through
     this.container.addChild(this.backdrop);
+
+    // Centered card panel
+    this.cardPanel = new Graphics();
+    const pw = engine.width * 0.92;
+    const ph = engine.height * 0.75;
+    const px = (engine.width - pw) / 2;
+    const py = engine.height * 0.06;
+    this.cardPanel.roundRect(px, py, pw, ph, 24);
+    this.cardPanel.fill({ color: 0x1E1B4B, alpha: 0.88 });
+    this.cardPanel.roundRect(px, py, pw, ph, 24);
+    this.cardPanel.stroke({ width: 1.5, color: 0xffffff, alpha: 0.12 });
+    this.container.addChild(this.cardPanel);
 
     // Exercise panel
     this.panel = new Container();

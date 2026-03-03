@@ -42,8 +42,27 @@ export default class NPC {
       sprite.y = 0;
       this._sprite = sprite;
 
-      // Insert sprite after shadow (index 1)
-      this.container.addChildAt(sprite, 1);
+      // Circular portrait mask to hide JPG white background
+      const radius = targetH * 0.44;
+      const centerY = -targetH / 2;
+
+      // Colored ring behind the sprite
+      const ring = new Graphics();
+      ring.circle(0, centerY, radius + 3);
+      ring.fill({ color: config.bodyColor || 0x8B5CF6, alpha: 0.8 });
+      this.container.addChildAt(ring, 1); // after shadow
+      this._ring = ring;
+
+      // Insert sprite after ring (index 2)
+      this.container.addChildAt(sprite, 2);
+
+      // Circular mask on sprite
+      const mask = new Graphics();
+      mask.circle(0, centerY, radius);
+      mask.fill({ color: 0xffffff });
+      this.container.addChild(mask);
+      sprite.mask = mask;
+      this._mask = mask;
     } catch {
       // Keep fallback rendering
     }
@@ -118,6 +137,9 @@ export default class NPC {
 
   destroy() {
     if (this._talkInterval) clearInterval(this._talkInterval);
+    if (this._sprite) this._sprite.mask = null;
+    if (this._mask) { this._mask.destroy(); this._mask = null; }
+    if (this._ring) { this._ring.destroy(); this._ring = null; }
     this.container.destroy({ children: true });
   }
 }
