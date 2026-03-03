@@ -1,4 +1,4 @@
-import { Container, Graphics, TilingSprite, Texture, Assets } from 'pixi.js';
+import { Container, Graphics, TilingSprite, Sprite, Texture, Assets } from 'pixi.js';
 
 /**
  * Multi-layer parallax background.
@@ -28,6 +28,29 @@ export default class ParallaxBackground {
 
     const w = this.engine.width;
     const h = this.engine.height;
+
+    // Fullscreen single-image mode
+    if (bgDef?.fullscreen) {
+      try {
+        const tex = await Assets.load(bgDef.fullscreen);
+        const sprite = Sprite.from(tex);
+        // Scale to cover entire screen
+        const scaleX = w / sprite.texture.width;
+        const scaleY = h / sprite.texture.height;
+        const scale = Math.max(scaleX, scaleY);
+        sprite.scale.set(scale);
+        sprite.anchor.set(0.5, 0.5);
+        sprite.x = w / 2;
+        sprite.y = h / 2;
+        sprite._parallaxSpeed = 0;
+        sprite._isFullscreen = true;
+        this.container.addChild(sprite);
+        this.layers.push(sprite);
+      } catch {
+        // Fall through to layer mode
+      }
+      return;
+    }
 
     for (const layerDef of (bgDef?.layers || [])) {
       let sprite;
@@ -120,9 +143,14 @@ export default class ParallaxBackground {
   }
 
   resize(w, h) {
-    // Resize layers to fill screen
     for (const layer of this.layers) {
-      if (layer instanceof TilingSprite) {
+      if (layer._isFullscreen) {
+        const scaleX = w / layer.texture.width;
+        const scaleY = h / layer.texture.height;
+        layer.scale.set(Math.max(scaleX, scaleY));
+        layer.x = w / 2;
+        layer.y = h / 2;
+      } else if (layer instanceof TilingSprite) {
         layer.width = w * 3;
       }
     }
