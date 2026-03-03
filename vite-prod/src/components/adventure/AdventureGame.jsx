@@ -157,49 +157,81 @@ export default function AdventureGame({ onBack }) {
             <div className="w-10" />
           </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6">
-            {/* Forest world card */}
-            <button
-              onClick={() => handleStartWorld('forest')}
-              className="w-full max-w-sm rounded-3xl p-6 text-center active:scale-95 transition-transform"
-              style={{
-                background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
-                boxShadow: '0 8px 30px rgba(22, 163, 74, 0.4)',
-              }}
-            >
-              <span className="text-5xl block mb-3">🌲</span>
-              <h2 className="text-white font-black text-xl mb-1">
-                {uiLang === 'he' ? 'יער הקסמים' : 'The Magic Forest'}
-              </h2>
-              <p className="text-white/80 text-sm">
-                {uiLang === 'he' ? '6 סצנות • פגוש חברים חדשים!' : '6 scenes • Meet new friends!'}
-              </p>
-              <div className="mt-3 inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5">
-                <span className="text-white font-bold text-sm">
-                  {uiLang === 'he' ? 'התחל!' : 'Start!'}
-                </span>
-                <span className="text-white">▶</span>
-              </div>
-            </button>
-
-            {/* Locked worlds */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 overflow-y-auto py-4">
             {[
-              { emoji: '🌊', nameHe: 'עולם האוקיינוס', nameEn: 'Ocean World' },
-              { emoji: '🚀', nameHe: 'עולם החלל', nameEn: 'Space World' },
-              { emoji: '🏰', nameHe: 'הטירה הקסומה', nameEn: 'Magic Castle' },
-            ].map((w, i) => (
-              <div
-                key={i}
-                className="w-full max-w-sm rounded-3xl p-4 text-center opacity-50"
-                style={{ background: 'rgba(255,255,255,0.1)' }}
-              >
-                <span className="text-3xl">{w.emoji}</span>
-                <p className="text-white/60 font-bold text-sm mt-1">
-                  {uiLang === 'he' ? w.nameHe : w.nameEn}
-                </p>
-                <p className="text-white/40 text-xs">🔒 {uiLang === 'he' ? 'בקרוב!' : 'Coming soon!'}</p>
-              </div>
-            ))}
+              { id: 'forest', emoji: '🌲', nameHe: 'יער הקסמים', nameEn: 'The Magic Forest', gradient: ['#22c55e', '#16a34a', '#15803d'], shadow: 'rgba(22, 163, 74, 0.4)', scenes: 6, requiresWorld: null },
+              { id: 'ocean', emoji: '🌊', nameHe: 'עולם האוקיינוס', nameEn: 'Ocean World', gradient: ['#0ea5e9', '#0284c7', '#0369a1'], shadow: 'rgba(14, 165, 233, 0.4)', scenes: 6, requiresWorld: 'forest' },
+              { id: 'space', emoji: '🚀', nameHe: 'עולם החלל', nameEn: 'Space World', gradient: ['#6366f1', '#4f46e5', '#4338ca'], shadow: 'rgba(99, 102, 241, 0.4)', scenes: 6, requiresWorld: 'ocean' },
+              { id: 'castle', emoji: '🏰', nameHe: 'הטירה הקסומה', nameEn: 'Magic Castle', gradient: ['#f59e0b', '#d97706', '#b45309'], shadow: 'rgba(245, 158, 11, 0.4)', scenes: 6, requiresWorld: 'space' },
+            ].map((world) => {
+              const worldProgress = progress.adventure?.worldProgress || {};
+              const requiredCompleted = world.requiresWorld
+                ? (worldProgress[world.requiresWorld]?.scenesCompleted || 0)
+                : Infinity;
+              const requiredTotal = world.requiresWorld ? 6 : 0;
+              const isUnlocked = !world.requiresWorld || requiredCompleted >= requiredTotal;
+              const myCompleted = worldProgress[world.id]?.scenesCompleted || 0;
+              const hasStarted = myCompleted > 0;
+              const isComplete = myCompleted >= world.scenes;
+
+              // Worlds with no scenes file yet (space, castle)
+              const hasContent = world.id === 'forest' || world.id === 'ocean';
+
+              if (isUnlocked && hasContent) {
+                return (
+                  <button
+                    key={world.id}
+                    onClick={() => handleStartWorld(world.id)}
+                    className="w-full max-w-sm rounded-3xl p-6 text-center active:scale-95 transition-transform"
+                    style={{
+                      background: `linear-gradient(135deg, ${world.gradient[0]} 0%, ${world.gradient[1]} 50%, ${world.gradient[2]} 100%)`,
+                      boxShadow: `0 8px 30px ${world.shadow}`,
+                    }}
+                  >
+                    <span className="text-5xl block mb-3">{world.emoji}</span>
+                    <h2 className="text-white font-black text-xl mb-1">
+                      {uiLang === 'he' ? world.nameHe : world.nameEn}
+                    </h2>
+                    <p className="text-white/80 text-sm">
+                      {isComplete
+                        ? (uiLang === 'he' ? `הושלם! ${world.scenes}/${world.scenes}` : `Complete! ${world.scenes}/${world.scenes}`)
+                        : hasStarted
+                          ? (uiLang === 'he' ? `${myCompleted}/${world.scenes} הושלמו` : `${myCompleted}/${world.scenes} completed`)
+                          : (uiLang === 'he' ? `${world.scenes} סצנות • פגוש חברים חדשים!` : `${world.scenes} scenes • Meet new friends!`)
+                      }
+                    </p>
+                    <div className="mt-3 inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5">
+                      <span className="text-white font-bold text-sm">
+                        {isComplete
+                          ? (uiLang === 'he' ? 'שחק שוב!' : 'Play again!')
+                          : hasStarted
+                            ? (uiLang === 'he' ? 'המשך!' : 'Continue!')
+                            : (uiLang === 'he' ? 'התחל!' : 'Start!')
+                        }
+                      </span>
+                      <span className="text-white">▶</span>
+                    </div>
+                  </button>
+                );
+              }
+
+              // Locked world
+              return (
+                <div
+                  key={world.id}
+                  className="w-full max-w-sm rounded-3xl p-4 text-center opacity-50"
+                  style={{ background: 'rgba(255,255,255,0.1)' }}
+                >
+                  <span className="text-3xl">{world.emoji}</span>
+                  <p className="text-white/60 font-bold text-sm mt-1">
+                    {uiLang === 'he' ? world.nameHe : world.nameEn}
+                  </p>
+                  <p className="text-white/40 text-xs">
+                    {uiLang === 'he' ? 'בקרוב!' : 'Coming soon!'}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

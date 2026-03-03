@@ -35,6 +35,9 @@ export default class SceneManager {
       case 'forest':
         scenesData = (await import('../../../data/adventure/forest-scenes.js')).FOREST_SCENES;
         break;
+      case 'ocean':
+        scenesData = (await import('../../../data/adventure/ocean-scenes.js')).OCEAN_SCENES;
+        break;
       default:
         console.warn('Unknown world:', worldId);
         return;
@@ -109,9 +112,17 @@ export default class SceneManager {
     }
     this.sceneObjects = [];
 
-    // Spawn NPCs
+    // Spawn NPCs (import the right NPC module for the current world)
     if (scene.npcs) {
-      const { createNPC } = await import('../characters/ForestNPCs.js');
+      let createNPC;
+      switch (this.currentWorld) {
+        case 'ocean':
+          createNPC = (await import('../characters/OceanNPCs.js')).createNPC;
+          break;
+        default:
+          createNPC = (await import('../characters/ForestNPCs.js')).createNPC;
+          break;
+      }
       for (const npcDef of scene.npcs) {
         const npc = createNPC(this.engine, npcDef);
         this.npcs[npcDef.id] = npc;
