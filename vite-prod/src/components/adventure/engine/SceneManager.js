@@ -1,4 +1,4 @@
-import { Sprite, Assets, Graphics } from 'pixi.js';
+import { Sprite, Assets } from 'pixi.js';
 import { playCorrect, playComplete, playStar } from '../../../utils/gameSounds.js';
 
 /**
@@ -104,8 +104,6 @@ export default class SceneManager {
 
     // Clear previous scene objects
     for (const obj of this.sceneObjects) {
-      if (obj.sprite) obj.sprite.mask = null;
-      if (obj.mask) obj.mask.destroy();
       obj.sprite.destroy();
     }
     this.sceneObjects = [];
@@ -132,19 +130,7 @@ export default class SceneManager {
           sprite.x = objDef.position.x * this.engine.width;
           sprite.y = objDef.position.y * this.engine.height;
           this.engine.worldLayer.addChild(sprite);
-
-          // Rounded mask to soften JPG edges
-          const maskG = new Graphics();
-          const mw = sprite.width;
-          const mh = sprite.height;
-          maskG.roundRect(-mw / 2, -mh / 2, mw, mh, Math.min(mw, mh) * 0.15);
-          maskG.fill({ color: 0xffffff });
-          maskG.x = sprite.x;
-          maskG.y = sprite.y;
-          this.engine.worldLayer.addChild(maskG);
-          sprite.mask = maskG;
-
-          this.sceneObjects.push({ def: objDef, sprite, mask: maskG });
+          this.sceneObjects.push({ def: objDef, sprite });
         } catch {
           // Image failed to load — skip this object
         }
@@ -338,8 +324,6 @@ export default class SceneManager {
       npc.destroy();
     }
     for (const obj of this.sceneObjects) {
-      if (obj.sprite) obj.sprite.mask = null;
-      if (obj.mask) obj.mask.destroy();
       obj.sprite.destroy();
     }
     this.sceneObjects = [];

@@ -8,37 +8,37 @@
 // Background definitions — image assets with color fallbacks
 const FOREST_BG = {
   layers: [
-    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 180 },
-    { asset: '/images/adventure/backgrounds/forest-trees-far.jpg', speed: 0.3, y: 150, height: 120 },
-    { asset: '/images/adventure/backgrounds/forest-trees-near.jpg', speed: 0.6, y: 250, height: 110 },
-    { asset: '/images/adventure/backgrounds/forest-ground.jpg', speed: 1.0, y: 340, height: 360 },
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 220 },
+    { asset: '/images/adventure/backgrounds/forest-trees-far.jpg', speed: 0.3, y: 130, height: 170 },
+    { asset: '/images/adventure/backgrounds/forest-trees-near.jpg', speed: 0.6, y: 220, height: 170 },
+    { asset: '/images/adventure/backgrounds/forest-ground.jpg', speed: 1.0, y: 300, height: 500 },
   ],
 };
 
 const DARK_CAVE_BG = {
   layers: [
-    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 180 },
-    { asset: '/images/adventure/objects/cave-entrance.jpg', speed: 0.3, y: 150, height: 140 },
-    { color: [0x2D2D44, 0x1E1E33], speed: 0.6, y: 270, height: 100 },
-    { color: [0x3D3D55, 0x2A2A3E], speed: 1.0, y: 350, height: 350 },
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 220 },
+    { asset: '/images/adventure/objects/cave-entrance.jpg', speed: 0.3, y: 130, height: 180 },
+    { color: [0x2D2D44, 0x1E1E33], speed: 0.6, y: 240, height: 150 },
+    { color: [0x3D3D55, 0x2A2A3E], speed: 1.0, y: 320, height: 500 },
   ],
 };
 
 const RIVER_BG = {
   layers: [
-    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 160 },
-    { asset: '/images/adventure/backgrounds/forest-trees-far.jpg', speed: 0.3, y: 130, height: 100 },
-    { asset: '/images/adventure/objects/forest-river.jpg', speed: 0.6, y: 220, height: 90 },
-    { asset: '/images/adventure/backgrounds/forest-ground.jpg', speed: 1.0, y: 300, height: 400 },
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 200 },
+    { asset: '/images/adventure/backgrounds/forest-trees-far.jpg', speed: 0.3, y: 110, height: 150 },
+    { asset: '/images/adventure/objects/forest-river.jpg', speed: 0.6, y: 190, height: 140 },
+    { asset: '/images/adventure/backgrounds/forest-ground.jpg', speed: 1.0, y: 270, height: 500 },
   ],
 };
 
 const DRAGON_BG = {
   layers: [
-    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 180 },
-    { asset: '/images/adventure/objects/dragon-lair.jpg', speed: 0.3, y: 150, height: 120 },
-    { color: [0x5C4033, 0x6B4D3B], speed: 0.7, y: 260, height: 90 },
-    { color: [0x8B4513, 0x6B3410], speed: 1.0, y: 340, height: 360 },
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 220 },
+    { asset: '/images/adventure/objects/dragon-lair.jpg', speed: 0.3, y: 130, height: 170 },
+    { color: [0x5C4033, 0x6B4D3B], speed: 0.7, y: 230, height: 140 },
+    { color: [0x8B4513, 0x6B3410], speed: 1.0, y: 300, height: 500 },
   ],
 };
 

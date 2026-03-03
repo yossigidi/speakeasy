@@ -36,6 +36,22 @@ export default class Speakli {
       this._sprite.height = 90;
       this.container.addChild(this._sprite);
       this._imageLoaded = true;
+
+      // Circular mask + ring for clean portrait look
+      const radius = 38;
+      const centerY = -45;
+      const ring = new Graphics();
+      ring.circle(0, centerY, radius + 3);
+      ring.fill({ color: 0x2563EB, alpha: 0.8 });
+      this.container.addChildAt(ring, 0);
+      this._ring = ring;
+
+      const mask = new Graphics();
+      mask.circle(0, centerY, radius);
+      mask.fill({ color: 0xffffff });
+      this.container.addChild(mask);
+      this._sprite.mask = mask;
+      this._mask = mask;
     } catch {
       // Fallback: simple colored circle with emoji
       this._buildFallback();
@@ -197,6 +213,9 @@ export default class Speakli {
 
   destroy() {
     if (this._talkInterval) clearInterval(this._talkInterval);
+    if (this._sprite) this._sprite.mask = null;
+    if (this._mask) { this._mask.destroy(); this._mask = null; }
+    if (this._ring) { this._ring.destroy(); this._ring = null; }
     this.container.destroy({ children: true });
   }
 }
