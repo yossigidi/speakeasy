@@ -53,6 +53,7 @@ export default class SceneManager {
   }
 
   async _loadScene(index) {
+    if (this._destroyed) return;
     if (index >= this.scenes.length) {
       this._worldComplete();
       return;
@@ -139,6 +140,7 @@ export default class SceneManager {
   }
 
   async _runScene(scene) {
+    if (this._destroyed) return;
     // 1. Intro animation (walk Speakli to position)
     if (scene.intro?.speakliWalkTo && this.engine.speakli) {
       await this.engine.speakli.walkToNorm(
@@ -301,6 +303,7 @@ export default class SceneManager {
   }
 
   update(dt) {
+    if (this._destroyed) return;
     // Update Speakli
     if (this.engine.speakli) this.engine.speakli.update(dt);
 
@@ -320,14 +323,16 @@ export default class SceneManager {
   }
 
   destroy() {
+    this._destroyed = true;
     for (const npc of Object.values(this.npcs)) {
       npc.destroy();
     }
+    this.npcs = {};
     for (const obj of this.sceneObjects) {
-      obj.sprite.destroy();
+      try { obj.sprite.destroy(); } catch {}
     }
     this.sceneObjects = [];
-    if (this.currentExercise) this.currentExercise.destroy();
-    if (this.dialogue) this.dialogue.destroy();
+    if (this.currentExercise) { this.currentExercise.destroy(); this.currentExercise = null; }
+    if (this.dialogue) { this.dialogue.destroy(); this.dialogue = null; }
   }
 }

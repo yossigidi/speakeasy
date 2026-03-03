@@ -30,6 +30,7 @@ export default class NPC {
   async _loadSprite(config) {
     try {
       const tex = await Assets.load(config.sprite);
+      if (this._destroyed) return;
       // Remove fallback body + emoji (keep shadow at index 0 and name label at end)
       if (this._body) { this.container.removeChild(this._body); this._body.destroy(); this._body = null; }
       if (this._emoji) { this.container.removeChild(this._emoji); this._emoji.destroy(); this._emoji = null; }
@@ -115,11 +116,13 @@ export default class NPC {
   }
 
   setState(state) {
+    if (this._destroyed) return;
     this.state = state;
     if (this._talkInterval) { clearInterval(this._talkInterval); this._talkInterval = null; }
     if (state === 'talk' || state === 'excited') {
       let tick = 0;
       this._talkInterval = setInterval(() => {
+        if (this._destroyed) { clearInterval(this._talkInterval); return; }
         tick++;
         this.container.scale.y = 1 + Math.sin(tick * 0.4) * 0.05;
         this.container.scale.x = 1 + Math.sin(tick * 0.4 + 1) * 0.02;
@@ -130,16 +133,18 @@ export default class NPC {
   }
 
   update(dt) {
+    if (this._destroyed) return;
     if (this.state === 'idle') {
       this.container.y += Math.sin(Date.now() * 0.002 + this.config.id.charCodeAt(0)) * 0.12;
     }
   }
 
   destroy() {
-    if (this._talkInterval) clearInterval(this._talkInterval);
+    this._destroyed = true;
+    if (this._talkInterval) { clearInterval(this._talkInterval); this._talkInterval = null; }
     if (this._sprite) this._sprite.mask = null;
     if (this._mask) { this._mask.destroy(); this._mask = null; }
     if (this._ring) { this._ring.destroy(); this._ring = null; }
-    this.container.destroy({ children: true });
+    try { this.container.destroy({ children: true }); } catch {}
   }
 }

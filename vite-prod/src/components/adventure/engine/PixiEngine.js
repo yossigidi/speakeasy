@@ -66,7 +66,17 @@ export default class PixiEngine {
   }
 
   destroy() {
+    this.destroyed = true;
+    this.paused = true;
     this.app.ticker.remove(this._boundUpdate);
-    this.root.destroy({ children: true });
+
+    // Clean up subsystems before destroying the display tree
+    if (this.sceneManager) { this.sceneManager.destroy(); this.sceneManager = null; }
+    if (this.particles) { this.particles = null; }
+    if (this.touch) { this.touch = null; }
+    if (this.hud) { this.hud = null; }
+    if (this.speakli) { this.speakli = null; }
+
+    try { this.root.destroy({ children: true }); } catch {}
   }
 }

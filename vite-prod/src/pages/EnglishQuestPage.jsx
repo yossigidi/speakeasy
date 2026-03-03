@@ -13,10 +13,10 @@ import KidsIntro from '../components/kids/KidsIntro.jsx';
 /* ─── Constants ─── */
 
 const QUEST_SCENES = [
-  { id: 'forest', emoji: '🌲', nameEn: 'Magic Forest', nameHe: 'היער הקסום', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameEn: 'Dragon', bossNameHe: 'דרקון' },
-  { id: 'school', emoji: '🏫', nameEn: 'Haunted School', nameHe: 'בית הספר הרדוף', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameEn: 'Ghost', bossNameHe: 'רוח רפאים' },
-  { id: 'space', emoji: '🚀', nameEn: 'Space Station', nameHe: 'תחנת חלל', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameEn: 'Alien', bossNameHe: 'חייזר' },
-  { id: 'ocean', emoji: '🌊', nameEn: 'Deep Ocean', nameHe: 'מעמקי הים', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameEn: 'Octopus', bossNameHe: 'תמנון' },
+  { id: 'forest', emoji: '🌲', nameEn: 'Magic Forest', nameHe: 'היער הקסום', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameEn: 'Dragon', bossNameHe: 'דרקון', bgImage: '/images/adventure/backgrounds/forest-sky.jpg', bossImage: '/images/adventure/characters/dragon-drago.jpg', icon: '/images/adventure/objects/world-icon-forest.jpg' },
+  { id: 'school', emoji: '🏫', nameEn: 'Haunted School', nameHe: 'בית הספר הרדוף', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameEn: 'Ghost', bossNameHe: 'רוח רפאים', bgImage: '/images/quest/backgrounds/school-bg.jpg', bossImage: '/images/quest/bosses/ghost-boss.jpg', icon: '/images/quest/icons/school-icon.jpg' },
+  { id: 'space', emoji: '🚀', nameEn: 'Space Station', nameHe: 'תחנת חלל', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameEn: 'Alien', bossNameHe: 'חייזר', bgImage: '/images/quest/backgrounds/space-bg.jpg', bossImage: '/images/quest/bosses/alien-boss.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
+  { id: 'ocean', emoji: '🌊', nameEn: 'Deep Ocean', nameHe: 'מעמקי הים', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameEn: 'Octopus', bossNameHe: 'תמנון', bgImage: '/images/quest/backgrounds/ocean-bg.jpg', bossImage: '/images/quest/bosses/octopus-boss.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
 ];
 
 // First hero is Speakli (avatar image), rest are emoji heroes
@@ -103,12 +103,15 @@ function FloatingXP({ amount, x, y }) {
 }
 
 /* ─── Boss HP Bar ─── */
-function BossHPBar({ hp, maxHP, bossEmoji, bossName, isHe }) {
+function BossHPBar({ hp, maxHP, bossEmoji, bossImage, bossName, isHe }) {
   const pct = Math.max(0, (hp / maxHP) * 100);
   const barColor = pct > 50 ? 'bg-red-500' : pct > 25 ? 'bg-orange-500' : 'bg-yellow-500';
   return (
     <div className="flex items-center gap-3 px-4 py-2">
-      <span className="text-3xl">{bossEmoji}</span>
+      {bossImage ? (
+        <img src={bossImage} alt="" className="w-8 h-8 object-contain" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
+      ) : null}
+      <span className="text-3xl" style={bossImage ? { display: 'none' } : {}}>{bossEmoji}</span>
       <div className="flex-1">
         <div className="flex justify-between text-xs font-bold text-white/80 mb-1">
           <span>{bossName}</span>
@@ -128,7 +131,7 @@ function BossHPBar({ hp, maxHP, bossEmoji, bossName, isHe }) {
 /* ─── Game Header ─── */
 function QuestHeader({ scene, onBack, missionIndex, isHe }) {
   return (
-    <div className={`sticky top-0 z-30 bg-gradient-to-r ${scene.bg} shadow-lg`}>
+    <div className={`sticky top-0 z-30 bg-gradient-to-r ${scene.bg} shadow-lg`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center top' } : undefined}>
       <div className="flex items-center justify-between px-3 py-2">
         <button onClick={onBack} className="p-2 rounded-full bg-white/20 active:scale-90 transition-transform">
           <ArrowLeft size={20} className="text-white" />
@@ -163,7 +166,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
   const petEmoji = hero?.pet != null ? PETS[hero.pet] : null;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex flex-col items-center justify-center p-6 relative overflow-hidden`}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex flex-col items-center justify-center p-6 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       {/* Background scene emojis */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {Array.from({ length: 8 }).map((_, i) => (
@@ -206,7 +209,10 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
 
         {/* Scene info */}
         <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-          <div className="text-4xl mb-2">{scene.emoji}</div>
+          {scene.icon ? (
+            <img src={scene.icon} alt="" className="w-16 h-16 rounded-full object-cover mx-auto mb-2 shadow-lg" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
+          ) : null}
+          <div className="text-4xl mb-2" style={scene.icon ? { display: 'none' } : {}}>{scene.emoji}</div>
           <h2 className="text-white font-black text-xl mb-1">
             {isHe ? scene.nameHe : scene.nameEn}
           </h2>
@@ -214,7 +220,10 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
             {isHe ? `הביסו את ה${scene.bossNameHe} עם כוח האנגלית!` : `Defeat the ${scene.bossNameEn} with English power!`}
           </p>
           <div className="flex items-center justify-center gap-1 mt-2">
-            <span className="text-2xl">{scene.boss}</span>
+            {scene.bossImage ? (
+              <img src={scene.bossImage} alt="" className="w-8 h-8 object-contain" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
+            ) : null}
+            <span className="text-2xl" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</span>
             <span className="text-white/60 text-xs">
               {isHe ? `בוס: ${scene.bossNameHe}` : `Boss: ${scene.bossNameEn}`}
             </span>
@@ -261,7 +270,7 @@ function MissionTransition({ missionIndex, scene, isHe, onReady }) {
   }, [onReady]);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center`}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       <div className="text-center animate-pop-in space-y-4">
         <div className="text-6xl">{MISSION_EMOJIS[missionIndex]}</div>
         <h2 className="text-white font-black text-2xl">
@@ -361,7 +370,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       {/* Round counter */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-white/70 text-sm font-bold">
@@ -482,11 +491,17 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
   const parts = current.sentence.split('___');
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       {/* Boss */}
       <div className="text-center mb-4">
-        <div className={`text-8xl inline-block transition-all duration-500 ${bossAnim}`}>
-          {scene.boss}
+        <div className={`inline-block transition-all duration-500 ${bossAnim}`}>
+          {scene.bossImage ? (
+            <img src={scene.bossImage} alt={scene.bossNameEn}
+              className="w-24 h-24 object-contain drop-shadow-lg mx-auto"
+              onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }}
+            />
+          ) : null}
+          <span className="text-8xl" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</span>
         </div>
         {attackAnim && (
           <div className="absolute left-1/2 top-1/3 -translate-x-1/2 text-5xl animate-pop-in">
@@ -495,7 +510,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
         )}
       </div>
 
-      <BossHPBar hp={bossHP} maxHP={bossMaxHP} bossEmoji={scene.boss} bossName={isHe ? scene.bossNameHe : scene.bossNameEn} isHe={isHe} />
+      <BossHPBar hp={bossHP} maxHP={bossMaxHP} bossEmoji={scene.boss} bossImage={scene.bossImage} bossName={isHe ? scene.bossNameHe : scene.bossNameEn} isHe={isHe} />
 
       {/* Round */}
       <div className="flex justify-between items-center my-3">
@@ -638,7 +653,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       {/* Round */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-white/70 text-sm font-bold">
@@ -748,13 +763,16 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
   }, []);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center p-6 relative`}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center p-6 relative`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       <ConfettiBurst show={showConfetti} />
 
       <div className="text-center space-y-5 animate-pop-in relative z-10 max-w-sm w-full">
         {/* Boss defeated */}
         <div className="relative inline-block">
-          <div className="text-7xl opacity-50 grayscale">{scene.boss}</div>
+          {scene.bossImage ? (
+            <img src={scene.bossImage} alt={scene.bossNameEn} className="w-20 h-20 object-contain opacity-50 grayscale mx-auto" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
+          ) : null}
+          <div className="text-7xl opacity-50 grayscale" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</div>
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-5xl">💥</span>
           </div>

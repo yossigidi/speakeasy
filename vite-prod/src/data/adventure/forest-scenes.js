@@ -78,7 +78,7 @@ export const FOREST_SCENES = [
     npcs: [{ id: 'bunny', type: 'bunny', position: { x: 0.65, y: 0.72 } }],
     intro: { speakliWalkTo: { x: 0.3, y: 0.75 } },
     dialogue: [
-      { speaker: 'bunny', text: "Hi friends! I'm Bella the Bunny! Can you help me sort berries?", textHe: 'היי חברים! אני בלה הארנבת! תעזרו לי למיין פירות?', emotion: 'excited' },
+      { speaker: 'bunny', text: "Hi friends! I'm Bella the Bunny! Can you help me sort berries?", textHe: 'היי חברים! אני Bella הארנבת! תעזרו לי למיין פירות?', emotion: 'excited' },
       { speaker: 'speakli', text: "Sure! We need to know our colors in English!", textHe: 'בטח! אנחנו צריכים לדעת צבעים באנגלית!', emotion: 'talk' },
     ],
     exercise: {

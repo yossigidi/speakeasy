@@ -81,14 +81,22 @@ export default class MultipleChoiceExercise extends ExerciseBase {
     const cols = 2;
     const startY = h * 0.48;
 
+    // Map color words to their actual colors for color-related questions
+    const colorWordMap = {
+      red: 0xEF4444, blue: 0x3B82F6, green: 0x22C55E, yellow: 0xEAB308,
+      orange: 0xF97316, purple: 0x8B5CF6, pink: 0xEC4899, black: 0x374151,
+      white: 0xD1D5DB, brown: 0x92400E,
+    };
+    const defaultColors = [0x3B82F6, 0x8B5CF6, 0xF59E0B, 0x22C55E];
+
     shuffled.forEach((option, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
       const x = w / 2 + (col === 0 ? -btnW / 2 - gap / 2 : btnW / 2 + gap / 2);
       const y = startY + row * (btnH + gap);
 
-      const colors = [0x3B82F6, 0x8B5CF6, 0xF59E0B, 0x22C55E];
-      this.createButton(option, x, y, btnW, btnH, colors[i % colors.length], () => {
+      const btnColor = colorWordMap[option.toLowerCase()] || defaultColors[i % defaultColors.length];
+      this.createButton(option, x, y, btnW, btnH, btnColor, () => {
         this._handleAnswer(option, q.answer);
       });
     });
