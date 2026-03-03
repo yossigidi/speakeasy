@@ -26,7 +26,7 @@ export default function usePixiApp(onReady, deps = []) {
       });
 
       if (destroyedRef.current) {
-        app.destroy(true, { children: true });
+        try { app.destroy(true, { children: true }); } catch {}
         return;
       }
 
@@ -40,7 +40,7 @@ export default function usePixiApp(onReady, deps = []) {
     return () => {
       destroyedRef.current = true;
       if (appRef.current) {
-        appRef.current.destroy(true, { children: true });
+        try { appRef.current.destroy(true, { children: true }); } catch {}
         appRef.current = null;
       }
     };
