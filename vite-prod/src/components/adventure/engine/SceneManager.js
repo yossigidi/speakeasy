@@ -1,3 +1,4 @@
+import { Sprite, Assets } from 'pixi.js';
 import { playCorrect, playComplete, playStar } from '../../../utils/gameSounds.js';
 
 /**
@@ -14,6 +15,7 @@ export default class SceneManager {
     this.sceneIndex = 0;
     this.currentScene = null;
     this.npcs = {}; // active NPC instances
+    this.sceneObjects = []; // active scene object sprites
 
     // State flags
     this.isDialogueActive = false;
@@ -100,12 +102,38 @@ export default class SceneManager {
       this.engine.speakli.setNormalized(scene.speakliPosition.x, scene.speakliPosition.y);
     }
 
+    // Clear previous scene objects
+    for (const obj of this.sceneObjects) {
+      obj.sprite.destroy();
+    }
+    this.sceneObjects = [];
+
     // Spawn NPCs
     if (scene.npcs) {
       const { createNPC } = await import('../characters/ForestNPCs.js');
       for (const npcDef of scene.npcs) {
         const npc = createNPC(this.engine, npcDef);
         this.npcs[npcDef.id] = npc;
+      }
+    }
+
+    // Load scene objects
+    if (scene.sceneObjects) {
+      for (const objDef of scene.sceneObjects) {
+        try {
+          const tex = await Assets.load(objDef.asset);
+          const sprite = Sprite.from(tex);
+          const targetH = objDef.height || 100;
+          const scale = targetH / sprite.texture.height;
+          sprite.scale.set(scale);
+          sprite.anchor.set(0.5, 0.5);
+          sprite.x = objDef.position.x * this.engine.width;
+          sprite.y = objDef.position.y * this.engine.height;
+          this.engine.worldLayer.addChild(sprite);
+          this.sceneObjects.push({ def: objDef, sprite });
+        } catch {
+          // Image failed to load — skip this object
+        }
       }
     }
   }
@@ -134,6 +162,9 @@ export default class SceneManager {
       this.isExerciseActive = true;
       await this._runExercise(scene.exercise);
       this.isExerciseActive = false;
+
+      // Swap scene objects to "after" state (e.g. gate opens, bridge repairs)
+      await this._swapSceneObjects();
     }
 
     // 4. Reward
@@ -189,6 +220,18 @@ export default class SceneManager {
         },
       });
     });
+  }
+
+  async _swapSceneObjects() {
+    for (const obj of this.sceneObjects) {
+      if (!obj.def.assetAfter) continue;
+      try {
+        const tex = await Assets.load(obj.def.assetAfter);
+        obj.sprite.texture = tex;
+      } catch {
+        // Keep original texture
+      }
+    }
   }
 
   async _giveReward(reward) {
@@ -280,6 +323,10 @@ export default class SceneManager {
     for (const npc of Object.values(this.npcs)) {
       npc.destroy();
     }
+    for (const obj of this.sceneObjects) {
+      obj.sprite.destroy();
+    }
+    this.sceneObjects = [];
     if (this.currentExercise) this.currentExercise.destroy();
     if (this.dialogue) this.dialogue.destroy();
   }

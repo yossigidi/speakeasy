@@ -5,43 +5,40 @@
  * dialogue, exercise, and rewards.
  */
 
-// Procedural background color palettes (no external assets needed)
+// Background definitions — image assets with color fallbacks
 const FOREST_BG = {
   layers: [
-    { color: [0x87CEEB, 0x4A90D9], speed: 0.1, y: 0, height: 180 },    // Sky
-    { color: [0x228B22, 0x1A6B1A], speed: 0.3, y: 150, height: 120 },   // Far trees
-    { color: [0x2D5A1E, 0x1E3F14], speed: 0.5, y: 240, height: 100 },   // Mid trees
-    { color: [0x3B7A2E, 0x4A8B3B], speed: 0.8, y: 310, height: 80 },    // Near bushes
-    { color: [0x5C4033, 0x4A3328], speed: 1.0, y: 370, height: 130 },    // Ground
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 180 },
+    { asset: '/images/adventure/backgrounds/forest-trees-far.jpg', speed: 0.3, y: 150, height: 120 },
+    { asset: '/images/adventure/backgrounds/forest-trees-near.jpg', speed: 0.6, y: 250, height: 110 },
+    { asset: '/images/adventure/backgrounds/forest-ground.jpg', speed: 1.0, y: 340, height: 160 },
   ],
 };
 
 const DARK_CAVE_BG = {
   layers: [
-    { color: [0x1A1A2E, 0x0F0F1E], speed: 0.1, y: 0, height: 200 },    // Dark ceiling
-    { color: [0x2D2D44, 0x1E1E33], speed: 0.3, y: 170, height: 130 },   // Cave walls
-    { color: [0x3D3D55, 0x2A2A3E], speed: 0.6, y: 270, height: 100 },   // Mid cave
-    { color: [0x4A4A5A, 0x3B3B4A], speed: 1.0, y: 350, height: 150 },   // Cave floor
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 180 },
+    { asset: '/images/adventure/objects/cave-entrance.jpg', speed: 0.3, y: 150, height: 140 },
+    { color: [0x2D2D44, 0x1E1E33], speed: 0.6, y: 270, height: 100 },
+    { color: [0x3D3D55, 0x2A2A3E], speed: 1.0, y: 350, height: 150 },
   ],
 };
 
 const RIVER_BG = {
   layers: [
-    { color: [0x87CEEB, 0x6BB5D6], speed: 0.1, y: 0, height: 160 },    // Sky
-    { color: [0x228B22, 0x196B19], speed: 0.3, y: 130, height: 100 },   // Trees
-    { color: [0x1E90FF, 0x1A7AE6], speed: 0.6, y: 220, height: 80 },   // River
-    { color: [0x5C4033, 0x4A3328], speed: 0.8, y: 280, height: 60 },    // Bank
-    { color: [0x3B7A2E, 0x4A8B3B], speed: 1.0, y: 330, height: 170 },   // Grass
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 160 },
+    { asset: '/images/adventure/backgrounds/forest-trees-far.jpg', speed: 0.3, y: 130, height: 100 },
+    { asset: '/images/adventure/objects/forest-river.jpg', speed: 0.6, y: 220, height: 90 },
+    { asset: '/images/adventure/backgrounds/forest-ground.jpg', speed: 1.0, y: 300, height: 200 },
   ],
 };
 
 const DRAGON_BG = {
   layers: [
-    { color: [0xF97316, 0xDC2626], speed: 0.1, y: 0, height: 180 },    // Sunset sky
-    { color: [0x1A1A2E, 0x2D1B4E], speed: 0.3, y: 150, height: 100 },  // Mountains
-    { color: [0x4A2C17, 0x3B2312], speed: 0.5, y: 230, height: 80 },   // Rocky terrain
-    { color: [0x5C4033, 0x6B4D3B], speed: 0.8, y: 290, height: 80 },   // Rocky ground
-    { color: [0x8B4513, 0x6B3410], speed: 1.0, y: 360, height: 140 },   // Dragon's lair floor
+    { asset: '/images/adventure/backgrounds/forest-sky.jpg', speed: 0.1, y: 0, height: 180 },
+    { asset: '/images/adventure/objects/dragon-lair.jpg', speed: 0.3, y: 150, height: 120 },
+    { color: [0x5C4033, 0x6B4D3B], speed: 0.7, y: 260, height: 90 },
+    { color: [0x8B4513, 0x6B3410], speed: 1.0, y: 340, height: 160 },
   ],
 };
 
@@ -55,6 +52,9 @@ export const FOREST_SCENES = [
     particles: { type: 'leaves', density: 15 },
     speakliPosition: { x: 0.1, y: 0.75 },
     npcs: [{ id: 'fox', type: 'fox', position: { x: 0.75, y: 0.7 } }],
+    sceneObjects: [
+      { id: 'gate', asset: '/images/adventure/objects/forest-gate.jpg', assetAfter: '/images/adventure/objects/forest-gate-open.jpg', position: { x: 0.5, y: 0.65 }, height: 120 },
+    ],
     intro: { speakliWalkTo: { x: 0.35, y: 0.75 } },
     dialogue: [
       { speaker: 'speakli', text: "Look! A big gate... It's locked!", textHe: 'תראו! שער גדול... הוא נעול!', emotion: 'talk' },
@@ -82,6 +82,9 @@ export const FOREST_SCENES = [
     particles: { type: 'leaves', density: 20 },
     speakliPosition: { x: 0.1, y: 0.75 },
     npcs: [{ id: 'owl', type: 'owl', position: { x: 0.7, y: 0.55 } }],
+    sceneObjects: [
+      { id: 'bridge', asset: '/images/adventure/objects/bridge-broken.jpg', assetAfter: '/images/adventure/objects/bridge-fixed.jpg', position: { x: 0.5, y: 0.78 }, height: 80 },
+    ],
     intro: { speakliWalkTo: { x: 0.3, y: 0.75 } },
     dialogue: [
       { speaker: 'speakli', text: "Oh no, the bridge is broken!", textHe: 'אוי לא, הגשר שבור!', emotion: 'sad' },
@@ -108,6 +111,9 @@ export const FOREST_SCENES = [
     particles: { type: 'leaves', density: 10 },
     speakliPosition: { x: 0.1, y: 0.75 },
     npcs: [{ id: 'bunny', type: 'bunny', position: { x: 0.65, y: 0.72 } }],
+    sceneObjects: [
+      { id: 'berries', asset: '/images/adventure/objects/berry-bushes.jpg', position: { x: 0.45, y: 0.7 }, height: 90 },
+    ],
     intro: { speakliWalkTo: { x: 0.3, y: 0.75 } },
     dialogue: [
       { speaker: 'bunny', text: "Hi friends! I'm Bella the Bunny! Can you help me sort berries?", textHe: 'היי חברים! אני בלה הארנבת! תעזרו לי למיין פירות?', emotion: 'excited' },
@@ -135,6 +141,9 @@ export const FOREST_SCENES = [
     particles: { type: 'sparkle', density: 8 },
     speakliPosition: { x: 0.1, y: 0.75 },
     npcs: [{ id: 'deer', type: 'deer', position: { x: 0.7, y: 0.7 } }],
+    sceneObjects: [
+      { id: 'river', asset: '/images/adventure/objects/forest-river.jpg', position: { x: 0.5, y: 0.75 }, height: 70 },
+    ],
     intro: { speakliWalkTo: { x: 0.25, y: 0.75 } },
     dialogue: [
       { speaker: 'deer', text: "Hello! I'm Danny the Deer. To cross the river, listen carefully!", textHe: 'שלום! אני דני האייל. כדי לחצות את הנהר, הקשיבו בתשומת לב!', emotion: 'talk' },
@@ -164,6 +173,9 @@ export const FOREST_SCENES = [
     particles: { type: 'sparkle', density: 5 },
     speakliPosition: { x: 0.1, y: 0.75 },
     npcs: [{ id: 'firefly', type: 'firefly', position: { x: 0.5, y: 0.45 } }],
+    sceneObjects: [
+      { id: 'cave', asset: '/images/adventure/objects/cave-entrance.jpg', position: { x: 0.35, y: 0.6 }, height: 110 },
+    ],
     intro: { speakliWalkTo: { x: 0.25, y: 0.75 } },
     dialogue: [
       { speaker: 'speakli', text: "It's so dark in here...", textHe: 'חשוך כאן...', emotion: 'sad' },
@@ -215,6 +227,9 @@ export const FOREST_SCENES = [
     particles: { type: 'sparkle', density: 12 },
     speakliPosition: { x: 0.1, y: 0.75 },
     npcs: [{ id: 'dragon', type: 'dragon', position: { x: 0.7, y: 0.6 } }],
+    sceneObjects: [
+      { id: 'lair', asset: '/images/adventure/objects/dragon-lair.jpg', position: { x: 0.5, y: 0.55 }, height: 130 },
+    ],
     intro: { speakliWalkTo: { x: 0.25, y: 0.75 } },
     dialogue: [
       { speaker: 'dragon', text: "ROAR! I'm Drago! Beat my 3 challenges to become a Forest Hero!", textHe: 'שאגה! אני דרגו! נצחו ב-3 אתגרים שלי כדי להפוך לגיבורי היער!', emotion: 'excited' },

@@ -1,4 +1,4 @@
-import { Container, Graphics, Text } from 'pixi.js';
+import { Container, Graphics, Text, Sprite, Assets } from 'pixi.js';
 
 /**
  * PixiJS world map — shows world nodes connected by paths.
@@ -44,10 +44,10 @@ export default class WorldMapUI {
 
     // World nodes
     const worlds = [
-      { id: 'forest', emoji: '🌲', color: 0x22C55E, unlocked: true },
-      { id: 'ocean', emoji: '🌊', color: 0x0EA5E9, unlocked: false },
-      { id: 'space', emoji: '🚀', color: 0x6366F1, unlocked: false },
-      { id: 'castle', emoji: '🏰', color: 0xF59E0B, unlocked: false },
+      { id: 'forest', emoji: '🌲', color: 0x22C55E, unlocked: true, icon: '/images/adventure/objects/world-icon-forest.jpg' },
+      { id: 'ocean', emoji: '🌊', color: 0x0EA5E9, unlocked: false, icon: '/images/adventure/objects/world-icon-ocean.jpg' },
+      { id: 'space', emoji: '🚀', color: 0x6366F1, unlocked: false, icon: '/images/adventure/objects/world-icon-space.jpg' },
+      { id: 'castle', emoji: '🏰', color: 0xF59E0B, unlocked: false, icon: '/images/adventure/objects/world-icon-castle.jpg' },
     ];
 
     const startY = 120;
@@ -73,18 +73,25 @@ export default class WorldMapUI {
       node.x = x;
       node.y = y;
 
+      // Border ring
+      const ring = new Graphics();
+      ring.circle(0, 0, 33);
+      ring.stroke({ color: world.unlocked ? 0xffffff : 0x475569, width: 2, alpha: world.unlocked ? 0.5 : 0.3 });
+      node.addChild(ring);
+
+      // Color circle fallback (visible until sprite loads, or as base for locked)
       const circle = new Graphics();
       circle.circle(0, 0, 30);
       circle.fill({ color: world.unlocked ? world.color : 0x475569 });
-      if (world.unlocked) {
-        circle.circle(0, 0, 33);
-        circle.stroke({ color: 0xffffff, width: 2, alpha: 0.5 });
-      }
       node.addChild(circle);
 
+      // Emoji fallback
       const emoji = new Text({ text: world.emoji, style: { fontSize: 26 } });
       emoji.anchor.set(0.5);
       node.addChild(emoji);
+
+      // Try loading sprite icon
+      this._loadWorldIcon(node, world, circle, emoji);
 
       if (!world.unlocked) {
         const lock = new Text({ text: '🔒', style: { fontSize: 14 } });
@@ -116,6 +123,33 @@ export default class WorldMapUI {
       this.container.addChild(node);
       this.nodes.push(node);
     });
+  }
+
+  async _loadWorldIcon(node, world, fallbackCircle, fallbackEmoji) {
+    try {
+      const tex = await Assets.load(world.icon);
+      const sprite = Sprite.from(tex);
+      const diameter = 60;
+      const scale = diameter / Math.min(sprite.texture.width, sprite.texture.height);
+      sprite.scale.set(scale);
+      sprite.anchor.set(0.5);
+
+      // Circle mask
+      const mask = new Graphics();
+      mask.circle(0, 0, 30);
+      mask.fill({ color: 0xffffff });
+      node.addChild(mask);
+      sprite.mask = mask;
+      node.addChild(sprite);
+
+      // Remove fallbacks
+      node.removeChild(fallbackCircle);
+      fallbackCircle.destroy();
+      node.removeChild(fallbackEmoji);
+      fallbackEmoji.destroy();
+    } catch {
+      // Keep emoji + circle fallback
+    }
   }
 
   destroy() {

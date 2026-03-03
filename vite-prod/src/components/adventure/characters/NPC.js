@@ -1,7 +1,7 @@
-import { Container, Graphics, Text } from 'pixi.js';
+import { Container, Graphics, Text, Sprite, Assets } from 'pixi.js';
 
 /**
- * NPC character — large emoji + colored body circle + name.
+ * NPC character — sprite image with emoji+circle fallback + name.
  */
 export default class NPC {
   constructor(engine, config) {
@@ -11,7 +11,8 @@ export default class NPC {
     this.container.label = `npc-${config.id}`;
     this.state = 'idle';
 
-    this._build(config);
+    // Build with fallback first, then try sprite
+    this._buildFallback(config);
 
     if (config.position) {
       this.container.x = config.position.x * engine.width;
@@ -19,9 +20,36 @@ export default class NPC {
     }
 
     engine.worldLayer.addChild(this.container);
+
+    // Attempt to load sprite image (replaces fallback on success)
+    if (config.sprite) {
+      this._loadSprite(config);
+    }
   }
 
-  _build(config) {
+  async _loadSprite(config) {
+    try {
+      const tex = await Assets.load(config.sprite);
+      // Remove fallback body + emoji (keep shadow at index 0 and name label at end)
+      if (this._body) { this.container.removeChild(this._body); this._body.destroy(); this._body = null; }
+      if (this._emoji) { this.container.removeChild(this._emoji); this._emoji.destroy(); this._emoji = null; }
+
+      const sprite = Sprite.from(tex);
+      const targetH = 90;
+      const scale = targetH / sprite.texture.height;
+      sprite.scale.set(scale);
+      sprite.anchor.set(0.5, 1); // bottom-center
+      sprite.y = 0;
+      this._sprite = sprite;
+
+      // Insert sprite after shadow (index 1)
+      this.container.addChildAt(sprite, 1);
+    } catch {
+      // Keep fallback rendering
+    }
+  }
+
+  _buildFallback(config) {
     // Shadow
     const shadow = new Graphics();
     shadow.ellipse(0, 2, 28, 8);
@@ -46,6 +74,7 @@ export default class NPC {
     emoji.anchor.set(0.5, 0.5);
     emoji.y = -40;
     this.container.addChild(emoji);
+    this._emoji = emoji;
 
     // Name label with background
     const name = new Text({
