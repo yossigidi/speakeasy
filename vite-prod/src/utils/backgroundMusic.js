@@ -6,13 +6,13 @@ const TRACKS = {
   'kids-games':   '/sounds/music/kids-games.mp3',
   'kids-lessons': '/sounds/music/kids-lessons.mp3',
   'kids-quest':     '/sounds/music/kids-quest.mp3',
-  'kids-adventure': '/sounds/music/kids-games.mp3',
+  'kids-adventure': '/sounds/music/kids-adventure.mp3',
 };
 
-const NORMAL_VOL = 0.3;
-const DUCKED_VOL = 0.08;
-const FADE_MS = 800;
-const DUCK_MS = 300;
+const NORMAL_VOL = 0.15;
+const DUCKED_VOL = 0.03;
+const FADE_MS = 1200;
+const DUCK_MS = 400;
 
 class MusicPlayer {
   constructor() {

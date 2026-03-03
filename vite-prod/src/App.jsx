@@ -45,6 +45,7 @@ const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
+import FloatingMusicBtn from './components/ui/FloatingMusicBtn.jsx';
 
 /* ── Lazy loading fallback ── */
 function PageLoader() {
@@ -298,6 +299,7 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
       <ChildModeBanner />
+      {isChildMode && currentPage !== 'profile' && <FloatingMusicBtn />}
       {showHeader && (
         <Header
           title={pageTitles[currentPage]}
