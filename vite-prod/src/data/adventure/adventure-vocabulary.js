@@ -92,6 +92,42 @@ export const ADVENTURE_VOCAB = {
       { word: 'five', translation: 'חמש', emoji: '5️⃣' },
     ],
   },
+  // Level 3 — Intermediate (ages 8-9)
+  3: {
+    weather: [
+      { word: 'sun', translation: 'שמש', emoji: '☀️' },
+      { word: 'rain', translation: 'גשם', emoji: '🌧️' },
+      { word: 'cloud', translation: 'ענן', emoji: '☁️' },
+      { word: 'wind', translation: 'רוח', emoji: '💨' },
+      { word: 'snow', translation: 'שלג', emoji: '❄️' },
+      { word: 'hot', translation: 'חם', emoji: '🔥' },
+      { word: 'cold', translation: 'קר', emoji: '🥶' },
+    ],
+    clothes: [
+      { word: 'shirt', translation: 'חולצה', emoji: '👕' },
+      { word: 'pants', translation: 'מכנסיים', emoji: '👖' },
+      { word: 'shoes', translation: 'נעליים', emoji: '👟' },
+      { word: 'hat', translation: 'כובע', emoji: '🎩' },
+      { word: 'dress', translation: 'שמלה', emoji: '👗' },
+      { word: 'socks', translation: 'גרביים', emoji: '🧦' },
+    ],
+    home: [
+      { word: 'house', translation: 'בית', emoji: '🏠' },
+      { word: 'door', translation: 'דלת', emoji: '🚪' },
+      { word: 'window', translation: 'חלון', emoji: '🪟' },
+      { word: 'bed', translation: 'מיטה', emoji: '🛏️' },
+      { word: 'chair', translation: 'כיסא', emoji: '🪑' },
+      { word: 'table', translation: 'שולחן', emoji: '🪵' },
+    ],
+    actions: [
+      { word: 'run', translation: 'לרוץ', emoji: '🏃' },
+      { word: 'jump', translation: 'לקפוץ', emoji: '🤸' },
+      { word: 'eat', translation: 'לאכול', emoji: '🍽️' },
+      { word: 'drink', translation: 'לשתות', emoji: '🥤' },
+      { word: 'sleep', translation: 'לישון', emoji: '😴' },
+      { word: 'play', translation: 'לשחק', emoji: '🎮' },
+    ],
+  },
 };
 
 /**

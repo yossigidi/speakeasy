@@ -139,6 +139,25 @@ export default class ParticleSystem {
         break;
       }
 
+      case 'stars': {
+        graphic = new Graphics();
+        const size = 1 + Math.random() * 2.5;
+        const colors = [0xFFFFFF, 0xFDE68A, 0xBAE6FD, 0xE9D5FF];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        graphic.star(0, 0, 4, size, size * 0.4);
+        graphic.fill({ color });
+        graphic.x = Math.random() * w;
+        graphic.y = Math.random() * h;
+        config = {
+          vx: 0,
+          vy: 0,
+          life: 1.5 + Math.random() * 2.5,
+          rotSpeed: (Math.random() - 0.5) * 0.02,
+          pulseSpeed: 0.05 + Math.random() * 0.05,
+        };
+        break;
+      }
+
       case 'bubbles': {
         graphic = new Graphics();
         const size = 2 + Math.random() * 4;
