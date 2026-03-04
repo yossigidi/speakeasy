@@ -12,6 +12,12 @@
     { "path": "/api/daily-reminder", "schedule": "0 6 * * *" }
   ],
   "rewrites": [
+    { "source": "/api/chat", "destination": "/api/ai?action=chat" },
+    { "source": "/api/child-advice", "destination": "/api/ai?action=child-advice" },
+    { "source": "/api/simulation", "destination": "/api/ai?action=simulation" },
+    { "source": "/api/pronunciation-feedback", "destination": "/api/ai?action=pronunciation-feedback" },
+    { "source": "/api/generate-lesson", "destination": "/api/ai?action=generate-lesson" },
+    { "source": "/api/generate-story", "destination": "/api/ai?action=generate-story" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/app", "destination": "/app.html" },
     { "source": "/((?!api|assets|sw\\.js|manifest\\.json|icons|sounds|support\\.html|privacy\\.html|terms\\.html|app\\.html|index\\.html).*)", "destination": "/app.html" }
