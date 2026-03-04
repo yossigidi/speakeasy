@@ -298,8 +298,8 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
-      <ChildModeBanner />
-      {isChildMode && currentPage !== 'profile' && <FloatingMusicBtn />}
+      {currentPage !== 'adventure' && <ChildModeBanner />}
+      {isChildMode && currentPage !== 'profile' && currentPage !== 'adventure' && <FloatingMusicBtn />}
       {showHeader && (
         <Header
           title={pageTitles[currentPage]}

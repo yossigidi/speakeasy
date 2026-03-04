@@ -4,11 +4,15 @@
 
 import { getAudioContext } from './hebrewAudio.js';
 
+const IS_MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const VOL_SCALE = IS_MOBILE ? 0.4 : 1; // Mobile speakers are louder
+
 function isSoundEnabled() {
   return localStorage.getItem('se-sounds') !== 'off';
 }
 
 function playTone(frequency, duration, type = 'sine', volume = 0.3, delay = 0) {
+  volume *= VOL_SCALE;
   if (!isSoundEnabled()) return;
   try {
     const ctx = getAudioContext();
@@ -58,7 +62,7 @@ export function playPop() {
     osc.type = 'sine';
     osc.frequency.value = 600;
     osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.1);
-    gain.gain.value = 0.2;
+    gain.gain.value = 0.2 * VOL_SCALE;
     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -77,7 +81,7 @@ export function playSplash() {
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize) * 0.3;
+      data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize) * 0.3 * VOL_SCALE;
     }
     const source = ctx.createBufferSource();
     source.buffer = buffer;
@@ -120,7 +124,7 @@ export function playWhoosh() {
     osc.type = 'sine';
     osc.frequency.value = 300;
     osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.15);
-    gain.gain.value = 0.08;
+    gain.gain.value = 0.08 * VOL_SCALE;
     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
     osc.connect(gain);
     gain.connect(ctx.destination);

@@ -210,12 +210,11 @@ export default function AdventureGame({ onBack }) {
   }, [onBack, stopSpeaking]);
 
   return createPortal(
-    <div className="fixed inset-0 bg-black" style={{ zIndex: 99999 }}>
+    <div className="bg-black" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh', zIndex: 99999, overflow: 'hidden' }}>
       {/* PixiJS canvas container */}
       <div
         ref={containerRef}
-        className="w-full h-full"
-        style={{ touchAction: 'none' }}
+        style={{ width: '100%', height: '100%', touchAction: 'none' }}
       />
 
       {/* Video intro overlay */}
@@ -233,8 +232,8 @@ export default function AdventureGame({ onBack }) {
 
       {/* World map overlay */}
       {showWorldMap && (
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-sky-900 via-sky-800 to-emerald-900 flex flex-col">
-          <div className="flex items-center justify-between px-4 pt-safe-top" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10, background: 'linear-gradient(to bottom, #0c4a6e, #075985, #064e3b)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <div className="flex items-center justify-between px-4 shrink-0" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}>
             <button
               onClick={onBack}
               className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-xl"
@@ -247,7 +246,7 @@ export default function AdventureGame({ onBack }) {
             <div className="w-10" />
           </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 overflow-y-auto py-4">
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '16px 24px', WebkitOverflowScrolling: 'touch' }}>
             {[
               { id: 'forest', emoji: '🌲', nameHe: 'יער הקסמים', nameEn: 'The Magic Forest', gradient: ['#22c55e', '#16a34a', '#15803d'], shadow: 'rgba(22, 163, 74, 0.4)', scenes: 6, requiresWorld: null },
               { id: 'ocean', emoji: '🌊', nameHe: 'עולם האוקיינוס', nameEn: 'Ocean World', gradient: ['#0ea5e9', '#0284c7', '#0369a1'], shadow: 'rgba(14, 165, 233, 0.4)', scenes: 6, requiresWorld: 'forest' },
