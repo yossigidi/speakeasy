@@ -63,7 +63,8 @@ export default function VideoOverlay({ src, onComplete }) {
         src={src}
         className="w-full h-full object-contain"
         playsInline
-        muted={false}
+        muted
+        autoPlay
         onEnded={handleEnded}
         onError={handleError}
       />
