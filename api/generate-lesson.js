@@ -1,5 +1,5 @@
-import { callGroq } from './_lib/groq.js';
-import { handleCors } from './_lib/cors.js';
+import { callGroq } from '../lib/groq.js';
+import { handleCors } from '../lib/cors.js';
 
 export default async function handler(req, res) {
   if (handleCors(req, res)) return;

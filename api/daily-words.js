@@ -1,4 +1,4 @@
-import { handleCors } from './_lib/cors.js';
+import { handleCors } from '../lib/cors.js';
 
 // Simple daily word selection based on date
 export default async function handler(req, res) {

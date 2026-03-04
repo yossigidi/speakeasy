@@ -1,5 +1,5 @@
-import { handleCors } from './_lib/cors.js';
-import { getFirestore } from './_lib/firebase.js';
+import { handleCors } from '../lib/cors.js';
+import { getFirestore } from '../lib/firebase.js';
 
 const ADMIN_EMAIL = process.env.SUPPORT_ADMIN_EMAIL || 'support@speakli.co.il';
 

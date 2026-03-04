@@ -1,5 +1,5 @@
-import { handleCors } from './_lib/cors.js';
-import { getFirestore } from './_lib/firebase.js';
+import { handleCors } from '../lib/cors.js';
+import { getFirestore } from '../lib/firebase.js';
 
 const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 const CACHE_COLLECTION = 'tts-cache';
