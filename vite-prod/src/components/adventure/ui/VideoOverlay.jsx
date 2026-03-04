@@ -1,16 +1,16 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 /**
  * Fullscreen video overlay for adventure intro videos.
- * Shows a Play button first (required by iOS for unmuted audio),
- * then plays the video with sound + TTS narration.
+ * - autoPlay mode: video starts immediately (muted for iOS) + TTS narration
+ * - manual mode: shows Play button, user taps to start video + TTS
  * Gracefully handles missing video files (calls onComplete immediately).
  */
-export default function VideoOverlay({ src, narration, onSpeak, onComplete }) {
+export default function VideoOverlay({ src, narration, onSpeak, onComplete, autoPlay }) {
   const videoRef = useRef(null);
   const [fadingOut, setFadingOut] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [waitingToPlay, setWaitingToPlay] = useState(true);
+  const [started, setStarted] = useState(false);
   const completedRef = useRef(false);
 
   const finish = useCallback(() => {
@@ -38,19 +38,26 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete }) {
     finish();
   }, [finish]);
 
-  // User taps Play — start video + TTS narration
-  const handlePlay = useCallback(() => {
-    setWaitingToPlay(false);
+  // Start video + TTS
+  const startPlayback = useCallback(() => {
+    if (started) return;
+    setStarted(true);
     if (videoRef.current) {
       videoRef.current.play().catch(() => {
         finish();
       });
     }
-    // Speak narration alongside video
     if (narration && onSpeak) {
       onSpeak(narration);
     }
-  }, [finish, narration, onSpeak]);
+  }, [started, finish, narration, onSpeak]);
+
+  // Auto-play: start immediately on mount
+  useEffect(() => {
+    if (autoPlay && !hasError) {
+      startPlayback();
+    }
+  }, [autoPlay, hasError, startPlayback]);
 
   if (hasError) return null;
 
@@ -67,16 +74,17 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete }) {
         src={src}
         className="w-full h-full object-contain"
         playsInline
+        muted
         preload="auto"
         onEnded={handleEnded}
         onError={handleError}
       />
 
-      {/* Play button — shown before video starts */}
-      {waitingToPlay && (
+      {/* Play button — only for manual mode */}
+      {!autoPlay && !started && (
         <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-4"
-          onClick={handlePlay}
+          onClick={startPlayback}
           style={{ cursor: 'pointer' }}
         >
           <div className="w-20 h-20 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center active:scale-90 transition-transform">
@@ -87,7 +95,7 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete }) {
       )}
 
       {/* Skip button */}
-      {!waitingToPlay && (
+      {started && (
         <button
           onClick={(e) => { e.stopPropagation(); handleSkip(); }}
           className="absolute bottom-8 right-6 px-5 py-2.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-bold text-sm active:scale-95 transition-transform"
