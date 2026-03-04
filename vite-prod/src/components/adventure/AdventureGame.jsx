@@ -204,21 +204,22 @@ export default function AdventureGame({ onBack }) {
     }
   }, [progress.adventure]);
 
-  // Welcome intro — speak greeting then show world map
+  // Welcome intro — show welcome video with TTS, then world map
   const welcomeDismissed = useRef(false);
   const handleWelcomeTap = useCallback(() => {
     if (welcomeDismissed.current) return;
     welcomeDismissed.current = true;
+    setShowWelcome(false);
+    // Show welcome video, then transition to world map
     const greeting = uiLang === 'he'
       ? 'היי! ברוכים הבאים להרפתקה של ספיקלי! בואו נלמד אנגלית ביחד!'
       : "Hey! Welcome to Speakli's Adventure! Let's learn English together!";
-    speak(greeting, { lang: 'he' });
-    // Transition to world map after a short delay for the speech to start
-    setTimeout(() => {
-      setShowWelcome(false);
+    videoResolveRef.current = () => {
+      videoResolveRef.current = null;
       setShowWorldMap(true);
-    }, 1500);
-  }, [speak, uiLang]);
+    };
+    setVideoData({ src: '/videos/adventure/welcome.mp4', narration: greeting });
+  }, [uiLang]);
 
   // Pause handlers
   const handleResume = useCallback(() => {
