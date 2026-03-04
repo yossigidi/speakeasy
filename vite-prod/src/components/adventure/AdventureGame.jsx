@@ -35,7 +35,8 @@ export default function AdventureGame({ onBack }) {
   const { uiLang } = useTheme();
 
   const [showPause, setShowPause] = useState(false);
-  const [showWorldMap, setShowWorldMap] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWorldMap, setShowWorldMap] = useState(false);
   const [videoSrc, setVideoSrc] = useState(null);
   const [achievementToast, setAchievementToast] = useState(null);
   const engineRef = useRef(null);
@@ -197,6 +198,22 @@ export default function AdventureGame({ onBack }) {
     }
   }, [progress.adventure]);
 
+  // Welcome intro — speak greeting then show world map
+  const welcomeDismissed = useRef(false);
+  const handleWelcomeTap = useCallback(() => {
+    if (welcomeDismissed.current) return;
+    welcomeDismissed.current = true;
+    const greeting = uiLang === 'he'
+      ? 'היי! ברוכים הבאים להרפתקה של ספיקלי! בואו נלמד אנגלית ביחד!'
+      : "Hey! Welcome to Speakli's Adventure! Let's learn English together!";
+    speak(greeting, { lang: 'he' });
+    // Transition to world map after a short delay for the speech to start
+    setTimeout(() => {
+      setShowWelcome(false);
+      setShowWorldMap(true);
+    }, 1500);
+  }, [speak, uiLang]);
+
   // Pause handlers
   const handleResume = useCallback(() => {
     setShowPause(false);
@@ -228,6 +245,60 @@ export default function AdventureGame({ onBack }) {
           achievement={achievementToast}
           onDismiss={() => setAchievementToast(null)}
         />
+      )}
+
+      {/* Welcome intro overlay */}
+      {showWelcome && (
+        <div
+          onClick={handleWelcomeTap}
+          style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 15,
+            background: 'radial-gradient(ellipse at center, #1e40af 0%, #0c1445 70%, #000 100%)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            gap: '24px', cursor: 'pointer',
+          }}
+        >
+          {/* Stars background */}
+          <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', opacity: 0.6 }}>
+            {Array.from({ length: 30 }).map((_, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                width: `${2 + Math.random() * 3}px`,
+                height: `${2 + Math.random() * 3}px`,
+                borderRadius: '50%',
+                background: 'white',
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                animation: `twinkle ${1.5 + Math.random() * 2}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 2}s`,
+              }} />
+            ))}
+          </div>
+          <style>{`@keyframes twinkle { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }`}</style>
+
+          <div style={{ fontSize: '80px', animation: 'bounce 2s ease-in-out infinite' }}>
+            🌟
+          </div>
+          <style>{`@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }`}</style>
+
+          <h1 style={{
+            color: 'white', fontWeight: 900, fontSize: '28px', textAlign: 'center',
+            textShadow: '0 2px 20px rgba(99, 102, 241, 0.8)',
+          }}>
+            {uiLang === 'he' ? 'ההרפתקה של ספיקלי' : "Speakli's Adventure"}
+          </h1>
+
+          <div style={{
+            background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)',
+            borderRadius: '9999px', padding: '14px 32px',
+            animation: 'pulse 2s ease-in-out infinite',
+          }}>
+            <span style={{ color: 'white', fontWeight: 700, fontSize: '16px' }}>
+              {uiLang === 'he' ? 'לחץ להתחיל! ▶' : 'Tap to start! ▶'}
+            </span>
+          </div>
+          <style>{`@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }`}</style>
+        </div>
       )}
 
       {/* World map overlay */}
