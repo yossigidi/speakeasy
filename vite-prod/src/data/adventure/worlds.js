@@ -12,6 +12,7 @@ export const WORLDS = [
     unlocked: true,
     requiredLevel: 1,
     introVideo: '/videos/adventure/forest-world-intro.mp4',
+    videoNarration: 'ברוכים הבאים ליער הקסמים! כאן נפגוש חיות מדהימות ונלמד מילים חדשות באנגלית!',
   },
   {
     id: 'ocean',
@@ -24,6 +25,7 @@ export const WORLDS = [
     requiredLevel: 2,
     requiresWorld: 'forest',
     introVideo: '/videos/adventure/ocean-world-intro.mp4',
+    videoNarration: 'צוללים לעולם האוקיינוס! מוכנים לפגוש יצורים מופלאים מתחת למים?',
   },
   {
     id: 'space',
@@ -36,6 +38,7 @@ export const WORLDS = [
     requiredLevel: 3,
     requiresWorld: 'ocean',
     introVideo: '/videos/adventure/space-world-intro.mp4',
+    videoNarration: 'שלוש, שתיים, אחת, שיגור! יוצאים להרפתקה מטורפת בחלל החיצון!',
   },
   {
     id: 'castle',
@@ -48,5 +51,6 @@ export const WORLDS = [
     requiredLevel: 4,
     requiresWorld: 'space',
     introVideo: '/videos/adventure/castle-world-intro.mp4',
+    videoNarration: 'הנה הטירה הקסומה! בואו נגלה את הסודות שמסתתרים בפנים!',
   },
 ];

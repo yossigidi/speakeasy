@@ -1,12 +1,12 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 
 /**
  * Fullscreen video overlay for adventure intro videos.
  * Shows a Play button first (required by iOS for unmuted audio),
- * then plays the video with sound. Skip button available throughout.
+ * then plays the video with sound + TTS narration.
  * Gracefully handles missing video files (calls onComplete immediately).
  */
-export default function VideoOverlay({ src, onComplete }) {
+export default function VideoOverlay({ src, narration, onSpeak, onComplete }) {
   const videoRef = useRef(null);
   const [fadingOut, setFadingOut] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -22,7 +22,6 @@ export default function VideoOverlay({ src, onComplete }) {
     }, 400);
   }, [onComplete]);
 
-  // Handle video errors (missing file, etc.) — skip gracefully
   const handleError = useCallback(() => {
     setHasError(true);
     finish();
@@ -39,7 +38,7 @@ export default function VideoOverlay({ src, onComplete }) {
     finish();
   }, [finish]);
 
-  // User taps Play — start video with sound (satisfies iOS user-gesture requirement)
+  // User taps Play — start video + TTS narration
   const handlePlay = useCallback(() => {
     setWaitingToPlay(false);
     if (videoRef.current) {
@@ -47,7 +46,11 @@ export default function VideoOverlay({ src, onComplete }) {
         finish();
       });
     }
-  }, [finish]);
+    // Speak narration alongside video
+    if (narration && onSpeak) {
+      onSpeak(narration);
+    }
+  }, [finish, narration, onSpeak]);
 
   if (hasError) return null;
 

@@ -37,7 +37,7 @@ export default function AdventureGame({ onBack }) {
   const [showPause, setShowPause] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [showWorldMap, setShowWorldMap] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(null);
+  const [videoData, setVideoData] = useState(null); // { src, narration }
   const [achievementToast, setAchievementToast] = useState(null);
   const engineRef = useRef(null);
   const videoResolveRef = useRef(null);
@@ -75,20 +75,26 @@ export default function AdventureGame({ onBack }) {
   }, [user, activeChildId, uiLang]);
 
   // Scene video callback — returns a Promise that resolves when video completes/skips
-  const handleSceneVideo = useCallback((src) => {
+  // Accepts string (legacy) or { src, narration } object
+  const handleSceneVideo = useCallback((videoInfo) => {
     return new Promise((resolve) => {
       videoResolveRef.current = resolve;
-      setVideoSrc(src);
+      if (typeof videoInfo === 'string') {
+        setVideoData({ src: videoInfo, narration: null });
+      } else {
+        setVideoData(videoInfo);
+      }
     });
   }, []);
 
   const handleVideoComplete = useCallback(() => {
-    setVideoSrc(null);
+    setVideoData(null);
+    stopSpeaking();
     if (videoResolveRef.current) {
       videoResolveRef.current();
       videoResolveRef.current = null;
     }
-  }, []);
+  }, [stopSpeaking]);
 
   // Bridge options from React contexts to engine
   const optionsRef = useRef({});
@@ -189,7 +195,7 @@ export default function AdventureGame({ onBack }) {
           engineRef.current.sceneManager.startWorld(worldId);
         }
       };
-      setVideoSrc(worldDef.introVideo);
+      setVideoData({ src: worldDef.introVideo, narration: worldDef.videoNarration || null });
     } else {
       setShowWorldMap(false);
       if (engineRef.current?.sceneManager) {
@@ -238,8 +244,13 @@ export default function AdventureGame({ onBack }) {
       />
 
       {/* Video intro overlay */}
-      {videoSrc && (
-        <VideoOverlay src={videoSrc} onComplete={handleVideoComplete} />
+      {videoData && (
+        <VideoOverlay
+          src={videoData.src}
+          narration={videoData.narration}
+          onSpeak={(text) => speak(text, { lang: 'he' })}
+          onComplete={handleVideoComplete}
+        />
       )}
 
       {/* Achievement toast */}

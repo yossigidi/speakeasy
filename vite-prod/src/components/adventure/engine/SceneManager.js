@@ -165,9 +165,9 @@ export default class SceneManager {
   async _runScene(scene) {
     if (this._destroyed) return;
 
-    // 0. Scene intro video (if defined)
+    // 0. Scene intro video (if defined) — pass narration for TTS
     if (scene.introVideo && this.options.onSceneVideo) {
-      await this.options.onSceneVideo(scene.introVideo);
+      await this.options.onSceneVideo({ src: scene.introVideo, narration: scene.videoNarration || null });
     }
 
     // 1. Intro animation (walk Speakli to position)
