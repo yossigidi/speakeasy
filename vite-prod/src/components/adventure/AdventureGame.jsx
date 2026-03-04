@@ -223,6 +223,9 @@ export default function AdventureGame({ onBack }) {
   const handleQuit = useCallback(() => {
     setShowPause(false);
     stopSpeaking();
+    if (engineRef.current?.sceneManager) {
+      try { engineRef.current.sceneManager.stop(); } catch {}
+    }
     if (onBack) onBack();
   }, [onBack, stopSpeaking]);
 
@@ -306,7 +309,7 @@ export default function AdventureGame({ onBack }) {
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10, background: 'linear-gradient(to bottom, #0c4a6e, #075985, #064e3b)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <div className="flex items-center justify-between px-4 shrink-0" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}>
             <button
-              onClick={onBack}
+              onClick={handleQuit}
               className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-xl"
             >
               ←
