@@ -89,8 +89,10 @@ export default class WordDoorExercise extends ExerciseBase {
   }
 
   _handleChoice(word) {
+    if (this._locked) return;
     this.attempts++;
     if (word === this.targetWord.word) {
+      this._locked = true;
       // Correct! Open the door
       this._lockIcon.text = '🔓';
       this.showFeedback(true, () => {

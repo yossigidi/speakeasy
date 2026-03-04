@@ -381,6 +381,7 @@ export function SpeechProvider({ children }) {
   }, [speakSequenceInner]);
 
   const stopSpeaking = useCallback(() => {
+    speakGenRef.current++; // Cancel any in-flight sequence
     stopAllAudio();
     setIsSpeaking(false);
     stopKeepAlive();

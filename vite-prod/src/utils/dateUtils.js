@@ -20,7 +20,7 @@ export function daysBetween(date1, date2) {
   const d1 = new Date(date1);
   const d2 = new Date(date2);
   const diffMs = Math.abs(d2 - d1);
-  return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  return Math.round(diffMs / (1000 * 60 * 60 * 24));
 }
 
 export function formatDate(dateStr, lang = 'en') {
@@ -32,6 +32,7 @@ export function formatDate(dateStr, lang = 'en') {
 }
 
 export function formatTime(seconds) {
+  seconds = Math.floor(seconds);
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, '0')}`;

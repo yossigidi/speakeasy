@@ -43,6 +43,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Subject and message are required' });
     }
 
+    // Validate email format if provided
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
+
     const db = getFirestore();
 
     // Save ticket to Firestore

@@ -126,8 +126,8 @@ export default function ConversationPage() {
       };
       setMessages(prev => [...prev, assistantMsg]);
 
-      // Award XP after 5+ exchanges
-      if (newMessages.filter(m => m.role === 'user').length >= 5) {
+      // Award XP once after exactly 5 exchanges
+      if (newMessages.filter(m => m.role === 'user').length === 5) {
         addXP(15, 'conversation');
       }
     } catch (err) {

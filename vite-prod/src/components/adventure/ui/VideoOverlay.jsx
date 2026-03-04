@@ -6,8 +6,9 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
  * - manual mode: shows Play button, user taps to start video + TTS
  * Gracefully handles missing video files (calls onComplete immediately).
  */
-export default function VideoOverlay({ src, narration, onSpeak, onComplete, autoPlay }) {
+export default function VideoOverlay({ src, narration, onSpeak, onStopSpeaking, onComplete, autoPlay }) {
   const videoRef = useRef(null);
+  const finishTimerRef = useRef(null);
   const [fadingOut, setFadingOut] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [started, setStarted] = useState(false);
@@ -16,11 +17,22 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete, auto
   const finish = useCallback(() => {
     if (completedRef.current) return;
     completedRef.current = true;
+    onStopSpeaking?.();
     setFadingOut(true);
-    setTimeout(() => {
+    finishTimerRef.current = setTimeout(() => {
       onComplete?.();
     }, 400);
-  }, [onComplete]);
+  }, [onComplete, onStopSpeaking]);
+
+  // Cleanup on unmount — stop video + TTS + clear finish timer
+  useEffect(() => {
+    return () => {
+      if (finishTimerRef.current) clearTimeout(finishTimerRef.current);
+      if (!completedRef.current) {
+        onStopSpeaking?.();
+      }
+    };
+  }, [onStopSpeaking]);
 
   const handleError = useCallback(() => {
     setHasError(true);
@@ -43,6 +55,10 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete, auto
     if (started) return;
     setStarted(true);
     if (videoRef.current) {
+      // In manual mode (user tapped Play), unmute the video
+      if (!autoPlay) {
+        videoRef.current.muted = false;
+      }
       videoRef.current.play().catch(() => {
         finish();
       });
@@ -50,7 +66,7 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete, auto
     if (narration && onSpeak) {
       onSpeak(narration);
     }
-  }, [started, finish, narration, onSpeak]);
+  }, [started, autoPlay, finish, narration, onSpeak]);
 
   // Auto-play: start immediately on mount
   useEffect(() => {
@@ -74,7 +90,7 @@ export default function VideoOverlay({ src, narration, onSpeak, onComplete, auto
         src={src}
         className="w-full h-full object-contain"
         playsInline
-        muted
+        muted={autoPlay || !started}
         preload="auto"
         onEnded={handleEnded}
         onError={handleError}

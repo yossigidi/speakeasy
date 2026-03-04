@@ -29,15 +29,15 @@ export const OCEAN_SCENES = [
     dialogue: [
       { speaker: 'speakli', text: "Wow, we're underwater! Look at all the colors!", textHe: 'וואו, אנחנו מתחת למים! תראו כמה צבעים!', emotion: 'excited' },
       { speaker: 'dolphin', text: "Welcome to the ocean! I'm Dina the Dolphin! To enter the reef, tell me — what's this?", textHe: 'ברוכים הבאים לאוקיינוס! אני דינה הדולפינה! כדי להיכנס לשונית, ספרו לי — מה זה?', emotion: 'excited' },
-      { speaker: 'speakli', text: "It's a body part... I need to pick the right English word!", textHe: 'זה איבר בגוף... אני צריך לבחור את המילה הנכונה באנגלית!', emotion: 'talk' },
+      { speaker: 'speakli', text: "An animal that lives in the sea... I need to pick the right one!", textHe: 'חיה שגרה בים... אני צריך לבחור את הנכונה!', emotion: 'talk' },
     ],
     exercise: {
       type: 'wordDoor',
       config: {
-        targetWord: { word: 'hand', translation: 'יד' },
-        distractors: ['foot', 'ear', 'eye'],
-        prompt: 'Choose the right word to enter the reef!',
-        promptHe: 'בחרו את המילה הנכונה כדי להיכנס לשונית!',
+        targetWord: { word: 'fish', translation: 'דג' },
+        distractors: ['cat', 'dog', 'bird'],
+        prompt: '🐟 Which animal lives in the sea?',
+        promptHe: '🐟 איזו חיה גרה בים?',
       },
     },
     reward: { xp: 10, coins: 5, speakliAnimation: 'celebrate' },
@@ -63,9 +63,9 @@ export const OCEAN_SCENES = [
     exercise: {
       type: 'spellBridge',
       config: {
-        targetWord: { word: 'apple', translation: 'תפוח' },
-        hint: "A red fruit: ____",
-        hintHe: 'פרי אדום: ____',
+        targetWord: { word: 'cat', translation: 'חתול' },
+        hint: '🐱 Say meow! Spell: ____',
+        hintHe: '🐱 מיאו! אייתו: ____',
       },
     },
     reward: { xp: 15, coins: 5, speakliAnimation: 'celebrate' },
@@ -84,16 +84,16 @@ export const OCEAN_SCENES = [
     npcs: [{ id: 'octopus', type: 'octopus', position: { x: 0.65, y: 0.65 } }],
     intro: { speakliWalkTo: { x: 0.3, y: 0.75 } },
     dialogue: [
-      { speaker: 'octopus', text: "Hello friends! I'm Oscar the Octopus! I know everything about the body — let me quiz you!", textHe: 'שלום חברים! אני אוסקר התמנון! אני יודע הכל על הגוף — בואו אבחן אתכם!', emotion: 'excited' },
-      { speaker: 'speakli', text: "Body parts in English? Let's go!", textHe: 'איברי הגוף באנגלית? יאללה!', emotion: 'talk' },
+      { speaker: 'octopus', text: "Hello friends! I'm Oscar the Octopus! I know everything about the sea — let me quiz you!", textHe: 'שלום חברים! אני אוסקר התמנון! אני יודע הכל על הים — בואו אבחן אתכם!', emotion: 'excited' },
+      { speaker: 'speakli', text: "Questions about the sea? Let's go!", textHe: 'שאלות על הים? יאללה!', emotion: 'talk' },
     ],
     exercise: {
       type: 'multipleChoice',
       config: {
         questions: [
-          { question: 'What do you see with?', questionHe: 'במה רואים?', answer: 'eye', options: ['eye', 'ear', 'nose', 'mouth'], image: '👁️' },
-          { question: 'What do you hear with?', questionHe: 'במה שומעים?', answer: 'ear', options: ['hand', 'ear', 'foot', 'head'], image: '👂' },
-          { question: 'What do you walk with?', questionHe: 'במה הולכים?', answer: 'foot', options: ['arm', 'nose', 'foot', 'eye'], image: '🦶' },
+          { question: '🐠 What is this?', questionHe: '🐠 מה זה?', answer: 'fish', options: ['fish', 'cat', 'dog', 'bird'], image: '🐠' },
+          { question: '🌊 What color is the sea?', questionHe: '🌊 באיזה צבע הים?', answer: 'blue', options: ['blue', 'red', 'green', 'yellow'], image: '🌊' },
+          { question: '🐚 Where do fish live?', questionHe: '🐚 איפה דגים גרים?', answer: 'water', options: ['water', 'tree', 'house', 'car'], image: '🐚' },
         ],
       },
     },
@@ -113,19 +113,19 @@ export const OCEAN_SCENES = [
     npcs: [{ id: 'seahorse', type: 'seahorse', position: { x: 0.7, y: 0.6 } }],
     intro: { speakliWalkTo: { x: 0.25, y: 0.75 } },
     dialogue: [
-      { speaker: 'seahorse', text: "Hello! I'm Sandy the Seahorse. Listen carefully and find the right family member!", textHe: 'שלום! אני סנדי סוסון הים. הקשיבו היטב ומצאו את בן המשפחה הנכון!', emotion: 'talk' },
-      { speaker: 'speakli', text: "Family words! I'll listen and find the right one!", textHe: 'מילים של משפחה! אקשיב ואמצא את הנכונה!', emotion: 'talk' },
+      { speaker: 'seahorse', text: "Hello! I'm Sandy the Seahorse. Listen carefully and find the right animal!", textHe: 'שלום! אני סנדי סוסון הים. הקשיבו היטב ומצאו את החיה הנכונה!', emotion: 'talk' },
+      { speaker: 'speakli', text: "Animal sounds! I'll listen and find the right one!", textHe: 'קולות של חיות! אקשיב ואמצא את הנכונה!', emotion: 'talk' },
     ],
     exercise: {
       type: 'listenFind',
       config: {
         words: [
-          { word: 'mother', translation: 'אמא', emoji: '🤱' },
-          { word: 'father', translation: 'אבא', emoji: '👨‍👦' },
-          { word: 'sister', translation: 'אחות', emoji: '👧' },
-          { word: 'brother', translation: 'אח', emoji: '👦' },
+          { word: 'fish', translation: 'דג', emoji: '🐟' },
+          { word: 'cat', translation: 'חתול', emoji: '🐱' },
+          { word: 'dog', translation: 'כלב', emoji: '🐶' },
+          { word: 'bird', translation: 'ציפור', emoji: '🐦' },
         ],
-        rounds: 3,
+        rounds: 2,
       },
     },
     reward: { xp: 15, coins: 8, speakliAnimation: 'celebrate' },
@@ -137,7 +137,7 @@ export const OCEAN_SCENES = [
     titleEn: 'The Deep Trench',
     titleHe: 'התעלה העמוקה',
     introVideo: '/videos/adventure/ocean-scene5.mp4',
-    videoNarration: 'התעלה העמוקה! יורדים לעומק האוקיינוס!',
+    videoNarration: 'אוי! התעלה העמוקה והחשוכה! כאן מחכה לנו קרלוס הסרטן עם שאלות מאתגרות!',
     background: SCENE5_BG,
     particles: { type: 'bubbles', density: 6 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -154,28 +154,28 @@ export const OCEAN_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'three', translation: 'שלוש' },
-              distractors: ['one', 'five', 'four'],
-              prompt: 'Light 1: How many claws does Carlos have? (Hint: not really!)',
-              promptHe: 'אור 1: בחרו את המספר הנכון!',
+              targetWord: { word: 'red', translation: 'אדום' },
+              distractors: ['blue', 'green', 'yellow'],
+              prompt: '🔴 What color is Carlos the Crab?',
+              promptHe: '🔴 באיזה צבע קרלוס הסרטן?',
             },
           },
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'bread', translation: 'לחם' },
-              distractors: ['water', 'milk', 'egg'],
-              prompt: 'Light 2: Choose the right food word!',
-              promptHe: 'אור 2: בחרו את מילת האוכל הנכונה!',
+              targetWord: { word: 'fish', translation: 'דג' },
+              distractors: ['cat', 'dog', 'bird'],
+              prompt: '🐟 What lives in the sea?',
+              promptHe: '🐟 מה גר בים?',
             },
           },
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'baby', translation: 'תינוק' },
-              distractors: ['mother', 'father', 'sister'],
-              prompt: 'Light 3: The youngest family member!',
-              promptHe: 'אור 3: בן המשפחה הצעיר ביותר!',
+              targetWord: { word: 'two', translation: 'שתיים' },
+              distractors: ['one', 'three', 'four'],
+              prompt: '✌️ How many claws does Carlos have?',
+              promptHe: '✌️ כמה צבתות יש לקרלוס?',
             },
           },
         ],
@@ -209,11 +209,11 @@ export const OCEAN_SCENES = [
             config: {
               questions: [
                 {
-                  question: 'Which word means "ראש"?',
-                  questionHe: 'איזו מילה היא "ראש"?',
-                  answer: 'head',
-                  options: ['head', 'hand', 'foot', 'arm'],
-                  image: '🧠',
+                  question: '🐋 What is the biggest animal in the sea?',
+                  questionHe: '🐋 מה החיה הכי גדולה בים?',
+                  answer: 'whale',
+                  options: ['whale', 'fish', 'crab', 'turtle'],
+                  image: '🐋',
                 },
               ],
             },
@@ -221,19 +221,19 @@ export const OCEAN_SCENES = [
           {
             type: 'spellBridge',
             config: {
-              targetWord: { word: 'water', translation: 'מים' },
-              hint: "Fish live in ____",
-              hintHe: 'דגים חיים ב____',
+              targetWord: { word: 'dog', translation: 'כלב' },
+              hint: '🐶 Woof woof! Spell: ____',
+              hintHe: '🐶 הב הב! אייתו: ____',
             },
           },
           {
             type: 'listenFind',
             config: {
               words: [
-                { word: 'one', translation: 'אחד', emoji: '1️⃣' },
-                { word: 'two', translation: 'שניים', emoji: '2️⃣' },
-                { word: 'three', translation: 'שלוש', emoji: '3️⃣' },
-                { word: 'four', translation: 'ארבע', emoji: '4️⃣' },
+                { word: 'red', translation: 'אדום', emoji: '🔴' },
+                { word: 'blue', translation: 'כחול', emoji: '🔵' },
+                { word: 'green', translation: 'ירוק', emoji: '🟢' },
+                { word: 'yellow', translation: 'צהוב', emoji: '🟡' },
               ],
               rounds: 2,
             },

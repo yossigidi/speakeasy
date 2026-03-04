@@ -30,8 +30,16 @@ export default async function handler(req, res) {
 }
 
 // ── Chat ──────────────────────────────────────────────────────────────
+const VALID_CEFR = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const MAX_MESSAGES = 30;
+const MAX_TEXT_LEN = 2000;
+
+function sanitizeStr(s, maxLen = MAX_TEXT_LEN) {
+  return typeof s === 'string' ? s.slice(0, maxLen) : '';
+}
+
 async function handleChat(req, res) {
-  const { messages, scenario, cefrLevel, uiLang } = req.body;
+  const { messages, scenario, cefrLevel = 'B1', uiLang = 'en' } = req.body;
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'messages array is required' });
   }
@@ -46,7 +54,13 @@ async function handleChat(req, res) {
     'small-talk': 'Have casual small talk about weather, hobbies, weekend plans, etc.',
   };
 
-  const systemPrompt = `You are an English conversation practice partner for a ${cefrLevel} level learner.
+  const safeCefr = VALID_CEFR.includes(cefrLevel) ? cefrLevel : 'B1';
+  const safeMessages = messages.slice(-MAX_MESSAGES).map(m => ({
+    role: m.role === 'user' ? 'user' : 'assistant',
+    content: sanitizeStr(m.content),
+  }));
+
+  const systemPrompt = `You are an English conversation practice partner for a ${safeCefr} level learner.
 ${scenarioContext[scenario] || scenarioContext.free}
 
 IMPORTANT RULES:
@@ -67,7 +81,7 @@ Only include "correction" if there was an actual error. Reply ONLY with the JSON
 
   const apiMessages = [
     { role: 'system', content: systemPrompt },
-    ...messages.filter(m => m && m.role && m.content).map(m => ({ role: m.role, content: String(m.content) }))
+    ...safeMessages
   ];
 
   const rawResponse = await callGroq(apiMessages, { temperature: 0.7, max_tokens: 512 });
@@ -142,13 +156,17 @@ async function handleChildAdvice(req, res) {
 async function handleSimulation(req, res) {
   const {
     scenarioContext, npcRole, npcName, npcPersonality,
-    userMessage, cefrLevel, uiLang, history,
+    userMessage, cefrLevel = 'B1', uiLang = 'en', history,
     evaluationFocus, step, freeMode, industry,
   } = req.body;
 
   if (!userMessage || typeof userMessage !== 'string' || !userMessage.trim()) {
     return res.status(400).json({ error: 'userMessage is required' });
   }
+
+  const safeCefr = VALID_CEFR.includes(cefrLevel) ? cefrLevel : 'B1';
+  const safeUserMsg = sanitizeStr(userMessage);
+  const safeHistory = Array.isArray(history) ? history.slice(-MAX_MESSAGES) : [];
 
   const langNote = uiLang === 'he'
     ? 'Give corrections and explanations in Hebrew.'
@@ -164,11 +182,11 @@ async function handleSimulation(req, res) {
     };
     const role = roleMap[industry] || roleMap.tech;
 
-    systemPrompt = `You are ${role}, having an open English conversation practice with a ${cefrLevel} level learner.
+    systemPrompt = `You are ${role}, having an open English conversation practice with a ${safeCefr} level learner.
 
 RULES:
 - Stay in character. Be natural, conversational, and engaging.
-- Match your vocabulary to ${cefrLevel} level.
+- Match your vocabulary to ${safeCefr} level.
 - Keep responses 1-3 sentences. Ask follow-up questions to keep the conversation going.
 - After responding, evaluate the user's English on 4 metrics (0-100 each).
 - If the user makes mistakes, provide a correction.
@@ -186,12 +204,12 @@ Reply with ONLY valid JSON:
     systemPrompt = `You are ${npcName}, a ${npcRole}. Personality: ${npcPersonality}.
 
 CONTEXT: ${scenarioContext || 'Professional workplace scenario'}
-This is step ${step} of a simulation. The learner's English level is ${cefrLevel}.
+This is step ${step} of a simulation. The learner's English level is ${safeCefr}.
 
 RULES:
 - Stay in character as ${npcName} the ${npcRole}.
 - React naturally to the user's response. Keep your reply to 1-3 sentences.
-- Match vocabulary complexity to ${cefrLevel} level.
+- Match vocabulary complexity to ${safeCefr} level.
 - Evaluate the user's response on these focus areas: ${(evaluationFocus || []).join(', ')}.
 - Rate each metric honestly based on the response quality.
 - If the user makes grammar, vocabulary, or register mistakes, list them.
@@ -209,8 +227,8 @@ Reply with ONLY valid JSON:
 
   const apiMessages = [
     { role: 'system', content: systemPrompt },
-    ...(history || []).filter(m => m && m.role && m.content).map(m => ({ role: m.role, content: String(m.content) })),
-    { role: 'user', content: userMessage },
+    ...safeHistory.filter(m => m && m.role && m.content).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: sanitizeStr(m.content) })),
+    { role: 'user', content: safeUserMsg },
   ];
 
   const rawResponse = await callGroq(apiMessages, { temperature: 0.7, max_tokens: 512 });
@@ -284,7 +302,12 @@ Rules:
   ], { temperature: 0.6, max_tokens: 2048 });
 
   const clean = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-  const exercises = JSON.parse(clean);
+  let exercises;
+  try {
+    exercises = JSON.parse(clean);
+  } catch {
+    return res.status(500).json({ error: 'Failed to parse lesson response' });
+  }
 
   return res.status(200).json({ exercises });
 }
@@ -327,7 +350,12 @@ Include 3 comprehension questions. Reply ONLY with JSON.`;
   ], { temperature: 0.8, max_tokens: 2048 });
 
   const clean = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-  const story = JSON.parse(clean);
+  let story;
+  try {
+    story = JSON.parse(clean);
+  } catch {
+    return res.status(500).json({ error: 'Failed to parse story response' });
+  }
 
   return res.status(200).json(story);
 }

@@ -15,6 +15,7 @@ export default class MultipleChoiceExercise extends ExerciseBase {
   }
 
   _showQuestion() {
+    this._locked = false;
     // Clear previous question UI
     this.panel.removeChildren();
 
@@ -108,7 +109,9 @@ export default class MultipleChoiceExercise extends ExerciseBase {
   }
 
   _handleAnswer(selected, correct) {
+    if (this._locked) return;
     if (selected === correct) {
+      this._locked = true;
       this.score++;
       this.showFeedback(true, () => {
         this.currentQ++;

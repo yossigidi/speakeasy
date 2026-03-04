@@ -161,6 +161,7 @@ export default class ExerciseBase {
     feedback.scale.set(0);
     const start = performance.now();
     const tick = () => {
+      if (this.destroyed) return;
       const t = Math.min((performance.now() - start) / 300, 1);
       // Elastic out
       const p = 0.4;
@@ -196,6 +197,9 @@ export default class ExerciseBase {
 
   destroy() {
     this.destroyed = true;
-    // Don't destroy display objects — app.destroy() handles that
+    if (this.container?.parent) {
+      this.container.parent.removeChild(this.container);
+    }
+    this.container.destroy({ children: true });
   }
 }

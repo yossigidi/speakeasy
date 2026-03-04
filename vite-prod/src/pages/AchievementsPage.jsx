@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import achievementsData from '../data/achievements.json';
@@ -21,17 +22,20 @@ const CATEGORY_LABELS = {
 export default function AchievementsPage({ onBack }) {
   const { uiLang } = useTheme();
   const { user } = useAuth();
+  const { activeChildId } = useUserProgress();
   const [unlockedIds, setUnlockedIds] = useState([]);
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    if (!user) return;
-    const ref = window.firestore.collection(window.db, 'users', user.uid, 'achievements');
+    if (!user || !window.firestore || !window.db) return;
+    const ref = activeChildId
+      ? window.firestore.collection(window.db, 'childProfiles', activeChildId, 'achievements')
+      : window.firestore.collection(window.db, 'users', user.uid, 'achievements');
     const unsub = window.firestore.onSnapshot(ref, (snap) => {
       setUnlockedIds(snap.docs.map(d => d.id));
     });
     return unsub;
-  }, [user]);
+  }, [user, activeChildId]);
 
   const filtered = filter === 'all' ? achievementsData : achievementsData.filter(a => a.category === filter);
   const unlockedCount = achievementsData.filter(a => unlockedIds.includes(a.id)).length;

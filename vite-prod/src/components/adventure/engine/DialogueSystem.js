@@ -26,6 +26,7 @@ export default class DialogueSystem {
   async play(lines, speakers = {}) {
     this.active = true;
     this.queue = [...lines];
+    this._speakers = speakers;
 
     return new Promise(resolve => {
       this._resolve = resolve;
@@ -113,6 +114,7 @@ export default class DialogueSystem {
       clearTimeout(this._autoAdvanceTimer);
       this._autoAdvanceTimer = null;
     }
+    if (this.options.stopSpeaking) this.options.stopSpeaking();
     if (this.currentBubble) {
       this.currentBubble.destroy();
       this.currentBubble = null;
@@ -125,5 +127,11 @@ export default class DialogueSystem {
 
   destroy() {
     this._cleanup();
+    // Resolve any pending play() promise so _runScene can unwind
+    if (this._resolve) {
+      const r = this._resolve;
+      this._resolve = null;
+      r();
+    }
   }
 }

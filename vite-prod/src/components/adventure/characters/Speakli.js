@@ -116,6 +116,7 @@ export default class Speakli {
   setNormalized(nx, ny) {
     this.container.x = nx * this.engine.width;
     this.container.y = ny * this.engine.height;
+    this._idleBaseY = this.container.y;
   }
 
   walkTo(targetX, targetY) {
@@ -163,15 +164,16 @@ export default class Speakli {
 
   _bounceAnim(count, interval) {
     let i = 0;
-    this._baseY = this._baseY || this.container.y;
+    const baseY = this._idleBaseY ?? this.container.y;
     const bounce = () => {
-      if (i >= count) {
-        this.container.y = this._baseY;
+      if (this._destroyed || i >= count) {
+        this.container.y = baseY;
+        this._idleBaseY = baseY;
         return;
       }
-      this.container.y = this._baseY - (i % 2 === 0 ? 15 : 0);
+      this.container.y = baseY - (i % 2 === 0 ? 15 : 0);
       i++;
-      setTimeout(bounce, interval);
+      this._bounceTimer = setTimeout(bounce, interval);
     };
     bounce();
   }
@@ -200,6 +202,7 @@ export default class Speakli {
         this.container.x = this._walkTarget.x;
         this.container.y = this._walkTarget.y;
         this._walkTarget = null;
+        this._idleBaseY = this.container.y;
         this.setState('idle');
         if (this._walkResolve) { this._walkResolve(); this._walkResolve = null; }
       } else {
@@ -207,14 +210,17 @@ export default class Speakli {
         this.container.y += (dy / dist) * this.walkSpeed * dt;
       }
     }
-    // Idle bobbing
-    if (this.state === 'idle') {
-      this.container.y += Math.sin(Date.now() * 0.003) * 0.2;
+    // Idle bobbing (absolute offset to prevent drift)
+    if (this.state === 'idle' && !this._walkTarget) {
+      if (this._idleBaseY == null) this._idleBaseY = this.container.y;
+      this.container.y = this._idleBaseY + Math.sin(Date.now() * 0.003) * 3;
     }
   }
 
   destroy() {
+    this._destroyed = true;
     if (this._talkInterval) clearInterval(this._talkInterval);
+    if (this._bounceTimer) clearTimeout(this._bounceTimer);
     if (this._sprite) this._sprite.mask = null;
     if (this._mask) { this._mask.destroy(); this._mask = null; }
     if (this._ring) { this._ring.destroy(); this._ring = null; }

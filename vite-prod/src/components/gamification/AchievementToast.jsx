@@ -23,7 +23,9 @@ export default function AchievementToast({ achievement, onDismiss }) {
       <div className={`toast ${visible ? '' : 'toast-exit'}`}
         style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.95), rgba(239,68,68,0.95))' }}
       >
-        <Trophy size={22} className="text-white flex-shrink-0" />
+        {achievement.icon
+          ? <span className="text-xl flex-shrink-0">{achievement.icon}</span>
+          : <Trophy size={22} className="text-white flex-shrink-0" />}
         <div className="min-w-0">
           <p className="text-white font-bold text-sm truncate">{achievement.title}</p>
           <p className="text-white/80 text-xs truncate">{achievement.description}</p>

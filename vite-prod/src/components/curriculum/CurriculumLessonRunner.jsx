@@ -180,7 +180,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   // Lesson complete handler
   const handleLessonComplete = useCallback(async (lastWasCorrect) => {
     const totalCount = exercises.length;
-    const finalCorrect = correctCountRef.current + (lastWasCorrect ? 1 : 0);
+    const finalCorrect = correctCountRef.current;
     const acc = ((finalCorrect) / totalCount) * 100;
     const stars = calculateStars(acc);
     const xp = calculateXP(stars);

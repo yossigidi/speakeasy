@@ -106,21 +106,30 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     } else {
       playWrong();
       setWrongCount(prev => prev + 1);
+      let heartsReachedZero = false;
       setHearts(prev => {
         const newHearts = Math.max(0, prev - 1);
-        if (newHearts === 0) {
-          setAnswers(a => [...a, { isCorrect, wordData }]);
-          const t1 = setTimeout(() => handleLessonComplete(isCorrect), 1200);
-          exerciseTimersRef.current.push(t1);
-        }
+        if (newHearts === 0) heartsReachedZero = true;
         return newHearts;
       });
       setStreak(0);
       setTeacherState('encouraging');
       speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
+
+      // Always record answer once
+      setAnswers(prev => [...prev, { isCorrect, wordData }]);
+
+      if (heartsReachedZero) {
+        const t1 = setTimeout(() => handleLessonComplete(isCorrect), 1200);
+        exerciseTimersRef.current.push(t1);
+        return;
+      }
     }
 
-    setAnswers(prev => [...prev, { isCorrect, wordData }]);
+    // Record answer for correct path (wrong path records above)
+    if (isCorrect) {
+      setAnswers(prev => [...prev, { isCorrect, wordData }]);
+    }
 
     const t1 = setTimeout(() => setTeacherState('idle'), 1500);
     exerciseTimersRef.current.push(t1);
@@ -144,7 +153,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
   // Complete exercises and save
   const handleLessonComplete = useCallback(async (lastWasCorrect) => {
     const totalCount = exercises.length;
-    const finalCorrect = correctCountRef.current + (lastWasCorrect ? 1 : 0);
+    const finalCorrect = correctCountRef.current;
     const acc = totalCount > 0 ? ((finalCorrect) / totalCount) * 100 : 100;
     const stars = calculateStars(acc);
     await handleLessonSave(stars, acc);

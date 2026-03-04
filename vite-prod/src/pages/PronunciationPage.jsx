@@ -122,12 +122,16 @@ export default function PronunciationPage() {
 
   const sentence = PRACTICE_SENTENCES[currentIndex];
 
+  const xpAwardedRef = useRef(false);
   useEffect(() => {
     if (transcript && !isListening && hasRecorded) {
       const s = pronunciationScore(sentence.text, transcript, confidence);
       setScore(s);
       setWordResults(compareWords(sentence.text, transcript));
-      if (s >= 50) addXP(3, 'pronunciation');
+      if (s >= 50 && !xpAwardedRef.current) {
+        xpAwardedRef.current = true;
+        addXP(3, 'pronunciation');
+      }
     }
   }, [transcript, isListening, hasRecorded, sentence.text, confidence, addXP]);
 
@@ -147,6 +151,7 @@ export default function PronunciationPage() {
     setScore(null);
     setWordResults(null);
     setHasRecorded(false);
+    xpAwardedRef.current = false;
   };
 
   if (!supported) {

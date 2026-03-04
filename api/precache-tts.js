@@ -53,6 +53,18 @@ async function callElevenLabsTTS(text) {
 export default async function handler(req, res) {
   if (handleCors(req, res)) return;
 
+  // Only allow GET/POST
+  if (req.method !== 'GET' && req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Require CRON_SECRET auth (same as daily-reminder)
+  const cronSecret = process.env.CRON_SECRET;
+  const authHeader = req.headers['authorization'];
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   const db = getFirestore();
 
   // Find uncached texts

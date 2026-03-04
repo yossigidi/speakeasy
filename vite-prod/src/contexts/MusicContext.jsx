@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { getMusicPlayer } from '../utils/backgroundMusic.js';
 
 export const MusicContext = createContext(null);
@@ -57,8 +57,12 @@ export function MusicProvider({ children }) {
   const duck = useCallback(() => { playerRef.current.duck(); }, []);
   const unduck = useCallback(() => { playerRef.current.unduck(); }, []);
 
+  const value = useMemo(() => (
+    { musicEnabled, soundsEnabled, toggleMusic, toggleSounds, setSection, duck, unduck }
+  ), [musicEnabled, soundsEnabled, toggleMusic, toggleSounds, setSection, duck, unduck]);
+
   return (
-    <MusicContext.Provider value={{ musicEnabled, soundsEnabled, toggleMusic, toggleSounds, setSection, duck, unduck }}>
+    <MusicContext.Provider value={value}>
       {children}
     </MusicContext.Provider>
   );

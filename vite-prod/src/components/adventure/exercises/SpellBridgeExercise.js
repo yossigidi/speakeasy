@@ -157,7 +157,7 @@ export default class SpellBridgeExercise extends ExerciseBase {
   }
 
   _handleLetterTap(btn) {
-    if (btn._used) return;
+    if (this._locked || btn._used) return;
 
     const expected = this.letters[this.placed.length];
     if (btn._letter === expected) {
@@ -175,6 +175,7 @@ export default class SpellBridgeExercise extends ExerciseBase {
 
       // Check completion
       if (this.placed.length === this.letters.length) {
+        this._locked = true;
         this.showFeedback(true, () => this.complete(true));
       } else {
         try { import('../../../utils/gameSounds.js').then(m => m.playTap()); } catch {}

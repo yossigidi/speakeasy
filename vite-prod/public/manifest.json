@@ -2,10 +2,12 @@
   "name": "Speakli - Learn English",
   "short_name": "Speakli",
   "description": "AI-powered English learning with conversations, vocabulary, and pronunciation",
+  "id": "/",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "theme_color": "#030712",
   "orientation": "portrait",
   "icons": [
     {

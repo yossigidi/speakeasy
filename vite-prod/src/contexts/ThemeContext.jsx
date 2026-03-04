@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 
 const ThemeContext = createContext(null);
 
@@ -28,15 +28,17 @@ export function ThemeProvider({ children }) {
     return () => mq.removeEventListener('change', handler);
   }, [theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme(prev => prev === 'light' ? 'dark' : prev === 'dark' ? 'auto' : 'light');
-  };
+  }, []);
 
-  const toggleLang = () => {
+  const toggleLang = useCallback(() => {
     setUiLang(prev => prev === 'he' ? 'en' : 'he');
-  };
+  }, []);
 
-  const value = { theme, setTheme, toggleTheme, isDark, uiLang, setUiLang, toggleLang, dir };
+  const value = useMemo(() => (
+    { theme, setTheme, toggleTheme, isDark, uiLang, setUiLang, toggleLang, dir }
+  ), [theme, toggleTheme, isDark, uiLang, toggleLang, dir]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

@@ -18,6 +18,7 @@ export default class ListenFindExercise extends ExerciseBase {
   }
 
   _nextRound() {
+    this._locked = false;
     this.panel.removeChildren();
 
     if (this.currentRound >= this.totalRounds) {
@@ -128,7 +129,9 @@ export default class ListenFindExercise extends ExerciseBase {
   }
 
   _handleChoice(wordObj) {
+    if (this._locked) return;
     if (wordObj.word === this._targetWord.word) {
+      this._locked = true;
       this.score++;
       this.showFeedback(true, () => {
         this.currentRound++;

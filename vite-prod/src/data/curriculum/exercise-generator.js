@@ -117,7 +117,11 @@ function generateListenPick(wordData, allWords) {
  */
 function generateFillLetter(wordData) {
   const word = wordData.word.toLowerCase();
-  const idx = Math.floor(Math.random() * word.length);
+  // Only pick letter characters (skip spaces, hyphens, etc.)
+  const letterIndices = [...word].map((ch, i) => /[a-z]/i.test(ch) ? i : -1).filter(i => i >= 0);
+  const idx = letterIndices.length > 0
+    ? letterIndices[Math.floor(Math.random() * letterIndices.length)]
+    : Math.floor(Math.random() * word.length);
   const missingLetter = word[idx];
   const displayed = word.substring(0, idx) + '_' + word.substring(idx + 1);
 

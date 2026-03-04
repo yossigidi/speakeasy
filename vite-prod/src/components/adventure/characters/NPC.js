@@ -135,7 +135,8 @@ export default class NPC {
   update(dt) {
     if (this._destroyed) return;
     if (this.state === 'idle') {
-      this.container.y += Math.sin(Date.now() * 0.002 + this.config.id.charCodeAt(0)) * 0.12;
+      if (this._idleBaseY == null) this._idleBaseY = this.container.y;
+      this.container.y = this._idleBaseY + Math.sin(Date.now() * 0.002 + this.config.id.charCodeAt(0)) * 2;
     }
   }
 
@@ -143,6 +144,9 @@ export default class NPC {
     this._destroyed = true;
     if (this._talkInterval) { clearInterval(this._talkInterval); this._talkInterval = null; }
     if (this._sprite) this._sprite.mask = null;
-    // Don't destroy display objects — app.destroy() handles that
+    if (this.container?.parent) {
+      this.container.parent.removeChild(this.container);
+    }
+    this.container.destroy({ children: true });
   }
 }

@@ -9,7 +9,7 @@ function getCtx() {
 }
 
 function isEnabled() {
-  return localStorage.getItem('se-sounds') !== 'false';
+  return localStorage.getItem('se-sounds') !== 'off';
 }
 
 function vibrate(pattern) {

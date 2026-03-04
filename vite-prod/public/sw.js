@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakli-v81';
-const STATIC_CACHE = 'speakli-static-v81';
+const CACHE_NAME = 'speakli-v84';
+const STATIC_CACHE = 'speakli-static-v84';
 
 const urlsToCache = [
   '/',
@@ -73,7 +73,7 @@ self.addEventListener('fetch', event => {
           return response;
         })
         .catch(() => {
-          return caches.match('/index.html') || new Response('Offline', { status: 503 });
+          return caches.match('/index.html').then(r => r || new Response('Offline', { status: 503 }));
         })
     );
     return;

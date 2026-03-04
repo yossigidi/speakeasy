@@ -21,12 +21,16 @@ export default class SceneManager {
     this.isDialogueActive = false;
     this.isExerciseActive = false;
     this.currentExercise = null;
+    this._destroyed = false;
+    this._worldCompleteTimer = null;
+    this._exerciseResolve = null;
   }
 
   /**
    * Start a world by loading its scenes.
    */
   async startWorld(worldId) {
+    this._destroyed = false;
     this.currentWorld = worldId;
 
     // Dynamic import of world scenes
@@ -59,6 +63,26 @@ export default class SceneManager {
     }
 
     await this._loadScene(this.sceneIndex);
+  }
+
+  /**
+   * Stop the scene pipeline (called when quitting mid-scene).
+   */
+  stop() {
+    this._destroyed = true;
+    if (this._worldCompleteTimer) {
+      clearTimeout(this._worldCompleteTimer);
+      this._worldCompleteTimer = null;
+    }
+    // Resolve any pending exercise promise so _runScene can unwind
+    if (this._exerciseResolve) {
+      this._exerciseResolve(false);
+      this._exerciseResolve = null;
+    }
+    if (this.currentExercise) {
+      try { this.currentExercise.destroy(); } catch {}
+      this.currentExercise = null;
+    }
   }
 
   async _loadScene(index) {
@@ -168,6 +192,7 @@ export default class SceneManager {
     // 0. Scene intro video (if defined) — pass narration for TTS
     if (scene.introVideo && this.options.onSceneVideo) {
       await this.options.onSceneVideo({ src: scene.introVideo, narration: scene.videoNarration || null });
+      if (this._destroyed) return;
     }
 
     // 1. Intro animation (walk Speakli to position)
@@ -176,16 +201,19 @@ export default class SceneManager {
         scene.intro.speakliWalkTo.x,
         scene.intro.speakliWalkTo.y
       );
+      if (this._destroyed) return;
     }
 
     // Small pause
     await this._wait(400);
+    if (this._destroyed) return;
 
     // 2. Dialogue
     if (scene.dialogue && this.dialogue) {
       this.isDialogueActive = true;
       await this.dialogue.play(scene.dialogue, this.npcs);
       this.isDialogueActive = false;
+      if (this._destroyed) return;
     }
 
     // 3. Exercise
@@ -193,14 +221,17 @@ export default class SceneManager {
       this.isExerciseActive = true;
       await this._runExercise(scene.exercise);
       this.isExerciseActive = false;
+      if (this._destroyed) return;
 
       // Swap scene objects to "after" state (e.g. gate opens, bridge repairs)
       await this._swapSceneObjects();
+      if (this._destroyed) return;
     }
 
     // 4. Reward
     if (scene.reward) {
       await this._giveReward(scene.reward);
+      if (this._destroyed) return;
     }
 
     // 5. Save progress
@@ -208,6 +239,7 @@ export default class SceneManager {
 
     // 6. Auto-advance to next scene after delay
     await this._wait(800);
+    if (this._destroyed) return;
     await this._loadScene(this.sceneIndex + 1);
   }
 
@@ -230,6 +262,7 @@ export default class SceneManager {
       case 'boss':
         // Boss = sequential mixed exercises
         for (const round of exerciseDef.config.rounds) {
+          if (this._destroyed) return;
           await this._runExercise(round);
         }
         return;
@@ -239,10 +272,12 @@ export default class SceneManager {
     }
 
     return new Promise(resolve => {
+      this._exerciseResolve = resolve;
       this.currentExercise = new ExerciseClass(this.engine, {
         ...exerciseDef.config,
         options: this.options,
         onComplete: (success) => {
+          this._exerciseResolve = null;
           if (this.currentExercise) {
             this.currentExercise.destroy();
             this.currentExercise = null;
@@ -300,12 +335,13 @@ export default class SceneManager {
 
     // Only update if we've gone further
     const newCompleted = Math.max(worldProg.scenesCompleted, this.sceneIndex + 1);
+    const isNewScene = this.sceneIndex + 1 > worldProg.scenesCompleted;
 
     const updatedWorldProgress = {
       ...existing,
       [this.currentWorld]: {
         scenesCompleted: newCompleted,
-        totalStars: worldProg.totalStars + (this.currentScene?.reward?.xp ? 1 : 0),
+        totalStars: worldProg.totalStars + (isNewScene && this.currentScene?.reward?.xp ? 1 : 0),
       },
     };
 
@@ -357,7 +393,8 @@ export default class SceneManager {
     try { playComplete(); } catch {}
 
     // Return to world map
-    setTimeout(() => {
+    this._worldCompleteTimer = setTimeout(() => {
+      if (this._destroyed) return;
       if (this.options.onWorldMap) this.options.onWorldMap();
     }, 2500);
   }
@@ -387,14 +424,13 @@ export default class SceneManager {
   }
 
   destroy() {
-    this._destroyed = true;
+    this.stop();
     // Stop NPC intervals/timers — don't destroy display objects (app.destroy handles that)
     for (const npc of Object.values(this.npcs)) {
       try { npc.destroy(); } catch {}
     }
     this.npcs = {};
     this.sceneObjects = [];
-    if (this.currentExercise) { try { this.currentExercise.destroy(); } catch {} this.currentExercise = null; }
     if (this.dialogue) { try { this.dialogue.destroy(); } catch {} this.dialogue = null; }
   }
 }

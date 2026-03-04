@@ -36,12 +36,11 @@ export default function AdventureGame({ onBack }) {
 
   const [showPause, setShowPause] = useState(false);
   const [showWorldMap, setShowWorldMap] = useState(false);
-  const welcomeGreeting = uiLang === 'he'
-    ? 'היי! ברוכים הבאים להרפתקה של ספיקלי! בואו נלמד אנגלית ביחד!'
-    : "Hey! Welcome to Speakli's Adventure! Let's learn English together!";
   const [videoData, setVideoData] = useState({
     src: '/videos/adventure/welcome.mp4',
-    narration: welcomeGreeting,
+    narration: uiLang === 'he'
+      ? 'היי! ברוכים הבאים להרפתקה של ספיקלי! בואו נלמד אנגלית ביחד!'
+      : "Hey! Welcome to Speakli's Adventure! Let's learn English together!",
     autoPlay: true,
   });
   const [achievementToast, setAchievementToast] = useState(null);
@@ -175,8 +174,14 @@ export default function AdventureGame({ onBack }) {
       if (engineRef.current.sceneManager) {
         engineRef.current.sceneManager.options = optionsRef.current;
       }
+      if (engineRef.current.sceneManager?.dialogue) {
+        engineRef.current.sceneManager.dialogue.options = optionsRef.current;
+      }
+      if (engineRef.current.hud) {
+        engineRef.current.hud.options = optionsRef.current;
+      }
     }
-  }, [uiLang, progress.adventure]);
+  });
 
   // Cleanup
   useEffect(() => {
@@ -224,6 +229,8 @@ export default function AdventureGame({ onBack }) {
 
   const handleQuit = useCallback(() => {
     setShowPause(false);
+    setVideoData(null);
+    videoResolveRef.current = null; // Discard — don't call (it triggers startWorld)
     stopSpeaking();
     if (engineRef.current?.sceneManager) {
       try { engineRef.current.sceneManager.stop(); } catch {}
@@ -246,6 +253,7 @@ export default function AdventureGame({ onBack }) {
           narration={videoData.narration}
           autoPlay={videoData.autoPlay}
           onSpeak={(text) => speak(text, { lang: 'he' })}
+          onStopSpeaking={stopSpeaking}
           onComplete={handleVideoComplete}
         />
       )}
@@ -367,7 +375,13 @@ export default function AdventureGame({ onBack }) {
               {uiLang === 'he' ? 'המשך!' : 'Resume!'}
             </button>
             <button
-              onClick={() => { setShowPause(false); setShowWorldMap(true); }}
+              onClick={() => {
+                setShowPause(false);
+                if (engineRef.current?.sceneManager) {
+                  try { engineRef.current.sceneManager.stop(); } catch {}
+                }
+                setShowWorldMap(true);
+              }}
               className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-400 to-sky-500 text-white font-bold"
             >
               {uiLang === 'he' ? 'מפת עולמות' : 'World Map'}

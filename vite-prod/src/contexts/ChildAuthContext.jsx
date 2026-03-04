@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
 
 const ChildAuthContext = createContext(null);
 
@@ -178,7 +178,7 @@ export function ChildAuthProvider({ children }) {
     }
   }, [ensureAuth]);
 
-  const value = {
+  const value = useMemo(() => ({
     childUser,
     loading,
     loginChild,
@@ -186,7 +186,7 @@ export function ChildAuthProvider({ children }) {
     hashCredentials,
     fetchChildrenByCode,
     checkRateLimit,
-  };
+  }), [childUser, loading, loginChild, logoutChild, hashCredentials, fetchChildrenByCode, checkRateLimit]);
 
   return <ChildAuthContext.Provider value={value}>{children}</ChildAuthContext.Provider>;
 }
