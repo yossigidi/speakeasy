@@ -11,6 +11,7 @@ export const WORLDS = [
     gradient: ['#22c55e', '#16a34a'],
     unlocked: true,
     requiredLevel: 1,
+    introVideo: '/videos/adventure/forest-world-intro.mp4',
   },
   {
     id: 'ocean',
@@ -21,7 +22,8 @@ export const WORLDS = [
     gradient: ['#0ea5e9', '#0284c7'],
     unlocked: false,
     requiredLevel: 2,
-    requiresWorld: 'forest', // must complete forest first
+    requiresWorld: 'forest',
+    introVideo: '/videos/adventure/ocean-world-intro.mp4',
   },
   {
     id: 'space',
@@ -33,6 +35,7 @@ export const WORLDS = [
     unlocked: false,
     requiredLevel: 3,
     requiresWorld: 'ocean',
+    introVideo: '/videos/adventure/space-world-intro.mp4',
   },
   {
     id: 'castle',
@@ -44,5 +47,6 @@ export const WORLDS = [
     unlocked: false,
     requiredLevel: 4,
     requiresWorld: 'space',
+    introVideo: '/videos/adventure/castle-world-intro.mp4',
   },
 ];

@@ -164,6 +164,12 @@ export default class SceneManager {
 
   async _runScene(scene) {
     if (this._destroyed) return;
+
+    // 0. Scene intro video (if defined)
+    if (scene.introVideo && this.options.onSceneVideo) {
+      await this.options.onSceneVideo(scene.introVideo);
+    }
+
     // 1. Intro animation (walk Speakli to position)
     if (scene.intro?.speakliWalkTo && this.engine.speakli) {
       await this.engine.speakli.walkToNorm(
@@ -295,17 +301,52 @@ export default class SceneManager {
     // Only update if we've gone further
     const newCompleted = Math.max(worldProg.scenesCompleted, this.sceneIndex + 1);
 
+    const updatedWorldProgress = {
+      ...existing,
+      [this.currentWorld]: {
+        scenesCompleted: newCompleted,
+        totalStars: worldProg.totalStars + (this.currentScene?.reward?.xp ? 1 : 0),
+      },
+    };
+
     this.options.onProgress({
       currentWorld: this.currentWorld,
-      worldProgress: {
-        ...existing,
-        [this.currentWorld]: {
-          scenesCompleted: newCompleted,
-          totalStars: worldProg.totalStars + (this.currentScene?.reward?.xp ? 1 : 0),
-        },
-      },
+      worldProgress: updatedWorldProgress,
       totalCoins: this.engine.coins,
     });
+
+    // Check adventure achievements
+    this._checkAchievements(updatedWorldProgress);
+  }
+
+  _checkAchievements(worldProgress) {
+    if (!this.options.onAchievement) return;
+
+    // Count total scenes completed across all worlds
+    const totalScenes = Object.values(worldProgress).reduce(
+      (sum, wp) => sum + (wp.scenesCompleted || 0), 0
+    );
+    const totalCoins = this.engine.coins || 0;
+
+    // adventure_start: 1 scene
+    if (totalScenes >= 1) this.options.onAchievement('adventure_start');
+
+    // scene_explorer: 12 scenes
+    if (totalScenes >= 12) this.options.onAchievement('scene_explorer');
+
+    // adventure_master: 24 scenes
+    if (totalScenes >= 24) this.options.onAchievement('adventure_master');
+
+    // Per-world hero badges
+    const worldHeroes = { forest: 'forest_hero', ocean: 'ocean_hero', space: 'space_hero', castle: 'castle_hero' };
+    for (const [wid, achId] of Object.entries(worldHeroes)) {
+      if ((worldProgress[wid]?.scenesCompleted || 0) >= 6) {
+        this.options.onAchievement(achId);
+      }
+    }
+
+    // coin_collector: 100 coins
+    if (totalCoins >= 100) this.options.onAchievement('coin_collector');
   }
 
   _worldComplete() {

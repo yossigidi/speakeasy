@@ -498,5 +498,85 @@
     "icon": "🎓",
     "category": "lessons",
     "condition": { "type": "unitsCompleted", "value": 1 }
+  },
+  {
+    "id": "adventure_start",
+    "title": "First Adventure",
+    "titleHe": "הרפתקה ראשונה",
+    "description": "Complete your first adventure scene",
+    "descriptionHe": "השלימו את סצנת ההרפתקה הראשונה",
+    "icon": "🗺️",
+    "category": "adventure",
+    "condition": { "type": "adventureScenesCompleted", "value": 1 }
+  },
+  {
+    "id": "scene_explorer",
+    "title": "Scene Explorer",
+    "titleHe": "חוקר סצנות",
+    "description": "Complete 12 adventure scenes",
+    "descriptionHe": "השלימו 12 סצנות הרפתקה",
+    "icon": "🔭",
+    "category": "adventure",
+    "condition": { "type": "adventureScenesCompleted", "value": 12 }
+  },
+  {
+    "id": "forest_hero",
+    "title": "Forest Hero",
+    "titleHe": "גיבור היער",
+    "description": "Complete all 6 forest scenes",
+    "descriptionHe": "השלימו את כל 6 סצנות היער",
+    "icon": "🌲",
+    "category": "adventure",
+    "condition": { "type": "adventureWorldCompleted", "value": "forest" }
+  },
+  {
+    "id": "ocean_hero",
+    "title": "Ocean Hero",
+    "titleHe": "גיבור האוקיינוס",
+    "description": "Complete all 6 ocean scenes",
+    "descriptionHe": "השלימו את כל 6 סצנות האוקיינוס",
+    "icon": "🌊",
+    "category": "adventure",
+    "condition": { "type": "adventureWorldCompleted", "value": "ocean" }
+  },
+  {
+    "id": "space_hero",
+    "title": "Space Hero",
+    "titleHe": "גיבור החלל",
+    "description": "Complete all 6 space scenes",
+    "descriptionHe": "השלימו את כל 6 סצנות החלל",
+    "icon": "🚀",
+    "category": "adventure",
+    "condition": { "type": "adventureWorldCompleted", "value": "space" }
+  },
+  {
+    "id": "castle_hero",
+    "title": "Castle Champion",
+    "titleHe": "אלוף הטירה",
+    "description": "Complete all 6 castle scenes",
+    "descriptionHe": "השלימו את כל 6 סצנות הטירה",
+    "icon": "🏰",
+    "category": "adventure",
+    "condition": { "type": "adventureWorldCompleted", "value": "castle" }
+  },
+  {
+    "id": "adventure_master",
+    "title": "Adventure Master",
+    "titleHe": "מאסטר הרפתקאות",
+    "description": "Complete all 24 adventure scenes",
+    "descriptionHe": "השלימו את כל 24 סצנות ההרפתקה",
+    "icon": "👑",
+    "category": "adventure",
+    "condition": { "type": "adventureScenesCompleted", "value": 24 }
+  },
+  {
+    "id": "coin_collector",
+    "title": "Coin Collector",
+    "titleHe": "אספן מטבעות",
+    "description": "Earn 100 adventure coins",
+    "descriptionHe": "צברו 100 מטבעות הרפתקה",
+    "icon": "🪙",
+    "category": "adventure",
+    "condition": { "type": "adventureCoins", "value": 100 }
   }
 ]

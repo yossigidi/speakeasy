@@ -6,9 +6,10 @@ import { t } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import achievementsData from '../data/achievements.json';
 
-const CATEGORIES = ['all', 'streaks', 'vocabulary', 'lessons', 'conversations', 'pronunciation', 'milestones'];
+const CATEGORIES = ['all', 'adventure', 'streaks', 'vocabulary', 'lessons', 'conversations', 'pronunciation', 'milestones'];
 const CATEGORY_LABELS = {
   all: { en: 'All', he: 'הכל' },
+  adventure: { en: 'Adventure', he: 'הרפתקה' },
   streaks: { en: 'Streaks', he: 'רצפים' },
   vocabulary: { en: 'Vocabulary', he: 'אוצר מילים' },
   lessons: { en: 'Lessons', he: 'שיעורים' },

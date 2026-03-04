@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 import { useMusic } from '../../contexts/MusicContext.jsx';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import usePixiApp from '../../hooks/usePixiApp.js';
@@ -14,6 +15,10 @@ import ParallaxBackground from './engine/ParallaxBackground.js';
 import DialogueSystem from './engine/DialogueSystem.js';
 import ParticleSystem from './engine/ParticleSystem.js';
 import HUD from './ui/HUD.js';
+import VideoOverlay from './ui/VideoOverlay.jsx';
+import AchievementToast from '../gamification/AchievementToast.jsx';
+import { WORLDS } from '../../data/adventure/worlds.js';
+import achievementsData from '../../data/achievements.json';
 
 // Lazy-load world map separately
 const WorldMap = React.lazy(() => import('./worlds/WorldMap.js').then(m => ({ default: m.default || m })));
@@ -23,13 +28,65 @@ const WorldMap = React.lazy(() => import('./worlds/WorldMap.js').then(m => ({ de
  */
 export default function AdventureGame({ onBack }) {
   const { speak, speakSequence, stopSpeaking } = useSpeech();
-  const { progress, addXP, updateProgress } = useUserProgress();
+  const { progress, addXP, updateProgress, activeChildId } = useUserProgress();
+  const { user } = useAuth();
   const { setSection } = useMusic();
   const { uiLang } = useTheme();
 
   const [showPause, setShowPause] = useState(false);
   const [showWorldMap, setShowWorldMap] = useState(true);
+  const [videoSrc, setVideoSrc] = useState(null);
+  const [achievementToast, setAchievementToast] = useState(null);
   const engineRef = useRef(null);
+  const videoResolveRef = useRef(null);
+  const grantedAchievementsRef = useRef(new Set());
+
+  // Write achievement to Firestore + show toast
+  const handleAchievement = useCallback((achievementId) => {
+    // Prevent duplicate grants in same session
+    if (grantedAchievementsRef.current.has(achievementId)) return;
+    grantedAchievementsRef.current.add(achievementId);
+
+    const uid = user?.uid;
+    if (!uid) return;
+
+    const achPath = activeChildId
+      ? ['childProfiles', activeChildId, 'achievements', achievementId]
+      : ['users', uid, 'achievements', achievementId];
+
+    try {
+      const docRef = window.firestore.doc(window.db, ...achPath);
+      window.firestore.setDoc(docRef, {
+        unlockedAt: window.firestore.serverTimestamp(),
+      }, { merge: true }).catch(() => {});
+    } catch {}
+
+    // Show toast
+    const achData = achievementsData.find(a => a.id === achievementId);
+    if (achData) {
+      setAchievementToast({
+        title: uiLang === 'he' ? achData.titleHe : achData.title,
+        description: uiLang === 'he' ? achData.descriptionHe : achData.description,
+        icon: achData.icon,
+      });
+    }
+  }, [user, activeChildId, uiLang]);
+
+  // Scene video callback — returns a Promise that resolves when video completes/skips
+  const handleSceneVideo = useCallback((src) => {
+    return new Promise((resolve) => {
+      videoResolveRef.current = resolve;
+      setVideoSrc(src);
+    });
+  }, []);
+
+  const handleVideoComplete = useCallback(() => {
+    setVideoSrc(null);
+    if (videoResolveRef.current) {
+      videoResolveRef.current();
+      videoResolveRef.current = null;
+    }
+  }, []);
 
   // Bridge options from React contexts to engine
   const optionsRef = useRef({});
@@ -44,6 +101,8 @@ export default function AdventureGame({ onBack }) {
     onPause: () => setShowPause(true),
     onWorldMap: () => setShowWorldMap(true),
     onBack,
+    onSceneVideo: handleSceneVideo,
+    onAchievement: handleAchievement,
   };
 
   const onPixiReady = useCallback((app) => {
@@ -112,13 +171,30 @@ export default function AdventureGame({ onBack }) {
     };
   }, []);
 
-  // Start a world
+  // Start a world (with optional world intro video)
   const handleStartWorld = useCallback((worldId) => {
-    setShowWorldMap(false);
-    if (engineRef.current?.sceneManager) {
-      engineRef.current.sceneManager.startWorld(worldId);
+    const worldDef = WORLDS.find(w => w.id === worldId);
+    const worldProgress = progress.adventure?.worldProgress || {};
+    const hasStarted = (worldProgress[worldId]?.scenesCompleted || 0) > 0;
+
+    // Play world intro video on first visit only
+    if (worldDef?.introVideo && !hasStarted) {
+      setShowWorldMap(false);
+      // Show world intro video, then start the world
+      videoResolveRef.current = () => {
+        videoResolveRef.current = null;
+        if (engineRef.current?.sceneManager) {
+          engineRef.current.sceneManager.startWorld(worldId);
+        }
+      };
+      setVideoSrc(worldDef.introVideo);
+    } else {
+      setShowWorldMap(false);
+      if (engineRef.current?.sceneManager) {
+        engineRef.current.sceneManager.startWorld(worldId);
+      }
     }
-  }, []);
+  }, [progress.adventure]);
 
   // Pause handlers
   const handleResume = useCallback(() => {
@@ -140,6 +216,19 @@ export default function AdventureGame({ onBack }) {
         className="w-full h-full"
         style={{ touchAction: 'none' }}
       />
+
+      {/* Video intro overlay */}
+      {videoSrc && (
+        <VideoOverlay src={videoSrc} onComplete={handleVideoComplete} />
+      )}
+
+      {/* Achievement toast */}
+      {achievementToast && (
+        <AchievementToast
+          achievement={achievementToast}
+          onDismiss={() => setAchievementToast(null)}
+        />
+      )}
 
       {/* World map overlay */}
       {showWorldMap && (
