@@ -235,8 +235,8 @@
 
 .page-enter-active {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  /* No transform here — transform (even translateY(0)) creates a containing block
+     that breaks position:fixed for all children (lessons, modals, etc.) */
 }
 
 .page-exit {

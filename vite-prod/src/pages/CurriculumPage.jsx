@@ -213,13 +213,15 @@ export default function CurriculumPage({ onBack }) {
             }}
           />
 
-          {/* Center Modal */}
+          {/* Top-aligned Modal */}
           <div
             ref={bottomSheetRef}
             style={{
-              position: 'fixed', top: '50%', left: '50%',
-              transform: 'translate(-50%, -50%)',
+              position: 'fixed',
+              top: 'calc(env(safe-area-inset-top, 0px) + 72px)',
+              left: 0, right: 0,
               width: 'calc(100% - 48px)', maxWidth: 360,
+              margin: '0 auto',
               background: 'white', borderRadius: 24,
               padding: '24px', zIndex: 51,
               boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
@@ -305,8 +307,8 @@ export default function CurriculumPage({ onBack }) {
           to { opacity: 1; }
         }
         @keyframes curriculum-pop-in {
-          from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-          to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          from { opacity: 0; transform: scale(0.8); }
+          to { opacity: 1; transform: scale(1); }
         }
       `}</style>
     </div>
