@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useAuth } from '../../contexts/AuthContext.jsx';
@@ -208,8 +209,8 @@ export default function AdventureGame({ onBack }) {
     if (onBack) onBack();
   }, [onBack, stopSpeaking]);
 
-  return (
-    <div className="fixed inset-0 z-50 bg-black">
+  return createPortal(
+    <div className="fixed inset-0 bg-black" style={{ zIndex: 99999 }}>
       {/* PixiJS canvas container */}
       <div
         ref={containerRef}
@@ -353,6 +354,7 @@ export default function AdventureGame({ onBack }) {
           </div>
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 }

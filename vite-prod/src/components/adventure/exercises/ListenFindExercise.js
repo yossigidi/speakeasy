@@ -90,12 +90,28 @@ export default class ListenFindExercise extends ExerciseBase {
 
       const emoji = new Text({
         text: wordObj.emoji,
-        style: { fontSize: 32 },
+        style: { fontSize: 38 },
       });
       emoji.anchor.set(0.5);
       emoji.x = gridSize / 2;
-      emoji.y = gridSize / 2;
+      emoji.y = gridSize * 0.38;
       btn.addChild(emoji);
+
+      // Translation label under emoji for clarity
+      const label = new Text({
+        text: wordObj.translation,
+        style: {
+          fontFamily: 'Arial, Heebo, sans-serif',
+          fontSize: 11,
+          fill: 0xffffff,
+          alpha: 0.9,
+          align: 'center',
+        },
+      });
+      label.anchor.set(0.5, 0);
+      label.x = gridSize / 2;
+      label.y = gridSize * 0.62;
+      btn.addChild(label);
 
       btn.x = startX + col * (gridSize + gap);
       btn.y = startY + row * (gridSize + gap);

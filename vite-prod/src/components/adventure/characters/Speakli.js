@@ -125,8 +125,10 @@ export default class Speakli {
       this.setState('walk');
       if (targetX < this.container.x) {
         this.container.scale.x = -Math.abs(this.container.scale.x || 1);
+        if (this._nameLabel) this._nameLabel.scale.x = -1;
       } else {
         this.container.scale.x = Math.abs(this.container.scale.x || 1);
+        if (this._nameLabel) this._nameLabel.scale.x = 1;
       }
     });
   }

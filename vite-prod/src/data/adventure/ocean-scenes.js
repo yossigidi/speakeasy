@@ -116,8 +116,8 @@ export const OCEAN_SCENES = [
       type: 'listenFind',
       config: {
         words: [
-          { word: 'mother', translation: 'אמא', emoji: '👩' },
-          { word: 'father', translation: 'אבא', emoji: '👨' },
+          { word: 'mother', translation: 'אמא', emoji: '🤱' },
+          { word: 'father', translation: 'אבא', emoji: '👨‍👦' },
           { word: 'sister', translation: 'אחות', emoji: '👧' },
           { word: 'brother', translation: 'אח', emoji: '👦' },
         ],
