@@ -238,6 +238,21 @@ const GAME_CARDS = [
     shadowColor: 'shadow-cyan-400/30',
     page: 'conversation',
   },
+  {
+    id: 'reading',
+    emoji: '📚',
+    titleHe: 'הסיפורים של ספיקלי!',
+    titleEn: "Speakli's Stories!",
+    titleAr: 'قصص سبيكلي!',
+    titleRu: 'Рассказы Спикли!',
+    descHe: 'קראו סיפורים באנגלית',
+    descEn: 'Read English stories',
+    descAr: 'اقرأ قصص بالإنجليزية',
+    descRu: 'Читай рассказы на английском',
+    gradient: 'from-blue-500 via-sky-500 to-cyan-500',
+    shadowColor: 'shadow-blue-500/30',
+    page: 'reading',
+  },
 ];
 
 /* ── YouTube educational videos for kids ── */
@@ -516,6 +531,33 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
           </div>
         </div>
 
+        {/* Speaking Coach - featured card */}
+        <button
+          onClick={() => onNavigate('speaking-coach')}
+          className="w-full rounded-3xl p-4 active:scale-95 transition-transform relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #6366F1 100%)',
+            boxShadow: '0 8px 25px rgba(59, 130, 246, 0.35)',
+          }}
+        >
+          <div className="absolute top-1 right-3 text-lg animate-sparkle">✨</div>
+          <div className="absolute bottom-1 left-3 text-sm animate-sparkle" style={{ animationDelay: '0.5s' }}>🎤</div>
+          <div className="flex items-center gap-3">
+            <SpeakliAvatar mode="bounce" size="sm" shadow={false} glow={false} />
+            <div className="text-left flex-1">
+              <h3 className="text-white font-extrabold text-sm">
+                {t('speakingCoachKids', uiLang)}
+              </h3>
+              <p className="text-white/80 text-xs">
+                {t('speakingCoachKidsDesc', uiLang)}
+              </p>
+            </div>
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-2xl">
+              🗣️
+            </div>
+          </div>
+        </button>
+
         {/* Game cards grid */}
         <div>
           <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 flex items-center gap-2">
@@ -602,27 +644,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
           </div>
         </div>
 
-        {/* Reading card */}
-        <button
-          onClick={() => onNavigate('reading')}
-          className="w-full rounded-3xl p-4 active:scale-95 transition-transform relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 50%, #06B6D4 100%)',
-            boxShadow: '0 6px 20px rgba(37, 99, 235, 0.3)',
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <SpeakliAvatar mode="idle" size="sm" shadow={false} glow={false} />
-            <div className="text-left">
-              <h3 className="text-white font-extrabold text-sm">
-                {t('kidsSpeakliStories', uiLang)}
-              </h3>
-              <p className="text-white/80 text-xs">
-                {t('kidsSpeakliStoriesDesc', uiLang)}
-              </p>
-            </div>
-          </div>
-        </button>
+        {/* Reading card moved to GAME_CARDS grid */}
 
         {/* Bottom spacer */}
         <div className="h-4" />
