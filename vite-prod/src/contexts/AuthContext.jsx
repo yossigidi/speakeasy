@@ -60,6 +60,16 @@ export function AuthProvider({ children }) {
     return window.firebaseAuth.signOut(window.auth);
   }, []);
 
+  const deleteAccount = useCallback(async () => {
+    const currentUser = window.auth.currentUser;
+    if (!currentUser) throw new Error('No user signed in');
+    await window.firebaseAuth.deleteUser(currentUser);
+    // Clear local storage
+    localStorage.removeItem('speakeasy_activeChildId');
+    localStorage.removeItem('speakeasy_childSession');
+    sessionStorage.clear();
+  }, []);
+
   const value = useMemo(() => ({
     user,
     loading,
@@ -68,8 +78,9 @@ export function AuthProvider({ children }) {
     signUpWithEmail,
     signInWithEmail,
     signOut,
+    deleteAccount,
     isAuthenticated: !!user,
-  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, signOut]);
+  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, signOut, deleteAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

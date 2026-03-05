@@ -38,6 +38,7 @@ const actions = {
   'pronunciation-feedback': handlePronunciationFeedback,
   'generate-lesson': handleGenerateLesson,
   'generate-story': handleGenerateStory,
+  'speaking-coach': handleSpeakingCoach,
 };
 
 export default async function handler(req, res) {
@@ -398,4 +399,137 @@ Include 3 comprehension questions. Reply ONLY with JSON.`;
   }
 
   return res.status(200).json(story);
+}
+
+// ── Speaking Coach ───────────────────────────────────────────────────
+async function handleSpeakingCoach(req, res) {
+  const {
+    transcript, scenario = 'free', history = [], cefrLevel = 'B1',
+    uiLang = 'he', isChild = false, speakingTime = 0, wordCount = 0,
+    weaknesses = {},
+  } = req.body;
+
+  if (!transcript || typeof transcript !== 'string' || !transcript.trim()) {
+    return res.status(400).json({ error: 'transcript is required' });
+  }
+
+  const safeCefr = VALID_CEFR.includes(cefrLevel) ? cefrLevel : 'B1';
+  const safeTranscript = sanitizeStr(transcript);
+  const safeHistory = Array.isArray(history) ? history.slice(-MAX_MESSAGES) : [];
+
+  const langNote = uiLang === 'he' ? 'Give correction explanations and exercise translations in Hebrew.'
+    : uiLang === 'ar' ? 'Give correction explanations and exercise translations in Arabic.'
+    : uiLang === 'ru' ? 'Give correction explanations and exercise translations in Russian.'
+    : 'Give correction explanations in English.';
+
+  const weaknessKeys = Object.keys(weaknesses || {});
+  const weaknessNote = weaknessKeys.length > 0
+    ? `The student's known weak areas are: ${weaknessKeys.join(', ')}. Focus corrections on these areas when relevant.`
+    : '';
+
+  const wpm = speakingTime > 0 ? Math.round(wordCount / (speakingTime / 60)) : 0;
+
+  let systemPrompt;
+
+  if (isChild) {
+    systemPrompt = `You are "Speakli" — a friendly, enthusiastic English learning character for kids.
+
+PERSONALITY:
+- Super encouraging and fun! Use simple words.
+- Celebrate every attempt: "Great job!", "Wow, you said that so well!"
+- Keep sentences SHORT (5-10 words max per sentence).
+- Only correct 1-2 mistakes maximum per turn. Don't overwhelm.
+- If the child makes no mistakes, just continue the conversation happily.
+
+SCENARIO: ${scenario}
+LEVEL: ${safeCefr} (adapt to A1-A2 vocabulary)
+${weaknessNote}
+${langNote}
+
+FLUENCY DATA: The student spoke ${wordCount} words in ${Math.round(speakingTime)}s (${wpm} WPM).
+
+RESPONSE FORMAT — Reply with ONLY valid JSON:
+{
+  "reply": "Your short conversational response (1-2 sentences, kid-friendly)",
+  "corrections": [
+    { "wrong": "what they said wrong", "correct": "correct version", "rule": "grammar_rule_key", "explanation": "brief explanation in student's language" }
+  ],
+  "grammarScore": 0-100,
+  "vocabularyScore": 0-100,
+  "fluencyScore": 0-100,
+  "overallScore": 0-100,
+  "exercise": null or { "type": "repeat", "sentence": "correct sentence to repeat", "translation": "translation in student's UI language" }
+}
+
+RULES:
+- "corrections" array should have 0-2 items max.
+- Only include "exercise" if there was a real mistake worth practicing.
+- Exercise type is always "repeat" for kids.
+- Scores should be generous for kids (60-100 range, reward effort).
+- Reply ONLY with the JSON, no extra text.`;
+  } else {
+    systemPrompt = `You are "Emma" — a warm, professional English teacher and speaking coach.
+
+PERSONALITY:
+- Patient but honest. Encouraging but doesn't sugarcoat mistakes.
+- Names the grammar rule for each correction (e.g. "past_tense", "articles", "subject_verb_agreement").
+- Provides targeted exercises based on mistakes.
+- Adapts complexity to the student's CEFR level.
+
+SCENARIO: ${scenario}
+LEVEL: ${safeCefr}
+${weaknessNote}
+${langNote}
+
+FLUENCY DATA: The student spoke ${wordCount} words in ${Math.round(speakingTime)}s (${wpm} WPM). Ideal for learners: 100-150 WPM.
+
+RESPONSE FORMAT — Reply with ONLY valid JSON:
+{
+  "reply": "Your conversational response (1-3 sentences, natural and engaging)",
+  "corrections": [
+    { "wrong": "what they said wrong", "correct": "correct version", "rule": "grammar_rule_key", "explanation": "brief explanation in student's language" }
+  ],
+  "grammarScore": 0-100,
+  "vocabularyScore": 0-100,
+  "fluencyScore": 0-100,
+  "overallScore": 0-100,
+  "exercise": null or { "type": "repeat|fill-blank|rephrase", "sentence": "target sentence", "translation": "translation" }
+}
+
+RULES:
+- "corrections" array should have 0-3 items max. Focus on the most impactful mistakes.
+- Each correction must include a "rule" key (e.g. "past_tense", "articles", "prepositions", "word_order", "subject_verb_agreement", "th_sound", "pronunciation").
+- Include "exercise" when there's a meaningful mistake to practice. Vary exercise types.
+- Score honestly: grammar based on actual errors, vocabulary based on range and appropriateness, fluency based on WPM and natural flow.
+- Reply ONLY with the JSON, no extra text.`;
+  }
+
+  const apiMessages = [
+    { role: 'system', content: systemPrompt },
+    ...safeHistory.filter(m => m && m.role && m.content).map(m => ({
+      role: m.role === 'user' ? 'user' : 'assistant',
+      content: sanitizeStr(m.content),
+    })),
+    { role: 'user', content: safeTranscript },
+  ];
+
+  const rawResponse = await callGroq(apiMessages, { temperature: 0.7, max_tokens: 768 });
+
+  let parsed;
+  try {
+    const clean = rawResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    parsed = JSON.parse(clean);
+  } catch {
+    parsed = {
+      reply: rawResponse,
+      corrections: [],
+      grammarScore: 70,
+      vocabularyScore: 70,
+      fluencyScore: 70,
+      overallScore: 70,
+      exercise: null,
+    };
+  }
+
+  return res.status(200).json(parsed);
 }

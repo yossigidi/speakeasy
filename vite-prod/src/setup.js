@@ -37,6 +37,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  deleteUser,
   browserLocalPersistence,
   setPersistence
 } from 'firebase/auth';
@@ -86,7 +87,8 @@ window.firebaseAuth = {
   OAuthProvider,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  deleteUser
 };
 
 // Remove loading skeleton

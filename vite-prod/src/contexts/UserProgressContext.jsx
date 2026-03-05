@@ -746,6 +746,83 @@ export function UserProgressProvider({ children: reactChildren }) {
     );
   }, [user]);
 
+  const deleteAllUserData = useCallback(async () => {
+    if (!user) return;
+    const uid = user.uid;
+    try {
+      // 1. Delete all child profiles owned by this user
+      const childQuery = window.firestore.query(
+        window.firestore.collection(window.db, 'childProfiles'),
+        window.firestore.where('parentUid', '==', uid)
+      );
+      const childSnap = await window.firestore.getDocs(childQuery);
+      for (const childDoc of childSnap.docs) {
+        // Delete child achievements subcollection
+        try {
+          const achRef = window.firestore.collection(window.db, 'childProfiles', childDoc.id, 'achievements');
+          const achSnap = await window.firestore.getDocs(achRef);
+          for (const achDoc of achSnap.docs) {
+            await window.firestore.deleteDoc(achDoc.ref);
+          }
+        } catch (e) { console.warn('Failed to delete child achievements:', e); }
+        // Delete child dailyActivity subcollection
+        try {
+          const actRef = window.firestore.collection(window.db, 'childProfiles', childDoc.id, 'dailyActivity');
+          const actSnap = await window.firestore.getDocs(actRef);
+          for (const actDoc of actSnap.docs) {
+            await window.firestore.deleteDoc(actDoc.ref);
+          }
+        } catch (e) { console.warn('Failed to delete child dailyActivity:', e); }
+        await window.firestore.deleteDoc(childDoc.ref);
+      }
+
+      // 2. Delete parentChildren/{familyCode}
+      if (familyCode) {
+        await window.firestore.deleteDoc(
+          window.firestore.doc(window.db, 'parentChildren', familyCode)
+        );
+      }
+
+      // 3. Delete user achievements subcollection
+      try {
+        const achRef = window.firestore.collection(window.db, 'users', uid, 'achievements');
+        const achSnap = await window.firestore.getDocs(achRef);
+        for (const achDoc of achSnap.docs) {
+          await window.firestore.deleteDoc(achDoc.ref);
+        }
+      } catch (e) { console.warn('Failed to delete user achievements:', e); }
+
+      // 4. Delete user dailyActivity subcollection
+      try {
+        const actRef = window.firestore.collection(window.db, 'users', uid, 'dailyActivity');
+        const actSnap = await window.firestore.getDocs(actRef);
+        for (const actDoc of actSnap.docs) {
+          await window.firestore.deleteDoc(actDoc.ref);
+        }
+      } catch (e) { console.warn('Failed to delete user dailyActivity:', e); }
+
+      // 5. Delete push subscriptions
+      try {
+        const pushQuery = window.firestore.query(
+          window.firestore.collection(window.db, 'push-subscriptions'),
+          window.firestore.where('userId', '==', uid)
+        );
+        const pushSnap = await window.firestore.getDocs(pushQuery);
+        for (const pushDoc of pushSnap.docs) {
+          await window.firestore.deleteDoc(pushDoc.ref);
+        }
+      } catch (e) { console.warn('Failed to delete push subscriptions:', e); }
+
+      // 6. Delete users/{uid} document
+      await window.firestore.deleteDoc(
+        window.firestore.doc(window.db, 'users', uid)
+      );
+    } catch (err) {
+      console.error('deleteAllUserData failed:', err);
+      throw err;
+    }
+  }, [user, familyCode]);
+
   const activeChild = useMemo(() => {
     if (!activeChildId) return null;
     return childrenList.find(c => c.id === activeChildId) || null;
@@ -777,10 +854,11 @@ export function UserProgressProvider({ children: reactChildren }) {
     generateFamilyCode,
     resetChildPin,
     updateChildLevel,
+    deleteAllUserData,
   }), [progress, loading, updateProgress, addXP, levelInfo, achievementToast, dismissAchievementToast,
        activeChildId, activeChild,
        isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
-       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel]);
+       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData]);
 
   return <UserProgressContext.Provider value={value}>{reactChildren}</UserProgressContext.Provider>;
 }

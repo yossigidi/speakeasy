@@ -16,6 +16,9 @@ export const XP_REWARDS = {
   simulationMax: 60,
   simulationPerfectBonus: 30,
   careerPromotion: 100,
+  speakingCoachBase: 25,
+  speakingCoachMax: 70,
+  speakingCoachPerfectBonus: 40,
 };
 
 export function calcLessonXP(accuracy, exerciseCount) {
@@ -50,4 +53,12 @@ export function calcSimulationXP(avgScore, stepCount) {
   const perfectBonus = avgScore >= 90 ? XP_REWARDS.simulationPerfectBonus : 0;
   const total = base + stepsBonus + perfectBonus;
   return { base, stepsBonus, perfectBonus, total };
+}
+
+export function calcSpeakingCoachXP(avgScore, turnCount) {
+  const scoreRatio = avgScore / 100;
+  const base = XP_REWARDS.speakingCoachBase + Math.round(scoreRatio * (XP_REWARDS.speakingCoachMax - XP_REWARDS.speakingCoachBase));
+  const turnsBonus = Math.min(turnCount * 3, 15);
+  const perfectBonus = avgScore >= 90 ? XP_REWARDS.speakingCoachPerfectBonus : 0;
+  return { base, turnsBonus, perfectBonus, total: base + turnsBonus + perfectBonus };
 }

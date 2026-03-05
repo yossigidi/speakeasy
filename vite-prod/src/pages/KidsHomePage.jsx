@@ -89,6 +89,21 @@ function LevelBadge({ childLevel, uiLang }) {
 /* ── Game cards data (Speakli character colors: blue, cyan, orange, green, red) ── */
 const GAME_CARDS = [
   {
+    id: 'speaking-coach',
+    emoji: '🗣️',
+    titleHe: 'מאמן הדיבור של ספיקלי!',
+    titleEn: "Speakli's Speaking Coach!",
+    titleAr: 'مدرب المحادثة مع سبيكلي!',
+    titleRu: 'Тренер речи Спикли!',
+    descHe: 'דברו באנגלית עם AI',
+    descEn: 'Speak English with AI',
+    descAr: 'تحدث بالإنجليزية مع AI',
+    descRu: 'Говори по-английски с ИИ',
+    gradient: 'from-cyan-400 via-blue-500 to-indigo-500',
+    shadowColor: 'shadow-cyan-400/30',
+    page: 'speaking-coach',
+  },
+  {
     id: 'adventure',
     emoji: '🗺️',
     titleHe: 'ההרפתקה של ספיקלי!',

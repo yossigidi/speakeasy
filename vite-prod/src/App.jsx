@@ -43,6 +43,7 @@ const SupportTicketsPage = lazy(() => import('./pages/SupportTicketsPage.jsx'));
 const EnglishQuestPage = lazy(() => import('./pages/EnglishQuestPage.jsx'));
 const SkillsPage = lazy(() => import('./pages/SkillsPage.jsx'));
 const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
+const SpeakingCoachPage = lazy(() => import('./pages/SpeakingCoachPage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -225,11 +226,12 @@ function AppContent() {
     'english-quest': null,
     'skills': null,
     'adventure': null,
+    'speaking-coach': t('speakingCoach', uiLang),
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure', 'speaking-coach'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure' && currentPage !== 'speaking-coach';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -294,6 +296,8 @@ function AppContent() {
         return <SkillsPage onBack={() => navigateTo('home')} />;
       case 'adventure':
         return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+      case 'speaking-coach':
+        return <SpeakingCoachPage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -381,6 +385,8 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         return <PageErrorBoundary><CurriculumPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'adventure':
         return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+      case 'speaking-coach':
+        return <SpeakingCoachPage onBack={() => navigateTo('home')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle, Music, Volume2 } from 'lucide-react';
+import { Moon, Sun, Languages, LogOut, Trash2, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle, Music, Volume2 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -13,12 +13,14 @@ import XPBar from '../components/gamification/XPBar.jsx';
 
 export default function ProfilePage({ onNavigate }) {
   const { uiLang, setLang, isDark, toggleTheme } = useTheme();
-  const { user, signOut } = useAuth();
-  const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild } = useUserProgress();
+  const { user, signOut, deleteAccount } = useAuth();
+  const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild, deleteAllUserData } = useUserProgress();
   const { musicEnabled, soundsEnabled, toggleMusic, toggleSounds } = useMusic();
 
   const [pushEnabled, setPushEnabled] = useState(false);
   const [pushLoading, setPushLoading] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -89,6 +91,18 @@ export default function ProfilePage({ onNavigate }) {
       console.error('Push toggle error:', e);
     } finally {
       setPushLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    try {
+      await deleteAllUserData();
+      await deleteAccount();
+    } catch (err) {
+      console.error('Delete account failed:', err);
+      setDeleteLoading(false);
+      setShowDeleteModal(false);
     }
   };
 
@@ -323,8 +337,53 @@ export default function ProfilePage({ onNavigate }) {
               </div>
             </GlassCard>
           )}
+
+          {/* Delete Account - hidden in child mode */}
+          {!isChildMode && (
+            <GlassCard className="!p-3 cursor-pointer" onClick={() => setShowDeleteModal(true)}>
+              <div className="flex items-center gap-3">
+                <Trash2 size={20} className="text-red-500" />
+                <span className="font-medium text-red-600 dark:text-red-400">{t('deleteAccount', uiLang)}</span>
+              </div>
+            </GlassCard>
+          )}
         </div>
       </div>
+
+      {/* Delete Account Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" onClick={() => !deleteLoading && setShowDeleteModal(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-sm w-full shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <Trash2 size={24} className="text-red-500" />
+              </div>
+            </div>
+            <h3 className="text-lg font-bold text-center text-gray-900 dark:text-white mb-2">
+              {t('deleteAccountConfirm', uiLang)}
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
+              {t('deleteAccountWarning', uiLang)}
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deleteLoading}
+                className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium"
+              >
+                {t('cancel', uiLang)}
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleteLoading}
+                className="flex-1 py-2.5 rounded-xl bg-red-500 text-white font-medium disabled:opacity-50"
+              >
+                {deleteLoading ? t('deleting', uiLang) : t('deleteAccount', uiLang)}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
