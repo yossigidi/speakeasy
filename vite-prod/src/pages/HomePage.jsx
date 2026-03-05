@@ -189,7 +189,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
       {/* Words to Review */}
       {reviewCount > 0 && (
         <GlassCard
-          className="cursor-pointer border-l-4 border-amber-500"
+          className="cursor-pointer border-l-4 rtl:border-l-0 rtl:border-r-4 border-amber-500"
           onClick={() => onNavigate('vocabulary')}
         >
           <div className="flex items-center justify-between">
@@ -248,6 +248,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
                 <h4 className="text-2xl font-bold text-gray-900 dark:text-white">{wordOfDay.word}</h4>
                 <button
                   onClick={() => speak(wordOfDay.word)}
+                  aria-label="Listen"
                   className="p-1.5 rounded-full hover:bg-brand-100 dark:hover:bg-brand-900/30"
                 >
                   <Volume2 size={16} className="text-brand-500" />
@@ -262,7 +263,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
             </div>
             <button
               onClick={() => onNavigate('vocabulary')}
-              className="shrink-0 ml-3 px-3 py-2 rounded-xl bg-brand-500 text-white text-xs font-semibold hover:bg-brand-600 transition-colors"
+              className="shrink-0 ms-3 px-3 py-2 rounded-xl bg-brand-500 text-white text-xs font-semibold hover:bg-brand-600 transition-colors"
             >
               {t('learnMore', uiLang)}
             </button>
@@ -272,7 +273,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
 
       {/* Grammar Tip */}
       {grammarTip && (
-        <GlassCard className="border-l-4 border-amber-400">
+        <GlassCard className="border-l-4 rtl:border-l-0 rtl:border-r-4 border-amber-400">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
               <Lightbulb size={20} className="text-amber-600 dark:text-amber-400" />

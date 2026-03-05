@@ -37,6 +37,7 @@ function ChatBubble({ message, onSpeak }) {
         {!isUser && (
           <button
             onClick={() => onSpeak(message.content)}
+            aria-label="Listen"
             className="mt-1 p-1 rounded hover:bg-black/5 dark:hover:bg-white/5"
           >
             <Volume2 size={14} className="text-gray-400" />
@@ -63,7 +64,7 @@ function ChatBubble({ message, onSpeak }) {
 export default function ConversationPage() {
   const { uiLang } = useTheme();
   const { user } = useAuth();
-  const { progress, addXP } = useUserProgress();
+  const { progress, addXP, updateProgress } = useUserProgress();
   const { speak } = useSpeechSynthesis();
   const { transcript, isListening, startListening, stopListening, sttSupported } = useSpeechRecognition();
   const [scenario, setScenario] = useState(null);
@@ -105,9 +106,13 @@ export default function ConversationPage() {
     setLoading(true);
 
     try {
+      const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({
           messages: newMessages.slice(-20),
           scenario: scenario?.id || 'free',
@@ -129,6 +134,9 @@ export default function ConversationPage() {
       // Award XP once after exactly 5 exchanges
       if (newMessages.filter(m => m.role === 'user').length === 5) {
         addXP(15, 'conversation');
+        updateProgress({
+          conversationsCompleted: (progress.conversationsCompleted || 0) + 1,
+        });
       }
     } catch (err) {
       // Fallback response when API is unavailable
@@ -193,7 +201,7 @@ export default function ConversationPage() {
     <div className="flex flex-col h-[calc(100vh-140px)]">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200/50 dark:border-gray-700/50">
-        <button onClick={() => { setScenario(null); setMessages([]); }} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+        <button onClick={() => { setScenario(null); setMessages([]); }} aria-label="Back" className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
           <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
         <span className="text-xl">{scenario.emoji}</span>
@@ -235,6 +243,7 @@ export default function ConversationPage() {
           {sttSupported && (
             <button
               onClick={handleMicToggle}
+              aria-label="Toggle microphone"
               className={`p-2.5 rounded-xl transition-all ${
                 isListening
                   ? 'bg-red-500 text-white recording-pulse'
@@ -247,6 +256,7 @@ export default function ConversationPage() {
           <button
             onClick={sendMessage}
             disabled={!input.trim() || loading}
+            aria-label="Send"
             className="p-2.5 rounded-xl bg-brand-500 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
           >
             <Send size={20} />

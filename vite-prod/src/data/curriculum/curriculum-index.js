@@ -8,10 +8,10 @@ export const LEVELS = [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5];
 
 // Level metadata for display
 export const LEVEL_META = [
-  { id: 1, name: 'Starters', nameHe: 'מתחילים', nameAr: 'خطوات أولى', nameRu: 'Первые шаги', emoji: '🌱', color: '#FF6B6B', bgGradient: 'from-red-400 to-coral-500' },
+  { id: 1, name: 'Starters', nameHe: 'מתחילים', nameAr: 'مبتدئون', nameRu: 'Начинающие', emoji: '🌱', color: '#FF6B6B', bgGradient: 'from-red-400 to-coral-500' },
   { id: 2, name: 'Explorers', nameHe: 'חוקרים', nameAr: 'مستكشفون', nameRu: 'Исследователи', emoji: '🔭', color: '#38BDF8', bgGradient: 'from-sky-400 to-blue-500', locked: true },
-  { id: 3, name: 'Readers', nameHe: 'קוראים', nameAr: 'قارئون', nameRu: 'Читатели', emoji: '📖', color: '#10B981', bgGradient: 'from-emerald-400 to-green-500', locked: true },
-  { id: 4, name: 'Writers', nameHe: 'כותבים', nameAr: 'كاتبون', nameRu: 'Писатели', emoji: '✍️', color: '#FB923C', bgGradient: 'from-orange-400 to-amber-500', locked: true },
+  { id: 3, name: 'Readers', nameHe: 'קוראים', nameAr: 'قراء', nameRu: 'Читатели', emoji: '📖', color: '#10B981', bgGradient: 'from-emerald-400 to-green-500', locked: true },
+  { id: 4, name: 'Writers', nameHe: 'כותבים', nameAr: 'كتّاب', nameRu: 'Писатели', emoji: '✍️', color: '#FB923C', bgGradient: 'from-orange-400 to-amber-500', locked: true },
   { id: 5, name: 'Champions', nameHe: 'אלופים', nameAr: 'أبطال', nameRu: 'Чемпионы', emoji: '🏆', color: '#0EA5E9', bgGradient: 'from-teal-400 to-cyan-500', locked: true },
 ];
 

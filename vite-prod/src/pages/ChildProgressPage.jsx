@@ -128,20 +128,18 @@ export default function ChildProgressPage({ childId, onBack }) {
           days.push(d.toISOString().split('T')[0]);
         }
 
-        const results = [];
-        for (const date of days) {
+        const results = await Promise.all(days.map(async (date) => {
           try {
             const ref = window.firestore.doc(window.db, 'childProfiles', childId, 'dailyActivity', date);
             const snap = await window.firestore.getDoc(ref);
             if (snap.exists()) {
-              results.push({ date, ...snap.data() });
-            } else {
-              results.push({ date, xp: 0, minutes: 0, sources: {} });
+              return { date, ...snap.data() };
             }
+            return { date, xp: 0, minutes: 0, sources: {} };
           } catch {
-            results.push({ date, xp: 0, minutes: 0, sources: {} });
+            return { date, xp: 0, minutes: 0, sources: {} };
           }
-        }
+        }));
         setDailyData(results);
       } catch (e) {
         console.error('Failed to fetch activity:', e);
@@ -248,7 +246,7 @@ export default function ChildProgressPage({ childId, onBack }) {
   if (!child) {
     return (
       <div className="pb-24 px-4 pt-2">
-        <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+        <button onClick={onBack} aria-label="Back" className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
           <ChevronLeft size={22} className={dir === 'rtl' ? 'rotate-180' : ''} />
         </button>
         <p className="text-center text-gray-500 mt-8">{t('childNotFound', uiLang)}</p>
@@ -264,7 +262,8 @@ export default function ChildProgressPage({ childId, onBack }) {
       <div className="flex items-center gap-2 mb-1">
         <button
           onClick={onBack}
-          className="p-1.5 -ml-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          aria-label="Back"
+          className="p-1.5 ltr:-ml-1.5 rtl:-mr-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
         >
           <ChevronLeft size={22} className={dir === 'rtl' ? 'rotate-180' : ''} />
         </button>

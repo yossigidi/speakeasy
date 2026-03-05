@@ -11,6 +11,13 @@ export default function Modal({ isOpen, onClose, title, children, showClose = tr
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
@@ -26,6 +33,7 @@ export default function Modal({ isOpen, onClose, title, children, showClose = tr
               {showClose && (
                 <button
                   onClick={onClose}
+                  aria-label="Close"
                   className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                 >
                   <X size={20} />

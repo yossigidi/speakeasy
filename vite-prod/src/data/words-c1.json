@@ -7,6 +7,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "עבודת דוקטורט",
+    "translationAr": "أطروحة",
+    "translationRu": "диссертация",
     "definition": "A long piece of writing on a subject, especially for a university degree.",
     "definitionHe": "חיבור ארוך על נושא, במיוחד לצורך תואר אוניברסיטאי.",
     "examples": [
@@ -42,6 +44,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "תוכנית לימודים",
+    "translationAr": "منهج دراسي",
+    "translationRu": "учебная программа",
     "definition": "The subjects and content taught in a school or educational program.",
     "definitionHe": "הנושאים והתוכן הנלמדים בבית ספר או תוכנית חינוכית.",
     "examples": [
@@ -77,6 +81,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "פדגוגיה",
+    "translationAr": "علم التربية",
+    "translationRu": "педагогика",
     "definition": "The method and practice of teaching.",
     "definitionHe": "שיטת ההוראה ותרגולה.",
     "examples": [
@@ -112,6 +118,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "מתודולוגיה",
+    "translationAr": "منهجية",
+    "translationRu": "методология",
     "definition": "A system of methods used in a particular field of study.",
     "definitionHe": "מערכת של שיטות המשמשות בתחום מחקר מסוים.",
     "examples": [
@@ -147,6 +155,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "אמפירי",
+    "translationAr": "تجريبي",
+    "translationRu": "эмпирический",
     "definition": "Based on observation and experience rather than theory.",
     "definitionHe": "מבוסס על תצפית וניסיון ולא על תיאוריה.",
     "examples": [
@@ -182,6 +192,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "להניח, לטעון",
+    "translationAr": "افتَرَضَ",
+    "translationRu": "постулировать",
     "definition": "To suggest or assume something as a basis for reasoning.",
     "definitionHe": "להציע או להניח משהו כבסיס לטיעון.",
     "examples": [
@@ -217,6 +229,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "אקדמי, מלומד",
+    "translationAr": "أكاديمي، علمي",
+    "translationRu": "научный, учёный",
     "definition": "Involving serious academic study; relating to scholars.",
     "definitionHe": "כרוך בלימוד אקדמי רציני; הקשור למלומדים.",
     "examples": [
@@ -252,6 +266,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "בין-תחומי",
+    "translationAr": "متعدد التخصصات",
+    "translationRu": "междисциплинарный",
     "definition": "Involving two or more academic disciplines or fields of study.",
     "definitionHe": "כולל שני תחומי לימוד אקדמיים או יותר.",
     "examples": [
@@ -287,6 +303,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "הסמכה, הכרה",
+    "translationAr": "اعتماد",
+    "translationRu": "аккредитация",
     "definition": "Official recognition that an institution meets required standards.",
     "definitionHe": "הכרה רשמית שמוסד עומד בסטנדרטים הנדרשים.",
     "examples": [
@@ -322,6 +340,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "סילבוס",
+    "translationAr": "برنامج المقرر الدراسي",
+    "translationRu": "учебный план",
     "definition": "An outline of the topics covered in a course.",
     "definitionHe": "תוכן הנושאים הנלמדים בקורס.",
     "examples": [
@@ -357,6 +377,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "תזה",
+    "translationAr": "أطروحة",
+    "translationRu": "тезис, диссертация",
     "definition": "A statement or theory put forward to be supported; a long academic work.",
     "definitionHe": "הצהרה או תיאוריה שמוצגת לגיבוי; עבודה אקדמית ארוכה.",
     "examples": [
@@ -392,6 +414,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "גניבה ספרותית",
+    "translationAr": "سرقة أدبية",
+    "translationRu": "плагиат",
     "definition": "The practice of taking someone else's work and presenting it as your own.",
     "definitionHe": "הנוהג של לקיחת עבודה של מישהו אחר והצגתה כשלך.",
     "examples": [
@@ -427,6 +451,8 @@
     "cefrLevel": "C1",
     "category": "academic",
     "translation": "דרישת קדם",
+    "translationAr": "شرط مُسبَق",
+    "translationRu": "предварительное условие",
     "definition": "Something required before something else can happen.",
     "definitionHe": "משהו שנדרש לפני שמשהו אחר יכול לקרות.",
     "examples": [
@@ -462,6 +488,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "אלגוריה",
+    "translationAr": "رمزية، قصة رمزية",
+    "translationRu": "аллегория",
     "definition": "A story with a hidden meaning, usually moral or political.",
     "definitionHe": "סיפור עם משמעות נסתרת, בדרך כלל מוסרית או פוליטית.",
     "examples": [
@@ -497,6 +525,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "גיבור ראשי",
+    "translationAr": "بطل (رئيسي)",
+    "translationRu": "главный герой, протагонист",
     "definition": "The main character in a story, play, or film.",
     "definitionHe": "הדמות הראשית בסיפור, מחזה או סרט.",
     "examples": [
@@ -532,6 +562,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "מטאפורה",
+    "translationAr": "استعارة",
+    "translationRu": "метафора",
     "definition": "A figure of speech comparing two unlike things without using 'like' or 'as'.",
     "definitionHe": "תמונת דיבור המשווה שני דברים לא דומים ללא שימוש ב-like או as.",
     "examples": [
@@ -567,6 +599,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "נרטיב, סיפור",
+    "translationAr": "سرد، رواية",
+    "translationRu": "нарратив, повествование",
     "definition": "A spoken or written account of connected events; a story.",
     "definitionHe": "תיאור מדובר או כתוב של אירועים קשורים; סיפור.",
     "examples": [
@@ -602,6 +636,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "פרוזה",
+    "translationAr": "نثر",
+    "translationRu": "проза",
     "definition": "Written or spoken language in ordinary form, without metrical structure.",
     "definitionHe": "שפה כתובה או מדוברת בצורה רגילה, ללא מבנה מטרי.",
     "examples": [
@@ -637,6 +673,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "שיר, בית שיר",
+    "translationAr": "شعر، بيت شعر",
+    "translationRu": "стих, строфа",
     "definition": "Writing arranged with a metrical rhythm; a stanza of a poem.",
     "definitionHe": "כתיבה מסודרת בקצב מטרי; בית של שיר.",
     "examples": [
@@ -672,6 +710,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "סטירה",
+    "translationAr": "هجاء، سخرية",
+    "translationRu": "сатира",
     "definition": "The use of humor or irony to criticize people or society.",
     "definitionHe": "שימוש בהומור או אירוניה לביקורת על אנשים או חברה.",
     "examples": [
@@ -707,6 +747,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "ז'אנר",
+    "translationAr": "نوع أدبي / فني",
+    "translationRu": "жанр",
     "definition": "A category of artistic work characterized by a particular style.",
     "definitionHe": "קטגוריה של יצירה אמנותית המאופיינת בסגנון מסוים.",
     "examples": [
@@ -742,6 +784,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "דיסטופיה",
+    "translationAr": "مدينة فاسدة، ديستوبيا",
+    "translationRu": "дистопия, антиутопия",
     "definition": "An imagined society in which there is great suffering and injustice.",
     "definitionHe": "חברה מדומיינת שבה יש סבל ואי-צדק רבים.",
     "examples": [
@@ -777,6 +821,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "מונולוג",
+    "translationAr": "مناجاة، حديث النفس",
+    "translationRu": "монолог, солилоквий",
     "definition": "A speech in a play where a character speaks their thoughts aloud, alone.",
     "definitionHe": "נאום במחזה שבו דמות אומרת את מחשבותיה בקול רם, לבד.",
     "examples": [
@@ -812,6 +858,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "הצבה זו לצד זו",
+    "translationAr": "مقارنة، وضع جنبًا إلى جنب",
+    "translationRu": "сопоставление",
     "definition": "The placement of two things side by side for comparison or contrast.",
     "definitionHe": "הצבת שני דברים זה לצד זה לצורך השוואה או ניגוד.",
     "examples": [
@@ -847,6 +895,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "רמיזה מוקדמת",
+    "translationAr": "تمهيد، إنذار مبكر",
+    "translationRu": "предзнаменование",
     "definition": "A literary device giving hints about future events in a story.",
     "definitionHe": "כלי ספרותי שנותן רמזים על אירועים עתידיים בסיפור.",
     "examples": [
@@ -882,6 +932,8 @@
     "cefrLevel": "C1",
     "category": "literature",
     "translation": "סמליות",
+    "translationAr": "رمزية",
+    "translationRu": "символизм",
     "definition": "The use of symbols to represent ideas or qualities.",
     "definitionHe": "שימוש בסמלים לייצוג רעיונות או תכונות.",
     "examples": [
@@ -917,6 +969,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "רהיטות",
+    "translationAr": "بلاغة، فصاحة",
+    "translationRu": "красноречие",
     "definition": "Fluent, forceful, and persuasive speaking or writing.",
     "definitionHe": "דיבור או כתיבה שוטפים, חזקים ומשכנעים.",
     "examples": [
@@ -952,6 +1006,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "שכנוע",
+    "translationAr": "إقناع",
+    "translationRu": "убеждение",
     "definition": "The act of convincing someone to do or believe something.",
     "definitionHe": "הפעולה של שכנוע מישהו לעשות או להאמין במשהו.",
     "examples": [
@@ -987,6 +1043,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "כשל לוגי",
+    "translationAr": "مغالطة",
+    "translationRu": "заблуждение, ошибка",
     "definition": "A mistaken belief or a flaw in reasoning.",
     "definitionHe": "אמונה שגויה או פגם בחשיבה.",
     "examples": [
@@ -1022,6 +1080,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "שיח",
+    "translationAr": "خطاب",
+    "translationRu": "дискурс",
     "definition": "Written or spoken communication or discussion.",
     "definitionHe": "תקשורת או דיון כתובים או מדוברים.",
     "examples": [
@@ -1057,6 +1117,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "לבטא, להביע",
+    "translationAr": "عَبَّرَ بوضوح",
+    "translationRu": "чётко выражать, формулировать",
     "definition": "To express thoughts or feelings clearly and effectively.",
     "definitionHe": "להביע מחשבות או רגשות בצורה ברורה ויעילה.",
     "examples": [
@@ -1092,6 +1154,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "להפריך",
+    "translationAr": "دَحَضَ، فنَّدَ",
+    "translationRu": "опровергать",
     "definition": "To prove that a statement or theory is wrong.",
     "definitionHe": "להוכיח שהצהרה או תיאוריה שגויים.",
     "examples": [
@@ -1127,6 +1191,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "לתמוך, לדגול",
+    "translationAr": "دافَعَ عن، نادى بـ",
+    "translationRu": "отстаивать, выступать за",
     "definition": "To publicly support or recommend a cause or policy.",
     "definitionHe": "לתמוך באופן פומבי או להמליץ על מטרה או מדיניות.",
     "examples": [
@@ -1162,6 +1228,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "לבסס, להוכיח",
+    "translationAr": "أثبَتَ، دعَّمَ",
+    "translationRu": "обосновать, подтвердить",
     "definition": "To provide evidence to support a claim or statement.",
     "definitionHe": "לספק ראיות לתמיכה בטענה או הצהרה.",
     "examples": [
@@ -1197,6 +1265,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "הפרכה",
+    "translationAr": "تفنيد، ردّ",
+    "translationRu": "опровержение",
     "definition": "An argument or statement that contradicts or opposes something.",
     "definitionHe": "טיעון או הצהרה שסותרים או מתנגדים למשהו.",
     "examples": [
@@ -1232,6 +1302,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "אנקדוטה",
+    "translationAr": "حكاية قصيرة",
+    "translationRu": "анекдот, случай",
     "definition": "A short amusing or interesting story about a real event or person.",
     "definitionHe": "סיפור קצר משעשע או מעניין על אירוע או אדם אמיתיים.",
     "examples": [
@@ -1267,6 +1339,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "הגזמה",
+    "translationAr": "مبالغة",
+    "translationRu": "гипербола",
     "definition": "Exaggerated statements not meant to be taken literally.",
     "definitionHe": "הצהרות מוגזמות שלא נועדו להילקח כפשוטן.",
     "examples": [
@@ -1302,6 +1376,8 @@
     "cefrLevel": "C1",
     "category": "rhetoric",
     "translation": "שנוי במחלוקת",
+    "translationAr": "قابل للنقاش",
+    "translationRu": "спорный, дискуссионный",
     "definition": "Open to discussion or argument; not certain.",
     "definitionHe": "פתוח לדיון או ויכוח; לא ודאי.",
     "examples": [
@@ -1337,6 +1413,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "שגריר",
+    "translationAr": "سفير",
+    "translationRu": "посол",
     "definition": "A diplomat who represents their country in another country.",
     "definitionHe": "דיפלומט שמייצג את מדינתו במדינה אחרת.",
     "examples": [
@@ -1372,6 +1450,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "אמנה",
+    "translationAr": "معاهدة",
+    "translationRu": "договор",
     "definition": "A formal agreement between countries.",
     "definitionHe": "הסכם רשמי בין מדינות.",
     "examples": [
@@ -1407,6 +1487,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "דו-צדדי",
+    "translationAr": "ثنائي",
+    "translationRu": "двусторонний",
     "definition": "Involving two parties, especially two countries.",
     "definitionHe": "כולל שני צדדים, במיוחד שתי מדינות.",
     "examples": [
@@ -1442,6 +1524,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "תיווך",
+    "translationAr": "وساطة",
+    "translationRu": "посредничество, медиация",
     "definition": "The process of resolving a dispute with the help of a neutral third party.",
     "definitionHe": "תהליך של פתרון סכסוך בעזרת צד שלישי ניטרלי.",
     "examples": [
@@ -1477,6 +1561,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "הפסקת אש",
+    "translationAr": "وقف إطلاق النار",
+    "translationRu": "прекращение огня",
     "definition": "An agreement to stop fighting temporarily.",
     "definitionHe": "הסכם להפסקת לחימה באופן זמני.",
     "examples": [
@@ -1512,6 +1598,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "לאשרר",
+    "translationAr": "صادَقَ على",
+    "translationRu": "ратифицировать",
     "definition": "To formally approve or confirm an agreement, especially by a government.",
     "definitionHe": "לאשר באופן רשמי הסכם, במיוחד על ידי ממשלה.",
     "examples": [
@@ -1547,6 +1635,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "שליח",
+    "translationAr": "مبعوث",
+    "translationRu": "посланник, эмиссар",
     "definition": "A person sent by a government on a diplomatic mission.",
     "definitionHe": "אדם שנשלח על ידי ממשלה במשימה דיפלומטית.",
     "examples": [
@@ -1582,6 +1672,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "דיפלומטי",
+    "translationAr": "دبلوماسي",
+    "translationRu": "дипломатический",
     "definition": "Relating to diplomacy; tactful and skilled in dealing with people.",
     "definitionHe": "הקשור לדיפלומטיה; טקטי ומיומן בעבודה עם אנשים.",
     "examples": [
@@ -1617,6 +1709,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "מקלט",
+    "translationAr": "لجوء",
+    "translationRu": "убежище",
     "definition": "Protection granted to people fleeing persecution in their home country.",
     "definitionHe": "הגנה שניתנת לאנשים שבורחים מרדיפה במדינת מולדתם.",
     "examples": [
@@ -1652,6 +1746,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "הסגרה",
+    "translationAr": "تسليم المجرمين",
+    "translationRu": "экстрадиция",
     "definition": "The sending of a person accused of a crime back to the country where the crime was committed.",
     "definitionHe": "שליחת אדם החשוד בפשע חזרה למדינה שבה הפשע בוצע.",
     "examples": [
@@ -1687,6 +1783,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "לנהל משא ומתן",
+    "translationAr": "تفاوَضَ",
+    "translationRu": "вести переговоры",
     "definition": "To discuss terms and try to reach an agreement between parties.",
     "definitionHe": "לדון בתנאים ולנסות להגיע להסכם בין צדדים.",
     "examples": [
@@ -1722,6 +1820,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "סנקציה",
+    "translationAr": "عقوبة، جزاء",
+    "translationRu": "санкция",
     "definition": "A penalty or restriction imposed by one country on another.",
     "definitionHe": "עונש או הגבלה שמוטלים על ידי מדינה אחת על אחרת.",
     "examples": [
@@ -1757,6 +1857,8 @@
     "cefrLevel": "C1",
     "category": "diplomacy",
     "translation": "ריבונות",
+    "translationAr": "سيادة",
+    "translationRu": "суверенитет",
     "definition": "The authority of a state to govern itself without external interference.",
     "definitionHe": "סמכותה של מדינה לשלוט בעצמה ללא התערבות חיצונית.",
     "examples": [
@@ -1792,6 +1894,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מיתון",
+    "translationAr": "ركود اقتصادي",
+    "translationRu": "рецессия",
     "definition": "A period of significant decline in economic activity.",
     "definitionHe": "תקופה של ירידה משמעותית בפעילות כלכלית.",
     "examples": [
@@ -1827,6 +1931,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "פיסקלי",
+    "translationAr": "مالي",
+    "translationRu": "фискальный",
     "definition": "Relating to government revenue, spending, and financial management.",
     "definitionHe": "הקשור להכנסות ממשלתיות, הוצאות וניהול פיננסי.",
     "examples": [
@@ -1862,6 +1968,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מוניטרי",
+    "translationAr": "نقدي",
+    "translationRu": "монетарный, денежный",
     "definition": "Relating to money or currency, especially as controlled by a central bank.",
     "definitionHe": "הקשור לכסף או למטבע, במיוחד כפי שנשלט על ידי בנק מרכזי.",
     "examples": [
@@ -1897,6 +2005,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "סובסידיה",
+    "translationAr": "دعم حكومي، إعانة",
+    "translationRu": "субсидия",
     "definition": "Money given by the government to help an industry or keep prices low.",
     "definitionHe": "כסף שניתן על ידי הממשלה לסייע לתעשייה או לשמור על מחירים נמוכים.",
     "examples": [
@@ -1932,6 +2042,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מכס",
+    "translationAr": "تعريفة جمركية",
+    "translationRu": "тариф, пошлина",
     "definition": "A tax on goods imported from another country.",
     "definitionHe": "מס על סחורות שמיובאות ממדינה אחרת.",
     "examples": [
@@ -1967,6 +2079,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "דפלציה",
+    "translationAr": "انكماش",
+    "translationRu": "дефляция",
     "definition": "A general decrease in prices and increase in the value of money.",
     "definitionHe": "ירידה כללית במחירים ועלייה בערך הכסף.",
     "examples": [
@@ -2002,6 +2116,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "צנע",
+    "translationAr": "تقشُّف",
+    "translationRu": "жёсткая экономия, аскетизм",
     "definition": "Strict economic measures to reduce government spending.",
     "definitionHe": "אמצעים כלכליים קפדניים להפחתת הוצאות הממשלה.",
     "examples": [
@@ -2037,6 +2153,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מונופול",
+    "translationAr": "احتكار",
+    "translationRu": "монополия",
     "definition": "Exclusive control of a commodity or service in a market.",
     "definitionHe": "שליטה בלעדית על סחורה או שירות בשוק.",
     "examples": [
@@ -2072,6 +2190,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "עודף",
+    "translationAr": "فائض",
+    "translationRu": "излишек, профицит",
     "definition": "An amount that is more than what is needed or used.",
     "definitionHe": "כמות שהיא יותר ממה שנדרש או בשימוש.",
     "examples": [
@@ -2107,6 +2227,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מחסור",
+    "translationAr": "ندرة، شُحّ",
+    "translationRu": "дефицит, нехватка",
     "definition": "A shortage or lack of something.",
     "definitionHe": "מחסור או חוסר של משהו.",
     "examples": [
@@ -2142,6 +2264,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מיקרו-כלכלה",
+    "translationAr": "اقتصاد جزئي",
+    "translationRu": "микроэкономика",
     "definition": "The study of individual economic units such as households and firms.",
     "definitionHe": "חקר יחידות כלכליות בודדות כגון משקי בית וחברות.",
     "examples": [
@@ -2177,6 +2301,8 @@
     "cefrLevel": "C1",
     "category": "economics",
     "translation": "מקרו-כלכלה",
+    "translationAr": "اقتصاد كلي",
+    "translationRu": "макроэкономика",
     "definition": "The study of the economy as a whole, including GDP, inflation, and unemployment.",
     "definitionHe": "חקר הכלכלה כמכלול, כולל תמ\"ג, אינפלציה ואבטלה.",
     "examples": [
@@ -2212,6 +2338,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "ביקורת עמיתים",
+    "translationAr": "مراجعة الأقران",
+    "translationRu": "рецензирование",
     "definition": "Evaluation of work by experts in the same field before publication.",
     "definitionHe": "הערכת עבודה על ידי מומחים באותו תחום לפני פרסום.",
     "examples": [
@@ -2247,6 +2375,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "איכותני",
+    "translationAr": "نوعي، كيفي",
+    "translationRu": "качественный",
     "definition": "Relating to the quality or character of something, not its quantity.",
     "definitionHe": "הקשור לאיכות או לאופי של משהו, לא לכמותו.",
     "examples": [
@@ -2282,6 +2412,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "כמותי",
+    "translationAr": "كمّي",
+    "translationRu": "количественный",
     "definition": "Relating to measuring amounts or quantities using numbers.",
     "definitionHe": "הקשור למדידת כמויות או סכומים באמצעות מספרים.",
     "examples": [
@@ -2317,6 +2449,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "אורכי",
+    "translationAr": "طولي",
+    "translationRu": "продольный",
     "definition": "Studying subjects over a long period of time.",
     "definitionHe": "חוקר נבדקים לאורך תקופה ארוכה.",
     "examples": [
@@ -2352,6 +2486,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "לשחזר",
+    "translationAr": "استنسَخَ، كرَّرَ",
+    "translationRu": "воспроизвести, повторить",
     "definition": "To repeat an experiment or study to verify results.",
     "definitionHe": "לחזור על ניסוי או מחקר כדי לאמת תוצאות.",
     "examples": [
@@ -2387,6 +2523,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "דגימה, מדגם",
+    "translationAr": "عَيِّنة",
+    "translationRu": "образец, экземпляр",
     "definition": "A sample taken for examination or study.",
     "definitionHe": "דגימה שנלקחת לבדיקה או מחקר.",
     "examples": [
@@ -2422,6 +2560,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "סטייה",
+    "translationAr": "انحراف",
+    "translationRu": "отклонение",
     "definition": "A departure from an established norm or standard.",
     "definitionHe": "סטייה מנורמה או סטנדרט מבוססים.",
     "examples": [
@@ -2457,6 +2597,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "אמת מידה",
+    "translationAr": "معيار مرجعي",
+    "translationRu": "эталон, ориентир",
     "definition": "A standard or point of reference for measuring performance.",
     "definitionHe": "סטנדרט או נקודת ייחוס למדידת ביצועים.",
     "examples": [
@@ -2492,6 +2634,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "פרמטר",
+    "translationAr": "مُعامِل",
+    "translationRu": "параметр",
     "definition": "A measurable factor that defines a system or sets conditions.",
     "definitionHe": "גורם מדיד שמגדיר מערכת או קובע תנאים.",
     "examples": [
@@ -2527,6 +2671,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "תוקף",
+    "translationAr": "صلاحية",
+    "translationRu": "валидность, достоверность",
     "definition": "The quality of being logically sound or based on good reasoning.",
     "definitionHe": "האיכות של להיות הגיוני או מבוסס על חשיבה טובה.",
     "examples": [
@@ -2562,6 +2708,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "תקציר",
+    "translationAr": "مُلَخَّص",
+    "translationRu": "аннотация, реферат",
     "definition": "A brief summary of a research paper or article.",
     "definitionHe": "תקציר קצר של מאמר מחקרי או כתבה.",
     "examples": [
@@ -2597,6 +2745,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "ציטוט, הפניה",
+    "translationAr": "اقتباس، إحالة",
+    "translationRu": "цитата, ссылка",
     "definition": "A reference to a source of information in academic writing.",
     "definitionHe": "הפניה למקור מידע בכתיבה אקדמית.",
     "examples": [
@@ -2632,6 +2782,8 @@
     "cefrLevel": "C1",
     "category": "research",
     "translation": "מאגר נתונים",
+    "translationAr": "مجموعة بيانات",
+    "translationRu": "набор данных",
     "definition": "A collection of related data organized for analysis.",
     "definitionHe": "אוסף של נתונים קשורים המאורגנים לניתוח.",
     "examples": [
@@ -2667,6 +2819,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "אמינות",
+    "translationAr": "مصداقية",
+    "translationRu": "достоверность, авторитетность",
     "definition": "The quality of being trusted and believed in.",
     "definitionHe": "התכונה של להיות מהימן ולהיות מאמינים בו.",
     "examples": [
@@ -2702,6 +2856,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "אובייקטיביות",
+    "translationAr": "موضوعية",
+    "translationRu": "объективность",
     "definition": "The quality of being fair and not influenced by personal feelings.",
     "definitionHe": "התכונה של להיות הוגן ולא מושפע מרגשות אישיים.",
     "examples": [
@@ -2737,6 +2893,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "סנסציונליזם",
+    "translationAr": "إثارة، مبالغة إعلامية",
+    "translationRu": "сенсационность",
     "definition": "The use of exciting or shocking stories to attract attention.",
     "definitionHe": "שימוש בסיפורים מרגשים או מזעזעים כדי למשוך תשומת לב.",
     "examples": [
@@ -2772,6 +2930,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "חושף שחיתויות",
+    "translationAr": "مُبَلِّغ عن مخالفات",
+    "translationRu": "информатор, разоблачитель",
     "definition": "A person who reveals illegal or unethical activity in an organization.",
     "definitionHe": "אדם שחושף פעילות בלתי חוקית או לא אתית בארגון.",
     "examples": [
@@ -2807,6 +2967,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "צנזורה",
+    "translationAr": "رقابة",
+    "translationRu": "цензура",
     "definition": "The suppression of speech, writing, or information by authorities.",
     "definitionHe": "דיכוי של דיבור, כתיבה או מידע על ידי רשויות.",
     "examples": [
@@ -2842,6 +3004,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "חוקר",
+    "translationAr": "استقصائي",
+    "translationRu": "расследовательский",
     "definition": "Relating to detailed examination or inquiry, especially in journalism.",
     "definitionHe": "הקשור לבדיקה או חקירה מפורטת, במיוחד בעיתונות.",
     "examples": [
@@ -2877,6 +3041,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "שקיפות",
+    "translationAr": "شفافية",
+    "translationRu": "прозрачность",
     "definition": "The quality of being open, honest, and easy to understand.",
     "definitionHe": "התכונה של להיות פתוח, ישר וקל להבנה.",
     "examples": [
@@ -2912,6 +3078,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "הוצאת דיבה",
+    "translationAr": "تشهير",
+    "translationRu": "клевета, диффамация",
     "definition": "The action of damaging someone's reputation by making false statements.",
     "definitionHe": "הפעולה של פגיעה בשם הטוב של מישהו על ידי אמירת דברים שקריים.",
     "examples": [
@@ -2947,6 +3115,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "חזרה מפרסום",
+    "translationAr": "تراجع، سحب",
+    "translationRu": "отзыв, опровержение",
     "definition": "A public withdrawal of a statement or article because it was wrong.",
     "definitionHe": "נסיגה פומבית מהצהרה או כתבה כי היא הייתה שגויה.",
     "examples": [
@@ -2982,6 +3152,8 @@
     "cefrLevel": "C1",
     "category": "journalism",
     "translation": "אנונימי",
+    "translationAr": "مجهول الهوية",
+    "translationRu": "анонимный",
     "definition": "Not identified by name; of unknown identity.",
     "definitionHe": "לא מזוהה בשם; בזהות לא ידועה.",
     "examples": [
@@ -3017,6 +3189,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "דילמה",
+    "translationAr": "مُعضلة",
+    "translationRu": "дилемма",
     "definition": "A situation in which a difficult choice has to be made between two options.",
     "definitionHe": "מצב שבו יש לעשות בחירה קשה בין שתי אפשרויות.",
     "examples": [
@@ -3052,6 +3226,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "אחריותיות",
+    "translationAr": "مُساءلة",
+    "translationRu": "подотчётность",
     "definition": "The obligation to accept responsibility for one's actions.",
     "definitionHe": "החובה לקבל אחריות על מעשיו.",
     "examples": [
@@ -3087,6 +3263,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "הסכמה",
+    "translationAr": "موافقة",
+    "translationRu": "согласие",
     "definition": "Permission or agreement given voluntarily.",
     "definitionHe": "רשות או הסכמה שניתנות מרצון.",
     "examples": [
@@ -3122,6 +3300,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "אלטרואיזם",
+    "translationAr": "إيثار",
+    "translationRu": "альтруизм",
     "definition": "Selfless concern for the well-being of others.",
     "definitionHe": "דאגה חסרת אינטרס לרווחת הזולת.",
     "examples": [
@@ -3157,6 +3337,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "חסר פניות",
+    "translationAr": "محايد، نزيه",
+    "translationRu": "беспристрастный",
     "definition": "Treating all people and sides equally; not biased.",
     "definitionHe": "מתייחס לכל האנשים והצדדים באופן שווה; ללא הטיה.",
     "examples": [
@@ -3192,6 +3374,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "אוטונומיה",
+    "translationAr": "استقلالية",
+    "translationRu": "автономия",
     "definition": "The right of self-governance; personal independence.",
     "definitionHe": "הזכות לשלטון עצמי; עצמאות אישית.",
     "examples": [
@@ -3227,6 +3411,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "סודיות",
+    "translationAr": "سرّية",
+    "translationRu": "конфиденциальность",
     "definition": "The state of keeping information private and secret.",
     "definitionHe": "המצב של שמירת מידע פרטי וסודי.",
     "examples": [
@@ -3262,6 +3448,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "ניצול",
+    "translationAr": "استغلال",
+    "translationRu": "эксплуатация",
     "definition": "The act of using someone or something unfairly for one's own benefit.",
     "definitionHe": "הפעולה של שימוש במישהו או במשהו באופן לא הוגן למען תועלת עצמית.",
     "examples": [
@@ -3297,6 +3485,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "ציות, תאימות",
+    "translationAr": "امتثال",
+    "translationRu": "соответствие, соблюдение",
     "definition": "The act of following rules, laws, or regulations.",
     "definitionHe": "הפעולה של מעקב אחר כללים, חוקים או תקנות.",
     "examples": [
@@ -3332,6 +3522,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "המתת חסד",
+    "translationAr": "قتل رحيم",
+    "translationRu": "эвтаназия",
     "definition": "The practice of intentionally ending a life to relieve suffering.",
     "definitionHe": "הנוהג של סיום חיים במכוון כדי להקל על סבל.",
     "examples": [
@@ -3367,6 +3559,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "יושרה",
+    "translationAr": "نزاهة",
+    "translationRu": "честность, порядочность",
     "definition": "The quality of being honest and having strong moral principles.",
     "definitionHe": "התכונה של להיות ישר ובעל עקרונות מוסריים חזקים.",
     "examples": [
@@ -3402,6 +3596,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "חשיפת שחיתויות",
+    "translationAr": "كشف المخالفات",
+    "translationRu": "разоблачение",
     "definition": "The act of reporting illegal or unethical activities within an organization.",
     "definitionHe": "הפעולה של דיווח על פעילויות בלתי חוקיות או לא אתיות בתוך ארגון.",
     "examples": [
@@ -3437,6 +3633,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "תועלתנות",
+    "translationAr": "نفعية",
+    "translationRu": "утилитаризм",
     "definition": "The ethical theory that the best action is the one that maximizes well-being for all.",
     "definitionHe": "התיאוריה האתית שלפיה הפעולה הטובה ביותר היא זו שממקסמת רווחה לכולם.",
     "examples": [
@@ -3472,6 +3670,8 @@
     "cefrLevel": "C1",
     "category": "ethics",
     "translation": "ביואתיקה",
+    "translationAr": "أخلاقيات حيوية",
+    "translationRu": "биоэтика",
     "definition": "The study of ethical issues arising from advances in biology and medicine.",
     "definitionHe": "חקר הסוגיות האתיות הנובעות מהתקדמות בביולוגיה וברפואה.",
     "examples": [

@@ -8,6 +8,7 @@ import { getSkillLesson } from '../../data/skills/skills-data.js';
 import { generateExercises } from '../../data/curriculum/exercise-generator.js';
 import { calculateStars, calculateXP, LESSON_TYPES } from '../../data/curriculum/curriculum-index.js';
 import useSkillsProgress from '../../hooks/useSkillsProgress.js';
+import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
@@ -29,6 +30,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
   const [simulationAccuracy, setSimulationAccuracy] = useState(null);
 
   const skillsProgress = useSkillsProgress();
+  const { progress: userProgress, updateProgress } = useUserProgress();
   const { speak, stopSpeaking } = useSpeech();
   const spokenRef = useRef(false);
 
@@ -166,10 +168,21 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     } catch (err) {
       console.error('Failed to save skill lesson progress:', err);
     }
+
+    // Increment totalWordsLearned from words in this lesson
+    const uniqueWords = answers
+      .filter(a => a.wordData)
+      .reduce((set, a) => { set.add(a.wordData.word); return set; }, new Set());
+    if (uniqueWords.size > 0) {
+      updateProgress({
+        totalWordsLearned: (userProgress.totalWordsLearned || 0) + uniqueWords.size,
+      });
+    }
+
     setSavedAccuracy(accuracy);
     playComplete && playComplete();
     setPhase('complete');
-  }, [lessonId, skillsProgress]);
+  }, [lessonId, skillsProgress, answers, updateProgress, userProgress]);
 
   // Cleanup speech and timers on unmount
   useEffect(() => {

@@ -1,5 +1,31 @@
 import { handleCors } from '../lib/cors.js';
 import { getFirestore } from '../lib/firebase.js';
+import admin from 'firebase-admin';
+
+// Ensure Firebase Admin is initialised (shared with lib/firebase.js)
+function ensureApp() {
+  if (admin.apps.length === 0) {
+    let serviceAccount;
+    try {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+    } catch (e) {
+      serviceAccount = {};
+    }
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      projectId: serviceAccount.project_id,
+    });
+  }
+}
+
+async function verifyAuth(req) {
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  if (!token) return null;
+  try {
+    ensureApp();
+    return await admin.auth().verifyIdToken(token);
+  } catch { return null; }
+}
 
 const ADMIN_EMAIL = process.env.SUPPORT_ADMIN_EMAIL || 'support@speakli.co.il';
 
@@ -35,6 +61,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
+
+  const user = await verifyAuth(req);
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const { userId, email, name, category, subject, message } = req.body;

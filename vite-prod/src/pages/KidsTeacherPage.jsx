@@ -314,7 +314,7 @@ function generateExercises(topicId, uiLang = 'he') {
 
 export default function KidsTeacherPage({ onBack }) {
   const { uiLang } = useTheme();
-  const { addXP, progress: userProgress } = useUserProgress();
+  const { addXP, progress: userProgress, updateProgress } = useUserProgress();
   const { speak, speakSequence } = useSpeech();
   const { speakWordPair } = useSpeechSynthesis();
   const isRTL = RTL_LANGS.includes(uiLang);
@@ -406,6 +406,11 @@ export default function KidsTeacherPage({ onBack }) {
         setShowSpeech(true);
         setShowConfetti(true);
         if (addXP) addXP(10 + score * 5, 'kids-teacher').catch(() => {});
+        // Increment lesson counter for achievements
+        updateProgress({
+          totalLessonsCompleted: (userProgress.totalLessonsCompleted || 0) + 1,
+          ...(score === exercises.length ? { perfectLessons: (userProgress.perfectLessons || 0) + 1 } : {}),
+        });
       } else {
         setCurrentExIndex(nextIdx);
         setTeacherState('idle');

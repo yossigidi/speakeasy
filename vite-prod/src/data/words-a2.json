@@ -7,6 +7,8 @@
     "cefrLevel": "A2",
     "category": "health",
     "translation": "תור (אצל רופא)",
+    "translationAr": "موعد",
+    "translationRu": "запись на приём",
     "definition": "An arrangement to meet someone at a particular time and place, especially a doctor or dentist.",
     "definitionHe": "סידור מוסכם לפגישה עם מישהו בזמן ובמקום מסוימים, בדרך כלל אצל רופא או רופא שיניים.",
     "examples": [
@@ -47,6 +49,8 @@
     "cefrLevel": "A2",
     "category": "health",
     "translation": "תרופה",
+    "translationAr": "دواء",
+    "translationRu": "лекарство",
     "definition": "A substance, especially a pill or liquid, that you take to treat an illness.",
     "definitionHe": "חומר, בדרך כלל כדור או נוזל, שלוקחים כדי לטפל במחלה.",
     "examples": [
@@ -82,6 +86,8 @@
     "cefrLevel": "A2",
     "category": "health",
     "translation": "כאב ראש",
+    "translationAr": "صداع",
+    "translationRu": "головная боль",
     "definition": "A continuous pain in the head.",
     "definitionHe": "כאב מתמשך בראש.",
     "examples": [
@@ -114,6 +120,8 @@
     "cefrLevel": "A2",
     "category": "health",
     "translation": "פעילות גופנית",
+    "translationAr": "تمرين",
+    "translationRu": "упражнение",
     "definition": "Physical activity done to stay healthy and strong.",
     "definitionHe": "פעילות גופנית שעושים כדי להישאר בריאים וחזקים.",
     "examples": [
@@ -149,6 +157,8 @@
     "cefrLevel": "A2",
     "category": "health",
     "translation": "בריא",
+    "translationAr": "صحّي",
+    "translationRu": "здоровый",
     "definition": "In good physical condition; good for your health.",
     "definitionHe": "במצב גופני טוב; טוב לבריאות.",
     "examples": [
@@ -184,6 +194,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "מחשב",
+    "translationAr": "حاسوب",
+    "translationRu": "компьютер",
     "definition": "An electronic machine that stores and processes information.",
     "definitionHe": "מכונה אלקטרונית שמאחסנת ומעבדת מידע.",
     "examples": [
@@ -218,6 +230,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "אינטרנט",
+    "translationAr": "إنترنت",
+    "translationRu": "интернет",
     "definition": "The global network that connects computers and allows people to share information.",
     "definitionHe": "הרשת העולמית שמחברת מחשבים ומאפשרת לאנשים לשתף מידע.",
     "examples": [
@@ -253,6 +267,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "אתר אינטרנט",
+    "translationAr": "موقع إلكتروني",
+    "translationRu": "веб-сайт",
     "definition": "A set of pages on the internet with information about a particular subject or organization.",
     "definitionHe": "מכלול של דפים באינטרנט עם מידע על נושא או ארגון מסוים.",
     "examples": [
@@ -288,6 +304,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "סיסמה",
+    "translationAr": "كلمة مرور",
+    "translationRu": "пароль",
     "definition": "A secret word or phrase used to gain access to a computer system or account.",
     "definitionHe": "מילה או צירוף מילים סודיים שמשמשים לגישה למערכת מחשב או חשבון.",
     "examples": [
@@ -322,6 +340,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "להוריד (קובץ)",
+    "translationAr": "تحميل",
+    "translationRu": "скачивание",
     "definition": "To copy data from the internet or another computer to your own device.",
     "definitionHe": "להעתיק מידע מהאינטרנט או ממחשב אחר למכשיר שלכם.",
     "examples": [
@@ -354,6 +374,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "מוזיאון",
+    "translationAr": "متحف",
+    "translationRu": "музей",
     "definition": "A building where important objects of art, history, or science are kept and shown to the public.",
     "definitionHe": "מבנה שבו שומרים ומציגים לציבור פריטים חשובים של אמנות, היסטוריה או מדע.",
     "examples": [
@@ -388,6 +410,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "קונצרט / הופעה",
+    "translationAr": "حفلة موسيقية",
+    "translationRu": "концерт",
     "definition": "A public performance of music.",
     "definitionHe": "הופעת מוזיקה ציבורית.",
     "examples": [
@@ -423,6 +447,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "פסטיבל / חגיגה",
+    "translationAr": "مهرجان",
+    "translationRu": "фестиваль",
     "definition": "A series of special events, performances, or celebrations, often held over several days.",
     "definitionHe": "סדרה של אירועים, הופעות או חגיגות מיוחדות, לרוב במשך מספר ימים.",
     "examples": [
@@ -458,6 +484,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "מסורת",
+    "translationAr": "تقليد",
+    "translationRu": "традиция",
     "definition": "A custom or belief that has existed for a long time and is passed from one generation to another.",
     "definitionHe": "מנהג או אמונה שקיימים מזמן רב ועוברים מדור לדור.",
     "examples": [
@@ -492,6 +520,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "אמנות",
+    "translationAr": "فنّ",
+    "translationRu": "искусство",
     "definition": "The creation of paintings, drawings, music, and other things that are considered beautiful or meaningful.",
     "definitionHe": "יצירת ציורים, רישומים, מוזיקה ודברים אחרים שנחשבים יפים או משמעותיים.",
     "examples": [
@@ -524,6 +554,8 @@
     "cefrLevel": "A2",
     "category": "travel-advanced",
     "translation": "דרכון",
+    "translationAr": "جواز سفر",
+    "translationRu": "паспорт",
     "definition": "An official document issued by a government that proves your identity and allows you to travel to other countries.",
     "definitionHe": "מסמך רשמי שהממשלה מנפיקה, מוכיח את הזהות שלכם ומאפשר לכם לנסוע למדינות אחרות.",
     "examples": [
@@ -556,6 +588,8 @@
     "cefrLevel": "A2",
     "category": "travel-advanced",
     "translation": "הזמנה (מקום)",
+    "translationAr": "حجز",
+    "translationRu": "бронирование",
     "definition": "An arrangement to have something kept for you, such as a table at a restaurant or a hotel room.",
     "definitionHe": "סידור לשמור עבורכם משהו, כמו שולחן במסעדה או חדר במלון.",
     "examples": [
@@ -590,6 +624,8 @@
     "cefrLevel": "A2",
     "category": "travel-advanced",
     "translation": "מזוודה",
+    "translationAr": "حقيبة سفر",
+    "translationRu": "чемодан",
     "definition": "A large bag with a handle used for carrying clothes and personal items when traveling.",
     "definitionHe": "תיק גדול עם ידית שמשמש לנשיאת בגדים וחפצים אישיים בנסיעות.",
     "examples": [
@@ -625,6 +661,8 @@
     "cefrLevel": "A2",
     "category": "travel-advanced",
     "translation": "לבטל",
+    "translationAr": "إلغاء",
+    "translationRu": "отмена",
     "definition": "To decide that something that was planned will not happen.",
     "definitionHe": "להחליט שמשהו שתוכנן לא יתקיים.",
     "examples": [
@@ -659,6 +697,8 @@
     "cefrLevel": "A2",
     "category": "travel-advanced",
     "translation": "עיכוב",
+    "translationAr": "تأخير",
+    "translationRu": "задержка",
     "definition": "A situation where something happens later than expected or planned.",
     "definitionHe": "מצב שבו משהו קורה מאוחר יותר מהצפוי או מהמתוכנן.",
     "examples": [
@@ -693,6 +733,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "עמית לעבודה",
+    "translationAr": "زميل",
+    "translationRu": "коллега",
     "definition": "A person you work with, especially in a professional job.",
     "definitionHe": "אדם שאתם עובדים איתו, בעיקר בעבודה מקצועית.",
     "examples": [
@@ -727,6 +769,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "פגישה / ישיבה",
+    "translationAr": "اجتماع",
+    "translationRu": "встреча",
     "definition": "An occasion when people come together to discuss or decide something.",
     "definitionHe": "אירוע שבו אנשים מתכנסים כדי לדון או להחליט על משהו.",
     "examples": [
@@ -761,6 +805,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "משכורת",
+    "translationAr": "راتب",
+    "translationRu": "зарплата",
     "definition": "A fixed amount of money paid to an employee regularly, usually every month.",
     "definitionHe": "סכום כסף קבוע שמשולם לעובד באופן קבוע, בדרך כלל כל חודש.",
     "examples": [
@@ -796,6 +842,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "ניסיון / חוויה",
+    "translationAr": "خبرة",
+    "translationRu": "опыт",
     "definition": "Knowledge or skill gained from doing something over time; or an event that affects you.",
     "definitionHe": "ידע או מיומנות שנרכשים מעשייה לאורך זמן; או אירוע שמשפיע עליכם.",
     "examples": [
@@ -830,6 +878,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "הזדמנות",
+    "translationAr": "فرصة",
+    "translationRu": "возможность",
     "definition": "A chance to do something good or beneficial.",
     "definitionHe": "סיכוי לעשות משהו טוב או מועיל.",
     "examples": [
@@ -864,6 +914,8 @@
     "cefrLevel": "A2",
     "category": "food-advanced",
     "translation": "מתכון",
+    "translationAr": "وصفة طبخ",
+    "translationRu": "рецепт",
     "definition": "A set of instructions for preparing a particular dish, including the ingredients needed.",
     "definitionHe": "סט הוראות להכנת מאכל מסוים, כולל המרכיבים הנדרשים.",
     "examples": [
@@ -896,6 +948,8 @@
     "cefrLevel": "A2",
     "category": "food-advanced",
     "translation": "קינוח",
+    "translationAr": "حلوى",
+    "translationRu": "десерт",
     "definition": "A sweet dish served at the end of a meal.",
     "definitionHe": "מנה מתוקה שמוגשת בסוף הארוחה.",
     "examples": [
@@ -930,6 +984,8 @@
     "cefrLevel": "A2",
     "category": "food-advanced",
     "translation": "צמחוני",
+    "translationAr": "نباتي",
+    "translationRu": "вегетарианец",
     "definition": "A person who does not eat meat; or food that contains no meat.",
     "definitionHe": "אדם שלא אוכל בשר; או אוכל שלא מכיל בשר.",
     "examples": [
@@ -962,6 +1018,8 @@
     "cefrLevel": "A2",
     "category": "food-advanced",
     "translation": "להמליץ",
+    "translationAr": "يوصي",
+    "translationRu": "рекомендовать",
     "definition": "To suggest that something is good or suitable for a particular purpose.",
     "definitionHe": "להציע שמשהו טוב או מתאים למטרה מסוימת.",
     "examples": [
@@ -996,6 +1054,8 @@
     "cefrLevel": "A2",
     "category": "food-advanced",
     "translation": "טעים מאוד",
+    "translationAr": "لذيذ",
+    "translationRu": "вкусный",
     "definition": "Having a very pleasant taste or smell.",
     "definitionHe": "בעל טעם או ריח נעים מאוד.",
     "examples": [
@@ -1031,6 +1091,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "אוניברסיטה",
+    "translationAr": "جامعة",
+    "translationRu": "университет",
     "definition": "An institution of higher education where students study for degrees.",
     "definitionHe": "מוסד להשכלה גבוהה שבו סטודנטים לומדים לקראת תואר.",
     "examples": [
@@ -1065,6 +1127,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "מבחן",
+    "translationAr": "امتحان",
+    "translationRu": "экзамен",
     "definition": "A formal test of knowledge or ability in a particular subject.",
     "definitionHe": "בחינה רשמית של ידע או יכולת בנושא מסוים.",
     "examples": [
@@ -1100,6 +1164,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "שיעורי בית",
+    "translationAr": "واجب منزلي",
+    "translationRu": "домашнее задание",
     "definition": "Work that a student is given to do at home by their teacher.",
     "definitionHe": "עבודה שמורה נותן לתלמיד לעשות בבית.",
     "examples": [
@@ -1134,6 +1200,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "לשפר",
+    "translationAr": "يُحسّن",
+    "translationRu": "улучшать",
     "definition": "To make something better, or to become better.",
     "definitionHe": "לעשות משהו טוב יותר, או להפוך לטוב יותר.",
     "examples": [
@@ -1169,6 +1237,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "ידע",
+    "translationAr": "معرفة",
+    "translationRu": "знание",
     "definition": "Information, understanding, and skills that you have gained through learning or experience.",
     "definitionHe": "מידע, הבנה ומיומנויות שרכשתם דרך למידה או ניסיון.",
     "examples": [
@@ -1208,6 +1278,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "סרט",
+    "translationAr": "فيلم",
+    "translationRu": "фильм",
     "definition": "A story shown in moving pictures, watched at a cinema or on a screen.",
     "definitionHe": "סיפור שמוצג בתמונות נעות, שצופים בו בקולנוע או על מסך.",
     "examples": [
@@ -1242,6 +1314,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "כרטיס",
+    "translationAr": "تذكرة",
+    "translationRu": "билет",
     "definition": "A piece of paper or electronic record that shows you have paid to enter a place or travel.",
     "definitionHe": "פיסת נייר או רישום אלקטרוני שמוכיח ששילמתם כדי להיכנס למקום או לנסוע.",
     "examples": [
@@ -1274,6 +1348,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "קהל",
+    "translationAr": "جمهور",
+    "translationRu": "аудитория",
     "definition": "The group of people who watch or listen to a performance, movie, or show.",
     "definitionHe": "קבוצת האנשים שצופים או מאזינים להופעה, סרט או תוכנית.",
     "examples": [
@@ -1309,6 +1385,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "הופעה / ביצוע",
+    "translationAr": "عرض",
+    "translationRu": "представление",
     "definition": "An act of presenting a play, concert, or other entertainment to an audience.",
     "definitionHe": "מעשה של הצגת מחזה, קונצרט או בידור אחר בפני קהל.",
     "examples": [
@@ -1343,6 +1421,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "מסך",
+    "translationAr": "شاشة",
+    "translationRu": "экран",
     "definition": "The flat surface of a television, computer, or phone where images are shown.",
     "definitionHe": "המשטח השטוח של טלוויזיה, מחשב או טלפון שעליו מוצגות תמונות.",
     "examples": [
@@ -1378,6 +1458,8 @@
     "cefrLevel": "A2",
     "category": "environment",
     "translation": "זיהום",
+    "translationAr": "تلوّث",
+    "translationRu": "загрязнение",
     "definition": "Harmful substances that damage the air, water, or land.",
     "definitionHe": "חומרים מזיקים שפוגעים באוויר, במים או בקרקע.",
     "examples": [
@@ -1412,6 +1494,8 @@
     "cefrLevel": "A2",
     "category": "environment",
     "translation": "למחזר",
+    "translationAr": "إعادة تدوير",
+    "translationRu": "переработка",
     "definition": "To process used materials so they can be used again.",
     "definitionHe": "לעבד חומרים משומשים כדי שאפשר יהיה להשתמש בהם שוב.",
     "examples": [
@@ -1446,6 +1530,8 @@
     "cefrLevel": "A2",
     "category": "environment",
     "translation": "אנרגיה",
+    "translationAr": "طاقة",
+    "translationRu": "энергия",
     "definition": "The power from electricity, gas, or other sources used to make machines work; also physical strength and vitality.",
     "definitionHe": "כוח מחשמל, גז או מקורות אחרים שמפעיל מכונות; גם כוח גופני וחיוניות.",
     "examples": [
@@ -1480,6 +1566,8 @@
     "cefrLevel": "A2",
     "category": "environment",
     "translation": "להגן",
+    "translationAr": "يحمي",
+    "translationRu": "защищать",
     "definition": "To keep someone or something safe from harm or damage.",
     "definitionHe": "לשמור על מישהו או משהו מפני נזק או פגיעה.",
     "examples": [
@@ -1515,6 +1603,8 @@
     "cefrLevel": "A2",
     "category": "environment",
     "translation": "אקלים",
+    "translationAr": "مناخ",
+    "translationRu": "климат",
     "definition": "The general weather conditions of an area over a long period of time.",
     "definitionHe": "תנאי מזג האוויר הכלליים של אזור לאורך תקופה ארוכה.",
     "examples": [
@@ -1547,6 +1637,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "שכן / שכנה",
+    "translationAr": "جار",
+    "translationRu": "сосед",
     "definition": "A person who lives near you, especially next door.",
     "definitionHe": "אדם שגר קרוב אליכם, במיוחד בדלת הסמוכה.",
     "examples": [
@@ -1579,6 +1671,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "להזמין (אורחים)",
+    "translationAr": "يدعو",
+    "translationRu": "приглашать",
     "definition": "To ask someone to come to an event or to do something with you.",
     "definitionHe": "לבקש ממישהו לבוא לאירוע או לעשות משהו איתכם.",
     "examples": [
@@ -1613,6 +1707,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להסכים",
+    "translationAr": "يوافق",
+    "translationRu": "соглашаться",
     "definition": "To have the same opinion as someone else; to say yes to a suggestion.",
     "definitionHe": "להיות בעל אותה דעה כמו מישהו אחר; להגיד כן להצעה.",
     "examples": [
@@ -1650,6 +1746,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להסביר",
+    "translationAr": "يشرح",
+    "translationRu": "объяснять",
     "definition": "To make something clear and easy to understand by describing it in detail.",
     "definitionHe": "להפוך משהו לברור וקל להבנה על ידי תיאור מפורט.",
     "examples": [
@@ -1685,6 +1783,8 @@
     "cefrLevel": "A2",
     "category": "idioms",
     "translation": "אולי / יכול להיות",
+    "translationAr": "ربّما",
+    "translationRu": "возможно",
     "definition": "Used to show that something is possible but not certain.",
     "definitionHe": "משמש להראות שמשהו אפשרי אבל לא בטוח.",
     "examples": [
@@ -1720,6 +1820,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להאמין",
+    "translationAr": "يؤمن",
+    "translationRu": "верить",
     "definition": "To think that something is true or that someone is telling the truth.",
     "definitionHe": "לחשוב שמשהו נכון או שמישהו אומר אמת.",
     "examples": [
@@ -1755,6 +1857,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "להשתייך / לשייך",
+    "translationAr": "ينتمي",
+    "translationRu": "принадлежать",
     "definition": "To be the property of someone, or to be a member of a group.",
     "definitionHe": "להיות הרכוש של מישהו, או להיות חבר בקבוצה.",
     "examples": [
@@ -1790,6 +1894,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לשאול (לקחת בהשאלה)",
+    "translationAr": "يستعير",
+    "translationRu": "одалживать",
     "definition": "To take something from someone with the intention of returning it.",
     "definitionHe": "לקחת משהו ממישהו עם כוונה להחזיר.",
     "examples": [
@@ -1824,6 +1930,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "לחגוג",
+    "translationAr": "يحتفل",
+    "translationRu": "праздновать",
     "definition": "To do something special for an important event or occasion.",
     "definitionHe": "לעשות משהו מיוחד לכבוד אירוע או מאורע חשוב.",
     "examples": [
@@ -1859,6 +1967,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "להשוות",
+    "translationAr": "يقارن",
+    "translationRu": "сравнивать",
     "definition": "To examine things to see how they are similar or different.",
     "definitionHe": "לבדוק דברים כדי לראות איך הם דומים או שונים.",
     "examples": [
@@ -1894,6 +2004,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להתלונן",
+    "translationAr": "يشتكي",
+    "translationRu": "жаловаться",
     "definition": "To say that you are unhappy or not satisfied with something.",
     "definitionHe": "לומר שאתה לא מרוצה או לא מסופק ממשהו.",
     "examples": [
@@ -1929,6 +2041,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לחבר / להתחבר",
+    "translationAr": "يربط",
+    "translationRu": "соединять",
     "definition": "To join two or more things together, or to link to the internet or a network.",
     "definitionHe": "לחבר שני דברים או יותר יחד, או להתחבר לאינטרנט או לרשת.",
     "examples": [
@@ -1965,6 +2079,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להחליט",
+    "translationAr": "يقرّر",
+    "translationRu": "решать",
     "definition": "To make a choice about something after thinking about the options.",
     "definitionHe": "לבחור משהו אחרי שחושבים על האפשרויות.",
     "examples": [
@@ -2000,6 +2116,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "לספק / למסור / לשלוח",
+    "translationAr": "يوصل",
+    "translationRu": "доставлять",
     "definition": "To bring goods or letters to a particular place or person.",
     "definitionHe": "להביא סחורות או מכתבים למקום מסוים או לאדם מסוים.",
     "examples": [
@@ -2036,6 +2154,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לתאר",
+    "translationAr": "يصف",
+    "translationRu": "описывать",
     "definition": "To say what someone or something is like by giving details.",
     "definitionHe": "לספר איך מישהו או משהו נראה או מרגיש על ידי מתן פרטים.",
     "examples": [
@@ -2072,6 +2192,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "לגלות",
+    "translationAr": "يكتشف",
+    "translationRu": "обнаруживать",
     "definition": "To find something or learn about something for the first time.",
     "definitionHe": "למצוא משהו או ללמוד על משהו בפעם הראשונה.",
     "examples": [
@@ -2107,6 +2229,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לדון",
+    "translationAr": "يناقش",
+    "translationRu": "обсуждать",
     "definition": "To talk about something with another person or group, especially to make a decision.",
     "definitionHe": "לדבר על משהו עם אדם אחר או קבוצה, בעיקר כדי לקבל החלטה.",
     "examples": [
@@ -2142,6 +2266,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "להרוויח",
+    "translationAr": "يكسب",
+    "translationRu": "зарабатывать",
     "definition": "To get money for work that you do.",
     "definitionHe": "לקבל כסף עבור עבודה שעושים.",
     "examples": [
@@ -2182,6 +2308,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "לעודד",
+    "translationAr": "يشجّع",
+    "translationRu": "поощрять",
     "definition": "To give someone confidence or support to do something.",
     "definitionHe": "לתת למישהו ביטחון או תמיכה לעשות משהו.",
     "examples": [
@@ -2218,6 +2346,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "ליהנות",
+    "translationAr": "يستمتع",
+    "translationRu": "наслаждаться",
     "definition": "To get pleasure from something.",
     "definitionHe": "לקבל הנאה ממשהו.",
     "examples": [
@@ -2254,6 +2384,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "לצפות / לדרוש",
+    "translationAr": "يتوقّع",
+    "translationRu": "ожидать",
     "definition": "To think that something will happen or that someone will do something.",
     "definitionHe": "לחשוב שמשהו יקרה או שמישהו יעשה משהו.",
     "examples": [
@@ -2289,6 +2421,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לבטא",
+    "translationAr": "يعبّر",
+    "translationRu": "выражать",
     "definition": "To show or tell people what you think or feel using words or actions.",
     "definitionHe": "להראות או לספר לאנשים מה אתה חושב או מרגיש באמצעות מילים או מעשים.",
     "examples": [
@@ -2325,6 +2459,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "להיכשל / לכשול",
+    "translationAr": "يفشل",
+    "translationRu": "провалиться",
     "definition": "To not succeed in doing something, or to not pass an exam.",
     "definitionHe": "לא להצליח לעשות משהו, או לא לעבור מבחן.",
     "examples": [
@@ -2360,6 +2496,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לעקוב / ללכת אחרי",
+    "translationAr": "يتبع",
+    "translationRu": "следовать",
     "definition": "To go or come after someone, or to obey rules or instructions.",
     "definitionHe": "ללכת אחרי מישהו, או לציית לכללים או הוראות.",
     "examples": [
@@ -2396,6 +2534,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "לסלוח",
+    "translationAr": "يسامح",
+    "translationRu": "прощать",
     "definition": "To stop being angry with someone who has done something wrong.",
     "definitionHe": "להפסיק לכעוס על מישהו שעשה משהו רע.",
     "examples": [
@@ -2431,6 +2571,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לנחש",
+    "translationAr": "يخمّن",
+    "translationRu": "угадывать",
     "definition": "To give an answer or opinion without being sure it is correct.",
     "definitionHe": "לתת תשובה או דעה בלי להיות בטוח שהיא נכונה.",
     "examples": [
@@ -2466,6 +2608,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לקרות",
+    "translationAr": "يحدث",
+    "translationRu": "происходить",
     "definition": "To take place, especially without being planned.",
     "definitionHe": "להתרחש, במיוחד בלי תכנון מוקדם.",
     "examples": [
@@ -2501,6 +2645,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "לקוות",
+    "translationAr": "يأمل",
+    "translationRu": "надеяться",
     "definition": "To want something to happen and think that it is possible.",
     "definitionHe": "לרצות שמשהו יקרה ולחשוב שזה אפשרי.",
     "examples": [
@@ -2536,6 +2682,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "לדמיין",
+    "translationAr": "يتخيّل",
+    "translationRu": "представлять",
     "definition": "To form a picture or idea in your mind of something that is not real or present.",
     "definitionHe": "ליצור תמונה או רעיון במוח של משהו שלא קיים או לא נמצא.",
     "examples": [
@@ -2572,6 +2720,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לכלול",
+    "translationAr": "يشمل",
+    "translationRu": "включать",
     "definition": "To contain something as a part of something else.",
     "definitionHe": "להכיל משהו כחלק ממשהו אחר.",
     "examples": [
@@ -2607,6 +2757,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "להגדיל / לעלות",
+    "translationAr": "يزيد",
+    "translationRu": "увеличивать",
     "definition": "To become larger in amount, number, or degree.",
     "definitionHe": "להפוך לגדול יותר בכמות, במספר, או בדרגה.",
     "examples": [
@@ -2643,6 +2795,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "להציג / להכיר בין אנשים",
+    "translationAr": "يقدّم",
+    "translationRu": "представлять",
     "definition": "To tell someone another person's name for the first time, or to present something new.",
     "definitionHe": "לספר למישהו את שמו של אדם אחר בפעם הראשונה, או להציג משהו חדש.",
     "examples": [
@@ -2678,6 +2832,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "להצטרף",
+    "translationAr": "ينضمّ",
+    "translationRu": "присоединяться",
     "definition": "To become a member of a group, or to go together with someone.",
     "definitionHe": "להפוך לחבר בקבוצה, או להצטרף למישהו.",
     "examples": [
@@ -2714,6 +2870,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "לנהל / להצליח",
+    "translationAr": "يُدير",
+    "translationRu": "управлять",
     "definition": "To be in charge of something, or to succeed in doing something difficult.",
     "definitionHe": "להיות אחראי על משהו, או להצליח לעשות משהו קשה.",
     "examples": [
@@ -2750,6 +2908,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להזכיר",
+    "translationAr": "يذكر",
+    "translationRu": "упоминать",
     "definition": "To talk about something briefly without giving many details.",
     "definitionHe": "לדבר על משהו בקצרה בלי לתת הרבה פרטים.",
     "examples": [
@@ -2785,6 +2945,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "להתגעגע / לפספס",
+    "translationAr": "يفتقد",
+    "translationRu": "скучать",
     "definition": "To feel sad because someone is not with you, or to not catch or attend something.",
     "definitionHe": "להרגיש עצוב כי מישהו לא איתך, או לפספס משהו.",
     "examples": [
@@ -2820,6 +2982,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לשים לב",
+    "translationAr": "يلاحظ",
+    "translationRu": "замечать",
     "definition": "To see or become aware of something.",
     "definitionHe": "לראות או להיות מודע למשהו.",
     "examples": [
@@ -2856,6 +3020,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להציע",
+    "translationAr": "يعرض",
+    "translationRu": "предлагать",
     "definition": "To say that you are willing to do something or give something to someone.",
     "definitionHe": "לומר שאתה מוכן לעשות משהו או לתת משהו למישהו.",
     "examples": [
@@ -2892,6 +3058,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "לארגן",
+    "translationAr": "ينظّم",
+    "translationRu": "организовать",
     "definition": "To plan and arrange something, or to put things in order.",
     "definitionHe": "לתכנן ולסדר משהו, או לשים דברים בסדר.",
     "examples": [
@@ -2928,6 +3096,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "להעדיף",
+    "translationAr": "يفضّل",
+    "translationRu": "предпочитать",
     "definition": "To like one thing more than another.",
     "definitionHe": "לאהוב דבר אחד יותר מדבר אחר.",
     "examples": [
@@ -2963,6 +3133,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "להכין / להתכונן",
+    "translationAr": "يُحضّر",
+    "translationRu": "готовить",
     "definition": "To make something ready, or to get ready for something.",
     "definitionHe": "להכין משהו, או להתכונן למשהו.",
     "examples": [
@@ -2999,6 +3171,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "להבטיח",
+    "translationAr": "يعد",
+    "translationRu": "обещать",
     "definition": "To tell someone that you will definitely do something.",
     "definitionHe": "לומר למישהו שאתה בהחלט תעשה משהו.",
     "examples": [
@@ -3035,6 +3209,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "להבין / להיות מודע",
+    "translationAr": "يدرك",
+    "translationRu": "осознавать",
     "definition": "To understand or become aware of something that you did not know before.",
     "definitionHe": "להבין או להיות מודע למשהו שלא ידעת לפני כן.",
     "examples": [
@@ -3071,6 +3247,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לקבל",
+    "translationAr": "يستلم",
+    "translationRu": "получать",
     "definition": "To get something that has been given or sent to you.",
     "definitionHe": "לקבל משהו שנשלח או ניתן לך.",
     "examples": [
@@ -3106,6 +3284,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "לזהות / להכיר",
+    "translationAr": "يتعرّف على",
+    "translationRu": "узнавать",
     "definition": "To know who someone is or what something is because you have seen them before.",
     "definitionHe": "לדעת מי מישהו או מה משהו כי ראית אותם בעבר.",
     "examples": [
@@ -3142,6 +3322,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "לזכור",
+    "translationAr": "يتذكّر",
+    "translationRu": "помнить",
     "definition": "To have information in your mind from the past, or to not forget to do something.",
     "definitionHe": "להיות עם מידע מהעבר בראש, או לא לשכוח לעשות משהו.",
     "examples": [
@@ -3177,6 +3359,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "להציע",
+    "translationAr": "يقترح",
+    "translationRu": "предлагать",
     "definition": "To put forward an idea or plan for someone to think about.",
     "definitionHe": "להעלות רעיון או תוכנית שמישהו יחשוב עליהם.",
     "examples": [
@@ -3212,6 +3396,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "הפתעה",
+    "translationAr": "مفاجأة",
+    "translationRu": "сюрприз",
     "definition": "An unexpected event, or the feeling caused by something unexpected.",
     "definitionHe": "אירוע לא צפוי, או התחושה שנגרמת ממשהו לא צפוי.",
     "examples": [
@@ -3252,6 +3438,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "עצה",
+    "translationAr": "نصيحة",
+    "translationRu": "совет",
     "definition": "A suggestion about what someone should do",
     "definitionHe": "הצעה על מה שמישהו צריך לעשות",
     "examples": [
@@ -3286,6 +3474,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "קריירה",
+    "translationAr": "مسيرة مهنية",
+    "translationRu": "карьера",
     "definition": "The job or series of jobs that you do during your working life",
     "definitionHe": "המקצוע או סדרת העבודות שאדם עושה במהלך חיי העבודה שלו",
     "examples": [
@@ -3320,6 +3510,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "אתגר",
+    "translationAr": "تحدّي",
+    "translationRu": "вызов",
     "definition": "Something new and difficult that requires great effort",
     "definitionHe": "דבר חדש וקשה שדורש מאמץ רב",
     "examples": [
@@ -3354,6 +3546,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "קהילה",
+    "translationAr": "مجتمع",
+    "translationRu": "сообщество",
     "definition": "A group of people living in the same area or sharing common interests",
     "definitionHe": "קבוצת אנשים שגרים באותו אזור או חולקים תחומי עניין משותפים",
     "examples": [
@@ -3388,6 +3582,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "תחרות",
+    "translationAr": "مسابقة",
+    "translationRu": "соревнование",
     "definition": "An event in which people try to win something by being the best",
     "definitionHe": "אירוע שבו אנשים מנסים לנצח על ידי כך שהם הטובים ביותר",
     "examples": [
@@ -3422,6 +3618,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "שיחה",
+    "translationAr": "محادثة",
+    "translationRu": "разговор",
     "definition": "A talk between two or more people, in which they exchange ideas and news",
     "definitionHe": "דיבור בין שני אנשים או יותר, שבו הם מחליפים רעיונות וחדשות",
     "examples": [
@@ -3456,6 +3654,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "לקוח",
+    "translationAr": "زبون",
+    "translationRu": "клиент",
     "definition": "A person who buys goods or services from a shop or business",
     "definitionHe": "אדם שקונה מוצרים או שירותים מחנות או עסק",
     "examples": [
@@ -3490,6 +3690,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "החלטה",
+    "translationAr": "قرار",
+    "translationRu": "решение",
     "definition": "A choice that you make after thinking about several possibilities",
     "definitionHe": "בחירה שעושים אחרי שחושבים על כמה אפשרויות",
     "examples": [
@@ -3524,6 +3726,8 @@
     "cefrLevel": "A2",
     "category": "education",
     "translation": "חינוך / השכלה",
+    "translationAr": "تعليم",
+    "translationRu": "образование",
     "definition": "The process of teaching and learning, usually at school or university",
     "definitionHe": "תהליך ההוראה והלמידה, בדרך כלל בבית ספר או באוניברסיטה",
     "examples": [
@@ -3558,6 +3762,8 @@
     "cefrLevel": "A2",
     "category": "environment",
     "translation": "סביבה",
+    "translationAr": "بيئة",
+    "translationRu": "окружающая среда",
     "definition": "The natural world around us, or the conditions in which you live or work",
     "definitionHe": "העולם הטבעי סביבנו, או התנאים שבהם אדם חי או עובד",
     "examples": [
@@ -3592,6 +3798,8 @@
     "cefrLevel": "A2",
     "category": "entertainment",
     "translation": "אירוע",
+    "translationAr": "حدث",
+    "translationRu": "событие",
     "definition": "Something that happens, especially something important or unusual",
     "definitionHe": "משהו שקורה, במיוחד משהו חשוב או יוצא דופן",
     "examples": [
@@ -3626,6 +3834,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "ממשלה",
+    "translationAr": "حكومة",
+    "translationRu": "правительство",
     "definition": "The group of people who officially control a country",
     "definitionHe": "קבוצת האנשים שמנהלים רשמית את המדינה",
     "examples": [
@@ -3660,6 +3870,8 @@
     "cefrLevel": "A2",
     "category": "health",
     "translation": "בריאות",
+    "translationAr": "صحّة",
+    "translationRu": "здоровье",
     "definition": "The condition of your body and how well or ill you are",
     "definitionHe": "מצב הגוף שלך וכמה אתה בריא או חולה",
     "examples": [
@@ -3694,6 +3906,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "מידע",
+    "translationAr": "معلومات",
+    "translationRu": "информация",
     "definition": "Facts or details about a subject",
     "definitionHe": "עובדות או פרטים על נושא מסוים",
     "examples": [
@@ -3728,6 +3942,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "הודעה",
+    "translationAr": "رسالة",
+    "translationRu": "сообщение",
     "definition": "A piece of written or spoken information that one person sends to another",
     "definitionHe": "פיסת מידע כתובה או מדוברת שאדם אחד שולח לאחר",
     "examples": [
@@ -3762,6 +3978,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "דעה",
+    "translationAr": "رأي",
+    "translationRu": "мнение",
     "definition": "What you think or believe about something",
     "definitionHe": "מה שאתה חושב או מאמין לגבי משהו",
     "examples": [
@@ -3796,6 +4014,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "מערכת יחסים / קשר",
+    "translationAr": "علاقة",
+    "translationRu": "отношения",
     "definition": "The way in which two people or groups are connected",
     "definitionHe": "האופן שבו שני אנשים או קבוצות מחוברים זה לזה",
     "examples": [
@@ -3830,6 +4050,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "טכנולוגיה",
+    "translationAr": "تكنولوجيا",
+    "translationRu": "технология",
     "definition": "The use of science and machines to solve problems and make life easier",
     "definitionHe": "השימוש במדע ובמכונות כדי לפתור בעיות ולהקל על החיים",
     "examples": [
@@ -3864,6 +4086,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "מפחד / חושש",
+    "translationAr": "خائف",
+    "translationRu": "испуганный",
     "definition": "Feeling fear or worry about something",
     "definitionHe": "מרגיש פחד או דאגה לגבי משהו",
     "examples": [
@@ -3898,6 +4122,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "משעמם",
+    "translationAr": "ممل",
+    "translationRu": "скучный",
     "definition": "Not interesting or exciting",
     "definitionHe": "לא מעניין או מרגש",
     "examples": [
@@ -3932,6 +4158,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "אמיץ",
+    "translationAr": "شجاع",
+    "translationRu": "храбрый",
     "definition": "Ready to do dangerous or difficult things without showing fear",
     "definitionHe": "מוכן לעשות דברים מסוכנים או קשים בלי להראות פחד",
     "examples": [
@@ -3966,6 +4194,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "נוח",
+    "translationAr": "مريح",
+    "translationRu": "удобный",
     "definition": "Making you feel physically relaxed, or feeling at ease",
     "definitionHe": "גורם לך להרגיש רגוע פיזית, או מרגיש בנוח",
     "examples": [
@@ -4000,6 +4230,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "יצירתי",
+    "translationAr": "مبدع",
+    "translationRu": "творческий",
     "definition": "Having the ability to produce new and original ideas or things",
     "definitionHe": "בעל יכולת ליצור רעיונות או דברים חדשים ומקוריים",
     "examples": [
@@ -4034,6 +4266,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "סקרן",
+    "translationAr": "فضولي",
+    "translationRu": "любопытный",
     "definition": "Wanting to know or learn about something",
     "definitionHe": "רוצה לדעת או ללמוד על משהו",
     "examples": [
@@ -4068,6 +4302,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "מאוכזב",
+    "translationAr": "محبط",
+    "translationRu": "разочарованный",
     "definition": "Sad because something was not as good as expected or did not happen",
     "definitionHe": "עצוב כי משהו לא היה טוב כמו שציפית או לא קרה",
     "examples": [
@@ -4102,6 +4338,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "מצוין",
+    "translationAr": "ممتاز",
+    "translationRu": "отличный",
     "definition": "Extremely good; of very high quality",
     "definitionHe": "טוב ביותר; באיכות גבוהה מאוד",
     "examples": [
@@ -4136,6 +4374,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "נרגש / מתרגש",
+    "translationAr": "متحمّس",
+    "translationRu": "взволнованный",
     "definition": "Feeling very happy and enthusiastic about something",
     "definitionHe": "מרגיש מאוד שמח ונלהב לגבי משהו",
     "examples": [
@@ -4170,6 +4410,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "מפורסם",
+    "translationAr": "مشهور",
+    "translationRu": "знаменитый",
     "definition": "Known by many people",
     "definitionHe": "מוכר על ידי אנשים רבים",
     "examples": [
@@ -4204,6 +4446,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "זר / חוץ-לארצי",
+    "translationAr": "أجنبي",
+    "translationRu": "иностранный",
     "definition": "Belonging to or coming from another country",
     "definitionHe": "שייך לארץ אחרת או בא ממנה",
     "examples": [
@@ -4238,6 +4482,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "כנה / ישר",
+    "translationAr": "صادق",
+    "translationRu": "честный",
     "definition": "Always telling the truth and not cheating or stealing",
     "definitionHe": "תמיד אומר את האמת ולא מרמה או גונב",
     "examples": [
@@ -4272,6 +4518,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "מעוניין / מתעניין",
+    "translationAr": "مهتم",
+    "translationRu": "заинтересованный",
     "definition": "Wanting to know or learn more about something",
     "definitionHe": "רוצה לדעת או ללמוד עוד על משהו",
     "examples": [
@@ -4306,6 +4554,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "בודד",
+    "translationAr": "وحيد",
+    "translationRu": "одинокий",
     "definition": "Unhappy because you are alone or do not have friends",
     "definitionHe": "עצוב כי אתה לבד או שאין לך חברים",
     "examples": [
@@ -4340,6 +4590,8 @@
     "cefrLevel": "A2",
     "category": "technology",
     "translation": "מודרני / חדיש",
+    "translationAr": "حديث",
+    "translationRu": "современный",
     "definition": "Relating to the present time or recent times, using new methods or designs",
     "definitionHe": "קשור לזמן הנוכחי או לזמנים האחרונים, משתמש בשיטות או עיצובים חדשים",
     "examples": [
@@ -4374,6 +4626,8 @@
     "cefrLevel": "A2",
     "category": "communication",
     "translation": "הכרחי / נחוץ",
+    "translationAr": "ضروري",
+    "translationRu": "необходимый",
     "definition": "Needed in order to achieve a particular result",
     "definitionHe": "נדרש כדי להשיג תוצאה מסוימת",
     "examples": [
@@ -4408,6 +4662,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "עצבני / חרד",
+    "translationAr": "متوتّر",
+    "translationRu": "нервный",
     "definition": "Feeling worried and anxious about something that might happen",
     "definitionHe": "מרגיש מודאג וחרד לגבי משהו שעלול לקרות",
     "examples": [
@@ -4442,6 +4698,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "סבלני",
+    "translationAr": "صبور",
+    "translationRu": "терпеливый",
     "definition": "Able to wait calmly for a long time or deal with difficulties without getting angry",
     "definitionHe": "מסוגל לחכות בשלווה זמן רב או להתמודד עם קשיים בלי לכעוס",
     "examples": [
@@ -4476,6 +4734,8 @@
     "cefrLevel": "A2",
     "category": "relationships",
     "translation": "מנומס",
+    "translationAr": "مهذّب",
+    "translationRu": "вежливый",
     "definition": "Behaving in a way that is respectful and considerate of other people",
     "definitionHe": "מתנהג בצורה מכבדת ומתחשבת באנשים אחרים",
     "examples": [
@@ -4510,6 +4770,8 @@
     "cefrLevel": "A2",
     "category": "culture",
     "translation": "פופולרי / אהוב",
+    "translationAr": "شائع",
+    "translationRu": "популярный",
     "definition": "Liked or enjoyed by many people",
     "definitionHe": "אהוב או נהנים ממנו אנשים רבים",
     "examples": [
@@ -4544,6 +4806,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "גאה",
+    "translationAr": "فخور",
+    "translationRu": "гордый",
     "definition": "Feeling pleased and satisfied about something you or someone connected to you has achieved",
     "definitionHe": "מרגיש מרוצה ושבע רצון ממשהו שאתה או מישהו קרוב אליך השיג",
     "examples": [
@@ -4578,6 +4842,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "אחראי",
+    "translationAr": "مسؤول",
+    "translationRu": "ответственный",
     "definition": "Having the duty to deal with something or having caused something to happen",
     "definitionHe": "בעל חובה לטפל במשהו או שגרם למשהו לקרות",
     "examples": [
@@ -4612,6 +4878,8 @@
     "cefrLevel": "A2",
     "category": "work-advanced",
     "translation": "מצליח",
+    "translationAr": "ناجح",
+    "translationRu": "успешный",
     "definition": "Achieving what you wanted or having become rich or famous",
     "definitionHe": "משיג את מה שרצית או שהפך לעשיר או מפורסם",
     "examples": [
@@ -4646,6 +4914,8 @@
     "cefrLevel": "A2",
     "category": "emotions",
     "translation": "נפלא / נהדר",
+    "translationAr": "رائع",
+    "translationRu": "замечательный",
     "definition": "Extremely good; making you feel very happy",
     "definitionHe": "טוב ביותר; גורם לך להרגיש מאוד שמח",
     "examples": [

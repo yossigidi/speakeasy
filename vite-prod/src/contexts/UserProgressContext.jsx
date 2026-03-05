@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useAuth } from './AuthContext.jsx';
 import { getLevelInfo, getXPForLevel } from '../utils/levelSystem.js';
+import { checkAchievements } from '../utils/achievementChecker.js';
+import achievementsData from '../data/achievements.json';
 
 const UserProgressContext = createContext(null);
 
@@ -68,6 +70,106 @@ export function UserProgressProvider({ children: reactChildren }) {
 
   // Mutex for addXP to prevent race conditions from concurrent calls
   const xpQueueRef = useRef(Promise.resolve());
+
+  // Achievement toast state (shown globally via App.jsx)
+  const [achievementToast, setAchievementToast] = useState(null);
+  const achievementToastQueueRef = useRef([]);
+  const isShowingToastRef = useRef(false);
+  const achievementCheckTimerRef = useRef(null);
+  const pendingAchievementProgressRef = useRef(null);
+
+  // Show the next achievement toast from the queue
+  const showNextToast = useCallback(() => {
+    if (achievementToastQueueRef.current.length === 0) {
+      isShowingToastRef.current = false;
+      return;
+    }
+    isShowingToastRef.current = true;
+    const next = achievementToastQueueRef.current.shift();
+    setAchievementToast(next);
+  }, []);
+
+  const dismissAchievementToast = useCallback(() => {
+    setAchievementToast(null);
+    // Show next toast after a short delay
+    setTimeout(() => showNextToast(), 400);
+  }, [showNextToast]);
+
+  // Internal: run achievement check (non-debounced)
+  const _runAchievementCheck = useCallback(async (freshProgress) => {
+    if (!user) return;
+
+    // Use ref to get current activeChildId (avoids stale closure)
+    const currentChildId = activeChildIdRef.current;
+
+    try {
+      // Fetch currently unlocked achievement IDs from Firestore subcollection
+      const achCollPath = currentChildId
+        ? ['childProfiles', currentChildId, 'achievements']
+        : ['users', user.uid, 'achievements'];
+      const achRef = window.firestore.collection(window.db, ...achCollPath);
+      const achSnap = await window.firestore.getDocs(achRef);
+      const unlockedSet = new Set(achSnap.docs.map(d => d.id));
+
+      // Check which achievements are newly unlocked
+      const newlyUnlocked = checkAchievements(freshProgress, unlockedSet);
+
+      if (newlyUnlocked.length === 0) return;
+
+      // Write each new achievement to Firestore and queue toasts
+      for (const achId of newlyUnlocked) {
+        const achDocPath = currentChildId
+          ? ['childProfiles', currentChildId, 'achievements', achId]
+          : ['users', user.uid, 'achievements', achId];
+
+        try {
+          const docRef = window.firestore.doc(window.db, ...achDocPath);
+          await window.firestore.setDoc(docRef, {
+            unlockedAt: window.firestore.serverTimestamp(),
+          }, { merge: true });
+        } catch (err) {
+          console.warn('Failed to write achievement:', achId, err);
+        }
+
+        // Queue toast
+        const achData = achievementsData.find(a => a.id === achId);
+        if (achData) {
+          achievementToastQueueRef.current.push(achData);
+        }
+      }
+
+      // Start showing toasts if not already showing
+      if (!isShowingToastRef.current) {
+        showNextToast();
+      }
+    } catch (err) {
+      console.warn('checkAndGrantAchievements failed:', err);
+    }
+  }, [user, showNextToast]);
+
+  // Debounced achievement check: batches multiple progress updates into a single check.
+  // Always reads the latest progress from Firestore to ensure we have the most complete picture.
+  const checkAndGrantAchievements = useCallback(() => {
+    if (achievementCheckTimerRef.current) {
+      clearTimeout(achievementCheckTimerRef.current);
+    }
+    achievementCheckTimerRef.current = setTimeout(async () => {
+      achievementCheckTimerRef.current = null;
+      if (!user) return;
+      try {
+        const currentChildId = activeChildIdRef.current;
+        const docRef = currentChildId
+          ? window.firestore.doc(window.db, 'childProfiles', currentChildId)
+          : window.firestore.doc(window.db, 'users', user.uid);
+        const freshSnap = await window.firestore.getDoc(docRef);
+        if (freshSnap.exists()) {
+          _runAchievementCheck({ ...DEFAULT_PROGRESS, ...freshSnap.data() });
+        }
+      } catch (err) {
+        console.warn('Achievement check fresh-read failed:', err);
+      }
+    }, 1500); // 1.5s debounce to batch rapid updates
+  }, [user, _runAchievementCheck]);
 
   // Persist activeChildId to localStorage
   useEffect(() => {
@@ -142,9 +244,8 @@ export function UserProgressProvider({ children: reactChildren }) {
         return;
       }
 
-      // Fetch all child profiles
-      const kids = [];
-      for (const cid of childrenIds) {
+      // Fetch all child profiles in parallel
+      const kidResults = await Promise.all(childrenIds.map(async (cid) => {
         try {
           const childSnap = await window.firestore.getDoc(
             window.firestore.doc(window.db, 'childProfiles', cid)
@@ -172,12 +273,15 @@ export function UserProgressProvider({ children: reactChildren }) {
                 { merge: true }
               ).catch(e => console.warn('Lazy migration failed:', cid, e));
             }
-            kids.push({ id: childSnap.id, ...childData });
+            return { id: childSnap.id, ...childData };
           }
+          return null;
         } catch (e) {
           console.warn('Failed to fetch child:', cid, e);
+          return null;
         }
-      }
+      }));
+      const kids = kidResults.filter(Boolean);
       setChildrenList(kids);
       setChildrenLoaded(true);
 
@@ -306,10 +410,18 @@ export function UserProgressProvider({ children: reactChildren }) {
         ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
         : window.firestore.doc(window.db, 'users', user.uid);
       await window.firestore.setDoc(docRef, updates, { merge: true });
+
+      // Check achievements (debounced; will read fresh progress from Firestore)
+      try {
+        checkAndGrantAchievements();
+      } catch (achErr) {
+        // Non-critical: don't fail the updateProgress call
+        console.warn('Achievement check after updateProgress failed:', achErr);
+      }
     } catch (err) {
       console.error('updateProgress failed (offline?):', err);
     }
-  }, [user, activeChildId]);
+  }, [user, activeChildId, checkAndGrantAchievements]);
 
   const addXP = useCallback((amount, source = 'unknown') => {
     if (!user || amount <= 0) return Promise.resolve({ leveledUp: false, newLevel: progress.level });
@@ -352,6 +464,19 @@ export function UserProgressProvider({ children: reactChildren }) {
           newLongest = Math.max(newLongest, newStreak);
         }
 
+        // Daily goal streak: when transitioning to a new day, check if yesterday met the goal
+        let newDailyGoalStreak = freshData.dailyGoalStreak || 0;
+        if (freshData.lastActiveDate !== today && freshData.lastActiveDate) {
+          const goalXP = (freshData.dailyGoalMinutes || 10) * 3; // ~3 XP per minute of activity
+          if ((freshData.dailyXP || 0) >= goalXP) {
+            // Yesterday's goal was met, increment streak
+            newDailyGoalStreak += 1;
+          } else {
+            // Goal was not met, reset streak
+            newDailyGoalStreak = 0;
+          }
+        }
+
         const updates = {
           xp: newXP,
           level: levelInfo.level,
@@ -359,6 +484,7 @@ export function UserProgressProvider({ children: reactChildren }) {
           streak: newStreak,
           longestStreak: newLongest,
           lastActiveDate: today,
+          dailyGoalStreak: newDailyGoalStreak,
           ...(usedFreeze ? { streakFreezes: Math.max(0, (freshData.streakFreezes || 0) - 1) } : {}),
         };
 
@@ -388,6 +514,9 @@ export function UserProgressProvider({ children: reactChildren }) {
           console.warn('Failed to log daily activity:', activityErr);
         }
 
+        // Check achievements (debounced; will read fresh progress from Firestore)
+        checkAndGrantAchievements();
+
         return { leveledUp: levelInfo.level > freshData.level, newLevel: levelInfo.level };
       } catch (err) {
         console.error('addXP failed:', err);
@@ -397,7 +526,7 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     xpQueueRef.current = task.catch(() => {}); // keep queue alive even on error
     return task;
-  }, [user, progress.level, activeChildId]);
+  }, [user, progress.level, activeChildId, checkAndGrantAchievements]);
 
   // --- Family management functions ---
 
@@ -630,6 +759,9 @@ export function UserProgressProvider({ children: reactChildren }) {
     updateProgress,
     addXP,
     levelInfo,
+    // Achievements
+    achievementToast,
+    dismissAchievementToast,
     // Family
     activeChildId,
     activeChild,
@@ -645,7 +777,8 @@ export function UserProgressProvider({ children: reactChildren }) {
     generateFamilyCode,
     resetChildPin,
     updateChildLevel,
-  }), [progress, loading, updateProgress, addXP, levelInfo, activeChildId, activeChild,
+  }), [progress, loading, updateProgress, addXP, levelInfo, achievementToast, dismissAchievementToast,
+       activeChildId, activeChild,
        isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
        addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel]);
 

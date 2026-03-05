@@ -7,6 +7,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "לשדר",
+    "translationAr": "بَثَّ، أذاعَ",
+    "translationRu": "транслировать",
     "definition": "To transmit a program or information by radio or television.",
     "definitionHe": "לשדר תוכנית או מידע ברדיו או בטלוויזיה.",
     "examples": [
@@ -42,6 +44,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "עיתונאות",
+    "translationAr": "صحافة",
+    "translationRu": "журналистика",
     "definition": "The activity or profession of writing for newspapers, magazines, or news websites.",
     "definitionHe": "הפעילות או המקצוע של כתיבה לעיתונים, מגזינים או אתרי חדשות.",
     "examples": [
@@ -77,6 +81,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "כותרת",
+    "translationAr": "عنوان رئيسي",
+    "translationRu": "заголовок",
     "definition": "The title of a newspaper article printed in large letters.",
     "definitionHe": "הכותרת של כתבה בעיתון, מודפסת באותיות גדולות.",
     "examples": [
@@ -112,6 +118,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "מאמר מערכת",
+    "translationAr": "مقال افتتاحي",
+    "translationRu": "редакционная статья",
     "definition": "A newspaper article that expresses the editor's opinion on a topic.",
     "definitionHe": "מאמר בעיתון שמביע את דעת העורך בנושא מסוים.",
     "examples": [
@@ -147,6 +155,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "סיקור",
+    "translationAr": "تغطية إعلامية",
+    "translationRu": "освещение",
     "definition": "The reporting of news and events by the media.",
     "definitionHe": "דיווח על חדשות ואירועים על ידי התקשורת.",
     "examples": [
@@ -182,6 +192,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "קהל",
+    "translationAr": "جمهور",
+    "translationRu": "аудитория",
     "definition": "The group of people who watch, listen to, or read something.",
     "definitionHe": "קבוצת האנשים שצופים, מאזינים או קוראים משהו.",
     "examples": [
@@ -217,6 +229,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "כתב",
+    "translationAr": "مراسل",
+    "translationRu": "корреспондент",
     "definition": "A journalist who reports news from a particular place or on a particular topic.",
     "definitionHe": "עיתונאי שמדווח חדשות ממקום מסוים או על נושא מסוים.",
     "examples": [
@@ -252,6 +266,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "סרט תיעודי",
+    "translationAr": "فيلم وثائقي",
+    "translationRu": "документальный фильм",
     "definition": "A film or TV program that gives facts about a real subject.",
     "definitionHe": "סרט או תוכנית טלוויזיה שמציגים עובדות על נושא אמיתי.",
     "examples": [
@@ -287,6 +303,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "להירשם כמנוי",
+    "translationAr": "اشترك",
+    "translationRu": "подписаться",
     "definition": "To arrange to receive something regularly, especially a publication or service.",
     "definitionHe": "לסדר קבלה של משהו באופן קבוע, בעיקר פרסום או שירות.",
     "examples": [
@@ -322,6 +340,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "לפרסם",
+    "translationAr": "نَشَرَ",
+    "translationRu": "публиковать",
     "definition": "To make content available to the public, especially in print or online.",
     "definitionHe": "להפוך תוכן לזמין לציבור, בעיקר בדפוס או באינטרנט.",
     "examples": [
@@ -357,6 +377,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "לצנזר",
+    "translationAr": "رَقَّبَ، فرض رقابة",
+    "translationRu": "цензурировать",
     "definition": "To examine and suppress material considered offensive or a threat.",
     "definitionHe": "לבדוק ולהסיר חומר שנחשב פוגעני או מאיים.",
     "examples": [
@@ -392,6 +414,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "צילומים, חומר מצולם",
+    "translationAr": "لقطات مصوَّرة",
+    "translationRu": "видеозапись, кадры",
     "definition": "Recorded film or video material.",
     "definitionHe": "חומר סרט או וידאו מוקלט.",
     "examples": [
@@ -427,6 +451,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "טוּר",
+    "translationAr": "كاتب عمود",
+    "translationRu": "обозреватель, колумнист",
     "definition": "A journalist who writes a regular column in a newspaper or magazine.",
     "definitionHe": "עיתונאי שכותב טור קבוע בעיתון או מגזין.",
     "examples": [
@@ -462,6 +488,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "מרכזי, רווח",
+    "translationAr": "سائد، رئيسي",
+    "translationRu": "основной, мейнстримный",
     "definition": "Considered normal and accepted by most people in a society.",
     "definitionHe": "נחשב רגיל ומקובל על רוב האנשים בחברה.",
     "examples": [
@@ -497,6 +525,8 @@
     "cefrLevel": "B2",
     "category": "media",
     "translation": "תעמולה",
+    "translationAr": "دعاية، بروباغندا",
+    "translationRu": "пропаганда",
     "definition": "Information used to promote a political cause or point of view, often misleading.",
     "definitionHe": "מידע המשמש לקידום מטרה פוליטית או נקודת מבט, לעתים מטעה.",
     "examples": [
@@ -532,6 +562,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "דמוקרטיה",
+    "translationAr": "ديمقراطية",
+    "translationRu": "демократия",
     "definition": "A system of government in which people vote to choose their leaders.",
     "definitionHe": "שיטת ממשל שבה העם בוחר את מנהיגיו בהצבעה.",
     "examples": [
@@ -567,6 +599,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "פרלמנט",
+    "translationAr": "برلمان",
+    "translationRu": "парламент",
     "definition": "The group of elected representatives who make laws in a country.",
     "definitionHe": "קבוצת הנציגים הנבחרים שמחוקקים חוקים במדינה.",
     "examples": [
@@ -602,6 +636,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "חקיקה",
+    "translationAr": "تشريع",
+    "translationRu": "законодательство",
     "definition": "Laws considered collectively; the process of making laws.",
     "definitionHe": "חוקים כמכלול; התהליך של חקיקת חוקים.",
     "examples": [
@@ -637,6 +673,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "מסע, קמפיין",
+    "translationAr": "حملة",
+    "translationRu": "кампания",
     "definition": "An organized course of action to achieve a particular goal.",
     "definitionHe": "מהלך מאורגן של פעולות להשגת מטרה מסוימת.",
     "examples": [
@@ -672,6 +710,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "דיפלומט",
+    "translationAr": "دبلوماسي",
+    "translationRu": "дипломат",
     "definition": "A person who represents their country in negotiations with other nations.",
     "definitionHe": "אדם שמייצג את מדינתו במשאים ומתנים עם מדינות אחרות.",
     "examples": [
@@ -707,6 +747,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "חוקה",
+    "translationAr": "دستور",
+    "translationRu": "конституция",
     "definition": "The fundamental principles by which a state is governed.",
     "definitionHe": "העקרונות הבסיסיים שלפיהם מדינה מתנהלת.",
     "examples": [
@@ -742,6 +784,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "תיקון (לחוק)",
+    "translationAr": "تعديل (قانوني)",
+    "translationRu": "поправка",
     "definition": "A change or addition to a law, constitution, or document.",
     "definitionHe": "שינוי או תוספת לחוק, חוקה או מסמך.",
     "examples": [
@@ -777,6 +821,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "אופוזיציה",
+    "translationAr": "معارضة",
+    "translationRu": "оппозиция",
     "definition": "The main political party opposing the government; resistance to something.",
     "definitionHe": "המפלגה הפוליטית העיקרית שמתנגדת לממשלה; התנגדות למשהו.",
     "examples": [
@@ -812,6 +858,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "משאל עם",
+    "translationAr": "استفتاء",
+    "translationRu": "референдум",
     "definition": "A vote in which all eligible people can decide on an important issue.",
     "definitionHe": "הצבעה שבה כל מי שזכאי יכול להחליט בנושא חשוב.",
     "examples": [
@@ -847,6 +895,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "ריבונות",
+    "translationAr": "سيادة",
+    "translationRu": "суверенитет",
     "definition": "Supreme power or authority of a state to govern itself.",
     "definitionHe": "הסמכות או הכוח העליון של מדינה לשלוט בעצמה.",
     "examples": [
@@ -882,6 +932,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "בירוקרטיה",
+    "translationAr": "بيروقراطية",
+    "translationRu": "бюрократия",
     "definition": "A system of government with many complicated rules and processes.",
     "definitionHe": "מערכת ממשל עם כללים ותהליכים מורכבים רבים.",
     "examples": [
@@ -917,6 +969,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "קואליציה",
+    "translationAr": "ائتلاف",
+    "translationRu": "коалиция",
     "definition": "A temporary alliance of different parties for joint action.",
     "definitionHe": "ברית זמנית של מפלגות שונות לפעולה משותפת.",
     "examples": [
@@ -952,6 +1006,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "סנקציה",
+    "translationAr": "عقوبة، جزاء",
+    "translationRu": "санкция",
     "definition": "An official penalty or restriction imposed on a country or individual.",
     "definitionHe": "עונש רשמי או הגבלה שמוטלים על מדינה או יחיד.",
     "examples": [
@@ -987,6 +1043,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "משטר",
+    "translationAr": "نظام حكم",
+    "translationRu": "режим",
     "definition": "A government, especially one that is strict or authoritarian.",
     "definitionHe": "ממשלה, במיוחד כזו שהיא נוקשה או סמכותנית.",
     "examples": [
@@ -1022,6 +1080,8 @@
     "cefrLevel": "B2",
     "category": "politics",
     "translation": "אידאולוגיה",
+    "translationAr": "أيديولوجية",
+    "translationRu": "идеология",
     "definition": "A set of beliefs or principles, especially political ones.",
     "definitionHe": "מערכת של אמונות או עקרונות, במיוחד פוליטיים.",
     "examples": [
@@ -1057,6 +1117,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "השערה",
+    "translationAr": "فرضية",
+    "translationRu": "гипотеза",
     "definition": "A proposed explanation for something that can be tested.",
     "definitionHe": "הסבר מוצע למשהו שניתן לבדוק.",
     "examples": [
@@ -1092,6 +1154,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "ניסוי",
+    "translationAr": "تجربة",
+    "translationRu": "эксперимент",
     "definition": "A test done to discover something new or verify a hypothesis.",
     "definitionHe": "בדיקה שנעשית כדי לגלות משהו חדש או לאמת השערה.",
     "examples": [
@@ -1127,6 +1191,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "מולקולה",
+    "translationAr": "جُزَيء",
+    "translationRu": "молекула",
     "definition": "The smallest unit of a substance that has all the properties of that substance.",
     "definitionHe": "היחידה הקטנה ביותר של חומר שיש לה את כל התכונות של אותו חומר.",
     "examples": [
@@ -1162,6 +1228,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "אורגניזם",
+    "translationAr": "كائن حي",
+    "translationRu": "организм",
     "definition": "A living thing, such as a plant, animal, or bacterium.",
     "definitionHe": "יצור חי, כגון צמח, בעל חיים או חיידק.",
     "examples": [
@@ -1197,6 +1265,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "אבולוציה",
+    "translationAr": "تطوُّر",
+    "translationRu": "эволюция",
     "definition": "The gradual development of species over millions of years.",
     "definitionHe": "ההתפתחות ההדרגתית של מינים לאורך מיליוני שנים.",
     "examples": [
@@ -1232,6 +1302,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "תופעה",
+    "translationAr": "ظاهرة",
+    "translationRu": "феномен, явление",
     "definition": "A fact or event that can be observed, especially one that is remarkable.",
     "definitionHe": "עובדה או אירוע שניתן לצפות בהם, במיוחד כזו שהיא יוצאת דופן.",
     "examples": [
@@ -1267,6 +1339,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "גנום",
+    "translationAr": "جينوم",
+    "translationRu": "геном",
     "definition": "The complete set of genetic material in an organism.",
     "definitionHe": "המערך המלא של חומר גנטי באורגניזם.",
     "examples": [
@@ -1302,6 +1376,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "מערכת אקולוגית",
+    "translationAr": "نظام بيئي",
+    "translationRu": "экосистема",
     "definition": "A community of living things interacting with their environment.",
     "definitionHe": "קהילה של יצורים חיים המתקשרים עם סביבתם.",
     "examples": [
@@ -1337,6 +1413,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "משפט (מתמטי)",
+    "translationAr": "مبرهنة",
+    "translationRu": "теорема",
     "definition": "A statement that has been proven true based on previously established facts.",
     "definitionHe": "הצהרה שהוכחה כנכונה על בסיס עובדות שנקבעו קודם.",
     "examples": [
@@ -1372,6 +1450,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "משתנה",
+    "translationAr": "مُتَغَيِّر",
+    "translationRu": "переменная",
     "definition": "A factor that can change in an experiment or mathematical equation.",
     "definitionHe": "גורם שיכול להשתנות בניסוי או במשוואה מתמטית.",
     "examples": [
@@ -1407,6 +1487,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "חלקיק",
+    "translationAr": "جُسَيم",
+    "translationRu": "частица",
     "definition": "An extremely small piece of matter.",
     "definitionHe": "פיסת חומר קטנה ביותר.",
     "examples": [
@@ -1442,6 +1524,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "זרז",
+    "translationAr": "حافز، عامل مُحَفِّز",
+    "translationRu": "катализатор",
     "definition": "A substance that speeds up a chemical reaction; something that causes change.",
     "definitionHe": "חומר שמאיץ תגובה כימית; משהו שגורם לשינוי.",
     "examples": [
@@ -1477,6 +1561,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "סינתזה, מיזוג",
+    "translationAr": "تركيب، توليف",
+    "translationRu": "синтез",
     "definition": "The combination of elements to form a whole; the production of a substance.",
     "definitionHe": "שילוב של אלמנטים ליצירת שלם; ייצור של חומר.",
     "examples": [
@@ -1512,6 +1598,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "מתאם",
+    "translationAr": "ارتباط، علاقة ترابطية",
+    "translationRu": "корреляция",
     "definition": "A mutual relationship or connection between two things.",
     "definitionHe": "קשר הדדי או חיבור בין שני דברים.",
     "examples": [
@@ -1547,6 +1635,8 @@
     "cefrLevel": "B2",
     "category": "science",
     "translation": "מיקרוסקופ",
+    "translationAr": "مجهر",
+    "translationRu": "микроскоп",
     "definition": "An instrument used to see very small objects that are invisible to the naked eye.",
     "definitionHe": "מכשיר המשמש לראות עצמים קטנים מאוד שאינם נראים לעין בלתי מזוינת.",
     "examples": [
@@ -1582,6 +1672,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "השקעה",
+    "translationAr": "استثمار",
+    "translationRu": "инвестиция",
     "definition": "The act of putting money into something to make a profit.",
     "definitionHe": "הפעולה של הכנסת כסף למשהו כדי להרוויח.",
     "examples": [
@@ -1617,6 +1709,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "אינפלציה",
+    "translationAr": "تضخُّم",
+    "translationRu": "инфляция",
     "definition": "A general increase in prices and fall in the value of money.",
     "definitionHe": "עלייה כללית במחירים וירידה בערך הכסף.",
     "examples": [
@@ -1652,6 +1746,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "הכנסות",
+    "translationAr": "إيرادات",
+    "translationRu": "доход, выручка",
     "definition": "The total income generated by a business or government.",
     "definitionHe": "ההכנסה הכוללת שנוצרת על ידי עסק או ממשלה.",
     "examples": [
@@ -1687,6 +1783,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "משכנתא",
+    "translationAr": "رهن عقاري",
+    "translationRu": "ипотека",
     "definition": "A loan used to buy property, with the property as security.",
     "definitionHe": "הלוואה לרכישת נכס, כאשר הנכס משמש כבטוחה.",
     "examples": [
@@ -1722,6 +1820,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "דיבידנד",
+    "translationAr": "أرباح موزَّعة",
+    "translationRu": "дивиденд",
     "definition": "A payment made by a company to its shareholders from its profits.",
     "definitionHe": "תשלום שנעשה על ידי חברה לבעלי המניות שלה מהרווחים.",
     "examples": [
@@ -1757,6 +1857,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "פשיטת רגל",
+    "translationAr": "إفلاس",
+    "translationRu": "банкротство",
     "definition": "The state of being unable to pay debts; legal declaration of inability to pay.",
     "definitionHe": "מצב של חוסר יכולת לשלם חובות; הכרזה משפטית על חדלות פירעון.",
     "examples": [
@@ -1792,6 +1894,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "תיק השקעות",
+    "translationAr": "محفظة استثمارية",
+    "translationRu": "портфель",
     "definition": "A collection of investments owned by a person or organization.",
     "definitionHe": "אוסף השקעות שבבעלות אדם או ארגון.",
     "examples": [
@@ -1827,6 +1931,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "סחורה",
+    "translationAr": "سلعة",
+    "translationRu": "товар, сырьё",
     "definition": "A raw material or basic product that can be bought and sold.",
     "definitionHe": "חומר גלם או מוצר בסיסי שניתן לקנות ולמכור.",
     "examples": [
@@ -1862,6 +1968,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "התחייבות, חבות",
+    "translationAr": "التزام، مسؤولية",
+    "translationRu": "обязательство, ответственность",
     "definition": "A financial debt or obligation; legal responsibility.",
     "definitionHe": "חוב כספי או התחייבות; אחריות משפטית.",
     "examples": [
@@ -1897,6 +2005,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "הון עצמי",
+    "translationAr": "حقوق ملكية، رأس مال",
+    "translationRu": "собственный капитал",
     "definition": "The value of an asset minus any money owed on it.",
     "definitionHe": "ערך הנכס פחות כסף שחייבים עליו.",
     "examples": [
@@ -1932,6 +2042,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "פחת",
+    "translationAr": "استهلاك، إهلاك",
+    "translationRu": "амортизация",
     "definition": "A decrease in the value of an asset over time.",
     "definitionHe": "ירידה בערך של נכס לאורך זמן.",
     "examples": [
@@ -1967,6 +2079,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "עסקה",
+    "translationAr": "صفقة، معاملة",
+    "translationRu": "транзакция, сделка",
     "definition": "An instance of buying or selling; a business deal.",
     "definitionHe": "מקרה של קנייה או מכירה; עסקה מסחרית.",
     "examples": [
@@ -2002,6 +2116,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "ריבית",
+    "translationAr": "سعر الفائدة",
+    "translationRu": "процентная ставка",
     "definition": "The percentage charged for borrowing money or earned on savings.",
     "definitionHe": "האחוז שנגבה על הלוואת כסף או שנצבר על חיסכון.",
     "examples": [
@@ -2037,6 +2153,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "שוק המניות",
+    "translationAr": "سوق الأسهم",
+    "translationRu": "фондовый рынок",
     "definition": "A place where shares of companies are bought and sold.",
     "definitionHe": "מקום שבו קונים ומוכרים מניות של חברות.",
     "examples": [
@@ -2072,6 +2190,8 @@
     "cefrLevel": "B2",
     "category": "finance",
     "translation": "גירעון תקציבי",
+    "translationAr": "عجز في الميزانية",
+    "translationRu": "бюджетный дефицит",
     "definition": "When a government spends more money than it receives.",
     "definitionHe": "כאשר ממשלה מוציאה יותר כסף ממה שהיא מקבלת.",
     "examples": [
@@ -2107,6 +2227,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "חרדה",
+    "translationAr": "قلق",
+    "translationRu": "тревога, тревожность",
     "definition": "A feeling of worry, nervousness, or unease about something uncertain.",
     "definitionHe": "תחושת דאגה, עצבנות או אי שקט לגבי משהו לא ודאי.",
     "examples": [
@@ -2142,6 +2264,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "קוגניטיבי",
+    "translationAr": "إدراكي، معرفي",
+    "translationRu": "когнитивный",
     "definition": "Relating to mental processes of perception, memory, and reasoning.",
     "definitionHe": "הקשור לתהליכים מנטליים של תפיסה, זיכרון וחשיבה.",
     "examples": [
@@ -2177,6 +2301,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "אמפתיה",
+    "translationAr": "تعاطف",
+    "translationRu": "эмпатия, сочувствие",
     "definition": "The ability to understand and share the feelings of another person.",
     "definitionHe": "היכולת להבין ולחלוק את הרגשות של אדם אחר.",
     "examples": [
@@ -2212,6 +2338,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "תפיסה",
+    "translationAr": "إدراك",
+    "translationRu": "восприятие",
     "definition": "The way you understand or interpret something; awareness through the senses.",
     "definitionHe": "הדרך שבה אתה מבין או מפרש משהו; מודעות דרך החושים.",
     "examples": [
@@ -2247,6 +2375,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "תת-מודע",
+    "translationAr": "اللاوعي",
+    "translationRu": "подсознание",
     "definition": "Existing in the mind but not immediately available to consciousness.",
     "definitionHe": "קיים בתודעה אבל לא זמין באופן מיידי למודעות.",
     "examples": [
@@ -2282,6 +2412,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "טראומה",
+    "translationAr": "صدمة نفسية",
+    "translationRu": "травма",
     "definition": "A deeply distressing or disturbing experience; emotional shock.",
     "definitionHe": "חוויה מצערת או מטרידה עמוקות; הלם רגשי.",
     "examples": [
@@ -2317,6 +2449,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "חוסן",
+    "translationAr": "مرونة، صمود",
+    "translationRu": "устойчивость, стойкость",
     "definition": "The ability to recover quickly from difficulties.",
     "definitionHe": "היכולת להתאושש מהר מקשיים.",
     "examples": [
@@ -2352,6 +2486,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "הפרעה",
+    "translationAr": "اضطراب",
+    "translationRu": "расстройство",
     "definition": "A medical condition that disrupts normal functioning.",
     "definitionHe": "מצב רפואי שמשבש תפקוד תקין.",
     "examples": [
@@ -2387,6 +2523,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "גירוי",
+    "translationAr": "مُثير، حافز",
+    "translationRu": "стимул, раздражитель",
     "definition": "Something that causes a reaction or response.",
     "definitionHe": "משהו שגורם לתגובה.",
     "examples": [
@@ -2422,6 +2560,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "אינסטינקט",
+    "translationAr": "غريزة",
+    "translationRu": "инстинкт",
     "definition": "An innate pattern of behavior; a natural tendency.",
     "definitionHe": "דפוס התנהגות מולד; נטייה טבעית.",
     "examples": [
@@ -2457,6 +2597,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "התנהגותי",
+    "translationAr": "سلوكي",
+    "translationRu": "поведенческий",
     "definition": "Relating to the way a person or animal acts.",
     "definitionHe": "הקשור לדרך שבה אדם או בעל חיים פועלים.",
     "examples": [
@@ -2492,6 +2634,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "פוביה",
+    "translationAr": "رُهاب",
+    "translationRu": "фобия",
     "definition": "An extreme or irrational fear of something.",
     "definitionHe": "פחד קיצוני או לא רציונלי ממשהו.",
     "examples": [
@@ -2527,6 +2671,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "נוירוזה",
+    "translationAr": "عُصاب",
+    "translationRu": "невроз",
     "definition": "A mild mental disorder involving anxiety, depression, or obsessive behavior.",
     "definitionHe": "הפרעה נפשית קלה הכוללת חרדה, דיכאון או התנהגות אובססיבית.",
     "examples": [
@@ -2562,6 +2708,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "הערכה עצמית",
+    "translationAr": "تقدير الذات",
+    "translationRu": "самооценка",
     "definition": "Confidence in one's own worth or abilities.",
     "definitionHe": "ביטחון בערך העצמי או ביכולות של עצמך.",
     "examples": [
@@ -2597,6 +2745,8 @@
     "cefrLevel": "B2",
     "category": "psychology",
     "translation": "מופנם",
+    "translationAr": "انطوائي",
+    "translationRu": "интроверт",
     "definition": "A person who is more focused on internal thoughts and feelings.",
     "definitionHe": "אדם שמתמקד יותר במחשבות ורגשות פנימיים.",
     "examples": [
@@ -2632,6 +2782,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "פסק דין",
+    "translationAr": "حُكم (قضائي)",
+    "translationRu": "вердикт, приговор",
     "definition": "The decision of a jury or judge in a legal case.",
     "definitionHe": "ההחלטה של חבר מושבעים או שופט בתיק משפטי.",
     "examples": [
@@ -2667,6 +2819,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "תביעה",
+    "translationAr": "ادِّعاء، مُلاحَقة قضائية",
+    "translationRu": "обвинение, судебное преследование",
     "definition": "The side in a legal case that accuses someone of a crime.",
     "definitionHe": "הצד בתיק משפטי שמאשים מישהו בפשע.",
     "examples": [
@@ -2702,6 +2856,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "נאשם",
+    "translationAr": "مُتَّهَم، مُدَّعَى عليه",
+    "translationRu": "обвиняемый, ответчик",
     "definition": "A person accused of a crime in a court of law.",
     "definitionHe": "אדם שמואשם בפשע בבית משפט.",
     "examples": [
@@ -2737,6 +2893,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "עדות",
+    "translationAr": "شهادة",
+    "translationRu": "показания, свидетельство",
     "definition": "A formal statement made under oath in a court of law.",
     "definitionHe": "הצהרה רשמית שניתנת תחת שבועה בבית משפט.",
     "examples": [
@@ -2772,6 +2930,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "סמכות שיפוט",
+    "translationAr": "ولاية قضائية",
+    "translationRu": "юрисдикция",
     "definition": "The official power to make legal decisions in a particular area.",
     "definitionHe": "הסמכות הרשמית לקבל החלטות משפטיות באזור מסוים.",
     "examples": [
@@ -2807,6 +2967,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "חוק, חיקוק",
+    "translationAr": "قانون، تشريع",
+    "translationRu": "закон, статут",
     "definition": "A written law passed by a legislative body.",
     "definitionHe": "חוק כתוב שנחקק על ידי גוף מחוקק.",
     "examples": [
@@ -2842,6 +3004,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "עורך דין",
+    "translationAr": "محامٍ",
+    "translationRu": "адвокат",
     "definition": "A lawyer, especially one qualified to represent clients in court.",
     "definitionHe": "עורך דין, במיוחד כזה שמוסמך לייצג לקוחות בבית משפט.",
     "examples": [
@@ -2877,6 +3041,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "תובע",
+    "translationAr": "مُدَّعٍ",
+    "translationRu": "истец",
     "definition": "A person who brings a legal action against someone in court.",
     "definitionHe": "אדם שמגיש תביעה משפטית נגד מישהו בבית משפט.",
     "examples": [
@@ -2912,6 +3078,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "התדיינות משפטית",
+    "translationAr": "تقاضٍ",
+    "translationRu": "судебное разбирательство",
     "definition": "The process of taking a dispute to court.",
     "definitionHe": "התהליך של הבאת סכסוך לבית משפט.",
     "examples": [
@@ -2947,6 +3115,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "סעיף",
+    "translationAr": "بند، شرط",
+    "translationRu": "статья, пункт",
     "definition": "A specific provision or condition in a legal document.",
     "definitionHe": "הוראה או תנאי ספציפיים במסמך משפטי.",
     "examples": [
@@ -2982,6 +3152,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "צו",
+    "translationAr": "أمر قضائي، مُذَكَّرة",
+    "translationRu": "ордер",
     "definition": "A document issued by a judge authorizing an action, such as an arrest or search.",
     "definitionHe": "מסמך שהוצא על ידי שופט המאשר פעולה, כגון מעצר או חיפוש.",
     "examples": [
@@ -3017,6 +3189,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "זיכוי",
+    "translationAr": "تبرئة",
+    "translationRu": "оправдание",
     "definition": "A judgment that a person is not guilty of a crime.",
     "definitionHe": "פסיקה שאדם אינו אשם בפשע.",
     "examples": [
@@ -3052,6 +3226,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "פשע חמור",
+    "translationAr": "جناية",
+    "translationRu": "тяжкое преступление",
     "definition": "A serious crime such as murder or robbery.",
     "definitionHe": "פשע חמור כגון רצח או שוד.",
     "examples": [
@@ -3087,6 +3263,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "ערבות, ערובה",
+    "translationAr": "كفالة",
+    "translationRu": "залог",
     "definition": "Money paid to a court to allow a prisoner to be released before trial.",
     "definitionHe": "כסף ששולם לבית המשפט כדי לאפשר שחרור אסיר לפני המשפט.",
     "examples": [
@@ -3122,6 +3300,8 @@
     "cefrLevel": "B2",
     "category": "law",
     "translation": "ערעור",
+    "translationAr": "استئناف",
+    "translationRu": "апелляция",
     "definition": "A request to a higher court to change a lower court's decision.",
     "definitionHe": "בקשה לבית משפט גבוה יותר לשנות החלטה של בית משפט נמוך.",
     "examples": [
@@ -3157,6 +3337,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "יושרה",
+    "translationAr": "نزاهة",
+    "translationRu": "честность, порядочность",
     "definition": "The quality of being honest and having strong moral principles.",
     "definitionHe": "התכונה של להיות ישר ובעל עקרונות מוסריים חזקים.",
     "examples": [
@@ -3192,6 +3374,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "דו-משמעות",
+    "translationAr": "غموض، التباس",
+    "translationRu": "двусмысленность",
     "definition": "The quality of being open to more than one interpretation.",
     "definitionHe": "התכונה של להיות פתוח ליותר מפירוש אחד.",
     "examples": [
@@ -3227,6 +3411,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "פרדוקס",
+    "translationAr": "مفارقة",
+    "translationRu": "парадокс",
     "definition": "A statement that seems contradictory but may be true.",
     "definitionHe": "הצהרה שנראית סותרת אבל עשויה להיות נכונה.",
     "examples": [
@@ -3262,6 +3448,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "נקודת מבט",
+    "translationAr": "منظور، وجهة نظر",
+    "translationRu": "перспектива, точка зрения",
     "definition": "A particular way of considering something; a point of view.",
     "definitionHe": "דרך מסוימת לשקול משהו; נקודת מבט.",
     "examples": [
@@ -3297,6 +3485,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "תודעה",
+    "translationAr": "وعي",
+    "translationRu": "сознание",
     "definition": "The state of being aware of one's surroundings, thoughts, and feelings.",
     "definitionHe": "המצב של להיות מודע לסביבה, למחשבות ולרגשות.",
     "examples": [
@@ -3332,6 +3522,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "אותנטיות",
+    "translationAr": "أصالة",
+    "translationRu": "подлинность, аутентичность",
     "definition": "The quality of being genuine, real, or true.",
     "definitionHe": "התכונה של להיות אמיתי, מקורי או נכון.",
     "examples": [
@@ -3367,6 +3559,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "מוסריות",
+    "translationAr": "أخلاق",
+    "translationRu": "мораль, нравственность",
     "definition": "Principles concerning right and wrong behavior.",
     "definitionHe": "עקרונות הנוגעים להתנהגות נכונה ולא נכונה.",
     "examples": [
@@ -3402,6 +3596,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "קונפורמיות",
+    "translationAr": "امتثال، مسايرة",
+    "translationRu": "конформизм",
     "definition": "Behavior that matches what is expected or accepted by a group.",
     "definitionHe": "התנהגות שתואמת למה שצפוי או מקובל על ידי קבוצה.",
     "examples": [
@@ -3437,6 +3633,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "היררכיה",
+    "translationAr": "تسلسل هرمي",
+    "translationRu": "иерархия",
     "definition": "A system in which people or things are ranked according to status or authority.",
     "definitionHe": "מערכת שבה אנשים או דברים מדורגים לפי מעמד או סמכות.",
     "examples": [
@@ -3472,6 +3670,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "גיוון",
+    "translationAr": "تنوُّع",
+    "translationRu": "разнообразие",
     "definition": "The state of having many different types of people or things.",
     "definitionHe": "המצב של קיום סוגים רבים ושונים של אנשים או דברים.",
     "examples": [
@@ -3507,6 +3707,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "זכות יתר",
+    "translationAr": "امتياز",
+    "translationRu": "привилегия",
     "definition": "A special right or advantage available only to certain people.",
     "definitionHe": "זכות או יתרון מיוחדים שזמינים רק לאנשים מסוימים.",
     "examples": [
@@ -3542,6 +3744,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "סטריאוטיפ",
+    "translationAr": "صورة نمطية",
+    "translationRu": "стереотип",
     "definition": "A widely held but oversimplified idea about a type of person or thing.",
     "definitionHe": "רעיון רווח אך פשטני מדי על סוג של אדם או דבר.",
     "examples": [
@@ -3577,6 +3781,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "אי-נמנעות",
+    "translationAr": "حتمية",
+    "translationRu": "неизбежность",
     "definition": "The state of being certain to happen; unavoidability.",
     "definitionHe": "המצב של להיות ודאי שיקרה; בלתי נמנע.",
     "examples": [
@@ -3612,6 +3818,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "פגיעות",
+    "translationAr": "هشاشة، ضعف",
+    "translationRu": "уязвимость",
     "definition": "The quality of being exposed to the possibility of harm.",
     "definitionHe": "התכונה של להיות חשוף לאפשרות של פגיעה.",
     "examples": [
@@ -3647,6 +3855,8 @@
     "cefrLevel": "B2",
     "category": "abstract-concepts",
     "translation": "הטיה",
+    "translationAr": "تحيُّز",
+    "translationRu": "предвзятость",
     "definition": "An unfair inclination for or against a person, group, or thing.",
     "definitionHe": "נטייה לא הוגנת בעד או נגד אדם, קבוצה או דבר.",
     "examples": [
@@ -3682,6 +3892,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "קידום",
+    "translationAr": "ترقية",
+    "translationRu": "продвижение",
     "definition": "Advancement to a higher position or rank at work.",
     "definitionHe": "התקדמות לתפקיד או דרגה גבוהים יותר בעבודה.",
     "examples": [
@@ -3717,6 +3929,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "התפטרות",
+    "translationAr": "استقالة",
+    "translationRu": "отставка",
     "definition": "The act of voluntarily leaving a job or position.",
     "definitionHe": "הפעולה של עזיבה מרצון של עבודה או תפקיד.",
     "examples": [
@@ -3752,6 +3966,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "גיוס עובדים",
+    "translationAr": "توظيف",
+    "translationRu": "набор персонала",
     "definition": "The process of finding and hiring new employees.",
     "definitionHe": "התהליך של מציאה והעסקה של עובדים חדשים.",
     "examples": [
@@ -3787,6 +4003,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "כישורים",
+    "translationAr": "مؤهِّلات",
+    "translationRu": "квалификация",
     "definition": "The skills, knowledge, or experience needed for a job.",
     "definitionHe": "הכישורים, הידע או הניסיון הדרושים לעבודה.",
     "examples": [
@@ -3822,6 +4040,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "התמחות",
+    "translationAr": "تدريب عملي",
+    "translationRu": "стажировка",
     "definition": "A period of work experience, often unpaid, for training purposes.",
     "definitionHe": "תקופת ניסיון עבודה, לעתים ללא תשלום, למטרות הכשרה.",
     "examples": [
@@ -3857,6 +4077,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "מנטור",
+    "translationAr": "مُرشِد، مُوَجِّه",
+    "translationRu": "наставник, ментор",
     "definition": "An experienced person who advises and guides someone less experienced.",
     "definitionHe": "אדם מנוסה שמייעץ ומנחה מישהו פחות מנוסה.",
     "examples": [
@@ -3892,6 +4114,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "עצמאי, פרילנסר",
+    "translationAr": "عمل حرّ",
+    "translationRu": "фрилансер, внештатный",
     "definition": "Working independently rather than being employed by a company.",
     "definitionHe": "עובד באופן עצמאי במקום להיות מועסק על ידי חברה.",
     "examples": [
@@ -3927,6 +4151,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "יזם",
+    "translationAr": "رائد أعمال",
+    "translationRu": "предприниматель",
     "definition": "A person who starts and runs their own business.",
     "definitionHe": "אדם שמקים ומנהל עסק משלו.",
     "examples": [
@@ -3962,6 +4188,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "לנהל משא ומתן",
+    "translationAr": "تفاوَضَ",
+    "translationRu": "вести переговоры",
     "definition": "To discuss something formally to reach an agreement.",
     "definitionHe": "לדון במשהו באופן רשמי כדי להגיע להסכמה.",
     "examples": [
@@ -3997,6 +4225,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "לשתף פעולה",
+    "translationAr": "تعاوَنَ",
+    "translationRu": "сотрудничать",
     "definition": "To work together with others on a project or task.",
     "definitionHe": "לעבוד יחד עם אחרים על פרויקט או משימה.",
     "examples": [
@@ -4032,6 +4262,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "נטוורקינג, יצירת קשרים",
+    "translationAr": "بناء شبكة علاقات",
+    "translationRu": "нетворкинг, налаживание связей",
     "definition": "The activity of building professional relationships.",
     "definitionHe": "הפעילות של בניית קשרים מקצועיים.",
     "examples": [
@@ -4067,6 +4299,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "כשירות, מיומנות",
+    "translationAr": "كفاءة",
+    "translationRu": "компетенция",
     "definition": "The ability to do something successfully or efficiently.",
     "definitionHe": "היכולת לעשות משהו בהצלחה או ביעילות.",
     "examples": [
@@ -4102,6 +4336,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "הערכה",
+    "translationAr": "تقييم",
+    "translationRu": "аттестация, оценка",
     "definition": "An assessment of the value or quality of something or someone's work.",
     "definitionHe": "הערכת ערך או איכות של משהו או של עבודת מישהו.",
     "examples": [
@@ -4137,6 +4373,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "תקופת ניסיון",
+    "translationAr": "فترة اختبار",
+    "translationRu": "испытательный срок",
     "definition": "A trial period during which a new employee is assessed.",
     "definitionHe": "תקופת ניסיון שבה עובד חדש מוערך.",
     "examples": [
@@ -4172,6 +4410,8 @@
     "cefrLevel": "B2",
     "category": "career",
     "translation": "מועד אחרון",
+    "translationAr": "موعد نهائي",
+    "translationRu": "крайний срок, дедлайн",
     "definition": "The latest time or date by which something must be completed.",
     "definitionHe": "הזמן או התאריך האחרון שבו משהו חייב להיות מוגמר.",
     "examples": [

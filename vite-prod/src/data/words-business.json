@@ -7,6 +7,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "פגישה",
+    "translationAr": "اجتماع",
+    "translationRu": "встреча",
     "definition": "An event where people come together to discuss things and make decisions.",
     "definitionHe": "אירוע שבו אנשים מתכנסים כדי לדון בנושאים ולקבל החלטות.",
     "examples": [
@@ -39,6 +41,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "מועד אחרון",
+    "translationAr": "موعد نهائي",
+    "translationRu": "крайний срок",
     "definition": "The latest time or date by which something must be completed.",
     "definitionHe": "הזמן או התאריך האחרון שבו משהו חייב להיות מוגמר.",
     "examples": [
@@ -71,6 +75,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "דואר אלקטרוני",
+    "translationAr": "بريد إلكتروني",
+    "translationRu": "электронная почта",
     "definition": "A message sent electronically from one person to another via computer.",
     "definitionHe": "הודעה שנשלחת באופן אלקטרוני ממחשב אחד לאחר.",
     "examples": [
@@ -103,6 +109,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "משכורת",
+    "translationAr": "راتب",
+    "translationRu": "зарплата",
     "definition": "A fixed amount of money paid to an employee regularly, usually every month.",
     "definitionHe": "סכום כסף קבוע שמשולם לעובד באופן קבוע, בדרך כלל מדי חודש.",
     "examples": [
@@ -135,6 +143,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "חוזה",
+    "translationAr": "عقد",
+    "translationRu": "контракт",
     "definition": "A written legal agreement between two or more parties.",
     "definitionHe": "הסכם משפטי כתוב בין שני צדדים או יותר.",
     "examples": [
@@ -167,6 +177,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "ראיון",
+    "translationAr": "مقابلة",
+    "translationRu": "собеседование",
     "definition": "A formal meeting in which someone is asked questions to find out if they are suitable for a job.",
     "definitionHe": "פגישה רשמית שבה שואלים מישהו שאלות כדי לבדוק אם הוא מתאים לתפקיד.",
     "examples": [
@@ -199,6 +211,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "מנהל",
+    "translationAr": "مدير",
+    "translationRu": "менеджер",
     "definition": "A person who is responsible for controlling or organizing a group of people or a department.",
     "definitionHe": "אדם שאחראי על ניהול או ארגון קבוצת אנשים או מחלקה.",
     "examples": [
@@ -231,6 +245,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "קורות חיים",
+    "translationAr": "سيرة ذاتية",
+    "translationRu": "резюме",
     "definition": "A document that lists your education, work experience, and skills, used when applying for a job.",
     "definitionHe": "מסמך שמפרט את ההשכלה, ניסיון העבודה והכישורים שלך, המשמש בעת הגשת מועמדות לעבודה.",
     "examples": [
@@ -263,6 +279,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "קידום",
+    "translationAr": "ترقية",
+    "translationRu": "повышение",
     "definition": "A move to a higher position or rank in a company.",
     "definitionHe": "מעבר לתפקיד או דרגה גבוהים יותר בחברה.",
     "examples": [
@@ -295,6 +313,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "עמית לעבודה",
+    "translationAr": "زميل",
+    "translationRu": "коллега",
     "definition": "A person you work with, especially in a professional job.",
     "definitionHe": "אדם שאתה עובד איתו, במיוחד בעבודה מקצועית.",
     "examples": [
@@ -327,6 +347,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "משא ומתן",
+    "translationAr": "تفاوض",
+    "translationRu": "переговоры",
     "definition": "A discussion between people who are trying to reach an agreement, especially in business.",
     "definitionHe": "דיון בין אנשים שמנסים להגיע להסכמה, במיוחד בעסקים.",
     "examples": [
@@ -359,6 +381,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "תקציב",
+    "translationAr": "ميزانية",
+    "translationRu": "бюджет",
     "definition": "A plan that shows how much money you have and how you will spend it.",
     "definitionHe": "תוכנית שמראה כמה כסף יש לך ואיך תוציא אותו.",
     "examples": [
@@ -391,6 +415,8 @@
     "cefrLevel": "B1",
     "category": "business",
     "translation": "מצגת",
+    "translationAr": "عرض تقديمي",
+    "translationRu": "презентация",
     "definition": "A talk or speech given to a group of people to explain or show something.",
     "definitionHe": "הרצאה או דיבור שניתנים בפני קבוצת אנשים כדי להסביר או להציג משהו.",
     "examples": [
@@ -423,6 +449,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "שדה תעופה",
+    "translationAr": "مطار",
+    "translationRu": "аэропорт",
     "definition": "A place where planes take off and land, with buildings for passengers.",
     "definitionHe": "מקום שבו מטוסים ממריאים ונוחתים, עם מבנים לנוסעים.",
     "examples": [
@@ -455,6 +483,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "דרכון",
+    "translationAr": "جواز سفر",
+    "translationRu": "паспорт",
     "definition": "An official document that identifies you as a citizen of a country and allows you to travel abroad.",
     "definitionHe": "מסמך רשמי שמזהה אותך כאזרח של מדינה ומאפשר לך לנסוע לחו\"ל.",
     "examples": [
@@ -487,6 +517,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "מזוודות",
+    "translationAr": "أمتعة",
+    "translationRu": "багаж",
     "definition": "Bags and suitcases that you take with you when you travel.",
     "definitionHe": "תיקים ומזוודות שלוקחים איתך כשנוסעים.",
     "examples": [
@@ -519,6 +551,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "כרטיס עלייה למטוס",
+    "translationAr": "بطاقة صعود",
+    "translationRu": "посадочный талон",
     "definition": "A card or document that allows you to get on an airplane.",
     "definitionHe": "כרטיס או מסמך שמאפשר לך לעלות על מטוס.",
     "examples": [
@@ -551,6 +585,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "הזמנה",
+    "translationAr": "حجز",
+    "translationRu": "бронирование",
     "definition": "An arrangement to have something kept for you, such as a hotel room, table, or seat.",
     "definitionHe": "סידור לשמור עבורך משהו, כמו חדר מלון, שולחן או מושב.",
     "examples": [
@@ -583,6 +619,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "יעד",
+    "translationAr": "وجهة",
+    "translationRu": "пункт назначения",
     "definition": "The place you are going to or traveling to.",
     "definitionHe": "המקום שאליו אתה נוסע או הולך.",
     "examples": [
@@ -615,6 +653,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "טיסה",
+    "translationAr": "رحلة جوية",
+    "translationRu": "рейс",
     "definition": "A journey by airplane from one place to another.",
     "definitionHe": "מסע במטוס ממקום אחד לאחר.",
     "examples": [
@@ -647,6 +687,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "מכס",
+    "translationAr": "جمارك",
+    "translationRu": "таможня",
     "definition": "The place at an airport or border where officials check your bags and goods entering a country.",
     "definitionHe": "המקום בשדה תעופה או בגבול שבו פקידים בודקים את התיקים והסחורות שנכנסות למדינה.",
     "examples": [
@@ -679,6 +721,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "עיכוב",
+    "translationAr": "تأخير",
+    "translationRu": "задержка",
     "definition": "A period of time when something happens later than planned.",
     "definitionHe": "פרק זמן שבו משהו קורה מאוחר מהמתוכנן.",
     "examples": [
@@ -711,6 +755,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "מקום לינה",
+    "translationAr": "إقامة",
+    "translationRu": "жильё",
     "definition": "A place to stay, such as a hotel or apartment, when traveling.",
     "definitionHe": "מקום לשהות בו, כמו מלון או דירה, כשנוסעים.",
     "examples": [
@@ -743,6 +789,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "מסלול טיול",
+    "translationAr": "خطّ سير الرحلة",
+    "translationRu": "маршрут",
     "definition": "A plan or list of places to visit and things to do during a trip.",
     "definitionHe": "תוכנית או רשימה של מקומות לבקר ודברים לעשות במהלך טיול.",
     "examples": [
@@ -775,6 +823,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "מטבע (כסף)",
+    "translationAr": "عملة",
+    "translationRu": "валюта",
     "definition": "The system of money used in a particular country.",
     "definitionHe": "מערכת הכסף שמשתמשים בה במדינה מסוימת.",
     "examples": [
@@ -807,6 +857,8 @@
     "cefrLevel": "B1",
     "category": "travel",
     "translation": "העברה / הסעה",
+    "translationAr": "تحويل",
+    "translationRu": "перевод",
     "definition": "The act of moving from one place, vehicle, or system to another during a journey.",
     "definitionHe": "המעבר ממקום, כלי רכב או מערכת אחת לאחרת במהלך נסיעה.",
     "examples": [
@@ -839,6 +891,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "קבלה",
+    "translationAr": "إيصال",
+    "translationRu": "квитанция",
     "definition": "A piece of paper that shows you have paid for something.",
     "definitionHe": "פיסת נייר שמוכיחה שילמת עבור משהו.",
     "examples": [
@@ -871,6 +925,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "הנחה",
+    "translationAr": "خصم",
+    "translationRu": "скидка",
     "definition": "A reduction in the usual price of something.",
     "definitionHe": "הפחתה במחיר הרגיל של משהו.",
     "examples": [
@@ -903,6 +959,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "החזר כספי",
+    "translationAr": "استرداد",
+    "translationRu": "возврат денег",
     "definition": "Money that is given back to you because you returned something or paid too much.",
     "definitionHe": "כסף שמוחזר לך כי החזרת משהו או שילמת יותר מדי.",
     "examples": [
@@ -935,6 +993,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "קופאי / קופאית",
+    "translationAr": "أمين الصندوق",
+    "translationRu": "кассир",
     "definition": "A person whose job is to receive and pay out money in a store or bank.",
     "definitionHe": "אדם שתפקידו לקבל ולשלם כסף בחנות או בנק.",
     "examples": [
@@ -967,6 +1027,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "תג מחיר",
+    "translationAr": "بطاقة السعر",
+    "translationRu": "ценник",
     "definition": "A label on an item in a store that shows how much it costs.",
     "definitionHe": "תווית על פריט בחנות שמראה כמה הוא עולה.",
     "examples": [
@@ -999,6 +1061,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "קופה / תשלום",
+    "translationAr": "الدفع والمغادرة",
+    "translationRu": "касса",
     "definition": "The place in a store where you pay for goods, or the process of paying.",
     "definitionHe": "המקום בחנות שבו משלמים על סחורות, או תהליך התשלום.",
     "examples": [
@@ -1031,6 +1095,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "החלפה",
+    "translationAr": "تبادل",
+    "translationRu": "обмен",
     "definition": "The act of giving something and receiving something else in return, especially returning an item for a different one.",
     "definitionHe": "פעולה של נתינה וקבלה של משהו אחר בתמורה, במיוחד החזרת פריט תמורת פריט אחר.",
     "examples": [
@@ -1063,6 +1129,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "אחריות",
+    "translationAr": "ضمان",
+    "translationRu": "гарантия",
     "definition": "A written promise by a company to repair or replace a product if it breaks within a certain time.",
     "definitionHe": "הבטחה כתובה של חברה לתקן או להחליף מוצר אם הוא מתקלקל תוך זמן מסוים.",
     "examples": [
@@ -1095,6 +1163,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "מציאה",
+    "translationAr": "صفقة",
+    "translationRu": "выгодная покупка",
     "definition": "Something bought for a lower price than usual; a good deal.",
     "definitionHe": "משהו שנקנה במחיר נמוך מהרגיל; עסקה טובה.",
     "examples": [
@@ -1127,6 +1197,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "כרטיס אשראי",
+    "translationAr": "بطاقة ائتمان",
+    "translationRu": "кредитная карта",
     "definition": "A small plastic card that allows you to buy things now and pay for them later.",
     "definitionHe": "כרטיס פלסטיק קטן שמאפשר לקנות דברים עכשיו ולשלם עליהם מאוחר יותר.",
     "examples": [
@@ -1159,6 +1231,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "חדר מדידה",
+    "translationAr": "غرفة القياس",
+    "translationRu": "примерочная",
     "definition": "A room in a clothing store where you can try on clothes before buying them.",
     "definitionHe": "חדר בחנות בגדים שבו אפשר למדוד בגדים לפני שקונים אותם.",
     "examples": [
@@ -1191,6 +1265,8 @@
     "cefrLevel": "B1",
     "category": "shopping",
     "translation": "עגלת קניות",
+    "translationAr": "عربة تسوّق",
+    "translationRu": "тележка",
     "definition": "A large basket on wheels used for carrying items while shopping in a store.",
     "definitionHe": "סל גדול על גלגלים שמשמש לנשיאת פריטים בזמן קניות בחנות.",
     "examples": [
@@ -1223,6 +1299,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "הזמנת מקום",
+    "translationAr": "حجز",
+    "translationRu": "бронирование",
     "definition": "An arrangement to have a table kept for you at a restaurant.",
     "definitionHe": "סידור לשמור עבורך שולחן במסעדה.",
     "examples": [
@@ -1255,6 +1333,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "תפריט",
+    "translationAr": "قائمة الطعام",
+    "translationRu": "меню",
     "definition": "A list of food and drinks available at a restaurant with their prices.",
     "definitionHe": "רשימה של מאכלים ומשקאות זמינים במסעדה עם מחיריהם.",
     "examples": [
@@ -1287,6 +1367,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "מנה ראשונה",
+    "translationAr": "مقبّلات",
+    "translationRu": "закуска",
     "definition": "A small dish served before the main meal.",
     "definitionHe": "מנה קטנה שמוגשת לפני הארוחה העיקרית.",
     "examples": [
@@ -1319,6 +1401,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "מנה עיקרית",
+    "translationAr": "الطبق الرئيسي",
+    "translationRu": "основное блюдо",
     "definition": "The largest and most important dish of a meal.",
     "definitionHe": "המנה הגדולה והחשובה ביותר בארוחה.",
     "examples": [
@@ -1351,6 +1435,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "קינוח",
+    "translationAr": "حلوى",
+    "translationRu": "десерт",
     "definition": "A sweet food served at the end of a meal.",
     "definitionHe": "מאכל מתוק שמוגש בסוף הארוחה.",
     "examples": [
@@ -1383,6 +1469,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "טיפ / תשר",
+    "translationAr": "بقشيش",
+    "translationRu": "чаевые",
     "definition": "Extra money given to a waiter, taxi driver, etc. for their service.",
     "definitionHe": "כסף נוסף שנותנים למלצר, נהג מונית וכו' עבור השירות שלהם.",
     "examples": [
@@ -1415,6 +1503,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "מלצר",
+    "translationAr": "نادل",
+    "translationRu": "официант",
     "definition": "A person whose job is to serve food and drinks at the tables in a restaurant.",
     "definitionHe": "אדם שתפקידו להגיש אוכל ומשקאות לשולחנות במסעדה.",
     "examples": [
@@ -1447,6 +1537,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "חשבון",
+    "translationAr": "فاتورة",
+    "translationRu": "счёт",
     "definition": "A piece of paper showing how much you owe for food and drinks at a restaurant.",
     "definitionHe": "פיסת נייר שמראה כמה חייבים על אוכל ומשקאות במסעדה.",
     "examples": [
@@ -1479,6 +1571,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "מנה / כמות",
+    "translationAr": "حصّة",
+    "translationRu": "порция",
     "definition": "The amount of food served to one person.",
     "definitionHe": "כמות האוכל שמוגשת לאדם אחד.",
     "examples": [
@@ -1511,6 +1605,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "אוכל לקחת / טייקאווי",
+    "translationAr": "طعام للتوصيل",
+    "translationRu": "еда навынос",
     "definition": "Food that you buy at a restaurant to eat somewhere else.",
     "definitionHe": "אוכל שקונים במסעדה כדי לאכול במקום אחר.",
     "examples": [
@@ -1543,6 +1639,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "אלרגיה",
+    "translationAr": "حساسية",
+    "translationRu": "аллергия",
     "definition": "A medical condition that causes your body to react badly to certain foods or substances.",
     "definitionHe": "מצב רפואי שגורם לגוף להגיב בצורה רעה למזונות או חומרים מסוימים.",
     "examples": [
@@ -1575,6 +1673,8 @@
     "cefrLevel": "B1",
     "category": "restaurant",
     "translation": "שף",
+    "translationAr": "طاهٍ",
+    "translationRu": "шеф-повар",
     "definition": "A professional cook, especially the main cook in a restaurant or hotel.",
     "definitionHe": "טבח מקצועי, במיוחד הטבח הראשי במסעדה או מלון.",
     "examples": [

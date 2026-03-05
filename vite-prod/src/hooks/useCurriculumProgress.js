@@ -97,7 +97,27 @@ export default function useCurriculumProgress() {
         testStars: stars,
       } : undefined;
 
+      // Build top-level achievement counter updates
+      const achievementCounters = {};
+      if (isNewCompletion) {
+        achievementCounters.totalLessonsCompleted = (progress.totalLessonsCompleted || 0) + 1;
+      }
+      if (isNewCompletion && accuracy === 100) {
+        achievementCounters.perfectLessons = (progress.perfectLessons || 0) + 1;
+      }
+      // Time-of-day achievements
+      if (isNewCompletion) {
+        const hour = new Date().getHours();
+        if (hour >= 23 || hour < 4) {
+          achievementCounters.lateNightLessons = (progress.lateNightLessons || 0) + 1;
+        }
+        if (hour >= 4 && hour < 7) {
+          achievementCounters.earlyMorningLessons = (progress.earlyMorningLessons || 0) + 1;
+        }
+      }
+
       await updateProgress({
+        ...achievementCounters,
         curriculum: {
           ...curriculum,
           lessons: {

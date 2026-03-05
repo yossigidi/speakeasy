@@ -108,7 +108,7 @@ function WordComparison({ results }) {
 
 export default function PronunciationPage() {
   const { uiLang } = useTheme();
-  const { addXP, progress } = useUserProgress();
+  const { addXP, progress, updateProgress } = useUserProgress();
   const { speak } = useSpeechSynthesis();
   const { transcript, confidence, isListening, startListening, stopListening, sttSupported: supported } = useSpeechRecognition();
 
@@ -123,6 +123,9 @@ export default function PronunciationPage() {
   const sentence = PRACTICE_SENTENCES[currentIndex];
 
   const xpAwardedRef = useRef(false);
+  const progressRef = useRef(progress);
+  useEffect(() => { progressRef.current = progress; }, [progress]);
+
   useEffect(() => {
     if (transcript && !isListening && hasRecorded) {
       const s = pronunciationScore(sentence.text, transcript, confidence);
@@ -131,9 +134,25 @@ export default function PronunciationPage() {
       if (s >= 50 && !xpAwardedRef.current) {
         xpAwardedRef.current = true;
         addXP(3, 'pronunciation');
+
+        // Increment pronunciation achievement counters
+        const p = progressRef.current;
+        const counterUpdates = {
+          pronunciationExercises: (p.pronunciationExercises || 0) + 1,
+        };
+        if (s >= 95) {
+          counterUpdates.pronunciationHighScore = Math.max(p.pronunciationHighScore || 0, s);
+        }
+        // Track pronunciation streak (consecutive 80%+ scores)
+        if (s >= 80) {
+          counterUpdates.pronunciationStreak = (p.pronunciationStreak || 0) + 1;
+        } else {
+          counterUpdates.pronunciationStreak = 0;
+        }
+        updateProgress(counterUpdates);
       }
     }
-  }, [transcript, isListening, hasRecorded, sentence.text, confidence, addXP]);
+  }, [transcript, isListening, hasRecorded, sentence.text, confidence, addXP, updateProgress]);
 
   const handleRecord = () => {
     if (isListening) {
@@ -207,6 +226,7 @@ export default function PronunciationPage() {
       <GlassCard variant="strong" className="text-center py-6">
         <button
           onClick={() => speak(sentence.text)}
+          aria-label="Listen"
           className="mx-auto mb-3 p-3 rounded-full bg-brand-100 dark:bg-brand-900/30 hover:bg-brand-200 dark:hover:bg-brand-800/40 transition-colors"
         >
           <Volume2 size={24} className="text-brand-600 dark:text-brand-400" />
@@ -222,6 +242,7 @@ export default function PronunciationPage() {
       <div className="flex justify-center">
         <button
           onClick={handleRecord}
+          aria-label={isListening ? 'Stop recording' : 'Start recording'}
           className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-200 ${
             isListening
               ? 'bg-red-500 shadow-lg shadow-red-500/30 recording-pulse'

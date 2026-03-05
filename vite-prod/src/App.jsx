@@ -12,6 +12,7 @@ import BottomNav from './components/layout/BottomNav.jsx';
 import PageTransition from './components/layout/PageTransition.jsx';
 import LoadingSpinner from './components/shared/LoadingSpinner.jsx';
 import ErrorBoundary from './components/shared/ErrorBoundary.jsx';
+import PageErrorBoundary from './components/shared/PageErrorBoundary.jsx';
 
 /* ── Eagerly loaded (critical path) ── */
 import HomePage from './pages/HomePage.jsx';
@@ -57,12 +58,13 @@ function PageLoader() {
   );
 }
 
-import { t } from './utils/translations.js';
+import { t, lf } from './utils/translations.js';
+import AchievementToast from './components/gamification/AchievementToast.jsx';
 
 function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const { childUser, logoutChild } = useChildAuth();
-  const { progress, loading: progressLoading, children, childrenLoaded, isChildMode } = useUserProgress();
+  const { progress, loading: progressLoading, children, childrenLoaded, isChildMode, achievementToast, dismissAchievementToast } = useUserProgress();
   const { uiLang } = useTheme();
   const { dueCount } = useSpacedRepetition();
   const [currentPage, setCurrentPage] = useState('home');
@@ -253,9 +255,9 @@ function AppContent() {
       case 'lessons':
         return <LessonPage onComplete={() => navigateTo('home')} onBack={() => navigateTo('home')} lesson={lessonData} />;
       case 'conversation':
-        return <SimulationPage />;
+        return <PageErrorBoundary><SimulationPage /></PageErrorBoundary>;
       case 'vocabulary':
-        return <VocabularyPage />;
+        return <PageErrorBoundary><VocabularyPage /></PageErrorBoundary>;
       case 'pronunciation':
         return <PronunciationPage />;
       case 'reading':
@@ -267,9 +269,9 @@ function AppContent() {
       case 'alphabet':
         return <KidsAlphabetPage />;
       case 'kids-games':
-        return <KidsGamesPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'english-quest':
-        return <EnglishQuestPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><EnglishQuestPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'audio-learn':
         return <AudioLearningPage onBack={() => navigateTo('home')} />;
       case 'family':
@@ -279,7 +281,7 @@ function AppContent() {
       case 'kids-teacher':
         return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       case 'curriculum':
-        return <CurriculumPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><CurriculumPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'support':
         return <SupportPage onNavigate={navigateTo} onBack={() => navigateTo('profile')} />;
       case 'support-faq':
@@ -291,7 +293,7 @@ function AppContent() {
       case 'skills':
         return <SkillsPage onBack={() => navigateTo('home')} />;
       case 'adventure':
-        return <AdventurePage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -326,6 +328,18 @@ function AppContent() {
       )}
 
       <InstallBanner hasBottomNav={showNav} />
+
+      {/* Global achievement toast */}
+      {achievementToast && (
+        <AchievementToast
+          achievement={{
+            title: lf(achievementToast, 'title', uiLang),
+            description: lf(achievementToast, 'description', uiLang),
+            icon: achievementToast.icon,
+          }}
+          onDismiss={dismissAchievementToast}
+        />
+      )}
     </div>
   );
 }
@@ -354,19 +368,19 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
       case 'lessons':
         return <LessonPage onComplete={() => navigateTo('home')} onBack={() => navigateTo('home')} />;
       case 'vocabulary':
-        return <VocabularyPage />;
+        return <PageErrorBoundary><VocabularyPage /></PageErrorBoundary>;
       case 'alphabet':
         return <KidsAlphabetPage />;
       case 'kids-games':
-        return <KidsGamesPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'english-quest':
-        return <EnglishQuestPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><EnglishQuestPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'kids-teacher':
         return <KidsTeacherPage onBack={() => navigateTo('home')} />;
       case 'curriculum':
-        return <CurriculumPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><CurriculumPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'adventure':
-        return <AdventurePage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }

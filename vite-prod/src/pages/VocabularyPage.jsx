@@ -14,14 +14,7 @@ import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 import Modal from '../components/shared/Modal.jsx';
 
-import wordsA1 from '../data/words-a1.json';
-import wordsA2 from '../data/words-a2.json';
-import wordsBusiness from '../data/words-business.json';
-import wordsB2 from '../data/words-b2.json';
-import wordsC1 from '../data/words-c1.json';
-
-const ALL_WORDS = [...wordsA1, ...wordsA2, ...wordsBusiness, ...wordsB2, ...wordsC1];
-const CATEGORIES = [...new Set(ALL_WORDS.map(w => w.category))];
+import { loadWordData } from '../utils/lazyData.js';
 
 // ── Word Detail Modal ────────────────────────────────────
 function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVocab }) {
@@ -37,6 +30,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{word.word}</h2>
             <button
               onClick={() => onSpeak(word.word)}
+              aria-label="Listen"
               className="p-2 rounded-full hover:bg-brand-50 dark:hover:bg-brand-900/30 transition-colors"
             >
               <Volume2 size={22} className="text-brand-500" />
@@ -71,7 +65,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
             <div className="space-y-2">
               {word.examples.map((ex, i) => (
                 <div key={i} className="flex items-start gap-2 bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3">
-                  <button onClick={() => onSpeak(ex)} className="mt-0.5 shrink-0">
+                  <button onClick={() => onSpeak(ex)} aria-label="Listen" className="mt-0.5 shrink-0">
                     <Volume2 size={14} className="text-brand-400" />
                   </button>
                   <p className="text-sm text-gray-700 dark:text-gray-200 italic">"{ex}"</p>
@@ -300,6 +294,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 
             <button
               onClick={() => speakWordPair(word.word, lf(word, 'translation', uiLang), uiLang)}
+              aria-label="Listen"
               className="mx-auto mb-3 w-14 h-14 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow active:scale-95"
             >
               <Volume2 size={24} className="text-white" />
@@ -379,6 +374,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                 <div className="flex items-start gap-3">
                   <button
                     onClick={() => speak(ex)}
+                    aria-label="Listen"
                     className="mt-1 shrink-0 w-8 h-8 rounded-full bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center"
                   >
                     <Volume2 size={14} className="text-brand-500" />
@@ -509,7 +505,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <h3 className="text-lg text-gray-600 dark:text-gray-300 mb-2">
               {t('whatIsTranslation', uiLang)}
             </h3>
-            <button onClick={() => speak(word.word)} className="inline-flex items-center gap-2">
+            <button onClick={() => speak(word.word)} aria-label="Listen" className="inline-flex items-center gap-2">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{word.word}</h2>
               <Volume2 size={20} className="text-brand-400" />
             </button>
@@ -575,7 +571,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 }
 
 // ── Enhanced Review Session ──────────────────────────────
-function ReviewSession({ dueWords, onReview, onBack }) {
+function ReviewSession({ dueWords, onReview, onBack, ALL_WORDS }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -642,6 +638,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
       <GlassCard variant="strong" className="text-center py-8 relative">
         <button
           onClick={() => speak(fullWord.word || word.word)}
+          aria-label="Listen"
           className="mx-auto mb-3 w-14 h-14 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-lg active:scale-95 transition-transform"
         >
           <Volume2 size={24} className="text-white" />
@@ -666,7 +663,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
             )}
             {fullWord.examples?.[0] && (
               <div className="flex items-center justify-center gap-2">
-                <button onClick={() => speak(fullWord.examples[0])} className="shrink-0">
+                <button onClick={() => speak(fullWord.examples[0])} aria-label="Listen" className="shrink-0">
                   <Volume2 size={12} className="text-brand-400" />
                 </button>
                 <p className="text-xs text-gray-500 italic">"{fullWord.examples[0]}"</p>
@@ -743,7 +740,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
 }
 
 // ── Category Browser ─────────────────────────────────────
-function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }) {
+function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1', ALL_WORDS, CATEGORIES }) {
   const { uiLang } = useTheme();
 
   const categoryInfo = {
@@ -832,7 +829,7 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
         return levels?.has('C1') && !levels.has('A1') && !levels.has('A2') && !levels.has('B1') && !levels.has('B2');
       }),
     };
-  }, []); // ALL_WORDS and CATEGORIES are module constants
+  }, [ALL_WORDS, CATEGORIES]);
 
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   const userLevelIndex = levelOrder.indexOf(userLevel || 'A1');
@@ -896,7 +893,7 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
 }
 
 // ── Category Words View ──────────────────────────────────
-function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
+function CategoryWordsView({ category, onBack, onSelectWord, onLearn, ALL_WORDS }) {
   const { speak, speakWordPair } = useSpeechSynthesis();
   const { uiLang } = useTheme();
   const isRtl = RTL_LANGS.includes(uiLang);
@@ -1006,6 +1003,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
           >
             <button
               onClick={(e) => { e.stopPropagation(); speakWordPair(word.word, lf(word, 'translation', uiLang), uiLang); }}
+              aria-label="Listen"
               className="shrink-0 w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center"
             >
               <Volume2 size={16} className="text-brand-500" />
@@ -1038,13 +1036,31 @@ function getWordsForLevel(cefrLevel, allWords) {
 // ── Main Vocabulary Page ────────────────────────────────
 export default function VocabularyPage() {
   const { uiLang } = useTheme();
-  const { addXP, progress } = useUserProgress();
+  const { addXP, progress, updateProgress } = useUserProgress();
   const { dueWords, dueCount, reviewWord, addWord, isLoading } = useSpacedRepetition();
   const { speak } = useSpeechSynthesis();
   const [view, setView] = useState('main'); // main, review, browse, learn, detail
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedWord, setSelectedWord] = useState(null);
   const [learnWords, setLearnWords] = useState([]);
+  const [allWordsData, setAllWordsData] = useState({ a1: [], a2: [], b2: [], business: [], c1: [] });
+
+  useEffect(() => {
+    Promise.all([
+      loadWordData('a1'), loadWordData('a2'), loadWordData('b2'),
+      loadWordData('business'), loadWordData('c1')
+    ]).then(([a1, a2, b2, business, c1]) => {
+      setAllWordsData({ a1, a2, b2, business, c1 });
+    }).catch(() => {});
+  }, []);
+
+  const ALL_WORDS = useMemo(() => [
+    ...allWordsData.a1, ...allWordsData.a2, ...allWordsData.business,
+    ...allWordsData.b2, ...allWordsData.c1
+  ], [allWordsData]);
+
+  const CATEGORIES = useMemo(() => [...new Set(ALL_WORDS.map(w => w.category))], [ALL_WORDS]);
+
   const userLevel = progress.cefrLevel || 'A1';
   const availableWords = getWordsForLevel(userLevel, ALL_WORDS);
 
@@ -1063,6 +1079,12 @@ export default function VocabularyPage() {
 
   const handleLearnComplete = () => {
     if (addXP) addXP(learnWords.length * 5, 'vocabulary');
+    // Increment words learned counter for achievements
+    if (updateProgress && learnWords.length > 0) {
+      updateProgress({
+        totalWordsLearned: (progress.totalWordsLearned || 0) + learnWords.length,
+      });
+    }
     setView('main');
     setLearnWords([]);
   };
@@ -1081,11 +1103,20 @@ export default function VocabularyPage() {
     );
   }
 
+  // Wrap reviewWord to also increment vocabReviews counter for achievements
+  const handleReviewWord = useCallback(async (wordId, quality) => {
+    const result = await reviewWord(wordId, quality);
+    updateProgress({
+      vocabReviews: (progress.vocabReviews || 0) + 1,
+    });
+    return result;
+  }, [reviewWord, updateProgress, progress]);
+
   // ── Review Flow ──
   if (view === 'review') {
     return (
       <div className="pb-24 px-4 pt-4">
-        <ReviewSession dueWords={dueWords} onReview={reviewWord} onBack={() => setView('main')} />
+        <ReviewSession dueWords={dueWords} onReview={handleReviewWord} onBack={() => setView('main')} ALL_WORDS={ALL_WORDS} />
       </div>
     );
   }
@@ -1099,6 +1130,7 @@ export default function VocabularyPage() {
           onBack={() => { setView('main'); setSelectedCategory(null); }}
           onSelectWord={(word) => setSelectedWord(word)}
           onLearn={(words) => handleStartLearn(words)}
+          ALL_WORDS={ALL_WORDS}
         />
         {selectedWord && (
           <WordDetailModal
@@ -1227,6 +1259,8 @@ export default function VocabularyPage() {
           onSelectCategory={(cat) => { setSelectedCategory(cat); setView('browse'); }}
           onLearnCategory={(words) => handleStartLearn(words)}
           userLevel={userLevel}
+          ALL_WORDS={ALL_WORDS}
+          CATEGORIES={CATEGORIES}
         />
       </div>
 

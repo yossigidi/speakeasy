@@ -104,9 +104,13 @@ export async function preloadHebrewAudio(texts, lang) {
   await Promise.allSettled(toLoad.map(async (text) => {
     const trimmed = text.trim();
     try {
+      const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/tts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ text: trimmed, lang }),
       });
       if (!res.ok) return;
@@ -169,9 +173,13 @@ export async function playFromAPI(text, lang, signal) {
     }
 
     // Fetch from API (pass signal to cancel fetch if needed)
+    const token = await window.auth?.currentUser?.getIdToken();
     const fetchOpts = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+      },
       body: JSON.stringify({ text: trimmed, lang }),
     };
     if (signal) fetchOpts.signal = signal;

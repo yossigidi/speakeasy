@@ -116,7 +116,8 @@ export default function FamilyPage({ onNavigate }) {
       <div className="flex items-center gap-2 mb-2">
         <button
           onClick={() => onNavigate('profile')}
-          className="p-1.5 -ml-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          aria-label="Back"
+          className="p-1.5 ltr:-ml-1.5 rtl:-mr-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
         >
           <ChevronLeft size={22} className={dir === 'rtl' ? 'rotate-180' : ''} />
         </button>
@@ -177,7 +178,7 @@ export default function FamilyPage({ onNavigate }) {
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
                   {child.name}
                   {child.age && (
-                    <span className="text-sm font-normal text-gray-400 mr-1 ml-1">({child.age})</span>
+                    <span className="text-sm font-normal text-gray-400 mx-1">({child.age})</span>
                   )}
                 </h3>
                 <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
@@ -202,6 +203,7 @@ export default function FamilyPage({ onNavigate }) {
                   onClick={() => onNavigate('child-progress', child.id)}
                   className="p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors text-gray-400 hover:text-indigo-500"
                   title={t('viewProgress', uiLang)}
+                  aria-label={t('viewProgress', uiLang) || 'View progress'}
                 >
                   <BarChart3 size={16} />
                 </button>
@@ -209,18 +211,21 @@ export default function FamilyPage({ onNavigate }) {
                   onClick={() => setResetPinChild(child)}
                   className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-400"
                   title={t('resetPin', uiLang)}
+                  aria-label={t('resetPin', uiLang) || 'Reset PIN'}
                 >
                   <Key size={16} />
                 </button>
                 <button
                   onClick={() => setEditingChild(child)}
                   className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-400"
+                  aria-label="Edit"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={() => setDeletingChild(child)}
                   className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-gray-400 hover:text-red-500"
+                  aria-label="Delete"
                 >
                   <Trash2 size={16} />
                 </button>

@@ -65,6 +65,7 @@ export default function AudioLearningPage({ onBack }) {
   const phaseRef = useRef(PHASE.IDLE);
   const repeatModeRef = useRef(false);
   const timeoutRef = useRef(null);
+  const navTimeoutRef = useRef(null);
   const abortRef = useRef(false);
   const uiLangRef = useRef(uiLang);
 
@@ -99,6 +100,7 @@ export default function AudioLearningPage({ onBack }) {
     return () => {
       abortRef.current = true;
       clearTimeout(timeoutRef.current);
+      clearTimeout(navTimeoutRef.current);
       stopSpeaking();
     };
   }, [stopSpeaking]);
@@ -256,6 +258,7 @@ export default function AudioLearningPage({ onBack }) {
 
   const handleNext = useCallback(() => {
     clearTimeout(timeoutRef.current);
+    clearTimeout(navTimeoutRef.current);
     stopSpeaking();
     const nextIdx = Math.min(currentIndexRef.current + 1, words.length - 1);
     currentIndexRef.current = nextIdx;
@@ -263,7 +266,7 @@ export default function AudioLearningPage({ onBack }) {
     setPhase(PHASE.IDLE);
     if (isPlayingRef.current) {
       abortRef.current = true;
-      setTimeout(() => {
+      navTimeoutRef.current = setTimeout(() => {
         abortRef.current = false;
         isPlayingRef.current = true;
         runPlayback(nextIdx);
@@ -273,6 +276,7 @@ export default function AudioLearningPage({ onBack }) {
 
   const handlePrev = useCallback(() => {
     clearTimeout(timeoutRef.current);
+    clearTimeout(navTimeoutRef.current);
     stopSpeaking();
     const prevIdx = Math.max(currentIndexRef.current - 1, 0);
     currentIndexRef.current = prevIdx;
@@ -280,7 +284,7 @@ export default function AudioLearningPage({ onBack }) {
     setPhase(PHASE.IDLE);
     if (isPlayingRef.current) {
       abortRef.current = true;
-      setTimeout(() => {
+      navTimeoutRef.current = setTimeout(() => {
         abortRef.current = false;
         isPlayingRef.current = true;
         runPlayback(prevIdx);
@@ -337,6 +341,7 @@ export default function AudioLearningPage({ onBack }) {
         <div className="flex items-center justify-between mb-6 pt-2">
           <button
             onClick={onBack}
+            aria-label="Back"
             className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 active:scale-95 transition-all"
           >
             <ArrowLeft size={20} className={isRtl ? 'rotate-180' : ''} />
@@ -351,6 +356,7 @@ export default function AudioLearningPage({ onBack }) {
 
           <button
             onClick={() => setShowSettings(!showSettings)}
+            aria-label="Settings"
             className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 active:scale-95 transition-all"
           >
             <Settings size={20} />
@@ -524,6 +530,7 @@ export default function AudioLearningPage({ onBack }) {
             {/* Speed button */}
             <button
               onClick={cycleSpeed}
+              aria-label={`Speed ${speed}x`}
               className="w-12 h-12 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-sm text-white hover:bg-white/25 active:scale-90 transition-all"
             >
               <span className="text-xs font-bold">{speed}x</span>
@@ -533,6 +540,7 @@ export default function AudioLearningPage({ onBack }) {
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
+              aria-label="Previous"
               className="w-14 h-14 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-sm text-white hover:bg-white/25 active:scale-90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <SkipBack size={24} fill="white" />
@@ -541,6 +549,7 @@ export default function AudioLearningPage({ onBack }) {
             {/* Play / Pause */}
             <button
               onClick={handleTogglePlay}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
               className="w-20 h-20 flex items-center justify-center rounded-full bg-white text-gray-900 shadow-2xl hover:scale-105 active:scale-95 transition-all"
               style={{ boxShadow: '0 10px 40px rgba(255,255,255,0.3)' }}
             >
@@ -555,6 +564,7 @@ export default function AudioLearningPage({ onBack }) {
             <button
               onClick={handleNext}
               disabled={currentIndex >= words.length - 1 && !repeatMode}
+              aria-label="Next"
               className="w-14 h-14 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-sm text-white hover:bg-white/25 active:scale-90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <SkipForward size={24} fill="white" />
@@ -563,6 +573,7 @@ export default function AudioLearningPage({ onBack }) {
             {/* Repeat */}
             <button
               onClick={() => setRepeatMode(!repeatMode)}
+              aria-label="Toggle repeat"
               className={`w-12 h-12 flex items-center justify-center rounded-full backdrop-blur-sm transition-all active:scale-90 ${
                 repeatMode
                   ? 'bg-white/40 text-white'

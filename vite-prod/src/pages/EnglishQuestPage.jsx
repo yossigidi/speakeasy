@@ -1029,6 +1029,8 @@ export default function EnglishQuestPage({ onBack }) {
         questsCompleted: newQuestsCompleted,
         questLevel: newQuestLevel,
         questHero: questHero,
+        // Increment lesson counter for achievements (quests count as lessons)
+        totalLessonsCompleted: (progress.totalLessonsCompleted || 0) + 1,
       });
 
       setPhase('complete');

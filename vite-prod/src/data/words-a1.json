@@ -32,7 +32,9 @@
     "synonyms": [
       "hi",
       "hey"
-    ]
+    ],
+    "translationAr": "مرحبا",
+    "translationRu": "Привет"
   },
   {
     "id": "a1_002",
@@ -67,7 +69,9 @@
     "synonyms": [
       "bye",
       "farewell"
-    ]
+    ],
+    "translationAr": "مع السلامة",
+    "translationRu": "До свидания"
   },
   {
     "id": "a1_003",
@@ -99,7 +103,9 @@
     ],
     "tip": "'Please' can go at the beginning, middle, or end of a sentence. At the end is very common: 'Can I have some water, please?'",
     "tipHe": "אפשר לשים 'please' בהתחלה, באמצע או בסוף המשפט. בסוף זה מאוד נפוץ: 'Can I have some water, please?'",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "من فضلك",
+    "translationRu": "Пожалуйста"
   },
   {
     "id": "a1_004",
@@ -139,7 +145,9 @@
     "synonyms": [
       "thanks",
       "cheers"
-    ]
+    ],
+    "translationAr": "شكراً لك",
+    "translationRu": "Спасибо"
   },
   {
     "id": "a1_005",
@@ -174,7 +182,9 @@
     "synonyms": [
       "yeah",
       "yep"
-    ]
+    ],
+    "translationAr": "نعم",
+    "translationRu": "Да"
   },
   {
     "id": "a1_006",
@@ -209,7 +219,9 @@
     "synonyms": [
       "nope",
       "nah"
-    ]
+    ],
+    "translationAr": "لا",
+    "translationRu": "Нет"
   },
   {
     "id": "a1_007",
@@ -248,7 +260,9 @@
     "tipHe": "'Sorry' משמש גם כשלא שמעתם משהו: 'Sorry? Could you say that again?' — כמו לומר 'סליחה?' בעברית.",
     "synonyms": [
       "apologetic"
-    ]
+    ],
+    "translationAr": "آسف",
+    "translationRu": "Извините"
   },
   {
     "id": "a1_008",
@@ -282,7 +296,9 @@
     "tipHe": "השתמשו ב-'excuse me' לפני שעושים משהו (למשוך תשומת לב, לעבור). השתמשו ב-'sorry' אחרי שעשיתם משהו לא נכון.",
     "synonyms": [
       "pardon me"
-    ]
+    ],
+    "translationAr": "عفواً",
+    "translationRu": "Извините"
   },
   {
     "id": "a1_009",
@@ -314,7 +330,9 @@
     ],
     "tip": "In casual situations, many people just say 'Morning!' without the 'Good'. It's perfectly friendly and natural.",
     "tipHe": "במצבים יומיומיים, הרבה אנשים אומרים רק 'Morning!' בלי 'Good'. זה לגמרי ידידותי וטבעי.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "صباح الخير",
+    "translationRu": "Доброе утро"
   },
   {
     "id": "a1_010",
@@ -346,7 +364,9 @@
     ],
     "tip": "'Good night' is ONLY for saying goodbye or going to sleep. When you arrive somewhere at night, say 'Good evening' instead.",
     "tipHe": "'Good night' הוא רק לפרידה או לשינה. כשמגיעים למקום בלילה, אומרים 'Good evening'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "تصبح على خير",
+    "translationRu": "Спокойной ночи"
   },
   {
     "id": "a1_011",
@@ -378,7 +398,9 @@
     ],
     "tip": "'One' is pronounced 'wun' — it starts with a 'w' sound, not 'oh'. This surprises many learners!",
     "tipHe": "'One' מבוטא 'ואן' — מתחיל בצליל 'w', לא 'או'. זה מפתיע הרבה לומדים!",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "واحد",
+    "translationRu": "Один"
   },
   {
     "id": "a1_012",
@@ -410,7 +432,9 @@
     ],
     "tip": "'Two', 'to', and 'too' all sound the same but mean different things. Context always makes the meaning clear.",
     "tipHe": "'Two', 'to', ו-'too' נשמעים אותו דבר אבל המשמעות שונה. ההקשר תמיד מבהיר את המשמעות.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "اثنان",
+    "translationRu": "Два"
   },
   {
     "id": "a1_013",
@@ -442,7 +466,9 @@
     ],
     "tip": "Be careful: 'three' (the number) and 'tree' (a plant) sound very different. Practice the 'th' sound with your tongue between your teeth.",
     "tipHe": "שימו לב: 'three' (המספר) ו-'tree' (עץ) נשמעים שונה. תרגלו את הצליל 'th' עם הלשון בין השיניים.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "ثلاثة",
+    "translationRu": "Три"
   },
   {
     "id": "a1_014",
@@ -474,7 +500,9 @@
     ],
     "tip": "'Four' and 'for' are homophones (sound the same). Spelling matters! Remember: 'four' has a 'u' for the number.",
     "tipHe": "'Four' ו-'for' נשמעים אותו דבר. האיות חשוב! זכרו: 'four' עם 'u' למספר.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أربعة",
+    "translationRu": "Четыре"
   },
   {
     "id": "a1_015",
@@ -506,7 +534,9 @@
     ],
     "tip": "The 'v' in 'five' is voiced — your throat vibrates. 'F' is voiceless. Put your hand on your throat to feel the difference.",
     "tipHe": "ה-'v' ב-'five' הוא קולי — הגרון רוטט. 'f' הוא חסר קול. שימו יד על הגרון כדי להרגיש את ההבדל.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "خمسة",
+    "translationRu": "Пять"
   },
   {
     "id": "a1_016",
@@ -541,7 +571,9 @@
     "synonyms": [
       "mom",
       "mum"
-    ]
+    ],
+    "translationAr": "أم",
+    "translationRu": "Мама"
   },
   {
     "id": "a1_017",
@@ -576,7 +608,9 @@
     "synonyms": [
       "dad",
       "daddy"
-    ]
+    ],
+    "translationAr": "أب",
+    "translationRu": "Папа"
   },
   {
     "id": "a1_018",
@@ -610,7 +644,9 @@
     "tipHe": "באנגלית, 'brother' יכול לשמש גם לחבר קרוב באופן לא רשמי, כמו 'bro' בסלנג.",
     "synonyms": [
       "bro"
-    ]
+    ],
+    "translationAr": "أخ",
+    "translationRu": "Брат"
   },
   {
     "id": "a1_019",
@@ -644,7 +680,9 @@
     "tipHe": "בניגוד ל-'brother/mother/father', ב-'sister' אין צליל 'th' — קל להגות!",
     "synonyms": [
       "sis"
-    ]
+    ],
+    "translationAr": "أخت",
+    "translationRu": "Сестра"
   },
   {
     "id": "a1_020",
@@ -684,7 +722,9 @@
     "synonyms": [
       "buddy",
       "pal"
-    ]
+    ],
+    "translationAr": "صديق / صديقة",
+    "translationRu": "Друг / подруга"
   },
   {
     "id": "a1_021",
@@ -716,7 +756,9 @@
     ],
     "tip": "'Water' is uncountable in English. Say 'a glass of water', 'a bottle of water', or 'some water' — never 'a water' in formal English.",
     "tipHe": "'Water' הוא לא ספיר באנגלית. אמרו 'a glass of water', 'a bottle of water', או 'some water' — לא 'a water' באנגלית רשמית.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "ماء",
+    "translationRu": "Вода"
   },
   {
     "id": "a1_022",
@@ -748,7 +790,9 @@
     ],
     "tip": "Like 'water', 'bread' is uncountable. You need a unit word: 'a slice of bread', 'a loaf of bread'.",
     "tipHe": "כמו 'water', גם 'bread' הוא לא ספיר. צריך מילת יחידה: 'a slice of bread', 'a loaf of bread'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "خبز",
+    "translationRu": "Хлеб"
   },
   {
     "id": "a1_023",
@@ -780,7 +824,9 @@
     ],
     "tip": "Like water and bread, milk is uncountable: 'some milk', 'a glass of milk' — not 'a milk' or 'milks'.",
     "tipHe": "כמו water ו-bread, גם milk הוא לא ספיר: 'some milk', 'a glass of milk' — לא 'a milk' או 'milks'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "حليب",
+    "translationRu": "Молоко"
   },
   {
     "id": "a1_024",
@@ -812,7 +858,9 @@
     ],
     "tip": "In a cafe, 'Two coffees' is acceptable shorthand for 'two cups of coffee'. In writing, coffee is technically uncountable.",
     "tipHe": "בבית קפה, 'Two coffees' הוא קיצור מקובל ל-'two cups of coffee'. בכתיבה, coffee הוא טכנית לא ספיר.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "قهوة",
+    "translationRu": "Кофе"
   },
   {
     "id": "a1_025",
@@ -844,7 +892,9 @@
     ],
     "tip": "Be careful not to confuse 'rice' /raɪs/ with 'rise' /raɪz/. 'Rice' ends with an 's' sound, 'rise' with a 'z' sound.",
     "tipHe": "אל תבלבלו בין 'rice' (אורז) ל-'rise' (לעלות). 'Rice' מסתיים ב-'ס', 'rise' ב-'ז'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أرز",
+    "translationRu": "Рис"
   },
   {
     "id": "a1_026",
@@ -878,7 +928,9 @@
     "tipHe": "'House' הוא המבנה. 'Home' הוא התחושה של המקום שגרים בו. אומרים 'go home' (בלי 'to'), אבל 'go to the house'.",
     "synonyms": [
       "home"
-    ]
+    ],
+    "translationAr": "بيت / منزل",
+    "translationRu": "Дом"
   },
   {
     "id": "a1_027",
@@ -910,7 +962,9 @@
     ],
     "tip": "Common phrases: 'answer the door' (go see who knocked), 'next door' (the neighbor), 'door to door' (from one house to another).",
     "tipHe": "ביטויים נפוצים: 'answer the door' (לפתוח כשדופקים), 'next door' (השכן), 'door to door' (מדלת לדלת).",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "باب",
+    "translationRu": "Дверь"
   },
   {
     "id": "a1_028",
@@ -942,7 +996,9 @@
     ],
     "tip": "Both 'out of the window' and 'out the window' are correct. American English often drops 'of'.",
     "tipHe": "גם 'out of the window' וגם 'out the window' נכונים. באנגלית אמריקאית לעיתים משמיטים את 'of'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "نافذة",
+    "translationRu": "Окно"
   },
   {
     "id": "a1_029",
@@ -976,7 +1032,9 @@
     "tipHe": "'Set the table' פירושו לערוך את השולחן — לשים צלחות, כוסות וסכו''ם לפני האוכל. ביטוי שימושי!",
     "synonyms": [
       "desk"
-    ]
+    ],
+    "translationAr": "طاولة",
+    "translationRu": "Стол"
   },
   {
     "id": "a1_030",
@@ -1010,7 +1068,9 @@
     "tipHe": "אל תבלבלו 'chair' (כיסא) עם 'share' (לחלוק). 'Chair' מתחיל ב-'צ׳' (כמו 'צ׳וקולד'), לא 'ש'.",
     "synonyms": [
       "seat"
-    ]
+    ],
+    "translationAr": "كرسي",
+    "translationRu": "Стул"
   },
   {
     "id": "a1_031",
@@ -1042,7 +1102,9 @@
     ],
     "tip": "Use 'by bus' (no 'the') for the general method of transport, but 'on the bus' when you're inside it.",
     "tipHe": "משתמשים ב-'by bus' (בלי 'the') לשיטת הנסיעה הכללית, אבל 'on the bus' כשאתם בתוכו.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "حافلة",
+    "translationRu": "Автобус"
   },
   {
     "id": "a1_032",
@@ -1074,7 +1136,9 @@
     ],
     "tip": "You travel 'by train' but you are 'on the train'. Same pattern as 'by bus' / 'on the bus'.",
     "tipHe": "נוסעים 'by train' אבל נמצאים 'on the train'. אותה תבנית כמו 'by bus' / 'on the bus'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "قطار",
+    "translationRu": "Поезд"
   },
   {
     "id": "a1_033",
@@ -1106,7 +1170,9 @@
     ],
     "tip": "Remember: you arrive AT the airport (not 'to'). This is one of the most common preposition mistakes.",
     "tipHe": "זכרו: arrive AT the airport (לא 'to'). זו אחת מהטעויות הנפוצות ביותר במילות יחס.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "مطار",
+    "translationRu": "Аэропорт"
   },
   {
     "id": "a1_034",
@@ -1140,7 +1206,9 @@
     "tipHe": "בתחבורה, 'by car' (כללי) אבל 'in the car' (בתוך מכונית ספציפית). לאוטובוס/רכבת, משתמשים ב-'on' לא 'in'.",
     "synonyms": [
       "automobile"
-    ]
+    ],
+    "translationAr": "سيارة",
+    "translationRu": "Машина"
   },
   {
     "id": "a1_035",
@@ -1174,7 +1242,9 @@
     "tipHe": "משתמשים ב-'on' עם שמות רחובות: 'I live on Main Street.' משתמשים ב-'in' לערים: 'I live in Tel Aviv.'",
     "synonyms": [
       "road"
-    ]
+    ],
+    "translationAr": "شارع",
+    "translationRu": "Улица"
   },
   {
     "id": "a1_036",
@@ -1208,7 +1278,9 @@
     "tipHe": "המורה TEACHES (מלמד), התלמיד LEARNS (לומד). לעולם אל תגידו 'the teacher learned me' — תמיד 'the teacher taught me'.",
     "synonyms": [
       "instructor"
-    ]
+    ],
+    "translationAr": "معلم / معلمة",
+    "translationRu": "Учитель"
   },
   {
     "id": "a1_037",
@@ -1242,7 +1314,9 @@
     "tipHe": "'Go to the doctor' פירושו לבקר את הרופא הקבוע שלך. 'See a doctor' זה כל רופא. שניהם נפוצים מאוד.",
     "synonyms": [
       "physician"
-    ]
+    ],
+    "translationAr": "طبيب / طبيبة",
+    "translationRu": "Врач"
   },
   {
     "id": "a1_038",
@@ -1277,7 +1351,9 @@
     "synonyms": [
       "pupil",
       "learner"
-    ]
+    ],
+    "translationAr": "طالب / طالبة",
+    "translationRu": "Студент / ученик"
   },
   {
     "id": "a1_039",
@@ -1317,7 +1393,9 @@
     "synonyms": [
       "job",
       "employment"
-    ]
+    ],
+    "translationAr": "عمل",
+    "translationRu": "Работа"
   },
   {
     "id": "a1_040",
@@ -1352,7 +1430,9 @@
     "synonyms": [
       "position",
       "occupation"
-    ]
+    ],
+    "translationAr": "وظيفة",
+    "translationRu": "Работа / должность"
   },
   {
     "id": "a1_041",
@@ -1384,7 +1464,9 @@
     ],
     "tip": "'Head' is used in many expressions: 'keep your head' (stay calm), 'head to' (go to), 'from head to toe' (all of the body).",
     "tipHe": "'Head' משמש בביטויים רבים: 'keep your head' (שמור על רוגע), 'head to' (ללכת ל-), 'from head to toe' (מכף רגל עד ראש).",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "رأس",
+    "translationRu": "Голова"
   },
   {
     "id": "a1_042",
@@ -1416,7 +1498,9 @@
     ],
     "tip": "'Hand' in English is just the part with fingers. The whole arm is called 'arm'. In Hebrew, 'יד' can mean both.",
     "tipHe": "'Hand' באנגלית זה רק כף היד עם האצבעות. כל הזרוע נקראת 'arm'. בעברית, 'יד' יכול להיות שניהם.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يد",
+    "translationRu": "Рука / кисть"
   },
   {
     "id": "a1_043",
@@ -1448,7 +1532,9 @@
     ],
     "tip": "'Eye' is pronounced exactly like the pronoun 'I'. Context makes it clear which one you mean.",
     "tipHe": "'Eye' מבוטא בדיוק כמו 'I' (אני). ההקשר מבהיר למה מתכוונים.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "عين",
+    "translationRu": "Глаз"
   },
   {
     "id": "a1_044",
@@ -1480,7 +1566,9 @@
     ],
     "tip": "'Blow your nose' means to clean it with a tissue. 'Pick your nose' (putting a finger in) is considered very rude in English culture.",
     "tipHe": "'Blow your nose' פירושו לנקות את האף עם טישו. 'Pick your nose' (לשים אצבע בפנים) נחשב מאוד לא מנומס בתרבות האנגלית.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أنف",
+    "translationRu": "Нос"
   },
   {
     "id": "a1_045",
@@ -1512,7 +1600,9 @@
     ],
     "tip": "The 'th' at the end of 'mouth' is voiceless (like in 'think'). But in the plural 'mouths', it becomes voiced (like in 'the').",
     "tipHe": "ה-'th' בסוף 'mouth' הוא חסר קול (כמו ב-'think'). אבל ברבים 'mouths', הוא הופך לקולי (כמו ב-'the').",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "فم",
+    "translationRu": "Рот"
   },
   {
     "id": "a1_046",
@@ -1546,7 +1636,9 @@
     "tipHe": "'Walk the dog' פירושו לקחת אותו החוצה לטיול. זהו ביטוי יומיומי מאוד נפוץ לבעלי כלבים.",
     "synonyms": [
       "puppy"
-    ]
+    ],
+    "translationAr": "كلب",
+    "translationRu": "Собака"
   },
   {
     "id": "a1_047",
@@ -1580,7 +1672,9 @@
     "tipHe": "חתול קטן נקרא 'kitten'. הצליל שחתול עושה באנגלית הוא 'meow' (לא 'מיאו' כמו בעברית).",
     "synonyms": [
       "kitten"
-    ]
+    ],
+    "translationAr": "قطة",
+    "translationRu": "Кошка"
   },
   {
     "id": "a1_048",
@@ -1612,7 +1706,9 @@
     ],
     "tip": "'Early bird' is a common expression meaning someone who wakes up early. 'The early bird catches the worm' is a famous proverb.",
     "tipHe": "'Early bird' הוא ביטוי נפוץ למישהו שמשכים קום. 'The early bird catches the worm' הוא פתגם מפורסם — המשכים קום מרוויח.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "طائر",
+    "translationRu": "Птица"
   },
   {
     "id": "a1_049",
@@ -1644,7 +1740,9 @@
     ],
     "tip": "The plural of 'fish' is usually 'fish' (not 'fishes'): 'one fish, two fish'. The same word for singular and plural!",
     "tipHe": "הרבים של 'fish' הוא בדרך כלל 'fish' (לא 'fishes'): 'one fish, two fish'. אותה מילה ליחיד ולרבים!",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "سمكة",
+    "translationRu": "Рыба"
   },
   {
     "id": "a1_050",
@@ -1678,7 +1776,9 @@
     "tipHe": "עבר של 'ride' הוא 'rode' (לא 'rided'). 'I rode a horse yesterday.' זהו פועל לא רגיל.",
     "synonyms": [
       "pony"
-    ]
+    ],
+    "translationAr": "حصان",
+    "translationRu": "Лошадь"
   },
   {
     "id": "a1_051",
@@ -1712,7 +1812,9 @@
     "tipHe": "באנגלית תואר הצבע בא לפני שם העצם: 'a red car' ולא 'a car red'.",
     "synonyms": [
       "crimson"
-    ]
+    ],
+    "translationAr": "أحمر",
+    "translationRu": "Красный"
   },
   {
     "id": "a1_052",
@@ -1744,7 +1846,9 @@
     ],
     "tip": "'Feeling blue' is an idiom meaning feeling sad. It's very common in everyday English.",
     "tipHe": "'Feeling blue' הוא ביטוי שמשמעותו להרגיש עצוב. זה ביטוי נפוץ מאוד באנגלית יומיומית.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أزرق",
+    "translationRu": "Синий / голубой"
   },
   {
     "id": "a1_053",
@@ -1776,7 +1880,9 @@
     ],
     "tip": "'Green light' means permission to go ahead with something, not just a traffic signal.",
     "tipHe": "'Green light' אומר אישור להתקדם עם משהו, לא רק רמזור ירוק.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أخضر",
+    "translationRu": "Зелёный"
   },
   {
     "id": "a1_054",
@@ -1808,7 +1914,9 @@
     ],
     "tip": "The 'wh' in 'white' sounds like /w/ - the 'h' is silent.",
     "tipHe": "ה-'wh' ב-'white' נשמע כמו /w/ - האות 'h' שקטה.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أبيض",
+    "translationRu": "Белый"
   },
   {
     "id": "a1_055",
@@ -1842,7 +1950,9 @@
     "tipHe": "'Black coffee' זה קפה בלי חלב. זו הזמנה נפוצה מאוד בבתי קפה.",
     "synonyms": [
       "dark"
-    ]
+    ],
+    "translationAr": "أسود",
+    "translationRu": "Чёрный"
   },
   {
     "id": "a1_056",
@@ -1874,7 +1984,9 @@
     ],
     "tip": "A 'shirt' usually has buttons and a collar. A 'T-shirt' is casual with no buttons.",
     "tipHe": "'Shirt' בדרך כלל עם כפתורים וצווארון. 'T-shirt' הוא חולצה יומיומית בלי כפתורים.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "قميص",
+    "translationRu": "Рубашка"
   },
   {
     "id": "a1_057",
@@ -1911,7 +2023,9 @@
     ],
     "tip": "Shoes are almost always plural. Use 'a pair of shoes' when talking about one set.",
     "tipHe": "נעליים כמעט תמיד ברבים באנגלית. משתמשים ב-'a pair of shoes' כשמדברים על זוג אחד.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "حذاء",
+    "translationRu": "Обувь / туфли"
   },
   {
     "id": "a1_058",
@@ -1945,7 +2059,9 @@
     "tipHe": "אומרים 'put on a hat' (לשים כובע) ו-'take off a hat' (להוריד כובע). פעלים אלה משמשים לכל הבגדים.",
     "synonyms": [
       "cap"
-    ]
+    ],
+    "translationAr": "قبعة",
+    "translationRu": "Шляпа / шапка"
   },
   {
     "id": "a1_059",
@@ -1979,7 +2095,9 @@
     "tipHe": "באנגלית אמריקאית 'pants' זה מכנסיים. באנגלית בריטית 'pants' זה תחתונים!",
     "synonyms": [
       "trousers"
-    ]
+    ],
+    "translationAr": "بنطال",
+    "translationRu": "Брюки / штаны"
   },
   {
     "id": "a1_060",
@@ -2013,7 +2131,9 @@
     "tipHe": "'Dress' יכולה להיות גם פועל שמשמעותו להתלבש: 'I dress quickly in the morning.'",
     "synonyms": [
       "gown"
-    ]
+    ],
+    "translationAr": "فستان",
+    "translationRu": "Платье"
   },
   {
     "id": "a1_061",
@@ -2045,7 +2165,9 @@
     ],
     "tip": "'Today' can go at the beginning or end of a sentence: 'Today I work' or 'I work today.'",
     "tipHe": "'Today' יכול לבוא בתחילת המשפט או בסופו: 'Today I work' או 'I work today.'",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "اليوم",
+    "translationRu": "Сегодня"
   },
   {
     "id": "a1_062",
@@ -2077,7 +2199,9 @@
     ],
     "tip": "Use 'will' or 'going to' with 'tomorrow' for future plans: 'I will call you tomorrow.'",
     "tipHe": "משתמשים ב-'will' או 'going to' עם 'tomorrow' לתוכניות עתידיות: 'I will call you tomorrow.'",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "غداً",
+    "translationRu": "Завтра"
   },
   {
     "id": "a1_063",
@@ -2109,7 +2233,9 @@
     ],
     "tip": "'Yesterday' always requires past tense verbs. This is one of the most common mistakes for beginners.",
     "tipHe": "'Yesterday' תמיד דורש פעלים בזמן עבר. זו אחת הטעויות הנפוצות ביותר אצל מתחילים.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "أمس",
+    "translationRu": "Вчера"
   },
   {
     "id": "a1_064",
@@ -2141,7 +2267,9 @@
     ],
     "tip": "Use 'in' with morning, afternoon, evening: 'in the morning'. But use 'at' with night: 'at night'.",
     "tipHe": "משתמשים ב-'in' עם morning, afternoon, evening: 'in the morning'. אבל 'at' עם night: 'at night'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "صباح",
+    "translationRu": "Утро"
   },
   {
     "id": "a1_065",
@@ -2175,7 +2303,9 @@
     "tipHe": "אומרים 'at night' (לא 'in the night'). אבל אומרים 'in the morning/afternoon/evening'.",
     "synonyms": [
       "nighttime"
-    ]
+    ],
+    "translationAr": "ليل",
+    "translationRu": "Ночь"
   },
   {
     "id": "a1_066",
@@ -2207,7 +2337,9 @@
     ],
     "tip": "'Sun' and 'son' sound exactly the same! Context tells you which one is meant.",
     "tipHe": "'Sun' (שמש) ו-'son' (בן) נשמעים בדיוק אותו דבר! ההקשר אומר לך למה מתכוונים.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "شمس",
+    "translationRu": "Солнце"
   },
   {
     "id": "a1_067",
@@ -2239,7 +2371,9 @@
     ],
     "tip": "'Rain' is a noun and a verb. As a verb: 'It is raining.' As a noun: 'The rain is heavy.'",
     "tipHe": "'Rain' הוא גם שם עצם וגם פועל. כפועל: 'It is raining.' כשם עצם: 'The rain is heavy.'",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "مطر",
+    "translationRu": "Дождь"
   },
   {
     "id": "a1_068",
@@ -2274,7 +2408,9 @@
     "synonyms": [
       "chilly",
       "cool"
-    ]
+    ],
+    "translationAr": "بارد",
+    "translationRu": "Холодный"
   },
   {
     "id": "a1_069",
@@ -2308,7 +2444,9 @@
     "tipHe": "למזג אוויר תמיד משתמשים ב-'it': 'It is hot' ולא 'Today is hot'. 'It' הוא הנושא למזג אוויר.",
     "synonyms": [
       "warm"
-    ]
+    ],
+    "translationAr": "حار",
+    "translationRu": "Горячий / жаркий"
   },
   {
     "id": "a1_070",
@@ -2340,7 +2478,9 @@
     ],
     "tip": "The most natural way to ask about weather is 'What's the weather like?' Don't confuse 'weather' with 'whether' (if).",
     "tipHe": "הדרך הטבעית ביותר לשאול על מזג אוויר היא 'What's the weather like?' אל תבלבלו בין 'weather' (מזג אוויר) ל-'whether' (האם).",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "طقس",
+    "translationRu": "Погода"
   },
   {
     "id": "a1_071",
@@ -2372,7 +2512,9 @@
     ],
     "tip": "'Book' is also a verb meaning to reserve: 'I booked a hotel room.'",
     "tipHe": "'Book' הוא גם פועל שמשמעותו להזמין מראש: 'I booked a hotel room.'",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "كتاب",
+    "translationRu": "Книга"
   },
   {
     "id": "a1_072",
@@ -2404,7 +2546,9 @@
     ],
     "tip": "A 'pen' uses ink. A 'pencil' uses graphite and can be erased. Don't confuse them!",
     "tipHe": "'Pen' (עט) משתמש בדיו. 'Pencil' (עיפרון) משתמש בגרפיט ואפשר למחוק. אל תבלבלו ביניהם!",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "قلم",
+    "translationRu": "Ручка"
   },
   {
     "id": "a1_073",
@@ -2438,7 +2582,9 @@
     "tipHe": "'Class' יכול להיות השיעור ('I have class') או הקבוצה ('My class has 30 people').",
     "synonyms": [
       "lesson"
-    ]
+    ],
+    "translationAr": "صف / حصة",
+    "translationRu": "Класс / урок"
   },
   {
     "id": "a1_074",
@@ -2470,7 +2616,9 @@
     ],
     "tip": "Present: read /riːd/ (sounds like 'reed'). Past: read /rɛd/ (sounds like 'red'). Same spelling, different pronunciation!",
     "tipHe": "הווה: read /riːd/ (נשמע כמו 'ריד'). עבר: read /rɛd/ (נשמע כמו 'רד'). אותו כתיב, הגייה שונה!",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يقرأ",
+    "translationRu": "Читать"
   },
   {
     "id": "a1_075",
@@ -2507,7 +2655,9 @@
     ],
     "tip": "'Write' has a silent 'w': it sounds like 'rite'. Past tense is 'wrote', past participle is 'written'.",
     "tipHe": "ב-'write' האות 'w' שקטה: נשמע כמו 'rite'. עבר: 'wrote', עבר מושלם: 'written'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يكتب",
+    "translationRu": "Писать"
   },
   {
     "id": "a1_076",
@@ -2546,7 +2696,9 @@
     "tipHe": "'Money' הוא שם עצם שאינו סופר באנגלית. משתמשים ב-'much money' או 'a lot of money', לעולם לא 'many moneys'.",
     "synonyms": [
       "cash"
-    ]
+    ],
+    "translationAr": "مال / نقود",
+    "translationRu": "Деньги"
   },
   {
     "id": "a1_077",
@@ -2580,7 +2732,9 @@
     "tipHe": "'Shop' הוא גם שם עצם (החנות) וגם פועל (לקנות). 'Go shopping' פירושו ללכת לחנויות לקנות דברים.",
     "synonyms": [
       "store"
-    ]
+    ],
+    "translationAr": "متجر",
+    "translationRu": "Магазин"
   },
   {
     "id": "a1_078",
@@ -2614,7 +2768,9 @@
     "tipHe": "'Buy' נשמע בדיוק כמו 'bye' (להתראות)! עבר: 'bought'. זכרו: buy-bought-bought.",
     "synonyms": [
       "purchase"
-    ]
+    ],
+    "translationAr": "يشتري",
+    "translationRu": "Покупать"
   },
   {
     "id": "a1_079",
@@ -2648,7 +2804,9 @@
     "tipHe": "אל תבלבלו בין 'price' (מחיר) ל-'prize' (פרס). ההגייה שונה: price /praɪs/ ו-prize /praɪz/.",
     "synonyms": [
       "cost"
-    ]
+    ],
+    "translationAr": "سعر",
+    "translationRu": "Цена"
   },
   {
     "id": "a1_080",
@@ -2683,7 +2841,9 @@
     "synonyms": [
       "affordable",
       "inexpensive"
-    ]
+    ],
+    "translationAr": "رخيص",
+    "translationRu": "Дешёвый"
   },
   {
     "id": "a1_081",
@@ -2715,7 +2875,9 @@
     ],
     "tip": "Useful direction phrases: 'Turn left', 'On the left', 'Take a left'. They all mean the same direction.",
     "tipHe": "ביטויי כיוון שימושיים: 'Turn left', 'On the left', 'Take a left'. כולם אומרים אותו כיוון.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يسار",
+    "translationRu": "Налево"
   },
   {
     "id": "a1_082",
@@ -2747,7 +2909,9 @@
     ],
     "tip": "'Right' has many meanings: a direction (turn right), correct (that's right), and a privilege (human rights).",
     "tipHe": "ל-'right' יש כמה משמעויות: כיוון (פנה ימינה), נכון (זה נכון), וזכות (זכויות אדם).",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يمين",
+    "translationRu": "Направо"
   },
   {
     "id": "a1_083",
@@ -2781,7 +2945,9 @@
     "tipHe": "האיות של 'straight' קצת מסובך. זכרו: str-aight. זה מתחרז עם 'late' ו-'eight'.",
     "synonyms": [
       "directly"
-    ]
+    ],
+    "translationAr": "مستقيم",
+    "translationRu": "Прямо"
   },
   {
     "id": "a1_084",
@@ -2815,7 +2981,9 @@
     "tipHe": "'Near' לא צריך 'to' אחריו: 'near the park' ולא 'near to the park'. 'Nearby' פירושו באזור.",
     "synonyms": [
       "close"
-    ]
+    ],
+    "translationAr": "قريب",
+    "translationRu": "Близко"
   },
   {
     "id": "a1_085",
@@ -2849,7 +3017,9 @@
     "tipHe": "'How far' שואל על מרחק: 'How far is the beach?' אפשר לענות: 'It's 5 minutes away.'",
     "synonyms": [
       "distant"
-    ]
+    ],
+    "translationAr": "بعيد",
+    "translationRu": "Далеко"
   },
   {
     "id": "a1_086",
@@ -2884,7 +3054,9 @@
     "synonyms": [
       "glad",
       "pleased"
-    ]
+    ],
+    "translationAr": "سعيد",
+    "translationRu": "Счастливый"
   },
   {
     "id": "a1_087",
@@ -2918,7 +3090,9 @@
     "tipHe": "'Sad' הוא תואר, 'sadness' שם עצם, 'sadly' תואר הפועל. למדו את כל שלוש הצורות!",
     "synonyms": [
       "unhappy"
-    ]
+    ],
+    "translationAr": "حزين",
+    "translationRu": "Грустный"
   },
   {
     "id": "a1_088",
@@ -2953,7 +3127,9 @@
     "synonyms": [
       "mad",
       "upset"
-    ]
+    ],
+    "translationAr": "غاضب",
+    "translationRu": "Злой / сердитый"
   },
   {
     "id": "a1_089",
@@ -2987,7 +3163,9 @@
     "tipHe": "'Tired' פירושו שצריך לנוח. 'Tired of' פירושו משועמם מ-: 'I'm tired of waiting' אומר שאתה לא רוצה לחכות יותר.",
     "synonyms": [
       "exhausted"
-    ]
+    ],
+    "translationAr": "متعب",
+    "translationRu": "Уставший"
   },
   {
     "id": "a1_090",
@@ -3027,7 +3205,9 @@
     "synonyms": [
       "great",
       "nice"
-    ]
+    ],
+    "translationAr": "جيد",
+    "translationRu": "Хороший"
   },
   {
     "id": "a1_091",
@@ -3061,7 +3241,9 @@
     "tipHe": "באנגלית אמריקאית 'football' זה פוטבול אמריקאי. בארה\"ב משתמשים ב-'soccer' למה שהעולם קורא כדורגל.",
     "synonyms": [
       "soccer"
-    ]
+    ],
+    "translationAr": "كرة القدم",
+    "translationRu": "Футбол"
   },
   {
     "id": "a1_092",
@@ -3093,7 +3275,9 @@
     ],
     "tip": "We say 'go swimming' (not 'go to swim'). This pattern works for many sports: go running, go cycling.",
     "tipHe": "אומרים 'go swimming' (לא 'go to swim'). התבנית הזו עובדת לספורטים רבים: go running, go cycling.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يسبح",
+    "translationRu": "Плавать"
   },
   {
     "id": "a1_093",
@@ -3127,7 +3311,9 @@
     "tipHe": "פועל לא רגיל: run-ran-run. צורת ה-ing: running (שתי אותיות 'n'). 'Go for a run' = ללכת לרוץ.",
     "synonyms": [
       "jog"
-    ]
+    ],
+    "translationAr": "يركض",
+    "translationRu": "Бегать"
   },
   {
     "id": "a1_094",
@@ -3159,7 +3345,9 @@
     ],
     "tip": "No article with sports: 'play football'. Use 'the' with instruments: 'play the piano'. This is a key rule!",
     "tipHe": "בלי 'the' עם ספורט: 'play football'. עם 'the' לכלי נגינה: 'play the piano'. זה כלל חשוב!",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يلعب",
+    "translationRu": "Играть"
   },
   {
     "id": "a1_095",
@@ -3193,7 +3381,9 @@
     "tipHe": "אנחנו 'play' משחק, לא 'do' משחק. 'Match' הוא ספציפית משחק תחרותי בין שתי קבוצות.",
     "synonyms": [
       "match"
-    ]
+    ],
+    "translationAr": "لعبة",
+    "translationRu": "Игра"
   },
   {
     "id": "a1_096",
@@ -3227,7 +3417,9 @@
     "tipHe": "פועל לא רגיל: eat-ate-eaten. 'Ate' נהגה כמו המספר 'eight'. 'Let's eat' = בואו נאכל.",
     "synonyms": [
       "have"
-    ]
+    ],
+    "translationAr": "يأكل",
+    "translationRu": "Есть / кушать"
   },
   {
     "id": "a1_097",
@@ -3261,7 +3453,9 @@
     "tipHe": "פועל לא רגיל: sleep-slept-slept. 'Go to sleep' = ללכת לישון. 'Fall asleep' = להירדם באופן טבעי.",
     "synonyms": [
       "rest"
-    ]
+    ],
+    "translationAr": "ينام",
+    "translationRu": "Спать"
   },
   {
     "id": "a1_098",
@@ -3298,7 +3492,9 @@
     ],
     "tip": "Very irregular: go-went-gone. Remember: no 'to' before 'home', 'here', 'there': 'go home', 'go there'.",
     "tipHe": "פועל לא רגיל מאוד: go-went-gone. זכרו: בלי 'to' לפני 'home', 'here', 'there': 'go home', 'go there'.",
-    "synonyms": []
+    "synonyms": [],
+    "translationAr": "يذهب",
+    "translationRu": "Идти / ходить"
   },
   {
     "id": "a1_099",
@@ -3332,7 +3528,9 @@
     "tipHe": "'Come' = לכיוון הדובר. 'Go' = הרחק מהדובר. 'Come here' אבל 'Go there'.",
     "synonyms": [
       "arrive"
-    ]
+    ],
+    "translationAr": "يأتي",
+    "translationRu": "Приходить"
   },
   {
     "id": "a1_100",
@@ -3371,7 +3569,9 @@
     "tipHe": "'Make' = ליצור משהו חדש (make food, make a plan). 'Do' = לבצע פעילות (do homework, do work).",
     "synonyms": [
       "create"
-    ]
+    ],
+    "translationAr": "يصنع / يحضّر",
+    "translationRu": "Делать / готовить"
   },
   {
     "id": "a1-102",
@@ -3405,7 +3605,9 @@
       }
     ],
     "tip": "'Drink' is irregular: drink → drank → drunk. As a noun, 'a drink' means a beverage.",
-    "tipHe": "הפועל drink לא סדיר: drink → drank → drunk. כשם עצם, 'a drink' פירושו משקה."
+    "tipHe": "הפועל drink לא סדיר: drink → drank → drunk. כשם עצם, 'a drink' פירושו משקה.",
+    "translationAr": "يشرب",
+    "translationRu": "Пить"
   },
   {
     "id": "a1-104",
@@ -3439,7 +3641,9 @@
       }
     ],
     "tip": "'Walk' is regular: walk → walked → walked. The 'l' is silent — it sounds like 'wok'. Don't pronounce it 'wAlk'.",
-    "tipHe": "הפועל walk סדיר: walk → walked → walked. ה-l שקטה — זה נשמע כמו 'ווֹק'. אל תגידו 'וואלק'."
+    "tipHe": "הפועל walk סדיר: walk → walked → walked. ה-l שקטה — זה נשמע כמו 'ווֹק'. אל תגידו 'וואלק'.",
+    "translationAr": "يمشي",
+    "translationRu": "Ходить / гулять"
   },
   {
     "id": "a1-106",
@@ -3473,7 +3677,9 @@
       }
     ],
     "tip": "'Sit' is irregular: sit → sat → sat. 'Sit down' = the action of sitting. 'Be sitting' = already in a sitting position.",
-    "tipHe": "הפועל sit לא סדיר: sit → sat → sat. 'Sit down' = הפעולה של ישיבה. 'Be sitting' = כבר יושב."
+    "tipHe": "הפועל sit לא סדיר: sit → sat → sat. 'Sit down' = הפעולה של ישיבה. 'Be sitting' = כבר יושב.",
+    "translationAr": "يجلس",
+    "translationRu": "Сидеть"
   },
   {
     "id": "a1-107",
@@ -3508,7 +3714,9 @@
       }
     ],
     "tip": "'Stand' is irregular: stand → stood → stood. 'Stand up' means to go from sitting to standing.",
-    "tipHe": "הפועל stand לא סדיר: stand → stood → stood. 'Stand up' פירושו לקום מישיבה לעמידה."
+    "tipHe": "הפועל stand לא סדיר: stand → stood → stood. 'Stand up' פירושו לקום מישיבה לעמידה.",
+    "translationAr": "يقف",
+    "translationRu": "Стоять"
   },
   {
     "id": "a1-108",
@@ -3542,7 +3750,9 @@
       }
     ],
     "tip": "'Open' is regular: open → opened → opened. It is also an adjective: 'The door is open.' Be careful: in Hebrew you 'open' the light, but in English you 'turn on' the light.",
-    "tipHe": "הפועל open סדיר: open → opened → opened. זה גם שם תואר: 'The door is open.' זהירות: בעברית 'פותחים את האור' אבל באנגלית 'turn on the light'."
+    "tipHe": "הפועל open סדיר: open → opened → opened. זה גם שם תואר: 'The door is open.' זהירות: בעברית 'פותחים את האור' אבל באנגלית 'turn on the light'.",
+    "translationAr": "يفتح",
+    "translationRu": "Открывать"
   },
   {
     "id": "a1-109",
@@ -3576,7 +3786,9 @@
       }
     ],
     "tip": "As a verb, 'close' rhymes with 'nose' (/kloʊz/). As an adjective (= near), it rhymes with 'dose' (/kloʊs/). Two different pronunciations!",
-    "tipHe": "כפועל, 'close' מחורז עם 'nose' (/קלוֹז/). כשם תואר (= קרוב), מחורז עם 'dose' (/קלוֹס/). שתי הגיות שונות!"
+    "tipHe": "כפועל, 'close' מחורז עם 'nose' (/קלוֹז/). כשם תואר (= קרוב), מחורז עם 'dose' (/קלוֹס/). שתי הגיות שונות!",
+    "translationAr": "يغلق",
+    "translationRu": "Закрывать"
   },
   {
     "id": "a1-110",
@@ -3611,7 +3823,9 @@
       }
     ],
     "tip": "'Give' is irregular: give → gave → given. You can say 'give me the book' or 'give the book to me' — both are correct.",
-    "tipHe": "הפועל give לא סדיר: give → gave → given. אפשר לומר 'give me the book' או 'give the book to me' — שניהם נכונים."
+    "tipHe": "הפועל give לא סדיר: give → gave → given. אפשר לומר 'give me the book' או 'give the book to me' — שניהם נכונים.",
+    "translationAr": "يعطي",
+    "translationRu": "Давать"
   },
   {
     "id": "a1-111",
@@ -3646,7 +3860,9 @@
       }
     ],
     "tip": "'Take' is irregular: take → took → taken. 'Take' has many uses: take a bus, take a photo, take a break, take time.",
-    "tipHe": "הפועל take לא סדיר: take → took → taken. ל-'take' יש שימושים רבים: take a bus, take a photo, take a break, take time."
+    "tipHe": "הפועל take לא סדיר: take → took → taken. ל-'take' יש שימושים רבים: take a bus, take a photo, take a break, take time.",
+    "translationAr": "يأخذ",
+    "translationRu": "Брать"
   },
   {
     "id": "a1-113",
@@ -3681,7 +3897,9 @@
       }
     ],
     "tip": "'Want' is regular: want → wanted → wanted. Always use 'want to' + verb: 'I want to eat' (not 'I want eat').",
-    "tipHe": "הפועל want סדיר: want → wanted → wanted. תמיד 'want to' + פועל: 'I want to eat' (לא 'I want eat')."
+    "tipHe": "הפועל want סדיר: want → wanted → wanted. תמיד 'want to' + פועל: 'I want to eat' (לא 'I want eat').",
+    "translationAr": "يريد",
+    "translationRu": "Хотеть"
   },
   {
     "id": "a1-114",
@@ -3715,7 +3933,9 @@
       }
     ],
     "tip": "'Need' is regular: need → needed → needed. 'Need' is stronger than 'want' — it means something is necessary, not just desired.",
-    "tipHe": "הפועל need סדיר: need → needed → needed. 'Need' חזק יותר מ-'want' — הוא אומר שמשהו הכרחי, לא רק רצוי."
+    "tipHe": "הפועל need סדיר: need → needed → needed. 'Need' חזק יותר מ-'want' — הוא אומר שמשהו הכרחי, לא רק רצוי.",
+    "translationAr": "يحتاج",
+    "translationRu": "Нуждаться"
   },
   {
     "id": "a1-115",
@@ -3749,7 +3969,9 @@
       }
     ],
     "tip": "'Like' is regular: like → liked → liked. After 'like' you can use -ing or to: 'I like swimming' = 'I like to swim'. Both are correct!",
-    "tipHe": "הפועל like סדיר: like → liked → liked. אחרי 'like' אפשר -ing או to: 'I like swimming' = 'I like to swim'. שניהם נכונים!"
+    "tipHe": "הפועל like סדיר: like → liked → liked. אחרי 'like' אפשר -ing או to: 'I like swimming' = 'I like to swim'. שניהם נכונים!",
+    "translationAr": "يحب / يعجبه",
+    "translationRu": "Нравиться / любить"
   },
   {
     "id": "a1-116",
@@ -3783,7 +4005,9 @@
       }
     ],
     "tip": "'Love' is regular: love → loved → loved. In English, 'love' is used more freely than in Hebrew — you can say 'I love pizza!' without it being dramatic.",
-    "tipHe": "הפועל love סדיר: love → loved → loved. באנגלית משתמשים ב-'love' בחופשיות — אפשר להגיד 'I love pizza!' בלי שזה ישמע מוגזם."
+    "tipHe": "הפועל love סדיר: love → loved → loved. באנגלית משתמשים ב-'love' בחופשיות — אפשר להגיד 'I love pizza!' בלי שזה ישמע מוגזם.",
+    "translationAr": "يحب",
+    "translationRu": "Любить"
   },
   {
     "id": "a1-119",
@@ -3818,7 +4042,9 @@
       }
     ],
     "tip": "'See' is irregular: see → saw → seen. 'See' = notice with your eyes (automatic). 'Look' = direct your eyes somewhere (on purpose). 'Watch' = look at something for a while.",
-    "tipHe": "הפועל see לא סדיר: see → saw → seen. 'See' = להבחין (אוטומטי). 'Look' = להפנות מבט (בכוונה). 'Watch' = לצפות במשהו לאורך זמן."
+    "tipHe": "הפועל see לא סדיר: see → saw → seen. 'See' = להבחין (אוטומטי). 'Look' = להפנות מבט (בכוונה). 'Watch' = לצפות במשהו לאורך זמן.",
+    "translationAr": "يرى",
+    "translationRu": "Видеть"
   },
   {
     "id": "a1-120",
@@ -3852,7 +4078,9 @@
       }
     ],
     "tip": "'Hear' is irregular: hear → heard → heard. 'Hear' = receive sound (automatic). 'Listen' = pay attention to sound (on purpose).",
-    "tipHe": "הפועל hear לא סדיר: hear → heard → heard. 'Hear' = לשמוע (אוטומטי). 'Listen' = להקשיב (בכוונה)."
+    "tipHe": "הפועל hear לא סדיר: hear → heard → heard. 'Hear' = לשמוע (אוטומטי). 'Listen' = להקשיב (בכוונה).",
+    "translationAr": "يسمع",
+    "translationRu": "Слышать"
   },
   {
     "id": "a1-121",
@@ -3886,7 +4114,9 @@
       }
     ],
     "tip": "'Speak' is irregular: speak → spoke → spoken. 'Speak' is slightly more formal than 'talk'. You 'speak a language' but 'talk to a friend'.",
-    "tipHe": "הפועל speak לא סדיר: speak → spoke → spoken. 'Speak' קצת יותר רשמי מ-'talk'. אומרים 'speak a language' אבל 'talk to a friend'."
+    "tipHe": "הפועל speak לא סדיר: speak → spoke → spoken. 'Speak' קצת יותר רשמי מ-'talk'. אומרים 'speak a language' אבל 'talk to a friend'.",
+    "translationAr": "يتكلم",
+    "translationRu": "Говорить"
   },
   {
     "id": "a1-122",
@@ -3921,7 +4151,9 @@
       }
     ],
     "tip": "'Know' is irregular: know → knew → known. The 'k' is silent! It sounds like 'no'. Don't confuse 'know' (לדעת) with 'no' (לא).",
-    "tipHe": "הפועל know לא סדיר: know → knew → known. ה-k שקטה! זה נשמע כמו 'no'. אל תתבלבלו בין 'know' (לדעת) ל-'no' (לא)."
+    "tipHe": "הפועל know לא סדיר: know → knew → known. ה-k שקטה! זה נשמע כמו 'no'. אל תתבלבלו בין 'know' (לדעת) ל-'no' (לא).",
+    "translationAr": "يعرف",
+    "translationRu": "Знать"
   },
   {
     "id": "a1-123",
@@ -3956,7 +4188,9 @@
       }
     ],
     "tip": "'Think' is irregular: think → thought → thought. The 'th' sound /θ/ doesn't exist in Hebrew — put your tongue between your teeth!",
-    "tipHe": "הפועל think לא סדיר: think → thought → thought. הצליל 'th' לא קיים בעברית — שימו את הלשון בין השיניים!"
+    "tipHe": "הפועל think לא סדיר: think → thought → thought. הצליל 'th' לא קיים בעברית — שימו את הלשון בין השיניים!",
+    "translationAr": "يفكر",
+    "translationRu": "Думать"
   },
   {
     "id": "a1-125",
@@ -3991,7 +4225,9 @@
       }
     ],
     "tip": "'Do' is irregular: do → did → done. 'Do' is also a helper verb for questions and negatives: 'Do you like it?' 'I don't know.'",
-    "tipHe": "הפועל do לא סדיר: do → did → done. 'Do' גם פועל עזר לשאלות ושליליות: 'Do you like it?' 'I don't know.'"
+    "tipHe": "הפועל do לא סדיר: do → did → done. 'Do' גם פועל עזר לשאלות ושליליות: 'Do you like it?' 'I don't know.'",
+    "translationAr": "يفعل",
+    "translationRu": "Делать"
   },
   {
     "id": "a1-127",
@@ -4026,7 +4262,9 @@
       }
     ],
     "tip": "'Stop' is regular: stop → stopped → stopped (note the double 'p'). 'Stop doing' ≠ 'stop to do' — they have different meanings!",
-    "tipHe": "הפועל stop סדיר: stop → stopped → stopped (שימו לב ל-p כפולה). 'Stop doing' ≠ 'stop to do' — משמעויות שונות!"
+    "tipHe": "הפועל stop סדיר: stop → stopped → stopped (שימו לב ל-p כפולה). 'Stop doing' ≠ 'stop to do' — משמעויות שונות!",
+    "translationAr": "يتوقف",
+    "translationRu": "Останавливаться"
   },
   {
     "id": "a1-128",
@@ -4060,7 +4298,9 @@
       }
     ],
     "tip": "'Start' is regular: start → started → started. 'Start' and 'begin' mean the same thing, but 'start' is more common in everyday speech.",
-    "tipHe": "הפועל start סדיר: start → started → started. 'Start' ו-'begin' אותו דבר, אבל 'start' נפוץ יותר בדיבור יומיומי."
+    "tipHe": "הפועל start סדיר: start → started → started. 'Start' ו-'begin' אותו דבר, אבל 'start' נפוץ יותר בדיבור יומיומי.",
+    "translationAr": "يبدأ",
+    "translationRu": "Начинать"
   },
   {
     "id": "a1-129",
@@ -4094,7 +4334,9 @@
       }
     ],
     "tip": "'Wait' is regular: wait → waited → waited. Always say 'wait for': 'I'm waiting for you' (not 'I'm waiting you').",
-    "tipHe": "הפועל wait סדיר: wait → waited → waited. תמיד 'wait for': 'I'm waiting for you' (לא 'I'm waiting you')."
+    "tipHe": "הפועל wait סדיר: wait → waited → waited. תמיד 'wait for': 'I'm waiting for you' (לא 'I'm waiting you').",
+    "translationAr": "ينتظر",
+    "translationRu": "Ждать"
   },
   {
     "id": "a1-130",
@@ -4129,7 +4371,9 @@
       }
     ],
     "tip": "'Help' is regular: help → helped → helped. After 'help', you can use the base verb directly: 'Help me carry this' (no 'to' needed, though 'help me to carry' is also OK).",
-    "tipHe": "הפועל help סדיר: help → helped → helped. אחרי 'help' אפשר להשתמש בפועל ישירות: 'Help me carry this' (בלי to, אם כי 'help me to carry' גם בסדר)."
+    "tipHe": "הפועל help סדיר: help → helped → helped. אחרי 'help' אפשר להשתמש בפועל ישירות: 'Help me carry this' (בלי to, אם כי 'help me to carry' גם בסדר).",
+    "translationAr": "يساعد",
+    "translationRu": "Помогать"
   },
   {
     "id": "a1-131",
@@ -4164,7 +4408,9 @@
       }
     ],
     "tip": "'Live' (verb, /lɪv/) is regular: live → lived → lived. Don't confuse with 'live' (adjective, /laɪv/) meaning 'happening now' — like 'live music'.",
-    "tipHe": "הפועל live (/לִיב/) סדיר: live → lived → lived. אל תתבלבלו עם 'live' (תואר, /לַייב/) שפירושו 'בשידור חי' — כמו 'live music'."
+    "tipHe": "הפועל live (/לִיב/) סדיר: live → lived → lived. אל תתבלבלו עם 'live' (תואר, /לַייב/) שפירושו 'בשידור חי' — כמו 'live music'.",
+    "translationAr": "يعيش / يسكن",
+    "translationRu": "Жить"
   },
   {
     "id": "a1-132",
@@ -4198,7 +4444,9 @@
       }
     ],
     "tip": "'Pay' is irregular: pay → paid → paid. Use 'pay for' when talking about what you bought: 'I paid for the coffee.' Use 'pay' directly for bills: 'pay the bill'.",
-    "tipHe": "הפועל pay לא סדיר: pay → paid → paid. משתמשים ב-'pay for' כשמדברים על מה שקנינו: 'I paid for the coffee.' ו-'pay' ישירות עם חשבונות: 'pay the bill'."
+    "tipHe": "הפועל pay לא סדיר: pay → paid → paid. משתמשים ב-'pay for' כשמדברים על מה שקנינו: 'I paid for the coffee.' ו-'pay' ישירות עם חשבונות: 'pay the bill'.",
+    "translationAr": "يدفع",
+    "translationRu": "Платить"
   },
   {
     "id": "a1-133",
@@ -4233,7 +4481,9 @@
       }
     ],
     "tip": "'Ask' is regular: ask → asked → asked. 'Ask someone a question' (no 'to'). But 'ask for something' when making a request.",
-    "tipHe": "הפועל ask סדיר: ask → asked → asked. 'Ask someone a question' (בלי to). אבל 'ask for something' כשמבקשים משהו."
+    "tipHe": "הפועל ask סדיר: ask → asked → asked. 'Ask someone a question' (בלי to). אבל 'ask for something' כשמבקשים משהו.",
+    "translationAr": "يسأل",
+    "translationRu": "Спрашивать"
   },
   {
     "id": "a1-134",
@@ -4268,7 +4518,9 @@
       }
     ],
     "tip": "'Answer' is regular: answer → answered → answered. 'Answer' as a verb has no 'to': 'answer the question'. But as a noun: 'the answer to the question'.",
-    "tipHe": "הפועל answer סדיר: answer → answered → answered. 'Answer' כפועל בלי to: 'answer the question'. אבל כשם עצם: 'the answer to the question'."
+    "tipHe": "הפועל answer סדיר: answer → answered → answered. 'Answer' כפועל בלי to: 'answer the question'. אבל כשם עצם: 'the answer to the question'.",
+    "translationAr": "يجيب",
+    "translationRu": "Отвечать"
   },
   {
     "id": "a1-135",
@@ -4303,7 +4555,9 @@
       }
     ],
     "tip": "'Find' is irregular: find → found → found. 'Find out' means to learn or discover new information: 'I found out that she moved.'",
-    "tipHe": "הפועל find לא סדיר: find → found → found. 'Find out' פירושו לגלות מידע חדש: 'I found out that she moved.'"
+    "tipHe": "הפועל find לא סדיר: find → found → found. 'Find out' פירושו לגלות מידע חדש: 'I found out that she moved.'",
+    "translationAr": "يجد",
+    "translationRu": "Находить"
   },
   {
     "id": "a1-136",
@@ -4338,7 +4592,9 @@
       }
     ],
     "tip": "'Put' never changes form: put → put → put. 'Put on' = wear clothes. 'Put away' = return something to its place.",
-    "tipHe": "הפועל put לעולם לא משתנה: put → put → put. 'Put on' = ללבוש. 'Put away' = להחזיר משהו למקומו."
+    "tipHe": "הפועל put לעולם לא משתנה: put → put → put. 'Put on' = ללבוש. 'Put away' = להחזיר משהו למקומו.",
+    "translationAr": "يضع",
+    "translationRu": "Класть / ставить"
   },
   {
     "id": "a1-137",
@@ -4372,7 +4628,9 @@
       }
     ],
     "tip": "'Use' is regular: use → used → used. As a verb, it sounds like /juːz/ (with a 'z' sound). As a noun, it sounds like /juːs/ (with an 's' sound).",
-    "tipHe": "הפועל use סדיר: use → used → used. כפועל, נשמע /יוּז/ (עם צליל 'ז'). כשם עצם, נשמע /יוּס/ (עם צליל 'ס')."
+    "tipHe": "הפועל use סדיר: use → used → used. כפועל, נשמע /יוּז/ (עם צליל 'ז'). כשם עצם, נשמע /יוּס/ (עם צליל 'ס').",
+    "translationAr": "يستخدم",
+    "translationRu": "Использовать"
   },
   {
     "id": "a1-138",
@@ -4406,7 +4664,9 @@
       }
     ],
     "tip": "'Try' is regular: try → tried → tried (the 'y' changes to 'i'). 'Try to do' = make an effort. 'Try doing' = experiment to see what happens.",
-    "tipHe": "הפועל try סדיר: try → tried → tried (ה-y משתנה ל-i). 'Try to do' = להשתדל. 'Try doing' = לנסות ולראות מה קורה."
+    "tipHe": "הפועל try סדיר: try → tried → tried (ה-y משתנה ל-i). 'Try to do' = להשתדל. 'Try doing' = לנסות ולראות מה קורה.",
+    "translationAr": "يحاول",
+    "translationRu": "Пробовать / пытаться"
   },
   {
     "id": "a1-139",
@@ -4440,7 +4700,9 @@
       }
     ],
     "tip": "'Learn' is regular (in American English): learn → learned → learned. In Hebrew 'ללמוד' covers both 'learn' (gain knowledge) and 'study' (do schoolwork) — in English these are different!",
-    "tipHe": "הפועל learn סדיר: learn → learned → learned. בעברית 'ללמוד' מכסה גם 'learn' (לרכוש ידע) וגם 'study' (לשבת וללמוד) — באנגלית אלה מילים שונות!"
+    "tipHe": "הפועל learn סדיר: learn → learned → learned. בעברית 'ללמוד' מכסה גם 'learn' (לרכוש ידע) וגם 'study' (לשבת וללמוד) — באנגלית אלה מילים שונות!",
+    "translationAr": "يتعلم",
+    "translationRu": "Учиться"
   },
   {
     "id": "a1-140",
@@ -4475,7 +4737,9 @@
       }
     ],
     "tip": "'Show' is irregular: show → showed → shown. 'Show up' means to arrive or appear: 'He didn't show up to the meeting.'",
-    "tipHe": "הפועל show לא סדיר: show → showed → shown. 'Show up' פירושו להגיע או להופיע: 'He didn't show up to the meeting.'"
+    "tipHe": "הפועל show לא סדיר: show → showed → shown. 'Show up' פירושו להגיע או להופיע: 'He didn't show up to the meeting.'",
+    "translationAr": "يُري",
+    "translationRu": "Показывать"
   },
   {
     "id": "a1-141",
@@ -4510,7 +4774,9 @@
       }
     ],
     "tip": "'Feel' is irregular: feel → felt → felt. Don't add 'myself' — just say 'I feel good' (not 'I feel myself good'). This is a very common mistake for Hebrew speakers!",
-    "tipHe": "הפועל feel לא סדיר: feel → felt → felt. לא מוסיפים 'myself' — פשוט 'I feel good' (לא 'I feel myself good'). זו טעות מאוד נפוצה בקרב דוברי עברית!"
+    "tipHe": "הפועל feel לא סדיר: feel → felt → felt. לא מוסיפים 'myself' — פשוט 'I feel good' (לא 'I feel myself good'). זו טעות מאוד נפוצה בקרב דוברי עברית!",
+    "translationAr": "يشعر",
+    "translationRu": "Чувствовать"
   },
   {
     "id": "a1-142",
@@ -4545,7 +4811,9 @@
       }
     ],
     "tip": "'Call' is regular: call → called → called. 'Call someone' = phone them (no 'to'). 'Call someone back' = return their call.",
-    "tipHe": "הפועל call סדיר: call → called → called. 'Call someone' = לטלפן (בלי to). 'Call someone back' = להחזיר שיחה."
+    "tipHe": "הפועל call סדיר: call → called → called. 'Call someone' = לטלפן (בלי to). 'Call someone back' = להחזיר שיחה.",
+    "translationAr": "يتصل / ينادي",
+    "translationRu": "Звонить / звать"
   },
   {
     "id": "a1-143",
@@ -4580,7 +4848,9 @@
       }
     ],
     "tip": "'Bring' is irregular: bring → brought → brought. 'Bring' = toward the speaker. 'Take' = away from the speaker. Just like 'come' vs 'go'.",
-    "tipHe": "הפועל bring לא סדיר: bring → brought → brought. 'Bring' = לכיוון הדובר. 'Take' = הרחק מהדובר. בדיוק כמו 'come' מול 'go'."
+    "tipHe": "הפועל bring לא סדיר: bring → brought → brought. 'Bring' = לכיוון הדובר. 'Take' = הרחק מהדובר. בדיוק כמו 'come' מול 'go'.",
+    "translationAr": "يُحضر",
+    "translationRu": "Приносить"
   },
   {
     "id": "a1-144",
@@ -4615,7 +4885,9 @@
       }
     ],
     "tip": "'Send' is irregular: send → sent → sent. You can say 'send me an email' or 'send an email to me' — both are correct.",
-    "tipHe": "הפועל send לא סדיר: send → sent → sent. אפשר לומר 'send me an email' או 'send an email to me' — שניהם נכונים."
+    "tipHe": "הפועל send לא סדיר: send → sent → sent. אפשר לומר 'send me an email' או 'send an email to me' — שניהם נכונים.",
+    "translationAr": "يُرسل",
+    "translationRu": "Отправлять / посылать"
   },
   {
     "id": "a1-145",
@@ -4650,7 +4922,9 @@
       }
     ],
     "tip": "'Wash' is regular: wash → washed → washed. 'Wash up' in British English means to wash the dishes. In American English it means to wash your hands.",
-    "tipHe": "הפועל wash סדיר: wash → washed → washed. 'Wash up' באנגלית בריטית = לשטוף כלים. באנגלית אמריקאית = לרחוץ ידיים."
+    "tipHe": "הפועל wash סדיר: wash → washed → washed. 'Wash up' באנגלית בריטית = לשטוף כלים. באנגלית אמריקאית = לרחוץ ידיים.",
+    "translationAr": "يغسل",
+    "translationRu": "Мыть / стирать"
   },
   {
     "id": "a1-146",
@@ -4685,7 +4959,9 @@
       }
     ],
     "tip": "'Cook' is regular: cook → cooked → cooked. 'Cook' is also a noun — 'a cook' means a person who cooks. 'Chef' is a professional cook.",
-    "tipHe": "הפועל cook סדיר: cook → cooked → cooked. 'Cook' גם שם עצם — 'a cook' פירושו מי שמבשל. 'Chef' הוא טבח מקצועי."
+    "tipHe": "הפועל cook סדיר: cook → cooked → cooked. 'Cook' גם שם עצם — 'a cook' פירושו מי שמבשל. 'Chef' הוא טבח מקצועי.",
+    "translationAr": "يطبخ",
+    "translationRu": "Готовить"
   },
   {
     "id": "a1-147",
@@ -4719,7 +4995,9 @@
       }
     ],
     "tip": "'Drive' is irregular: drive → drove → driven. In Israel you 'do a license' (עושים רישיון), but in English you 'get a license' or 'get your driver's license'.",
-    "tipHe": "הפועל drive לא סדיר: drive → drove → driven. בעברית 'עושים רישיון' אבל באנגלית 'get a license' או 'get your driver's license'."
+    "tipHe": "הפועל drive לא סדיר: drive → drove → driven. בעברית 'עושים רישיון' אבל באנגלית 'get a license' או 'get your driver's license'.",
+    "translationAr": "يقود",
+    "translationRu": "Водить / ехать"
   },
   {
     "id": "a1-148",
@@ -4753,7 +5031,9 @@
       }
     ],
     "tip": "'Fly' is irregular: fly → flew → flown. Don't confuse with 'a fly' (noun) which is a small flying insect — they are spelled the same!",
-    "tipHe": "הפועל fly לא סדיר: fly → flew → flown. אל תתבלבלו עם 'a fly' (שם עצם) שהוא זבוב — אותו איות!"
+    "tipHe": "הפועל fly לא סדיר: fly → flew → flown. אל תתבלבלו עם 'a fly' (שם עצם) שהוא זבוב — אותו איות!",
+    "translationAr": "يطير",
+    "translationRu": "Летать"
   },
   {
     "id": "a1-150",
@@ -4785,7 +5065,9 @@
       }
     ],
     "tip": "'Dance' is regular: dance → danced → danced. 'Dance to music' (not 'on music'). 'Go dancing' is common: 'Let's go dancing tonight!'",
-    "tipHe": "הפועל dance סדיר: dance → danced → danced. 'Dance to music' (לא 'on music'). 'Go dancing' נפוץ: 'Let's go dancing tonight!'"
+    "tipHe": "הפועל dance סדיר: dance → danced → danced. 'Dance to music' (לא 'on music'). 'Go dancing' נפוץ: 'Let's go dancing tonight!'",
+    "translationAr": "يرقص",
+    "translationRu": "Танцевать"
   },
   {
     "id": "a1-151",
@@ -4820,7 +5102,9 @@
       }
     ],
     "tip": "Comparative: bigger. Superlative: biggest. The final 'g' doubles before -er/-est.",
-    "tipHe": "השוואה: bigger. שם עליון: biggest. האות g מוכפלת לפני -er/-est."
+    "tipHe": "השוואה: bigger. שם עליון: biggest. האות g מוכפלת לפני -er/-est.",
+    "translationAr": "كبير",
+    "translationRu": "Большой"
   },
   {
     "id": "a1-152",
@@ -4855,7 +5139,9 @@
       }
     ],
     "tip": "Comparative: smaller. Superlative: smallest. 'Small' and 'little' are similar but 'little' can also mean 'young'.",
-    "tipHe": "השוואה: smaller. שם עליון: smallest. small ו-little דומים אך little יכול גם להיות 'צעיר'."
+    "tipHe": "השוואה: smaller. שם עליון: smallest. small ו-little דומים אך little יכול גם להיות 'צעיר'.",
+    "translationAr": "صغير",
+    "translationRu": "Маленький"
   },
   {
     "id": "a1-155",
@@ -4890,7 +5176,9 @@
       }
     ],
     "tip": "Comparative: newer. Superlative: newest. 'Brand new' means completely new, never used.",
-    "tipHe": "השוואה: newer. שם עליון: newest. brand new = חדש לגמרי, מעולם לא השתמשו."
+    "tipHe": "השוואה: newer. שם עליון: newest. brand new = חדש לגמרי, מעולם לא השתמשו.",
+    "translationAr": "جديد",
+    "translationRu": "Новый"
   },
   {
     "id": "a1-156",
@@ -4925,7 +5213,9 @@
       }
     ],
     "tip": "Comparative: older. Superlative: oldest. Use 'How old are you?' to ask about age.",
-    "tipHe": "השוואה: older. שם עליון: oldest. שואלים על גיל עם How old are you?"
+    "tipHe": "השוואה: older. שם עליון: oldest. שואלים על גיל עם How old are you?",
+    "translationAr": "قديم / كبير في السن",
+    "translationRu": "Старый"
   },
   {
     "id": "a1-159",
@@ -4960,7 +5250,9 @@
       }
     ],
     "tip": "'Fast' works as both adjective (a fast car) and adverb (he runs fast). No need for -ly!",
-    "tipHe": "fast משמש גם כתואר (a fast car) וגם כתואר פועל (he runs fast). אין צורך ב-ly!"
+    "tipHe": "fast משמש גם כתואר (a fast car) וגם כתואר פועל (he runs fast). אין צורך ב-ly!",
+    "translationAr": "سريع",
+    "translationRu": "Быстрый"
   },
   {
     "id": "a1-160",
@@ -4995,7 +5287,9 @@
       }
     ],
     "tip": "Comparative: slower. Superlative: slowest. 'Slow down' means to reduce speed.",
-    "tipHe": "השוואה: slower. שם עליון: slowest. slow down = להאט."
+    "tipHe": "השוואה: slower. שם עליון: slowest. slow down = להאט.",
+    "translationAr": "بطيء",
+    "translationRu": "Медленный"
   },
   {
     "id": "a1-161",
@@ -5030,7 +5324,9 @@
       }
     ],
     "tip": "Use 'tall' for people, buildings, and trees. Use 'high' for mountains, prices, and abstract things.",
-    "tipHe": "משתמשים ב-tall לאנשים, בניינים ועצים. משתמשים ב-high להרים, מחירים ודברים מופשטים."
+    "tipHe": "משתמשים ב-tall לאנשים, בניינים ועצים. משתמשים ב-high להרים, מחירים ודברים מופשטים.",
+    "translationAr": "طويل القامة",
+    "translationRu": "Высокий"
   },
   {
     "id": "a1-162",
@@ -5065,7 +5361,9 @@
       }
     ],
     "tip": "'Short' can mean not tall (short person) or not long (short time, short hair).",
-    "tipHe": "short יכול להיות 'נמוך' (short person) או 'קצר' (short time, short hair)."
+    "tipHe": "short יכול להיות 'נמוך' (short person) או 'קצר' (short time, short hair).",
+    "translationAr": "قصير",
+    "translationRu": "Низкий / короткий"
   },
   {
     "id": "a1-164",
@@ -5100,7 +5398,9 @@
       }
     ],
     "tip": "Comparative: worse (NOT badder). Superlative: worst (NOT baddest). Irregular!",
-    "tipHe": "השוואה: worse (לא badder). שם עליון: worst (לא baddest). תואר חריג!"
+    "tipHe": "השוואה: worse (לא badder). שם עליון: worst (לא baddest). תואר חריג!",
+    "translationAr": "سيئ",
+    "translationRu": "Плохой"
   },
   {
     "id": "a1-165",
@@ -5135,7 +5435,9 @@
       }
     ],
     "tip": "Comparative: easier. Superlative: easiest. 'Take it easy' means relax.",
-    "tipHe": "השוואה: easier. שם עליון: easiest. take it easy = תירגע."
+    "tipHe": "השוואה: easier. שם עליון: easiest. take it easy = תירגע.",
+    "translationAr": "سهل",
+    "translationRu": "Лёгкий"
   },
   {
     "id": "a1-166",
@@ -5170,7 +5472,9 @@
       }
     ],
     "tip": "'Hard' as adverb means with effort (work hard). 'Hardly' means almost not (I hardly know him).",
-    "tipHe": "hard כתואר פועל = בחריצות (work hard). hardly = בקושי, כמעט לא (I hardly know him)."
+    "tipHe": "hard כתואר פועל = בחריצות (work hard). hardly = בקושי, כמעט לא (I hardly know him).",
+    "translationAr": "صعب",
+    "translationRu": "Трудный / тяжёлый"
   },
   {
     "id": "a1-167",
@@ -5205,7 +5509,9 @@
       }
     ],
     "tip": "Comparative: more beautiful. Superlative: most beautiful. Too long for -er/-est.",
-    "tipHe": "השוואה: more beautiful. שם עליון: most beautiful. מילה ארוכה מדי ל-er/-est."
+    "tipHe": "השוואה: more beautiful. שם עליון: most beautiful. מילה ארוכה מדי ל-er/-est.",
+    "translationAr": "جميل / جميلة",
+    "translationRu": "Красивый"
   },
   {
     "id": "a1-168",
@@ -5240,7 +5546,9 @@
       }
     ],
     "tip": "'Clean' is also a verb: I clean the house. As adjective: The house is clean.",
-    "tipHe": "clean הוא גם פועל: I clean the house (אני מנקה). כתואר: The house is clean (נקי)."
+    "tipHe": "clean הוא גם פועל: I clean the house (אני מנקה). כתואר: The house is clean (נקי).",
+    "translationAr": "نظيف",
+    "translationRu": "Чистый"
   },
   {
     "id": "a1-169",
@@ -5275,7 +5583,9 @@
       }
     ],
     "tip": "Comparative: dirtier. Superlative: dirtiest. The 'y' changes to 'i'.",
-    "tipHe": "השוואה: dirtier. שם עליון: dirtiest. ה-y משתנה ל-i."
+    "tipHe": "השוואה: dirtier. שם עליון: dirtiest. ה-y משתנה ל-i.",
+    "translationAr": "وسخ / قذر",
+    "translationRu": "Грязный"
   },
   {
     "id": "a1-170",
@@ -5310,7 +5620,9 @@
       }
     ],
     "tip": "'I am full' means you ate enough. 'Full of' means filled with something.",
-    "tipHe": "I am full = אני שבע. full of = מלא ב-. שימו לב להבדל."
+    "tipHe": "I am full = אני שבע. full of = מלא ב-. שימו לב להבדל.",
+    "translationAr": "ممتلئ",
+    "translationRu": "Полный"
   },
   {
     "id": "a1-171",
@@ -5345,7 +5657,9 @@
       }
     ],
     "tip": "'Empty' is also a verb: Please empty the trash. As adjective: The trash is empty.",
-    "tipHe": "empty הוא גם פועל: Please empty the trash (רוקן). כתואר: The trash is empty (ריק)."
+    "tipHe": "empty הוא גם פועל: Please empty the trash (רוקן). כתואר: The trash is empty (ריק).",
+    "translationAr": "فارغ",
+    "translationRu": "Пустой"
   },
   {
     "id": "a1-172",
@@ -5380,7 +5694,9 @@
       }
     ],
     "tip": "Comparative: younger. Superlative: youngest. The opposite of 'old' for people.",
-    "tipHe": "השוואה: younger. שם עליון: youngest. ההפך של old כשמדברים על אנשים."
+    "tipHe": "השוואה: younger. שם עליון: youngest. ההפך של old כשמדברים על אנשים.",
+    "translationAr": "شاب / صغير في السن",
+    "translationRu": "Молодой"
   },
   {
     "id": "a1-173",
@@ -5415,7 +5731,9 @@
       }
     ],
     "tip": "'Light' has many meanings: not heavy, bright, light color. Also a noun: Turn on the light.",
-    "tipHe": "ל-light משמעויות רבות: לא כבד, בהיר, צבע בהיר. גם שם עצם: אור."
+    "tipHe": "ל-light משמעויות רבות: לא כבד, בהיר, צבע בהיר. גם שם עצם: אור.",
+    "translationAr": "فاتح / خفيف",
+    "translationRu": "Светлый / лёгкий"
   },
   {
     "id": "a1-174",
@@ -5450,7 +5768,9 @@
       }
     ],
     "tip": "'Dark' describes absence of light and deep colors. 'After dark' means after sunset.",
-    "tipHe": "dark מתאר העדר אור וצבעים כהים. after dark = אחרי רדת החשכה."
+    "tipHe": "dark מתאר העדר אור וצבעים כהים. after dark = אחרי רדת החשכה.",
+    "translationAr": "داكن / مظلم",
+    "translationRu": "Тёмный"
   },
   {
     "id": "a1-175",
@@ -5485,7 +5805,9 @@
       }
     ],
     "tip": "'Dry' is also a verb: Dry your hands. As adjective: My hands are dry.",
-    "tipHe": "dry הוא גם פועל: Dry your hands (ייבש). כתואר: My hands are dry (יבשות)."
+    "tipHe": "dry הוא גם פועל: Dry your hands (ייבש). כתואר: My hands are dry (יבשות).",
+    "translationAr": "جاف",
+    "translationRu": "Сухой"
   },
   {
     "id": "a1-176",
@@ -5520,7 +5842,9 @@
       }
     ],
     "tip": "Comparative: wetter. Superlative: wettest. The 't' doubles before -er/-est.",
-    "tipHe": "השוואה: wetter. שם עליון: wettest. ה-t מוכפל לפני -er/-est."
+    "tipHe": "השוואה: wetter. שם עליון: wettest. ה-t מוכפל לפני -er/-est.",
+    "translationAr": "مبلل / رطب",
+    "translationRu": "Мокрый / влажный"
   },
   {
     "id": "a1-177",
@@ -5555,7 +5879,9 @@
       }
     ],
     "tip": "Comparative: safer. Superlative: safest. 'Safe' is also a noun: a metal safe (כספת).",
-    "tipHe": "השוואה: safer. שם עליון: safest. safe הוא גם שם עצם: כספת."
+    "tipHe": "השוואה: safer. שם עליון: safest. safe הוא גם שם עצם: כספת.",
+    "translationAr": "آمن",
+    "translationRu": "Безопасный"
   },
   {
     "id": "a1-178",
@@ -5590,7 +5916,9 @@
       }
     ],
     "tip": "Always use 'the' before 'same': the same color, the same person. Never just 'same'.",
-    "tipHe": "תמיד משתמשים ב-the לפני same: the same color. לעולם לא same בלי the."
+    "tipHe": "תמיד משתמשים ב-the לפני same: the same color. לעולם לא same בלי the.",
+    "translationAr": "نفس الشيء / مماثل",
+    "translationRu": "Одинаковый / такой же"
   },
   {
     "id": "a1-179",
@@ -5625,7 +5953,9 @@
       }
     ],
     "tip": "Use 'different from' in most cases. 'Different than' is acceptable in American English.",
-    "tipHe": "משתמשים ב-different from ברוב המקרים. different than מקובל באנגלית אמריקאית."
+    "tipHe": "משתמשים ב-different from ברוב המקרים. different than מקובל באנגלית אמריקאית.",
+    "translationAr": "مختلف",
+    "translationRu": "Другой / разный"
   },
   {
     "id": "a1-184",
@@ -5660,7 +5990,9 @@
       }
     ],
     "tip": "'Right now' is more emphatic than 'now'. 'Just now' means a moment ago.",
-    "tipHe": "right now = ממש עכשיו, חזק יותר מ-now. just now = לפני רגע."
+    "tipHe": "right now = ממש עכשיו, חזק יותר מ-now. just now = לפני רגע.",
+    "translationAr": "الآن",
+    "translationRu": "Сейчас"
   },
   {
     "id": "a1-186",
@@ -5695,7 +6027,9 @@
       }
     ],
     "tip": "Use 'in' with parts of the day: in the morning, in the afternoon, in the evening. But: at night!",
-    "tipHe": "משתמשים ב-in עם חלקי היום: in the morning/afternoon/evening. אבל: at night!"
+    "tipHe": "משתמשים ב-in עם חלקי היום: in the morning/afternoon/evening. אבל: at night!",
+    "translationAr": "بعد الظهر",
+    "translationRu": "День / после обеда"
   },
   {
     "id": "a1-187",
@@ -5730,7 +6064,9 @@
       }
     ],
     "tip": "'Good evening' is a greeting. 'Good night' is a farewell. Don't mix them up!",
-    "tipHe": "Good evening = ברכה כשנפגשים בערב. Good night = פרידה ללילה. אל תבלבלו!"
+    "tipHe": "Good evening = ברכה כשנפגשים בערב. Good night = פרידה ללילה. אל תבלבלו!",
+    "translationAr": "مساء",
+    "translationRu": "Вечер"
   },
   {
     "id": "a1-188",
@@ -5764,7 +6100,9 @@
       }
     ],
     "tip": "No preposition with 'next/last/this week': I start next week (not 'in next week').",
-    "tipHe": "אין מילת יחס עם next/last/this week: I start next week (לא in next week)."
+    "tipHe": "אין מילת יחס עם next/last/this week: I start next week (לא in next week).",
+    "translationAr": "أسبوع",
+    "translationRu": "Неделя"
   },
   {
     "id": "a1-189",
@@ -5798,7 +6136,9 @@
       }
     ],
     "tip": "Pronounce the 'th' at the end: /mʌnθ/. Plural: months /mʌnθs/.",
-    "tipHe": "שימו לב להגיית ה-th בסוף: /mʌnθ/. רבים: months /mʌnθs/."
+    "tipHe": "שימו לב להגיית ה-th בסוף: /mʌnθ/. רבים: months /mʌnθs/.",
+    "translationAr": "شهر",
+    "translationRu": "Месяц"
   },
   {
     "id": "a1-190",
@@ -5832,7 +6172,9 @@
       }
     ],
     "tip": "Say the year: 2025 = twenty twenty-five or two thousand twenty-five.",
-    "tipHe": "איך אומרים שנה: 2025 = twenty twenty-five או two thousand twenty-five."
+    "tipHe": "איך אומרים שנה: 2025 = twenty twenty-five או two thousand twenty-five.",
+    "translationAr": "سنة / عام",
+    "translationRu": "Год"
   },
   {
     "id": "a1-191",
@@ -5867,7 +6209,9 @@
       }
     ],
     "tip": "Plural: cities (y changes to ies). 'City' is bigger than 'town'.",
-    "tipHe": "רבים: cities (ה-y הופך ל-ies). city גדולה מ-town."
+    "tipHe": "רבים: cities (ה-y הופך ל-ies). city גדולה מ-town.",
+    "translationAr": "مدينة",
+    "translationRu": "Город"
   },
   {
     "id": "a1-193",
@@ -5902,7 +6246,9 @@
       }
     ],
     "tip": "'Park' is also a verb: I park my car. As a noun: We walk in the park.",
-    "tipHe": "park הוא גם פועל: I park my car (חונה). כשם עצם: We walk in the park."
+    "tipHe": "park הוא גם פועל: I park my car (חונה). כשם עצם: We walk in the park.",
+    "translationAr": "حديقة عامة",
+    "translationRu": "Парк"
   },
   {
     "id": "a1-194",
@@ -5937,7 +6283,9 @@
       }
     ],
     "tip": "American: 'in the hospital'. British: 'in hospital'. Both are correct.",
-    "tipHe": "אמריקאית: in the hospital. בריטית: in hospital. שניהם נכונים."
+    "tipHe": "אמריקאית: in the hospital. בריטית: in hospital. שניהם נכונים.",
+    "translationAr": "مستشفى",
+    "translationRu": "Больница"
   },
   {
     "id": "a1-195",
@@ -5972,7 +6320,9 @@
       }
     ],
     "tip": "Spelling tip: rest-au-rant. The 'au' in the middle is often misspelled.",
-    "tipHe": "טיפ לכתיב: rest-au-rant. ה-au באמצע נשכח הרבה פעמים."
+    "tipHe": "טיפ לכתיב: rest-au-rant. ה-au באמצע נשכח הרבה פעמים.",
+    "translationAr": "مطعم",
+    "translationRu": "Ресторан"
   },
   {
     "id": "a1-196",
@@ -6006,7 +6356,9 @@
       }
     ],
     "tip": "'Bank' also means the side of a river: the river bank. Context tells you the meaning.",
-    "tipHe": "bank גם אומר גדת נהר: the river bank. ההקשר מסביר את המשמעות."
+    "tipHe": "bank גם אומר גדת נהר: the river bank. ההקשר מסביר את המשמעות.",
+    "translationAr": "بنك / مصرف",
+    "translationRu": "Банк"
   },
   {
     "id": "a1-197",
@@ -6040,7 +6392,9 @@
       }
     ],
     "tip": "Pronunciation: LY-brer-ee. Don't skip the first 'r'. Plural: libraries.",
-    "tipHe": "הגייה: LY-brer-ee. אל תדלגו על ה-r הראשון. רבים: libraries."
+    "tipHe": "הגייה: LY-brer-ee. אל תדלגו על ה-r הראשון. רבים: libraries.",
+    "translationAr": "مكتبة",
+    "translationRu": "Библиотека"
   },
   {
     "id": "a1-198",
@@ -6075,7 +6429,9 @@
       }
     ],
     "tip": "'Supermarket' is the modern indoor version. 'Market' often means an open-air market.",
-    "tipHe": "supermarket = סופרמרקט מודרני. market = שוק, לרוב פתוח."
+    "tipHe": "supermarket = סופרמרקט מודרני. market = שוק, לרוב פתוח.",
+    "translationAr": "سوق",
+    "translationRu": "Рынок"
   },
   {
     "id": "a1-199",
@@ -6110,7 +6466,9 @@
       }
     ],
     "tip": "Use 'on the beach' (not 'in'): We sit on the beach. But: We swim in the sea.",
-    "tipHe": "אומרים on the beach (לא in): We sit on the beach. אבל: We swim in the sea."
+    "tipHe": "אומרים on the beach (לא in): We sit on the beach. אבל: We swim in the sea.",
+    "translationAr": "شاطئ",
+    "translationRu": "Пляж"
   },
   {
     "id": "a1-200",
@@ -6145,6 +6503,8 @@
       }
     ],
     "tip": "'Store' is more common in American English. 'Shop' is more common in British English.",
-    "tipHe": "store נפוץ יותר באנגלית אמריקאית. shop נפוץ יותר באנגלית בריטית."
+    "tipHe": "store נפוץ יותר באנגלית אמריקאית. shop נפוץ יותר באנגלית בריטית.",
+    "translationAr": "متجر / محل",
+    "translationRu": "Магазин"
   }
 ]

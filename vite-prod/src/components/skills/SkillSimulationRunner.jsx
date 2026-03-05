@@ -58,9 +58,13 @@ export default function SkillSimulationRunner({ simulation, onComplete, uiLang }
     setIsLoading(true);
 
     try {
+      const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/simulation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({
           scenarioContext: context,
           npcRole: npcRole,

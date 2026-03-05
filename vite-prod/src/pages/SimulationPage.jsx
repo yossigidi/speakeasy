@@ -38,7 +38,7 @@ function NPCBubble({ name, role, text, onSpeak }) {
             <p className="text-xs font-semibold text-gray-900 dark:text-white">{name}</p>
             <p className="text-[10px] text-gray-500 dark:text-gray-400">{role}</p>
           </div>
-          <button onClick={() => onSpeak(text)} className="ml-auto p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+          <button onClick={() => onSpeak(text)} aria-label="Listen" className="ml-auto p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
             <Volume2 size={14} className="text-brand-500" />
           </button>
         </div>
@@ -199,9 +199,13 @@ export default function SimulationPage() {
         industry: selectedIndustry,
       };
 
+      const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/simulation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(body),
       });
 
@@ -302,6 +306,8 @@ export default function SimulationPage() {
         completedScenarios,
         totalSimulations: newTotalSimulations,
       },
+      // Increment conversation counter for achievements
+      conversationsCompleted: (progress.conversationsCompleted || 0) + 1,
     });
 
     await addXP(xpResult.total, 'simulation');
@@ -347,7 +353,7 @@ export default function SimulationPage() {
       <div className="min-h-screen pb-24 px-4 pt-4">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <button onClick={backToSelection} className="p-2 rounded-xl glass-card">
+          <button onClick={backToSelection} aria-label="Back" className="p-2 rounded-xl glass-card">
             <ArrowLeft size={20} className="rtl:rotate-180" />
           </button>
           <h1 className="text-lg font-bold text-gray-900 dark:text-white">{t('yourPerformance', uiLang)}</h1>
@@ -435,7 +441,7 @@ export default function SimulationPage() {
         {/* Top bar */}
         <div className="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 px-4 py-3">
           <div className="flex items-center justify-between">
-            <button onClick={backToSelection} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+            <button onClick={backToSelection} aria-label="Back" className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
               <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300 rtl:rotate-180" />
             </button>
             <div className="text-center flex-1 mx-3">
@@ -543,6 +549,7 @@ export default function SimulationPage() {
             {sttSupported && (
               <button
                 onClick={() => isListening ? stopListening() : startListening({ lang: 'en-US' })}
+                aria-label="Toggle microphone"
                 className={`p-2.5 rounded-xl transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'}`}
                 disabled={isLoading}>
                 {isListening ? <MicOff size={18} /> : <Mic size={18} />}
@@ -551,6 +558,7 @@ export default function SimulationPage() {
             <button
               onClick={() => sendMessage(inputText)}
               disabled={!inputText.trim() || isLoading}
+              aria-label="Send"
               className="p-2.5 rounded-xl bg-brand-500 text-white disabled:opacity-40 transition-opacity">
               <Send size={18} />
             </button>

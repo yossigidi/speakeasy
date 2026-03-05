@@ -223,7 +223,7 @@ function StoryCard({ story, onClick }) {
 
 function ReadingView({ story, onBack }) {
   const { uiLang } = useTheme();
-  const { addXP } = useUserProgress();
+  const { addXP, progress, updateProgress } = useUserProgress();
   const { speak, speakWordPair, stop, isSpeaking } = useSpeechSynthesis();
   const { addWord } = useSpacedRepetition();
   const [isReadingAloud, setIsReadingAloud] = useState(false);
@@ -290,6 +290,10 @@ function ReadingView({ story, onBack }) {
         if (!xpAwardedRef.current) {
           xpAwardedRef.current = true;
           addXP(20, 'reading');
+          // Increment stories read counter for achievements
+          updateProgress({
+            storiesRead: (progress.storiesRead || 0) + 1,
+          });
         }
         return prev;
       }
@@ -319,7 +323,7 @@ function ReadingView({ story, onBack }) {
     return (
       <div className="pb-24 px-4 pt-4 space-y-4">
         <div className="flex items-center gap-2">
-          <button onClick={() => setShowQuiz(false)} className="p-3 -ml-1 rounded-lg hover:bg-black/5 min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <button onClick={() => setShowQuiz(false)} aria-label="Back" className="p-3 ltr:-ml-1 rtl:-mr-1 rounded-lg hover:bg-black/5 min-w-[44px] min-h-[44px] flex items-center justify-center">
             <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <span className="text-sm text-gray-500">{quizIndex + 1}/{story.questions.length}</span>
@@ -355,10 +359,10 @@ function ReadingView({ story, onBack }) {
     <div className="pb-24 px-4 pt-4 space-y-4">
       {/* B2: Larger back button with safe area padding */}
       <div className="flex items-center justify-between pt-2">
-        <button onClick={onBack} className="p-3 -ml-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 min-w-[44px] min-h-[44px] flex items-center justify-center">
+        <button onClick={onBack} aria-label="Back" className="p-3 ltr:-ml-1 rtl:-mr-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 min-w-[44px] min-h-[44px] flex items-center justify-center">
           <ArrowLeft size={22} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
-        <button onClick={toggleReadAloud} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
+        <button onClick={toggleReadAloud} aria-label={isReadingAloud ? 'Stop audio' : 'Listen to story'} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
           isReadingAloud
             ? 'bg-red-100 dark:bg-red-900/30 text-red-600'
             : 'bg-brand-100 dark:bg-brand-900/30 text-brand-600'
@@ -427,7 +431,7 @@ function ReadingView({ story, onBack }) {
         {selectedWord && (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <button onClick={() => speakWordPair(selectedWord.word, lf(selectedWord, 'translation', uiLang), uiLang)} className="p-2 rounded-full bg-brand-100 dark:bg-brand-900/30">
+              <button onClick={() => speakWordPair(selectedWord.word, lf(selectedWord, 'translation', uiLang), uiLang)} aria-label="Listen" className="p-2 rounded-full bg-brand-100 dark:bg-brand-900/30">
                 <Volume2 size={18} className="text-brand-600" />
               </button>
               <span className="text-xl font-bold text-gray-900 dark:text-white">{selectedWord.word}</span>

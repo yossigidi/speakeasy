@@ -35,9 +35,13 @@ export default function SupportContactPage({ onBack }) {
     setError('');
 
     try {
+      const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/support-ticket', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({
           userId: user?.uid || 'anonymous',
           email: email.trim(),

@@ -1217,7 +1217,7 @@ function GameSelector({ onSelectGame, onBack }) {
    KIDS GAMES PAGE - Main orchestrator
    ══════════════════════════════════════════════════════ */
 export default function KidsGamesPage({ onBack }) {
-  const { addXP, progress } = useUserProgress();
+  const { addXP, progress, updateProgress } = useUserProgress();
   const [selectedGame, setSelectedGame] = useState(null);
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
 
@@ -1227,7 +1227,13 @@ export default function KidsGamesPage({ onBack }) {
   }, []);
 
   const handleComplete = async (xp) => {
-    if (xp > 0) await addXP(xp, 'kids-game');
+    if (xp > 0) {
+      await addXP(xp, 'kids-game');
+      // Increment lesson counter for achievements (games count as lessons)
+      updateProgress({
+        totalLessonsCompleted: (progress.totalLessonsCompleted || 0) + 1,
+      });
+    }
     setSelectedGame(null);
   };
 

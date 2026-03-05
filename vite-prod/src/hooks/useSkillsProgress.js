@@ -69,7 +69,17 @@ export default function useSkillsProgress() {
         ? (skills.totalLessonsCompleted || 0) + 1
         : skills.totalLessonsCompleted || 0;
 
+      // Build top-level achievement counter updates
+      const achievementCounters = {};
+      if (isNewCompletion) {
+        achievementCounters.totalLessonsCompleted = (progress.totalLessonsCompleted || 0) + 1;
+      }
+      if (isNewCompletion && accuracy === 100) {
+        achievementCounters.perfectLessons = (progress.perfectLessons || 0) + 1;
+      }
+
       await updateProgress({
+        ...achievementCounters,
         skills: {
           ...skills,
           lessons: {

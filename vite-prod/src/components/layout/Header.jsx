@@ -16,7 +16,8 @@ export default function Header({ title, showBack = false, onBack, showStats = tr
           {showBack && (
             <button
               onClick={onBack}
-              className="p-1.5 -ml-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              aria-label={t('back', uiLang) || 'Back'}
+              className="p-1.5 ltr:-ml-1.5 rtl:-mr-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             >
               <ChevronLeft size={22} className={dir === 'rtl' ? 'rotate-180' : ''} />
             </button>

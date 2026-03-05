@@ -27,19 +27,39 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    // Child profiles - any authenticated user who knows the childId can access
-    // childId is a random UUID, only discoverable via correct PIN
+    // Child profiles - only the parent who owns the profile can read/write
     match /childProfiles/{childId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if request.auth != null
+        && resource.data.parentUid == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.parentUid == request.auth.uid;
       match /dailyActivity/{date} {
-        allow read, write: if request.auth != null;
+        allow read, write: if request.auth != null
+          && get(/databases/$(database)/documents/childProfiles/$(childId)).data.parentUid == request.auth.uid;
       }
     }
 
     // Parent-children directory indexed by family code
+    // Restrict writes to authenticated non-anonymous users
     match /parentChildren/{familyCode} {
       allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    // Push subscriptions - only the owning user can read/write
+    match /push-subscriptions/{docId} {
+      allow read, write: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Support tickets - users can read their own, any authenticated user can create
+    match /support-tickets/{ticketId} {
+      allow read: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
     }
   }
 }

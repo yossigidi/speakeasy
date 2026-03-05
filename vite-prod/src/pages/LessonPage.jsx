@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Heart, Volume2, Check, ArrowRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -269,7 +269,12 @@ function MatchPairs({ exercise, onAnswer }) {
   const [selected, setSelected] = useState(null);
   const [matched, setMatched] = useState([]);
   const [wrong, setWrong] = useState(null);
+  const wrongTimerRef = useRef(null);
   const pairs = exercise.pairs;
+
+  useEffect(() => {
+    return () => clearTimeout(wrongTimerRef.current);
+  }, []);
 
   const leftItems = pairs.map(p => p[0]);
   const [rightItems] = useState(() => shuffle(pairs.map(p => p[1])));
@@ -300,7 +305,8 @@ function MatchPairs({ exercise, onAnswer }) {
       }
     } else {
       setWrong([selected.item, item]);
-      setTimeout(() => { setWrong(null); setSelected(null); }, 600);
+      clearTimeout(wrongTimerRef.current);
+      wrongTimerRef.current = setTimeout(() => { setWrong(null); setSelected(null); }, 600);
     }
   };
 
@@ -352,7 +358,7 @@ function ListeningExercise({ exercise, onAnswer, speak, uiLang }) {
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <button onClick={() => speak(exercise.text)} className="p-4 rounded-full bg-brand-100 dark:bg-brand-900/30 mx-auto hover:bg-brand-200 transition-colors">
+        <button onClick={() => speak(exercise.text)} aria-label="Listen" className="p-4 rounded-full bg-brand-100 dark:bg-brand-900/30 mx-auto hover:bg-brand-200 transition-colors">
           <Volume2 size={32} className="text-brand-600" />
         </button>
         <p className="text-sm text-gray-500 mt-2">{t('listen', uiLang)}</p>
@@ -396,7 +402,7 @@ function ExerciseFeedback({ correct, explanation, onContinue }) {
 
 export default function LessonPage({ lesson, onComplete, onBack }) {
   const { uiLang } = useTheme();
-  const { addXP } = useUserProgress();
+  const { addXP, updateProgress, progress: userProgress } = useUserProgress();
   const { speak } = useSpeechSynthesis();
   const { playCorrect, playWrong } = useAudio();
 
@@ -453,6 +459,23 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
       const accuracy = Math.round((correctCountRef.current / exercises.length) * 100);
       const xp = calcLessonXP(accuracy, exercises.length);
       addXP(xp.total, 'lesson');
+
+      // Increment achievement counters
+      const counterUpdates = {
+        totalLessonsCompleted: (userProgress.totalLessonsCompleted || 0) + 1,
+      };
+      if (accuracy === 100) {
+        counterUpdates.perfectLessons = (userProgress.perfectLessons || 0) + 1;
+      }
+      // Time-of-day achievements
+      const hour = new Date().getHours();
+      if (hour >= 23 || hour < 4) {
+        counterUpdates.lateNightLessons = (userProgress.lateNightLessons || 0) + 1;
+      }
+      if (hour >= 4 && hour < 7) {
+        counterUpdates.earlyMorningLessons = (userProgress.earlyMorningLessons || 0) + 1;
+      }
+      updateProgress(counterUpdates);
 
       if (accuracy === 100) setShowConfetti(true);
       setLessonDone(true);
@@ -520,7 +543,7 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
     <div className="pb-24 px-4 pt-4 space-y-6">
       {/* Top bar */}
       <div className="flex items-center gap-3">
-        <button onClick={onBack} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+        <button onClick={onBack} aria-label="Close" className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
           <X size={22} className="text-gray-500" />
         </button>
         <div className="flex-1 progress-bar">

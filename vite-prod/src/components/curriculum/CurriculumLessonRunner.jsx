@@ -5,6 +5,7 @@ import LessonCompleteScreen from './LessonCompleteScreen.jsx';
 import { getLesson, calculateStars, calculateXP, LESSON_TYPES } from '../../data/curriculum/curriculum-index.js';
 import { generateExercises } from '../../data/curriculum/exercise-generator.js';
 import useCurriculumProgress from '../../hooks/useCurriculumProgress.js';
+import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
@@ -23,6 +24,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   const [lessonData, setLessonData] = useState(null);
 
   const curriculum = useCurriculumProgress();
+  const { progress: userProgress, updateProgress } = useUserProgress();
   const { speak, stopSpeaking } = useSpeech();
   const introTimerRef = useRef(null);
   const spokenRef = useRef(false);
@@ -177,6 +179,10 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   const correctCountRef = useRef(0);
   useEffect(() => { correctCountRef.current = correctCount; }, [correctCount]);
 
+  // Keep answers in ref for lesson complete handler
+  const answersRef = useRef([]);
+  useEffect(() => { answersRef.current = answers; }, [answers]);
+
   // Lesson complete handler
   const handleLessonComplete = useCallback(async (lastWasCorrect) => {
     const totalCount = exercises.length;
@@ -191,9 +197,19 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       console.error('Failed to save lesson progress:', err);
     }
 
+    // Increment totalWordsLearned from words in this lesson
+    const uniqueWords = answersRef.current
+      .filter(a => a.wordData)
+      .reduce((set, a) => { set.add(a.wordData.word); return set; }, new Set());
+    if (uniqueWords.size > 0) {
+      updateProgress({
+        totalWordsLearned: (userProgress.totalWordsLearned || 0) + uniqueWords.size,
+      });
+    }
+
     playComplete && playComplete();
     setPhase('complete');
-  }, [exercises.length, lessonId, curriculum]);
+  }, [exercises.length, lessonId, curriculum, updateProgress, userProgress]);
 
   // Cleanup speech and timers on unmount
   useEffect(() => {

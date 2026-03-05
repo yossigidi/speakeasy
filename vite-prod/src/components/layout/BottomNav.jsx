@@ -54,7 +54,7 @@ export default function BottomNav({ currentPage, onNavigate, reviewCount = 0 }) 
                 <div className="relative">
                   <Icon size={22} strokeWidth={active ? 2.5 : 1.8} />
                   {id === 'vocabulary' && reviewCount > 0 && (
-                    <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 flex items-center justify-center text-[10px] font-bold text-white bg-red-500 rounded-full">
+                    <span className="absolute -top-1.5 ltr:-right-2.5 rtl:-left-2.5 min-w-[16px] h-4 px-1 flex items-center justify-center text-[10px] font-bold text-white bg-red-500 rounded-full">
                       {reviewCount > 99 ? '99+' : reviewCount}
                     </span>
                   )}
