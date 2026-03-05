@@ -10,6 +10,7 @@ import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { shuffle } from '../utils/shuffle.js';
+import { t, tReplace, RTL_LANGS } from '../utils/translations.js';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -221,10 +222,10 @@ function BubblePopGame({ onComplete, onBack }) {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
           <SpeakliAvatar mode="celebrate" size="lg" glow />
           <h2 className="text-4xl font-black py-2 mb-2 mt-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {uiLang === 'he' ? 'ספיקלי גאה בך!' : 'Speakli is proud!'}
+            {t('speakliProud', uiLang)}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-2 font-medium">
-            {uiLang === 'he' ? `פוצצת ${score} בועות!` : `You popped ${score} bubbles!`}
+            {tReplace('poppedBubbles', uiLang, { score })}
           </p>
           <div className="flex gap-2 mb-6">
             {[...Array(TOTAL_ROUNDS)].map((_, i) => (
@@ -238,7 +239,7 @@ function BubblePopGame({ onComplete, onBack }) {
             </div>
           </div>
           <button onClick={() => onComplete(score * 3)} className="px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-cyan-400 to-blue-500 shadow-2xl active:scale-[0.97] transition-all">
-            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
+            {t('continue', uiLang)} ✨
           </button>
         </div>
       </div>
@@ -252,7 +253,7 @@ function BubblePopGame({ onComplete, onBack }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+            <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-4 py-1.5 flex items-center gap-2">
             <span className="text-lg">🫧</span>
@@ -275,7 +276,7 @@ function BubblePopGame({ onComplete, onBack }) {
               className="inline-flex items-center gap-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg"
             >
               <span className="text-sm font-bold text-gray-600 dark:text-gray-300">
-                {uiLang === 'he' ? '!מצאו את האות' : 'Find the letter'}
+                {t('findTheLetter', uiLang)}
               </span>
               <span className={`text-4xl font-black bg-gradient-to-r ${targetLetter.color} bg-clip-text text-transparent animate-jelly`}>
                 {targetLetter.letter}
@@ -522,17 +523,17 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
           <SpeakliAvatar mode="celebrate" size="lg" glow />
           <h2 className="text-4xl font-black py-2 mb-2 mt-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {uiLang === 'he' ? 'מצוין! ספיקלי שמח!' : 'Excellent! Speakli is happy!'}
+            {t('speakliHappy', uiLang)}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-1 font-medium">
-            {uiLang === 'he' ? `סיימת ב-${totalMoves} מהלכים!` : `Done in ${totalMoves} moves!`}
+            {tReplace('doneInMoves', uiLang, { totalMoves })}
           </p>
           <div className="flex gap-2 mb-6 mt-2">
             {roundStars.map((s, i) => (
               <div key={i} className="flex flex-col items-center gap-0.5">
                 <Star size={40} className={`${s >= 1 ? 'text-yellow-400 fill-yellow-400 animate-pop-in' : 'text-gray-300'}`} style={{ animationDelay: `${i * 0.15}s` }} />
                 <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
-                  {uiLang === 'he' ? `סיבוב ${i + 1}` : `R${i + 1}`}
+                  {tReplace('roundLabel', uiLang, { num: i + 1 })}
                 </span>
               </div>
             ))}
@@ -544,7 +545,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
             </div>
           </div>
           <button onClick={() => onComplete(xp)} className="px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-purple-400 to-pink-500 shadow-2xl active:scale-[0.97] transition-all">
-            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
+            {t('continue', uiLang)} ✨
           </button>
         </div>
       </div>
@@ -562,7 +563,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
           <div className="bg-white dark:bg-gray-800 rounded-3xl px-8 py-6 text-center shadow-2xl animate-pop-in">
             <SpeakliAvatar mode="celebrate" size="md" />
             <h3 className="text-2xl font-black mt-2 text-gray-800 dark:text-white">
-              {uiLang === 'he' ? `סיבוב ${round + 1} הושלם!` : `Round ${round + 1} complete!`}
+              {tReplace('roundComplete', uiLang, { num: round + 1 })}
             </h3>
             <div className="flex justify-center gap-1.5 mt-2">
               {[0, 1, 2].map(i => (
@@ -577,15 +578,15 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Header - compact */}
         <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+            <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <div className="text-center">
             <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
               <span className="animate-wiggle inline-block">🧠</span>
-              {uiLang === 'he' ? 'משחק זיכרון' : 'Memory Match'}
+              {t('memoryMatch', uiLang)}
             </h2>
             <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
-              {uiLang === 'he' ? `סיבוב ${round + 1}/${TOTAL_ROUNDS}` : `Round ${round + 1}/${TOTAL_ROUNDS}`}
+              {tReplace('roundOf', uiLang, { current: round + 1, total: TOTAL_ROUNDS })}
             </span>
           </div>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-2.5 py-1">
@@ -638,7 +639,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
                     ) : (
                       <>
                         <span className="text-lg sm:text-2xl font-black text-white drop-shadow-md leading-tight" dir="ltr">{card.word}</span>
-                        <span className="text-xs sm:text-sm font-bold text-white/80 leading-tight" dir="rtl">{card.translation}</span>
+                        <span className="text-xs sm:text-sm font-bold text-white/80 leading-tight" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{card.translation}</span>
                         <span className="text-xl sm:text-2xl mt-0.5">{card.emoji}</span>
                       </>
                     )}
@@ -652,7 +653,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
                   <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-xl sm:rounded-2xl">
                     <span className="text-3xl sm:text-4xl text-white/60 drop-shadow-md">❓</span>
                     <span className="text-xs font-bold text-white/40">
-                      {uiLang === 'he' ? 'לחצו!' : 'Tap!'}
+                      {t('tap', uiLang)}
                     </span>
                   </div>
                 )}
@@ -837,10 +838,10 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
           <SpeakliAvatar mode="celebrate" size="lg" glow />
           <h2 className="text-4xl font-black py-2 mb-2 mt-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {uiLang === 'he' ? 'ספיקלי אומר: מעולה!' : 'Speakli says: Amazing!'}
+            {t('speakliAmazing', uiLang)}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-2 font-medium">
-            {uiLang === 'he' ? `בנית ${score} מילים!` : `You built ${score} words!`}
+            {tReplace('builtWords', uiLang, { score })}
           </p>
           <div className="flex gap-2 mb-6">
             {[...Array(TOTAL_ROUNDS)].map((_, i) => (
@@ -854,7 +855,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             </div>
           </div>
           <button onClick={() => onComplete(xp)} className="px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-orange-400 to-red-500 shadow-2xl active:scale-[0.97] transition-all">
-            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
+            {t('continue', uiLang)} ✨
           </button>
         </div>
       </div>
@@ -868,12 +869,12 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+            <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <div className="text-center">
             <h2 className="text-lg font-black text-gray-800 dark:text-white flex items-center gap-2">
               <span className="animate-wiggle inline-block">🏗️</span>
-              {uiLang === 'he' ? 'בונה מילים' : 'Word Builder'}
+              {t('wordBuilder', uiLang)}
             </h2>
           </div>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1.5">
@@ -900,14 +901,14 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
           >
             <span className="text-7xl block mb-2 animate-jelly">{currentWord.emoji}</span>
           </button>
-          <p className="text-sm text-gray-500 dark:text-gray-400 font-medium" dir="rtl">
+          <p className="text-sm text-gray-500 dark:text-gray-400 font-medium" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>
             {currentWord.translation}
           </p>
           <button
             onClick={() => speak(currentWord.word, { rate: 0.7 })}
             className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-blue-500 active:scale-95 transition-transform"
           >
-            <Volume2 size={16} /> {uiLang === 'he' ? 'השמיעו' : 'Listen'}
+            <Volume2 size={16} /> {t('listenBtn', uiLang)}
           </button>
         </div>
 
@@ -968,7 +969,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
               onClick={handleReset}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-gray-500 active:scale-95 transition-transform"
             >
-              <RotateCcw size={14} /> {uiLang === 'he' ? 'התחילו מחדש' : 'Reset'}
+              <RotateCcw size={14} /> {t('resetGame', uiLang)}
             </button>
           </div>
         )}
@@ -979,19 +980,19 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             <div className="inline-block bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl px-8 py-6 shadow-2xl">
               <SpeakliAvatar mode="bounce" size="sm" shadow={false} />
               <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mb-1">
-                {uiLang === 'he' ? 'ספיקלי אומר: נכון!' : 'Speakli says: Correct!'}
+                {t('speakliCorrect', uiLang)}
               </p>
               <p className="text-lg font-bold text-gray-700 dark:text-gray-300 mb-1" dir="ltr">
                 {currentWord.word} = {currentWord.emoji}
               </p>
-              <p className="text-sm text-gray-500 mb-4" dir="rtl">{currentWord.translation}</p>
+              <p className="text-sm text-gray-500 mb-4" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{currentWord.translation}</p>
               <button
                 onClick={handleNextRound}
                 className="px-8 py-3 rounded-2xl font-black text-white bg-gradient-to-r from-emerald-400 to-green-500 shadow-lg active:scale-95 transition-all"
               >
                 {round + 1 >= TOTAL_ROUNDS
-                  ? (uiLang === 'he' ? 'סיים!' : 'Finish!')
-                  : (uiLang === 'he' ? 'מילה הבאה' : 'Next Word')
+                  ? t('finishGame', uiLang)
+                  : t('nextWord', uiLang)
                 } →
               </button>
             </div>
@@ -1009,80 +1010,64 @@ const GAMES = [
   {
     id: 'listen-pop',
     emoji: '🎧',
-    titleHe: 'שמעו ולחצו',
-    titleEn: 'Listen & Pop',
-    descHe: 'הקשיבו ומצאו את התמונה!',
-    descEn: 'Listen and find the picture!',
+    titleKey: 'gameListenPopTitle',
+    descKey: 'gameListenPopDesc',
     gradient: 'from-cyan-400 via-sky-400 to-blue-500',
     component: ListenPopGame,
   },
   {
     id: 'bubble-pop',
     emoji: '🫧',
-    titleHe: 'פוצצו בועות',
-    titleEn: 'Bubble Pop ABCs',
-    descHe: 'מצאו את האות הנכונה!',
-    descEn: 'Find the right letter!',
+    titleKey: 'gameBubblePopTitle',
+    descKey: 'gameBubblePopDesc',
     gradient: 'from-cyan-400 via-blue-400 to-indigo-400',
     component: BubblePopGame,
   },
   {
     id: 'missing-letter',
     emoji: '🔤',
-    titleHe: 'אות חסרה',
-    titleEn: 'Missing Letter',
-    descHe: 'מצאו את האות שחסרה!',
-    descEn: 'Find the missing letter!',
+    titleKey: 'gameMissingLetterTitle',
+    descKey: 'gameMissingLetterDesc',
     gradient: 'from-violet-400 via-purple-400 to-fuchsia-400',
     component: MissingLetterGame,
   },
   {
     id: 'memory',
     emoji: '🧠',
-    titleHe: 'משחק זיכרון',
-    titleEn: 'Memory Match',
-    descHe: 'התאימו מילים לתמונות!',
-    descEn: 'Match words to pictures!',
+    titleKey: 'gameMemoryTitle',
+    descKey: 'gameMemoryDesc',
     gradient: 'from-purple-400 via-pink-400 to-rose-400',
     component: MemoryMatchGame,
   },
   {
     id: 'category-sort',
     emoji: '📦',
-    titleHe: 'מיין נכון',
-    titleEn: 'Category Sort',
-    descHe: 'מיין פריטים לקטגוריות!',
-    descEn: 'Sort items into categories!',
+    titleKey: 'gameCategorySortTitle',
+    descKey: 'gameCategorySortDesc',
     gradient: 'from-green-400 via-emerald-400 to-teal-400',
     component: CategorySortGame,
   },
   {
     id: 'word-builder',
     emoji: '🏗️',
-    titleHe: 'בונה מילים',
-    titleEn: 'Word Builder',
-    descHe: 'בנו מילים מאותיות!',
-    descEn: 'Build words from letters!',
+    titleKey: 'gameWordBuilderTitle',
+    descKey: 'gameWordBuilderDesc',
     gradient: 'from-orange-400 via-amber-400 to-yellow-400',
     component: WordBuilderGame,
   },
   {
     id: 'sentence-builder',
     emoji: '📝',
-    titleHe: 'בנו משפט',
-    titleEn: 'Sentence Builder',
-    descHe: 'סדרו מילים למשפט!',
-    descEn: 'Arrange words into a sentence!',
+    titleKey: 'gameSentenceBuilderTitle',
+    descKey: 'gameSentenceBuilderDesc',
     gradient: 'from-indigo-400 via-blue-400 to-sky-400',
     component: SentenceBuilderGame,
   },
   {
     id: 'speakli-run',
     emoji: '🏃',
-    titleHe: 'מרוץ המילים',
-    titleEn: 'Speakli Run',
-    descHe: 'רוצו ולמדו מילים!',
-    descEn: 'Run and learn words!',
+    titleKey: 'gameSpeakliRunTitle',
+    descKey: 'gameSpeakliRunDesc',
     gradient: 'from-green-400 via-emerald-400 to-teal-400',
     component: SpeakliRunGame,
   },
@@ -1122,10 +1107,10 @@ function GameSelector({ onSelectGame, onBack }) {
         {/* Header */}
         <div className="flex items-center gap-3 mb-3">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform">
-            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+            <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <h1 className="text-2xl font-black py-1 flex-1 text-center" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {uiLang === 'he' ? 'המשחקים של ספיקלי' : "Speakli's Games"}
+            {t('speakliGames', uiLang)}
           </h1>
           <div className="w-9" />
         </div>
@@ -1133,12 +1118,12 @@ function GameSelector({ onSelectGame, onBack }) {
         <div className="flex items-center justify-center gap-2 mb-4">
           <SpeakliAvatar mode="idle" size="sm" shadow={false} />
           <p className="text-center text-sm font-bold text-blue-600 dark:text-sky-400">
-            {uiLang === 'he' ? 'ספיקלי אומר: בחרו משחק ובואו נשחק!' : 'Speakli says: Pick a game and play!'}
+            {t('speakliPickGame', uiLang)}
           </p>
         </div>
 
         <p className="text-center text-xs text-gray-500 dark:text-gray-400 mb-3">
-          {uiLang === 'he' ? 'כל משחק נותן נקודות XP!' : 'Each game gives you XP points!'}
+          {t('gamesGiveXP', uiLang)}
         </p>
 
         {/* Game cards - 2 column grid */}
@@ -1164,10 +1149,10 @@ function GameSelector({ onSelectGame, onBack }) {
                     {game.emoji}
                   </div>
                   <h3 className="text-sm font-black text-white drop-shadow-md leading-tight">
-                    {uiLang === 'he' ? game.titleHe : game.titleEn}
+                    {t(game.titleKey, uiLang)}
                   </h3>
                   <p className="text-[11px] text-white/75 font-medium leading-tight">
-                    {uiLang === 'he' ? game.descHe : game.descEn}
+                    {t(game.descKey, uiLang)}
                   </p>
                 </div>
               </div>

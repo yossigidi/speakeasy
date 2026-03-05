@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronLeft, MessageSquare, CheckCircle, Send, Loader2 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, RTL_LANGS } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 
 const CATEGORIES = ['bug', 'feature', 'account', 'billing', 'other'];
@@ -65,7 +65,7 @@ export default function SupportContactPage({ onBack }) {
       <div className="pb-24 px-4 pt-4">
         <div className="flex items-center gap-3 mb-6">
           <button onClick={onBack} className="p-2 rounded-xl bg-white/60 dark:bg-gray-800/60">
-            <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${uiLang === 'he' ? 'rotate-180' : ''}`} />
+            <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''}`} />
           </button>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
             {t('contactSupport', uiLang)}
@@ -98,7 +98,7 @@ export default function SupportContactPage({ onBack }) {
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <button onClick={onBack} className="p-2 rounded-xl bg-white/60 dark:bg-gray-800/60">
-          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${uiLang === 'he' ? 'rotate-180' : ''}`} />
+          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''}`} />
         </button>
         <div className="flex items-center gap-2">
           <MessageSquare size={22} className="text-emerald-500" />

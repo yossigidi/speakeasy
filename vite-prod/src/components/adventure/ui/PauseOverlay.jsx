@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from '../../../utils/translations.js';
 
 /**
  * React-rendered pause overlay (alternative to in-canvas pause).
@@ -16,28 +17,28 @@ export default function PauseOverlay({ onResume, onWorldMap, onQuit, uiLang }) {
       >
         <div className="text-5xl mb-2">⏸️</div>
         <h2 className="text-2xl font-black text-gray-800">
-          {uiLang === 'he' ? 'הפסקה' : 'Paused'}
+          {t('advPaused', uiLang)}
         </h2>
 
         <button
           onClick={onResume}
           className="w-full py-3 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-lg shadow-lg active:scale-95 transition-transform"
         >
-          {uiLang === 'he' ? '▶ המשך!' : '▶ Resume!'}
+          {t('advResume', uiLang)}
         </button>
 
         <button
           onClick={onWorldMap}
           className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-400 to-sky-500 text-white font-bold shadow-md active:scale-95 transition-transform"
         >
-          {uiLang === 'he' ? '🗺️ מפת עולמות' : '🗺️ World Map'}
+          {t('advWorldMap', uiLang)}
         </button>
 
         <button
           onClick={onQuit}
           className="w-full py-2.5 rounded-2xl bg-gray-100 text-gray-600 font-medium text-sm active:scale-95 transition-transform"
         >
-          {uiLang === 'he' ? '← חזרה הביתה' : '← Back Home'}
+          {t('advBackHome', uiLang)}
         </button>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Moon, Sun, Languages, LogOut, Trophy, BarChart3, Flame, Zap, BookOpen, 
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf, SUPPORTED_LANGS, LANG_LABELS } from '../utils/translations.js';
 import { getLevelTitle } from '../utils/levelSystem.js';
 import { LEVEL_META } from '../data/curriculum/curriculum-index.js';
 import { useMusic } from '../contexts/MusicContext.jsx';
@@ -12,7 +12,7 @@ import LevelBadge from '../components/gamification/LevelBadge.jsx';
 import XPBar from '../components/gamification/XPBar.jsx';
 
 export default function ProfilePage({ onNavigate }) {
-  const { uiLang, toggleLang, isDark, toggleTheme } = useTheme();
+  const { uiLang, setLang, isDark, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
   const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild } = useUserProgress();
   const { musicEnabled, soundsEnabled, toggleMusic, toggleSounds } = useMusic();
@@ -123,7 +123,7 @@ export default function ProfilePage({ onNavigate }) {
               {isChildMode && activeChild ? activeChild.name : (user?.displayName || user?.email?.split('@')[0] || 'User')}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {getLevelTitle(levelInfo.level, uiLang)} · {uiLang === 'he' ? `רמה ${progress.curriculumLevel || 1}` : `Level ${progress.curriculumLevel || 1}`}
+              {getLevelTitle(levelInfo.level, uiLang)} · {t('level', uiLang)} {progress.curriculumLevel || 1}
             </p>
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function ProfilePage({ onNavigate }) {
           </div>
           <div className="flex-1">
             <h3 className="font-bold text-gray-900 dark:text-white">{t('achievements', uiLang)}</h3>
-            <p className="text-xs text-gray-500">{uiLang === 'he' ? 'צפו בהישגים שלכם' : 'View your achievements'}</p>
+            <p className="text-xs text-gray-500">{t('viewAchievements', uiLang)}</p>
           </div>
           <Star size={18} className="text-amber-500" fill="currentColor" />
         </div>
@@ -189,7 +189,7 @@ export default function ProfilePage({ onNavigate }) {
             </div>
             <div className="flex-1">
               <h3 className="font-bold text-gray-900 dark:text-white">{t('helpCenter', uiLang)}</h3>
-              <p className="text-xs text-gray-500">{uiLang === 'he' ? 'שאלות נפוצות, יצירת קשר ופניות' : 'FAQ, contact us & tickets'}</p>
+              <p className="text-xs text-gray-500">{t('helpCenterDesc', uiLang)}</p>
             </div>
             <Star size={18} className="text-teal-500" fill="currentColor" />
           </div>
@@ -216,15 +216,28 @@ export default function ProfilePage({ onNavigate }) {
           </GlassCard>
 
           {/* Language */}
-          <GlassCard className="!p-3 cursor-pointer" onClick={toggleLang}>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Languages size={20} className="text-brand-500" />
-                <span className="font-medium text-gray-900 dark:text-white">{t('language', uiLang)}</span>
-              </div>
-              <span className="text-sm font-medium text-brand-600 dark:text-brand-400">
-                {uiLang === 'he' ? 'עברית' : 'English'}
-              </span>
+          <GlassCard className="!p-3">
+            <div className="flex items-center gap-3 mb-3">
+              <Languages size={20} className="text-brand-500" />
+              <span className="font-medium text-gray-900 dark:text-white">{t('language', uiLang)}</span>
+            </div>
+            <div className="flex gap-2">
+              {SUPPORTED_LANGS.map(lang => {
+                const isActive = uiLang === lang;
+                return (
+                  <button
+                    key={lang}
+                    onClick={() => setLang(lang)}
+                    className={`flex-1 py-2 px-2 rounded-xl transition-all text-sm font-semibold ${
+                      isActive
+                        ? 'bg-brand-100 dark:bg-brand-900/40 ring-2 ring-brand-500 text-brand-700 dark:text-brand-300'
+                        : 'bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    }`}
+                  >
+                    {LANG_LABELS[lang]}
+                  </button>
+                );
+              })}
             </div>
           </GlassCard>
 
@@ -293,7 +306,7 @@ export default function ProfilePage({ onNavigate }) {
                   >
                     <span className="text-lg">{meta.emoji}</span>
                     <span className={isActive ? 'text-teal-700 dark:text-teal-300' : 'text-gray-500 dark:text-gray-400'}>
-                      {uiLang === 'he' ? meta.nameHe : meta.name}
+                      {lf(meta, 'name', uiLang)}
                     </span>
                   </button>
                 );

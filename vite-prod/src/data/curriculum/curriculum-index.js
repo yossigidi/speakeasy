@@ -8,11 +8,11 @@ export const LEVELS = [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5];
 
 // Level metadata for display
 export const LEVEL_META = [
-  { id: 1, name: 'Starters', nameHe: 'מתחילים', emoji: '🌱', color: '#FF6B6B', bgGradient: 'from-red-400 to-coral-500' },
-  { id: 2, name: 'Explorers', nameHe: 'חוקרים', emoji: '🔭', color: '#38BDF8', bgGradient: 'from-sky-400 to-blue-500', locked: true },
-  { id: 3, name: 'Readers', nameHe: 'קוראים', emoji: '📖', color: '#10B981', bgGradient: 'from-emerald-400 to-green-500', locked: true },
-  { id: 4, name: 'Writers', nameHe: 'כותבים', emoji: '✍️', color: '#FB923C', bgGradient: 'from-orange-400 to-amber-500', locked: true },
-  { id: 5, name: 'Champions', nameHe: 'אלופים', emoji: '🏆', color: '#0EA5E9', bgGradient: 'from-teal-400 to-cyan-500', locked: true },
+  { id: 1, name: 'Starters', nameHe: 'מתחילים', nameAr: 'خطوات أولى', nameRu: 'Первые шаги', emoji: '🌱', color: '#FF6B6B', bgGradient: 'from-red-400 to-coral-500' },
+  { id: 2, name: 'Explorers', nameHe: 'חוקרים', nameAr: 'مستكشفون', nameRu: 'Исследователи', emoji: '🔭', color: '#38BDF8', bgGradient: 'from-sky-400 to-blue-500', locked: true },
+  { id: 3, name: 'Readers', nameHe: 'קוראים', nameAr: 'قارئون', nameRu: 'Читатели', emoji: '📖', color: '#10B981', bgGradient: 'from-emerald-400 to-green-500', locked: true },
+  { id: 4, name: 'Writers', nameHe: 'כותבים', nameAr: 'كاتبون', nameRu: 'Писатели', emoji: '✍️', color: '#FB923C', bgGradient: 'from-orange-400 to-amber-500', locked: true },
+  { id: 5, name: 'Champions', nameHe: 'אלופים', nameAr: 'أبطال', nameRu: 'Чемпионы', emoji: '🏆', color: '#0EA5E9', bgGradient: 'from-teal-400 to-cyan-500', locked: true },
 ];
 
 // Get a specific level's data
@@ -77,12 +77,12 @@ export function getLevelStats(levelId) {
 
 // Lesson type metadata
 export const LESSON_TYPES = {
-  speaking: { icon: '🗣️', color: '#FF6B6B', nameHe: 'דיבור', nameEn: 'Speaking' },
-  vocabulary: { icon: '📚', color: '#8B5CF6', nameHe: 'אוצר מילים', nameEn: 'Vocabulary' },
-  reading: { icon: '📖', color: '#0EA5E9', nameHe: 'קריאה', nameEn: 'Reading' },
-  writing: { icon: '✍️', color: '#10B981', nameHe: 'כתיבה', nameEn: 'Writing' },
-  mixed: { icon: '🎯', color: '#FB923C', nameHe: 'תרגול מעורב', nameEn: 'Mixed' },
-  test: { icon: '⭐', color: '#EAB308', nameHe: 'מבחן', nameEn: 'Test' },
+  speaking: { icon: '🗣️', color: '#FF6B6B', nameHe: 'דיבור', nameAr: 'محادثة', nameRu: 'Говорение', nameEn: 'Speaking' },
+  vocabulary: { icon: '📚', color: '#8B5CF6', nameHe: 'אוצר מילים', nameAr: 'مفردات', nameRu: 'Словарный запас', nameEn: 'Vocabulary' },
+  reading: { icon: '📖', color: '#0EA5E9', nameHe: 'קריאה', nameAr: 'قراءة', nameRu: 'Чтение', nameEn: 'Reading' },
+  writing: { icon: '✍️', color: '#10B981', nameHe: 'כתיבה', nameAr: 'كتابة', nameRu: 'Письмо', nameEn: 'Writing' },
+  mixed: { icon: '🎯', color: '#FB923C', nameHe: 'תרגול מעורב', nameAr: 'تدريب مختلط', nameRu: 'Смешанная практика', nameEn: 'Mixed' },
+  test: { icon: '⭐', color: '#EAB308', nameHe: 'מבחן', nameAr: 'اختبار', nameRu: 'Тест', nameEn: 'Test' },
 };
 
 // Star calculation

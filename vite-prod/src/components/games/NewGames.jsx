@@ -6,6 +6,7 @@ import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../.
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../../utils/gameSounds.js';
 import { getWordsForLevel, SENTENCES_BY_LEVEL, CATEGORIES_BY_LEVEL } from '../../data/kids-vocabulary.js';
 import { shuffle } from '../../utils/shuffle.js';
+import { t, tReplace, lf, RTL_LANGS } from '../../utils/translations.js';
 
 // Hebrew instruction phrases for new games — preloaded on mount
 const NEW_GAME_PHRASES = [
@@ -88,7 +89,7 @@ function GameOverScreen({ emoji, title, subtitle, score, total, xp, onContinue, 
           className={`btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl bg-gradient-to-r ${gradient} box-shadow-none`}
           style={{ boxShadow: 'none' }}
         >
-          {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
+          {t('continue', uiLang)} ✨
         </button>
       </div>
     </div>
@@ -99,7 +100,7 @@ function GameHeader({ onBack, title, emoji, right, uiLang }) {
   return (
     <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
       <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform">
-        <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+        <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
       </button>
       <div className="text-center">
         <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
@@ -257,8 +258,8 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     const xp = score * 4 + 5;
     return (
       <GameOverScreen
-        emoji="🎧" title={uiLang === 'he' ? '!שמיעה מעולה' : 'Great Listening!'}
-        subtitle={uiLang === 'he' ? `זיהית ${score} מילים!` : `You identified ${score} words!`}
+        emoji="🎧" title={t('greatListening', uiLang)}
+        subtitle={tReplace('identifiedWords', uiLang, { count: score })}
         score={score} total={TOTAL_ROUNDS} xp={xp}
         onContinue={() => onComplete(xp)}
         gradient="from-cyan-400 to-blue-500" uiLang={uiLang}
@@ -271,7 +272,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       <FloatingDecorations />
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="🎧"
-          title={uiLang === 'he' ? 'שמעו ולחצו' : 'Listen & Pop'}
+          title={t('listenAndPop', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
@@ -297,7 +298,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
             className="inline-flex items-center gap-3 btn-3d-blue rounded-2xl px-8 py-4 text-lg animate-glow-pulse"
           >
             <Volume2 size={24} />
-            {uiLang === 'he' ? 'הקשיבו שוב' : 'Listen Again'}
+            {t('listenAgain', uiLang)}
           </button>
         </div>
 
@@ -491,8 +492,8 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
     const xp = correct * 3 + 5;
     return (
       <GameOverScreen
-        emoji="📦" title={uiLang === 'he' ? '!מסדר מעולה' : 'Great Sorting!'}
-        subtitle={uiLang === 'he' ? `מיינת ${correct} פריטים נכון!` : `Sorted ${correct} items correctly!`}
+        emoji="📦" title={t('greatSorting', uiLang)}
+        subtitle={tReplace('sortedItems', uiLang, { count: correct })}
         score={Math.min(correct, 6)} total={6} xp={xp}
         onContinue={() => onComplete(xp)}
         gradient="from-green-400 to-emerald-500" uiLang={uiLang}
@@ -507,7 +508,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       <FloatingDecorations />
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="📦"
-          title={uiLang === 'he' ? 'מיין נכון' : 'Category Sort'}
+          title={t('categorySort', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
@@ -535,7 +536,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
             }`}>
               <span className="text-6xl block mb-2 animate-jelly">{item.emoji}</span>
               <span className="text-xl font-black text-gray-800 dark:text-white" dir="ltr">{item.word}</span>
-              <span className="text-sm text-gray-400 block" dir="rtl">{item.translation}</span>
+              <span className="text-sm text-gray-400 block" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{item.translation}</span>
             </div>
           </div>
         )}
@@ -552,7 +553,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
             >
               <span className="text-4xl">{cat.emoji}</span>
               <span className="text-lg font-black drop-shadow-md">
-                {uiLang === 'he' ? cat.nameHe : cat.name}
+                {lf(cat, 'name', uiLang)}
               </span>
               {/* Show sorted count */}
               <div className="flex gap-0.5 mt-1 flex-wrap justify-center">
@@ -570,7 +571,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
 
         {/* Instruction */}
         <p className="text-center text-sm text-gray-400 dark:text-gray-500 mt-4 px-4">
-          {uiLang === 'he' ? 'לחצו על הקטגוריה הנכונה!' : 'Tap the right category!'}
+          {t('tapRightCategory', uiLang)}
         </p>
       </div>
     </div>
@@ -732,8 +733,8 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
     const xp = score * 3 + 5;
     return (
       <GameOverScreen
-        emoji="🔤" title={uiLang === 'he' ? '!אלוף האותיות' : 'Letter Champion!'}
-        subtitle={uiLang === 'he' ? `מצאת ${score} אותיות!` : `Found ${score} letters!`}
+        emoji="🔤" title={t('letterChampion', uiLang)}
+        subtitle={tReplace('foundLetters', uiLang, { count: score })}
         score={score} total={TOTAL_ROUNDS} xp={xp}
         onContinue={() => onComplete(xp)}
         gradient="from-violet-400 to-purple-500" uiLang={uiLang}
@@ -748,7 +749,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       <FloatingDecorations />
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="🔤"
-          title={uiLang === 'he' ? 'אות חסרה' : 'Missing Letter'}
+          title={t('missingLetter', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{round + 1}/{TOTAL_ROUNDS}</span>
@@ -770,7 +771,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
           <button onClick={() => speak(current.word, { rate: 0.7 })} className="inline-block">
             <span className="text-7xl block mb-3 animate-jelly">{current.emoji}</span>
           </button>
-          <p className="text-sm text-gray-400 mb-2" dir="rtl">{current.translation}</p>
+          <p className="text-sm text-gray-400 mb-2" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{current.translation}</p>
 
           {/* Word with missing letter */}
           <div className="flex justify-center gap-1.5" dir="ltr">
@@ -799,7 +800,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
           <button onClick={() => speak(current.word, { rate: 0.7 })}
             className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-500 active:scale-95 transition-transform"
           >
-            <Volume2 size={14} /> {uiLang === 'he' ? 'השמיעו' : 'Listen'}
+            <Volume2 size={14} /> {t('listenBtn', uiLang)}
           </button>
         </div>
 
@@ -968,8 +969,8 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     const xp = score * 5 + 5;
     return (
       <GameOverScreen
-        emoji="📝" title={uiLang === 'he' ? '!בונה משפטים מעולה' : 'Sentence Pro!'}
-        subtitle={uiLang === 'he' ? `בנית ${score} משפטים!` : `Built ${score} sentences!`}
+        emoji="📝" title={t('sentencePro', uiLang)}
+        subtitle={tReplace('builtSentences', uiLang, { count: score })}
         score={score} total={TOTAL_ROUNDS} xp={xp}
         onContinue={() => onComplete(xp)}
         gradient="from-indigo-400 to-blue-500" uiLang={uiLang}
@@ -984,7 +985,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       <FloatingDecorations />
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="📝"
-          title={uiLang === 'he' ? 'בנו משפט' : 'Sentence Builder'}
+          title={t('sentenceBuilder', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{round + 1}/{TOTAL_ROUNDS}</span>
@@ -1006,11 +1007,11 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
           <button onClick={() => speak(current.sentence, { rate: 0.7 })} className="inline-block">
             <span className="text-6xl block mb-2 animate-jelly">{current.emoji}</span>
           </button>
-          <p className="text-sm text-gray-500 dark:text-gray-400" dir="rtl">{current.translationHe}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
           <button onClick={() => speak(current.sentence, { rate: 0.7 })}
             className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-500 active:scale-95"
           >
-            <Volume2 size={14} /> {uiLang === 'he' ? 'השמיעו' : 'Listen'}
+            <Volume2 size={14} /> {t('listenBtn', uiLang)}
           </button>
         </div>
 
@@ -1064,7 +1065,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             <button onClick={handleReset}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-gray-500 active:scale-95"
             >
-              <RotateCcw size={14} /> {uiLang === 'he' ? 'התחילו מחדש' : 'Reset'}
+              <RotateCcw size={14} /> {t('resetGame', uiLang)}
             </button>
           </div>
         )}
@@ -1075,15 +1076,15 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             <div className="inline-block bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl px-8 py-5 shadow-2xl">
               <span className="text-4xl block mb-2">🎉</span>
               <p className="text-xl font-black text-emerald-600 dark:text-emerald-400 mb-1">
-                {uiLang === 'he' ? '!נכון' : 'Correct!'}
+                {t('correct', uiLang)}
               </p>
               <p className="text-sm text-gray-500 mb-3" dir="ltr">{current.sentence}</p>
               <button onClick={handleNext}
                 className="btn-3d-green rounded-xl px-6 py-2.5 text-sm active:scale-95"
               >
                 {round + 1 >= TOTAL_ROUNDS
-                  ? (uiLang === 'he' ? 'סיים!' : 'Finish!')
-                  : (uiLang === 'he' ? 'משפט הבא' : 'Next')} →
+                  ? t('finishExclaim', uiLang)
+                  : t('nextSentence', uiLang)} →
               </button>
             </div>
           </div>

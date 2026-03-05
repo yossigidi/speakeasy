@@ -18,9 +18,8 @@ export default class SpellBridgeExercise extends ExerciseBase {
 
   _build() {
     const { w, h } = this;
-    const hint = this.uiLang === 'he'
-      ? (this.config.hintHe || 'סדרו את האותיות!')
-      : (this.config.hint || 'Arrange the letters!');
+    const suffix = {he:'He',ar:'Ar',ru:'Ru'}[this.uiLang] || '';
+    const hint = this.config['hint' + suffix] || this.config.hint || 'Arrange the letters!';
     this.showPrompt(hint);
 
     // Bridge graphic

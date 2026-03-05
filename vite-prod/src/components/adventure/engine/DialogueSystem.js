@@ -47,7 +47,7 @@ export default class DialogueSystem {
 
     const line = this.queue.shift();
     const uiLang = this.options.uiLang || 'he';
-    const text = uiLang === 'he' ? (line.textHe || line.text) : line.text;
+    const text = line['text' + ({he:'He',ar:'Ar',ru:'Ru'}[uiLang] || '')] || line.text;
 
     // Find speaker's display object
     let anchor = null;
@@ -74,7 +74,7 @@ export default class DialogueSystem {
     this.currentBubble = new SpeechBubble(this.engine, text, bubbleX, bubbleY);
 
     // Speak via TTS
-    const speakLang = (uiLang === 'he') ? 'he' : 'en-US';
+    const speakLang = uiLang;
     if (this.options.speak) {
       this.options.speak(text, {
         lang: speakLang,

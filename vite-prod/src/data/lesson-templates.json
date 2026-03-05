@@ -4,17 +4,23 @@
       "id": "u1",
       "title": "Greetings & Introductions",
       "titleHe": "ברכות והיכרות",
+      "titleAr": "تحيات وتعارف",
+      "titleRu": "Приветствия и знакомство",
       "cefrLevel": "A1",
       "lessons": [
         {
           "id": "u1l1",
           "title": "Hello & Goodbye",
           "titleHe": "שלום ולהתראות",
+          "titleAr": "مرحباً ومع السلامة",
+          "titleRu": "Привет и до свидания",
           "exercises": [
             {
               "type": "multiple-choice",
               "question": "What do you say when you meet someone in the morning?",
               "questionHe": "מה אומרים כשפוגשים מישהו בבוקר?",
+              "questionAr": "ماذا تقول عندما تقابل شخصاً في الصباح؟",
+              "questionRu": "Что ты говоришь, когда встречаешь кого-то утром?",
               "options": ["Good night", "Good morning", "Good luck", "Goodbye"],
               "correct": 1,
               "explanation": "We say 'Good morning' when greeting someone in the morning."
@@ -23,6 +29,8 @@
               "type": "match-pairs",
               "instruction": "Match the English greeting to its Hebrew translation",
               "instructionHe": "התאימו את הברכה באנגלית לתרגום בעברית",
+              "instructionAr": "طابقوا التحية بالإنجليزية مع ترجمتها بالعبرية",
+              "instructionRu": "Сопоставьте английское приветствие с переводом на иврит",
               "pairs": [
                 ["Hello", "שלום"],
                 ["Goodbye", "להתראות"],
@@ -36,7 +44,9 @@
               "answer": "bye",
               "alternatives": ["bye", "Bye"],
               "hint": "A short way to say goodbye",
-              "hintHe": "דרך קצרה לומר להתראות"
+              "hintHe": "דרך קצרה לומר להתראות",
+              "hintAr": "طريقة قصيرة لقول وداعاً",
+              "hintRu": "Короткий способ сказать «до свидания»"
             },
             {
               "type": "translation",
@@ -55,6 +65,8 @@
               "type": "multiple-choice",
               "question": "Which is a formal way to say goodbye?",
               "questionHe": "מהי דרך רשמית לומר להתראות?",
+              "questionAr": "ما هي الطريقة الرسمية لقول وداعاً؟",
+              "questionRu": "Какой формальный способ сказать «до свидания»?",
               "options": ["See ya!", "Bye-bye!", "Goodbye", "Later!"],
               "correct": 2,
               "explanation": "'Goodbye' is the most formal option. The others are informal."
@@ -71,13 +83,17 @@
               "text": "Good evening",
               "options": ["Good morning", "Good afternoon", "Good evening", "Good night"],
               "correct": 2,
-              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם",
+              "instructionAr": "استمعوا واختاروا ما سمعتم",
+              "instructionRu": "Послушайте и выберите то, что услышали"
             },
             {
               "type": "speaking",
               "text": "Hello, good morning!",
               "translation": "שלום, בוקר טוב!",
-              "instructionHe": "אמרו את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית",
+              "instructionAr": "قولوا الجملة التالية بالإنجليزية",
+              "instructionRu": "Произнесите следующее предложение по-английски"
             },
             {
               "type": "fill-blank",
@@ -85,7 +101,9 @@
               "answer": "morning",
               "alternatives": ["morning", "afternoon", "evening"],
               "hint": "A greeting for the start of the day",
-              "hintHe": "ברכה לתחילת היום"
+              "hintHe": "ברכה לתחילת היום",
+              "hintAr": "تحية لبداية اليوم",
+              "hintRu": "Приветствие в начале дня"
             }
           ]
         },
@@ -93,11 +111,15 @@
           "id": "u1l2",
           "title": "What's Your Name?",
           "titleHe": "מה השם שלך?",
+          "titleAr": "ما اسمك؟",
+          "titleRu": "Как тебя зовут?",
           "exercises": [
             {
               "type": "multiple-choice",
               "question": "How do you ask someone's name?",
               "questionHe": "איך שואלים מישהו מה שמו?",
+              "questionAr": "كيف تسأل شخصاً عن اسمه؟",
+              "questionRu": "Как спросить чьё-то имя?",
               "options": ["How is your name?", "What is your name?", "Who is your name?", "Where is your name?"],
               "correct": 1,
               "explanation": "In English we say 'What is your name?' to ask someone's name."
@@ -108,7 +130,9 @@
               "answer": "name",
               "alternatives": ["name"],
               "hint": "What people call you",
-              "hintHe": "איך אנשים קוראים לך"
+              "hintHe": "איך אנשים קוראים לך",
+              "hintAr": "ماذا يناديك الناس",
+              "hintRu": "Как тебя называют люди"
             },
             {
               "type": "word-arrange",
@@ -127,6 +151,8 @@
               "type": "multiple-choice",
               "question": "\"Nice to meet you\" means:",
               "questionHe": "\"Nice to meet you\" פירושו:",
+              "questionAr": "\"Nice to meet you\" تعني:",
+              "questionRu": "\"Nice to meet you\" означает:",
               "options": ["להתראות", "נעים להכיר", "מה שלומך", "תודה רבה"],
               "correct": 1,
               "explanation": "'Nice to meet you' is what we say when meeting someone for the first time."
@@ -135,6 +161,8 @@
               "type": "match-pairs",
               "instruction": "Match the question to the correct answer",
               "instructionHe": "התאימו את השאלה לתשובה הנכונה",
+              "instructionAr": "طابقوا السؤال بالإجابة الصحيحة",
+              "instructionRu": "Сопоставьте вопрос с правильным ответом",
               "pairs": [
                 ["What is your name?", "My name is Dan."],
                 ["How are you?", "I'm fine, thanks."],
@@ -148,13 +176,17 @@
               "answer": "meet",
               "alternatives": ["meet"],
               "hint": "What you say when you first meet someone",
-              "hintHe": "מה שאומרים כשפוגשים מישהו בפעם הראשונה"
+              "hintHe": "מה שאומרים כשפוגשים מישהו בפעם הראשונה",
+              "hintAr": "ما تقوله عندما تقابل شخصاً لأول مرة",
+              "hintRu": "Что ты говоришь, когда впервые встречаешь кого-то"
             },
             {
               "type": "speaking",
               "text": "My name is David. Nice to meet you.",
               "translation": "השם שלי דוד. נעים להכיר.",
-              "instructionHe": "אמרו את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית",
+              "instructionAr": "قولوا الجملة التالية بالإنجليزية",
+              "instructionRu": "Произнесите следующее предложение по-английски"
             },
             {
               "type": "word-arrange",
@@ -167,7 +199,9 @@
               "text": "What is your name?",
               "options": ["What is your name?", "Where is your home?", "What is your job?", "How is your day?"],
               "correct": 0,
-              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם",
+              "instructionAr": "استمعوا واختاروا ما سمعتم",
+              "instructionRu": "Послушайте и выберите то, что услышали"
             }
           ]
         },
@@ -175,11 +209,15 @@
           "id": "u1l3",
           "title": "How Are You?",
           "titleHe": "מה שלומך?",
+          "titleAr": "كيف حالك؟",
+          "titleRu": "Как дела?",
           "exercises": [
             {
               "type": "multiple-choice",
               "question": "What is a common reply to 'How are you?'",
               "questionHe": "מהי תשובה נפוצה ל-'How are you?'",
+              "questionAr": "ما هو الرد الشائع على 'How are you?'",
+              "questionRu": "Какой распространённый ответ на 'How are you?'",
               "options": ["I'm fine, thanks.", "My name is John.", "I'm from Israel.", "Nice to meet you."],
               "correct": 0,
               "explanation": "'I'm fine, thanks' is the most common reply to 'How are you?'"
@@ -190,12 +228,16 @@
               "answer": "are",
               "alternatives": ["are"],
               "hint": "The verb 'to be' for 'you'",
-              "hintHe": "הפועל 'to be' עבור 'you'"
+              "hintHe": "הפועל 'to be' עבור 'you'",
+              "hintAr": "الفعل 'to be' لـ 'you'",
+              "hintRu": "Глагол 'to be' для 'you'"
             },
             {
               "type": "match-pairs",
               "instruction": "Match the feeling to its meaning",
               "instructionHe": "התאימו את ההרגשה לפירוש שלה",
+              "instructionAr": "طابقوا الشعور بمعناه",
+              "instructionRu": "Сопоставьте чувство с его значением",
               "pairs": [
                 ["Happy", "שמח"],
                 ["Sad", "עצוב"],
@@ -221,6 +263,8 @@
               "type": "multiple-choice",
               "question": "Which means 'not good' in English?",
               "questionHe": "מה פירושו 'לא טוב' באנגלית?",
+              "questionAr": "ما معنى 'ليس جيداً' بالإنجليزية؟",
+              "questionRu": "Что означает «не хорошо» по-английски?",
               "options": ["I'm great", "I'm not so good", "I'm fine", "I'm happy"],
               "correct": 1,
               "explanation": "'I'm not so good' expresses that you are not feeling well."
@@ -231,20 +275,26 @@
               "answer": "good",
               "alternatives": ["good", "fine", "great", "okay"],
               "hint": "A positive feeling",
-              "hintHe": "הרגשה חיובית"
+              "hintHe": "הרגשה חיובית",
+              "hintAr": "شعور إيجابي",
+              "hintRu": "Позитивное чувство"
             },
             {
               "type": "speaking",
               "text": "I'm fine, thank you. And you?",
               "translation": "אני בסדר, תודה. ואתה?",
-              "instructionHe": "אמרו את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית",
+              "instructionAr": "قولوا الجملة التالية بالإنجليزية",
+              "instructionRu": "Произнесите следующее предложение по-английски"
             },
             {
               "type": "listening",
               "text": "I'm great, thank you!",
               "options": ["I'm great, thank you!", "I'm late, thank you!", "I'm eight, thank you!", "I'm gray, thank you!"],
               "correct": 0,
-              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם",
+              "instructionAr": "استمعوا واختاروا ما سمعتم",
+              "instructionRu": "Послушайте и выберите то, что услышали"
             }
           ]
         },
@@ -252,11 +302,15 @@
           "id": "u1l4",
           "title": "Where Are You From?",
           "titleHe": "מאיפה אתה?",
+          "titleAr": "من أين أنت؟",
+          "titleRu": "Откуда ты?",
           "exercises": [
             {
               "type": "multiple-choice",
               "question": "How do you ask where someone is from?",
               "questionHe": "איך שואלים מאיפה מישהו?",
+              "questionAr": "كيف تسأل من أين شخص ما؟",
+              "questionRu": "Как спросить, откуда кто-то?",
               "options": ["What are you from?", "Where are you from?", "Who are you from?", "When are you from?"],
               "correct": 1,
               "explanation": "We use 'Where are you from?' to ask about someone's origin."
@@ -267,12 +321,16 @@
               "answer": "am",
               "alternatives": ["am", "'m"],
               "hint": "The verb 'to be' for 'I'",
-              "hintHe": "הפועל 'to be' עבור 'I'"
+              "hintHe": "הפועל 'to be' עבור 'I'",
+              "hintAr": "الفعل 'to be' لـ 'I'",
+              "hintRu": "Глагол 'to be' для 'I'"
             },
             {
               "type": "match-pairs",
               "instruction": "Match the country to its nationality",
               "instructionHe": "התאימו את המדינה ללאום",
+              "instructionAr": "طابقوا الدولة بجنسيتها",
+              "instructionRu": "Сопоставьте страну с национальностью",
               "pairs": [
                 ["Israel", "Israeli"],
                 ["America", "American"],
@@ -298,6 +356,8 @@
               "type": "multiple-choice",
               "question": "\"I live in Tel Aviv\" - what does 'live' mean?",
               "questionHe": "\"I live in Tel Aviv\" - מה פירוש 'live'?",
+              "questionAr": "\"I live in Tel Aviv\" - ما معنى 'live'؟",
+              "questionRu": "\"I live in Tel Aviv\" - что означает 'live'?",
               "options": ["עובד", "גר", "לומד", "אוהב"],
               "correct": 1,
               "explanation": "'Live' means to reside in a place - לגור."
@@ -308,13 +368,17 @@
               "answer": "live",
               "alternatives": ["live"],
               "hint": "To reside somewhere",
-              "hintHe": "לגור במקום מסוים"
+              "hintHe": "לגור במקום מסוים",
+              "hintAr": "أن تسكن في مكان ما",
+              "hintRu": "Жить где-то"
             },
             {
               "type": "speaking",
               "text": "I am from Israel. I live in Tel Aviv.",
               "translation": "אני מישראל. אני גר בתל אביב.",
-              "instructionHe": "אמרו את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית",
+              "instructionAr": "قولوا الجملة التالية بالإنجليزية",
+              "instructionRu": "Произнесите следующее предложение по-английски"
             },
             {
               "type": "word-arrange",
@@ -327,7 +391,9 @@
               "text": "I am from Israel.",
               "options": ["I am from Israel.", "I am from Italy.", "I am from Ireland.", "I am from Iceland."],
               "correct": 0,
-              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם",
+              "instructionAr": "استمعوا واختاروا ما سمعتم",
+              "instructionRu": "Послушайте и выберите то, что услышали"
             }
           ]
         },
@@ -335,11 +401,15 @@
           "id": "u1l5",
           "title": "Numbers & Age",
           "titleHe": "מספרים וגיל",
+          "titleAr": "أرقام وعمر",
+          "titleRu": "Числа и возраст",
           "exercises": [
             {
               "type": "match-pairs",
               "instruction": "Match the number to its word",
               "instructionHe": "התאימו את המספר למילה",
+              "instructionAr": "طابقوا الرقم بكلمته",
+              "instructionRu": "Сопоставьте число с его словом",
               "pairs": [
                 ["1", "one"],
                 ["2", "two"],
@@ -352,6 +422,8 @@
               "type": "multiple-choice",
               "question": "How do you ask someone's age?",
               "questionHe": "איך שואלים מישהו מה גילו?",
+              "questionAr": "كيف تسأل شخصاً عن عمره؟",
+              "questionRu": "Как спросить чей-то возраст?",
               "options": ["What old are you?", "How old are you?", "How many are you?", "What age is you?"],
               "correct": 1,
               "explanation": "We say 'How old are you?' to ask about someone's age."
@@ -362,7 +434,9 @@
               "answer": "five",
               "alternatives": ["five"],
               "hint": "The number 5",
-              "hintHe": "המספר 5"
+              "hintHe": "המספר 5",
+              "hintAr": "الرقم 5",
+              "hintRu": "Число 5"
             },
             {
               "type": "translation",
@@ -381,6 +455,8 @@
               "type": "multiple-choice",
               "question": "What is 'fifteen' as a number?",
               "questionHe": "מה המספר של 'fifteen'?",
+              "questionAr": "ما هو الرقم 'fifteen'؟",
+              "questionRu": "Какое число означает 'fifteen'?",
               "options": ["50", "5", "15", "25"],
               "correct": 2,
               "explanation": "Fifteen = 15. It comes from 'five' + 'teen'."
@@ -391,12 +467,16 @@
               "answer": "eighteen",
               "alternatives": ["eighteen"],
               "hint": "Write the number 18 in words",
-              "hintHe": "כתבו את המספר 18 במילים"
+              "hintHe": "כתבו את המספר 18 במילים",
+              "hintAr": "اكتبوا الرقم 18 بالكلمات",
+              "hintRu": "Напишите число 18 словами"
             },
             {
               "type": "match-pairs",
               "instruction": "Match the number word to its numeral",
               "instructionHe": "התאימו את מילת המספר למספר",
+              "instructionAr": "طابقوا كلمة الرقم برقمها",
+              "instructionRu": "Сопоставьте слово числа с цифрой",
               "pairs": [
                 ["twelve", "12"],
                 ["twenty", "20"],
@@ -408,14 +488,18 @@
               "type": "speaking",
               "text": "I am twenty-five years old.",
               "translation": "אני בן עשרים וחמש.",
-              "instructionHe": "אמרו את המשפט הבא באנגלית"
+              "instructionHe": "אמרו את המשפט הבא באנגלית",
+              "instructionAr": "قولوا الجملة التالية بالإنجليزية",
+              "instructionRu": "Произнесите следующее предложение по-английски"
             },
             {
               "type": "listening",
               "text": "I am twenty years old.",
               "options": ["I am twelve years old.", "I am twenty years old.", "I am thirty years old.", "I am thirteen years old."],
               "correct": 1,
-              "instructionHe": "הקשיבו ובחרו את מה ששמעתם"
+              "instructionHe": "הקשיבו ובחרו את מה ששמעתם",
+              "instructionAr": "استمعوا واختاروا ما سمعتم",
+              "instructionRu": "Послушайте и выберите то, что услышали"
             }
           ]
         }

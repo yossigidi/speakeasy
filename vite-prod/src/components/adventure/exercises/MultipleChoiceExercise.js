@@ -56,7 +56,7 @@ export default class MultipleChoiceExercise extends ExerciseBase {
     }
 
     // Question text
-    const questionText = this.uiLang === 'he' ? (q.questionHe || q.question) : q.question;
+    const questionText = q['question' + ({he:'He',ar:'Ar',ru:'Ru'}[this.uiLang] || '')] || q.question;
     const qText = new Text({
       text: questionText,
       style: {

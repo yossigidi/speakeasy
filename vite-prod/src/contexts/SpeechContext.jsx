@@ -43,6 +43,29 @@ function scoreVoice(voice, langHint) {
     if (name.includes('tessa'))     score += 50;
   }
 
+  // ── Arabic-specific voices ──
+  if (langHint === 'ar') {
+    // Microsoft Edge Arabic voices
+    if (name.includes('microsoft') && lang.startsWith('ar')) score += 80;
+    // Google Arabic voices
+    if (name.includes('google') && lang.startsWith('ar')) score += 70;
+    // Apple Arabic voices
+    if (name.includes('maged'))    score += 65;
+    if (name.includes('tarik'))    score += 60;
+  }
+
+  // ── Russian-specific voices ──
+  if (langHint === 'ru') {
+    // Microsoft Edge Russian voices
+    if (name.includes('microsoft') && lang.startsWith('ru')) score += 80;
+    // Google Russian voices
+    if (name.includes('google') && lang.startsWith('ru')) score += 70;
+    // Apple Russian voices
+    if (name.includes('milena'))   score += 65;
+    if (name.includes('yuri'))     score += 60;
+    if (name.includes('katya'))    score += 55;
+  }
+
   // Google voices (Chrome on Android / desktop)
   if (name.includes('google'))    score += 45;
 
@@ -63,7 +86,11 @@ function pickBestVoice(voices, langPrefix) {
   const matching = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix.toLowerCase()));
   if (matching.length === 0) return null;
 
-  const hint = langPrefix.startsWith('he') ? 'he' : langPrefix.startsWith('en') ? 'en' : '';
+  const hint = langPrefix.startsWith('he') ? 'he'
+    : langPrefix.startsWith('en') ? 'en'
+    : langPrefix.startsWith('ar') ? 'ar'
+    : langPrefix.startsWith('ru') ? 'ru'
+    : '';
   // Sort by quality score descending
   matching.sort((a, b) => scoreVoice(b, hint) - scoreVoice(a, hint));
 
@@ -99,6 +126,8 @@ export function SpeechProvider({ children }) {
   const [voices, setVoices] = useState([]);
   const [preferredVoice, setPreferredVoice] = useState(null);
   const [hebrewVoice, setHebrewVoice] = useState(null);
+  const [arabicVoice, setArabicVoice] = useState(null);
+  const [russianVoice, setRussianVoice] = useState(null);
   const recognitionRef = useRef(null);
 
   // Promise that resolves when voices are loaded (or times out)
@@ -123,6 +152,8 @@ export function SpeechProvider({ children }) {
         // Pick best voices using quality ranking
         setPreferredVoice(pickBestVoice(v, 'en'));
         setHebrewVoice(pickBestVoice(v, 'he'));
+        setArabicVoice(pickBestVoice(v, 'ar'));
+        setRussianVoice(pickBestVoice(v, 'ru'));
         clearTimeout(voiceTimeout);
         resolveVoices();
       };
@@ -152,6 +183,10 @@ export function SpeechProvider({ children }) {
   preferredVoiceRef.current = preferredVoice;
   const hebrewVoiceRef = useRef(null);
   hebrewVoiceRef.current = hebrewVoice;
+  const arabicVoiceRef = useRef(null);
+  arabicVoiceRef.current = arabicVoice;
+  const russianVoiceRef = useRef(null);
+  russianVoiceRef.current = russianVoice;
 
   // Generation counter: each non-queued speak() call increments this.
   // onEnd callbacks only fire if the generation hasn't changed,
@@ -192,9 +227,14 @@ export function SpeechProvider({ children }) {
     }
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
+    const isArabic = options.lang === 'ar' || options.lang === 'ar-SA';
+    const isRussian = options.lang === 'ru' || options.lang === 'ru-RU';
     const cleanedText = isHebrew ? cleanHebrewForTTS(text) : text;
     const utterance = new SpeechSynthesisUtterance(cleanedText);
-    utterance.lang = isHebrew ? 'he-IL' : (options.lang || 'en-US');
+    utterance.lang = isHebrew ? 'he-IL'
+      : isArabic ? 'ar-SA'
+      : isRussian ? 'ru-RU'
+      : (options.lang || 'en-US');
 
     utterance.rate = options.rate || (isHebrew ? 0.9 : 1.0);
     utterance.pitch = options.pitch || (isHebrew ? 1.02 : 1.0);
@@ -202,7 +242,11 @@ export function SpeechProvider({ children }) {
 
     if (isHebrew && hebrewVoiceRef.current) {
       utterance.voice = hebrewVoiceRef.current;
-    } else if (!isHebrew && preferredVoiceRef.current) {
+    } else if (isArabic && arabicVoiceRef.current) {
+      utterance.voice = arabicVoiceRef.current;
+    } else if (isRussian && russianVoiceRef.current) {
+      utterance.voice = russianVoiceRef.current;
+    } else if (!isHebrew && !isArabic && !isRussian && preferredVoiceRef.current) {
       utterance.voice = preferredVoiceRef.current;
     }
 
@@ -253,7 +297,9 @@ export function SpeechProvider({ children }) {
     try { unlockAudioContext(); } catch (e) {}
 
     const isHebrew = options.lang === 'he' || options.lang === 'he-IL';
-    const apiLang = isHebrew ? 'he' : 'en';
+    const isArabic = options.lang === 'ar' || options.lang === 'ar-SA';
+    const isRussian = options.lang === 'ru' || options.lang === 'ru-RU';
+    const apiLang = isHebrew ? 'he' : isArabic ? 'ar' : isRussian ? 'ru' : 'en';
     // Clean Hebrew text (strip parentheses etc.) before sending to TTS
     const ttsText = isHebrew ? cleanHebrewForTTS(text) : text;
 

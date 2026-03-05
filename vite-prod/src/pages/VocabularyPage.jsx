@@ -3,7 +3,7 @@ import { RotateCcw, Grid3x3, Volume2, ChevronRight, ChevronLeft, Check, X, Arrow
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 import { shuffle } from '../utils/shuffle.js';
 import { preloadEnglishAudio, preloadHebrewAudio } from '../utils/hebrewAudio.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
@@ -26,7 +26,7 @@ const CATEGORIES = [...new Set(ALL_WORDS.map(w => w.category))];
 // ── Word Detail Modal ────────────────────────────────────
 function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVocab }) {
   if (!word) return null;
-  const isHe = uiLang === 'he';
+  const isRtl = RTL_LANGS.includes(uiLang);
 
   return (
     <Modal onClose={onClose}>
@@ -57,8 +57,8 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
         <div className="bg-gradient-to-r from-brand-50 to-emerald-50 dark:from-brand-950/30 dark:to-emerald-950/30 rounded-2xl p-4">
           <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400 text-center mb-1">{word.translation}</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300 text-center">{word.definition}</p>
-          {word.definitionHe && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-1" dir="rtl">{word.definitionHe}</p>
+          {uiLang !== 'en' && lf(word, 'definition', uiLang) && lf(word, 'definition', uiLang) !== word.definition && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-1" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(word, 'definition', uiLang)}</p>
           )}
         </div>
 
@@ -66,7 +66,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
         {word.examples?.length > 0 && (
           <div>
             <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {isHe ? 'דוגמאות' : 'Examples'}
+              {t('examples', uiLang)}
             </h4>
             <div className="space-y-2">
               {word.examples.map((ex, i) => (
@@ -85,7 +85,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
         {word.collocations?.length > 0 && (
           <div>
             <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {isHe ? 'צירופים נפוצים' : 'Common Collocations'}
+              {t('commonCollocations', uiLang)}
             </h4>
             <div className="flex flex-wrap gap-2">
               {word.collocations.map((col, i) => (
@@ -108,10 +108,10 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
               <Lightbulb size={18} className="text-amber-500 mt-0.5 shrink-0" />
               <div>
                 <h4 className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-1">
-                  {isHe ? 'טיפ' : 'Tip'}
+                  {t('tip', uiLang)}
                 </h4>
-                <p className="text-sm text-amber-800 dark:text-amber-200" dir={isHe ? 'rtl' : 'ltr'}>
-                  {isHe ? (word.tipHe || word.tip) : word.tip}
+                <p className="text-sm text-amber-800 dark:text-amber-200" dir={isRtl ? 'rtl' : 'ltr'}>
+                  {isRtl ? (word.tipHe || word.tip) : word.tip}
                 </p>
               </div>
             </div>
@@ -122,7 +122,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
         {word.commonMistakes?.length > 0 && (
           <div>
             <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {isHe ? 'טעויות נפוצות' : 'Common Mistakes'}
+              {t('vocabCommonMistakes', uiLang)}
             </h4>
             <div className="space-y-2">
               {word.commonMistakes.map((mistake, i) => (
@@ -148,7 +148,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
         {word.synonyms?.length > 0 && (
           <div>
             <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {isHe ? 'מילים נרדפות' : 'Synonyms'}
+              {t('synonyms', uiLang)}
             </h4>
             <div className="flex flex-wrap gap-2">
               {word.synonyms.map((syn, i) => (
@@ -164,7 +164,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
         {word.audioHint && (
           <div className="text-center py-2">
             <p className="text-xs text-gray-400">
-              {isHe ? 'הגייה:' : 'Pronunciation:'} <span className="font-mono text-brand-500">{word.audioHint}</span>
+              {t('pronunciationColon', uiLang)} <span className="font-mono text-brand-500">{word.audioHint}</span>
             </p>
           </div>
         )}
@@ -177,7 +177,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
             className="w-full"
           >
             <Bookmark size={16} className="mr-2" />
-            {isHe ? 'הוסיפו לאוצר המילים שלי' : 'Add to My Vocabulary'}
+            {t('addToMyVocabulary', uiLang)}
           </AnimatedButton>
         )}
       </div>
@@ -195,7 +195,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
   const [learnedCount, setLearnedCount] = useState(0);
   const { speak, speakWordPair } = useSpeechSynthesis();
   const { uiLang } = useTheme();
-  const isHe = uiLang === 'he';
+  const isRtl = RTL_LANGS.includes(uiLang);
   const inputRef = useRef(null);
 
   const word = words[step];
@@ -251,16 +251,16 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           <Trophy size={36} className="text-white" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {isHe ? 'כל הכבוד!' : 'Well Done!'}
+          {t('wellDone', uiLang)}
         </h2>
         <p className="text-gray-500 dark:text-gray-400 mb-1">
-          {isHe ? `למדת ${learnedCount} מילים חדשות` : `You learned ${learnedCount} new words`}
+          {tReplace('youLearnedCount', uiLang, { count: learnedCount })}
         </p>
         <p className="text-sm text-brand-500 font-medium mb-6">
           +{learnedCount * 5} XP
         </p>
         <AnimatedButton onClick={onComplete} variant="primary" className="w-full max-w-xs">
-          {isHe ? 'סיום' : 'Done'}
+          {t('done', uiLang)}
         </AnimatedButton>
       </div>
     );
@@ -271,7 +271,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={isRtl ? 'rotate-180' : ''} />
         </button>
         <div className="flex items-center gap-2">
           <GraduationCap size={16} className="text-brand-500" />
@@ -291,7 +291,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
         <div className="space-y-4 animate-fade-in">
           <div className="text-center py-2">
             <p className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3">
-              {isHe ? 'מילה חדשה' : 'New Word'}
+              {t('newWord', uiLang)}
             </p>
           </div>
 
@@ -312,7 +312,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 
             {word.audioHint && (
               <p className="mt-3 text-xs text-gray-400">
-                {isHe ? 'הגייה:' : 'Say:'} <span className="font-mono text-brand-400 font-medium">{word.audioHint}</span>
+                {t('sayColon', uiLang)} <span className="font-mono text-brand-400 font-medium">{word.audioHint}</span>
               </p>
             )}
           </GlassCard>
@@ -323,8 +323,8 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
               <div className="animate-fade-in space-y-2">
                 <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400">{word.translation}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">{word.definition}</p>
-                {word.definitionHe && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400" dir="rtl">{word.definitionHe}</p>
+                {uiLang !== 'en' && lf(word, 'definition', uiLang) && lf(word, 'definition', uiLang) !== word.definition && (
+                  <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(word, 'definition', uiLang)}</p>
                 )}
               </div>
             ) : (
@@ -337,7 +337,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                 className="flex items-center justify-center gap-2 mx-auto text-brand-500 hover:text-brand-600 transition-colors"
               >
                 <Eye size={18} />
-                <span className="font-medium">{isHe ? 'לחצו לתרגום' : 'Tap for translation'}</span>
+                <span className="font-medium">{t('tapForTranslation', uiLang)}</span>
               </button>
             )}
           </GlassCard>
@@ -347,8 +347,8 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 animate-slide-up">
               <div className="flex items-start gap-2">
                 <Lightbulb size={18} className="text-amber-500 mt-0.5 shrink-0" />
-                <p className="text-sm text-amber-800 dark:text-amber-200" dir={isHe ? 'rtl' : 'ltr'}>
-                  {isHe ? (word.tipHe || word.tip) : word.tip}
+                <p className="text-sm text-amber-800 dark:text-amber-200" dir={isRtl ? 'rtl' : 'ltr'}>
+                  {isRtl ? (word.tipHe || word.tip) : word.tip}
                 </p>
               </div>
             </div>
@@ -356,7 +356,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 
           {showTranslation && (
             <AnimatedButton onClick={nextPhase} variant="primary" className="w-full">
-              {isHe ? 'המשיכו' : 'Continue'}
+              {t('continue', uiLang)}
               <ArrowRight size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
             </AnimatedButton>
           )}
@@ -368,7 +368,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
         <div className="space-y-4 animate-fade-in">
           <div className="text-center py-2">
             <p className="text-xs uppercase tracking-widest text-emerald-500 font-semibold mb-1">
-              {isHe ? 'דוגמאות בהקשר' : 'Examples in Context'}
+              {t('examplesInContext', uiLang)}
             </p>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">{word.word}</h3>
           </div>
@@ -399,7 +399,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           {word.synonyms?.length > 0 && (
             <div className="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-4">
               <p className="text-xs font-semibold text-teal-500 uppercase tracking-wider mb-2">
-                {isHe ? 'מילים דומות' : 'Similar Words'}
+                {t('similarWords', uiLang)}
               </p>
               <div className="flex flex-wrap gap-2">
                 {word.synonyms.map((syn, i) => (
@@ -416,7 +416,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           )}
 
           <AnimatedButton onClick={nextPhase} variant="primary" className="w-full">
-            {isHe ? 'המשיכו' : 'Continue'}
+            {t('continue', uiLang)}
             <ArrowRight size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
           </AnimatedButton>
         </div>
@@ -427,7 +427,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
         <div className="space-y-4 animate-fade-in">
           <div className="text-center py-2">
             <p className="text-xs uppercase tracking-widest text-blue-500 font-semibold mb-1">
-              {isHe ? 'שימוש נכון' : 'Proper Usage'}
+              {t('properUsage', uiLang)}
             </p>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">{word.word}</h3>
           </div>
@@ -438,7 +438,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles size={16} className="text-blue-500" />
                 <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  {isHe ? 'צירופים נפוצים' : 'Common Collocations'}
+                  {t('commonCollocations', uiLang)}
                 </h4>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -461,7 +461,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
               <div className="flex items-center gap-2 mb-3">
                 <AlertTriangle size={16} className="text-red-500" />
                 <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  {isHe ? 'טעויות נפוצות - שים לב!' : 'Common Mistakes - Watch Out!'}
+                  {t('commonMistakes', uiLang)}
                 </h4>
               </div>
               <div className="space-y-3">
@@ -493,7 +493,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           )}
 
           <AnimatedButton onClick={nextPhase} variant="primary" className="w-full">
-            {isHe ? 'תרגול מהיר' : 'Quick Practice'}
+            {t('quickPractice', uiLang)}
             <Brain size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
           </AnimatedButton>
         </div>
@@ -504,10 +504,10 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
         <div className="space-y-4 animate-fade-in">
           <div className="text-center py-2">
             <p className="text-xs uppercase tracking-widest text-teal-500 font-semibold mb-1">
-              {isHe ? 'תרגול' : 'Practice'}
+              {t('practice', uiLang)}
             </p>
             <h3 className="text-lg text-gray-600 dark:text-gray-300 mb-2">
-              {isHe ? 'מה התרגום של:' : 'What is the translation of:'}
+              {t('whatIsTranslation', uiLang)}
             </h3>
             <button onClick={() => speak(word.word)} className="inline-flex items-center gap-2">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{word.word}</h2>
@@ -522,7 +522,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
               value={practiceAnswer}
               onChange={(e) => setPracticeAnswer(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !practiceResult && checkPractice()}
-              placeholder={isHe ? 'הקלד את התרגום...' : 'Type the translation...'}
+              placeholder={t('typeTranslation', uiLang)}
               className={`w-full px-4 py-4 rounded-2xl text-lg text-center font-medium border-2 transition-colors bg-white dark:bg-gray-800 outline-none ${
                 practiceResult === 'correct'
                   ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/20'
@@ -530,7 +530,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                   ? 'border-red-400 bg-red-50 dark:bg-red-900/20'
                   : 'border-gray-200 dark:border-gray-700 focus:border-brand-400'
               }`}
-              dir="rtl"
+              dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}
               autoFocus
               disabled={!!practiceResult}
             />
@@ -540,7 +540,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <div className="text-center animate-bounce-in">
               <div className="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full">
                 <Check size={18} />
-                <span className="font-bold">{isHe ? 'מצוין!' : 'Correct!'}</span>
+                <span className="font-bold">{t('practiceCorrect', uiLang)}</span>
               </div>
             </div>
           )}
@@ -549,10 +549,10 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <div className="text-center animate-fade-in space-y-2">
               <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-4 py-2 rounded-full">
                 <X size={18} />
-                <span className="font-medium">{isHe ? 'לא בדיוק' : 'Not quite'}</span>
+                <span className="font-medium">{t('notQuite', uiLang)}</span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                {isHe ? 'התשובה הנכונה:' : 'Correct answer:'}{' '}
+                {t('correctAnswerIs', uiLang)}{' '}
                 <span className="font-bold text-brand-600 dark:text-brand-400">{word.translation}</span>
               </p>
             </div>
@@ -560,11 +560,11 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
 
           {!practiceResult ? (
             <AnimatedButton onClick={checkPractice} variant="primary" className="w-full" disabled={!practiceAnswer.trim()}>
-              {isHe ? 'בדוק' : 'Check'}
+              {t('check', uiLang)}
             </AnimatedButton>
           ) : (
             <AnimatedButton onClick={nextPhase} variant="primary" className="w-full">
-              {step < totalWords - 1 ? (isHe ? 'מילה הבאה' : 'Next Word') : (isHe ? 'סיום' : 'Finish')}
+              {step < totalWords - 1 ? t('nextWord', uiLang) : t('finish', uiLang)}
               <ArrowRight size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
             </AnimatedButton>
           )}
@@ -581,7 +581,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
   const [showDetails, setShowDetails] = useState(false);
   const { speak } = useSpeechSynthesis();
   const { uiLang } = useTheme();
-  const isHe = uiLang === 'he';
+  const isRtl = RTL_LANGS.includes(uiLang);
 
   if (dueWords.length === 0) {
     return (
@@ -590,10 +590,10 @@ function ReviewSession({ dueWords, onReview, onBack }) {
           <Check size={32} className="text-white" />
         </div>
         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-          {isHe ? 'כל המילים נסקרו!' : 'All words reviewed!'}
+          {t('allWordsReviewed', uiLang)}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          {isHe ? 'חזרו מאוחר יותר לחזרה נוספת' : 'Come back later for more review'}
+          {t('comeBackLater', uiLang)}
         </p>
         <AnimatedButton onClick={onBack} variant="secondary">
           {t('back', uiLang)}
@@ -623,7 +623,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={isRtl ? 'rotate-180' : ''} />
         </button>
         <div className="flex items-center gap-2">
           <Brain size={16} className="text-amber-500" />
@@ -661,8 +661,8 @@ function ReviewSession({ dueWords, onReview, onBack }) {
               {fullWord.translation}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-300">{fullWord.definition}</p>
-            {fullWord.definitionHe && (
-              <p className="text-sm text-gray-500 dark:text-gray-400" dir="rtl">{fullWord.definitionHe}</p>
+            {uiLang !== 'en' && lf(fullWord, 'definition', uiLang) && lf(fullWord, 'definition', uiLang) !== fullWord.definition && (
+              <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(fullWord, 'definition', uiLang)}</p>
             )}
             {fullWord.examples?.[0] && (
               <div className="flex items-center justify-center gap-2">
@@ -679,12 +679,12 @@ function ReviewSession({ dueWords, onReview, onBack }) {
                 onClick={() => setShowDetails(!showDetails)}
                 className="text-xs text-brand-500 underline"
               >
-                {showDetails ? (isHe ? 'הסתר פרטים' : 'Hide details') : (isHe ? 'הצג פרטים נוספים' : 'Show more details')}
+                {showDetails ? t('hideDetails', uiLang) : t('showMoreDetails', uiLang)}
               </button>
             )}
 
             {showDetails && (
-              <div className="space-y-3 animate-fade-in text-right" dir={isHe ? 'rtl' : 'ltr'}>
+              <div className="space-y-3 animate-fade-in text-right" dir={isRtl ? 'rtl' : 'ltr'}>
                 {fullWord.collocations?.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 justify-center">
                     {fullWord.collocations.map((col, i) => (
@@ -698,7 +698,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
                   <div className="bg-amber-50/70 dark:bg-amber-900/10 rounded-xl p-2.5">
                     <p className="text-xs text-amber-700 dark:text-amber-300">
                       <Lightbulb size={12} className="inline mr-1" />
-                      {isHe ? (fullWord.tipHe || fullWord.tip) : fullWord.tip}
+                      {isRtl ? (fullWord.tipHe || fullWord.tip) : fullWord.tip}
                     </p>
                   </div>
                 )}
@@ -713,7 +713,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
             className="mt-6 inline-flex items-center gap-2 text-brand-600 dark:text-brand-400 font-semibold text-sm"
           >
             <Eye size={16} />
-            {isHe ? 'הצג תשובה' : 'Show Answer'}
+            {t('showAnswer', uiLang)}
           </button>
         )}
       </GlassCard>
@@ -722,10 +722,10 @@ function ReviewSession({ dueWords, onReview, onBack }) {
       {showAnswer && (
         <div className="grid grid-cols-4 gap-2 animate-slide-up">
           {[
-            { key: 'again', label: isHe ? 'שוב' : 'Again', color: 'from-red-500 to-red-600', sublabel: '<1m' },
-            { key: 'hard', label: isHe ? 'קשה' : 'Hard', color: 'from-orange-500 to-orange-600', sublabel: isHe ? 'דק\'' : 'min' },
-            { key: 'good', label: isHe ? 'טוב' : 'Good', color: 'from-emerald-500 to-emerald-600', sublabel: isHe ? 'ימים' : 'days' },
-            { key: 'easy', label: isHe ? 'קל' : 'Easy', color: 'from-blue-500 to-blue-600', sublabel: isHe ? 'שבוע' : 'week' },
+            { key: 'again', label: t('again', uiLang), color: 'from-red-500 to-red-600', sublabel: '<1m' },
+            { key: 'hard', label: t('hard', uiLang), color: 'from-orange-500 to-orange-600', sublabel: t('min', uiLang) },
+            { key: 'good', label: t('good', uiLang), color: 'from-emerald-500 to-emerald-600', sublabel: t('days', uiLang) },
+            { key: 'easy', label: t('easy', uiLang), color: 'from-blue-500 to-blue-600', sublabel: t('vocabWeek', uiLang) },
           ].map(({ key, label, color, sublabel }) => (
             <button
               key={key}
@@ -745,7 +745,6 @@ function ReviewSession({ dueWords, onReview, onBack }) {
 // ── Category Browser ─────────────────────────────────────
 function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }) {
   const { uiLang } = useTheme();
-  const isHe = uiLang === 'he';
 
   const categoryInfo = {
     greetings: { emoji: '👋', labelHe: 'ברכות', color: 'from-yellow-400 to-orange-400' },
@@ -848,12 +847,12 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
               ? 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
               : 'bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-300'
           }`}>
-            {levelLabel} {isLocked ? (isHe ? '🔒' : '🔒') : ''}
+            {levelLabel} {isLocked ? '🔒' : ''}
           </span>
           <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
           {isLocked && (
             <span className="text-[10px] text-gray-400">
-              {isHe ? `נפתח ברמת ${levelLabel}` : `Unlocks at ${levelLabel}`}
+              {tReplace('unlocksAtLevel', uiLang, { level: levelLabel })}
             </span>
           )}
         </div>
@@ -873,9 +872,9 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
                     <span className="text-lg">{info.emoji}</span>
                   </div>
                   <p className="text-xs font-semibold text-gray-800 dark:text-gray-200 capitalize truncate leading-tight">
-                    {isHe ? info.labelHe : cat.replace(/-/g, ' ')}
+                    {lf(info, 'label', uiLang) || cat.replace(/-/g, ' ')}
                   </p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">{wordCount} {isHe ? 'מילים' : 'words'}</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">{wordCount} {t('wordCount', uiLang)}</p>
                 </GlassCard>
               </div>
             );
@@ -900,7 +899,7 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
 function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
   const { speak, speakWordPair } = useSpeechSynthesis();
   const { uiLang } = useTheme();
-  const isHe = uiLang === 'he';
+  const isRtl = RTL_LANGS.includes(uiLang);
   const words = ALL_WORDS.filter(w => w.category === category);
 
   // Preload audio for all words in this category for instant playback
@@ -976,15 +975,15 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
       {/* Header */}
       <div className="flex items-center gap-3">
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={isRtl ? 'rotate-180' : ''} />
         </button>
         <div className="flex items-center gap-2 flex-1">
           <span className="text-xl">{info.emoji}</span>
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-            {isHe ? info.labelHe : category.replace(/-/g, ' ')}
+            {lf(info, 'label', uiLang) || category.replace(/-/g, ' ')}
           </h2>
         </div>
-        <span className="text-sm text-gray-400">{words.length} {isHe ? 'מילים' : 'words'}</span>
+        <span className="text-sm text-gray-400">{words.length} {t('wordCount', uiLang)}</span>
       </div>
 
       {/* Learn All Button */}
@@ -994,7 +993,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
         className="w-full"
       >
         <GraduationCap size={18} className="mr-2" />
-        {isHe ? `למדו ${words.length} מילים` : `Learn ${words.length} Words`}
+        {tReplace('learnCountWords', uiLang, { count: words.length })}
       </AnimatedButton>
 
       {/* Word List */}
@@ -1046,7 +1045,6 @@ export default function VocabularyPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedWord, setSelectedWord] = useState(null);
   const [learnWords, setLearnWords] = useState([]);
-  const isHe = uiLang === 'he';
   const userLevel = progress.cefrLevel || 'A1';
   const availableWords = getWordsForLevel(userLevel, ALL_WORDS);
 
@@ -1157,10 +1155,10 @@ export default function VocabularyPage() {
             </div>
             <div>
               <h3 className="font-bold text-gray-900 dark:text-white">
-                {isHe ? 'למדו מילים חדשות' : 'Learn New Words'}
+                {t('learnNewWords', uiLang)}
               </h3>
               <p className="text-sm text-brand-600 dark:text-brand-400">
-                {isHe ? `5 מילים ברמת ${userLevel} עם הסברים` : `5 ${userLevel}-level words with explanations`}
+                {tReplace('vocabLevelWordsDesc', uiLang, { level: userLevel })}
               </p>
             </div>
           </div>
@@ -1187,9 +1185,9 @@ export default function VocabularyPage() {
                 </span>
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 dark:text-white">{isHe ? 'חזרה על מילים' : 'Review Words'}</h3>
+                <h3 className="font-bold text-gray-900 dark:text-white">{t('reviewWords', uiLang)}</h3>
                 <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">
-                  {dueCount} {isHe ? 'מילים מחכות לחזרה' : 'words due for review'}
+                  {dueCount} {t('wordsDueReview', uiLang)}
                 </p>
               </div>
             </div>
@@ -1202,22 +1200,22 @@ export default function VocabularyPage() {
       <div className="grid grid-cols-3 gap-3">
         <div className="text-center p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
           <p className="text-2xl font-bold text-brand-600 dark:text-brand-400">{availableWords.length}</p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'מילים זמינות' : 'Available'}</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{t('vocabAvailable', uiLang)}</p>
         </div>
         <div className="text-center p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
           <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{userLevel}</p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'הרמה שלכם' : 'Your Level'}</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{t('vocabYourLevel', uiLang)}</p>
         </div>
         <div className="text-center p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
           <p className="text-2xl font-bold text-teal-600 dark:text-teal-400">{ALL_WORDS.length}</p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{isHe ? 'סה"כ' : 'Total'}</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{t('vocabTotal', uiLang)}</p>
         </div>
       </div>
 
       {/* Category Browser */}
       <div>
         <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
-          {isHe ? 'קטגוריות' : 'Categories'}
+          {t('categories', uiLang)}
         </h2>
         <CategoryBrowser
           onSelectCategory={(cat) => { setSelectedCategory(cat); setView('browse'); }}

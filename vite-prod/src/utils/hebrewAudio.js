@@ -287,9 +287,11 @@ export function playSequence(items, _speakEnglishUnused, onDone) {
     }
 
     const isHebrew = item.lang === 'he' || item.lang === 'he-IL';
+    const isArabic = item.lang === 'ar' || item.lang === 'ar-SA';
+    const isRussian = item.lang === 'ru' || item.lang === 'ru-RU';
 
-    // Try Cloud TTS API first for both languages (natural voice)
-    const apiLang = isHebrew ? 'he' : 'en';
+    // Try Cloud TTS API first for all languages (natural voice)
+    const apiLang = isHebrew ? 'he' : isArabic ? 'ar' : isRussian ? 'ru' : 'en';
     playFromAPI(item.text, apiLang).then(async (result) => {
       if (sequenceCancelled) return;
       if (result.started) {

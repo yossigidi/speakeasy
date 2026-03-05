@@ -18,9 +18,8 @@ export default class WordDoorExercise extends ExerciseBase {
 
   _build() {
     const { w, h } = this;
-    const prompt = this.uiLang === 'he'
-      ? (this.config.promptHe || 'בחרו את המילה הנכונה!')
-      : (this.config.prompt || 'Choose the right word!');
+    const suffix = {he:'He',ar:'Ar',ru:'Ru'}[this.uiLang] || '';
+    const prompt = this.config['prompt' + suffix] || this.config.prompt || 'Choose the right word!';
     this.showPrompt(prompt);
 
     // Door graphic

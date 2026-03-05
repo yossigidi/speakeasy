@@ -3,7 +3,7 @@ import { ArrowLeft, Volume2, Mic, MicOff, Send, Lock, ChevronRight, RotateCcw, P
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf } from '../utils/translations.js';
 import { calcSimulationXP } from '../utils/xpCalculator.js';
 import { INDUSTRIES, CAREER_LEVELS, SCENARIOS, getCareerLevel, getNextCareerLevel } from '../data/simulation-scenarios.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
@@ -82,8 +82,6 @@ export default function SimulationPage() {
   const { progress, updateProgress, addXP } = useUserProgress();
   const { speak } = useSpeechSynthesis();
   const { transcript, isListening, startListening, stopListening, sttSupported } = useSpeechRecognition();
-  const isHe = uiLang === 'he';
-
   // ── State ──
   const [selectedIndustry, setSelectedIndustry] = useState('tech');
   const [activeScenario, setActiveScenario] = useState(null);
@@ -388,7 +386,7 @@ export default function SimulationPage() {
             {leveledUp && (
               <div className="mt-3 p-3 rounded-xl bg-gradient-to-r from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 animate-slide-up">
                 <p className="text-sm font-bold text-amber-800 dark:text-amber-300">
-                  {t('levelUp', uiLang)} {newLevel.emoji} {isHe ? newLevel.titleHe : newLevel.title}
+                  {t('levelUp', uiLang)} {newLevel.emoji} {lf(newLevel, 'title', uiLang)}
                 </p>
               </div>
             )}
@@ -442,7 +440,7 @@ export default function SimulationPage() {
             </button>
             <div className="text-center flex-1 mx-3">
               <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
-                {freeMode ? t('freeConversation', uiLang) : (isHe ? scenario.titleHe : scenario.title)}
+                {freeMode ? t('freeConversation', uiLang) : lf(scenario, 'title', uiLang)}
               </p>
               {scenario && (
                 <div className="flex items-center justify-center gap-1 mt-0.5">
@@ -511,7 +509,7 @@ export default function SimulationPage() {
         {/* Choice buttons (for choice responseType) */}
         {step?.responseType === 'choice' && step.choices && !isLoading && currentStep < totalSteps && (
           <div className="px-4 py-2 space-y-2 border-t border-gray-200/30 dark:border-gray-700/30">
-            <p className="text-xs text-gray-500 dark:text-gray-400">{isHe ? 'בחרו תשובה:' : 'Choose a response:'}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{t('chooseResponse', uiLang)}</p>
             {step.choices.map((choice, i) => (
               <button key={i} onClick={() => handleChoiceSelect(choice)}
                 className="w-full text-left px-4 py-2.5 rounded-xl glass-card text-sm text-gray-800 dark:text-gray-200 hover:bg-brand-50 dark:hover:bg-brand-900/20 transition-colors active:scale-[0.98]">
@@ -598,7 +596,7 @@ export default function SimulationPage() {
           {t('simulations', uiLang)}
         </h1>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-          {isHe ? 'תרגול אנגלית בסימולציות אמיתיות' : 'Practice English in real-world simulations'}
+          {t('simulationsSubtitle', uiLang)}
         </p>
       </div>
 
@@ -610,7 +608,7 @@ export default function SimulationPage() {
           </div>
           <div className="flex-1">
             <p className="text-sm font-bold text-gray-900 dark:text-white">
-              {isHe ? careerLevel.titleHe : careerLevel.title}
+              {lf(careerLevel, 'title', uiLang)}
             </p>
             <p className="text-[10px] text-gray-500 dark:text-gray-400">
               {t('careerLevel', uiLang)} {careerLevel.level}
@@ -639,7 +637,7 @@ export default function SimulationPage() {
                 : 'glass-card text-gray-700 dark:text-gray-300'
             }`}>
             <span className="mr-1.5">{ind.emoji}</span>
-            {isHe ? ind.labelHe : ind.label}
+            {lf(ind, 'label', uiLang)}
           </button>
         ))}
       </div>
@@ -655,7 +653,7 @@ export default function SimulationPage() {
             <div className="flex items-center gap-2 mb-2">
               <span>{level.emoji}</span>
               <h2 className="text-sm font-bold text-gray-900 dark:text-white">
-                {isHe ? level.titleHe : level.title}
+                {lf(level, 'title', uiLang)}
               </h2>
               {!isUnlocked && <Lock size={12} className="text-gray-400" />}
             </div>
@@ -679,10 +677,10 @@ export default function SimulationPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className={`text-sm font-semibold ${isUnlocked ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
-                        {isHe ? scenario.titleHe : scenario.title}
+                        {lf(scenario, 'title', uiLang)}
                       </p>
                       <p className="text-[11px] text-gray-500 dark:text-gray-400 truncate">
-                        {isHe ? scenario.descHe : scenario.desc} · {scenario.duration}{isHe ? 'ד' : 'm'}
+                        {lf(scenario, 'desc', uiLang)} · {scenario.duration}{t('minuteShort', uiLang)}
                       </p>
                     </div>
                     {completed && (
@@ -712,7 +710,7 @@ export default function SimulationPage() {
           <div className="flex-1">
             <p className="text-sm font-bold">{t('freeConversation', uiLang)}</p>
             <p className="text-[11px] opacity-80">
-              {isHe ? 'שיחה חופשית עם AI' : 'Open conversation with AI'}
+              {t('freeConversationDesc', uiLang)}
             </p>
           </div>
           <Play size={18} className="opacity-80" />

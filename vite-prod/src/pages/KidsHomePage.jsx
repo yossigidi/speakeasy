@@ -8,7 +8,7 @@ import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 
 import { loadWordData } from '../utils/lazyData.js';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
-import { t } from '../utils/translations.js';
+import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
 /* ── Floating background decorations (Speakli-themed) ── */
 function FloatingDecorations() {
@@ -40,10 +40,10 @@ function MascotGreeting({ name, uiLang }) {
     <div className="text-center mb-2">
       <SpeakliAvatar mode="idle" size="lg" glow />
       <h1 className="text-3xl font-black py-1 mt-1" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-        {uiLang === 'he' ? `היי ${name || ''}!` : `Hi ${name || ''}!`}
+        {tReplace('kidsHiName', uiLang, { name: name || '' })}
       </h1>
       <p className="text-sm font-bold text-blue-600 dark:text-sky-400 mt-1 animate-pop-in">
-        {uiLang === 'he' ? 'ספיקלי כאן! בואו נלמד אנגלית!' : "Speakli is here! Let's learn English!"}
+        {t('kidsSpeakliIsHere', uiLang)}
       </p>
     </div>
   );
@@ -64,7 +64,7 @@ function KidsStatsBar({ progress, uiLang }) {
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-sm shadow-sm border border-blue-200/50">
         <Star size={18} className="text-blue-500" fill="currentColor" />
         <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
-          {uiLang === 'he' ? `שלב ${progress.level || 1}` : `Lvl ${progress.level || 1}`}
+          {tReplace('kidsStatsLevel', uiLang, { level: progress.level || 1 })}
         </span>
       </div>
     </div>
@@ -80,9 +80,7 @@ function LevelBadge({ childLevel, uiLang }) {
     >
       <span className="text-xl">{info.emoji}</span>
       <span className="text-sm font-black text-white drop-shadow-sm">
-        {uiLang === 'he'
-          ? `רמה ${childLevel}: ${info.name}`
-          : `Level ${childLevel}: ${info.nameEn}`}
+        {tReplace('kidsLevelBadge', uiLang, { level: childLevel, name: lf(info, 'name', uiLang) })}
       </span>
     </div>
   );
@@ -268,7 +266,7 @@ function VideoCard({ video, uiLang, isExpanded, onToggle }) {
             <iframe
               className="absolute inset-0 w-full h-full rounded-t-3xl"
               src={`https://www.youtube.com/embed/${video.videoId}?rel=0&modestbranding=1`}
-              title={uiLang === 'he' ? video.titleHe : video.titleEn}
+              title={lf(video, 'title', uiLang)}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
@@ -277,7 +275,7 @@ function VideoCard({ video, uiLang, isExpanded, onToggle }) {
             onClick={onToggle}
             className="w-full py-2.5 text-center text-sm font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400"
           >
-            {uiLang === 'he' ? 'סגור ✕' : 'Close ✕'}
+            {t('kidsCloseVideo', uiLang)}
           </button>
         </div>
       ) : (
@@ -288,12 +286,12 @@ function VideoCard({ video, uiLang, isExpanded, onToggle }) {
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-2xl shadow-md shrink-0">
             {video.emoji}
           </div>
-          <div className="flex-1 text-left" dir={uiLang === 'he' ? 'rtl' : 'ltr'}>
+          <div className="flex-1 text-left" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>
             <p className="font-bold text-gray-800 dark:text-white text-sm">
-              {uiLang === 'he' ? video.titleHe : video.titleEn}
+              {lf(video, 'title', uiLang)}
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              {uiLang === 'he' ? video.descHe : video.descEn}
+              {lf(video, 'desc', uiLang)}
             </p>
           </div>
           <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center shrink-0">
@@ -335,7 +333,7 @@ function KidsWordOfDay({ speak, speakSequence, uiLang }) {
       </div>
 
       <p className="text-xs font-bold text-white/70 uppercase tracking-wider mb-1">
-        {uiLang === 'he' ? 'המילה של ספיקלי להיום' : "Speakli's Word of the Day"}
+        {t('kidsWordOfTheDay', uiLang)}
       </p>
       <div className="flex items-center gap-3">
         <div className="flex-1">
@@ -411,7 +409,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         <div className="relative">
           <div className="flex items-center justify-between mb-1.5 px-1">
             <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
-              {uiLang === 'he' ? 'התקדמות אותיות' : 'Letter Progress'}
+              {t('kidsLetterProgress', uiLang)}
             </span>
             <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
               {lettersDone}/26 ⭐
@@ -441,7 +439,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         <div>
           <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 flex items-center gap-2">
             <SpeakliAvatar mode="bounce" size="xs" shadow={false} />
-            {uiLang === 'he' ? 'בואו נשחק עם ספיקלי!' : "Let's Play with Speakli!"}
+            {t('kidsLetsPlay', uiLang)}
           </h2>
           <div className="grid grid-cols-2 gap-3">
             {GAME_CARDS.map((card, i) => (
@@ -464,10 +462,10 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
                   <div className="relative z-10">
                     <span className="text-4xl block mb-2">{card.emoji}</span>
                     <h3 className="text-white font-extrabold text-sm leading-tight">
-                      {uiLang === 'he' ? card.titleHe : card.titleEn}
+                      {lf(card, 'title', uiLang)}
                     </h3>
                     <p className="text-white/70 text-[10px] mt-0.5 font-medium">
-                      {uiLang === 'he' ? card.descHe : card.descEn}
+                      {lf(card, 'desc', uiLang)}
                     </p>
                   </div>
                 </div>
@@ -494,10 +492,10 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
               <span className="text-3xl">📝</span>
               <div className="text-left">
                 <h3 className="text-white font-extrabold text-sm">
-                  {uiLang === 'he' ? 'מילים לחזרה!' : 'Words to Review!'}
+                  {t('kidsWordsToReview', uiLang)}
                 </h3>
                 <p className="text-white/80 text-xs">
-                  {reviewCount} {uiLang === 'he' ? 'מילים מחכות לכם' : 'words waiting for you'}
+                  {tReplace('kidsWordsWaiting', uiLang, { count: reviewCount })}
                 </p>
               </div>
             </div>
@@ -508,7 +506,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         <div>
           <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 flex items-center gap-2">
             <span className="text-xl">🎬</span>
-            {uiLang === 'he' ? 'הסרטונים של ספיקלי' : "Speakli's Videos"}
+            {t('kidsSpeakliVideos', uiLang)}
           </h2>
           <div className="grid grid-cols-2 gap-3">
             {KIDS_VIDEOS.map((video) => (
@@ -536,10 +534,10 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
             <SpeakliAvatar mode="idle" size="sm" shadow={false} glow={false} />
             <div className="text-left">
               <h3 className="text-white font-extrabold text-sm">
-                {uiLang === 'he' ? 'הסיפורים של ספיקלי' : "Speakli's Stories"}
+                {t('kidsSpeakliStories', uiLang)}
               </h3>
               <p className="text-white/80 text-xs">
-                {uiLang === 'he' ? 'קראו סיפורים קצרים ולמדו!' : 'Read short stories & learn!'}
+                {t('kidsSpeakliStoriesDesc', uiLang)}
               </p>
             </div>
           </div>

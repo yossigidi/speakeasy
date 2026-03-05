@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronDown, ChevronUp, Search, HelpCircle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, RTL_LANGS } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 
 const FAQ_DATA = [
@@ -76,7 +76,7 @@ export default function SupportFAQPage({ onBack }) {
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <button onClick={onBack} className="p-2 rounded-xl bg-white/60 dark:bg-gray-800/60">
-          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${uiLang === 'he' ? 'rotate-180' : ''}`} />
+          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''}`} />
         </button>
         <div className="flex items-center gap-2">
           <HelpCircle size={22} className="text-teal-500" />
@@ -88,14 +88,14 @@ export default function SupportFAQPage({ onBack }) {
 
       {/* Search */}
       <div className="relative">
-        <Search size={18} className="absolute top-3 text-gray-400" style={{ [uiLang === 'he' ? 'right' : 'left']: 12 }} />
+        <Search size={18} className="absolute top-3 text-gray-400" style={{ [RTL_LANGS.includes(uiLang) ? 'right' : 'left']: 12 }} />
         <input
           type="text"
           placeholder={t('searchFAQ', uiLang)}
           value={search}
           onChange={e => setSearch(e.target.value)}
           className="w-full py-2.5 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
-          style={{ [uiLang === 'he' ? 'paddingRight' : 'paddingLeft']: 40, [uiLang === 'he' ? 'paddingLeft' : 'paddingRight']: 12 }}
+          style={{ [RTL_LANGS.includes(uiLang) ? 'paddingRight' : 'paddingLeft']: 40, [RTL_LANGS.includes(uiLang) ? 'paddingLeft' : 'paddingRight']: 12 }}
         />
       </div>
 

@@ -3,7 +3,7 @@ import { BookOpen, MessageCircle, BookA, Mic, ChevronRight, Clock, Volume2, Ligh
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import useWelcomeSpeech from '../hooks/useWelcomeSpeech.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import StreakDisplay from '../components/gamification/StreakDisplay.jsx';
@@ -95,10 +95,10 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
               </div>
               <div>
                 <h3 className="font-bold text-gray-900 dark:text-white">
-                  {uiLang === 'he' ? 'למדו אותיות!' : 'Learn Letters!'}
+                  {t('learnLetters', uiLang)}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {(progress.lettersCompleted || []).length}/26 {uiLang === 'he' ? 'אותיות' : 'letters'} ⭐
+                  {(progress.lettersCompleted || []).length}/26 {t('lettersLabel', uiLang)} ⭐
                 </p>
               </div>
             </div>
@@ -122,10 +122,10 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
               </div>
               <div>
                 <h3 className="font-bold text-gray-900 dark:text-white">
-                  {uiLang === 'he' ? 'למידה בשמיעה' : 'Audio Learning'}
+                  {t('audioLearning', uiLang)}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {uiLang === 'he' ? 'למדו בזמן נהיגה' : 'Learn while driving'}
+                  {t('learnWhileDriving', uiLang)}
                 </p>
               </div>
             </div>
@@ -149,10 +149,10 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
               </div>
               <div>
                 <h3 className="font-bold text-gray-900 dark:text-white">
-                  {uiLang === 'he' ? 'מיומנויות שיחה' : 'Conversation Skills'}
+                  {t('skillsTitle', uiLang)}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {uiLang === 'he' ? 'תרגול מצבים מהחיים' : 'Practice real-life situations'}
+                  {t('skillsSubtitle', uiLang)}
                 </p>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
       {/* Quick Access Grid */}
       <div>
         <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
-          {uiLang === 'he' ? 'גישה מהירה' : 'Quick Access'}
+          {t('quickAccess', uiLang)}
         </h2>
         <div className="grid grid-cols-2 gap-3">
           {quickAccess.map(({ id, icon: Icon, label, color, page }) => (
@@ -239,7 +239,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
           <div className="flex items-center gap-2 mb-3">
             <span className="text-lg">✨</span>
             <h3 className="text-sm font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">
-              {uiLang === 'he' ? 'מילה של היום' : 'Word of the Day'}
+              {t('wordOfTheDay', uiLang)}
             </h3>
           </div>
           <div className="flex items-center justify-between">
@@ -264,7 +264,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
               onClick={() => onNavigate('vocabulary')}
               className="shrink-0 ml-3 px-3 py-2 rounded-xl bg-brand-500 text-white text-xs font-semibold hover:bg-brand-600 transition-colors"
             >
-              {uiLang === 'he' ? 'למדו עוד' : 'Learn More'}
+              {t('learnMore', uiLang)}
             </button>
           </div>
         </GlassCard>
@@ -279,10 +279,10 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">
-                {uiLang === 'he' ? grammarTip.titleHe : grammarTip.title}
+                {lf(grammarTip, 'title', uiLang)}
               </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400" dir={uiLang === 'he' ? 'rtl' : 'ltr'}>
-                {uiLang === 'he' ? grammarTip.explanationHe : grammarTip.explanation}
+              <p className="text-xs text-gray-500 dark:text-gray-400" dir={dir}>
+                {lf(grammarTip, 'explanation', uiLang)}
               </p>
               <p className="text-xs text-brand-500 font-mono mt-1">{grammarTip.rule}</p>
             </div>

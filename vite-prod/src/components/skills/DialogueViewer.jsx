@@ -134,10 +134,10 @@ export default function DialogueViewer({ dialogue, phrases, uiLang, speak, onCom
         textAlign: 'center',
       }}>
         <div style={{ fontSize: 14, fontWeight: 700, color: '#0369A1' }}>
-          {uiLang === 'he' ? 'דיאלוג' : 'Dialogue'}
+          {t('dialogue', uiLang)}
         </div>
         <div style={{ fontSize: 12, color: '#6B7280', marginTop: 4 }}>
-          {uiLang === 'he' ? 'הקשיבו לשיחה, לחצו על שורה לשמוע שוב' : 'Listen to the conversation, tap a line to replay'}
+          {t('dialogueInstructions', uiLang)}
         </div>
       </div>
 

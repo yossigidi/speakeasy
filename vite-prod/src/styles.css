@@ -35,10 +35,15 @@
     background: #030712;
   }
 
-  /* RTL support for Hebrew UI */
+  /* RTL support for Hebrew / Arabic UI */
   body[dir="rtl"] {
-    font-family: 'Heebo', 'Inter', sans-serif;
+    font-family: 'Heebo', 'Noto Sans Arabic', 'Inter', sans-serif;
     text-align: right;
+  }
+
+  /* Russian UI font */
+  body[lang="ru"] {
+    font-family: 'Inter', 'Noto Sans', sans-serif;
   }
 
   body[dir="rtl"] .flex-row {

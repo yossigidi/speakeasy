@@ -1,4 +1,5 @@
 import { Container, Graphics, Text, Sprite, Assets } from 'pixi.js';
+import { t } from '../../../utils/translations.js';
 
 /**
  * PixiJS world map — shows world nodes connected by paths.
@@ -28,7 +29,7 @@ export default class WorldMapUI {
 
     // Title
     const title = new Text({
-      text: this.options.uiLang === 'he' ? 'ההרפתקה של ספיקלי' : "Speakli's Adventure",
+      text: ({he: 'ההרפתקה של ספיקלי', ar: 'مغامرة سبيكلي', ru: 'Приключение Спикли'}[this.options.uiLang] || "Speakli's Adventure"),
       style: {
         fontFamily: 'Arial, sans-serif',
         fontSize: 22,

@@ -5,7 +5,7 @@ import CurriculumLessonRunner from '../components/curriculum/CurriculumLessonRun
 import useCurriculumProgress from '../hooks/useCurriculumProgress.js';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import { getLevel, LEVEL_META, LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
@@ -141,13 +141,13 @@ export default function CurriculumPage({ onBack }) {
             color: '#6B7280', flexShrink: 0,
           }}
         >
-          {uiLang === 'he' ? '\u2192' : '\u2190'}
+          {RTL_LANGS.includes(uiLang) ? '\u2192' : '\u2190'}
         </button>
 
         {/* Title */}
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 18, fontWeight: 800, color: '#374151' }}>
-            {uiLang === 'he' ? '\u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05DC\u05D9\u05DE\u05D5\u05D3' : 'Curriculum'}
+            {t('curriculumPageTitle', uiLang)}
           </div>
         </div>
 
@@ -244,7 +244,7 @@ export default function CurriculumPage({ onBack }) {
               }}
             >
               {selectedLessonInfo.result?.completed
-                ? (uiLang === 'he' ? '\u05E0\u05E1\u05D4 \u05E9\u05D5\u05D1' : 'Try Again')
+                ? t('retryLesson', uiLang)
                 : t('startLesson', uiLang)
               }
             </button>
@@ -261,13 +261,10 @@ export default function CurriculumPage({ onBack }) {
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 17, fontWeight: 700, color: '#374151' }}>
-                  {uiLang === 'he'
-                    ? (selectedLessonInfo.lesson.titleHe || selectedLessonInfo.lesson.titleEn)
-                    : selectedLessonInfo.lesson.titleEn
-                  }
+                  {lf(selectedLessonInfo.lesson, 'title', uiLang)}
                 </div>
                 <div style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 600 }}>
-                  {uiLang === 'he' ? selectedLessonInfo.typeInfo.nameHe : selectedLessonInfo.typeInfo.nameEn}
+                  {lf(selectedLessonInfo.typeInfo, 'name', uiLang)}
                 </div>
               </div>
             </div>
@@ -279,7 +276,7 @@ export default function CurriculumPage({ onBack }) {
                 padding: '10px 16px', background: '#FFFBEB', borderRadius: 12,
               }}>
                 <span style={{ fontSize: 13, color: '#92400E', fontWeight: 600 }}>
-                  {uiLang === 'he' ? '\u05E6\u05D9\u05D5\u05DF \u05E7\u05D5\u05D3\u05DD' : 'Previous score'}:
+                  {t('previousScore', uiLang)}:
                 </span>
                 <div style={{ display: 'flex', gap: 2 }}>
                   {[1, 2, 3].map(s => (

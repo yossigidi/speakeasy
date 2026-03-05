@@ -4,7 +4,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { getLevelInfo, getLevelTitle } from '../utils/levelSystem.js';
-import { t } from '../utils/translations.js';
+import { t, tReplace } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 
 // Simple SVG bar chart component
@@ -156,9 +156,7 @@ export default function ChildProgressPage({ childId, onBack }) {
   const chartData = useMemo(() => {
     return dailyData.map(d => {
       const date = new Date(d.date);
-      const dayNames = uiLang === 'he'
-        ? ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש']
-        : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+      const dayNames = t('dayNamesShort', uiLang).split(',');
       const label = timeRange <= 7
         ? dayNames[date.getDay()]
         : `${date.getDate()}/${date.getMonth() + 1}`;
@@ -190,13 +188,13 @@ export default function ChildProgressPage({ childId, onBack }) {
   };
 
   const sourceLabels = {
-    lesson: uiLang === 'he' ? 'שיעורים' : 'Lessons',
-    vocabulary: uiLang === 'he' ? 'אוצר מילים' : 'Vocabulary',
-    conversation: uiLang === 'he' ? 'שיחות' : 'Conversations',
-    'kids-game': uiLang === 'he' ? 'משחקים' : 'Games',
-    pronunciation: uiLang === 'he' ? 'הגייה' : 'Pronunciation',
-    reading: uiLang === 'he' ? 'קריאה' : 'Reading',
-    unknown: uiLang === 'he' ? 'אחר' : 'Other',
+    lesson: t('lessons', uiLang),
+    vocabulary: t('vocabulary', uiLang),
+    conversation: t('conversations', uiLang),
+    'kids-game': t('games', uiLang),
+    pronunciation: t('pronunciation', uiLang),
+    reading: t('reading', uiLang),
+    unknown: t('other', uiLang),
   };
 
   const donutSegments = Object.entries(sourceBreakdown)
@@ -242,7 +240,7 @@ export default function ChildProgressPage({ childId, onBack }) {
       setAdvice(data.advice || '');
     } catch (e) {
       console.error('Failed to get advice:', e);
-      setAdvice(uiLang === 'he' ? 'לא ניתן לטעון עצות כרגע. נסו שוב מאוחר יותר.' : 'Could not load advice right now. Try again later.');
+      setAdvice(t('adviceLoadError', uiLang));
     }
     setLoadingAdvice(false);
   };
@@ -253,7 +251,7 @@ export default function ChildProgressPage({ childId, onBack }) {
         <button onClick={onBack} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
           <ChevronLeft size={22} className={dir === 'rtl' ? 'rotate-180' : ''} />
         </button>
-        <p className="text-center text-gray-500 mt-8">{uiLang === 'he' ? 'ילד לא נמצא' : 'Child not found'}</p>
+        <p className="text-center text-gray-500 mt-8">{t('childNotFound', uiLang)}</p>
       </div>
     );
   }
@@ -359,7 +357,7 @@ export default function ChildProgressPage({ childId, onBack }) {
                     : 'text-gray-400 hover:text-gray-600'
                 }`}
               >
-                {days}{uiLang === 'he' ? 'י' : 'd'}
+                {days}{t('daySuffix', uiLang)}
               </button>
             ))}
           </div>
@@ -433,7 +431,7 @@ export default function ChildProgressPage({ childId, onBack }) {
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600 dark:text-gray-400">{uiLang === 'he' ? 'רמה' : 'Level'}</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">{t('level', uiLang)}</span>
             <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
               {child.curriculumLevel || child.childLevel || 1}
             </span>
@@ -441,7 +439,7 @@ export default function ChildProgressPage({ childId, onBack }) {
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-600 dark:text-gray-400">{t('lastActive', uiLang)}</span>
             <span className="text-sm font-bold text-gray-900 dark:text-white">
-              {child.lastActiveDate || (uiLang === 'he' ? 'טרם פעיל' : 'Not yet')}
+              {child.lastActiveDate || t('notYetShort', uiLang)}
             </span>
           </div>
         </div>
@@ -461,10 +459,10 @@ export default function ChildProgressPage({ childId, onBack }) {
           >
             <RefreshCw size={12} className={loadingAdvice ? 'animate-spin' : ''} />
             {loadingAdvice
-              ? (uiLang === 'he' ? 'טוען...' : 'Loading...')
+              ? t('loading', uiLang)
               : advice
-                ? (uiLang === 'he' ? 'רענן' : 'Refresh')
-                : (uiLang === 'he' ? 'קבל עצות' : 'Get Advice')
+                ? t('refresh', uiLang)
+                : t('getAdvice', uiLang)
             }
           </button>
         </div>
@@ -475,9 +473,7 @@ export default function ChildProgressPage({ childId, onBack }) {
           </div>
         ) : (
           <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-4">
-            {uiLang === 'he'
-              ? 'לחצו "קבלו עצות" כדי לקבל המלצות מותאמות אישית'
-              : 'Click "Get Advice" for personalized recommendations'}
+            {t('advicePrompt', uiLang)}
           </p>
         )}
       </GlassCard>

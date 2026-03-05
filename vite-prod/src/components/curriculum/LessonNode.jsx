@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { t } from '../../utils/translations.js';
 
 const TYPE_ICONS = {
   speaking: '\u{1F5E3}\uFE0F', vocabulary: '\u{1F4DA}', reading: '\u{1F4D6}',
@@ -83,7 +84,7 @@ export default function LessonNode({ lesson, lessonResult, isUnlocked, isCurrent
       )}
       {isCurrent && !isCompleted && (
         <span style={{ fontSize: 10, fontWeight: 700, color: levelColor }}>
-          {uiLang === 'he' ? '\u05D4\u05D1\u05D0' : 'Next'}
+          {t('next', uiLang)}
         </span>
       )}
     </div>

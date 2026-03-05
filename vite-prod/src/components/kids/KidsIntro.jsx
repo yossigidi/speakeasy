@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { unlockAudioContext, stopAllAudio } from '../../utils/hebrewAudio.js';
 import SpeakliAvatar from './SpeakliAvatar.jsx';
+import { t, tReplace, RTL_LANGS } from '../../utils/translations.js';
 
 // In-memory set: resets on every app launch / page refresh.
 // (sessionStorage persists indefinitely on iOS PWA, so intros would never re-appear.)
@@ -27,12 +28,18 @@ export default function KidsIntro({
   emoji = '🦉',
   title = "Let's go!",
   titleHe = 'בואו נתחיל!',
+  titleAr,
+  titleRu,
   desc = '',
   descHe = '',
+  descAr,
+  descRu,
   uiLang = 'en',
   gradient = 'from-blue-500 via-sky-500 to-cyan-500',
   buttonLabel = "Let's go!",
   buttonLabelHe = 'יאללה!',
+  buttonLabelAr,
+  buttonLabelRu,
   onDone,
 }) {
   const { speak, stopSpeaking } = useSpeech();
@@ -60,10 +67,13 @@ export default function KidsIntro({
 
   // Build the full description text to speak (Speakli's unique voice)
   const getSpeechText = useCallback(() => {
-    const isHe = uiLang === 'he';
-    const d = isHe ? descHe : desc;
-    return { text: d, lang: isHe ? 'he' : 'en-US' };
-  }, [uiLang, desc, descHe]);
+    const LANG_SUFFIX_MAP = {he:'He',ar:'Ar',ru:'Ru'};
+    const suffix = LANG_SUFFIX_MAP[uiLang] || '';
+    const TTS_LANG = { he: 'he-IL', ar: 'ar-SA', ru: 'ru-RU' };
+    const localizedDescs = { He: descHe, Ar: descAr, Ru: descRu };
+    const d = (suffix ? localizedDescs[suffix] : null) || desc;
+    return { text: d, lang: TTS_LANG[uiLang] || 'en-US' };
+  }, [uiLang, desc, descHe, descAr, descRu]);
 
   // Fire speech once when overlay appears — no delay, guarded by ref
   useEffect(() => {
@@ -109,8 +119,6 @@ export default function KidsIntro({
 
   if (!visible) return null;
 
-  const isHe = uiLang === 'he';
-
   // Use React Portal to render at body level — bypasses parent CSS
   // (transform, filter, backdrop-filter) that breaks position: fixed
   const overlay = (
@@ -144,19 +152,19 @@ export default function KidsIntro({
           {/* Greeting with name */}
           {name && (
             <h2 className="text-2xl font-black rainbow-text py-1 mb-1">
-              {isHe ? `היי ${name}!` : `Hi ${name}!`}
+              {tReplace('introGreeting', uiLang, { name })}
             </h2>
           )}
 
           {/* Title */}
           <h3 className="text-xl font-extrabold text-gray-800 dark:text-white mb-2">
-            {isHe ? titleHe : title}
+            {({he: titleHe, ar: titleAr, ru: titleRu}[uiLang]) || title}
           </h3>
 
           {/* Description */}
           {(desc || descHe) && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed" dir={isHe ? 'rtl' : 'ltr'}>
-              {isHe ? descHe : desc}
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>
+              {({he: descHe, ar: descAr, ru: descRu}[uiLang]) || desc}
             </p>
           )}
 
@@ -165,7 +173,7 @@ export default function KidsIntro({
             onClick={e => { e.stopPropagation(); dismiss(); }}
             className={`w-full py-3.5 rounded-2xl bg-gradient-to-r ${gradient} text-white font-black text-lg shadow-lg active:scale-95 transition-transform`}
           >
-            {isHe ? buttonLabelHe : buttonLabel}
+            {({he: buttonLabelHe, ar: buttonLabelAr, ru: buttonLabelRu}[uiLang]) || buttonLabel}
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Lock, Star, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf } from '../utils/translations.js';
 import { SKILLS, SKILL_LEVELS } from '../data/skills/skills-data.js';
 import { LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
 import useSkillsProgress from '../hooks/useSkillsProgress.js';
@@ -10,8 +10,6 @@ import SkillsLessonRunner from '../components/skills/SkillsLessonRunner.jsx';
 export default function SkillsPage({ onBack }) {
   const { uiLang, dir } = useTheme();
   const { skills, isSkillLessonUnlocked, getLessonResult, getSkillProgress } = useSkillsProgress();
-  const isHe = uiLang === 'he';
-
   const [activeLesson, setActiveLesson] = useState(null);
   const [bottomSheet, setBottomSheet] = useState(null);
 
@@ -56,10 +54,10 @@ export default function SkillsPage({ onBack }) {
 
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 20, fontWeight: 800 }}>
-              {isHe ? 'מיומנויות שיחה' : 'Conversation Skills'}
+              {t('skillsTitle', uiLang)}
             </div>
             <div style={{ fontSize: 12, opacity: 0.7, marginTop: 2 }}>
-              {isHe ? 'תרגול מצבים מהחיים' : 'Practice real-life situations'}
+              {t('skillsSubtitle', uiLang)}
             </div>
           </div>
 
@@ -88,7 +86,7 @@ export default function SkillsPage({ onBack }) {
               }}>
                 <span style={{ fontSize: 22 }}>{level.emoji}</span>
                 <span style={{ fontSize: 16, fontWeight: 700, color: level.color }}>
-                  {isHe ? level.nameHe : level.nameEn}
+                  {lf(level, 'name', uiLang)}
                 </span>
               </div>
 
@@ -136,10 +134,10 @@ export default function SkillsPage({ onBack }) {
                       </div>
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 17, fontWeight: 700, color: '#1F2937' }}>
-                          {isHe ? skill.titleHe : skill.titleEn}
+                          {lf(skill, 'title', uiLang)}
                         </div>
                         <div style={{ fontSize: 13, color: '#6B7280', marginTop: 2 }}>
-                          {isHe ? skill.descHe : skill.descEn}
+                          {lf(skill, 'desc', uiLang)}
                         </div>
                       </div>
                       {progress.isComplete && (
@@ -191,7 +189,7 @@ export default function SkillsPage({ onBack }) {
 
                     {/* Progress text */}
                     <div style={{ marginTop: 10, fontSize: 12, color: '#9CA3AF', textAlign: 'center' }}>
-                      {progress.completed}/{progress.total} {isHe ? 'שיעורים' : 'lessons'} · {progress.totalStars} ⭐
+                      {progress.completed}/{progress.total} {t('lessons', uiLang)} · {progress.totalStars} ⭐
                     </div>
                   </div>
                 );
@@ -237,10 +235,10 @@ export default function SkillsPage({ onBack }) {
               <span style={{ fontSize: 32 }}>{bottomSheet.typeInfo.icon}</span>
               <div>
                 <div style={{ fontSize: 18, fontWeight: 700, color: '#1F2937' }}>
-                  {isHe ? bottomSheet.lesson.titleHe : bottomSheet.lesson.titleEn}
+                  {lf(bottomSheet.lesson, 'title', uiLang)}
                 </div>
                 <div style={{ fontSize: 13, color: bottomSheet.typeInfo.color, fontWeight: 600 }}>
-                  {isHe ? bottomSheet.typeInfo.nameHe : bottomSheet.typeInfo.nameEn}
+                  {lf(bottomSheet.typeInfo, 'name', uiLang)}
                 </div>
               </div>
             </div>
@@ -251,13 +249,13 @@ export default function SkillsPage({ onBack }) {
                 background: '#F0FDF4', borderRadius: 12,
               }}>
                 <div>
-                  <div style={{ fontSize: 11, color: '#6B7280' }}>{isHe ? 'דיוק' : 'Accuracy'}</div>
+                  <div style={{ fontSize: 11, color: '#6B7280' }}>{t('accuracy', uiLang)}</div>
                   <div style={{ fontSize: 16, fontWeight: 700, color: '#10B981' }}>
                     {Math.round(bottomSheet.result.bestAccuracy || 0)}%
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: '#6B7280' }}>{isHe ? 'כוכבים' : 'Stars'}</div>
+                  <div style={{ fontSize: 11, color: '#6B7280' }}>{t('lessonStars', uiLang)}</div>
                   <div style={{ fontSize: 16 }}>
                     {[1, 2, 3].map(s => (
                       <span key={s} style={{ opacity: s <= (bottomSheet.result.stars || 0) ? 1 : 0.2 }}>⭐</span>
@@ -283,7 +281,7 @@ export default function SkillsPage({ onBack }) {
               }}
             >
               {bottomSheet.result?.completed
-                ? (isHe ? 'שחק שוב' : 'Play Again')
+                ? t('playAgain', uiLang)
                 : t('startLesson2', uiLang)}
             </button>
           </div>

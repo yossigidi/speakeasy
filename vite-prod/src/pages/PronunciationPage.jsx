@@ -159,10 +159,10 @@ export default function PronunciationPage() {
       <div className="pb-24 px-4 pt-4 flex flex-col items-center justify-center min-h-[60vh]">
         <span className="text-5xl mb-4">🎤</span>
         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-          {uiLang === 'he' ? 'זיהוי דיבור לא נתמך' : 'Speech Recognition Not Supported'}
+          {t('speechNotSupported', uiLang)}
         </h2>
         <p className="text-sm text-gray-500 text-center">
-          {uiLang === 'he' ? 'נסו להשתמש ב-Chrome במחשב או באנדרואיד' : 'Try using Chrome on desktop or Android'}
+          {t('tryChromeDesktop', uiLang)}
         </p>
       </div>
     );
@@ -232,7 +232,7 @@ export default function PronunciationPage() {
       {/* Transcript */}
       {transcript && !isListening && (
         <GlassCard className="text-center animate-slide-up">
-          <p className="text-sm text-gray-500 mb-1">{uiLang === 'he' ? 'מה שאמרת:' : 'You said:'}</p>
+          <p className="text-sm text-gray-500 mb-1">{t('youSaid', uiLang)}</p>
           <p className="text-lg font-medium text-gray-900 dark:text-white">{transcript}</p>
         </GlassCard>
       )}

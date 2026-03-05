@@ -11,7 +11,7 @@ import useSkillsProgress from '../../hooks/useSkillsProgress.js';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
-import { t } from '../../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../../utils/translations.js';
 
 export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLang }) {
   // Phase: 'intro' → 'dialogue' → 'exercise' → 'simulation' → 'complete'
@@ -49,9 +49,9 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
   useEffect(() => {
     if (phase === 'intro' && lessonInfo && !spokenRef.current) {
       spokenRef.current = true;
-      const title = uiLang === 'he' ? lessonInfo.lesson.titleHe : lessonInfo.lesson.titleEn;
+      const title = lf(lessonInfo.lesson, 'title', uiLang);
       setTimeout(() => {
-        speak(title, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
+        speak(title, { lang: uiLang, rate: 0.9 });
       }, 200);
     }
   }, [phase, lessonInfo]);
@@ -100,7 +100,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
         const newStreak = prev + 1;
         setTeacherState(newStreak >= 3 ? 'celebrating' : 'happy');
         const msg = newStreak >= 3 ? t('teacherEncourage3', uiLang) : t('teacherEncourage1', uiLang);
-        speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
+        speak(msg, { lang: uiLang, rate: 1.0, _queued: true });
         return newStreak;
       });
     } else {
@@ -114,7 +114,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
       });
       setStreak(0);
       setTeacherState('encouraging');
-      speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
+      speak(t('teacherWrong', uiLang), { lang: uiLang, rate: 0.95, _queued: true });
 
       // Always record answer once
       setAnswers(prev => [...prev, { isCorrect, wordData }]);
@@ -201,7 +201,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
     : LESSON_TYPES.mixed;
 
   const lessonTitle = lessonInfo?.lesson
-    ? (uiLang === 'he' ? lessonInfo.lesson.titleHe : lessonInfo.lesson.titleEn) || ''
+    ? lf(lessonInfo.lesson, 'title', uiLang) || lessonInfo.lesson.titleEn || ''
     : '';
 
   // ── Intro Phase ──
@@ -230,7 +230,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
         }}>
           <span style={{ fontSize: 24 }}>{lessonTypeInfo.icon}</span>
           <span style={{ fontSize: 16, fontWeight: 700, color: lessonTypeInfo.color }}>
-            {uiLang === 'he' ? lessonTypeInfo.nameHe : lessonTypeInfo.nameEn}
+            {lf(lessonTypeInfo, 'name', uiLang)}
           </span>
         </div>
 
@@ -244,7 +244,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
         <div style={{
           fontSize: 15, color: '#6B7280', marginBottom: 12, textAlign: 'center',
           maxWidth: 280, lineHeight: 1.5,
-          direction: uiLang === 'he' ? 'rtl' : 'ltr',
+          direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr',
         }}>
           {introDesc}
         </div>

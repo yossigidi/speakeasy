@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { t } from '../../utils/translations.js';
+import { t, RTL_LANGS } from '../../utils/translations.js';
 
 // Guidance bubble component - shows Hebrew instructions and reads them aloud
 function GuidanceBubble({ text, uiLang, speak, onDone }) {
@@ -11,7 +11,7 @@ function GuidanceBubble({ text, uiLang, speak, onDone }) {
     if (speak && text && !spokenRef.current) {
       spokenRef.current = true;
       timer = setTimeout(() => {
-        speak(text, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.92, onEnd: () => onDone && onDone() });
+        speak(text, { lang: uiLang, rate: 0.92, onEnd: () => onDone && onDone() });
       }, 300);
     }
     return () => clearTimeout(timer);
@@ -19,7 +19,7 @@ function GuidanceBubble({ text, uiLang, speak, onDone }) {
 
   return (
     <div
-      onClick={() => speak && speak(text, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.92 })}
+      onClick={() => speak && speak(text, { lang: uiLang, rate: 0.92 })}
       style={{
         background: 'linear-gradient(135deg, #FFF7ED, #FEF3C7)',
         border: '2px solid #FDE68A',
@@ -27,7 +27,7 @@ function GuidanceBubble({ text, uiLang, speak, onDone }) {
         padding: '10px 16px',
         marginBottom: 16,
         textAlign: 'center',
-        direction: uiLang === 'he' ? 'rtl' : 'ltr',
+        direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr',
         animation: 'curriculum-fade-in 0.4s ease',
         cursor: 'pointer',
       }}
@@ -191,9 +191,9 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'word-to-hebrew') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideWordToHebrew', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+        <GuidanceBubble text={t('guideWordToNative', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
-          {t('translateToHebrew', uiLang)}
+          {t('translateToNative', uiLang)}
         </div>
         <div style={{ fontSize: 36, marginBottom: 4 }}>{exercise.wordData?.emoji}</div>
         <div style={{ fontSize: 22, fontWeight: 700, color: '#FF6B6B', marginBottom: 20 }}>

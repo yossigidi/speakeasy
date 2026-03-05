@@ -3,7 +3,7 @@ import { Send, Mic, MicOff, Volume2, ArrowLeft, AlertCircle, Sparkles } from 'lu
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
@@ -160,7 +160,7 @@ export default function ConversationPage() {
           {t('scenarios', uiLang)}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          {uiLang === 'he' ? 'בחרו תרחיש לתרגול שיחה באנגלית' : 'Choose a scenario to practice English conversation'}
+          {t('chooseScenario', uiLang)}
         </p>
         <div className="space-y-3">
           {SCENARIOS.map(s => (
@@ -173,10 +173,10 @@ export default function ConversationPage() {
                 <span className="text-3xl">{s.emoji}</span>
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900 dark:text-white">
-                    {uiLang === 'he' ? s.labelHe : s.label}
+                    {lf(s, 'label', uiLang)}
                   </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {uiLang === 'he' ? s.descHe : s.desc}
+                    {lf(s, 'desc', uiLang)}
                   </p>
                 </div>
                 <Sparkles size={18} className="text-brand-400" />
@@ -194,11 +194,11 @@ export default function ConversationPage() {
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200/50 dark:border-gray-700/50">
         <button onClick={() => { setScenario(null); setMessages([]); }} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
         <span className="text-xl">{scenario.emoji}</span>
         <h3 className="font-semibold text-gray-900 dark:text-white">
-          {uiLang === 'he' ? scenario.labelHe : scenario.label}
+          {lf(scenario, 'label', uiLang)}
         </h3>
       </div>
 

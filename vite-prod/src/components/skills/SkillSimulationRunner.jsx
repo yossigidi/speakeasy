@@ -4,7 +4,7 @@ import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import useSpeechRecognition from '../../hooks/useSpeechRecognition.js';
-import { t } from '../../utils/translations.js';
+import { t, RTL_LANGS } from '../../utils/translations.js';
 
 export default function SkillSimulationRunner({ simulation, onComplete, uiLang }) {
   const { progress } = useUserProgress();
@@ -175,7 +175,7 @@ export default function SkillSimulationRunner({ simulation, onComplete, uiLang }
         <div style={{
           padding: '8px 16px', background: '#FEF3C7', borderBottom: '1px solid #FDE68A',
           fontSize: 12, color: '#92400E', fontWeight: 600,
-          direction: uiLang === 'he' ? 'rtl' : 'ltr',
+          direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr',
         }}>
           💡 {currentHint}
         </div>
@@ -246,9 +246,9 @@ export default function SkillSimulationRunner({ simulation, onComplete, uiLang }
           display: 'flex', gap: 12, justifyContent: 'center',
         }}>
           {[
-            { label: uiLang === 'he' ? 'בהירות' : 'Clarity', val: metrics.clarity },
-            { label: uiLang === 'he' ? 'דקדוק' : 'Grammar', val: metrics.grammar },
-            { label: uiLang === 'he' ? 'אוצר' : 'Vocab', val: metrics.vocabulary },
+            { label: t('clarity', uiLang), val: metrics.clarity },
+            { label: t('grammarAccuracy', uiLang), val: metrics.grammar },
+            { label: t('vocabShort', uiLang), val: metrics.vocabulary },
           ].map(m => (
             <div key={m.label} style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: m.val >= 70 ? '#10B981' : '#F59E0B' }}>{m.val}%</div>

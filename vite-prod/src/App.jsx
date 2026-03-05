@@ -46,6 +46,7 @@ const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
 import FloatingMusicBtn from './components/ui/FloatingMusicBtn.jsx';
+import InstallBanner from './components/ui/InstallBanner.jsx';
 
 /* ── Lazy loading fallback ── */
 function PageLoader() {
@@ -323,6 +324,8 @@ function AppContent() {
           reviewCount={dueCount}
         />
       )}
+
+      <InstallBanner hasBottomNav={showNav} />
     </div>
   );
 }

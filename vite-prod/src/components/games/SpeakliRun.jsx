@@ -7,6 +7,7 @@ import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playW
 import { getWordsForLevel, SENTENCES_BY_LEVEL } from '../../data/kids-vocabulary.js';
 import { shuffle } from '../../utils/shuffle.js';
 import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
+import { t, tReplace, lf, RTL_LANGS } from '../../utils/translations.js';
 
 // Hebrew phrases preloaded for instant feedback
 const RUN_PHRASES = [
@@ -154,7 +155,7 @@ function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
           onClick={onBack}
           className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform"
         >
-          <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
       </div>
       <div className="relative z-10 flex flex-col items-center px-4 pt-6 pb-4 flex-1">
@@ -162,10 +163,10 @@ function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
           <SpeakliAvatar mode="bounce" size="lg" />
         </div>
         <h2 className="text-2xl font-black text-gray-800 dark:text-white mb-1 text-center">
-          {uiLang === 'he' ? '🏃 מרוץ המילים' : '🏃 Speakli Run'}
+          {t('speakliRunTitle', uiLang)}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 text-center">
-          {uiLang === 'he' ? 'בחרו עולם ורוצו!' : 'Pick a world and run!'}
+          {t('pickWorldAndRun', uiLang)}
         </p>
 
         <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
@@ -178,7 +179,7 @@ function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
             >
               <span className="text-4xl">{world.emoji}</span>
               <span className="text-sm font-black leading-tight">
-                {uiLang === 'he' ? world.nameHe : world.nameEn}
+                {lf(world, 'name', uiLang)}
               </span>
             </button>
           ))}
@@ -186,7 +187,7 @@ function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
 
         {WORLDS.some(w => w.minLevel && childLevel < w.minLevel) && (
           <p className="text-xs text-gray-400 mt-4 text-center">
-            {uiLang === 'he' ? '🚀 עולמות נוספים נפתחים ברמות גבוהות!' : '🚀 More worlds unlock at higher levels!'}
+            {t('moreWorldsUnlock', uiLang)}
           </p>
         )}
       </div>
@@ -231,7 +232,7 @@ function RunHUD({ score, coins, streak, round, totalRounds, onBack, isPowerMode,
         onClick={onBack}
         className="text-white/80 hover:text-white bg-black/20 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform"
       >
-        <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+        <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
       </button>
 
       <div className="flex items-center gap-3">
@@ -320,7 +321,7 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
   return (
     <div
       className={`relative w-full h-full overflow-hidden ${isPowerMode ? 'runner-power' : ''} ${isPaused ? 'runner-paused' : ''}`}
-      style={{ background: world.skyGradient, minHeight: '100vh' }}
+      style={{ background: world.skyGradient, minHeight: '100dvh' }}
     >
       {/* Animated clouds */}
       <div className="absolute top-[5%] w-[300%] pointer-events-none"
@@ -451,12 +452,10 @@ function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, 
         </div>
 
         <h2 className="text-3xl font-black text-gray-800 dark:text-white mb-1">
-          {uiLang === 'he' ? '🏁 סיום המרוץ!' : '🏁 Race Complete!'}
+          {t('raceComplete', uiLang)}
         </h2>
         <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm">
-          {uiLang === 'he'
-            ? `ענית נכון על ${correctCount} מתוך ${totalRounds} מילים!`
-            : `You got ${correctCount} out of ${totalRounds} words!`}
+          {tReplace('raceResultSummary', uiLang, { correctCount, totalRounds })}
         </p>
 
         <div className="flex gap-2 mb-4">
@@ -474,12 +473,12 @@ function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, 
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-lg text-center">
             <div className="text-2xl mb-1">🪙</div>
             <div className="text-lg font-bold text-yellow-600">{coins}</div>
-            <div className="text-xs text-gray-500">{uiLang === 'he' ? 'מטבעות' : 'Coins'}</div>
+            <div className="text-xs text-gray-500">{t('coins', uiLang)}</div>
           </div>
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-lg text-center">
             <Star size={24} className="text-yellow-500 mx-auto mb-1" />
             <div className="text-lg font-bold text-gray-800 dark:text-white">{score}</div>
-            <div className="text-xs text-gray-500">{uiLang === 'he' ? 'נקודות' : 'Score'}</div>
+            <div className="text-xs text-gray-500">{t('points', uiLang)}</div>
           </div>
         </div>
 
@@ -495,7 +494,7 @@ function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, 
           className="btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl"
           style={{ background: world.skyGradient, boxShadow: 'none' }}
         >
-          {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
+          {t('continue', uiLang)} ✨
         </button>
       </div>
     </div>
@@ -557,7 +556,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       return shuffle(sentences).map(s => ({
         word: s.sentence,
         emoji: s.emoji,
-        translation: s.translationHe,
+        translation: lf(s, 'translation', uiLang),
       }));
     }
     // Regular words
@@ -777,7 +776,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
             {/* Instruction text */}
             <p className="text-white font-bold text-sm drop-shadow mb-3 text-center px-4">
-              {uiLang === 'he' ? 'הקשיבו ולחצו על המילה הנכונה!' : 'Listen and tap the right word!'}
+              {t('listenAndTapCorrect', uiLang)}
             </p>
 
             {/* Word boxes */}

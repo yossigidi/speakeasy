@@ -6,7 +6,7 @@ import {
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, RTL_LANGS } from '../utils/translations.js';
 
 import { loadWordData } from '../utils/lazyData.js';
 
@@ -37,7 +37,7 @@ export default function AudioLearningPage({ onBack }) {
   const { speak, speakSequence, stopSpeaking, isSpeaking } = useSpeech();
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
-  const isHe = uiLang === 'he';
+  const isRtl = RTL_LANGS.includes(uiLang);
 
   // ── Lazy-loaded word data ──────────────────────────────
   const [wordsA1, setWordsA1] = useState([]);
@@ -306,19 +306,19 @@ export default function AudioLearningPage({ onBack }) {
   const phaseLabel = useMemo(() => {
     switch (phase) {
       case PHASE.ENGLISH_WORD:
-        return isHe ? 'מילה באנגלית' : 'English Word';
+        return t('audioPhaseWord', uiLang);
       case PHASE.HEBREW_TRANSLATION:
-        return isHe ? 'תרגום לעברית' : 'Hebrew Translation';
+        return t('audioPhaseTranslation', uiLang);
       case PHASE.EXAMPLE_SENTENCE:
-        return isHe ? 'משפט לדוגמה' : 'Example Sentence';
+        return t('audioPhaseExample', uiLang);
       case PHASE.PAUSE_AFTER_WORD:
       case PHASE.PAUSE_AFTER_TRANSLATION:
       case PHASE.PAUSE_AFTER_EXAMPLE:
-        return isHe ? 'ממתין...' : 'Waiting...';
+        return t('audioPhaseWaiting', uiLang);
       default:
-        return isHe ? 'מוכן' : 'Ready';
+        return t('audioPhaseReady', uiLang);
     }
-  }, [phase, isHe]);
+  }, [phase, uiLang]);
 
   // ── Progress percentage ────────────────────────────────
   const progressPercent = words.length > 0 ? ((currentIndex + 1) / words.length) * 100 : 0;
@@ -337,13 +337,13 @@ export default function AudioLearningPage({ onBack }) {
             onClick={onBack}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 active:scale-95 transition-all"
           >
-            <ArrowLeft size={20} className={isHe ? 'rotate-180' : ''} />
+            <ArrowLeft size={20} className={isRtl ? 'rotate-180' : ''} />
           </button>
 
           <div className="flex items-center gap-2">
             <Headphones size={20} className="text-white/80" />
             <h1 className="text-white font-bold text-lg">
-              {isHe ? 'למידה בשמיעה' : 'Audio Learning'}
+              {t('audioLearning', uiLang)}
             </h1>
           </div>
 
@@ -363,7 +363,7 @@ export default function AudioLearningPage({ onBack }) {
             {/* Level Filter */}
             <div>
               <label className="text-white/80 text-sm font-medium mb-2 block">
-                {isHe ? 'סנן לפי רמה' : 'Filter by Level'}
+                {t('filterByLevel', uiLang)}
               </label>
               <div className="flex gap-2">
                 {['all', 'A1', 'A2'].map((lvl) => (
@@ -376,7 +376,7 @@ export default function AudioLearningPage({ onBack }) {
                         : 'bg-white/15 text-white hover:bg-white/25'
                     }`}
                   >
-                    {lvl === 'all' ? (isHe ? 'הכל' : 'All') : lvl}
+                    {lvl === 'all' ? t('all', uiLang) : lvl}
                   </button>
                 ))}
               </div>
@@ -385,7 +385,7 @@ export default function AudioLearningPage({ onBack }) {
             {/* Mode Toggle */}
             <div>
               <label className="text-white/80 text-sm font-medium mb-2 block">
-                {isHe ? 'מצב השמעה' : 'Playback Mode'}
+                {t('playbackMode', uiLang)}
               </label>
               <div className="flex gap-2">
                 <button
@@ -396,7 +396,7 @@ export default function AudioLearningPage({ onBack }) {
                       : 'bg-white/15 text-white hover:bg-white/25'
                   }`}
                 >
-                  {isHe ? 'מילים בלבד' : 'Words Only'}
+                  {t('wordsOnly', uiLang)}
                 </button>
                 <button
                   onClick={() => setMode('full')}
@@ -406,7 +406,7 @@ export default function AudioLearningPage({ onBack }) {
                       : 'bg-white/15 text-white hover:bg-white/25'
                   }`}
                 >
-                  {isHe ? 'מילים + משפטים' : 'Words + Sentences'}
+                  {t('wordsSentences', uiLang)}
                 </button>
               </div>
             </div>
@@ -414,7 +414,7 @@ export default function AudioLearningPage({ onBack }) {
             {/* Repeat Toggle */}
             <div className="flex items-center justify-between">
               <span className="text-white/80 text-sm font-medium">
-                {isHe ? 'חזרה אוטומטית' : 'Auto Repeat'}
+                {t('autoRepeat', uiLang)}
               </span>
               <button
                 onClick={() => setRepeatMode(!repeatMode)}
@@ -509,7 +509,7 @@ export default function AudioLearningPage({ onBack }) {
               />
             </div>
             <div className="flex justify-between mt-1.5 text-xs text-white/50 font-medium">
-              <span>{currentIndex + 1} {isHe ? 'מתוך' : 'of'} {words.length}</span>
+              <span>{currentIndex + 1} {t('of', uiLang)} {words.length}</span>
               <span>{speed}x</span>
             </div>
           </div>
@@ -575,32 +575,19 @@ export default function AudioLearningPage({ onBack }) {
           <div className="flex items-center justify-center gap-2 text-white/40 text-xs">
             <Volume2 size={14} />
             <span>
-              {isHe
-                ? mode === 'full'
-                  ? 'מילים + משפטים'
-                  : 'מילים בלבד'
-                : mode === 'full'
-                  ? 'Words + Sentences'
-                  : 'Words Only'
-              }
+              {mode === 'full' ? t('wordsSentences', uiLang) : t('wordsOnly', uiLang)}
             </span>
             <span className="mx-1">|</span>
             <Zap size={14} />
             <span>
-              {levelFilter === 'all'
-                ? isHe ? 'כל הרמות' : 'All Levels'
-                : levelFilter
-              }
+              {levelFilter === 'all' ? t('allLevels', uiLang) : levelFilter}
             </span>
           </div>
 
           {/* Drive mode hint */}
           <div className="text-center">
             <p className="text-white/30 text-xs">
-              {isHe
-                ? 'מצב נהיגה - הקשיבו ולמדו בזמן הנסיעה'
-                : 'Drive Mode - Listen & learn on the go'
-              }
+              {t('driveModeHint', uiLang)}
             </p>
           </div>
         </div>

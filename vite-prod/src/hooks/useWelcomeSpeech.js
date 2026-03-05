@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
+import { t } from '../utils/translations.js';
 
 /**
  * Play a welcome speech once per session when user first interacts with the page.
@@ -47,7 +48,7 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       timerRef.current = setTimeout(() => {
         if (isSpeakingRef.current) return; // another click handler is already speaking
         const isHe = uiLangRef.current === 'he';
-        speakRef.current(isHe ? textHeRef.current : textEnRef.current, { lang: isHe ? 'he' : 'en-US', rate: 0.9 });
+        speakRef.current(isHe ? textHeRef.current : textEnRef.current, { lang: t('speechLang', uiLangRef.current), rate: 0.9 });
       }, 500);
     };
 

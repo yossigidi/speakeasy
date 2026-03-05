@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Heart, Volume2, Check, ArrowRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, RTL_LANGS, lf } from '../utils/translations.js';
 import { calcLessonXP } from '../utils/xpCalculator.js';
 import { fuzzyMatch } from '../utils/stringDistance.js';
 import { shuffle } from '../utils/shuffle.js';
@@ -25,8 +25,8 @@ function MultipleChoice({ exercise, onAnswer, uiLang }) {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-bold text-gray-900 dark:text-white">{exercise.question}</h3>
-      {exercise.questionHe && uiLang === 'he' && (
-        <p className="text-sm text-gray-500 dark:text-gray-400" dir="rtl">{exercise.questionHe}</p>
+      {uiLang !== 'en' && lf(exercise, 'question', uiLang) && lf(exercise, 'question', uiLang) !== exercise.question && (
+        <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(exercise, 'question', uiLang)}</p>
       )}
       <div className="space-y-2">
         {exercise.options.map((opt, i) => (
@@ -95,7 +95,7 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
         </span>
         {parts[1]}
       </div>
-      {exercise.hint && <p className="text-sm text-gray-500 dark:text-gray-400" dir={uiLang === 'he' ? 'rtl' : 'ltr'}>💡 {exercise.hint}</p>}
+      {exercise.hint && <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>💡 {exercise.hint}</p>}
       {!answered && (
         <>
           <div className="flex gap-2 items-center">
@@ -119,7 +119,7 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
           </div>
           {showHelp && (
             <p className="text-sm text-amber-600 dark:text-amber-400 text-center font-medium">
-              {uiLang === 'he' ? 'מתחיל ב:' : 'Starts with:'} "{exercise.answer[0]}..."
+              {t('startsWith', uiLang)} "{exercise.answer[0]}..."
             </p>
           )}
           <AnimatedButton onClick={check} disabled={!input.trim()} size="full">
@@ -247,7 +247,7 @@ function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
           </div>
           {showHelp && (
             <p className="text-sm text-amber-600 dark:text-amber-400 text-center font-medium">
-              {uiLang === 'he' ? 'מתחיל ב:' : 'Starts with:'} "{exercise.target.substring(0, 2)}..."
+              {t('startsWith', uiLang)} "{exercise.target.substring(0, 2)}..."
             </p>
           )}
           <AnimatedButton onClick={check} disabled={!input.trim()} size="full">{t('check', uiLang)}</AnimatedButton>
@@ -471,7 +471,7 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
         <ConfettiExplosion trigger={showConfetti} />
         <span className="text-6xl mb-4">{failed ? '💔' : accuracy === 100 ? '🎉' : '✅'}</span>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {failed ? (uiLang === 'he' ? 'נגמרו הלבבות' : 'Out of Hearts') : t('lessonComplete', uiLang)}
+          {failed ? t('outOfHearts', uiLang) : t('lessonComplete', uiLang)}
         </h1>
         {!failed && (
           <div className="space-y-3 text-center mt-4">

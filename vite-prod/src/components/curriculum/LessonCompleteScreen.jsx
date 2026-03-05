@@ -56,12 +56,12 @@ export default function LessonCompleteScreen({
     if (!speak || spokenRef.current) return;
     spokenRef.current = true;
     const msg = stars === 3
-      ? (uiLang === 'he' ? 'מושלם! בלי אף טעות! אתם כוכבים!' : 'Perfect! No mistakes! You are stars!')
+      ? t('lessonPerfect', uiLang)
       : stars >= 1
-      ? (uiLang === 'he' ? 'כל הכבוד! סיימתם את השיעור!' : 'Great job! You finished the lesson!')
-      : (uiLang === 'he' ? 'לא נורא, בואו ננסה שוב!' : "That's okay, let's try again!");
+      ? t('lessonGood', uiLang)
+      : t('lessonTryAgain', uiLang);
     const tid = setTimeout(() => {
-      speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
+      speak(msg, { lang: uiLang, rate: 0.9 });
     }, 1800);
     return () => clearTimeout(tid);
   }, [stars, uiLang, speak]);

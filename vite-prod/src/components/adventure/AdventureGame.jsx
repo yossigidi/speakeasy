@@ -20,6 +20,7 @@ import VideoOverlay from './ui/VideoOverlay.jsx';
 import AchievementToast from '../gamification/AchievementToast.jsx';
 import { WORLDS } from '../../data/adventure/worlds.js';
 import achievementsData from '../../data/achievements.json';
+import { t, tReplace, lf } from '../../utils/translations.js';
 
 // Lazy-load world map separately
 const WorldMap = React.lazy(() => import('./worlds/WorldMap.js').then(m => ({ default: m.default || m })));
@@ -38,9 +39,7 @@ export default function AdventureGame({ onBack }) {
   const [showWorldMap, setShowWorldMap] = useState(false);
   const [videoData, setVideoData] = useState({
     src: '/videos/adventure/welcome.mp4',
-    narration: uiLang === 'he'
-      ? 'היי! ברוכים הבאים להרפתקה של ספיקלי! בואו נלמד אנגלית ביחד!'
-      : "Hey! Welcome to Speakli's Adventure! Let's learn English together!",
+    narration: t('adventureWelcomeNarration', uiLang),
     autoPlay: true,
   });
   const [achievementToast, setAchievementToast] = useState(null);
@@ -72,8 +71,8 @@ export default function AdventureGame({ onBack }) {
     const achData = achievementsData.find(a => a.id === achievementId);
     if (achData) {
       setAchievementToast({
-        title: uiLang === 'he' ? achData.titleHe : achData.title,
-        description: uiLang === 'he' ? achData.descriptionHe : achData.description,
+        title: lf(achData, 'title', uiLang),
+        description: lf(achData, 'description', uiLang),
         icon: achData.icon,
       });
     }
@@ -280,17 +279,17 @@ export default function AdventureGame({ onBack }) {
               ←
             </button>
             <h1 className="text-white font-black text-lg">
-              {uiLang === 'he' ? 'ההרפתקה של ספיקלי' : "Speakli's Adventure"}
+              {t('adventureTitle', uiLang)}
             </h1>
             <div className="w-10" />
           </div>
 
           <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '16px 24px', WebkitOverflowScrolling: 'touch' }}>
             {[
-              { id: 'forest', emoji: '🌲', nameHe: 'יער הקסמים', nameEn: 'The Magic Forest', gradient: ['#22c55e', '#16a34a', '#15803d'], shadow: 'rgba(22, 163, 74, 0.4)', scenes: 6, requiresWorld: null },
-              { id: 'ocean', emoji: '🌊', nameHe: 'עולם האוקיינוס', nameEn: 'Ocean World', gradient: ['#0ea5e9', '#0284c7', '#0369a1'], shadow: 'rgba(14, 165, 233, 0.4)', scenes: 6, requiresWorld: 'forest' },
-              { id: 'space', emoji: '🚀', nameHe: 'עולם החלל', nameEn: 'Space World', gradient: ['#6366f1', '#4f46e5', '#4338ca'], shadow: 'rgba(99, 102, 241, 0.4)', scenes: 6, requiresWorld: 'ocean' },
-              { id: 'castle', emoji: '🏰', nameHe: 'הטירה הקסומה', nameEn: 'Magic Castle', gradient: ['#f59e0b', '#d97706', '#b45309'], shadow: 'rgba(245, 158, 11, 0.4)', scenes: 6, requiresWorld: 'space' },
+              { id: 'forest', emoji: '🌲', nameKey: 'worldForest', gradient: ['#22c55e', '#16a34a', '#15803d'], shadow: 'rgba(22, 163, 74, 0.4)', scenes: 6, requiresWorld: null },
+              { id: 'ocean', emoji: '🌊', nameKey: 'worldOcean', gradient: ['#0ea5e9', '#0284c7', '#0369a1'], shadow: 'rgba(14, 165, 233, 0.4)', scenes: 6, requiresWorld: 'forest' },
+              { id: 'space', emoji: '🚀', nameKey: 'worldSpace', gradient: ['#6366f1', '#4f46e5', '#4338ca'], shadow: 'rgba(99, 102, 241, 0.4)', scenes: 6, requiresWorld: 'ocean' },
+              { id: 'castle', emoji: '🏰', nameKey: 'worldCastle', gradient: ['#f59e0b', '#d97706', '#b45309'], shadow: 'rgba(245, 158, 11, 0.4)', scenes: 6, requiresWorld: 'space' },
             ].map((world) => {
               const worldProgress = progress.adventure?.worldProgress || {};
               const requiredCompleted = world.requiresWorld
@@ -318,23 +317,23 @@ export default function AdventureGame({ onBack }) {
                   >
                     <span className="text-5xl block mb-3">{world.emoji}</span>
                     <h2 className="text-white font-black text-xl mb-1">
-                      {uiLang === 'he' ? world.nameHe : world.nameEn}
+                      {t(world.nameKey, uiLang)}
                     </h2>
                     <p className="text-white/80 text-sm">
                       {isComplete
-                        ? (uiLang === 'he' ? `הושלם! ${world.scenes}/${world.scenes}` : `Complete! ${world.scenes}/${world.scenes}`)
+                        ? tReplace('worldComplete', uiLang, { done: world.scenes, total: world.scenes })
                         : hasStarted
-                          ? (uiLang === 'he' ? `${myCompleted}/${world.scenes} הושלמו` : `${myCompleted}/${world.scenes} completed`)
-                          : (uiLang === 'he' ? `${world.scenes} סצנות • פגוש חברים חדשים!` : `${world.scenes} scenes • Meet new friends!`)
+                          ? tReplace('worldProgress', uiLang, { done: myCompleted, total: world.scenes })
+                          : tReplace('worldNew', uiLang, { scenes: world.scenes })
                       }
                     </p>
                     <div className="mt-3 inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5">
                       <span className="text-white font-bold text-sm">
                         {isComplete
-                          ? (uiLang === 'he' ? 'שחק שוב!' : 'Play again!')
+                          ? t('adventurePlayAgain', uiLang)
                           : hasStarted
-                            ? (uiLang === 'he' ? 'המשך!' : 'Continue!')
-                            : (uiLang === 'he' ? 'התחל!' : 'Start!')
+                            ? t('adventureContinue', uiLang)
+                            : t('adventureStart', uiLang)
                         }
                       </span>
                       <span className="text-white">▶</span>
@@ -352,10 +351,10 @@ export default function AdventureGame({ onBack }) {
                 >
                   <span className="text-3xl">{world.emoji}</span>
                   <p className="text-white/60 font-bold text-sm mt-1">
-                    {uiLang === 'he' ? world.nameHe : world.nameEn}
+                    {t(world.nameKey, uiLang)}
                   </p>
                   <p className="text-white/40 text-xs">
-                    {uiLang === 'he' ? 'בקרוב!' : 'Coming soon!'}
+                    {t('comingSoon', uiLang)}
                   </p>
                 </div>
               );
@@ -369,13 +368,13 @@ export default function AdventureGame({ onBack }) {
         <div className="absolute inset-0 z-20 bg-black/70 flex items-center justify-center">
           <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 text-center max-w-xs mx-4 space-y-4">
             <h2 className="text-2xl font-black text-gray-800 dark:text-white">
-              {uiLang === 'he' ? 'הפסקה' : 'Paused'}
+              {t('adventurePaused', uiLang)}
             </h2>
             <button
               onClick={handleResume}
               className="w-full py-3 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-lg"
             >
-              {uiLang === 'he' ? 'המשך!' : 'Resume!'}
+              {t('adventureResume', uiLang)}
             </button>
             <button
               onClick={() => {
@@ -387,13 +386,13 @@ export default function AdventureGame({ onBack }) {
               }}
               className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-400 to-sky-500 text-white font-bold"
             >
-              {uiLang === 'he' ? 'מפת עולמות' : 'World Map'}
+              {t('adventureWorldMap', uiLang)}
             </button>
             <button
               onClick={handleQuit}
               className="w-full py-2.5 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 font-medium text-sm"
             >
-              {uiLang === 'he' ? 'חזרה הביתה' : 'Back Home'}
+              {t('backHome', uiLang)}
             </button>
           </div>
         </div>

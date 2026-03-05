@@ -1,5 +1,6 @@
 import { Container, Graphics, Text } from 'pixi.js';
 import { playCorrect, playWrong, playTap } from '../../../utils/gameSounds.js';
+import { t } from '../../../utils/translations.js';
 
 /**
  * Base class for all adventure exercises.
@@ -136,8 +137,8 @@ export default class ExerciseBase {
     } catch {}
 
     const text = correct
-      ? (this.uiLang === 'he' ? '!נכון' : 'Correct!')
-      : (this.uiLang === 'he' ? 'נסו שוב!' : 'Try again!');
+      ? t('advCorrect', this.uiLang)
+      : t('advTryAgain', this.uiLang);
 
     const feedback = new Text({
       text,

@@ -10,6 +10,7 @@ import alphabetData from '../data/alphabet-kids.json';
 import { shuffle } from '../utils/shuffle.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { playWrong } from '../utils/gameSounds.js';
+import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
 /* ── Confetti burst helper ── */
 function ConfettiBurst({ show }) {
@@ -90,7 +91,7 @@ function LetterGrid({ onSelect, completedLetters }) {
         {/* Header */}
         <div className="text-center mb-4">
           <h1 className="text-3xl font-black rainbow-text py-1">
-            {uiLang === 'he' ? 'האותיות שלי' : 'My Letters'}
+            {t('myLetters', uiLang)}
           </h1>
           <div className="flex justify-center gap-1 mt-1">
             {['🌈', '🔤', '🎉'].map((e, i) => (
@@ -98,7 +99,7 @@ function LetterGrid({ onSelect, completedLetters }) {
             ))}
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {uiLang === 'he' ? 'לחצו על אות כדי ללמוד!' : 'Tap a letter to learn!'}
+            {t('tapLetterToLearn', uiLang)}
           </p>
         </div>
 
@@ -200,8 +201,8 @@ function LetterDetail({ letter, onBack, onStartGame }) {
       <div className="relative z-10 stagger-children">
         {/* Back button */}
         <button onClick={onBack} className="flex items-center gap-1 text-gray-500 hover:text-gray-700 mb-3 bg-white/50 dark:bg-gray-800/50 rounded-full px-3 py-1.5 backdrop-blur-sm">
-          <ArrowLeft size={16} className={uiLang === 'he' ? 'rotate-180' : ''} />
-          <span className="text-sm font-medium">{uiLang === 'he' ? 'חזרה' : 'Back'}</span>
+          <ArrowLeft size={16} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+          <span className="text-sm font-medium">{t('back', uiLang)}</span>
         </button>
 
         {/* Big Letter Card */}
@@ -225,7 +226,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/25 backdrop-blur-sm text-white font-bold text-base active:scale-95 transition-all hover:bg-white/35 shadow-lg"
             >
               <Volume2 size={20} />
-              {uiLang === 'he' ? 'השמיעו!' : 'Listen!'}
+              {t('listenExclaim', uiLang)}
             </button>
           </div>
         </div>
@@ -241,11 +242,11 @@ function LetterDetail({ letter, onBack, onStartGame }) {
             </button>
             <div className="flex-1">
               <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                {uiLang === 'he' ? '🔊 הצליל של האות' : '🔊 Letter Sound'}
+                {t('letterSound', uiLang)}
               </p>
               <p className="text-lg font-bold mt-0.5">
                 <span className={`text-2xl bg-gradient-to-r ${letter.color} bg-clip-text text-transparent`}>{letter.letter}</span>
-                {' '}{uiLang === 'he' ? 'כמו ב-' : 'as in'}{' '}
+                {' '}{t('asIn', uiLang)}{' '}
                 <button onClick={speakSound} className="underline decoration-dotted decoration-2 hover:text-brand-600 font-black">
                   {letter.soundWord}
                 </button>
@@ -257,7 +258,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
         {/* Words Section */}
         <h3 className="text-sm font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 px-1 flex items-center gap-1">
           <span>📝</span>
-          {uiLang === 'he' ? `מילים עם ${letter.letter}` : `Words with ${letter.letter}`}
+          {tReplace('wordsWithLetter', uiLang, { letter: letter.letter })}
         </h3>
         <div className="space-y-2 mb-4">
           {letter.words.map((w, i) => (
@@ -287,10 +288,10 @@ function LetterDetail({ letter, onBack, onStartGame }) {
             <span className="text-2xl animate-float">💡</span>
             <div>
               <p className="text-xs font-black text-yellow-700 dark:text-yellow-400 uppercase tracking-wider mb-1">
-                {uiLang === 'he' ? 'עובדה מעניינת!' : 'Fun Fact!'}
+                {t('funFact', uiLang)}
               </p>
               <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
-                {uiLang === 'he' ? letter.funFactHe : letter.funFact}
+                {lf(letter, 'funFact', uiLang)}
               </p>
             </div>
           </div>
@@ -304,7 +305,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
           <div className="absolute inset-0 bg-white/10 animate-pulse" style={{ animationDuration: '2s' }} />
           <span className="relative flex items-center gap-3">
             <span className="text-2xl">🎮</span>
-            {uiLang === 'he' ? '!בואו נשחק' : "Let's Play!"}
+            {t('letsPlay', uiLang)}
             <Sparkles size={22} className="animate-sparkle" />
           </span>
         </button>
@@ -329,10 +330,8 @@ function FindLetterGame({ letter, onComplete }) {
 
   // Read instruction aloud when game loads
   useEffect(() => {
-    const instruction = uiLang === 'he'
-      ? `מצאו את כל האותיות ${letter.letter} ו-${letter.lower}!`
-      : `Find all the letters ${letter.letter} and ${letter.lower}!`;
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    const instruction = tReplace('findAllLettersInstruction', uiLang, { upper: letter.letter, lower: letter.lower });
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -371,12 +370,10 @@ function FindLetterGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-950/30 dark:to-pink-950/30 rounded-2xl p-4 mb-4">
         <p className="text-lg font-black mb-1">
-          {uiLang === 'he' ? `🔍 מצאו את האות ${letter.letter}!` : `🔍 Find the letter ${letter.letter}!`}
+          {tReplace('findTheLetterTitle', uiLang, { letter: letter.letter })}
         </p>
         <p className="text-sm text-gray-500 font-medium">
-          {uiLang === 'he'
-            ? `לחצו על כל האותיות ${letter.letter} ו-${letter.lower} שאתם רואים!`
-            : `Tap every ${letter.letter} and ${letter.lower} you see!`}
+          {tReplace('tapEveryLetterYouSee', uiLang, { upper: letter.letter, lower: letter.lower })}
         </p>
         <div className="flex items-center justify-center gap-4">
           <span className={`text-5xl font-black bg-gradient-to-r ${letter.color} bg-clip-text text-transparent animate-jelly`}>
@@ -433,10 +430,8 @@ function MatchWordGame({ letter, onComplete }) {
 
   // Read instruction aloud when game loads
   useEffect(() => {
-    const instruction = uiLang === 'he'
-      ? 'לחצו קודם על מילה, ואז על התמונה שמתאימה לה!'
-      : 'Tap a word, then tap the matching picture!';
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    const instruction = t('tapWordThenPicture', uiLang);
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -479,12 +474,10 @@ function MatchWordGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? '🧩 התאימו מילה לתמונה!' : '🧩 Match word to picture!'} {letter.emoji}
+          {t('matchWordToPicture', uiLang)} {letter.emoji}
         </p>
         <p className="text-sm text-gray-500 font-medium mt-1">
-          {uiLang === 'he'
-            ? 'לחצו קודם על מילה, ואז על התמונה שמתאימה לה!'
-            : 'Tap a word, then tap the matching picture!'}
+          {t('tapWordThenPicture', uiLang)}
         </p>
       </div>
       <div className="flex gap-4 justify-center">
@@ -552,10 +545,8 @@ function CaseMatchGame({ letter, onComplete }) {
 
   // Read instruction aloud when game loads
   useEffect(() => {
-    const instruction = uiLang === 'he'
-      ? `זו האות הגדולה ${letter.letter}. מצאו את האות הקטנה שלה!`
-      : `This is uppercase ${letter.letter}. Find its lowercase!`;
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    const instruction = tReplace('uppercaseFindLowercaseInstruction', uiLang, { letter: letter.letter });
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -617,12 +608,10 @@ function CaseMatchGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-orange-100 to-yellow-100 dark:from-orange-950/30 dark:to-yellow-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? `🔠 מצאו את האות הקטנה של ${letter.letter}!` : `🔠 Find the lowercase of ${letter.letter}!`}
+          {tReplace('findLowercaseTitle', uiLang, { letter: letter.letter })}
         </p>
         <p className="text-sm text-gray-500 font-medium mt-1">
-          {uiLang === 'he'
-            ? `זו האות הגדולה ${letter.letter} - מצאו את האות הקטנה שלה!`
-            : `This is uppercase ${letter.letter} - find its lowercase!`}
+          {tReplace('uppercaseFindLowercaseHint', uiLang, { letter: letter.letter })}
         </p>
       </div>
 
@@ -704,10 +693,8 @@ function ListenChooseGame({ letter, onComplete }) {
 
   // Read instruction aloud with Jessica voice on mount
   useEffect(() => {
-    const instruction = uiLang === 'he'
-      ? 'לחצו על הרמקול כדי לשמוע מילה, ואז בחרו את התמונה הנכונה!'
-      : 'Tap the speaker to hear a word, then pick the right picture!';
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 }), 400);
+    const instruction = t('tapSpeakerPickPicture', uiLang);
+    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
     return () => clearTimeout(timer);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -727,12 +714,12 @@ function ListenChooseGame({ letter, onComplete }) {
 
   useEffect(() => {
     if (current < questions.length) {
-      const t = setTimeout(() => {
+      const speakTimer = setTimeout(() => {
         // Cancel any ongoing speech before speaking next question
         if (stopSpeakingRef.current) stopSpeakingRef.current();
         speakRef.current(questions[current].targetWord, { rate: 0.7 });
       }, 600);
-      return () => clearTimeout(t);
+      return () => clearTimeout(speakTimer);
     }
   }, [current, questions]);
 
@@ -770,12 +757,10 @@ function ListenChooseGame({ letter, onComplete }) {
       <ConfettiBurst show={showConfetti} />
       <div className="bg-gradient-to-r from-green-100 to-teal-100 dark:from-green-950/30 dark:to-teal-950/30 rounded-2xl p-3 mb-4">
         <p className="text-lg font-black">
-          {uiLang === 'he' ? '🎧 הקשיבו ובחרו!' : '🎧 Listen & Choose!'}
+          {t('listenAndChooseTitle', uiLang)}
         </p>
         <p className="text-sm text-gray-500 font-medium mt-1">
-          {uiLang === 'he'
-            ? 'לחצו על הרמקול כדי לשמוע מילה, ואז בחרו את התמונה הנכונה!'
-            : 'Tap the speaker to hear a word, then pick the right picture!'}
+          {t('tapSpeakerPickPicture', uiLang)}
         </p>
       </div>
 
@@ -839,6 +824,18 @@ const COMPLETION_PHRASES_EN = [
   'Speakli is proud of you! Keep it up!',
   'Awesome! You finished successfully!',
 ];
+const COMPLETION_PHRASES_AR = [
+  'أحسنتم! جمعتم نجومًا! هيا نكمل',
+  'رائع! عمل ممتاز!',
+  'سبيكلي فخور بكم! استمروا هكذا!',
+  'ممتاز! أنهيتم بنجاح!',
+];
+const COMPLETION_PHRASES_RU = [
+  'Молодцы! Вы собрали звёзды! Давайте продолжим',
+  'Потрясающе! Отличная работа!',
+  'Спикли гордится вами! Так держать!',
+  'Супер! Вы успешно закончили!',
+];
 
 function GameFlow({ letter, onComplete, onBack }) {
   const { uiLang } = useTheme();
@@ -852,20 +849,21 @@ function GameFlow({ letter, onComplete, onBack }) {
   // Speak congratulations when completing all games
   useEffect(() => {
     if (showComplete) {
-      const phrases = uiLang === 'he' ? COMPLETION_PHRASES_HE : COMPLETION_PHRASES_EN;
+      const PHRASES_BY_LANG = { he: COMPLETION_PHRASES_HE, ar: COMPLETION_PHRASES_AR, ru: COMPLETION_PHRASES_RU };
+      const phrases = PHRASES_BY_LANG[uiLang] || COMPLETION_PHRASES_EN;
       const phrase = phrases[Math.floor(Math.random() * phrases.length)];
       const timer = setTimeout(() => {
-        speak(phrase, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9 });
+        speak(phrase, { lang: uiLang, rate: 0.9 });
       }, 500);
       return () => clearTimeout(timer);
     }
   }, [showComplete]);
 
   const games = [
-    { component: FindLetterGame, name: uiLang === 'he' ? '🔍 מצאו את האות' : '🔍 Find Letter', color: 'from-purple-500 to-pink-500' },
-    { component: MatchWordGame, name: uiLang === 'he' ? '🧩 התאימו מילה' : '🧩 Match Words', color: 'from-blue-500 to-cyan-500' },
-    { component: CaseMatchGame, name: uiLang === 'he' ? '🔠 גדולה וקטנה' : '🔠 Big & Small', color: 'from-orange-500 to-yellow-500' },
-    { component: ListenChooseGame, name: uiLang === 'he' ? '🎧 הקשיבו ובחרו' : '🎧 Listen & Pick', color: 'from-green-500 to-teal-500' },
+    { component: FindLetterGame, name: t('gameFindLetter', uiLang), color: 'from-purple-500 to-pink-500' },
+    { component: MatchWordGame, name: t('gameMatchWords', uiLang), color: 'from-blue-500 to-cyan-500' },
+    { component: CaseMatchGame, name: t('gameBigSmall', uiLang), color: 'from-orange-500 to-yellow-500' },
+    { component: ListenChooseGame, name: t('gameListenPick', uiLang), color: 'from-green-500 to-teal-500' },
   ];
 
   const handleGameComplete = useCallback(() => {
@@ -885,12 +883,10 @@ function GameFlow({ letter, onComplete, onBack }) {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
           <SpeakliAvatar mode="celebrate" size="xl" glow />
           <h2 className="text-4xl font-black py-2 mb-2 mt-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {uiLang === 'he' ? 'ספיקלי גאה בך!' : 'Speakli is proud!'}
+            {t('speakliProud', uiLang)}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-4 font-medium">
-            {uiLang === 'he'
-              ? `למדת את האות ${letter.letter}!`
-              : `You mastered letter ${letter.letter}!`}
+            {tReplace('youMasteredLetter', uiLang, { letter: letter.letter })}
           </p>
           <div className="flex gap-2 mb-6">
             {[0, 1, 2, 3].map(i => (
@@ -914,7 +910,7 @@ function GameFlow({ letter, onComplete, onBack }) {
             onClick={() => onComplete(letter.letter)}
             className={`px-10 py-5 rounded-2xl font-black text-white text-xl bg-gradient-to-r ${letter.color} shadow-2xl active:scale-[0.97] transition-all`}
           >
-            {uiLang === 'he' ? 'המשיכו' : 'Continue'} ✨
+            {t('continue', uiLang)} ✨
           </button>
         </div>
       </div>
@@ -930,7 +926,7 @@ function GameFlow({ letter, onComplete, onBack }) {
         {/* Game header */}
         <div className="flex items-center justify-between mb-3">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm">
-            <ArrowLeft size={18} className={uiLang === 'he' ? 'rotate-180' : ''} />
+            <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1.5">
             <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${letter.color} flex items-center justify-center`}>

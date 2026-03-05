@@ -11,6 +11,8 @@ const MODEL_ID = 'eleven_v3';
 // Detect language from text (simple heuristic)
 function detectLang(text) {
   if (/[\u0590-\u05FF]/.test(text)) return 'he';
+  if (/[\u0600-\u06FF]/.test(text)) return 'ar';
+  if (/[\u0400-\u04FF]/.test(text)) return 'ru';
   return 'en';
 }
 
@@ -22,10 +24,25 @@ function cleanForTTS(text, lang) {
     cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
     cleaned = cleaned.replace(/\s*\/\s*/g, ' או ');
   }
+  if (lang === 'ar') {
+    // Remove parenthetical content for Arabic
+    cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
+    cleaned = cleaned.replace(/\s*\/\s*/g, ' أو ');
+  }
+  if (lang === 'ru') {
+    // Remove parenthetical content for Russian
+    cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
+    cleaned = cleaned.replace(/\s*\/\s*/g, ' или ');
+  }
   return cleaned.replace(/\s+/g, ' ').trim();
 }
 
-async function callElevenLabsTTS(text, voiceId) {
+// Use multilingual v2 for Arabic and Russian (better support than v3)
+const MULTILINGUAL_MODEL_ID = 'eleven_multilingual_v2';
+const MULTILINGUAL_LANGS = new Set(['ar', 'ru']);
+
+async function callElevenLabsTTS(text, voiceId, lang) {
+  const modelId = MULTILINGUAL_LANGS.has(lang) ? MULTILINGUAL_MODEL_ID : MODEL_ID;
   const response = await fetch(`${ELEVENLABS_API_URL}/${voiceId}`, {
     method: 'POST',
     headers: {
@@ -35,7 +52,7 @@ async function callElevenLabsTTS(text, voiceId) {
     },
     body: JSON.stringify({
       text,
-      model_id: MODEL_ID,
+      model_id: modelId,
       voice_settings: {
         stability: 0.5,
         similarity_boost: 0.75,
@@ -69,7 +86,7 @@ export default async function handler(req, res) {
   if (!trimmed) {
     return res.status(400).json({ error: 'Text cannot be empty' });
   }
-  const ALLOWED_LANGS = ['he', 'en', 'en-US', 'en-GB'];
+  const ALLOWED_LANGS = ['he', 'en', 'en-US', 'en-GB', 'ar', 'ru'];
   const detectedLang = (lang && ALLOWED_LANGS.includes(lang)) ? lang : detectLang(trimmed);
   const voiceId = VOICE_ID;
 
@@ -92,7 +109,7 @@ export default async function handler(req, res) {
 
   // 2. Generate via ElevenLabs TTS
   try {
-    const audioBase64 = await callElevenLabsTTS(cleanForTTS(trimmed, detectedLang), voiceId);
+    const audioBase64 = await callElevenLabsTTS(cleanForTTS(trimmed, detectedLang), voiceId, detectedLang);
 
     if (!audioBase64) {
       return res.status(500).json({ error: 'No audio in response' });

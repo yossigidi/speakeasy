@@ -9,14 +9,15 @@ import { playCorrect, playWrong, playComplete, playStar, playTap } from '../util
 import { WORDS_BY_LEVEL, SENTENCES_BY_LEVEL, getWordsForLevel } from '../data/kids-vocabulary.js';
 import { QUEST_GRAMMAR } from '../data/kids-vocabulary.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
 /* ─── Constants ─── */
 
 const QUEST_SCENES = [
-  { id: 'forest', emoji: '🌲', nameEn: 'Magic Forest', nameHe: 'היער הקסום', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameEn: 'Dragon', bossNameHe: 'דרקון', bgImage: '/images/adventure/backgrounds/forest-sky.jpg', bossImage: '/images/adventure/characters/dragon-drago.jpg', icon: '/images/adventure/objects/world-icon-forest.jpg' },
-  { id: 'school', emoji: '🏫', nameEn: 'Haunted School', nameHe: 'בית הספר הרדוף', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameEn: 'Ghost', bossNameHe: 'רוח רפאים', bgImage: '/images/quest/backgrounds/school-bg.jpg', bossImage: '/images/quest/bosses/ghost-boss.jpg', icon: '/images/quest/icons/school-icon.jpg' },
-  { id: 'space', emoji: '🚀', nameEn: 'Space Station', nameHe: 'תחנת חלל', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameEn: 'Alien', bossNameHe: 'חייזר', bgImage: '/images/quest/backgrounds/space-bg.jpg', bossImage: '/images/quest/bosses/alien-boss.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
-  { id: 'ocean', emoji: '🌊', nameEn: 'Deep Ocean', nameHe: 'מעמקי הים', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameEn: 'Octopus', bossNameHe: 'תמנון', bgImage: '/images/quest/backgrounds/ocean-bg.jpg', bossImage: '/images/quest/bosses/octopus-boss.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
+  { id: 'forest', emoji: '🌲', nameKey: 'questSceneForest', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameKey: 'questBossForest', bgImage: '/images/adventure/backgrounds/forest-sky.jpg', bossImage: '/images/adventure/characters/dragon-drago.jpg', icon: '/images/adventure/objects/world-icon-forest.jpg' },
+  { id: 'school', emoji: '🏫', nameKey: 'questSceneSchool', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameKey: 'questBossSchool', bgImage: '/images/quest/backgrounds/school-bg.jpg', bossImage: '/images/quest/bosses/ghost-boss.jpg', icon: '/images/quest/icons/school-icon.jpg' },
+  { id: 'space', emoji: '🚀', nameKey: 'questSceneSpace', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameKey: 'questBossSpace', bgImage: '/images/quest/backgrounds/space-bg.jpg', bossImage: '/images/quest/bosses/alien-boss.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
+  { id: 'ocean', emoji: '🌊', nameKey: 'questSceneOcean', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameKey: 'questBossOcean', bgImage: '/images/quest/backgrounds/ocean-bg.jpg', bossImage: '/images/quest/bosses/octopus-boss.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
 ];
 
 // First hero is Speakli (avatar image), rest are emoji heroes
@@ -44,8 +45,7 @@ const PETS = ['🐉', '🦄', '🐺', '🦅', '🐱', '🤖'];
 const OUTFIT_COST = 30;
 const PET_COST = 50;
 
-const MISSION_NAMES_EN = ['Vocabulary Hunt', 'Boss Battle', 'Speech Mission'];
-const MISSION_NAMES_HE = ['ציד מילים', 'קרב בוס', 'משימת דיבור'];
+const MISSION_NAME_KEYS = ['questMissionVocab', 'questMissionBoss', 'questMissionSpeech'];
 const MISSION_EMOJIS = ['🏔️', '⚔️', '🎤'];
 
 /* ─── Helpers ─── */
@@ -103,7 +103,7 @@ function FloatingXP({ amount, x, y }) {
 }
 
 /* ─── Boss HP Bar ─── */
-function BossHPBar({ hp, maxHP, bossEmoji, bossImage, bossName, isHe }) {
+function BossHPBar({ hp, maxHP, bossEmoji, bossImage, bossName }) {
   const pct = Math.max(0, (hp / maxHP) * 100);
   const barColor = pct > 50 ? 'bg-red-500' : pct > 25 ? 'bg-orange-500' : 'bg-yellow-500';
   return (
@@ -129,7 +129,7 @@ function BossHPBar({ hp, maxHP, bossEmoji, bossImage, bossName, isHe }) {
 }
 
 /* ─── Game Header ─── */
-function QuestHeader({ scene, onBack, missionIndex, isHe }) {
+function QuestHeader({ scene, onBack, missionIndex, uiLang }) {
   return (
     <div className={`sticky top-0 z-30 bg-gradient-to-r ${scene.bg} shadow-lg`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center top' } : undefined}>
       <div className="flex items-center justify-between px-3 py-2">
@@ -138,7 +138,7 @@ function QuestHeader({ scene, onBack, missionIndex, isHe }) {
         </button>
         <div className="text-center">
           <span className="text-white font-black text-sm">
-            {isHe ? scene.nameHe : scene.nameEn}
+            {t(scene.nameKey, uiLang)}
           </span>
           <div className="flex items-center justify-center gap-1 mt-0.5">
             {[0, 1, 2].map(i => (
@@ -160,7 +160,7 @@ function QuestHeader({ scene, onBack, missionIndex, isHe }) {
 /* ══════════════════════════════════════════════════════
    QUEST INTRO — Scene selection + hero display
    ══════════════════════════════════════════════════════ */
-function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe }) {
+function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLang }) {
   const heroIdx = hero?.character || 0;
   const outfitEmoji = OUTFITS[hero?.outfit || 0];
   const petEmoji = hero?.pet != null ? PETS[hero.pet] : null;
@@ -197,7 +197,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
           <Shield size={16} className="text-yellow-300" />
           <span className="text-white font-bold text-sm">
-            {isHe ? `גיבור ספיקלי רמה ${questLevel}` : `Speakli Hero Level ${questLevel}`}
+            {tReplace('questHeroLevel', uiLang, { level: questLevel })}
           </span>
         </div>
 
@@ -214,10 +214,10 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
           ) : null}
           <div className="text-4xl mb-2" style={scene.icon ? { display: 'none' } : {}}>{scene.emoji}</div>
           <h2 className="text-white font-black text-xl mb-1">
-            {isHe ? scene.nameHe : scene.nameEn}
+            {t(scene.nameKey, uiLang)}
           </h2>
           <p className="text-white/70 text-sm">
-            {isHe ? `הביסו את ה${scene.bossNameHe} עם כוח האנגלית!` : `Defeat the ${scene.bossNameEn} with English power!`}
+            {tReplace('questDefeatBoss', uiLang, { boss: t(scene.bossNameKey, uiLang) })}
           </p>
           <div className="flex items-center justify-center gap-1 mt-2">
             {scene.bossImage ? (
@@ -225,7 +225,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
             ) : null}
             <span className="text-2xl" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</span>
             <span className="text-white/60 text-xs">
-              {isHe ? `בוס: ${scene.bossNameHe}` : `Boss: ${scene.bossNameEn}`}
+              {tReplace('questBossLabel', uiLang, { boss: t(scene.bossNameKey, uiLang) })}
             </span>
           </div>
         </div>
@@ -235,7 +235,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
           {MISSION_EMOJIS.map((e, i) => (
             <div key={i} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/15 text-white text-xs font-bold">
               <span>{e}</span>
-              <span>{isHe ? MISSION_NAMES_HE[i] : MISSION_NAMES_EN[i]}</span>
+              <span>{t(MISSION_NAME_KEYS[i], uiLang)}</span>
             </div>
           ))}
         </div>
@@ -245,7 +245,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
           onClick={onStart}
           className="w-full py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-black text-xl shadow-xl active:scale-95 transition-transform"
         >
-          {isHe ? '!התחילו משימה' : 'Start Quest!'}
+          {t('questStart', uiLang)}
         </button>
 
         {/* Hero button */}
@@ -253,7 +253,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
           onClick={onHero}
           className="w-full py-3 rounded-2xl bg-white/20 text-white font-bold text-sm active:scale-95 transition-transform"
         >
-          {isHe ? '🦸 התאמה אישית של הגיבור' : '🦸 Customize Hero'}
+          {t('questCustomizeHero', uiLang)}
         </button>
       </div>
     </div>
@@ -263,10 +263,10 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, isHe
 /* ══════════════════════════════════════════════════════
    MISSION TRANSITION — Between stages
    ══════════════════════════════════════════════════════ */
-function MissionTransition({ missionIndex, scene, isHe, onReady }) {
+function MissionTransition({ missionIndex, scene, uiLang, onReady }) {
   useEffect(() => {
-    const t = setTimeout(onReady, 2500);
-    return () => clearTimeout(t);
+    const tid = setTimeout(onReady, 2500);
+    return () => clearTimeout(tid);
   }, [onReady]);
 
   return (
@@ -274,10 +274,10 @@ function MissionTransition({ missionIndex, scene, isHe, onReady }) {
       <div className="text-center animate-pop-in space-y-4">
         <div className="text-6xl">{MISSION_EMOJIS[missionIndex]}</div>
         <h2 className="text-white font-black text-2xl">
-          {isHe ? `משימה ${missionIndex + 1}` : `Mission ${missionIndex + 1}`}
+          {tReplace('questMissionNumber', uiLang, { num: missionIndex + 1 })}
         </h2>
         <p className="text-white/80 font-bold text-lg">
-          {isHe ? MISSION_NAMES_HE[missionIndex] : MISSION_NAMES_EN[missionIndex]}
+          {t(MISSION_NAME_KEYS[missionIndex], uiLang)}
         </p>
         <div className="flex justify-center gap-1">
           {[0, 1, 2].map(i => (
@@ -292,7 +292,7 @@ function MissionTransition({ missionIndex, scene, isHe, onReady }) {
 /* ══════════════════════════════════════════════════════
    STAGE 1: VOCABULARY HUNT
    ══════════════════════════════════════════════════════ */
-function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, speakSequence }) {
+function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, speakSequence }) {
   const words = useMemo(() => getWordsForLevel(childLevel), [childLevel]);
   const optionCount = childLevel <= 2 ? 4 : 6;
   const TOTAL_ROUNDS = 5;
@@ -322,12 +322,12 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
     // Voice instruction
     setTimeout(() => {
       speakSequence([
-        { text: isHe ? 'מצאו את ה' : 'Find the', lang: isHe ? 'he' : 'en-US', rate: 0.9 },
+        { text: t('questFindThe', uiLang), lang: uiLang, rate: 0.9 },
         { pause: 200 },
         { text: targetWord.word, lang: 'en-US', rate: 0.85 },
       ]);
     }, 400);
-  }, [words, optionCount, isHe, speakSequence]);
+  }, [words, optionCount, uiLang, speakSequence]);
 
   useEffect(() => {
     if (!roundInitRef.current) {
@@ -374,7 +374,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
       {/* Round counter */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-white/70 text-sm font-bold">
-          {isHe ? `סיבוב ${round + 1}/${TOTAL_ROUNDS}` : `Round ${round + 1}/${TOTAL_ROUNDS}`}
+          {tReplace('questRoundCounter', uiLang, { current: round + 1, total: TOTAL_ROUNDS })}
         </span>
         <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-400/20">
           <span className="text-yellow-300 text-sm font-bold">⚡ {xpEarned} XP</span>
@@ -384,10 +384,10 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
       {/* Instruction */}
       <div className="text-center mb-6">
         <p className="text-white/70 text-sm font-medium mb-1">
-          {isHe ? '!מצאו את' : 'Find the'}
+          {t('questFindThe', uiLang)}
         </p>
         <h2 className="text-white font-black text-3xl">{target?.word || ''}</h2>
-        <p className="text-white/50 text-xs mt-1" dir="rtl">{target?.translation || ''}</p>
+        <p className="text-white/50 text-xs mt-1" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{target?.translation || ''}</p>
         <button
           onClick={() => speak(target?.word, { lang: 'en-US', rate: 0.8 })}
           className="mt-2 p-2 rounded-full bg-white/20 active:scale-90 transition-transform inline-flex"
@@ -428,7 +428,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, isHe, speak, spe
 /* ══════════════════════════════════════════════════════
    STAGE 2: BOSS BATTLE
    ══════════════════════════════════════════════════════ */
-function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, onBossHPChange, isHe, speak }) {
+function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, onBossHPChange, uiLang, speak }) {
   const grammar = useMemo(() => {
     const lvl = QUEST_GRAMMAR[childLevel] || QUEST_GRAMMAR[1];
     return shuffle(lvl).slice(0, 4);
@@ -496,7 +496,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
       <div className="text-center mb-4">
         <div className={`inline-block transition-all duration-500 ${bossAnim}`}>
           {scene.bossImage ? (
-            <img src={scene.bossImage} alt={scene.bossNameEn}
+            <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')}
               className="w-24 h-24 object-contain drop-shadow-lg mx-auto"
               onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }}
             />
@@ -510,19 +510,19 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
         )}
       </div>
 
-      <BossHPBar hp={bossHP} maxHP={bossMaxHP} bossEmoji={scene.boss} bossImage={scene.bossImage} bossName={isHe ? scene.bossNameHe : scene.bossNameEn} isHe={isHe} />
+      <BossHPBar hp={bossHP} maxHP={bossMaxHP} bossEmoji={scene.boss} bossImage={scene.bossImage} bossName={t(scene.bossNameKey, uiLang)} />
 
       {/* Round */}
       <div className="flex justify-between items-center my-3">
         <span className="text-white/70 text-sm font-bold">
-          {isHe ? `התקפה ${round + 1}/${TOTAL_ROUNDS}` : `Attack ${round + 1}/${TOTAL_ROUNDS}`}
+          {tReplace('questAttackCounter', uiLang, { current: round + 1, total: TOTAL_ROUNDS })}
         </span>
         <span className="text-yellow-300 text-sm font-bold">⚡ {xpEarned} XP</span>
       </div>
 
       {/* Sentence with blank */}
       <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-4">
-        <p className="text-white/60 text-xs mb-2" dir="rtl">{current.translationHe}</p>
+        <p className="text-white/60 text-xs mb-2" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
         <p className="text-white font-bold text-xl text-center">
           {parts[0]}
           <span className="inline-block px-3 py-1 mx-1 rounded-lg bg-yellow-400/30 border-2 border-dashed border-yellow-400 min-w-[60px]">
@@ -558,7 +558,7 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
 /* ══════════════════════════════════════════════════════
    STAGE 3: SPEECH MISSION
    ══════════════════════════════════════════════════════ */
-function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) {
+function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }) {
   const sentences = useMemo(() => {
     const lvl = SENTENCES_BY_LEVEL[childLevel] || SENTENCES_BY_LEVEL[1];
     return shuffle(lvl).slice(0, 3);
@@ -657,7 +657,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
       {/* Round */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-white/70 text-sm font-bold">
-          {isHe ? `סיבוב ${round + 1}/${TOTAL_ROUNDS}` : `Round ${round + 1}/${TOTAL_ROUNDS}`}
+          {tReplace('questRoundCounter', uiLang, { current: round + 1, total: TOTAL_ROUNDS })}
         </span>
         <span className="text-yellow-300 text-sm font-bold">⚡ {xpEarned} XP</span>
       </div>
@@ -665,7 +665,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
       {/* Instruction */}
       <div className="text-center mb-6">
         <p className="text-white/70 text-sm mb-2">
-          {isHe ? '!אמרו את המשפט' : 'Say the phrase!'}
+          {t('questSayPhrase', uiLang)}
         </p>
 
         {/* Target phrase */}
@@ -681,7 +681,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
               </span>
             ))}
           </p>
-          <p className="text-white/50 text-sm" dir="rtl">{current.translationHe}</p>
+          <p className="text-white/50 text-sm" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
           <button
             onClick={() => speakFn(current.sentence, { lang: 'en-US', rate: 0.8 })}
             className="mt-3 p-2.5 rounded-full bg-white/20 active:scale-90 transition-transform inline-flex"
@@ -694,8 +694,8 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
         {result && (
           <div className={`text-xl font-black mb-3 animate-pop-in ${result === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
             {result === 'correct'
-              ? (isHe ? '!מדהים! נכון' : 'Amazing! Correct!')
-              : (isHe ? 'נסו שוב...' : 'Try again...')}
+              ? t('questAmazingCorrect', uiLang)
+              : t('questTryAgain', uiLang)}
           </div>
         )}
 
@@ -706,7 +706,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
               type="text"
               value={typedText}
               onChange={e => setTypedText(e.target.value)}
-              placeholder={isHe ? 'הקלד את המשפט...' : 'Type the phrase...'}
+              placeholder={t('questTypePhrase', uiLang)}
               className="w-full py-3 px-4 rounded-xl bg-white/15 text-white placeholder-white/40 text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               dir="ltr"
               onKeyDown={e => e.key === 'Enter' && handleTypeSubmit()}
@@ -715,7 +715,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
               onClick={handleTypeSubmit}
               className="w-full py-3 rounded-xl bg-yellow-400/30 text-yellow-300 font-bold active:scale-95 transition-transform"
             >
-              {isHe ? 'בדוק' : 'Check'}
+              {t('questCheck', uiLang)}
             </button>
           </div>
         ) : (
@@ -733,7 +733,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
 
         {isListening && (
           <p className="text-white/60 text-sm mt-3 animate-pulse">
-            {isHe ? '...מקשיב' : 'Listening...'}
+            {t('questListening', uiLang)}
           </p>
         )}
 
@@ -742,7 +742,7 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
             onClick={() => setTypeFallback(true)}
             className="mt-4 text-white/40 text-xs underline"
           >
-            {isHe ? 'העדף הקלדה' : 'Prefer typing'}
+            {t('questPreferTyping', uiLang)}
           </button>
         )}
       </div>
@@ -753,13 +753,13 @@ function SpeechMission({ scene, childLevel, onComplete, isHe, speak: speakFn }) 
 /* ══════════════════════════════════════════════════════
    QUEST COMPLETE SCREEN
    ══════════════════════════════════════════════════════ */
-function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContinue, isHe }) {
+function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContinue, uiLang }) {
   const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
     playComplete();
-    const t = setTimeout(() => setShowConfetti(false), 3000);
-    return () => clearTimeout(t);
+    const tid = setTimeout(() => setShowConfetti(false), 3000);
+    return () => clearTimeout(tid);
   }, []);
 
   return (
@@ -770,7 +770,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
         {/* Boss defeated */}
         <div className="relative inline-block">
           {scene.bossImage ? (
-            <img src={scene.bossImage} alt={scene.bossNameEn} className="w-20 h-20 object-contain opacity-50 grayscale mx-auto" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
+            <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')} className="w-20 h-20 object-contain opacity-50 grayscale mx-auto" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
           ) : null}
           <div className="text-7xl opacity-50 grayscale" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -779,17 +779,17 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
         </div>
 
         <h1 className="text-white font-black text-3xl">
-          {isHe ? '!המשימה הושלמה' : 'Quest Complete!'}
+          {t('questComplete', uiLang)}
         </h1>
 
         <p className="text-white/70 text-sm">
-          {isHe ? `הביסת את ה${scene.bossNameHe}!` : `You defeated the ${scene.bossNameEn}!`}
+          {tReplace('questDefeatedBoss', uiLang, { boss: t(scene.bossNameKey, uiLang) })}
         </p>
 
         {/* Rewards */}
         <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 space-y-3">
           <h3 className="text-yellow-300 font-black text-lg">
-            {isHe ? 'פרסים' : 'Rewards'}
+            {t('questRewards', uiLang)}
           </h3>
           <div className="flex justify-center gap-6">
             <div className="text-center">
@@ -800,7 +800,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
             <div className="text-center">
               <div className="text-3xl mb-1">🪙</div>
               <span className="text-white font-black text-xl">{coinsEarned}</span>
-              <p className="text-white/60 text-xs">{isHe ? 'מטבעות' : 'Coins'}</p>
+              <p className="text-white/60 text-xs">{t('questCoins', uiLang)}</p>
             </div>
           </div>
         </div>
@@ -808,7 +808,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
         {/* English power meter */}
         <div className="bg-white/10 rounded-2xl p-3">
           <p className="text-white/70 text-xs font-bold mb-1.5">
-            {isHe ? 'כוח אנגלית' : 'English Power'}
+            {t('questEnglishPower', uiLang)}
           </p>
           <div className="h-3 rounded-full bg-black/30 overflow-hidden">
             <div
@@ -817,7 +817,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
             />
           </div>
           <p className="text-yellow-300 text-xs font-bold mt-1">
-            {isHe ? `רמת גיבור ${questLevel}` : `Hero Level ${questLevel}`}
+            {tReplace('questHeroLevelShort', uiLang, { level: questLevel })}
           </p>
         </div>
 
@@ -825,7 +825,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
           onClick={onContinue}
           className="w-full py-4 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-black text-xl shadow-xl active:scale-95 transition-transform"
         >
-          {isHe ? '!המשיכו' : 'Continue!'}
+          {t('questContinue', uiLang)}
         </button>
       </div>
     </div>
@@ -835,7 +835,7 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
 /* ══════════════════════════════════════════════════════
    HERO CUSTOMIZER
    ══════════════════════════════════════════════════════ */
-function HeroCustomizer({ hero, questCoins, onBuy, onBack, isHe }) {
+function HeroCustomizer({ hero, questCoins, onBuy, onBack, uiLang }) {
   const [tab, setTab] = useState('heroes'); // heroes | outfits | pets
   const heroIdx = hero?.character || 0;
   const outfitEmoji = OUTFITS[hero?.outfit || 0];
@@ -948,18 +948,18 @@ function HeroCustomizer({ hero, questCoins, onBuy, onBack, isHe }) {
       {/* Tabs */}
       <div className="flex gap-2 mb-4">
         {[
-          { key: 'heroes', label: isHe ? 'גיבורים' : 'Heroes', emoji: '🦸' },
-          { key: 'outfits', label: isHe ? 'ציוד' : 'Outfits', emoji: '⚔️' },
-          { key: 'pets', label: isHe ? 'חיות' : 'Pets', emoji: '🐉' },
-        ].map(t => (
+          { key: 'heroes', label: t('questHeroes', uiLang), emoji: '🦸' },
+          { key: 'outfits', label: t('questOutfits', uiLang), emoji: '⚔️' },
+          { key: 'pets', label: t('questPets', uiLang), emoji: '🐉' },
+        ].map(item => (
           <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
+            key={item.key}
+            onClick={() => setTab(item.key)}
             className={`flex-1 py-2 rounded-xl font-bold text-sm transition-all ${
-              tab === t.key ? 'bg-yellow-400/30 text-yellow-300' : 'bg-white/10 text-white/60'
+              tab === item.key ? 'bg-yellow-400/30 text-yellow-300' : 'bg-white/10 text-white/60'
             }`}
           >
-            {t.emoji} {t.label}
+            {item.emoji} {item.label}
           </button>
         ))}
       </div>
@@ -979,7 +979,6 @@ export default function EnglishQuestPage({ onBack }) {
   const { uiLang } = useTheme();
   const { progress, updateProgress, addXP } = useUserProgress();
   const { speak, speakSequence } = useSpeech();
-  const isHe = uiLang === 'he';
 
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
   const questsCompleted = progress.questsCompleted || 0;
@@ -1088,7 +1087,7 @@ export default function EnglishQuestPage({ onBack }) {
             questLevel={questLevel}
             onStart={startQuest}
             onHero={() => { playTap(); setPhase('hero'); }}
-            isHe={isHe}
+            uiLang={uiLang}
           />
         );
 
@@ -1097,7 +1096,7 @@ export default function EnglishQuestPage({ onBack }) {
           <MissionTransition
             missionIndex={missionIndex}
             scene={scene}
-            isHe={isHe}
+            uiLang={uiLang}
             onReady={handleTransitionReady}
           />
         );
@@ -1109,14 +1108,14 @@ export default function EnglishQuestPage({ onBack }) {
               scene={scene}
               onBack={onBack}
               missionIndex={missionIndex}
-              isHe={isHe}
+              uiLang={uiLang}
             />
             {missionIndex === 0 && (
               <VocabularyHuntMission
                 scene={scene}
                 childLevel={childLevel}
                 onComplete={handleMissionComplete}
-                isHe={isHe}
+                uiLang={uiLang}
                 speak={speak}
                 speakSequence={speakSequence}
               />
@@ -1129,7 +1128,7 @@ export default function EnglishQuestPage({ onBack }) {
                 bossMaxHP={BOSS_MAX_HP}
                 onComplete={handleMissionComplete}
                 onBossHPChange={setBossHP}
-                isHe={isHe}
+                uiLang={uiLang}
                 speak={speak}
               />
             )}
@@ -1138,7 +1137,7 @@ export default function EnglishQuestPage({ onBack }) {
                 scene={scene}
                 childLevel={childLevel}
                 onComplete={handleMissionComplete}
-                isHe={isHe}
+                uiLang={uiLang}
                 speak={speak}
               />
             )}
@@ -1153,7 +1152,7 @@ export default function EnglishQuestPage({ onBack }) {
             coinsEarned={coinsEarned}
             questLevel={Math.floor((questsCompleted + 1) / 3) + 1}
             onContinue={onBack}
-            isHe={isHe}
+            uiLang={uiLang}
           />
         );
 
@@ -1164,7 +1163,7 @@ export default function EnglishQuestPage({ onBack }) {
             questCoins={questCoins}
             onBuy={handleHeroBuy}
             onBack={() => setPhase('intro')}
-            isHe={isHe}
+            uiLang={uiLang}
           />
         );
 

@@ -74,7 +74,7 @@ export default function ExerciseRenderer({ exercise, onAnswer, t, uiLang, speak,
   if (exercise.type === 'word-to-hebrew') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <div className="text-gray-800 dark:text-gray-200 font-semibold text-lg mb-2">{t('translateToHebrew', uiLang)}</div>
+        <div className="text-gray-800 dark:text-gray-200 font-semibold text-lg mb-2">{t('translateToNative', uiLang)}</div>
         <div style={{ fontSize: 36, marginBottom: 4 }}>{exercise.wordData?.emoji}</div>
         <div className="text-purple-600 dark:text-purple-400 font-bold text-xl mb-5">{exercise.question}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 300, margin: '0 auto' }}>

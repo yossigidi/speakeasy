@@ -1,5 +1,6 @@
 import { Graphics, Text, Container } from 'pixi.js';
 import ExerciseBase from './ExerciseBase.js';
+import { t } from '../../../utils/translations.js';
 
 /**
  * "Listen and Find" exercise.
@@ -33,7 +34,7 @@ export default class ListenFindExercise extends ExerciseBase {
     this._targetWord = available[this.currentRound % available.length];
 
     // Prompt
-    const promptText = this.uiLang === 'he' ? 'הקשיבו ומצאו!' : 'Listen and find!';
+    const promptText = t('advListenAndFind', this.uiLang);
     this.showPrompt(promptText);
 
     // Round indicator

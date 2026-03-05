@@ -11,7 +11,7 @@ import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { playCorrect, playWrong, playComplete, playStar } from '../utils/gameSounds.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { WORDS_BY_LEVEL } from '../data/kids-vocabulary.js';
-import { t } from '../utils/translations.js';
+import { t, RTL_LANGS } from '../utils/translations.js';
 
 const TEACHER_TOPICS = [
   { id: 'colors', emoji: '🎨', titleHe: 'צבעים', titleEn: 'Colors', level: 1, gradient: 'linear-gradient(135deg, #FF6B6B, #FFE66D)' },
@@ -221,7 +221,7 @@ export default function KidsTeacherPage({ onBack }) {
   const { addXP, progress: userProgress } = useUserProgress();
   const { speak, speakSequence } = useSpeech();
   const { speakWordPair } = useSpeechSynthesis();
-  const isRTL = uiLang === 'he' || uiLang === 'ar';
+  const isRTL = RTL_LANGS.includes(uiLang);
 
   const [phase, setPhase] = useState('topic-select');
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -250,7 +250,7 @@ export default function KidsTeacherPage({ onBack }) {
     try {
       const seen = JSON.parse(sessionStorage.getItem('kids-intro-seen') || '[]');
       if (seen.includes('kids-teacher-v1')) {
-        speak(uiLang === 'he' ? 'שלום! בואו נלמד ביחד!' : 'Hello! Let\'s learn together!', { lang: uiLang === 'he' ? 'he' : 'en-US' });
+        speak(t('teacherGreeting', uiLang), { lang: uiLang });
       }
     } catch (e) {}
   }, []);

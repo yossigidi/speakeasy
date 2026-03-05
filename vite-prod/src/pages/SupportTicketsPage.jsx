@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronDown, ChevronUp, Ticket, Bug, Lightbulb, User, CreditCard, MoreHorizontal, Inbox } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, RTL_LANGS } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 
 const CATEGORY_ICONS = {
@@ -48,7 +48,7 @@ export default function SupportTicketsPage({ onBack }) {
   const formatDate = (ts) => {
     if (!ts) return '';
     const d = ts.toDate ? ts.toDate() : new Date(ts);
-    return d.toLocaleDateString(uiLang === 'he' ? 'he-IL' : 'en-US', {
+    return d.toLocaleDateString(({ he: 'he-IL', ar: 'ar-SA', ru: 'ru-RU' }[uiLang] || 'en-US'), {
       day: 'numeric', month: 'short', year: 'numeric',
     });
   };
@@ -58,7 +58,7 @@ export default function SupportTicketsPage({ onBack }) {
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <button onClick={onBack} className="p-2 rounded-xl bg-white/60 dark:bg-gray-800/60">
-          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${uiLang === 'he' ? 'rotate-180' : ''}`} />
+          <ChevronLeft size={20} className={`text-gray-600 dark:text-gray-300 ${RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''}`} />
         </button>
         <div className="flex items-center gap-2">
           <Ticket size={22} className="text-cyan-500" />

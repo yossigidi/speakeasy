@@ -1,5 +1,6 @@
 import React from 'react';
 import LessonNode from './LessonNode.jsx';
+import { t } from '../../utils/translations.js';
 
 export default function UnitIsland({
   unit,
@@ -13,7 +14,7 @@ export default function UnitIsland({
   getLessonResult,
   currentLessonId,
 }) {
-  const unitName = uiLang === 'he' ? unit.nameHe : unit.name;
+  const unitName = unit[t('nameHeField', uiLang)];
   const completedCount = unitProgress?.completed || 0;
   const totalCount = unitProgress?.total || 6;
   const progressPercent = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
@@ -49,7 +50,7 @@ export default function UnitIsland({
             {unitName}
           </h3>
           <span style={{ fontSize: 10, color: '#9CA3AF' }}>
-            {completedCount}/{totalCount} {uiLang === 'he' ? '\u05E9\u05D9\u05E2\u05D5\u05E8\u05D9\u05DD' : 'lessons'}
+            {completedCount}/{totalCount} {t('curriculumLessons', uiLang)}
           </span>
         </div>
         {!isUnlocked && <span style={{ fontSize: 18 }}>{'\u{1F512}'}</span>}

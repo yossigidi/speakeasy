@@ -8,7 +8,7 @@ import useCurriculumProgress from '../../hooks/useCurriculumProgress.js';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete } from '../../utils/gameSounds.js';
-import { t } from '../../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../../utils/translations.js';
 
 export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, uiLang }) {
   const [phase, setPhase] = useState('intro'); // 'intro' | 'exercise' | 'complete'
@@ -60,10 +60,10 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>😕</div>
         <div style={{ fontSize: 20, fontWeight: 700, color: '#374151', marginBottom: 8 }}>
-          {uiLang === 'he' ? 'לא הצלחנו לטעון את השיעור' : "Couldn't load lesson"}
+          {t('lessonLoadError', uiLang)}
         </div>
         <div style={{ fontSize: 14, color: '#9CA3AF', marginBottom: 24 }}>
-          {uiLang === 'he' ? 'נסו שוב מאוחר יותר' : 'Please try again later'}
+          {t('tryAgainLater', uiLang)}
         </div>
         <button
           onClick={onBack}
@@ -91,13 +91,13 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         lessonType === 'writing' ? 'introWritingDesc' :
         lessonType === 'test' ? 'introTestDesc' : 'introMixedDesc';
 
-      const title = uiLang === 'he' ? lessonData.lesson.titleHe : lessonData.lesson.titleEn;
+      const title = lf(lessonData.lesson, 'title', uiLang);
       const desc = t(introKey, uiLang);
 
       // Speak title then description
       introTimerRef.current = setTimeout(() => {
-        speak(title, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, onEnd: () => {
-          introTimerRef.current = setTimeout(() => speak(desc, { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.9, _queued: true }), 200);
+        speak(title, { lang: uiLang, rate: 0.9, onEnd: () => {
+          introTimerRef.current = setTimeout(() => speak(desc, { lang: uiLang, rate: 0.9, _queued: true }), 200);
         }});
       }, 200);
     }
@@ -129,7 +129,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         const msg = newStreak >= 3
           ? t('teacherEncourage3', uiLang)
           : t('teacherEncourage1', uiLang);
-        speak(msg, { lang: uiLang === 'he' ? 'he' : 'en', rate: 1.0, _queued: true });
+        speak(msg, { lang: uiLang, rate: 1.0, _queued: true });
         return newStreak;
       });
     } else {
@@ -144,7 +144,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       });
       setStreak(0);
       setTeacherState('encouraging');
-      speak(t('teacherWrong', uiLang), { lang: uiLang === 'he' ? 'he' : 'en', rate: 0.95, _queued: true });
+      speak(t('teacherWrong', uiLang), { lang: uiLang, rate: 0.95, _queued: true });
     }
 
     // Always add the answer (once)
@@ -225,7 +225,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     : LESSON_TYPES.mixed;
 
   const lessonTitle = lessonData?.lesson
-    ? (uiLang === 'he' ? lessonData.lesson.titleHe : lessonData.lesson.titleEn) || lessonData.lesson.titleEn || ''
+    ? lf(lessonData.lesson, 'title', uiLang) || lessonData.lesson.titleEn || ''
     : '';
 
   // ── Intro Phase ──
@@ -251,7 +251,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         }}>
           <span style={{ fontSize: 24 }}>{lessonTypeInfo.icon}</span>
           <span style={{ fontSize: 16, fontWeight: 700, color: lessonTypeInfo.color }}>
-            {uiLang === 'he' ? lessonTypeInfo.nameHe : lessonTypeInfo.nameEn}
+            {lf(lessonTypeInfo, 'name', uiLang)}
           </span>
         </div>
 
@@ -266,7 +266,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         <div style={{
           fontSize: 15, color: '#6B7280', marginBottom: 12, textAlign: 'center',
           maxWidth: 280, lineHeight: 1.5,
-          direction: uiLang === 'he' ? 'rtl' : 'ltr',
+          direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr',
         }}>
           {lessonData?.lesson?.type === 'speaking' ? t('introSpeakingDesc', uiLang) :
            lessonData?.lesson?.type === 'vocabulary' ? t('introVocabDesc', uiLang) :
@@ -475,7 +475,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
             <div style={{ textAlign: 'center', padding: 40 }}>
               <div style={{ fontSize: 36, marginBottom: 12, animation: 'teacher-float 2s ease-in-out infinite' }}>📝</div>
               <div style={{ fontSize: 15, fontWeight: 600, color: '#9CA3AF' }}>
-                {uiLang === 'he' ? 'טוען תרגיל...' : 'Loading exercise...'}
+                {t('loadingExercise', uiLang)}
               </div>
             </div>
           )}

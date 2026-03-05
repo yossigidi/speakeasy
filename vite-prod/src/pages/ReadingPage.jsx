@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BookOpen, Clock, Volume2, VolumeX, ArrowLeft, Plus, Check, ChevronRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import useSpacedRepetition from '../hooks/useSpacedRepetition.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
@@ -206,10 +206,10 @@ function StoryCard({ story, onClick }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${LEVEL_COLORS[story.level] || 'bg-purple-100 text-purple-700'}`}>{story.level}</span>
-            <span className="text-xs text-gray-400">{uiLang === 'he' ? story.topicHe : story.topic}</span>
+            <span className="text-xs text-gray-400">{lf(story, 'topic', uiLang)}</span>
           </div>
           <h3 className="font-bold text-gray-900 dark:text-white truncate">
-            {uiLang === 'he' ? story.titleHe : story.title}
+            {lf(story, 'title', uiLang)}
           </h3>
           <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
             <Clock size={12} /> {story.readTime} {t('min', uiLang)}
@@ -320,7 +320,7 @@ function ReadingView({ story, onBack }) {
       <div className="pb-24 px-4 pt-4 space-y-4">
         <div className="flex items-center gap-2">
           <button onClick={() => setShowQuiz(false)} className="p-3 -ml-1 rounded-lg hover:bg-black/5 min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
+            <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
           </button>
           <span className="text-sm text-gray-500">{quizIndex + 1}/{story.questions.length}</span>
         </div>
@@ -356,7 +356,7 @@ function ReadingView({ story, onBack }) {
       {/* B2: Larger back button with safe area padding */}
       <div className="flex items-center justify-between pt-2">
         <button onClick={onBack} className="p-3 -ml-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 min-w-[44px] min-h-[44px] flex items-center justify-center">
-          <ArrowLeft size={22} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={22} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
         <button onClick={toggleReadAloud} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
           isReadingAloud
@@ -365,7 +365,7 @@ function ReadingView({ story, onBack }) {
         }`}>
           {isReadingAloud ? <VolumeX size={16} /> : <Volume2 size={16} />}
           {isReadingAloud
-            ? (uiLang === 'he' ? 'עצור' : 'Stop')
+            ? t('stopAudio', uiLang)
             : t('listenToStory', uiLang)}
         </button>
       </div>
@@ -442,7 +442,7 @@ function ReadingView({ story, onBack }) {
               size="full" variant="secondary" icon={addedWords.has(selectedWord.word) ? Check : Plus}
             >
               {addedWords.has(selectedWord.word)
-                ? (uiLang === 'he' ? 'נוסף!' : 'Added!')
+                ? t('wordAdded', uiLang)
                 : t('addToVocabulary', uiLang)}
             </AnimatedButton>
           </div>
@@ -492,7 +492,7 @@ export default function ReadingPage() {
         {t('stories', uiLang)}
       </h2>
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        {uiLang === 'he' ? 'קראו סיפורים ולמדו מילים חדשות' : 'Read stories and learn new words'}
+        {t('readStoriesDesc', uiLang)}
       </p>
 
       {/* B4: Level filter tabs */}
@@ -505,7 +505,7 @@ export default function ReadingPage() {
               : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
           }`}
         >
-          {uiLang === 'he' ? 'הכל' : 'All'}
+          {t('allFilter', uiLang)}
         </button>
         {availableLevels.map(level => (
           <button

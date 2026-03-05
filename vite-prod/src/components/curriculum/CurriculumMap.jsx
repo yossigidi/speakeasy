@@ -3,6 +3,7 @@ import UnitIsland from './UnitIsland.jsx';
 import PathConnector from './PathConnector.jsx';
 import useCurriculumProgress from '../../hooks/useCurriculumProgress.js';
 import { getLevel } from '../../data/curriculum/curriculum-index.js';
+import { t } from '../../utils/translations.js';
 
 export default function CurriculumMap({ levelId, onLessonTap, uiLang }) {
   const { curriculum, isLessonUnlocked, getLessonResult, getUnitProgress } = useCurriculumProgress();
@@ -53,7 +54,7 @@ export default function CurriculumMap({ levelId, onLessonTap, uiLang }) {
   if (!level) {
     return (
       <div className="flex items-center justify-center py-20 text-gray-400">
-        {uiLang === 'he' ? '\u05E9\u05DC\u05D1 \u05DC\u05D0 \u05D6\u05DE\u05D9\u05DF' : 'Level not available'}
+        {t('levelNotAvailable', uiLang)}
       </div>
     );
   }

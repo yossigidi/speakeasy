@@ -3,20 +3,20 @@ import { ArrowLeft, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import achievementsData from '../data/achievements.json';
 
 const CATEGORIES = ['all', 'adventure', 'streaks', 'vocabulary', 'lessons', 'conversations', 'pronunciation', 'milestones'];
 const CATEGORY_LABELS = {
-  all: { en: 'All', he: 'הכל' },
-  adventure: { en: 'Adventure', he: 'הרפתקה' },
-  streaks: { en: 'Streaks', he: 'רצפים' },
-  vocabulary: { en: 'Vocabulary', he: 'אוצר מילים' },
-  lessons: { en: 'Lessons', he: 'שיעורים' },
-  conversations: { en: 'Conversations', he: 'שיחות' },
-  pronunciation: { en: 'Pronunciation', he: 'הגייה' },
-  milestones: { en: 'Milestones', he: 'אבני דרך' },
+  all: { en: 'All', he: 'הכל', ar: 'الكل', ru: 'Все' },
+  adventure: { en: 'Adventure', he: 'הרפתקה', ar: 'مغامرة', ru: 'Приключение' },
+  streaks: { en: 'Streaks', he: 'רצפים', ar: 'تتابعات', ru: 'Серии' },
+  vocabulary: { en: 'Vocabulary', he: 'אוצר מילים', ar: 'مفردات', ru: 'Словарный запас' },
+  lessons: { en: 'Lessons', he: 'שיעורים', ar: 'دروس', ru: 'Уроки' },
+  conversations: { en: 'Conversations', he: 'שיחות', ar: 'محادثات', ru: 'Разговоры' },
+  pronunciation: { en: 'Pronunciation', he: 'הגייה', ar: 'نطق', ru: 'Произношение' },
+  milestones: { en: 'Milestones', he: 'אבני דרך', ar: 'إنجازات', ru: 'Достижения' },
 };
 
 export default function AchievementsPage({ onBack }) {
@@ -44,7 +44,7 @@ export default function AchievementsPage({ onBack }) {
     <div className="pb-24 px-4 pt-4 space-y-4">
       <div className="flex items-center gap-2">
         <button onClick={onBack} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-          <ArrowLeft size={20} className={uiLang === 'he' ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('achievements', uiLang)}</h2>
         <span className="ml-auto text-sm text-gray-500">{unlockedCount}/{achievementsData.length}</span>
@@ -78,10 +78,10 @@ export default function AchievementsPage({ onBack }) {
             >
               <div className="text-3xl mb-2">{unlocked ? achievement.icon : '🔒'}</div>
               <h4 className="text-sm font-bold text-gray-900 dark:text-white truncate">
-                {uiLang === 'he' ? achievement.titleHe : achievement.title}
+                {lf(achievement, 'title', uiLang)}
               </h4>
               <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
-                {uiLang === 'he' ? achievement.descriptionHe : achievement.description}
+                {lf(achievement, 'description', uiLang)}
               </p>
             </GlassCard>
           );

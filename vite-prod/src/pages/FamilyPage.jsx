@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, Play, Pencil, Trash2, Plus, Flame, Zap, Copy, Check, Share2, Key, BarChart3 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf } from '../utils/translations.js';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AddChildModal from '../components/family/AddChildModal.jsx';
@@ -137,7 +137,7 @@ export default function FamilyPage({ onNavigate }) {
             </div>
           ) : (
             <p className="text-sm text-gray-400 italic">
-              {uiLang === 'he' ? 'הקוד ייווצר כשתוסיף ילד' : 'Code will be created when you add a child'}
+              {t('codeWillBeCreated', uiLang)}
             </p>
           )}
           <p className="text-xs text-gray-400 dark:text-gray-500">
@@ -250,7 +250,7 @@ export default function FamilyPage({ onNavigate }) {
                     >
                       <span className="block text-sm">{info.emoji}</span>
                       <span className="block leading-tight" style={{ fontSize: '9px' }}>
-                        {uiLang === 'he' ? info.name : info.nameEn}
+                        {lf(info, 'name', uiLang)}
                       </span>
                     </button>
                   );
