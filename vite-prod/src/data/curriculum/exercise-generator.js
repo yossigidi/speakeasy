@@ -2,12 +2,14 @@
 // Takes a unit's word/sentence data and a lesson definition, generates exercises.
 //
 // Unit data shape:
-//   { words: [{ word, emoji, translation, example }], sentences: [{ en, words, he }] }
+//   { words: [{ word, emoji, translation, translationAr, translationRu, example }], sentences: [{ en, words, he, ar, ru }] }
 //
 // Lesson definition shape:
 //   { id, type, exerciseTypes: [...], wordIndices: [0,1,2,3] }
 //
 // Returns 8 exercise objects per lesson.
+
+import { lf } from '../../utils/translations.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -56,6 +58,33 @@ function randomLetterExcluding(excludeSet) {
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
+/**
+ * Get the localized translation for a word object.
+ * Uses lf() to check translationAr/translationRu/translationEn then falls back to translation (Hebrew).
+ */
+function getWordTranslation(wordData, lang) {
+  return lf(wordData, 'translation', lang);
+}
+
+/**
+ * Get the localized sentence string for a sentence object.
+ * Checks sentence[lang] (e.g. sentence.ar, sentence.ru) then falls back to sentence.he.
+ */
+function getSentenceTranslation(sentence, lang) {
+  return (lang && sentence[lang]) || sentence.he || '';
+}
+
+/**
+ * Build a localized wordData snapshot for attaching to exercise objects.
+ */
+function wordSnapshot(wordData, lang) {
+  return {
+    word: wordData.word,
+    emoji: wordData.emoji,
+    translation: getWordTranslation(wordData, lang),
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Individual exercise generators
 // ---------------------------------------------------------------------------
@@ -63,7 +92,7 @@ function randomLetterExcluding(excludeSet) {
 /**
  * emoji-pick: Show English word, pick correct emoji from 4 options.
  */
-function generateEmojiPick(wordData, allWords) {
+function generateEmojiPick(wordData, allWords, _sentences, _lessonWords, lang) {
   const distractors = pickDistractors(allWords, wordData, 3, 'emoji').map(
     (w) => w.emoji
   );
@@ -72,24 +101,27 @@ function generateEmojiPick(wordData, allWords) {
     question: wordData.word,
     correctAnswer: wordData.emoji,
     options: buildOptions(wordData.emoji, distractors),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
 
 /**
- * word-to-hebrew: Show emoji + English word, pick Hebrew translation from 4.
+ * word-to-hebrew: Show emoji + English word, pick native-language translation from 4.
  */
-function generateWordToHebrew(wordData, allWords) {
-  const distractors = pickDistractors(allWords, wordData, 3, 'translation').map(
-    (w) => w.translation
-  );
+function generateWordToHebrew(wordData, allWords, _sentences, _lessonWords, lang) {
+  const translation = getWordTranslation(wordData, lang);
+  const distractors = pickDistractors(allWords, wordData, 3, 'word').map(
+    (w) => getWordTranslation(w, lang)
+  ).filter((t) => t !== translation);
+  // Deduplicate and pad if needed
+  const uniqueDistractors = [...new Set(distractors)].slice(0, 3);
   return {
     type: 'word-to-hebrew',
     question: wordData.word,
-    correctAnswer: wordData.translation,
-    options: buildOptions(wordData.translation, distractors),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    correctAnswer: translation,
+    options: buildOptions(translation, uniqueDistractors),
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
@@ -97,7 +129,7 @@ function generateWordToHebrew(wordData, allWords) {
 /**
  * listen-pick: Play word audio, pick correct word from 4 options.
  */
-function generateListenPick(wordData, allWords) {
+function generateListenPick(wordData, allWords, _sentences, _lessonWords, lang) {
   const distractors = pickDistractors(allWords, wordData, 3, 'word').map(
     (w) => w.word
   );
@@ -106,7 +138,7 @@ function generateListenPick(wordData, allWords) {
     question: wordData.word,
     correctAnswer: wordData.word,
     options: buildOptions(wordData.word, distractors),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
     audio: wordData.word, // the word to play via TTS
   };
@@ -115,7 +147,7 @@ function generateListenPick(wordData, allWords) {
 /**
  * fill-letter: Show word with one missing letter, pick the letter from 4.
  */
-function generateFillLetter(wordData) {
+function generateFillLetter(wordData, _allWords, _sentences, _lessonWords, lang) {
   const word = wordData.word.toLowerCase();
   // Only pick letter characters (skip spaces, hyphens, etc.)
   const letterIndices = [...word].map((ch, i) => /[a-z]/i.test(ch) ? i : -1).filter(i => i >= 0);
@@ -141,7 +173,7 @@ function generateFillLetter(wordData) {
     question: displayed,
     correctAnswer: missingLetter,
     options: buildOptions(missingLetter, wrongLetters),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
     fullWord: wordData.word,
     missingIndex: idx,
@@ -151,13 +183,13 @@ function generateFillLetter(wordData) {
 /**
  * speak-word: Show emoji + word, user speaks it. No options needed.
  */
-function generateSpeakWord(wordData) {
+function generateSpeakWord(wordData, _allWords, _sentences, _lessonWords, lang) {
   return {
     type: 'speak-word',
     question: wordData.word,
     correctAnswer: wordData.word,
     options: [],
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
@@ -166,46 +198,51 @@ function generateSpeakWord(wordData) {
  * multiple-choice: Show a sentence/question, pick from 4 options.
  * Uses sentence data when available, otherwise falls back to word-level.
  */
-function generateMultipleChoice(wordData, allWords, sentences) {
+function generateMultipleChoice(wordData, allWords, sentences, _lessonWords, lang) {
   // Prefer a sentence that contains the target word
   const relatedSentence = sentences.find((s) =>
     s.words.map((w) => w.toLowerCase()).includes(wordData.word.toLowerCase())
   );
 
   if (relatedSentence) {
-    // Question: English sentence, pick Hebrew translation
-    const distractors = pickDistractors(sentences, relatedSentence, 3, 'he').map(
-      (s) => s.he
-    );
+    const correctTranslation = getSentenceTranslation(relatedSentence, lang);
+    // Question: English sentence, pick localized translation
+    const distractors = sentences
+      .filter((s) => getSentenceTranslation(s, lang) !== correctTranslation)
+      .map((s) => getSentenceTranslation(s, lang))
+      .filter(Boolean);
+    const shuffledDistractors = shuffleArray(distractors).slice(0, 3);
     // If not enough sentence distractors, pad with word translations
     let _mc_safety = 0;
-    while (distractors.length < 3 && _mc_safety++ < 50) {
+    while (shuffledDistractors.length < 3 && _mc_safety++ < 50) {
       const extra = allWords[Math.floor(Math.random() * allWords.length)];
-      if (!distractors.includes(extra.translation) && extra.translation !== relatedSentence.he) {
-        distractors.push(extra.translation);
+      const extraTr = getWordTranslation(extra, lang);
+      if (!shuffledDistractors.includes(extraTr) && extraTr !== correctTranslation) {
+        shuffledDistractors.push(extraTr);
       }
     }
     return {
       type: 'multiple-choice',
       question: relatedSentence.en,
-      correctAnswer: relatedSentence.he,
-      options: buildOptions(relatedSentence.he, distractors.slice(0, 3)),
-      wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+      correctAnswer: correctTranslation,
+      options: buildOptions(correctTranslation, shuffledDistractors.slice(0, 3)),
+      wordData: wordSnapshot(wordData, lang),
       emoji: wordData.emoji,
       sentence: relatedSentence,
     };
   }
 
   // Fallback: word-level multiple choice (what does this word mean?)
-  const distractors = pickDistractors(allWords, wordData, 3, 'translation').map(
-    (w) => w.translation
+  const translation = getWordTranslation(wordData, lang);
+  const distractors = pickDistractors(allWords, wordData, 3, 'word').map(
+    (w) => getWordTranslation(w, lang)
   );
   return {
     type: 'multiple-choice',
     question: `What does "${wordData.word}" mean?`,
-    correctAnswer: wordData.translation,
-    options: buildOptions(wordData.translation, distractors),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    correctAnswer: translation,
+    options: buildOptions(translation, distractors),
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
@@ -213,7 +250,7 @@ function generateMultipleChoice(wordData, allWords, sentences) {
 /**
  * fill-blank: Show sentence with blank, pick correct word from 4.
  */
-function generateFillBlank(wordData, allWords, sentences) {
+function generateFillBlank(wordData, allWords, sentences, _lessonWords, lang) {
   const relatedSentence = sentences.find((s) =>
     s.words.map((w) => w.toLowerCase()).includes(wordData.word.toLowerCase())
   );
@@ -232,7 +269,7 @@ function generateFillBlank(wordData, allWords, sentences) {
       question: blanked,
       correctAnswer: wordData.word,
       options: buildOptions(wordData.word, distractors),
-      wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+      wordData: wordSnapshot(wordData, lang),
       emoji: wordData.emoji,
       fullSentence: relatedSentence.en,
     };
@@ -247,7 +284,7 @@ function generateFillBlank(wordData, allWords, sentences) {
     question: `The ${wordData.emoji} is a ___`,
     correctAnswer: wordData.word,
     options: buildOptions(wordData.word, distractors),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
@@ -255,18 +292,19 @@ function generateFillBlank(wordData, allWords, sentences) {
 /**
  * word-arrange: Arrange words to form a sentence.
  */
-function generateWordArrange(wordData, _allWords, sentences) {
+function generateWordArrange(wordData, _allWords, sentences, _lessonWords, lang) {
   const relatedSentence = sentences.find((s) =>
     s.words.map((w) => w.toLowerCase()).includes(wordData.word.toLowerCase())
   );
 
   if (relatedSentence) {
+    const hintTranslation = getSentenceTranslation(relatedSentence, lang);
     return {
       type: 'word-arrange',
-      question: relatedSentence.he, // Show Hebrew as hint
+      question: hintTranslation, // Show localized translation as hint
       correctAnswer: relatedSentence.en,
       options: shuffleArray(relatedSentence.words),
-      wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+      wordData: wordSnapshot(wordData, lang),
       emoji: wordData.emoji,
       correctOrder: relatedSentence.words,
     };
@@ -276,64 +314,69 @@ function generateWordArrange(wordData, _allWords, sentences) {
   const simpleWords = ['I', 'like', wordData.word];
   return {
     type: 'word-arrange',
-    question: wordData.translation,
+    question: getWordTranslation(wordData, lang),
     correctAnswer: simpleWords.join(' '),
     options: shuffleArray([...simpleWords]),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
     correctOrder: simpleWords,
   };
 }
 
 /**
- * translation: Translate sentence from English to Hebrew (pick from 4).
+ * translation: Translate sentence from English to native language (pick from 4).
  */
-function generateTranslation(wordData, allWords, sentences) {
+function generateTranslation(wordData, allWords, sentences, _lessonWords, lang) {
   const relatedSentence = sentences.find((s) =>
     s.words.map((w) => w.toLowerCase()).includes(wordData.word.toLowerCase())
   );
 
   if (relatedSentence) {
-    const distractors = pickDistractors(sentences, relatedSentence, 3, 'he').map(
-      (s) => s.he
-    );
+    const correctTranslation = getSentenceTranslation(relatedSentence, lang);
+    const distractors = sentences
+      .filter((s) => getSentenceTranslation(s, lang) !== correctTranslation)
+      .map((s) => getSentenceTranslation(s, lang))
+      .filter(Boolean);
+    const shuffledDistractors = shuffleArray(distractors).slice(0, 3);
     // Pad if not enough sentence distractors
     let _tr_safety = 0;
-    while (distractors.length < 3 && _tr_safety++ < 50) {
+    while (shuffledDistractors.length < 3 && _tr_safety++ < 50) {
       const extra = allWords[Math.floor(Math.random() * allWords.length)];
-      if (!distractors.includes(extra.translation) && extra.translation !== relatedSentence.he) {
-        distractors.push(extra.translation);
+      const extraTr = getWordTranslation(extra, lang);
+      if (!shuffledDistractors.includes(extraTr) && extraTr !== correctTranslation) {
+        shuffledDistractors.push(extraTr);
       }
     }
     return {
       type: 'translation',
       question: relatedSentence.en,
-      correctAnswer: relatedSentence.he,
-      options: buildOptions(relatedSentence.he, distractors.slice(0, 3)),
-      wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+      correctAnswer: correctTranslation,
+      options: buildOptions(correctTranslation, shuffledDistractors.slice(0, 3)),
+      wordData: wordSnapshot(wordData, lang),
       emoji: wordData.emoji,
       sentence: relatedSentence,
     };
   }
 
   // Fallback: word-level translation
-  const distractors = pickDistractors(allWords, wordData, 3, 'translation').map(
-    (w) => w.translation
+  const translation = getWordTranslation(wordData, lang);
+  const distractors = pickDistractors(allWords, wordData, 3, 'word').map(
+    (w) => getWordTranslation(w, lang)
   );
   return {
     type: 'translation',
     question: wordData.word,
-    correctAnswer: wordData.translation,
-    options: buildOptions(wordData.translation, distractors),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    correctAnswer: translation,
+    options: buildOptions(translation, distractors),
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
 
 /**
- * match-pairs: Match 4 English-Hebrew pairs from the unit.
+ * match-pairs: Match 4 English-native-language pairs from the unit.
  */
-function generateMatchPairs(_wordData, allWords, _sentences, lessonWords) {
+function generateMatchPairs(_wordData, allWords, _sentences, lessonWords, lang) {
   // Pick up to 4 words from the lesson, padding from allWords if needed
   let pairWords = shuffleArray(lessonWords).slice(0, 4);
   if (pairWords.length < 4) {
@@ -346,7 +389,7 @@ function generateMatchPairs(_wordData, allWords, _sentences, lessonWords) {
 
   const pairs = pairWords.map((w) => ({
     en: w.word,
-    he: w.translation,
+    he: getWordTranslation(w, lang),
     emoji: w.emoji,
   }));
 
@@ -358,7 +401,7 @@ function generateMatchPairs(_wordData, allWords, _sentences, lessonWords) {
       english: shuffleArray(pairs.map((p) => p.en)),
       hebrew: shuffleArray(pairs.map((p) => p.he)),
     },
-    wordData: { word: pairWords[0].word, emoji: pairWords[0].emoji, translation: pairWords[0].translation },
+    wordData: wordSnapshot(pairWords[0], lang),
     emoji: pairWords[0].emoji,
     pairs,
   };
@@ -367,7 +410,7 @@ function generateMatchPairs(_wordData, allWords, _sentences, lessonWords) {
 /**
  * picture-sentence: Show emoji scene, pick correct sentence from 4.
  */
-function generatePictureSentence(wordData, _allWords, sentences) {
+function generatePictureSentence(wordData, _allWords, sentences, _lessonWords, lang) {
   const relatedSentence = sentences.find((s) =>
     s.words.map((w) => w.toLowerCase()).includes(wordData.word.toLowerCase())
   );
@@ -386,7 +429,7 @@ function generatePictureSentence(wordData, _allWords, sentences) {
       question: wordData.emoji,
       correctAnswer: relatedSentence.en,
       options: buildOptions(relatedSentence.en, distractors.slice(0, 3)),
-      wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+      wordData: wordSnapshot(wordData, lang),
       emoji: wordData.emoji,
       sentence: relatedSentence,
     };
@@ -404,7 +447,7 @@ function generatePictureSentence(wordData, _allWords, sentences) {
     question: wordData.emoji,
     correctAnswer: correctSentence,
     options: buildOptions(correctSentence, wrongSentences),
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
   };
 }
@@ -413,13 +456,13 @@ function generatePictureSentence(wordData, _allWords, sentences) {
  * category-sort: Sort words into 2 categories.
  * Stub for level 1 -- returns a placeholder exercise.
  */
-function generateCategorySort(wordData) {
+function generateCategorySort(wordData, _allWords, _sentences, _lessonWords, lang) {
   return {
     type: 'category-sort',
     question: 'Sort the words into categories',
     correctAnswer: null,
     options: [],
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
     stub: true,
     message: 'Category sort is available from level 2 onwards.',
@@ -430,13 +473,13 @@ function generateCategorySort(wordData) {
  * sentence-correction: Fix an error in a sentence.
  * Stub for level 1 -- returns a placeholder exercise.
  */
-function generateSentenceCorrection(wordData) {
+function generateSentenceCorrection(wordData, _allWords, _sentences, _lessonWords, lang) {
   return {
     type: 'sentence-correction',
     question: 'Find and fix the error',
     correctAnswer: null,
     options: [],
-    wordData: { word: wordData.word, emoji: wordData.emoji, translation: wordData.translation },
+    wordData: wordSnapshot(wordData, lang),
     emoji: wordData.emoji,
     stub: true,
     message: 'Sentence correction is available from level 2 onwards.',
@@ -472,9 +515,10 @@ const GENERATORS = {
  *
  * @param {Object} unit - The unit data ({ words, sentences }).
  * @param {Object} lesson - The lesson definition ({ id, type, exerciseTypes, wordIndices }).
+ * @param {string} [lang='he'] - The UI language code ('he', 'ar', 'ru'). Controls which translation fields are used.
  * @returns {Array} An array of 8 exercise objects.
  */
-export function generateExercises(unit, lesson) {
+export function generateExercises(unit, lesson, lang = 'he') {
   const EXERCISES_PER_LESSON = 8;
 
   const allWords = unit.words || [];
@@ -506,7 +550,7 @@ export function generateExercises(unit, lesson) {
       continue;
     }
 
-    const exercise = generator(targetWord, allWords, sentences, lessonWords);
+    const exercise = generator(targetWord, allWords, sentences, lessonWords, lang);
 
     if (!exercise) {
       console.warn(`[exercise-generator] Generator for "${exType}" returned null, skipping.`);

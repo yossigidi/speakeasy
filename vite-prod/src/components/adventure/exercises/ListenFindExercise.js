@@ -100,8 +100,9 @@ export default class ListenFindExercise extends ExerciseBase {
       btn.addChild(emoji);
 
       // Translation label under emoji for clarity
+      const LANG_SUFFIX = {he:'He',ar:'Ar',ru:'Ru'};
       const label = new Text({
-        text: wordObj.translation,
+        text: wordObj['translation' + (LANG_SUFFIX[this.uiLang] || '')] || wordObj.translation,
         style: {
           fontFamily: 'Arial, Heebo, sans-serif',
           fontSize: 11,

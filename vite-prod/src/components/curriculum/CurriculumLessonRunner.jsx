@@ -41,7 +41,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
 
     setLessonData(data);
     try {
-      const exs = generateExercises(data.unit, data.lesson);
+      const exs = generateExercises(data.unit, data.lesson, uiLang);
       setExercises(exs);
     } catch (err) {
       console.error('Failed to generate exercises:', err);
@@ -338,7 +338,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           setStreak(0);
           setTeacherState('idle');
           if (lessonData) {
-            setExercises(generateExercises(lessonData.unit, lessonData.lesson));
+            setExercises(generateExercises(lessonData.unit, lessonData.lesson, uiLang));
           }
         } : null}
         uiLang={uiLang}

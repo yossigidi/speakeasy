@@ -46,8 +46,9 @@ export default class WordDoorExercise extends ExerciseBase {
     this._door = door;
 
     // Translation hint
+    const LANG_SUFFIX = {he:'He',ar:'Ar',ru:'Ru'};
     const translationText = new Text({
-      text: this.targetWord.translation,
+      text: this.targetWord['translation' + (LANG_SUFFIX[this.uiLang] || '')] || this.targetWord.translation,
       style: {
         fontFamily: 'Arial, sans-serif',
         fontSize: 20,

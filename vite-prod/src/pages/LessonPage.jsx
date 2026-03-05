@@ -160,8 +160,8 @@ function WordArrange({ exercise, onAnswer, uiLang }) {
 
   return (
     <div className="space-y-4">
-      {exercise.translation && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 text-center">{exercise.translation}</p>
+      {(lf(exercise, 'translation', uiLang) || exercise.translation) && (
+        <p className="text-sm text-gray-500 dark:text-gray-400 text-center">{lf(exercise, 'translation', uiLang) || exercise.translation}</p>
       )}
       <div className="min-h-[60px] p-3 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 flex flex-wrap gap-2">
         {selected.map((word, i) => (

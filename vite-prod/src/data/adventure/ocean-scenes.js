@@ -23,6 +23,8 @@ export const OCEAN_SCENES = [
     titleRu: 'Коралловый риф',
     introVideo: '/videos/adventure/ocean-scene1.mp4',
     videoNarration: 'שונית אלמוגים צבעונית! מה נגלה מתחת למים?',
+    videoNarrationAr: 'شعاب مرجانية ملوّنة! ماذا سنكتشف تحت الماء؟',
+    videoNarrationRu: 'Красочный коралловый риф! Что мы откроем под водой?',
     background: SCENE1_BG,
     particles: { type: 'bubbles', density: 12 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -36,7 +38,7 @@ export const OCEAN_SCENES = [
     exercise: {
       type: 'wordDoor',
       config: {
-        targetWord: { word: 'fish', translation: 'דג' },
+        targetWord: { word: 'fish', translation: 'דג', translationAr: 'سمكة', translationRu: 'рыба' },
         distractors: ['cat', 'dog', 'bird'],
         prompt: 'Which animal lives in the sea?',
         promptHe: 'איזו חיה גרה בים?',
@@ -56,6 +58,8 @@ export const OCEAN_SCENES = [
     titleRu: 'Затонувший корабль',
     introVideo: '/videos/adventure/ocean-scene2.mp4',
     videoNarration: 'ספינה טרופה! איזה אוצרות מסתתרים כאן?',
+    videoNarrationAr: 'سفينة غارقة! ما الكنوز المخبأة هنا؟',
+    videoNarrationRu: 'Затонувший корабль! Какие сокровища здесь спрятаны?',
     background: SCENE2_BG,
     particles: { type: 'bubbles', density: 15 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -69,7 +73,7 @@ export const OCEAN_SCENES = [
     exercise: {
       type: 'spellBridge',
       config: {
-        targetWord: { word: 'cat', translation: 'חתול' },
+        targetWord: { word: 'cat', translation: 'חתול', translationAr: 'قطة', translationRu: 'кошка' },
         hint: 'Say meow! Spell: ____',
         hintHe: 'מיאו! אייתו: ____',
         hintAr: 'قل مياو! تهجئة: ____',
@@ -88,6 +92,8 @@ export const OCEAN_SCENES = [
     titleRu: 'Морской сад',
     introVideo: '/videos/adventure/ocean-scene3.mp4',
     videoNarration: 'גן ים קסום! פרחים שגדלים מתחת למים!',
+    videoNarrationAr: 'حديقة بحرية ساحرة! زهور تنمو تحت الماء!',
+    videoNarrationRu: 'Волшебный морской сад! Цветы, растущие под водой!',
     background: SCENE3_BG,
     particles: { type: 'bubbles', density: 10 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -119,6 +125,8 @@ export const OCEAN_SCENES = [
     titleRu: 'Подводная пещера',
     introVideo: '/videos/adventure/ocean-scene4.mp4',
     videoNarration: 'מערה תת-ימית! מי גר במקום החשוך הזה?',
+    videoNarrationAr: 'كهف تحت الماء! من يعيش في هذا المكان المظلم؟',
+    videoNarrationRu: 'Подводная пещера! Кто живёт в этом тёмном месте?',
     background: SCENE4_BG,
     particles: { type: 'bubbles', density: 8 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -132,10 +140,10 @@ export const OCEAN_SCENES = [
       type: 'listenFind',
       config: {
         words: [
-          { word: 'fish', translation: 'דג', emoji: '🐟' },
-          { word: 'cat', translation: 'חתול', emoji: '🐱' },
-          { word: 'dog', translation: 'כלב', emoji: '🐶' },
-          { word: 'bird', translation: 'ציפור', emoji: '🐦' },
+          { word: 'fish', translation: 'דג', translationAr: 'سمكة', translationRu: 'рыба', emoji: '🐟' },
+          { word: 'cat', translation: 'חתול', translationAr: 'قطة', translationRu: 'кошка', emoji: '🐱' },
+          { word: 'dog', translation: 'כלב', translationAr: 'كلب', translationRu: 'собака', emoji: '🐶' },
+          { word: 'bird', translation: 'ציפור', translationAr: 'طائر', translationRu: 'птица', emoji: '🐦' },
         ],
         rounds: 2,
       },
@@ -152,6 +160,8 @@ export const OCEAN_SCENES = [
     titleRu: 'Глубокая впадина',
     introVideo: '/videos/adventure/ocean-scene5.mp4',
     videoNarration: 'אוי! התעלה העמוקה והחשוכה! כאן מחכה לנו קרלוס הסרטן עם שאלות מאתגרות!',
+    videoNarrationAr: 'أوه! الخندق العميق والمظلم! هنا ينتظرنا كارلوس السلطعون بأسئلة صعبة!',
+    videoNarrationRu: 'Ой! Глубокая тёмная впадина! Здесь нас ждёт краб Карлос с трудными вопросами!',
     background: SCENE5_BG,
     particles: { type: 'bubbles', density: 6 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -168,7 +178,7 @@ export const OCEAN_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'red', translation: 'אדום' },
+              targetWord: { word: 'red', translation: 'אדום', translationAr: 'أحمر', translationRu: 'красный' },
               distractors: ['blue', 'green', 'yellow'],
               prompt: 'What color is Carlos the Crab?',
               promptHe: 'באיזה צבע קרלוס הסרטן?',
@@ -179,7 +189,7 @@ export const OCEAN_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'fish', translation: 'דג' },
+              targetWord: { word: 'fish', translation: 'דג', translationAr: 'سمكة', translationRu: 'рыба' },
               distractors: ['cat', 'dog', 'bird'],
               prompt: 'What lives in the sea?',
               promptHe: 'מה גר בים?',
@@ -190,7 +200,7 @@ export const OCEAN_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'two', translation: 'שתיים' },
+              targetWord: { word: 'two', translation: 'שתיים', translationAr: 'اثنان', translationRu: 'два' },
               distractors: ['one', 'three', 'four'],
               prompt: 'How many claws does Carlos have?',
               promptHe: 'כמה צבתות יש לקרלוס?',
@@ -213,6 +223,8 @@ export const OCEAN_SCENES = [
     titleRu: 'Испытание кита',
     introVideo: '/videos/adventure/ocean-scene6.mp4',
     videoNarration: 'הלווייתן הגדול! ההרפתקה התת-ימית מגיעה לסוף!',
+    videoNarrationAr: 'الحوت الكبير! تصل المغامرة تحت الماء إلى نهايتها!',
+    videoNarrationRu: 'Большой кит! Подводное приключение подходит к концу!',
     background: SCENE6_BG,
     particles: { type: 'bubbles', density: 18 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -245,7 +257,7 @@ export const OCEAN_SCENES = [
           {
             type: 'spellBridge',
             config: {
-              targetWord: { word: 'dog', translation: 'כלב' },
+              targetWord: { word: 'dog', translation: 'כלב', translationAr: 'كلب', translationRu: 'собака' },
               hint: 'Woof woof! Spell: ____',
               hintHe: 'הב הב! אייתו: ____',
               hintAr: 'هاو هاو! تهجئة: ____',
@@ -256,10 +268,10 @@ export const OCEAN_SCENES = [
             type: 'listenFind',
             config: {
               words: [
-                { word: 'red', translation: 'אדום', emoji: '🔴' },
-                { word: 'blue', translation: 'כחול', emoji: '🔵' },
-                { word: 'green', translation: 'ירוק', emoji: '🟢' },
-                { word: 'yellow', translation: 'צהוב', emoji: '🟡' },
+                { word: 'red', translation: 'אדום', translationAr: 'أحمر', translationRu: 'красный', emoji: '🔴' },
+                { word: 'blue', translation: 'כחול', translationAr: 'أزرق', translationRu: 'синий', emoji: '🔵' },
+                { word: 'green', translation: 'ירוק', translationAr: 'أخضر', translationRu: 'зелёный', emoji: '🟢' },
+                { word: 'yellow', translation: 'צהוב', translationAr: 'أصفر', translationRu: 'жёлтый', emoji: '🟡' },
               ],
               rounds: 2,
             },

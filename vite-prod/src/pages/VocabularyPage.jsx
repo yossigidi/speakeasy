@@ -55,7 +55,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
 
         {/* Translation & Definition */}
         <div className="bg-gradient-to-r from-brand-50 to-emerald-50 dark:from-brand-950/30 dark:to-emerald-950/30 rounded-2xl p-4">
-          <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400 text-center mb-1">{word.translation}</h3>
+          <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400 text-center mb-1">{lf(word, 'translation', uiLang)}</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300 text-center">{word.definition}</p>
           {uiLang !== 'en' && lf(word, 'definition', uiLang) && lf(word, 'definition', uiLang) !== word.definition && (
             <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-1" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(word, 'definition', uiLang)}</p>
@@ -231,16 +231,16 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
   };
 
   const checkPractice = () => {
-    const correct = word.translation.trim();
+    const correct = (lf(word, 'translation', uiLang) || '').trim();
     const answer = practiceAnswer.trim();
     if (answer === correct || answer === word.word) {
       setPracticeResult('correct');
       // Speak the English word, then the native-language translation
-      speakWordPair(word.word, word.translation, uiLang);
+      speakWordPair(word.word, lf(word, 'translation', uiLang), uiLang);
     } else {
       setPracticeResult('wrong');
       // On wrong answer, speak the correct translation
-      speak(word.translation, { lang: uiLang, rate: 0.9 });
+      speak(lf(word, 'translation', uiLang), { lang: uiLang, rate: 0.9 });
     }
   };
 
@@ -299,7 +299,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-emerald-400 to-teal-400" />
 
             <button
-              onClick={() => speakWordPair(word.word, word.translation, uiLang)}
+              onClick={() => speakWordPair(word.word, lf(word, 'translation', uiLang), uiLang)}
               className="mx-auto mb-3 w-14 h-14 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow active:scale-95"
             >
               <Volume2 size={24} className="text-white" />
@@ -321,7 +321,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
           <GlassCard className="text-center py-6">
             {showTranslation ? (
               <div className="animate-fade-in space-y-2">
-                <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400">{word.translation}</h3>
+                <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400">{lf(word, 'translation', uiLang)}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">{word.definition}</p>
                 {uiLang !== 'en' && lf(word, 'definition', uiLang) && lf(word, 'definition', uiLang) !== word.definition && (
                   <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(word, 'definition', uiLang)}</p>
@@ -332,7 +332,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                 onClick={() => {
                   setShowTranslation(true);
                   // Speak the translation when revealed
-                  speak(word.translation, { lang: uiLang, rate: 0.9 });
+                  speak(lf(word, 'translation', uiLang), { lang: uiLang, rate: 0.9 });
                 }}
                 className="flex items-center justify-center gap-2 mx-auto text-brand-500 hover:text-brand-600 transition-colors"
               >
@@ -553,7 +553,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300">
                 {t('correctAnswerIs', uiLang)}{' '}
-                <span className="font-bold text-brand-600 dark:text-brand-400">{word.translation}</span>
+                <span className="font-bold text-brand-600 dark:text-brand-400">{lf(word, 'translation', uiLang)}</span>
               </p>
             </div>
           )}
@@ -658,7 +658,7 @@ function ReviewSession({ dueWords, onReview, onBack }) {
           <div className="mt-6 animate-fade-in space-y-3">
             <div className="h-px bg-gray-200 dark:bg-gray-700" />
             <h3 className="text-2xl font-bold text-brand-600 dark:text-brand-400">
-              {fullWord.translation}
+              {lf(fullWord, 'translation', uiLang)}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-300">{fullWord.definition}</p>
             {uiLang !== 'en' && lf(fullWord, 'definition', uiLang) && lf(fullWord, 'definition', uiLang) !== fullWord.definition && (
@@ -905,9 +905,9 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
   // Preload audio for all words in this category for instant playback
   useEffect(() => {
     const englishTexts = words.map(w => w.word);
-    const hebrewTexts = words.map(w => w.translation.replace(/\s*\([^)]*\)/g, '').trim());
+    const nativeTexts = words.map(w => (lf(w, 'translation', uiLang) || w.translation || '').replace(/\s*\([^)]*\)/g, '').trim());
     preloadEnglishAudio(englishTexts);
-    preloadHebrewAudio(hebrewTexts, 'he');
+    preloadHebrewAudio(nativeTexts, uiLang);
   }, [category]);
 
   const categoryInfo = {
@@ -1005,7 +1005,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
             onClick={() => onSelectWord(word)}
           >
             <button
-              onClick={(e) => { e.stopPropagation(); speakWordPair(word.word, word.translation, uiLang); }}
+              onClick={(e) => { e.stopPropagation(); speakWordPair(word.word, lf(word, 'translation', uiLang), uiLang); }}
               className="shrink-0 w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center"
             >
               <Volume2 size={16} className="text-brand-500" />
@@ -1014,7 +1014,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-gray-900 dark:text-white">{word.word}</h3>
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{word.translation} - {word.definition}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{lf(word, 'translation', uiLang)} - {word.definition}</p>
             </div>
             <ChevronRight size={16} className="text-gray-300 shrink-0 rtl:rotate-180" />
           </div>

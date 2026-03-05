@@ -10,7 +10,7 @@ import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { shuffle } from '../utils/shuffle.js';
-import { t, tReplace, RTL_LANGS } from '../utils/translations.js';
+import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -378,27 +378,27 @@ function BubblePopGame({ onComplete, onBack }) {
 // Simple, visual words kids already know
 const MEMORY_WORDS = [
   // Fruits
-  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', bg: 'from-red-300 to-red-400' },
-  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', bg: 'from-yellow-200 to-yellow-400' },
-  { word: 'orange', emoji: '🍊', translation: 'תַּפּוּז', bg: 'from-orange-300 to-orange-400' },
-  { word: 'grape', emoji: '🍇', translation: 'עֲנָבִים', bg: 'from-purple-300 to-purple-400' },
+  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', translationAr: 'تفاحة', translationRu: 'яблоко', bg: 'from-red-300 to-red-400' },
+  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', translationAr: 'موزة', translationRu: 'банан', bg: 'from-yellow-200 to-yellow-400' },
+  { word: 'orange', emoji: '🍊', translation: 'תַּפּוּז', translationAr: 'برتقالة', translationRu: 'апельсин', bg: 'from-orange-300 to-orange-400' },
+  { word: 'grape', emoji: '🍇', translation: 'עֲנָבִים', translationAr: 'عنب', translationRu: 'виноград', bg: 'from-purple-300 to-purple-400' },
   // Animals
-  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', bg: 'from-amber-200 to-amber-400' },
-  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', bg: 'from-yellow-300 to-amber-400' },
-  { word: 'fish', emoji: '🐟', translation: 'דָּג', bg: 'from-blue-200 to-blue-400' },
-  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', bg: 'from-sky-200 to-sky-400' },
+  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка', bg: 'from-amber-200 to-amber-400' },
+  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака', bg: 'from-yellow-300 to-amber-400' },
+  { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба', bg: 'from-blue-200 to-blue-400' },
+  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица', bg: 'from-sky-200 to-sky-400' },
   // Colors
-  { word: 'red', emoji: '🔴', translation: 'אָדֹם', bg: 'from-red-300 to-red-500' },
-  { word: 'blue', emoji: '🔵', translation: 'כָּחֹל', bg: 'from-blue-300 to-blue-500' },
-  { word: 'green', emoji: '🟢', translation: 'יָרֹק', bg: 'from-green-300 to-green-500' },
-  { word: 'yellow', emoji: '🟡', translation: 'צָהֹב', bg: 'from-yellow-200 to-yellow-400' },
+  { word: 'red', emoji: '🔴', translation: 'אָדֹם', translationAr: 'أحمر', translationRu: 'красный', bg: 'from-red-300 to-red-500' },
+  { word: 'blue', emoji: '🔵', translation: 'כָּחֹל', translationAr: 'أزرق', translationRu: 'синий', bg: 'from-blue-300 to-blue-500' },
+  { word: 'green', emoji: '🟢', translation: 'יָרֹק', translationAr: 'أخضر', translationRu: 'зелёный', bg: 'from-green-300 to-green-500' },
+  { word: 'yellow', emoji: '🟡', translation: 'צָהֹב', translationAr: 'أصفر', translationRu: 'жёлтый', bg: 'from-yellow-200 to-yellow-400' },
   // Simple things
-  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', bg: 'from-yellow-200 to-orange-300' },
-  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', bg: 'from-indigo-200 to-indigo-400' },
-  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', bg: 'from-yellow-200 to-yellow-400' },
-  { word: 'heart', emoji: '❤️', translation: 'לֵב', bg: 'from-pink-300 to-rose-400' },
-  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', bg: 'from-green-200 to-emerald-400' },
-  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', bg: 'from-pink-200 to-pink-400' },
+  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', translationAr: 'شمس', translationRu: 'солнце', bg: 'from-yellow-200 to-orange-300' },
+  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна', bg: 'from-indigo-200 to-indigo-400' },
+  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', translationAr: 'نجمة', translationRu: 'звезда', bg: 'from-yellow-200 to-yellow-400' },
+  { word: 'heart', emoji: '❤️', translation: 'לֵב', translationAr: 'قلب', translationRu: 'сердце', bg: 'from-pink-300 to-rose-400' },
+  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч', bg: 'from-green-200 to-emerald-400' },
+  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт', bg: 'from-pink-200 to-pink-400' },
 ];
 
 function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
@@ -482,7 +482,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     playSequence([
       { text: card.word, lang: 'en-US', rate: 0.75 },
       { pause: 150 },
-      { text: card.translation, lang: uiLang },
+      { text: lf(card, 'translation', uiLang), lang: uiLang },
     ], speak);
 
     const newFlipped = [...flipped, card.id];
@@ -504,7 +504,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
             { pause: 100 },
             { text: first.word, lang: 'en-US', rate: 0.75 },
             { pause: 150 },
-            { text: first.translation, lang: uiLang },
+            { text: lf(first, 'translation', uiLang), lang: uiLang },
           ], speak);
         }, 400);
         matchTimersRef.current.push(t1);
@@ -682,7 +682,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
                     ) : (
                       <>
                         <span className="text-lg sm:text-2xl font-black text-white drop-shadow-md leading-tight" dir="ltr">{card.word}</span>
-                        <span className="text-xs sm:text-sm font-bold text-white/80 leading-tight" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{card.translation}</span>
+                        <span className="text-xs sm:text-sm font-bold text-white/80 leading-tight" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(card, 'translation', uiLang)}</span>
                         <span className="text-xl sm:text-2xl mt-0.5">{card.emoji}</span>
                       </>
                     )}
@@ -717,26 +717,26 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
 
 // Simple words data for word builder (3-5 letters, kids-friendly)
 const BUILDER_WORDS = [
-  { word: 'cat', emoji: '🐱', translation: 'חָתוּל' },
-  { word: 'dog', emoji: '🐕', translation: 'כֶּלֶב' },
-  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ' },
-  { word: 'hat', emoji: '🎩', translation: 'כּוֹבַע' },
-  { word: 'cup', emoji: '🥤', translation: 'כּוֹס' },
-  { word: 'bed', emoji: '🛏️', translation: 'מִטָּה' },
-  { word: 'bus', emoji: '🚌', translation: 'אוֹטוֹבּוּס' },
-  { word: 'fish', emoji: '🐟', translation: 'דָּג' },
-  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר' },
-  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב' },
-  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ' },
-  { word: 'tree', emoji: '🌳', translation: 'עֵץ' },
-  { word: 'book', emoji: '📖', translation: 'סֵפֶר' },
-  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר' },
-  { word: 'cake', emoji: '🎂', translation: 'עוּגָה' },
-  { word: 'frog', emoji: '🐸', translation: 'צְפַרְדֵּעַ' },
-  { word: 'duck', emoji: '🦆', translation: 'בַּרְוָז' },
-  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם' },
-  { word: 'milk', emoji: '🥛', translation: 'חָלָב' },
-  { word: 'hand', emoji: '✋', translation: 'יָד' },
+  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка' },
+  { word: 'dog', emoji: '🐕', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака' },
+  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', translationAr: 'شمس', translationRu: 'солнце' },
+  { word: 'hat', emoji: '🎩', translation: 'כּוֹבַע', translationAr: 'قبعة', translationRu: 'шляпа' },
+  { word: 'cup', emoji: '🥤', translation: 'כּוֹס', translationAr: 'كوب', translationRu: 'стакан' },
+  { word: 'bed', emoji: '🛏️', translation: 'מִטָּה', translationAr: 'سرير', translationRu: 'кровать' },
+  { word: 'bus', emoji: '🚌', translation: 'אוֹטוֹבּוּס', translationAr: 'حافلة', translationRu: 'автобус' },
+  { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба' },
+  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица' },
+  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', translationAr: 'نجمة', translationRu: 'звезда' },
+  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна' },
+  { word: 'tree', emoji: '🌳', translation: 'עֵץ', translationAr: 'شجرة', translationRu: 'дерево' },
+  { word: 'book', emoji: '📖', translation: 'סֵפֶר', translationAr: 'كتاب', translationRu: 'книга' },
+  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч' },
+  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт' },
+  { word: 'frog', emoji: '🐸', translation: 'צְפַרְדֵּעַ', translationAr: 'ضفدع', translationRu: 'лягушка' },
+  { word: 'duck', emoji: '🦆', translation: 'בַּרְוָז', translationAr: 'بطة', translationRu: 'утка' },
+  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם', translationAr: 'مطر', translationRu: 'дождь' },
+  { word: 'milk', emoji: '🥛', translation: 'חָלָב', translationAr: 'حليب', translationRu: 'молоко' },
+  { word: 'hand', emoji: '✋', translation: 'יָד', translationAr: 'يد', translationRu: 'рука' },
 ];
 
 function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
@@ -845,7 +845,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             { pause: 100 },
             { text: currentWord.word, lang: 'en-US', rate: 0.75 },
             { pause: 150 },
-            { text: currentWord.translation, lang: uiLang },
+            { text: lf(currentWord, 'translation', uiLang), lang: uiLang },
           ], speak);
         }, 300);
       }
@@ -945,7 +945,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             <span className="text-7xl block mb-2 animate-jelly">{currentWord.emoji}</span>
           </button>
           <p className="text-sm text-gray-500 dark:text-gray-400 font-medium" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>
-            {currentWord.translation}
+            {lf(currentWord, 'translation', uiLang)}
           </p>
           <button
             onClick={() => speak(currentWord.word, { rate: 0.7 })}
@@ -1028,7 +1028,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
               <p className="text-lg font-bold text-gray-700 dark:text-gray-300 mb-1" dir="ltr">
                 {currentWord.word} = {currentWord.emoji}
               </p>
-              <p className="text-sm text-gray-500 mb-4" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{currentWord.translation}</p>
+              <p className="text-sm text-gray-500 mb-4" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(currentWord, 'translation', uiLang)}</p>
               <button
                 onClick={handleNextRound}
                 className="px-8 py-3 rounded-2xl font-black text-white bg-gradient-to-r from-emerald-400 to-green-500 shadow-lg active:scale-95 transition-all"
@@ -1138,12 +1138,18 @@ function GameSelector({ onSelectGame, onBack }) {
         emoji="🎮"
         title="Speakli's Games!"
         titleHe="המשחקים של ספיקלי!"
+        titleAr="ألعاب سبيكلي!"
+        titleRu="Игры Спикли!"
         desc="Welcome to Speakli's game world! Play games and learn English!"
         descHe="ברוכים הבאים לעולם המשחקים של ספיקלי! שחקו ולמדו אנגלית!"
+        descAr="مرحباً بكم في عالم ألعاب سبيكلي! العبوا وتعلموا الإنجليزية!"
+        descRu="Добро пожаловать в игровой мир Спикли! Играйте и учите английский!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's play with Speakli!"
         buttonLabelHe="בואו נשחק עם ספיקלי!"
+        buttonLabelAr="لنلعب مع سبيكلي!"
+        buttonLabelRu="Играем со Спикли!"
       />
 
       <div className="relative z-10 px-4 pt-3">

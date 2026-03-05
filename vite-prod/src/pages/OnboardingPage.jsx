@@ -31,6 +31,8 @@ const PLACEMENT_QUESTIONS = [
     questionAr: 'ما معنى "Thank you"؟',
     questionRu: 'Что означает "Thank you"?',
     options: ['בבקשה', 'סליחה', 'תודה', 'שלום'],
+    optionsAr: ['من فضلك', 'عذراً', 'شكراً', 'مرحباً'],
+    optionsRu: ['пожалуйста', 'извините', 'спасибо', 'привет'],
     correct: 2, level: 1, type: 'vocabulary' },
   // ─── Level 2 ───
   { question: 'I ___ to the store yesterday.',
@@ -45,6 +47,8 @@ const PLACEMENT_QUESTIONS = [
     questionAr: 'ما معنى "Delicious"؟',
     questionRu: 'Что означает "Delicious"?',
     options: ['יפה', 'טעים', 'גדול', 'מהיר'],
+    optionsAr: ['جميل', 'لذيذ', 'كبير', 'سريع'],
+    optionsRu: ['красивый', 'вкусный', 'большой', 'быстрый'],
     correct: 1, level: 2, type: 'vocabulary' },
   { question: 'There are ___ apples on the table.',
     questionHe: 'יש ___ תפוחים על השולחן.',
@@ -65,6 +69,8 @@ const PLACEMENT_QUESTIONS = [
     questionAr: 'ما معنى "Although"؟',
     questionRu: 'Что означает "Although"?',
     options: ['בגלל', 'למרות', 'כאשר', 'אחרי'],
+    optionsAr: ['بسبب', 'رغم أن', 'عندما', 'بعد'],
+    optionsRu: ['потому что', 'хотя', 'когда', 'после'],
     correct: 1, level: 3, type: 'vocabulary' },
   { question: 'The movie was ___ boring that we left early.',
     questionHe: 'הסרט היה ___ משעמם שיצאנו מוקדם.',
@@ -78,6 +84,8 @@ const PLACEMENT_QUESTIONS = [
     questionAr: 'ما معنى "Nevertheless"؟',
     questionRu: 'Что означает "Nevertheless"?',
     options: ['לעולם לא', 'בכל זאת', 'לפעמים', 'מאוחר יותר'],
+    optionsAr: ['أبداً', 'ومع ذلك', 'أحياناً', 'لاحقاً'],
+    optionsRu: ['никогда', 'тем не менее', 'иногда', 'позже'],
     correct: 1, level: 4, type: 'vocabulary' },
   { question: 'I wish I ___ more time to travel last year.',
     questionHe: 'הלוואי ש ___ יותר זמן לטייל בשנה שעברה.',
@@ -98,6 +106,8 @@ const PLACEMENT_QUESTIONS = [
     questionAr: 'ما معنى "Ubiquitous"؟',
     questionRu: 'Что означает "Ubiquitous"?',
     options: ['נדיר', 'נמצא בכל מקום', 'מסתורי', 'עתיק'],
+    optionsAr: ['نادر', 'موجود في كل مكان', 'غامض', 'قديم'],
+    optionsRu: ['редкий', 'везде присутствующий', 'таинственный', 'древний'],
     correct: 1, level: 5, type: 'vocabulary' },
   { question: 'Hardly ___ the station when the train departed.',
     questionHe: 'בקושי ___ לתחנה כשהרכבת יצאה.',
@@ -781,7 +791,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
         {/* Options */}
         <div className="flex flex-col gap-2.5">
-          {q.options.map((opt, i) => {
+          {(uiLang === 'ar' && q.optionsAr ? q.optionsAr : uiLang === 'ru' && q.optionsRu ? q.optionsRu : q.options).map((opt, i) => {
             let btnClass = 'glass-card p-3.5 text-center font-medium transition-all duration-200 active:scale-[0.97] border-2 ';
             if (selectedOption === null) {
               btnClass += 'border-transparent hover:border-blue-400';

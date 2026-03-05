@@ -6,7 +6,7 @@ import {
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t, RTL_LANGS } from '../utils/translations.js';
+import { t, RTL_LANGS, lf } from '../utils/translations.js';
 
 import { loadWordData } from '../utils/lazyData.js';
 
@@ -124,7 +124,7 @@ export default function AudioLearningPage({ onBack }) {
     sequence.push({ pause: 900 / spd });
 
     // Native-language translation
-    sequence.push({ text: wordObj.translation, lang: uiLangRef.current, rate: 0.95 * spd });
+    sequence.push({ text: lf(wordObj, 'translation', uiLangRef.current), lang: uiLangRef.current, rate: 0.95 * spd });
 
     // Example sentence (only in full mode)
     if (modeRef.current === 'full' && wordObj.examples && wordObj.examples.length > 0) {
@@ -476,7 +476,7 @@ export default function AudioLearningPage({ onBack }) {
               phase === PHASE.HEBREW_TRANSLATION ? 'scale-110 opacity-100' : 'scale-100 opacity-70'
             }`}>
               <p className="text-2xl font-bold text-white/90 mb-1" dir={isRtl ? 'rtl' : 'ltr'}>
-                {currentWord?.translation}
+                {lf(currentWord, 'translation', uiLang)}
               </p>
             </div>
 

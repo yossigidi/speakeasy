@@ -266,7 +266,7 @@ function ReadingView({ story, onBack }) {
 
   // B1: Add word with visual feedback
   const handleAddWord = async (v) => {
-    await addWord({ id: v.word.replace(/\s/g, '-'), word: v.word, translation: v.translation, definition: v.definition, cefrLevel: story.level, category: 'reading' });
+    await addWord({ id: v.word.replace(/\s/g, '-'), word: v.word, translation: lf(v, 'translation', uiLang), definition: v.definition, cefrLevel: story.level, category: 'reading' });
     setAddedWords(prev => new Set([...prev, v.word]));
   };
 
@@ -395,11 +395,11 @@ function ReadingView({ story, onBack }) {
         <h3 className="font-bold text-gray-900 dark:text-white mb-2">{t('vocabulary', uiLang)}</h3>
         <div className="space-y-2">
           {story.vocabulary.map((v, i) => (
-            <GlassCard key={i} onClick={() => speakWordPair(v.word, v.translation, uiLang)} className="cursor-pointer !p-3 flex items-center justify-between">
+            <GlassCard key={i} onClick={() => speakWordPair(v.word, lf(v, 'translation', uiLang), uiLang)} className="cursor-pointer !p-3 flex items-center justify-between">
               <div>
                 <span className="font-semibold text-gray-900 dark:text-white">{v.word}</span>
                 <span className="text-gray-400 mx-2">-</span>
-                <span className="text-gray-600 dark:text-gray-400">{v.translation}</span>
+                <span className="text-gray-600 dark:text-gray-400">{lf(v, 'translation', uiLang)}</span>
               </div>
               {/* B1: "+" button with checkmark feedback */}
               <button
@@ -427,12 +427,12 @@ function ReadingView({ story, onBack }) {
         {selectedWord && (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <button onClick={() => speakWordPair(selectedWord.word, selectedWord.translation, uiLang)} className="p-2 rounded-full bg-brand-100 dark:bg-brand-900/30">
+              <button onClick={() => speakWordPair(selectedWord.word, lf(selectedWord, 'translation', uiLang), uiLang)} className="p-2 rounded-full bg-brand-100 dark:bg-brand-900/30">
                 <Volume2 size={18} className="text-brand-600" />
               </button>
               <span className="text-xl font-bold text-gray-900 dark:text-white">{selectedWord.word}</span>
             </div>
-            <p className="text-lg text-brand-600 dark:text-brand-400 font-medium">{selectedWord.translation}</p>
+            <p className="text-lg text-brand-600 dark:text-brand-400 font-medium">{lf(selectedWord, 'translation', uiLang)}</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">{selectedWord.definition}</p>
             <AnimatedButton
               onClick={() => {

@@ -23,6 +23,8 @@ export const SPACE_SCENES = [
     titleRu: 'Стартовая площадка',
     introVideo: '/videos/adventure/space-scene1.mp4',
     videoNarration: 'כן השיגור! מוכנים להמריא לחלל?',
+    videoNarrationAr: 'منصة الإطلاق! هل أنتم مستعدون للإقلاع إلى الفضاء؟',
+    videoNarrationRu: 'Стартовая площадка! Готовы к взлёту в космос?',
     background: SCENE1_BG,
     particles: { type: 'stars', density: 12 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -36,7 +38,7 @@ export const SPACE_SCENES = [
     exercise: {
       type: 'wordDoor',
       config: {
-        targetWord: { word: 'sun', translation: 'שמש' },
+        targetWord: { word: 'sun', translation: 'שמש', translationAr: 'شمس', translationRu: 'солнце' },
         distractors: ['rain', 'snow', 'cloud'],
         prompt: 'What shines bright in the sky?',
         promptHe: 'מה זורח בשמיים?',
@@ -56,6 +58,8 @@ export const SPACE_SCENES = [
     titleRu: 'Пояс астероидов',
     introVideo: '/videos/adventure/space-scene2.mp4',
     videoNarration: 'שדה אסטרואידים! צריך לעבור בזהירות!',
+    videoNarrationAr: 'حزام الكويكبات! يجب العبور بحذر!',
+    videoNarrationRu: 'Поле астероидов! Нужно проходить осторожно!',
     background: SCENE2_BG,
     particles: { type: 'stars', density: 15 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -69,7 +73,7 @@ export const SPACE_SCENES = [
     exercise: {
       type: 'spellBridge',
       config: {
-        targetWord: { word: 'shirt', translation: 'חולצה' },
+        targetWord: { word: 'shirt', translation: 'חולצה', translationAr: 'قميص', translationRu: 'рубашка' },
         hint: "You wear a ____ on your body",
         hintHe: 'לובשים ____ על הגוף',
         hintAr: 'ترتدي ____ على جسمك',
@@ -88,6 +92,8 @@ export const SPACE_SCENES = [
     titleRu: 'Космическая станция',
     introVideo: '/videos/adventure/space-scene3.mp4',
     videoNarration: 'תחנת חלל! מי עובד כאן למעלה בין הכוכבים?',
+    videoNarrationAr: 'محطة الفضاء! من يعمل هنا بين النجوم؟',
+    videoNarrationRu: 'Космическая станция! Кто работает здесь среди звёзд?',
     background: SCENE3_BG,
     particles: { type: 'stars', density: 8 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -119,6 +125,8 @@ export const SPACE_SCENES = [
     titleRu: 'Лунная база',
     introVideo: '/videos/adventure/space-scene4.mp4',
     videoNarration: 'הירח! האם נפגוש חייזרים ידידותיים?',
+    videoNarrationAr: 'القمر! هل سنقابل كائنات فضائية ودودة؟',
+    videoNarrationRu: 'Луна! Встретим ли мы дружелюбных инопланетян?',
     background: SCENE4_BG,
     particles: { type: 'sparkle', density: 6 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -132,10 +140,10 @@ export const SPACE_SCENES = [
       type: 'listenFind',
       config: {
         words: [
-          { word: 'shoes', translation: 'נעליים', emoji: '👟' },
-          { word: 'hat', translation: 'כובע', emoji: '🎩' },
-          { word: 'dress', translation: 'שמלה', emoji: '👗' },
-          { word: 'pants', translation: 'מכנסיים', emoji: '👖' },
+          { word: 'shoes', translation: 'נעליים', translationAr: 'حذاء', translationRu: 'обувь', emoji: '👟' },
+          { word: 'hat', translation: 'כובע', translationAr: 'قبعة', translationRu: 'шляпа', emoji: '🎩' },
+          { word: 'dress', translation: 'שמלה', translationAr: 'فستان', translationRu: 'платье', emoji: '👗' },
+          { word: 'pants', translation: 'מכנסיים', translationAr: 'بنطلون', translationRu: 'штаны', emoji: '👖' },
         ],
         rounds: 3,
       },
@@ -152,6 +160,8 @@ export const SPACE_SCENES = [
     titleRu: 'Туманность',
     introVideo: '/videos/adventure/space-scene5.mp4',
     videoNarration: 'ערפילית צבעונית! איזה יופי יש בחלל!',
+    videoNarrationAr: 'سديم ملوّن! ما أجمل الفضاء!',
+    videoNarrationRu: 'Красочная туманность! Какая красота в космосе!',
     background: SCENE5_BG,
     particles: { type: 'stars', density: 20 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -168,7 +178,7 @@ export const SPACE_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'rain', translation: 'גשם' },
+              targetWord: { word: 'rain', translation: 'גשם', translationAr: 'مطر', translationRu: 'дождь' },
               distractors: ['sun', 'hot', 'wind'],
               prompt: 'Star 1: What makes puddles on the ground?',
               promptHe: 'כוכב 1: מה עושה שלוליות על הרצפה?',
@@ -179,7 +189,7 @@ export const SPACE_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'shoes', translation: 'נעליים' },
+              targetWord: { word: 'shoes', translation: 'נעליים', translationAr: 'حذاء', translationRu: 'обувь' },
               distractors: ['hat', 'shirt', 'dress'],
               prompt: 'Star 2: What do you wear on your feet?',
               promptHe: 'כוכב 2: מה לובשים על הרגליים?',
@@ -190,7 +200,7 @@ export const SPACE_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'bed', translation: 'מיטה' },
+              targetWord: { word: 'bed', translation: 'מיטה', translationAr: 'سرير', translationRu: 'кровать' },
               distractors: ['chair', 'table', 'door'],
               prompt: 'Star 3: Where do you sleep?',
               promptHe: 'כוכב 3: איפה ישנים?',
@@ -213,6 +223,8 @@ export const SPACE_SCENES = [
     titleRu: 'Испытание Галактики',
     introVideo: '/videos/adventure/space-scene6.mp4',
     videoNarration: 'עוף החול הקוסמי! ההרפתקה בחלל מגיעה לסוף!',
+    videoNarrationAr: 'طائر الفينيق الكوني! تصل المغامرة في الفضاء إلى نهايتها!',
+    videoNarrationRu: 'Космический феникс! Космическое приключение подходит к концу!',
     background: SCENE6_BG,
     particles: { type: 'sparkle', density: 18 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -245,7 +257,7 @@ export const SPACE_SCENES = [
           {
             type: 'spellBridge',
             config: {
-              targetWord: { word: 'house', translation: 'בית' },
+              targetWord: { word: 'house', translation: 'בית', translationAr: 'بيت', translationRu: 'дом' },
               hint: "You live in a ____",
               hintHe: 'גרים ב____',
               hintAr: 'تعيش في ____',
@@ -256,10 +268,10 @@ export const SPACE_SCENES = [
             type: 'listenFind',
             config: {
               words: [
-                { word: 'run', translation: 'לרוץ', emoji: '🏃' },
-                { word: 'jump', translation: 'לקפוץ', emoji: '🤸' },
-                { word: 'eat', translation: 'לאכול', emoji: '🍽️' },
-                { word: 'sleep', translation: 'לישון', emoji: '😴' },
+                { word: 'run', translation: 'לרוץ', translationAr: 'يركض', translationRu: 'бегать', emoji: '🏃' },
+                { word: 'jump', translation: 'לקפוץ', translationAr: 'يقفز', translationRu: 'прыгать', emoji: '🤸' },
+                { word: 'eat', translation: 'לאכול', translationAr: 'يأكل', translationRu: 'есть', emoji: '🍽️' },
+                { word: 'sleep', translation: 'לישון', translationAr: 'ينام', translationRu: 'спать', emoji: '😴' },
               ],
               rounds: 2,
             },

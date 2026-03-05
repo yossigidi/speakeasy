@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Volume2, RefreshCw, ArrowLeft } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t } from '../utils/translations.js';
+import { t, lf } from '../utils/translations.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
@@ -212,7 +212,7 @@ export default function PronunciationPage() {
           <Volume2 size={24} className="text-brand-600 dark:text-brand-400" />
         </button>
         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{sentence.text}</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{sentence.translation}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{lf(sentence, 'translation', uiLang)}</p>
       </GlassCard>
 
       {/* Waveform */}

@@ -17,7 +17,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { uiLang, dir } = useTheme();
   const { progress } = useUserProgress();
   const { speak, speakSequence, ttsSupported } = useSpeech();
-  useWelcomeSpeech('home', 'ברוכים הבאים לספיקלי, המורה שלכם לאנגלית!', 'Welcome to Speakli, your English teacher!');
+  useWelcomeSpeech('home', 'ברוכים הבאים לספיקלי, המורה שלכם לאנגלית!', 'Welcome to Speakli, your English teacher!', 'مرحباً بكم في سبيكلي، معلّمكم للإنجليزية!', 'Добро пожаловать в Спикли, ваш учитель английского!');
 
   // Lazy-load word data for "Word of the Day"
   const [allWords, setAllWords] = useState([]);
@@ -254,7 +254,7 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
                 </button>
               </div>
               <p className="text-sm text-gray-400 font-mono mb-1">{wordOfDay.ipa}</p>
-              <p className="text-base font-semibold text-brand-600 dark:text-brand-400">{wordOfDay.translation}</p>
+              <p className="text-base font-semibold text-brand-600 dark:text-brand-400">{lf(wordOfDay, 'translation', uiLang)}</p>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{wordOfDay.definition}</p>
               {wordOfDay.examples?.[0] && (
                 <p className="text-xs text-gray-400 italic mt-1">"{wordOfDay.examples[0]}"</p>

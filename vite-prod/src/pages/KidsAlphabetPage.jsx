@@ -196,7 +196,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
     speak(wordObj.word, {
       rate: 0.85,
       onEnd: () => {
-        speak(wordObj.translation, { lang: uiLang, rate: 0.9, _queued: true });
+        speak(lf(wordObj, 'translation', uiLang), { lang: uiLang, rate: 0.9, _queued: true });
       }
     });
   };
@@ -281,7 +281,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
                   <span className="font-black text-lg">{w.word}</span>
                   <Volume2 size={14} className="text-brand-500 shrink-0 animate-pulse" />
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{w.translation}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{lf(w, 'translation', uiLang)}</p>
                 <p className="text-xs text-gray-400 italic mt-0.5 truncate">"{w.sentence}"</p>
               </div>
             </button>
@@ -463,7 +463,7 @@ function MatchWordGame({ letter, onComplete }) {
       setMatched(newMatched);
       setSelectedWord(null);
       // Speak translation in user's native language on match
-      speak(w.translation, { lang: uiLang, rate: 0.9 });
+      speak(lf(w, 'translation', uiLang), { lang: uiLang, rate: 0.9 });
       if (newMatched.length >= words.length) {
         setShowConfetti(true);
         matchTimersRef.current.push(setTimeout(onComplete, 1000));
@@ -681,7 +681,7 @@ function CaseMatchGame({ letter, onComplete }) {
       {/* Encouragement message */}
       {encourageMsg && !isAnswered && (
         <div className="mt-3 px-4 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 animate-fade-in">
-          <p className="text-sm font-bold text-amber-700 dark:text-amber-300" dir="rtl">{encourageMsg}</p>
+          <p className="text-sm font-bold text-amber-700 dark:text-amber-300" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{encourageMsg}</p>
         </div>
       )}
 
@@ -735,7 +735,7 @@ function ListenChooseGame({ letter, onComplete }) {
         { ...wrongs[0], isCorrect: false },
         { ...wrongs[1], isCorrect: false },
       ]);
-      return { targetWord: w.word, targetTranslation: w.translation, options };
+      return { targetWord: w.word, targetTranslation: lf(w, 'translation', uiLang), options };
     });
   }, [letter]);
 
@@ -758,7 +758,7 @@ function ListenChooseGame({ letter, onComplete }) {
       speak(opt.word, {
         rate: 0.75,
         onEnd: () => {
-          listenTimersRef.current.push(setTimeout(() => speak(opt.translation, { lang: uiLang, rate: 0.9, _queued: true }), 100));
+          listenTimersRef.current.push(setTimeout(() => speak(lf(opt, 'translation', uiLang), { lang: uiLang, rate: 0.9, _queued: true }), 100));
         }
       });
       listenTimersRef.current.push(setTimeout(() => {

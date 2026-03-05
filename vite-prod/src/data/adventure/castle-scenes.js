@@ -23,6 +23,8 @@ export const CASTLE_SCENES = [
     titleRu: 'Ворота замка',
     introVideo: '/videos/adventure/castle-scene1.mp4',
     videoNarration: 'שער הטירה הקסומה! האביר שומר על הכניסה!',
+    videoNarrationAr: 'بوابة القلعة السحرية! الفارس يحرس المدخل!',
+    videoNarrationRu: 'Ворота волшебного замка! Рыцарь охраняет вход!',
     background: SCENE1_BG,
     particles: { type: 'sparkle', density: 10 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -36,7 +38,7 @@ export const CASTLE_SCENES = [
     exercise: {
       type: 'wordDoor',
       config: {
-        targetWord: { word: 'book', translation: 'ספר' },
+        targetWord: { word: 'book', translation: 'ספר', translationAr: 'كتاب', translationRu: 'книга' },
         distractors: ['pen', 'desk', 'bag'],
         prompt: 'What do you read?',
         promptHe: 'במה קוראים?',
@@ -56,6 +58,8 @@ export const CASTLE_SCENES = [
     titleRu: 'Королевский сад',
     introVideo: '/videos/adventure/castle-scene2.mp4',
     videoNarration: 'גן הטירה! פרחים קסומים בכל מקום!',
+    videoNarrationAr: 'حديقة القلعة! زهور سحرية في كل مكان!',
+    videoNarrationRu: 'Сад замка! Волшебные цветы повсюду!',
     background: SCENE2_BG,
     particles: { type: 'leaves', density: 12 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -68,7 +72,7 @@ export const CASTLE_SCENES = [
     exercise: {
       type: 'spellBridge',
       config: {
-        targetWord: { word: 'flower', translation: 'פרח' },
+        targetWord: { word: 'flower', translation: 'פרח', translationAr: 'زهرة', translationRu: 'цветок' },
         hint: "Something beautiful that grows in the garden: ____",
         hintHe: 'משהו יפה שגדל בגינה: ____',
         hintAr: 'شيء جميل ينمو في الحديقة: ____',
@@ -87,6 +91,8 @@ export const CASTLE_SCENES = [
     titleRu: 'Большая библиотека',
     introVideo: '/videos/adventure/castle-scene3.mp4',
     videoNarration: 'הספרייה הקסומה! כמה ספרים מדהימים יש כאן!',
+    videoNarrationAr: 'المكتبة السحرية! كم من الكتب الرائعة هنا!',
+    videoNarrationRu: 'Волшебная библиотека! Сколько удивительных книг здесь!',
     background: SCENE3_BG,
     particles: { type: 'sparkle', density: 8 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -118,6 +124,8 @@ export const CASTLE_SCENES = [
     titleRu: 'Высокая башня',
     introVideo: '/videos/adventure/castle-scene4.mp4',
     videoNarration: 'מגדל הטירה הגבוה! מי מסתתר למעלה?',
+    videoNarrationAr: 'البرج العالي للقلعة! من يختبئ في الأعلى؟',
+    videoNarrationRu: 'Высокая башня замка! Кто прячется наверху?',
     background: SCENE4_BG,
     particles: { type: 'sparkle', density: 6 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -131,10 +139,10 @@ export const CASTLE_SCENES = [
       type: 'listenFind',
       config: {
         words: [
-          { word: 'flower', translation: 'פרח', emoji: '🌸' },
-          { word: 'river', translation: 'נהר', emoji: '🏞️' },
-          { word: 'mountain', translation: 'הר', emoji: '⛰️' },
-          { word: 'forest', translation: 'יער', emoji: '🌲' },
+          { word: 'flower', translation: 'פרח', translationAr: 'زهرة', translationRu: 'цветок', emoji: '🌸' },
+          { word: 'river', translation: 'נהר', translationAr: 'نهر', translationRu: 'река', emoji: '🏞️' },
+          { word: 'mountain', translation: 'הר', translationAr: 'جبل', translationRu: 'гора', emoji: '⛰️' },
+          { word: 'forest', translation: 'יער', translationAr: 'غابة', translationRu: 'лес', emoji: '🌲' },
         ],
         rounds: 3,
       },
@@ -151,6 +159,8 @@ export const CASTLE_SCENES = [
     titleRu: 'Тайное подземелье',
     introVideo: '/videos/adventure/castle-scene5.mp4',
     videoNarration: 'המרתף החשוך של הטירה! אל תפחדו!',
+    videoNarrationAr: 'قبو القلعة المظلم! لا تخافوا!',
+    videoNarrationRu: 'Тёмное подземелье замка! Не бойтесь!',
     background: SCENE5_BG,
     particles: { type: 'sparkle', density: 5 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -167,7 +177,7 @@ export const CASTLE_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'pencil', translation: 'עיפרון' },
+              targetWord: { word: 'pencil', translation: 'עיפרון', translationAr: 'قلم رصاص', translationRu: 'карандаш' },
               distractors: ['ruler', 'book', 'desk'],
               prompt: 'Lock 1: What do you draw with?',
               promptHe: 'מנעול 1: במה מציירים?',
@@ -178,7 +188,7 @@ export const CASTLE_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'river', translation: 'נהר' },
+              targetWord: { word: 'river', translation: 'נהר', translationAr: 'نهر', translationRu: 'река' },
               distractors: ['mountain', 'forest', 'flower'],
               prompt: 'Lock 2: Water that flows through the land!',
               promptHe: 'מנעול 2: מים שזורמים בארץ!',
@@ -189,7 +199,7 @@ export const CASTLE_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'happy', translation: 'שמח' },
+              targetWord: { word: 'happy', translation: 'שמח', translationAr: 'سعيد', translationRu: 'счастливый' },
               distractors: ['sad', 'angry', 'tired'],
               prompt: 'Lock 3: How do you feel when you win?',
               promptHe: 'מנעול 3: איך מרגישים כשמנצחים?',
@@ -212,6 +222,8 @@ export const CASTLE_SCENES = [
     titleRu: 'Испытание короля',
     introVideo: '/videos/adventure/castle-scene6.mp4',
     videoNarration: 'אולם הכס! המלך מחכה לנו בסוף ההרפתקה!',
+    videoNarrationAr: 'قاعة العرش! الملك ينتظرنا في نهاية المغامرة!',
+    videoNarrationRu: 'Тронный зал! Король ждёт нас в конце приключения!',
     background: SCENE6_BG,
     particles: { type: 'sparkle', density: 18 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -244,7 +256,7 @@ export const CASTLE_SCENES = [
           {
             type: 'spellBridge',
             config: {
-              targetWord: { word: 'castle', translation: 'טירה' },
+              targetWord: { word: 'castle', translation: 'טירה', translationAr: 'قلعة', translationRu: 'замок' },
               hint: "A king lives in a ____",
               hintHe: 'מלך גר ב____',
               hintAr: 'الملك يعيش في ____',
@@ -255,10 +267,10 @@ export const CASTLE_SCENES = [
             type: 'listenFind',
             config: {
               words: [
-                { word: 'book', translation: 'ספר', emoji: '📖' },
-                { word: 'pencil', translation: 'עיפרון', emoji: '✏️' },
-                { word: 'flower', translation: 'פרח', emoji: '🌸' },
-                { word: 'happy', translation: 'שמח', emoji: '😊' },
+                { word: 'book', translation: 'ספר', translationAr: 'كتاب', translationRu: 'книга', emoji: '📖' },
+                { word: 'pencil', translation: 'עיפרון', translationAr: 'قلم رصاص', translationRu: 'карандаш', emoji: '✏️' },
+                { word: 'flower', translation: 'פרח', translationAr: 'زهرة', translationRu: 'цветок', emoji: '🌸' },
+                { word: 'happy', translation: 'שמח', translationAr: 'سعيد', translationRu: 'счастливый', emoji: '😊' },
               ],
               rounds: 2,
             },

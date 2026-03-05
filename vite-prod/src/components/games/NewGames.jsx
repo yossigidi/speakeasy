@@ -151,24 +151,24 @@ function GameHeader({ onBack, title, emoji, right, uiLang }) {
    ══════════════════════════════════════════════════════ */
 
 const LISTEN_POP_WORDS = [
-  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ' },
-  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה' },
-  { word: 'cat', emoji: '🐱', translation: 'חָתוּל' },
-  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב' },
-  { word: 'fish', emoji: '🐟', translation: 'דָּג' },
-  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ' },
-  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ' },
-  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב' },
-  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר' },
-  { word: 'tree', emoji: '🌳', translation: 'עֵץ' },
-  { word: 'cake', emoji: '🎂', translation: 'עוּגָה' },
-  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר' },
-  { word: 'car', emoji: '🚗', translation: 'מְכוֹנִית' },
-  { word: 'house', emoji: '🏠', translation: 'בַּיִת' },
-  { word: 'flower', emoji: '🌸', translation: 'פֶּרַח' },
-  { word: 'heart', emoji: '❤️', translation: 'לֵב' },
-  { word: 'book', emoji: '📖', translation: 'סֵפֶר' },
-  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם' },
+  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', translationAr: 'تفاحة', translationRu: 'яблоко' },
+  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', translationAr: 'موزة', translationRu: 'банан' },
+  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка' },
+  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака' },
+  { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба' },
+  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', translationAr: 'شمس', translationRu: 'солнце' },
+  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна' },
+  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', translationAr: 'نجمة', translationRu: 'звезда' },
+  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица' },
+  { word: 'tree', emoji: '🌳', translation: 'עֵץ', translationAr: 'شجرة', translationRu: 'дерево' },
+  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт' },
+  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч' },
+  { word: 'car', emoji: '🚗', translation: 'מְכוֹנִית', translationAr: 'سيارة', translationRu: 'машина' },
+  { word: 'house', emoji: '🏠', translation: 'בַּיִת', translationAr: 'بيت', translationRu: 'дом' },
+  { word: 'flower', emoji: '🌸', translation: 'פֶּרַח', translationAr: 'زهرة', translationRu: 'цветок' },
+  { word: 'heart', emoji: '❤️', translation: 'לֵב', translationAr: 'قلب', translationRu: 'сердце' },
+  { word: 'book', emoji: '📖', translation: 'סֵפֶר', translationAr: 'كتاب', translationRu: 'книга' },
+  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם', translationAr: 'مطر', translationRu: 'дождь' },
 ];
 
 export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
@@ -267,7 +267,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: opt.word, lang: 'en-US', rate: 0.75 },
           { pause: 100 },
-          { text: opt.translation, lang: uiLang },
+          { text: lf(opt, 'translation', uiLang), lang: uiLang },
         ], speak);
       }, 400));
       gameTimersRef.current.push(setTimeout(() => {
@@ -373,50 +373,50 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
 const CATEGORY_SETS = [
   {
     categories: [
-      { name: 'Animals', nameHe: 'חיות', emoji: '🐾', color: 'from-amber-400 to-orange-500' },
-      { name: 'Food', nameHe: 'אוכל', emoji: '🍽️', color: 'from-green-400 to-emerald-500' },
+      { name: 'Animals', nameHe: 'חיות', nameAr: 'حيوانات', nameRu: 'Животные', emoji: '🐾', color: 'from-amber-400 to-orange-500' },
+      { name: 'Food', nameHe: 'אוכל', nameAr: 'طعام', nameRu: 'Еда', emoji: '🍽️', color: 'from-green-400 to-emerald-500' },
     ],
     items: [
-      { word: 'cat', emoji: '🐱', translation: 'חָתוּל', category: 0 },
-      { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', category: 0 },
-      { word: 'fish', emoji: '🐟', translation: 'דָּג', category: 0 },
-      { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', category: 0 },
-      { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', category: 1 },
-      { word: 'cake', emoji: '🎂', translation: 'עוּגָה', category: 1 },
-      { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', category: 1 },
-      { word: 'milk', emoji: '🥛', translation: 'חָלָב', category: 1 },
+      { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка', category: 0 },
+      { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака', category: 0 },
+      { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба', category: 0 },
+      { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица', category: 0 },
+      { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', translationAr: 'تفاحة', translationRu: 'яблоко', category: 1 },
+      { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт', category: 1 },
+      { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', translationAr: 'موزة', translationRu: 'банан', category: 1 },
+      { word: 'milk', emoji: '🥛', translation: 'חָלָב', translationAr: 'حليب', translationRu: 'молоко', category: 1 },
     ],
   },
   {
     categories: [
-      { name: 'Nature', nameHe: 'טבע', emoji: '🌿', color: 'from-green-400 to-teal-500' },
-      { name: 'Things', nameHe: 'דברים', emoji: '📦', color: 'from-blue-400 to-indigo-500' },
+      { name: 'Nature', nameHe: 'טבע', nameAr: 'طبيعة', nameRu: 'Природа', emoji: '🌿', color: 'from-green-400 to-teal-500' },
+      { name: 'Things', nameHe: 'דברים', nameAr: 'أشياء', nameRu: 'Вещи', emoji: '📦', color: 'from-blue-400 to-indigo-500' },
     ],
     items: [
-      { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', category: 0 },
-      { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', category: 0 },
-      { word: 'tree', emoji: '🌳', translation: 'עֵץ', category: 0 },
-      { word: 'flower', emoji: '🌸', translation: 'פֶּרַח', category: 0 },
-      { word: 'book', emoji: '📖', translation: 'סֵפֶר', category: 1 },
-      { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', category: 1 },
-      { word: 'car', emoji: '🚗', translation: 'מְכוֹנִית', category: 1 },
-      { word: 'house', emoji: '🏠', translation: 'בַּיִת', category: 1 },
+      { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', translationAr: 'شمس', translationRu: 'солнце', category: 0 },
+      { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна', category: 0 },
+      { word: 'tree', emoji: '🌳', translation: 'עֵץ', translationAr: 'شجرة', translationRu: 'дерево', category: 0 },
+      { word: 'flower', emoji: '🌸', translation: 'פֶּרַח', translationAr: 'زهرة', translationRu: 'цветок', category: 0 },
+      { word: 'book', emoji: '📖', translation: 'סֵפֶר', translationAr: 'كتاب', translationRu: 'книга', category: 1 },
+      { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч', category: 1 },
+      { word: 'car', emoji: '🚗', translation: 'מְכוֹנִית', translationAr: 'سيارة', translationRu: 'машина', category: 1 },
+      { word: 'house', emoji: '🏠', translation: 'בַּיִת', translationAr: 'بيت', translationRu: 'дом', category: 1 },
     ],
   },
   {
     categories: [
-      { name: 'Big', nameHe: 'גדולים', emoji: '🐘', color: 'from-purple-400 to-violet-500' },
-      { name: 'Small', nameHe: 'קטנים', emoji: '🐁', color: 'from-pink-400 to-rose-500' },
+      { name: 'Big', nameHe: 'גדולים', nameAr: 'كبيرة', nameRu: 'Большие', emoji: '🐘', color: 'from-purple-400 to-violet-500' },
+      { name: 'Small', nameHe: 'קטנים', nameAr: 'صغيرة', nameRu: 'Маленькие', emoji: '🐁', color: 'from-pink-400 to-rose-500' },
     ],
     items: [
-      { word: 'elephant', emoji: '🐘', translation: 'פִּיל', category: 0 },
-      { word: 'whale', emoji: '🐋', translation: 'לִוְיָתָן', category: 0 },
-      { word: 'horse', emoji: '🐎', translation: 'סוּס', category: 0 },
-      { word: 'bear', emoji: '🐻', translation: 'דֹּב', category: 0 },
-      { word: 'mouse', emoji: '🐭', translation: 'עַכְבָּר', category: 1 },
-      { word: 'ant', emoji: '🐜', translation: 'נְמָלָה', category: 1 },
-      { word: 'bee', emoji: '🐝', translation: 'דְּבוֹרָה', category: 1 },
-      { word: 'butterfly', emoji: '🦋', translation: 'פַּרְפַּר', category: 1 },
+      { word: 'elephant', emoji: '🐘', translation: 'פִּיל', translationAr: 'فيل', translationRu: 'слон', category: 0 },
+      { word: 'whale', emoji: '🐋', translation: 'לִוְיָתָן', translationAr: 'حوت', translationRu: 'кит', category: 0 },
+      { word: 'horse', emoji: '🐎', translation: 'סוּס', translationAr: 'حصان', translationRu: 'лошадь', category: 0 },
+      { word: 'bear', emoji: '🐻', translation: 'דֹּב', translationAr: 'دب', translationRu: 'медведь', category: 0 },
+      { word: 'mouse', emoji: '🐭', translation: 'עַכְבָּר', translationAr: 'فأر', translationRu: 'мышь', category: 1 },
+      { word: 'ant', emoji: '🐜', translation: 'נְמָלָה', translationAr: 'نملة', translationRu: 'муравей', category: 1 },
+      { word: 'bee', emoji: '🐝', translation: 'דְּבוֹרָה', translationAr: 'نحلة', translationRu: 'пчела', category: 1 },
+      { word: 'butterfly', emoji: '🦋', translation: 'פַּרְפַּר', translationAr: 'فراشة', translationRu: 'бабочка', category: 1 },
     ],
   },
 ];
@@ -567,7 +567,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
             }`}>
               <span className="text-6xl block mb-2 animate-jelly">{item.emoji}</span>
               <span className="text-xl font-black text-gray-800 dark:text-white" dir="ltr">{item.word}</span>
-              <span className="text-sm text-gray-400 block" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{item.translation}</span>
+              <span className="text-sm text-gray-400 block" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(item, 'translation', uiLang)}</span>
             </div>
           </div>
         )}
@@ -616,24 +616,24 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
    ══════════════════════════════════════════════════════ */
 
 const MISSING_LETTER_WORDS = [
-  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ' },
-  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה' },
-  { word: 'cat', emoji: '🐱', translation: 'חָתוּל' },
-  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב' },
-  { word: 'fish', emoji: '🐟', translation: 'דָּג' },
-  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר' },
-  { word: 'cake', emoji: '🎂', translation: 'עוּגָה' },
-  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ' },
-  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב' },
-  { word: 'tree', emoji: '🌳', translation: 'עֵץ' },
-  { word: 'book', emoji: '📖', translation: 'סֵפֶר' },
-  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר' },
-  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם' },
-  { word: 'milk', emoji: '🥛', translation: 'חָלָב' },
-  { word: 'frog', emoji: '🐸', translation: 'צְפַרְדֵּעַ' },
-  { word: 'duck', emoji: '🦆', translation: 'בַּרְוָז' },
-  { word: 'hand', emoji: '✋', translation: 'יָד' },
-  { word: 'door', emoji: '🚪', translation: 'דֶּלֶת' },
+  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', translationAr: 'تفاحة', translationRu: 'яблоко' },
+  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', translationAr: 'موزة', translationRu: 'банан' },
+  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка' },
+  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака' },
+  { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба' },
+  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица' },
+  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт' },
+  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна' },
+  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', translationAr: 'نجمة', translationRu: 'звезда' },
+  { word: 'tree', emoji: '🌳', translation: 'עֵץ', translationAr: 'شجرة', translationRu: 'дерево' },
+  { word: 'book', emoji: '📖', translation: 'סֵפֶר', translationAr: 'كتاب', translationRu: 'книга' },
+  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч' },
+  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם', translationAr: 'مطر', translationRu: 'дождь' },
+  { word: 'milk', emoji: '🥛', translation: 'חָלָב', translationAr: 'حليب', translationRu: 'молоко' },
+  { word: 'frog', emoji: '🐸', translation: 'צְפַרְדֵּעַ', translationAr: 'ضفدع', translationRu: 'лягушка' },
+  { word: 'duck', emoji: '🦆', translation: 'בַּרְוָז', translationAr: 'بطة', translationRu: 'утка' },
+  { word: 'hand', emoji: '✋', translation: 'יָד', translationAr: 'يد', translationRu: 'рука' },
+  { word: 'door', emoji: '🚪', translation: 'דֶּלֶת', translationAr: 'باب', translationRu: 'дверь' },
 ];
 
 export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
@@ -743,7 +743,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: current.word, lang: 'en-US', rate: 0.75 },
           { pause: 500 },
-          { text: current.translation, lang: uiLang },
+          { text: lf(current, 'translation', uiLang), lang: uiLang },
         ], speak, () => {
           audioDone = true;
           tryAdvance();
@@ -802,7 +802,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
           <button onClick={() => speak(current.word, { rate: 0.7 })} className="inline-block">
             <span className="text-7xl block mb-3 animate-jelly">{current.emoji}</span>
           </button>
-          <p className="text-sm text-gray-400 mb-2" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{current.translation}</p>
+          <p className="text-sm text-gray-400 mb-2" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
 
           {/* Word with missing letter */}
           <div className="flex justify-center gap-1.5" dir="ltr">
@@ -868,18 +868,18 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
    ══════════════════════════════════════════════════════ */
 
 const SENTENCE_DATA = [
-  { sentence: 'The cat is small', words: ['The', 'cat', 'is', 'small'], emoji: '🐱', translationHe: 'הֶחָתוּל קָטָן' },
-  { sentence: 'I like apples', words: ['I', 'like', 'apples'], emoji: '🍎', translationHe: 'אֲנִי אוֹהֵב תַּפּוּחִים' },
-  { sentence: 'The sun is hot', words: ['The', 'sun', 'is', 'hot'], emoji: '☀️', translationHe: 'הַשֶּׁמֶשׁ חַמָּה' },
-  { sentence: 'She has a dog', words: ['She', 'has', 'a', 'dog'], emoji: '🐶', translationHe: 'יֵשׁ לָהּ כֶּלֶב' },
-  { sentence: 'The bird can fly', words: ['The', 'bird', 'can', 'fly'], emoji: '🐦', translationHe: 'הַצִּפּוֹר יְכוֹלָה לָעוּף' },
-  { sentence: 'I am happy', words: ['I', 'am', 'happy'], emoji: '😊', translationHe: 'אֲנִי שָׂמֵחַ' },
-  { sentence: 'He reads a book', words: ['He', 'reads', 'a', 'book'], emoji: '📖', translationHe: 'הוּא קוֹרֵא סֵפֶר' },
-  { sentence: 'The fish is blue', words: ['The', 'fish', 'is', 'blue'], emoji: '🐟', translationHe: 'הַדָּג כָּחֹל' },
-  { sentence: 'We go to school', words: ['We', 'go', 'to', 'school'], emoji: '🏫', translationHe: 'אֲנַחְנוּ הוֹלְכִים לְבֵית סֵפֶר' },
-  { sentence: 'They eat cake', words: ['They', 'eat', 'cake'], emoji: '🎂', translationHe: 'הֵם אוֹכְלִים עוּגָה' },
-  { sentence: 'The ball is red', words: ['The', 'ball', 'is', 'red'], emoji: '🔴', translationHe: 'הַכַּדּוּר אָדֹם' },
-  { sentence: 'She drinks milk', words: ['She', 'drinks', 'milk'], emoji: '🥛', translationHe: 'הִיא שׁוֹתָה חָלָב' },
+  { sentence: 'The cat is small', words: ['The', 'cat', 'is', 'small'], emoji: '🐱', translationHe: 'הֶחָתוּל קָטָן', translationAr: 'القطة صغيرة', translationRu: 'Кошка маленькая' },
+  { sentence: 'I like apples', words: ['I', 'like', 'apples'], emoji: '🍎', translationHe: 'אֲנִי אוֹהֵב תַּפּוּחִים', translationAr: 'أنا أحب التفاح', translationRu: 'Я люблю яблоки' },
+  { sentence: 'The sun is hot', words: ['The', 'sun', 'is', 'hot'], emoji: '☀️', translationHe: 'הַשֶּׁמֶשׁ חַמָּה', translationAr: 'الشمس حارة', translationRu: 'Солнце горячее' },
+  { sentence: 'She has a dog', words: ['She', 'has', 'a', 'dog'], emoji: '🐶', translationHe: 'יֵשׁ לָהּ כֶּלֶב', translationAr: 'لديها كلب', translationRu: 'У неё есть собака' },
+  { sentence: 'The bird can fly', words: ['The', 'bird', 'can', 'fly'], emoji: '🐦', translationHe: 'הַצִּפּוֹר יְכוֹלָה לָעוּף', translationAr: 'الطائر يستطيع الطيران', translationRu: 'Птица может летать' },
+  { sentence: 'I am happy', words: ['I', 'am', 'happy'], emoji: '😊', translationHe: 'אֲנִי שָׂמֵחַ', translationAr: 'أنا سعيد', translationRu: 'Я счастлив' },
+  { sentence: 'He reads a book', words: ['He', 'reads', 'a', 'book'], emoji: '📖', translationHe: 'הוּא קוֹרֵא סֵפֶר', translationAr: 'هو يقرأ كتاباً', translationRu: 'Он читает книгу' },
+  { sentence: 'The fish is blue', words: ['The', 'fish', 'is', 'blue'], emoji: '🐟', translationHe: 'הַדָּג כָּחֹל', translationAr: 'السمكة زرقاء', translationRu: 'Рыба синяя' },
+  { sentence: 'We go to school', words: ['We', 'go', 'to', 'school'], emoji: '🏫', translationHe: 'אֲנַחְנוּ הוֹלְכִים לְבֵית סֵפֶר', translationAr: 'نحن نذهب إلى المدرسة', translationRu: 'Мы идём в школу' },
+  { sentence: 'They eat cake', words: ['They', 'eat', 'cake'], emoji: '🎂', translationHe: 'הֵם אוֹכְלִים עוּגָה', translationAr: 'هم يأكلون الكعكة', translationRu: 'Они едят торт' },
+  { sentence: 'The ball is red', words: ['The', 'ball', 'is', 'red'], emoji: '🔴', translationHe: 'הַכַּדּוּר אָדֹם', translationAr: 'الكرة حمراء', translationRu: 'Мяч красный' },
+  { sentence: 'She drinks milk', words: ['She', 'drinks', 'milk'], emoji: '🥛', translationHe: 'הִיא שׁוֹתָה חָלָב', translationAr: 'هي تشرب الحليب', translationRu: 'Она пьёт молоко' },
 ];
 
 export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {

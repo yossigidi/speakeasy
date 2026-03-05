@@ -23,6 +23,8 @@ export const FOREST_SCENES = [
     titleRu: 'Ворота леса',
     introVideo: '/videos/adventure/forest-scene1.mp4',
     videoNarration: 'שער יער הקסמים! מי מחכה לנו בצד השני?',
+    videoNarrationAr: 'بوابة غابة السحر! من ينتظرنا في الجانب الآخر؟',
+    videoNarrationRu: 'Ворота волшебного леса! Кто ждёт нас по ту сторону?',
     background: SCENE1_BG,
     particles: { type: 'leaves', density: 15 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -36,7 +38,7 @@ export const FOREST_SCENES = [
     exercise: {
       type: 'wordDoor',
       config: {
-        targetWord: { word: 'hello', translation: 'שלום' },
+        targetWord: { word: 'hello', translation: 'שלום', translationAr: 'مرحباً', translationRu: 'привет' },
         distractors: ['bye', 'yes', 'no'],
         prompt: 'Say the magic word to open the gate!',
         promptHe: 'בחרו את מילת הקסם כדי לפתוח את השער!',
@@ -56,6 +58,8 @@ export const FOREST_SCENES = [
     titleRu: 'Говорящее дерево',
     introVideo: '/videos/adventure/forest-scene2.mp4',
     videoNarration: 'גשר ישן ביער! האם נצליח לחצות אותו בשלום?',
+    videoNarrationAr: 'جسر قديم في الغابة! هل سنتمكن من عبوره بسلام؟',
+    videoNarrationRu: 'Старый мост в лесу! Сможем ли мы безопасно его перейти?',
     background: SCENE2_BG,
     particles: { type: 'leaves', density: 20 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -69,7 +73,7 @@ export const FOREST_SCENES = [
     exercise: {
       type: 'spellBridge',
       config: {
-        targetWord: { word: 'bird', translation: 'ציפור' },
+        targetWord: { word: 'bird', translation: 'ציפור', translationAr: 'طائر', translationRu: 'птица' },
         hint: "Oliver is a ____",
         hintHe: 'אוליבר הוא ____',
         hintAr: 'أوليفر هو ____',
@@ -88,6 +92,8 @@ export const FOREST_SCENES = [
     titleRu: 'Ягодная поляна',
     introVideo: '/videos/adventure/forest-scene3.mp4',
     videoNarration: 'שדה פירות יער! איזה פירות נמצא הפעם?',
+    videoNarrationAr: 'حقل توت الغابة! ما الفواكه التي سنجدها هذه المرة؟',
+    videoNarrationRu: 'Ягодная поляна! Какие ягоды мы найдём на этот раз?',
     background: SCENE3_BG,
     particles: { type: 'leaves', density: 10 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -119,6 +125,8 @@ export const FOREST_SCENES = [
     titleRu: 'Переправа через реку',
     introVideo: '/videos/adventure/forest-scene4.mp4',
     videoNarration: 'נהר זורם ביער! מי גר ליד המים הצלולים?',
+    videoNarrationAr: 'نهر يجري في الغابة! من يعيش بالقرب من المياه الصافية؟',
+    videoNarrationRu: 'Река течёт в лесу! Кто живёт у чистой воды?',
     background: SCENE4_BG,
     particles: { type: 'sparkle', density: 8 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -132,10 +140,10 @@ export const FOREST_SCENES = [
       type: 'listenFind',
       config: {
         words: [
-          { word: 'cat', translation: 'חתול', emoji: '🐱' },
-          { word: 'dog', translation: 'כלב', emoji: '🐶' },
-          { word: 'fish', translation: 'דג', emoji: '🐟' },
-          { word: 'tree', translation: 'עץ', emoji: '🌳' },
+          { word: 'cat', translation: 'חתול', translationAr: 'قطة', translationRu: 'кошка', emoji: '🐱' },
+          { word: 'dog', translation: 'כלב', translationAr: 'كلب', translationRu: 'собака', emoji: '🐶' },
+          { word: 'fish', translation: 'דג', translationAr: 'سمكة', translationRu: 'рыба', emoji: '🐟' },
+          { word: 'tree', translation: 'עץ', translationAr: 'شجرة', translationRu: 'дерево', emoji: '🌳' },
         ],
         rounds: 3,
       },
@@ -152,6 +160,8 @@ export const FOREST_SCENES = [
     titleRu: 'Тёмная пещера',
     introVideo: '/videos/adventure/forest-scene5.mp4',
     videoNarration: 'מערה חשוכה ומסתורית! מי מסתתר בפנים?',
+    videoNarrationAr: 'كهف مظلم وغامض! من يختبئ بداخله؟',
+    videoNarrationRu: 'Тёмная и таинственная пещера! Кто прячется внутри?',
     background: SCENE5_BG,
     particles: { type: 'sparkle', density: 5 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -168,7 +178,7 @@ export const FOREST_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'open', translation: 'פתוח' },
+              targetWord: { word: 'open', translation: 'פתוח', translationAr: 'مفتوح', translationRu: 'открыть' },
               distractors: ['close', 'stop', 'run'],
               prompt: 'Door 1: Choose the right word!',
               promptHe: 'דלת 1: בחרו את המילה הנכונה!',
@@ -179,7 +189,7 @@ export const FOREST_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'light', translation: 'אור' },
+              targetWord: { word: 'light', translation: 'אור', translationAr: 'ضوء', translationRu: 'свет' },
               distractors: ['dark', 'heavy', 'small'],
               prompt: 'Door 2: Choose the right word!',
               promptHe: 'דלת 2: בחרו את המילה הנכונה!',
@@ -190,7 +200,7 @@ export const FOREST_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'star', translation: 'כוכב' },
+              targetWord: { word: 'star', translation: 'כוכב', translationAr: 'نجمة', translationRu: 'звезда' },
               distractors: ['moon', 'sun', 'cloud'],
               prompt: 'Door 3: Choose the right word!',
               promptHe: 'דלת 3: בחרו את המילה הנכונה!',
@@ -213,6 +223,8 @@ export const FOREST_SCENES = [
     titleRu: 'Испытание дракона',
     introVideo: '/videos/adventure/forest-scene6.mp4',
     videoNarration: 'הדרקון של היער! ההרפתקה מגיעה לשיא!',
+    videoNarrationAr: 'تنين الغابة! تصل المغامرة إلى ذروتها!',
+    videoNarrationRu: 'Дракон леса! Приключение достигает кульминации!',
     background: SCENE6_BG,
     particles: { type: 'sparkle', density: 12 },
     speakliPosition: { x: 0.1, y: 0.75 },
@@ -229,7 +241,7 @@ export const FOREST_SCENES = [
           {
             type: 'wordDoor',
             config: {
-              targetWord: { word: 'brave', translation: 'אמיץ' },
+              targetWord: { word: 'brave', translation: 'אמיץ', translationAr: 'شجاع', translationRu: 'храбрый' },
               distractors: ['scared', 'tired', 'angry'],
               prompt: 'Round 1: What does a hero need to be?',
               promptHe: 'סיבוב 1: מה גיבור צריך להיות?',
@@ -240,7 +252,7 @@ export const FOREST_SCENES = [
           {
             type: 'spellBridge',
             config: {
-              targetWord: { word: 'fire', translation: 'אש' },
+              targetWord: { word: 'fire', translation: 'אש', translationAr: 'نار', translationRu: 'огонь' },
               hint: "Dragons breathe ____",
               hintHe: 'דרקונים נושפים ____',
               hintAr: 'التنانين تنفث ____',

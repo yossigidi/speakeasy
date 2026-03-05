@@ -40,7 +40,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
 
     // Generate exercises only if lesson has exerciseTypes
     if (data.lesson.exerciseTypes && data.lesson.exerciseTypes.length > 0) {
-      const exs = generateExercises(data.skill, data.lesson);
+      const exs = generateExercises(data.skill, data.lesson, uiLang);
       setExercises(exs);
     }
   }, [lessonId]);
@@ -337,7 +337,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
           if (lessonInfo) {
             const data = getSkillLesson(lessonId);
             if (data && data.lesson.exerciseTypes?.length > 0) {
-              setExercises(generateExercises(data.skill, data.lesson));
+              setExercises(generateExercises(data.skill, data.lesson, uiLang));
             }
           }
         } : null}

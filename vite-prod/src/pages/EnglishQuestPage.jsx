@@ -1180,12 +1180,18 @@ export default function EnglishQuestPage({ onBack }) {
         emoji="⚔️"
         title="Speakli's Quest!"
         titleHe="המשימה של ספיקלי!"
+        titleAr="مهمة سبيكلي!"
+        titleRu="Миссия Спикли!"
         desc="Join Speakli on an adventure! Defeat monsters using your English skills!"
         descHe="הצטרפו לספיקלי להרפתקה! הביסו מפלצות עם כישורי האנגלית שלכם!"
+        descAr="انضموا إلى سبيكلي في مغامرة! هزموا الوحوش باستخدام مهاراتكم في الإنجليزية!"
+        descRu="Присоединяйтесь к Спикли в приключении! Победите монстров с помощью своих знаний английского!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's go with Speakli!"
         buttonLabelHe="יאללה עם ספיקלי!"
+        buttonLabelAr="يالله مع سبيكلي!"
+        buttonLabelRu="Вперёд со Спикли!"
       />
 
       {phase === 'intro' && (

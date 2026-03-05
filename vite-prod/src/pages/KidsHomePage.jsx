@@ -398,14 +398,14 @@ function KidsWordOfDay({ speak, speakSequence, uiLang }) {
       <div className="flex items-center gap-3">
         <div className="flex-1">
           <h3 className="text-2xl font-black text-white">{word.word}</h3>
-          <p className="text-sm text-white/80 font-medium" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{word.translation}</p>
+          <p className="text-sm text-white/80 font-medium" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(word, 'translation', uiLang)}</p>
         </div>
         <button
           onClick={() => {
             speakSequence([
               { text: word.word, lang: 'en-US', rate: 0.85 },
               { pause: 600 },
-              { text: word.translation, lang: uiLang, rate: 0.95 },
+              { text: lf(word, 'translation', uiLang), lang: uiLang, rate: 0.95 },
             ]);
           }}
           className="w-12 h-12 rounded-full bg-white/25 flex items-center justify-center active:scale-90 transition-transform"
@@ -447,12 +447,18 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
         emoji="🦉"
         title="Speakli is here!"
         titleHe="ספיקלי כאן!"
+        titleAr="سبيكلي هنا!"
+        titleRu="Спикли здесь!"
         desc="Hi! I'm Speakli! So glad you're here! Let's learn and play together!"
         descHe="הַיי! אֲנִי סְפִּיקְלִי! אֵיזֶה כֵּיף שֶׁבָּאתֶם! בּוֹאוּ נִלְמַד וְנִשְׂחַק בְּיַחַד!"
+        descAr="مرحباً! أنا سبيكلي! يسعدني وجودكم هنا! لنتعلم ونلعب معاً!"
+        descRu="Привет! Я Спикли! Так рад, что вы здесь! Давайте учиться и играть вместе!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's go!"
         buttonLabelHe="יאללה, בואו!"
+        buttonLabelAr="يالله، هيا!"
+        buttonLabelRu="Поехали!"
       />
 
       <div className="relative z-10 px-4 pt-4 space-y-5">

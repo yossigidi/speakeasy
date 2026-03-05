@@ -115,12 +115,18 @@ export default function CurriculumPage({ onBack }) {
         emoji="📚"
         title="Speakli's Lessons!"
         titleHe="השיעורים של ספיקלי!"
+        titleAr="دروس سبيكلي!"
+        titleRu="Уроки Спикли!"
         desc="Follow Speakli's path and complete lessons to earn stars!"
         descHe="עקבו אחרי המסלול של ספיקלי והשלימו שיעורים כדי לצבור כוכבים!"
+        descAr="اتبعوا مسار سبيكلي وأكملوا الدروس لتحصلوا على النجوم!"
+        descRu="Следуйте по пути Спикли и завершайте уроки, чтобы заработать звёзды!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's learn with Speakli!"
         buttonLabelHe="בואו נלמד עם ספיקלי!"
+        buttonLabelAr="لنتعلم مع سبيكلي!"
+        buttonLabelRu="Учимся со Спикли!"
       />
 
       {/* Header */}

@@ -11,163 +11,258 @@ import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { playCorrect, playWrong, playComplete, playStar } from '../utils/gameSounds.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { WORDS_BY_LEVEL } from '../data/kids-vocabulary.js';
-import { t, RTL_LANGS } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 
 const TEACHER_TOPICS = [
-  { id: 'colors', emoji: '🎨', titleHe: 'צבעים', titleEn: 'Colors', level: 1, gradient: 'linear-gradient(135deg, #FF6B6B, #FFE66D)' },
-  { id: 'animals', emoji: '🐾', titleHe: 'חיות', titleEn: 'Animals', level: 1, gradient: 'linear-gradient(135deg, #4ECDC4, #44CF6C)' },
-  { id: 'numbers', emoji: '🔢', titleHe: 'מספרים', titleEn: 'Numbers', level: 1, gradient: 'linear-gradient(135deg, #A78BFA, #818CF8)' },
-  { id: 'fruits', emoji: '🍎', titleHe: 'פירות', titleEn: 'Fruits', level: 1, gradient: 'linear-gradient(135deg, #F472B6, #FB923C)' },
-  { id: 'greetings', emoji: '👋', titleHe: 'ברכות', titleEn: 'Greetings', level: 1, gradient: 'linear-gradient(135deg, #60A5FA, #34D399)' },
-  { id: 'family', emoji: '👨‍👩‍👧‍👦', titleHe: 'משפחה', titleEn: 'Family', level: 2, gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)' },
-  { id: 'body', emoji: '🦶', titleHe: 'גוף', titleEn: 'Body', level: 2, gradient: 'linear-gradient(135deg, #EC4899, #8B5CF6)' },
-  { id: 'classroom', emoji: '🏫', titleHe: 'כיתה', titleEn: 'Classroom', level: 2, gradient: 'linear-gradient(135deg, #14B8A6, #3B82F6)' },
-  { id: 'food', emoji: '🍔', titleHe: 'אוכל', titleEn: 'Food', level: 2, gradient: 'linear-gradient(135deg, #F97316, #FACC15)' },
-  { id: 'sizes', emoji: '📏', titleHe: 'גדלים', titleEn: 'Sizes', level: 2, gradient: 'linear-gradient(135deg, #6366F1, #EC4899)' },
-  { id: 'weather', emoji: '🌤️', titleHe: 'מזג אוויר', titleEn: 'Weather', level: 3, gradient: 'linear-gradient(135deg, #38BDF8, #818CF8)' },
-  { id: 'home', emoji: '🏠', titleHe: 'הבית', titleEn: 'Home', level: 3, gradient: 'linear-gradient(135deg, #A78BFA, #F472B6)' },
-  { id: 'clothes', emoji: '👕', titleHe: 'בגדים', titleEn: 'Clothes', level: 3, gradient: 'linear-gradient(135deg, #FB7185, #FBBF24)' },
-  { id: 'transport', emoji: '🚗', titleHe: 'תחבורה', titleEn: 'Transport', level: 3, gradient: 'linear-gradient(135deg, #2DD4BF, #3B82F6)' },
-  { id: 'nature', emoji: '🌳', titleHe: 'טבע', titleEn: 'Nature', level: 3, gradient: 'linear-gradient(135deg, #22C55E, #14B8A6)' },
-  { id: 'daily_routine', emoji: '⏰', titleHe: 'שגרה יומית', titleEn: 'Daily Routine', level: 4, gradient: 'linear-gradient(135deg, #F59E0B, #EC4899)' },
-  { id: 'store', emoji: '🛍️', titleHe: 'חנות', titleEn: 'Store', level: 4, gradient: 'linear-gradient(135deg, #8B5CF6, #06B6D4)' },
-  { id: 'hobbies', emoji: '🎯', titleHe: 'תחביבים', titleEn: 'Hobbies', level: 4, gradient: 'linear-gradient(135deg, #EF4444, #F97316)' },
-  { id: 'verbs', emoji: '🏃', titleHe: 'פעלים', titleEn: 'Verbs', level: 4, gradient: 'linear-gradient(135deg, #6366F1, #22C55E)' },
+  { id: 'colors', emoji: '🎨', titleHe: 'צבעים', titleEn: 'Colors', titleAr: 'الألوان', titleRu: 'Цвета', level: 1, gradient: 'linear-gradient(135deg, #FF6B6B, #FFE66D)' },
+  { id: 'animals', emoji: '🐾', titleHe: 'חיות', titleEn: 'Animals', titleAr: 'الحيوانات', titleRu: 'Животные', level: 1, gradient: 'linear-gradient(135deg, #4ECDC4, #44CF6C)' },
+  { id: 'numbers', emoji: '🔢', titleHe: 'מספרים', titleEn: 'Numbers', titleAr: 'الأرقام', titleRu: 'Числа', level: 1, gradient: 'linear-gradient(135deg, #A78BFA, #818CF8)' },
+  { id: 'fruits', emoji: '🍎', titleHe: 'פירות', titleEn: 'Fruits', titleAr: 'الفواكه', titleRu: 'Фрукты', level: 1, gradient: 'linear-gradient(135deg, #F472B6, #FB923C)' },
+  { id: 'greetings', emoji: '👋', titleHe: 'ברכות', titleEn: 'Greetings', titleAr: 'التحيات', titleRu: 'Приветствия', level: 1, gradient: 'linear-gradient(135deg, #60A5FA, #34D399)' },
+  { id: 'family', emoji: '👨‍👩‍👧‍👦', titleHe: 'משפחה', titleEn: 'Family', titleAr: 'العائلة', titleRu: 'Семья', level: 2, gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)' },
+  { id: 'body', emoji: '🦶', titleHe: 'גוף', titleEn: 'Body', titleAr: 'الجسم', titleRu: 'Тело', level: 2, gradient: 'linear-gradient(135deg, #EC4899, #8B5CF6)' },
+  { id: 'classroom', emoji: '🏫', titleHe: 'כיתה', titleEn: 'Classroom', titleAr: 'الفصل الدراسي', titleRu: 'Класс', level: 2, gradient: 'linear-gradient(135deg, #14B8A6, #3B82F6)' },
+  { id: 'food', emoji: '🍔', titleHe: 'אוכל', titleEn: 'Food', titleAr: 'الطعام', titleRu: 'Еда', level: 2, gradient: 'linear-gradient(135deg, #F97316, #FACC15)' },
+  { id: 'sizes', emoji: '📏', titleHe: 'גדלים', titleEn: 'Sizes', titleAr: 'الأحجام', titleRu: 'Размеры', level: 2, gradient: 'linear-gradient(135deg, #6366F1, #EC4899)' },
+  { id: 'weather', emoji: '🌤️', titleHe: 'מזג אוויר', titleEn: 'Weather', titleAr: 'الطقس', titleRu: 'Погода', level: 3, gradient: 'linear-gradient(135deg, #38BDF8, #818CF8)' },
+  { id: 'home', emoji: '🏠', titleHe: 'הבית', titleEn: 'Home', titleAr: 'المنزل', titleRu: 'Дом', level: 3, gradient: 'linear-gradient(135deg, #A78BFA, #F472B6)' },
+  { id: 'clothes', emoji: '👕', titleHe: 'בגדים', titleEn: 'Clothes', titleAr: 'الملابس', titleRu: 'Одежда', level: 3, gradient: 'linear-gradient(135deg, #FB7185, #FBBF24)' },
+  { id: 'transport', emoji: '🚗', titleHe: 'תחבורה', titleEn: 'Transport', titleAr: 'المواصلات', titleRu: 'Транспорт', level: 3, gradient: 'linear-gradient(135deg, #2DD4BF, #3B82F6)' },
+  { id: 'nature', emoji: '🌳', titleHe: 'טבע', titleEn: 'Nature', titleAr: 'الطبيعة', titleRu: 'Природа', level: 3, gradient: 'linear-gradient(135deg, #22C55E, #14B8A6)' },
+  { id: 'daily_routine', emoji: '⏰', titleHe: 'שגרה יומית', titleEn: 'Daily Routine', titleAr: 'الروتين اليومي', titleRu: 'Распорядок дня', level: 4, gradient: 'linear-gradient(135deg, #F59E0B, #EC4899)' },
+  { id: 'store', emoji: '🛍️', titleHe: 'חנות', titleEn: 'Store', titleAr: 'المتجر', titleRu: 'Магазин', level: 4, gradient: 'linear-gradient(135deg, #8B5CF6, #06B6D4)' },
+  { id: 'hobbies', emoji: '🎯', titleHe: 'תחביבים', titleEn: 'Hobbies', titleAr: 'الهوايات', titleRu: 'Хобби', level: 4, gradient: 'linear-gradient(135deg, #EF4444, #F97316)' },
+  { id: 'verbs', emoji: '🏃', titleHe: 'פעלים', titleEn: 'Verbs', titleAr: 'الأفعال', titleRu: 'Глаголы', level: 4, gradient: 'linear-gradient(135deg, #6366F1, #22C55E)' },
 ];
 
 const TOPIC_WORDS = {
   colors: [
-    { word: 'Red', emoji: '🔴', translation: 'אדום' }, { word: 'Blue', emoji: '🔵', translation: 'כחול' },
-    { word: 'Green', emoji: '🟢', translation: 'ירוק' }, { word: 'Yellow', emoji: '🟡', translation: 'צהוב' },
-    { word: 'Purple', emoji: '🟣', translation: 'סגול' }, { word: 'Orange', emoji: '🟠', translation: 'כתום' },
-    { word: 'Pink', emoji: '🩷', translation: 'ורוד' }, { word: 'White', emoji: '⬜', translation: 'לבן' },
-    { word: 'Black', emoji: '⬛', translation: 'שחור' }, { word: 'Brown', emoji: '🟤', translation: 'חום' },
+    { word: 'Red', emoji: '🔴', translation: 'אדום', translationAr: 'أحمر', translationRu: 'красный' },
+    { word: 'Blue', emoji: '🔵', translation: 'כחול', translationAr: 'أزرق', translationRu: 'синий' },
+    { word: 'Green', emoji: '🟢', translation: 'ירוק', translationAr: 'أخضر', translationRu: 'зелёный' },
+    { word: 'Yellow', emoji: '🟡', translation: 'צהוב', translationAr: 'أصفر', translationRu: 'жёлтый' },
+    { word: 'Purple', emoji: '🟣', translation: 'סגול', translationAr: 'بنفسجي', translationRu: 'фиолетовый' },
+    { word: 'Orange', emoji: '🟠', translation: 'כתום', translationAr: 'برتقالي', translationRu: 'оранжевый' },
+    { word: 'Pink', emoji: '🩷', translation: 'ורוד', translationAr: 'وردي', translationRu: 'розовый' },
+    { word: 'White', emoji: '⬜', translation: 'לבן', translationAr: 'أبيض', translationRu: 'белый' },
+    { word: 'Black', emoji: '⬛', translation: 'שחור', translationAr: 'أسود', translationRu: 'чёрный' },
+    { word: 'Brown', emoji: '🟤', translation: 'חום', translationAr: 'بني', translationRu: 'коричневый' },
   ],
   animals: [
-    { word: 'Dog', emoji: '🐕', translation: 'כלב' }, { word: 'Cat', emoji: '🐈', translation: 'חתול' },
-    { word: 'Bird', emoji: '🐦', translation: 'ציפור' }, { word: 'Fish', emoji: '🐟', translation: 'דג' },
-    { word: 'Horse', emoji: '🐴', translation: 'סוס' }, { word: 'Cow', emoji: '🐄', translation: 'פרה' },
-    { word: 'Lion', emoji: '🦁', translation: 'אריה' }, { word: 'Elephant', emoji: '🐘', translation: 'פיל' },
-    { word: 'Rabbit', emoji: '🐰', translation: 'ארנב' }, { word: 'Bear', emoji: '🐻', translation: 'דוב' },
+    { word: 'Dog', emoji: '🐕', translation: 'כלב', translationAr: 'كلب', translationRu: 'собака' },
+    { word: 'Cat', emoji: '🐈', translation: 'חתול', translationAr: 'قطة', translationRu: 'кошка' },
+    { word: 'Bird', emoji: '🐦', translation: 'ציפור', translationAr: 'طائر', translationRu: 'птица' },
+    { word: 'Fish', emoji: '🐟', translation: 'דג', translationAr: 'سمكة', translationRu: 'рыба' },
+    { word: 'Horse', emoji: '🐴', translation: 'סוס', translationAr: 'حصان', translationRu: 'лошадь' },
+    { word: 'Cow', emoji: '🐄', translation: 'פרה', translationAr: 'بقرة', translationRu: 'корова' },
+    { word: 'Lion', emoji: '🦁', translation: 'אריה', translationAr: 'أسد', translationRu: 'лев' },
+    { word: 'Elephant', emoji: '🐘', translation: 'פיל', translationAr: 'فيل', translationRu: 'слон' },
+    { word: 'Rabbit', emoji: '🐰', translation: 'ארנב', translationAr: 'أرنب', translationRu: 'кролик' },
+    { word: 'Bear', emoji: '🐻', translation: 'דוב', translationAr: 'دب', translationRu: 'медведь' },
   ],
   numbers: [
-    { word: 'One', emoji: '1️⃣', translation: 'אחד' }, { word: 'Two', emoji: '2️⃣', translation: 'שניים' },
-    { word: 'Three', emoji: '3️⃣', translation: 'שלושה' }, { word: 'Four', emoji: '4️⃣', translation: 'ארבעה' },
-    { word: 'Five', emoji: '5️⃣', translation: 'חמישה' }, { word: 'Six', emoji: '6️⃣', translation: 'שישה' },
-    { word: 'Seven', emoji: '7️⃣', translation: 'שבעה' }, { word: 'Eight', emoji: '8️⃣', translation: 'שמונה' },
-    { word: 'Nine', emoji: '9️⃣', translation: 'תשעה' }, { word: 'Ten', emoji: '🔟', translation: 'עשרה' },
+    { word: 'One', emoji: '1️⃣', translation: 'אחד', translationAr: 'واحد', translationRu: 'один' },
+    { word: 'Two', emoji: '2️⃣', translation: 'שניים', translationAr: 'اثنان', translationRu: 'два' },
+    { word: 'Three', emoji: '3️⃣', translation: 'שלושה', translationAr: 'ثلاثة', translationRu: 'три' },
+    { word: 'Four', emoji: '4️⃣', translation: 'ארבעה', translationAr: 'أربعة', translationRu: 'четыре' },
+    { word: 'Five', emoji: '5️⃣', translation: 'חמישה', translationAr: 'خمسة', translationRu: 'пять' },
+    { word: 'Six', emoji: '6️⃣', translation: 'שישה', translationAr: 'ستة', translationRu: 'шесть' },
+    { word: 'Seven', emoji: '7️⃣', translation: 'שבעה', translationAr: 'سبعة', translationRu: 'семь' },
+    { word: 'Eight', emoji: '8️⃣', translation: 'שמונה', translationAr: 'ثمانية', translationRu: 'восемь' },
+    { word: 'Nine', emoji: '9️⃣', translation: 'תשעה', translationAr: 'تسعة', translationRu: 'девять' },
+    { word: 'Ten', emoji: '🔟', translation: 'עשרה', translationAr: 'عشرة', translationRu: 'десять' },
   ],
   fruits: [
-    { word: 'Apple', emoji: '🍎', translation: 'תפוח' }, { word: 'Banana', emoji: '🍌', translation: 'בננה' },
-    { word: 'Orange', emoji: '🍊', translation: 'תפוז' }, { word: 'Grape', emoji: '🍇', translation: 'ענב' },
-    { word: 'Strawberry', emoji: '🍓', translation: 'תות' }, { word: 'Watermelon', emoji: '🍉', translation: 'אבטיח' },
-    { word: 'Pineapple', emoji: '🍍', translation: 'אננס' }, { word: 'Cherry', emoji: '🍒', translation: 'דובדבן' },
-    { word: 'Peach', emoji: '🍑', translation: 'אפרסק' }, { word: 'Lemon', emoji: '🍋', translation: 'לימון' },
+    { word: 'Apple', emoji: '🍎', translation: 'תפוח', translationAr: 'تفاحة', translationRu: 'яблоко' },
+    { word: 'Banana', emoji: '🍌', translation: 'בננה', translationAr: 'موزة', translationRu: 'банан' },
+    { word: 'Orange', emoji: '🍊', translation: 'תפוז', translationAr: 'برتقالة', translationRu: 'апельсин' },
+    { word: 'Grape', emoji: '🍇', translation: 'ענב', translationAr: 'عنب', translationRu: 'виноград' },
+    { word: 'Strawberry', emoji: '🍓', translation: 'תות', translationAr: 'فراولة', translationRu: 'клубника' },
+    { word: 'Watermelon', emoji: '🍉', translation: 'אבטיח', translationAr: 'بطيخ', translationRu: 'арбуз' },
+    { word: 'Pineapple', emoji: '🍍', translation: 'אננס', translationAr: 'أناناس', translationRu: 'ананас' },
+    { word: 'Cherry', emoji: '🍒', translation: 'דובדבן', translationAr: 'كرز', translationRu: 'вишня' },
+    { word: 'Peach', emoji: '🍑', translation: 'אפרסק', translationAr: 'خوخ', translationRu: 'персик' },
+    { word: 'Lemon', emoji: '🍋', translation: 'לימון', translationAr: 'ليمون', translationRu: 'лимон' },
   ],
   greetings: [
-    { word: 'Hello', emoji: '👋', translation: 'שלום' }, { word: 'Goodbye', emoji: '👋', translation: 'להתראות' },
-    { word: 'Thank you', emoji: '🙏', translation: 'תודה' }, { word: 'Please', emoji: '🤲', translation: 'בבקשה' },
-    { word: 'Yes', emoji: '✅', translation: 'כן' }, { word: 'No', emoji: '❌', translation: 'לא' },
-    { word: 'Good morning', emoji: '🌅', translation: 'בוקר טוב' }, { word: 'Good night', emoji: '🌙', translation: 'לילה טוב' },
-    { word: 'How are you?', emoji: '😊', translation: 'מה שלומך?' }, { word: 'My name is', emoji: '🏷️', translation: 'קוראים לי' },
+    { word: 'Hello', emoji: '👋', translation: 'שלום', translationAr: 'مرحباً', translationRu: 'привет' },
+    { word: 'Goodbye', emoji: '👋', translation: 'להתראות', translationAr: 'وداعاً', translationRu: 'до свидания' },
+    { word: 'Thank you', emoji: '🙏', translation: 'תודה', translationAr: 'شكراً', translationRu: 'спасибо' },
+    { word: 'Please', emoji: '🤲', translation: 'בבקשה', translationAr: 'من فضلك', translationRu: 'пожалуйста' },
+    { word: 'Yes', emoji: '✅', translation: 'כן', translationAr: 'نعم', translationRu: 'да' },
+    { word: 'No', emoji: '❌', translation: 'לא', translationAr: 'لا', translationRu: 'нет' },
+    { word: 'Good morning', emoji: '🌅', translation: 'בוקר טוב', translationAr: 'صباح الخير', translationRu: 'доброе утро' },
+    { word: 'Good night', emoji: '🌙', translation: 'לילה טוב', translationAr: 'تصبح على خير', translationRu: 'спокойной ночи' },
+    { word: 'How are you?', emoji: '😊', translation: 'מה שלומך?', translationAr: 'كيف حالك؟', translationRu: 'как дела?' },
+    { word: 'My name is', emoji: '🏷️', translation: 'קוראים לי', translationAr: 'اسمي', translationRu: 'меня зовут' },
   ],
   family: [
-    { word: 'Mother', emoji: '👩', translation: 'אמא' }, { word: 'Father', emoji: '👨', translation: 'אבא' },
-    { word: 'Brother', emoji: '👦', translation: 'אח' }, { word: 'Sister', emoji: '👧', translation: 'אחות' },
-    { word: 'Baby', emoji: '👶', translation: 'תינוק' }, { word: 'Grandmother', emoji: '👵', translation: 'סבתא' },
-    { word: 'Grandfather', emoji: '👴', translation: 'סבא' }, { word: 'Family', emoji: '👨‍👩‍👧‍👦', translation: 'משפחה' },
-    { word: 'Uncle', emoji: '👨', translation: 'דוד' }, { word: 'Aunt', emoji: '👩', translation: 'דודה' },
+    { word: 'Mother', emoji: '👩', translation: 'אמא', translationAr: 'أم', translationRu: 'мама' },
+    { word: 'Father', emoji: '👨', translation: 'אבא', translationAr: 'أب', translationRu: 'папа' },
+    { word: 'Brother', emoji: '👦', translation: 'אח', translationAr: 'أخ', translationRu: 'брат' },
+    { word: 'Sister', emoji: '👧', translation: 'אחות', translationAr: 'أخت', translationRu: 'сестра' },
+    { word: 'Baby', emoji: '👶', translation: 'תינוק', translationAr: 'طفل رضيع', translationRu: 'малыш' },
+    { word: 'Grandmother', emoji: '👵', translation: 'סבתא', translationAr: 'جدة', translationRu: 'бабушка' },
+    { word: 'Grandfather', emoji: '👴', translation: 'סבא', translationAr: 'جد', translationRu: 'дедушка' },
+    { word: 'Family', emoji: '👨‍👩‍👧‍👦', translation: 'משפחה', translationAr: 'عائلة', translationRu: 'семья' },
+    { word: 'Uncle', emoji: '👨', translation: 'דוד', translationAr: 'عم', translationRu: 'дядя' },
+    { word: 'Aunt', emoji: '👩', translation: 'דודה', translationAr: 'عمة', translationRu: 'тётя' },
   ],
   body: [
-    { word: 'Head', emoji: '😀', translation: 'ראש' }, { word: 'Hand', emoji: '✋', translation: 'יד' },
-    { word: 'Eye', emoji: '👁️', translation: 'עין' }, { word: 'Nose', emoji: '👃', translation: 'אף' },
-    { word: 'Mouth', emoji: '👄', translation: 'פה' }, { word: 'Ear', emoji: '👂', translation: 'אוזן' },
-    { word: 'Foot', emoji: '🦶', translation: 'רגל' }, { word: 'Hair', emoji: '💇', translation: 'שיער' },
-    { word: 'Heart', emoji: '❤️', translation: 'לב' }, { word: 'Teeth', emoji: '🦷', translation: 'שיניים' },
+    { word: 'Head', emoji: '😀', translation: 'ראש', translationAr: 'رأس', translationRu: 'голова' },
+    { word: 'Hand', emoji: '✋', translation: 'יד', translationAr: 'يد', translationRu: 'рука' },
+    { word: 'Eye', emoji: '👁️', translation: 'עין', translationAr: 'عين', translationRu: 'глаз' },
+    { word: 'Nose', emoji: '👃', translation: 'אף', translationAr: 'أنف', translationRu: 'нос' },
+    { word: 'Mouth', emoji: '👄', translation: 'פה', translationAr: 'فم', translationRu: 'рот' },
+    { word: 'Ear', emoji: '👂', translation: 'אוזן', translationAr: 'أذن', translationRu: 'ухо' },
+    { word: 'Foot', emoji: '🦶', translation: 'רגל', translationAr: 'قدم', translationRu: 'нога' },
+    { word: 'Hair', emoji: '💇', translation: 'שיער', translationAr: 'شعر', translationRu: 'волосы' },
+    { word: 'Heart', emoji: '❤️', translation: 'לב', translationAr: 'قلب', translationRu: 'сердце' },
+    { word: 'Teeth', emoji: '🦷', translation: 'שיניים', translationAr: 'أسنان', translationRu: 'зубы' },
   ],
   classroom: [
-    { word: 'Book', emoji: '📖', translation: 'ספר' }, { word: 'Pencil', emoji: '✏️', translation: 'עיפרון' },
-    { word: 'Teacher', emoji: '👩‍🏫', translation: 'מורה' }, { word: 'School', emoji: '🏫', translation: 'בית ספר' },
-    { word: 'Table', emoji: '🪑', translation: 'שולחן' }, { word: 'Chair', emoji: '💺', translation: 'כיסא' },
-    { word: 'Bag', emoji: '🎒', translation: 'תיק' }, { word: 'Clock', emoji: '🕐', translation: 'שעון' },
-    { word: 'Paper', emoji: '📄', translation: 'נייר' }, { word: 'Color', emoji: '🎨', translation: 'צבע' },
+    { word: 'Book', emoji: '📖', translation: 'ספר', translationAr: 'كتاب', translationRu: 'книга' },
+    { word: 'Pencil', emoji: '✏️', translation: 'עיפרון', translationAr: 'قلم رصاص', translationRu: 'карандаш' },
+    { word: 'Teacher', emoji: '👩‍🏫', translation: 'מורה', translationAr: 'معلمة', translationRu: 'учитель' },
+    { word: 'School', emoji: '🏫', translation: 'בית ספר', translationAr: 'مدرسة', translationRu: 'школа' },
+    { word: 'Table', emoji: '🪑', translation: 'שולחן', translationAr: 'طاولة', translationRu: 'стол' },
+    { word: 'Chair', emoji: '💺', translation: 'כיסא', translationAr: 'كرسي', translationRu: 'стул' },
+    { word: 'Bag', emoji: '🎒', translation: 'תיק', translationAr: 'حقيبة', translationRu: 'сумка' },
+    { word: 'Clock', emoji: '🕐', translation: 'שעון', translationAr: 'ساعة', translationRu: 'часы' },
+    { word: 'Paper', emoji: '📄', translation: 'נייר', translationAr: 'ورقة', translationRu: 'бумага' },
+    { word: 'Color', emoji: '🎨', translation: 'צבע', translationAr: 'لون', translationRu: 'цвет' },
   ],
   food: [
-    { word: 'Bread', emoji: '🍞', translation: 'לחם' }, { word: 'Milk', emoji: '🥛', translation: 'חלב' },
-    { word: 'Egg', emoji: '🥚', translation: 'ביצה' }, { word: 'Rice', emoji: '🍚', translation: 'אורז' },
-    { word: 'Pizza', emoji: '🍕', translation: 'פיצה' }, { word: 'Ice cream', emoji: '🍦', translation: 'גלידה' },
-    { word: 'Cake', emoji: '🎂', translation: 'עוגה' }, { word: 'Water', emoji: '💧', translation: 'מים' },
-    { word: 'Juice', emoji: '🧃', translation: 'מיץ' }, { word: 'Cookie', emoji: '🍪', translation: 'עוגיה' },
+    { word: 'Bread', emoji: '🍞', translation: 'לחם', translationAr: 'خبز', translationRu: 'хлеб' },
+    { word: 'Milk', emoji: '🥛', translation: 'חלב', translationAr: 'حليب', translationRu: 'молоко' },
+    { word: 'Egg', emoji: '🥚', translation: 'ביצה', translationAr: 'بيضة', translationRu: 'яйцо' },
+    { word: 'Rice', emoji: '🍚', translation: 'אורז', translationAr: 'أرز', translationRu: 'рис' },
+    { word: 'Pizza', emoji: '🍕', translation: 'פיצה', translationAr: 'بيتزا', translationRu: 'пицца' },
+    { word: 'Ice cream', emoji: '🍦', translation: 'גלידה', translationAr: 'آيس كريم', translationRu: 'мороженое' },
+    { word: 'Cake', emoji: '🎂', translation: 'עוגה', translationAr: 'كعكة', translationRu: 'торт' },
+    { word: 'Water', emoji: '💧', translation: 'מים', translationAr: 'ماء', translationRu: 'вода' },
+    { word: 'Juice', emoji: '🧃', translation: 'מיץ', translationAr: 'عصير', translationRu: 'сок' },
+    { word: 'Cookie', emoji: '🍪', translation: 'עוגיה', translationAr: 'بسكويت', translationRu: 'печенье' },
   ],
   sizes: [
-    { word: 'Big', emoji: '🐘', translation: 'גדול' }, { word: 'Small', emoji: '🐜', translation: 'קטן' },
-    { word: 'Tall', emoji: '🦒', translation: 'גבוה' }, { word: 'Short', emoji: '🐁', translation: 'נמוך' },
-    { word: 'Long', emoji: '🐍', translation: 'ארוך' }, { word: 'Fast', emoji: '🐆', translation: 'מהיר' },
-    { word: 'Slow', emoji: '🐢', translation: 'איטי' }, { word: 'Heavy', emoji: '🏋️', translation: 'כבד' },
-    { word: 'Light', emoji: '🪶', translation: 'קל' }, { word: 'Wide', emoji: '↔️', translation: 'רחב' },
+    { word: 'Big', emoji: '🐘', translation: 'גדול', translationAr: 'كبير', translationRu: 'большой' },
+    { word: 'Small', emoji: '🐜', translation: 'קטן', translationAr: 'صغير', translationRu: 'маленький' },
+    { word: 'Tall', emoji: '🦒', translation: 'גבוה', translationAr: 'طويل', translationRu: 'высокий' },
+    { word: 'Short', emoji: '🐁', translation: 'נמוך', translationAr: 'قصير', translationRu: 'низкий' },
+    { word: 'Long', emoji: '🐍', translation: 'ארוך', translationAr: 'طويل', translationRu: 'длинный' },
+    { word: 'Fast', emoji: '🐆', translation: 'מהיר', translationAr: 'سريع', translationRu: 'быстрый' },
+    { word: 'Slow', emoji: '🐢', translation: 'איטי', translationAr: 'بطيء', translationRu: 'медленный' },
+    { word: 'Heavy', emoji: '🏋️', translation: 'כבד', translationAr: 'ثقيل', translationRu: 'тяжёлый' },
+    { word: 'Light', emoji: '🪶', translation: 'קל', translationAr: 'خفيف', translationRu: 'лёгкий' },
+    { word: 'Wide', emoji: '↔️', translation: 'רחב', translationAr: 'عريض', translationRu: 'широкий' },
   ],
   weather: [
-    { word: 'Sun', emoji: '☀️', translation: 'שמש' }, { word: 'Rain', emoji: '🌧️', translation: 'גשם' },
-    { word: 'Cloud', emoji: '☁️', translation: 'ענן' }, { word: 'Snow', emoji: '❄️', translation: 'שלג' },
-    { word: 'Wind', emoji: '💨', translation: 'רוח' }, { word: 'Hot', emoji: '🔥', translation: 'חם' },
-    { word: 'Cold', emoji: '🥶', translation: 'קר' }, { word: 'Rainbow', emoji: '🌈', translation: 'קשת' },
-    { word: 'Star', emoji: '⭐', translation: 'כוכב' }, { word: 'Moon', emoji: '🌙', translation: 'ירח' },
+    { word: 'Sun', emoji: '☀️', translation: 'שמש', translationAr: 'شمس', translationRu: 'солнце' },
+    { word: 'Rain', emoji: '🌧️', translation: 'גשם', translationAr: 'مطر', translationRu: 'дождь' },
+    { word: 'Cloud', emoji: '☁️', translation: 'ענן', translationAr: 'غيمة', translationRu: 'облако' },
+    { word: 'Snow', emoji: '❄️', translation: 'שלג', translationAr: 'ثلج', translationRu: 'снег' },
+    { word: 'Wind', emoji: '💨', translation: 'רוח', translationAr: 'رياح', translationRu: 'ветер' },
+    { word: 'Hot', emoji: '🔥', translation: 'חם', translationAr: 'حار', translationRu: 'жарко' },
+    { word: 'Cold', emoji: '🥶', translation: 'קר', translationAr: 'بارد', translationRu: 'холодно' },
+    { word: 'Rainbow', emoji: '🌈', translation: 'קשת', translationAr: 'قوس قزح', translationRu: 'радуга' },
+    { word: 'Star', emoji: '⭐', translation: 'כוכב', translationAr: 'نجمة', translationRu: 'звезда' },
+    { word: 'Moon', emoji: '🌙', translation: 'ירח', translationAr: 'قمر', translationRu: 'луна' },
   ],
   home: [
-    { word: 'House', emoji: '🏠', translation: 'בית' }, { word: 'Door', emoji: '🚪', translation: 'דלת' },
-    { word: 'Window', emoji: '🪟', translation: 'חלון' }, { word: 'Bed', emoji: '🛏️', translation: 'מיטה' },
-    { word: 'Kitchen', emoji: '🍳', translation: 'מטבח' }, { word: 'Garden', emoji: '🌳', translation: 'גינה' },
-    { word: 'Key', emoji: '🔑', translation: 'מפתח' }, { word: 'Light', emoji: '💡', translation: 'אור' },
-    { word: 'Bathroom', emoji: '🚿', translation: 'חדר אמבטיה' }, { word: 'Television', emoji: '📺', translation: 'טלוויזיה' },
+    { word: 'House', emoji: '🏠', translation: 'בית', translationAr: 'بيت', translationRu: 'дом' },
+    { word: 'Door', emoji: '🚪', translation: 'דלת', translationAr: 'باب', translationRu: 'дверь' },
+    { word: 'Window', emoji: '🪟', translation: 'חלון', translationAr: 'نافذة', translationRu: 'окно' },
+    { word: 'Bed', emoji: '🛏️', translation: 'מיטה', translationAr: 'سرير', translationRu: 'кровать' },
+    { word: 'Kitchen', emoji: '🍳', translation: 'מטבח', translationAr: 'مطبخ', translationRu: 'кухня' },
+    { word: 'Garden', emoji: '🌳', translation: 'גינה', translationAr: 'حديقة', translationRu: 'сад' },
+    { word: 'Key', emoji: '🔑', translation: 'מפתח', translationAr: 'مفتاح', translationRu: 'ключ' },
+    { word: 'Light', emoji: '💡', translation: 'אור', translationAr: 'ضوء', translationRu: 'свет' },
+    { word: 'Bathroom', emoji: '🚿', translation: 'חדר אמבטיה', translationAr: 'حمام', translationRu: 'ванная' },
+    { word: 'Television', emoji: '📺', translation: 'טלוויזיה', translationAr: 'تلفزيون', translationRu: 'телевизор' },
   ],
   clothes: [
-    { word: 'Shirt', emoji: '👕', translation: 'חולצה' }, { word: 'Pants', emoji: '👖', translation: 'מכנסיים' },
-    { word: 'Shoes', emoji: '👟', translation: 'נעליים' }, { word: 'Hat', emoji: '🧢', translation: 'כובע' },
-    { word: 'Dress', emoji: '👗', translation: 'שמלה' }, { word: 'Socks', emoji: '🧦', translation: 'גרביים' },
-    { word: 'Jacket', emoji: '🧥', translation: "ז'קט" }, { word: 'Scarf', emoji: '🧣', translation: 'צעיף' },
-    { word: 'Glasses', emoji: '👓', translation: 'משקפיים' }, { word: 'Watch', emoji: '⌚', translation: 'שעון יד' },
+    { word: 'Shirt', emoji: '👕', translation: 'חולצה', translationAr: 'قميص', translationRu: 'рубашка' },
+    { word: 'Pants', emoji: '👖', translation: 'מכנסיים', translationAr: 'بنطلون', translationRu: 'штаны' },
+    { word: 'Shoes', emoji: '👟', translation: 'נעליים', translationAr: 'حذاء', translationRu: 'обувь' },
+    { word: 'Hat', emoji: '🧢', translation: 'כובע', translationAr: 'قبعة', translationRu: 'шляпа' },
+    { word: 'Dress', emoji: '👗', translation: 'שמלה', translationAr: 'فستان', translationRu: 'платье' },
+    { word: 'Socks', emoji: '🧦', translation: 'גרביים', translationAr: 'جوارب', translationRu: 'носки' },
+    { word: 'Jacket', emoji: '🧥', translation: "ז'קט", translationAr: 'جاكيت', translationRu: 'куртка' },
+    { word: 'Scarf', emoji: '🧣', translation: 'צעיף', translationAr: 'وشاح', translationRu: 'шарф' },
+    { word: 'Glasses', emoji: '👓', translation: 'משקפיים', translationAr: 'نظارة', translationRu: 'очки' },
+    { word: 'Watch', emoji: '⌚', translation: 'שעון יד', translationAr: 'ساعة يد', translationRu: 'часы' },
   ],
   transport: [
-    { word: 'Car', emoji: '🚗', translation: 'מכונית' }, { word: 'Bus', emoji: '🚌', translation: 'אוטובוס' },
-    { word: 'Train', emoji: '🚂', translation: 'רכבת' }, { word: 'Airplane', emoji: '✈️', translation: 'מטוס' },
-    { word: 'Bicycle', emoji: '🚲', translation: 'אופניים' }, { word: 'Ship', emoji: '🚢', translation: 'ספינה' },
-    { word: 'Helicopter', emoji: '🚁', translation: 'מסוק' }, { word: 'Truck', emoji: '🚛', translation: 'משאית' },
-    { word: 'Motorcycle', emoji: '🏍️', translation: 'אופנוע' }, { word: 'Taxi', emoji: '🚕', translation: 'מונית' },
+    { word: 'Car', emoji: '🚗', translation: 'מכונית', translationAr: 'سيارة', translationRu: 'машина' },
+    { word: 'Bus', emoji: '🚌', translation: 'אוטובוס', translationAr: 'حافلة', translationRu: 'автобус' },
+    { word: 'Train', emoji: '🚂', translation: 'רכבת', translationAr: 'قطار', translationRu: 'поезд' },
+    { word: 'Airplane', emoji: '✈️', translation: 'מטוס', translationAr: 'طائرة', translationRu: 'самолёт' },
+    { word: 'Bicycle', emoji: '🚲', translation: 'אופניים', translationAr: 'دراجة', translationRu: 'велосипед' },
+    { word: 'Ship', emoji: '🚢', translation: 'ספינה', translationAr: 'سفينة', translationRu: 'корабль' },
+    { word: 'Helicopter', emoji: '🚁', translation: 'מסוק', translationAr: 'مروحية', translationRu: 'вертолёт' },
+    { word: 'Truck', emoji: '🚛', translation: 'משאית', translationAr: 'شاحنة', translationRu: 'грузовик' },
+    { word: 'Motorcycle', emoji: '🏍️', translation: 'אופנוע', translationAr: 'دراجة نارية', translationRu: 'мотоцикл' },
+    { word: 'Taxi', emoji: '🚕', translation: 'מונית', translationAr: 'تاكسي', translationRu: 'такси' },
   ],
   nature: [
-    { word: 'Tree', emoji: '🌳', translation: 'עץ' }, { word: 'Flower', emoji: '🌸', translation: 'פרח' },
-    { word: 'Mountain', emoji: '🏔️', translation: 'הר' }, { word: 'Sea', emoji: '🌊', translation: 'ים' },
-    { word: 'River', emoji: '🏞️', translation: 'נהר' }, { word: 'Forest', emoji: '🌲', translation: 'יער' },
-    { word: 'Desert', emoji: '🏜️', translation: 'מדבר' }, { word: 'Lake', emoji: '🏞️', translation: 'אגם' },
-    { word: 'Sky', emoji: '🌤️', translation: 'שמיים' }, { word: 'Rock', emoji: '🪨', translation: 'סלע' },
+    { word: 'Tree', emoji: '🌳', translation: 'עץ', translationAr: 'شجرة', translationRu: 'дерево' },
+    { word: 'Flower', emoji: '🌸', translation: 'פרח', translationAr: 'زهرة', translationRu: 'цветок' },
+    { word: 'Mountain', emoji: '🏔️', translation: 'הר', translationAr: 'جبل', translationRu: 'гора' },
+    { word: 'Sea', emoji: '🌊', translation: 'ים', translationAr: 'بحر', translationRu: 'море' },
+    { word: 'River', emoji: '🏞️', translation: 'נהר', translationAr: 'نهر', translationRu: 'река' },
+    { word: 'Forest', emoji: '🌲', translation: 'יער', translationAr: 'غابة', translationRu: 'лес' },
+    { word: 'Desert', emoji: '🏜️', translation: 'מדבר', translationAr: 'صحراء', translationRu: 'пустыня' },
+    { word: 'Lake', emoji: '🏞️', translation: 'אגם', translationAr: 'بحيرة', translationRu: 'озеро' },
+    { word: 'Sky', emoji: '🌤️', translation: 'שמיים', translationAr: 'سماء', translationRu: 'небо' },
+    { word: 'Rock', emoji: '🪨', translation: 'סלע', translationAr: 'صخرة', translationRu: 'камень' },
   ],
   daily_routine: [
-    { word: 'Wake up', emoji: '⏰', translation: 'להתעורר' }, { word: 'Eat', emoji: '🍽️', translation: 'לאכול' },
-    { word: 'Drink', emoji: '🥤', translation: 'לשתות' }, { word: 'Sleep', emoji: '😴', translation: 'לישון' },
-    { word: 'Play', emoji: '🎮', translation: 'לשחק' }, { word: 'Read', emoji: '📖', translation: 'לקרוא' },
-    { word: 'Write', emoji: '✍️', translation: 'לכתוב' }, { word: 'Run', emoji: '🏃', translation: 'לרוץ' },
-    { word: 'Walk', emoji: '🚶', translation: 'ללכת' }, { word: 'Sing', emoji: '🎤', translation: 'לשיר' },
+    { word: 'Wake up', emoji: '⏰', translation: 'להתעורר', translationAr: 'الاستيقاظ', translationRu: 'просыпаться' },
+    { word: 'Eat', emoji: '🍽️', translation: 'לאכול', translationAr: 'يأكل', translationRu: 'есть' },
+    { word: 'Drink', emoji: '🥤', translation: 'לשתות', translationAr: 'يشرب', translationRu: 'пить' },
+    { word: 'Sleep', emoji: '😴', translation: 'לישון', translationAr: 'ينام', translationRu: 'спать' },
+    { word: 'Play', emoji: '🎮', translation: 'לשחק', translationAr: 'يلعب', translationRu: 'играть' },
+    { word: 'Read', emoji: '📖', translation: 'לקרוא', translationAr: 'يقرأ', translationRu: 'читать' },
+    { word: 'Write', emoji: '✍️', translation: 'לכתוב', translationAr: 'يكتب', translationRu: 'писать' },
+    { word: 'Run', emoji: '🏃', translation: 'לרוץ', translationAr: 'يركض', translationRu: 'бегать' },
+    { word: 'Walk', emoji: '🚶', translation: 'ללכת', translationAr: 'يمشي', translationRu: 'ходить' },
+    { word: 'Sing', emoji: '🎤', translation: 'לשיר', translationAr: 'يغني', translationRu: 'петь' },
   ],
   store: [
-    { word: 'Money', emoji: '💰', translation: 'כסף' }, { word: 'Price', emoji: '🏷️', translation: 'מחיר' },
-    { word: 'Buy', emoji: '🛒', translation: 'לקנות' }, { word: 'Shop', emoji: '🏪', translation: 'חנות' },
-    { word: 'Gift', emoji: '🎁', translation: 'מתנה' }, { word: 'Toy', emoji: '🧸', translation: 'צעצוע' },
-    { word: 'Candy', emoji: '🍬', translation: 'סוכרייה' }, { word: 'Chocolate', emoji: '🍫', translation: 'שוקולד' },
-    { word: 'Bag', emoji: '🛍️', translation: 'שקית' }, { word: 'Sell', emoji: '💵', translation: 'למכור' },
+    { word: 'Money', emoji: '💰', translation: 'כסף', translationAr: 'مال', translationRu: 'деньги' },
+    { word: 'Price', emoji: '🏷️', translation: 'מחיר', translationAr: 'سعر', translationRu: 'цена' },
+    { word: 'Buy', emoji: '🛒', translation: 'לקנות', translationAr: 'يشتري', translationRu: 'покупать' },
+    { word: 'Shop', emoji: '🏪', translation: 'חנות', translationAr: 'متجر', translationRu: 'магазин' },
+    { word: 'Gift', emoji: '🎁', translation: 'מתנה', translationAr: 'هدية', translationRu: 'подарок' },
+    { word: 'Toy', emoji: '🧸', translation: 'צעצוע', translationAr: 'لعبة', translationRu: 'игрушка' },
+    { word: 'Candy', emoji: '🍬', translation: 'סוכרייה', translationAr: 'حلوى', translationRu: 'конфета' },
+    { word: 'Chocolate', emoji: '🍫', translation: 'שוקולד', translationAr: 'شوكولاتة', translationRu: 'шоколад' },
+    { word: 'Bag', emoji: '🛍️', translation: 'שקית', translationAr: 'كيس', translationRu: 'пакет' },
+    { word: 'Sell', emoji: '💵', translation: 'למכור', translationAr: 'يبيع', translationRu: 'продавать' },
   ],
   hobbies: [
-    { word: 'Draw', emoji: '🎨', translation: 'לצייר' }, { word: 'Dance', emoji: '💃', translation: 'לרקוד' },
-    { word: 'Swim', emoji: '🏊', translation: 'לשחות' }, { word: 'Cook', emoji: '👨‍🍳', translation: 'לבשל' },
-    { word: 'Music', emoji: '🎵', translation: 'מוזיקה' }, { word: 'Soccer', emoji: '⚽', translation: 'כדורגל' },
-    { word: 'Basketball', emoji: '🏀', translation: 'כדורסל' }, { word: 'Tennis', emoji: '🎾', translation: 'טניס' },
-    { word: 'Photo', emoji: '📸', translation: 'צילום' }, { word: 'Game', emoji: '🎲', translation: 'משחק' },
+    { word: 'Draw', emoji: '🎨', translation: 'לצייר', translationAr: 'يرسم', translationRu: 'рисовать' },
+    { word: 'Dance', emoji: '💃', translation: 'לרקוד', translationAr: 'يرقص', translationRu: 'танцевать' },
+    { word: 'Swim', emoji: '🏊', translation: 'לשחות', translationAr: 'يسبح', translationRu: 'плавать' },
+    { word: 'Cook', emoji: '👨‍🍳', translation: 'לבשל', translationAr: 'يطبخ', translationRu: 'готовить' },
+    { word: 'Music', emoji: '🎵', translation: 'מוזיקה', translationAr: 'موسيقى', translationRu: 'музыка' },
+    { word: 'Soccer', emoji: '⚽', translation: 'כדורגל', translationAr: 'كرة القدم', translationRu: 'футбол' },
+    { word: 'Basketball', emoji: '🏀', translation: 'כדורסל', translationAr: 'كرة السلة', translationRu: 'баскетбол' },
+    { word: 'Tennis', emoji: '🎾', translation: 'טניס', translationAr: 'تنس', translationRu: 'теннис' },
+    { word: 'Photo', emoji: '📸', translation: 'צילום', translationAr: 'تصوير', translationRu: 'фото' },
+    { word: 'Game', emoji: '🎲', translation: 'משחק', translationAr: 'لعبة', translationRu: 'игра' },
   ],
   verbs: [
-    { word: 'Go', emoji: '🚶', translation: 'ללכת' }, { word: 'Come', emoji: '🏃', translation: 'לבוא' },
-    { word: 'See', emoji: '👀', translation: 'לראות' }, { word: 'Hear', emoji: '👂', translation: 'לשמוע' },
-    { word: 'Talk', emoji: '🗣️', translation: 'לדבר' }, { word: 'Think', emoji: '🤔', translation: 'לחשוב' },
-    { word: 'Love', emoji: '❤️', translation: 'לאהוב' }, { word: 'Want', emoji: '🤞', translation: 'לרצות' },
-    { word: 'Know', emoji: '🧠', translation: 'לדעת' }, { word: 'Make', emoji: '🔨', translation: 'לעשות' },
+    { word: 'Go', emoji: '🚶', translation: 'ללכת', translationAr: 'يذهب', translationRu: 'идти' },
+    { word: 'Come', emoji: '🏃', translation: 'לבוא', translationAr: 'يأتي', translationRu: 'приходить' },
+    { word: 'See', emoji: '👀', translation: 'לראות', translationAr: 'يرى', translationRu: 'видеть' },
+    { word: 'Hear', emoji: '👂', translation: 'לשמוע', translationAr: 'يسمع', translationRu: 'слышать' },
+    { word: 'Talk', emoji: '🗣️', translation: 'לדבר', translationAr: 'يتحدث', translationRu: 'говорить' },
+    { word: 'Think', emoji: '🤔', translation: 'לחשוב', translationAr: 'يفكر', translationRu: 'думать' },
+    { word: 'Love', emoji: '❤️', translation: 'לאהוב', translationAr: 'يحب', translationRu: 'любить' },
+    { word: 'Want', emoji: '🤞', translation: 'לרצות', translationAr: 'يريد', translationRu: 'хотеть' },
+    { word: 'Know', emoji: '🧠', translation: 'לדעת', translationAr: 'يعرف', translationRu: 'знать' },
+    { word: 'Make', emoji: '🔨', translation: 'לעשות', translationAr: 'يصنع', translationRu: 'делать' },
   ],
 };
 
@@ -180,11 +275,12 @@ function shuffle(arr) {
   return a;
 }
 
-function generateExercises(topicId) {
+function generateExercises(topicId, uiLang = 'he') {
   const words = TOPIC_WORDS[topicId] || TOPIC_WORDS.colors;
   const exercises = [];
   const shuffled = shuffle(words);
   const types = shuffle(['emoji-pick','word-to-hebrew','listen-pick','fill-letter','emoji-pick','word-to-hebrew','speak-word','listen-pick']);
+  const getTranslation = (w) => lf(w, 'translation', uiLang);
   for (let i = 0; i < 8; i++) {
     const target = shuffled[i % shuffled.length];
     const distractors = shuffle(words.filter(w => w.word !== target.word)).slice(0, 3);
@@ -193,8 +289,8 @@ function generateExercises(topicId) {
       exercises.push({ type, question: target.word, correctAnswer: target.emoji,
         options: shuffle([target, ...distractors]).map(w => ({ emoji: w.emoji, word: w.word })), wordData: target });
     } else if (type === 'word-to-hebrew') {
-      exercises.push({ type, question: target.word, correctAnswer: target.translation,
-        options: shuffle([target, ...distractors]).map(w => w.translation), wordData: target });
+      exercises.push({ type, question: target.word, correctAnswer: getTranslation(target),
+        options: shuffle([target, ...distractors]).map(w => getTranslation(w)), wordData: target });
     } else if (type === 'listen-pick') {
       exercises.push({ type, question: target.word, correctAnswer: target.word,
         options: shuffle([target, ...distractors]).map(w => w.word), wordData: target });
@@ -257,10 +353,10 @@ export default function KidsTeacherPage({ onBack }) {
 
   const handleTopicSelect = (topic) => {
     setSelectedTopic(topic);
-    setExercises(generateExercises(topic.id));
+    setExercises(generateExercises(topic.id, uiLang));
     setPhase('intro');
     setTeacherState('talking');
-    const topicName = isRTL ? topic.titleHe : topic.titleEn;
+    const topicName = lf(topic, 'title', uiLang);
     setSpeechText(`${t('todayWeLearn', uiLang)} ${topicName}! ${t('ready', uiLang)}`);
     speak(`Today we will learn about ${topic.titleEn}! Ready?`, { lang: 'en-US' });
   };
@@ -335,12 +431,18 @@ export default function KidsTeacherPage({ onBack }) {
           emoji="📝"
           title="Practice with Speakli!"
           titleHe="תרגול עם ספיקלי!"
+          titleAr="التدريب مع سبيكلي!"
+          titleRu="Практика со Спикли!"
           desc="Hi! Let's practice English together! Let's start!"
           descHe="היי! בואו נתרגל יחד אנגלית! בואו נתחיל!"
+          descAr="مرحباً! لنتدرب معاً على الإنجليزية! لنبدأ!"
+          descRu="Привет! Давайте вместе практиковать английский! Поехали!"
           uiLang={uiLang}
           gradient="from-purple-500 via-violet-500 to-fuchsia-500"
           buttonLabel="Let's practice!"
           buttonLabelHe="בואו נתרגל!"
+          buttonLabelAr="لنتدرب!"
+          buttonLabelRu="Практикуем!"
         />
         <div className="flex items-center gap-3 mb-4" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
           <button onClick={goBack} className="glass-card w-10 h-10 rounded-xl flex items-center justify-center text-xl">{isRTL ? '→' : '←'}</button>
@@ -373,7 +475,7 @@ export default function KidsTeacherPage({ onBack }) {
         <SpeechBubble text={speechText} direction={isRTL ? 'rtl' : 'ltr'} />
         <div className="mt-8 rounded-3xl p-6 text-center shadow-xl animate-pop-in" style={{ background: selectedTopic.gradient }}>
           <div className="text-5xl">{selectedTopic.emoji}</div>
-          <div className="text-xl font-bold text-white drop-shadow mt-2">{isRTL ? selectedTopic.titleHe : selectedTopic.titleEn}</div>
+          <div className="text-xl font-bold text-white drop-shadow mt-2">{lf(selectedTopic, 'title', uiLang)}</div>
         </div>
         <button onClick={startExercises}
           className="mt-8 bg-gradient-to-r from-purple-500 to-violet-600 text-white font-bold text-lg px-8 py-3 rounded-2xl shadow-lg active:scale-95 transition-transform">
@@ -434,7 +536,7 @@ export default function KidsTeacherPage({ onBack }) {
             {[...correctWords, ...wrongWords].map((w, i) => {
               const ok = correctWords.includes(w);
               return (
-                <button key={i} onClick={() => speakWordPair(w.word, w.translation, uiLang)}
+                <button key={i} onClick={() => speakWordPair(w.word, lf(w, 'translation', uiLang), uiLang)}
                   className={`rounded-lg px-2 py-1 text-xs font-semibold flex items-center gap-1 ${ok ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'}`}>
                   🔊 {w.emoji} {w.word} {ok ? '✅' : '❌'}
                 </button>

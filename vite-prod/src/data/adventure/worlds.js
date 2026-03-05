@@ -15,6 +15,8 @@ export const WORLDS = [
     requiredLevel: 1,
     introVideo: '/videos/adventure/forest-world-intro.mp4',
     videoNarration: 'ברוכים הבאים ליער הקסמים! כאן נפגוש חיות מדהימות ונלמד מילים חדשות באנגלית!',
+    videoNarrationAr: 'مرحباً بكم في الغابة السحرية! هنا سنلتقي بحيوانات رائعة ونتعلم كلمات إنجليزية جديدة!',
+    videoNarrationRu: 'Добро пожаловать в Волшебный лес! Здесь мы встретим удивительных животных и выучим новые слова по-английски!',
   },
   {
     id: 'ocean',
@@ -30,6 +32,8 @@ export const WORLDS = [
     requiresWorld: 'forest',
     introVideo: '/videos/adventure/ocean-world-intro.mp4',
     videoNarration: 'צוללים לעולם האוקיינוס! מוכנים לפגוש יצורים מופלאים מתחת למים?',
+    videoNarrationAr: 'نغطس إلى عالم المحيط! هل أنتم مستعدون لمقابلة كائنات رائعة تحت الماء؟',
+    videoNarrationRu: 'Погружаемся в мир океана! Готовы встретить удивительных существ под водой?',
   },
   {
     id: 'space',
@@ -45,6 +49,8 @@ export const WORLDS = [
     requiresWorld: 'ocean',
     introVideo: '/videos/adventure/space-world-intro.mp4',
     videoNarration: 'שלוש, שתיים, אחת, שיגור! יוצאים להרפתקה מטורפת בחלל החיצון!',
+    videoNarrationAr: 'ثلاثة، اثنان، واحد، انطلاق! نخرج لمغامرة جنونية في الفضاء الخارجي!',
+    videoNarrationRu: 'Три, два, один, пуск! Отправляемся в безумное приключение в открытый космос!',
   },
   {
     id: 'castle',
@@ -60,5 +66,7 @@ export const WORLDS = [
     requiresWorld: 'space',
     introVideo: '/videos/adventure/castle-world-intro.mp4',
     videoNarration: 'הנה הטירה הקסומה! בואו נגלה את הסודות שמסתתרים בפנים!',
+    videoNarrationAr: 'ها هي القلعة السحرية! هيا نكتشف الأسرار المخبأة بداخلها!',
+    videoNarrationRu: 'Вот волшебный замок! Давайте откроем тайны, спрятанные внутри!',
   },
 ];
