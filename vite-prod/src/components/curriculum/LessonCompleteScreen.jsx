@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import StarAnimation from './StarAnimation.jsx';
-import { t, RTL_LANGS } from '../../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../../utils/translations.js';
 
 // -- Confetti piece component --
 function ConfettiPiece({ delay, color, left, width, height, round, duration }) {
@@ -184,7 +184,7 @@ export default function LessonCompleteScreen({
               >
                 <span style={{ fontSize: 24 }}>{w.emoji}</span>
                 <span style={{ fontSize: 15, fontWeight: 600, color: '#374151', flex: 1 }}>{w.word}</span>
-                <span style={{ fontSize: 14, color: '#6B7280', direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr' }}>{w.translation}</span>
+                <span style={{ fontSize: 14, color: '#6B7280', direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr' }}>{lf(w, 'translation', uiLang)}</span>
               </div>
             ))}
           </div>

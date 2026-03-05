@@ -508,7 +508,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         {/* Hint: Hebrew translation or question */}
         <div style={{
           fontSize: 16, color: '#6B7280', marginBottom: 16,
-          direction: exercise.question && /[\u0590-\u05FF]/.test(exercise.question) ? 'rtl' : 'ltr',
+          direction: exercise.question && /[\u0590-\u05FF\u0600-\u06FF]/.test(exercise.question) ? 'rtl' : 'ltr',
         }}>
           {exercise.question}
         </div>

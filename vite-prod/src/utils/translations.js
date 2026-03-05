@@ -120,7 +120,6 @@ const translations = {
     learnWords: 'למדו מילים',
     allWordsReviewed: 'כל המילים נסקרו!',
     comeBackLater: 'חזרו מאוחר יותר לחזרה נוספת',
-    pronunciation: 'הגייה',
 
     // Conversation
     conversation: 'שיחה',
@@ -3128,7 +3127,7 @@ const translations = {
     questSceneSpace: 'Космос',
     questBossSpace: 'Звёздный король',
     questSceneOcean: 'Океан',
-    questBossOcean: 'ملكة البحر',
+    questBossOcean: 'Морская королева',
 
     // Vocabulary additional
     learnCountWords: 'Выучите {count} слов',

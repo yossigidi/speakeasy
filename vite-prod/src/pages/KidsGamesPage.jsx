@@ -444,11 +444,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     picked.forEach((w, i) => {
       deck.push({
         id: i * 2, pairId: i, type: 'picture',
-        emoji: w.emoji, word: w.word, translation: w.translation, bg: w.bg,
+        emoji: w.emoji, word: w.word, translation: w.translation, translationAr: w.translationAr, translationRu: w.translationRu, bg: w.bg,
       });
       deck.push({
         id: i * 2 + 1, pairId: i, type: 'word',
-        emoji: w.emoji, word: w.word, translation: w.translation, bg: w.bg,
+        emoji: w.emoji, word: w.word, translation: w.translation, translationAr: w.translationAr, translationRu: w.translationRu, bg: w.bg,
       });
     });
     setCards(shuffle(deck));

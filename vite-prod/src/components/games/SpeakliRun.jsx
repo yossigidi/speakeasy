@@ -800,7 +800,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
                   key={`${round}-${i}`}
                   word={opt.word}
                   emoji={opt.emoji}
-                  translation={opt.translation}
+                  translation={lf(opt, 'translation', uiLang)}
                   showEmoji={diff.showEmoji}
                   showHebrew={diff.showHebrew}
                   onClick={() => handleWordTap(opt, i)}

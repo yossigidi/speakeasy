@@ -387,7 +387,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
           {t('questFindThe', uiLang)}
         </p>
         <h2 className="text-white font-black text-3xl">{target?.word || ''}</h2>
-        <p className="text-white/50 text-xs mt-1" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{target?.translation || ''}</p>
+        <p className="text-white/50 text-xs mt-1" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(target, 'translation', uiLang) || ''}</p>
         <button
           onClick={() => speak(target?.word, { lang: 'en-US', rate: 0.8 })}
           className="mt-2 p-2 rounded-full bg-white/20 active:scale-90 transition-transform inline-flex"
