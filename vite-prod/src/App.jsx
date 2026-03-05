@@ -297,7 +297,7 @@ function AppContent() {
       case 'adventure':
         return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'speaking-coach':
-        return <SpeakingCoachPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><SpeakingCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -386,7 +386,7 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
       case 'adventure':
         return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'speaking-coach':
-        return <SpeakingCoachPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><SpeakingCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }

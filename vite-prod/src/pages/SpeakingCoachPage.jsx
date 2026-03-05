@@ -211,17 +211,21 @@ export default function SpeakingCoachPage({ onBack }) {
 
   // Load weaknesses from Firestore
   useEffect(() => {
-    if (!user?.uid || !window.firestore) return;
-    const uid = isChild && progress.activeChildId ? progress.activeChildId : user.uid;
-    const col = isChild && progress.activeChildId ? 'childProfiles' : 'users';
-    const docPath = [col, uid, 'speakingProfile', 'data'];
-    window.firestore.getDoc(window.firestore.doc(window.db, ...docPath))
-      .then(snap => {
-        if (snap.exists()) {
-          setWeaknesses(snap.data().weaknesses || {});
-        }
-      })
-      .catch(() => {});
+    if (!user?.uid || !window.firestore || !window.db) return;
+    try {
+      const uid = isChild && progress.activeChildId ? progress.activeChildId : user.uid;
+      const col = isChild && progress.activeChildId ? 'childProfiles' : 'users';
+      const docRef = window.firestore.doc(window.db, col, uid, 'speakingProfile', 'data');
+      window.firestore.getDoc(docRef)
+        .then(snap => {
+          if (snap.exists()) {
+            setWeaknesses(snap.data().weaknesses || {});
+          }
+        })
+        .catch(() => {});
+    } catch (e) {
+      console.warn('Speaking coach: failed to load weaknesses', e);
+    }
   }, [user, isChild, progress.activeChildId]);
 
   // Cleanup on unmount
@@ -383,7 +387,7 @@ export default function SpeakingCoachPage({ onBack }) {
 
     // Save speaking profile to Firestore
     try {
-      if (user?.uid && window.firestore) {
+      if (user?.uid && window.firestore && window.db) {
         const uid = isChild && progress.activeChildId ? progress.activeChildId : user.uid;
         const col = isChild && progress.activeChildId ? 'childProfiles' : 'users';
         const docRef = window.firestore.doc(window.db, col, uid, 'speakingProfile', 'data');
