@@ -10,6 +10,7 @@ import { calcSpeakingCoachXP } from '../utils/xpCalculator.js';
 import { t, tReplace, lf } from '../utils/translations.js';
 import { KIDS_SCENARIOS, ADULT_SCENARIOS } from '../data/speaking-scenarios.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
+import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 
 /* ── Helpers ── */
 function avg(arr) {
@@ -50,7 +51,7 @@ function ChatBubble({ role, content, corrections, isChild, uiLang, onPlayAudio }
         {isAI && (
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-bold text-brand-600 dark:text-brand-400">
-              {isChild ? '🦉 Speakli' : '👩‍🏫 Emma'}
+              {isChild ? <><SpeakliAvatar mode="idle" size="xs" shadow={false} glow={false} /> Speakli</> : '👩‍🏫 Emma'}
             </span>
             {onPlayAudio && (
               <button onClick={onPlayAudio} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -434,7 +435,7 @@ export default function SpeakingCoachPage({ onBack }) {
         <div className="px-4 pt-4 space-y-4">
           {/* Coach intro */}
           <div className="text-center mb-2">
-            <div className="text-5xl mb-2">{isChild ? '🦉' : '👩‍🏫'}</div>
+            <div className="mb-2">{isChild ? <SpeakliAvatar mode="idle" size="lg" glow /> : <span className="text-5xl">👩‍🏫</span>}</div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
               {isChild ? t('coachSpeakli', uiLang) : t('coachEmma', uiLang)}
             </h2>
