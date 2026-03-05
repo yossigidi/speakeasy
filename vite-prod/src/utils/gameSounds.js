@@ -55,6 +55,7 @@ export function playTap() {
 
 // Pop sound - for bubble popping
 export function playPop() {
+  if (!isSoundEnabled()) return;
   try {
     const ctx = getAudioContext();
     const osc = ctx.createOscillator();
@@ -74,6 +75,7 @@ export function playPop() {
 
 // Splash - for items landing in buckets
 export function playSplash() {
+  if (!isSoundEnabled()) return;
   try {
     const ctx = getAudioContext();
     // White noise burst
@@ -117,6 +119,7 @@ export function playStar() {
 
 // Whoosh - for items flying
 export function playWhoosh() {
+  if (!isSoundEnabled()) return;
   try {
     const ctx = getAudioContext();
     const osc = ctx.createOscillator();

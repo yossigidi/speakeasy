@@ -39,6 +39,7 @@ export default class CameraController {
       const start = performance.now();
 
       const tick = () => {
+        if (this._destroyed) { resolve(); return; }
         const t = Math.min((performance.now() - start) / duration, 1);
         const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
         this.engine.worldLayer.x = startX + (targetX - startX) * eased;
@@ -83,6 +84,7 @@ export default class CameraController {
   }
 
   destroy() {
+    this._destroyed = true;
     this.target = null;
   }
 }

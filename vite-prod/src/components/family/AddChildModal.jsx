@@ -110,9 +110,9 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
                     value={pin[i] || ''}
                     onChange={e => {
                       const val = e.target.value.replace(/\D/g, '');
-                      const newPin = pin.split('');
-                      newPin[i] = val;
-                      setPin(newPin.join('').slice(0, 4));
+                      const newPin = pin.padEnd(4, ' ').split('');
+                      newPin[i] = val || ' ';
+                      setPin(newPin.join('').replace(/ /g, '').slice(0, 4));
                       if (val && i < 3) {
                         e.target.nextElementSibling?.focus();
                       }
@@ -132,7 +132,7 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                 {t('confirmPin', uiLang)}
               </label>
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-3" dir="ltr">
                 {[0, 1, 2, 3].map(i => (
                   <input
                     key={`cpin-${i}`}
@@ -142,9 +142,9 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
                     value={confirmPinVal[i] || ''}
                     onChange={e => {
                       const val = e.target.value.replace(/\D/g, '');
-                      const newPin = confirmPinVal.split('');
-                      newPin[i] = val;
-                      setConfirmPinVal(newPin.join('').slice(0, 4));
+                      const newPin = confirmPinVal.padEnd(4, ' ').split('');
+                      newPin[i] = val || ' ';
+                      setConfirmPinVal(newPin.join('').replace(/ /g, '').slice(0, 4));
                       if (val && i < 3) {
                         e.target.nextElementSibling?.focus();
                       }

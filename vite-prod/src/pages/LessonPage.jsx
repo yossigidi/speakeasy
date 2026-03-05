@@ -272,7 +272,7 @@ function MatchPairs({ exercise, onAnswer }) {
   const pairs = exercise.pairs;
 
   const leftItems = pairs.map(p => p[0]);
-  const rightItems = shuffle(pairs.map(p => p[1]));
+  const [rightItems] = useState(() => shuffle(pairs.map(p => p[1])));
 
   const handleTap = (side, item) => {
     if (matched.includes(item)) return;
@@ -425,9 +425,12 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
   const exercise = exercises[currentExercise];
   const progress = ((currentExercise) / exercises.length) * 100;
 
+  const correctCountRef = useRef(0);
+
   const handleAnswer = (isCorrect) => {
     if (isCorrect) {
       playCorrect();
+      correctCountRef.current += 1;
       setCorrectCount(c => c + 1);
     } else {
       playWrong();
@@ -446,8 +449,8 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
     }
 
     if (currentExercise + 1 >= exercises.length) {
-      // Lesson complete
-      const accuracy = Math.round((correctCount / exercises.length) * 100);
+      // Lesson complete — use ref for accurate count (state may lag)
+      const accuracy = Math.round((correctCountRef.current / exercises.length) * 100);
       const xp = calcLessonXP(accuracy, exercises.length);
       addXP(xp.total, 'lesson');
 

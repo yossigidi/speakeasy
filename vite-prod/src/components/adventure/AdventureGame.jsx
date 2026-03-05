@@ -197,6 +197,9 @@ export default function AdventureGame({ onBack }) {
 
   // Start a world (with optional world intro video)
   const handleStartWorld = useCallback((worldId) => {
+    // Prevent double-tap: if a video is already queued, ignore
+    if (videoResolveRef.current) return;
+
     const worldDef = WORLDS.find(w => w.id === worldId);
     const worldProgress = progress.adventure?.worldProgress || {};
     const hasStarted = (worldProgress[worldId]?.scenesCompleted || 0) > 0;

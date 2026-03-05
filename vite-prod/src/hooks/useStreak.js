@@ -5,7 +5,7 @@ export default function useStreak() {
   const { progress } = useUserProgress();
 
   const isActiveToday = progress.lastActiveDate === getToday();
-  const isAtRisk = !isActiveToday && progress.streak > 0;
+  const isAtRisk = !isActiveToday && progress.streak > 0 && isYesterday(progress.lastActiveDate);
   const hasFreezes = (progress.streakFreezes || 0) > 0;
 
   // Milestone checks

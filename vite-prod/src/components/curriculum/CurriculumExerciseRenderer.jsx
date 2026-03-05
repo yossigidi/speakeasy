@@ -652,6 +652,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         }
       } else {
         setMatchFlash('wrong');
+        onAnswer(false, exercise.wordData);
         timersRef.current.push(setTimeout(() => {
           setSelectedLeft(null);
           setSelectedRight(null);

@@ -37,15 +37,13 @@ const REMINDER_MESSAGES = {
 };
 
 module.exports = async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+    // No CORS needed — this is a server-only cron endpoint
     if (req.method === 'OPTIONS') return res.status(200).end();
 
-    const authHeader = req.headers['authorization'];
+    // Require CRON_SECRET — fail closed (reject if not configured)
     const cronSecret = process.env.CRON_SECRET;
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    const authHeader = req.headers['authorization'];
+    if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
 

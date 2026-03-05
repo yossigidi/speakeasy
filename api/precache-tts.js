@@ -61,7 +61,7 @@ export default async function handler(req, res) {
   // Require CRON_SECRET auth (same as daily-reminder)
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = req.headers['authorization'];
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

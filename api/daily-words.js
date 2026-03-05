@@ -15,7 +15,8 @@ export default async function handler(req, res) {
 
   // Return word IDs to fetch from local data
   const startIndex = (seed * 7) % 500;
-  const prefix = level.toLowerCase() === 'a2' ? 'a2' : 'a1';
+  const levelMap = { a1: 'a1', a2: 'a2', b1: 'b1', b2: 'b2', c1: 'c1', c2: 'c2' };
+  const prefix = levelMap[level.toLowerCase()] || 'a1';
 
   const wordIds = Array.from({ length: count }, (_, i) => {
     const idx = ((startIndex + i * 13) % 500) + 1;

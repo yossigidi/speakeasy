@@ -64,7 +64,7 @@ async function handleChat(req, res) {
 ${scenarioContext[scenario] || scenarioContext.free}
 
 IMPORTANT RULES:
-- Speak at ${cefrLevel} level. Use simple vocabulary for A1-A2, moderate for B1-B2.
+- Speak at ${safeCefr} level. Use simple vocabulary for A1-A2, moderate for B1-B2.
 - Keep responses 1-3 sentences. Be conversational and natural.
 - If the user makes a grammar or vocabulary mistake, include a correction.
 - Be encouraging and supportive.
@@ -256,10 +256,12 @@ async function handlePronunciationFeedback(req, res) {
   if (!target || !spoken) {
     return res.status(400).json({ error: 'target and spoken are required' });
   }
+  const safeTarget = sanitizeStr(target, 500);
+  const safeSpoken = sanitizeStr(spoken, 500);
   const safeScore = Math.min(100, Math.max(0, parseInt(score, 10) || 0));
 
-  const prompt = `A student tried to say: "${target}"
-They actually said: "${spoken}"
+  const prompt = `A student tried to say: "${safeTarget}"
+They actually said: "${safeSpoken}"
 Pronunciation score: ${safeScore}/100
 
 Give brief, encouraging feedback (2-3 sentences). Point out specific pronunciation issues if any.
@@ -281,7 +283,11 @@ async function handleGenerateLesson(req, res) {
     return res.status(400).json({ error: 'cefrLevel and topic are required' });
   }
 
-  const prompt = `Generate an English lesson for ${cefrLevel} level learners about "${topic}"${grammarFocus ? ` with grammar focus on ${grammarFocus}` : ''}.
+  const safeCefr = VALID_CEFR.includes(cefrLevel) ? cefrLevel : 'B1';
+  const safeTopic = sanitizeStr(topic, 200);
+  const safeGrammar = grammarFocus ? sanitizeStr(grammarFocus, 200) : '';
+
+  const prompt = `Generate an English lesson for ${safeCefr} level learners about "${safeTopic}"${safeGrammar ? ` with grammar focus on ${safeGrammar}` : ''}.
 
 Create exactly 8 exercises as a JSON array. Mix these types:
 1. "multiple-choice" - { type, question, options: [4 strings], correct: index, explanation }
@@ -291,7 +297,7 @@ Create exactly 8 exercises as a JSON array. Mix these types:
 5. "match-pairs" - { type, pairs: [[english, hebrew], ...] (4-5 pairs) }
 
 Rules:
-- All content must be appropriate for ${cefrLevel} level
+- All content must be appropriate for ${safeCefr} level
 - Include Hebrew translations where relevant
 - Make exercises progressively harder
 - Reply with ONLY a JSON array of exercises, no extra text.`;
@@ -319,13 +325,15 @@ async function handleGenerateStory(req, res) {
     return res.status(400).json({ error: 'cefrLevel is required' });
   }
 
-  const wordCount = cefrLevel === 'A1' ? '100-150' : cefrLevel === 'A2' ? '150-200' : '200-300';
+  const safeCefr = VALID_CEFR.includes(cefrLevel) ? cefrLevel : 'B1';
+  const safeTopic = sanitizeStr(topic || 'daily life', 200);
+  const wordCount = safeCefr === 'A1' ? '100-150' : safeCefr === 'A2' ? '150-200' : '200-300';
 
-  const prompt = `Write an English reading passage for ${cefrLevel} level learners about "${topic || 'daily life'}".
+  const prompt = `Write an English reading passage for ${safeCefr} level learners about "${safeTopic}".
 
 Requirements:
 - ${wordCount} words
-- Vocabulary appropriate for ${cefrLevel}
+- Vocabulary appropriate for ${safeCefr}
 - Engaging and relatable content
 - Include 5 key vocabulary words with Hebrew translations
 

@@ -76,7 +76,7 @@ export default async function handler(req, res) {
 
     sendBrevoEmail({
       to: ADMIN_EMAIL,
-      subject: `[Speakli] ${categoryLabel}: ${subject}`,
+      subject: `[Speakli] ${categoryLabel}: ${safeSubject}`,
       htmlContent: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #0d9488;">New Support Ticket</h2>

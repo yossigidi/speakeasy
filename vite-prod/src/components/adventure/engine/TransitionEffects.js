@@ -59,6 +59,7 @@ export default class TransitionEffects {
       const start = performance.now();
 
       const tick = () => {
+        if (this._destroyed) { resolve(); return; }
         const elapsed = performance.now() - start;
         const t = Math.min(elapsed / duration, 1);
         const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -83,6 +84,7 @@ export default class TransitionEffects {
       const start = performance.now();
 
       const tick = () => {
+        if (this._destroyed) { resolve(); return; }
         const elapsed = performance.now() - start;
         const t = Math.min(elapsed / duration, 1);
         const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -107,6 +109,7 @@ export default class TransitionEffects {
   }
 
   destroy() {
+    this._destroyed = true;
     this.overlay.destroy();
   }
 }

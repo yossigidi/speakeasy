@@ -262,7 +262,7 @@ export function SpeechProvider({ children }) {
     // For long texts (>450 chars), split into sentences and speak via Cloud TTS sequentially
     // This avoids falling back to Web Speech which sounds robotic
     if (ttsText.length > 450) {
-      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+      const sentences = ttsText.match(/[^.!?]+[.!?]+/g) || [ttsText];
       const items = sentences.map(s => ({ text: s.trim(), lang: options.lang, rate: options.rate }));
       // Use speakSequenceInner directly (avoid circular dependency)
       speakSequenceInner(items, options.onEnd);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BookOpen, Clock, Volume2, VolumeX, ArrowLeft, Plus, Check, ChevronRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -254,6 +254,7 @@ function ReadingView({ story, onBack }) {
   const [quizAnswered, setQuizAnswered] = useState(false);
   const [quizDone, setQuizDone] = useState(false);
   const [selectedQuizAnswer, setSelectedQuizAnswer] = useState(null);
+  const xpAwardedRef = useRef(false);
 
   const words = story.text.split(/(\s+)/);
 
@@ -286,7 +287,10 @@ function ReadingView({ story, onBack }) {
     setQuizIndex(prev => {
       if (prev + 1 >= story.questions.length) {
         setQuizDone(true);
-        addXP(20, 'reading');
+        if (!xpAwardedRef.current) {
+          xpAwardedRef.current = true;
+          addXP(20, 'reading');
+        }
         return prev;
       }
       setQuizAnswered(false);
