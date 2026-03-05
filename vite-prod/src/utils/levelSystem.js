@@ -1,3 +1,5 @@
+import { lf } from './translations.js';
+
 // Level thresholds and titles
 const LEVELS = [
   { level: 1,  xp: 0,     title: 'Newcomer',    titleHe: 'מתחיל',  titleAr: 'مبتدئ',       titleRu: 'Новичок' },
@@ -59,8 +61,9 @@ export function getXPForLevel(level) {
 
 export function getLevelTitle(level, lang = 'en') {
   const l = LEVELS.find(l => l.level === level) || LEVELS[0];
-  if (lang === 'he') return l.titleHe;
-  if (lang === 'ar') return l.titleAr;
-  if (lang === 'ru') return l.titleRu;
-  return l.title;
+  return lf(
+    { titleHe: l.titleHe, titleAr: l.titleAr, titleRu: l.titleRu, titleEn: l.title },
+    'title',
+    lang
+  ) || l.title;
 }

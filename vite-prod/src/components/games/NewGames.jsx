@@ -17,6 +17,37 @@ const NEW_GAME_PHRASES = [
   'יוֹפִי!', 'נָכוֹן!', 'מְצוּיָּן!', 'כׇּל הַכָּבוֹד!', 'מַדְהִים!', 'נַסּוּ שׁוּב',
 ];
 
+// Game instruction strings by language
+const GAME_INSTRUCTIONS = {
+  listenPop: {
+    he: 'הקשיבו למילה ומצאו את התמונה הנכונה',
+    ar: 'استمعوا إلى الكلمة وابحثوا عن الصورة الصحيحة',
+    ru: 'Слушайте слово и найдите правильную картинку',
+    en: 'Listen to the word and find the correct picture',
+  },
+  categorySort: {
+    he: 'מיינו את הפריטים לקטגוריה הנכונה!',
+    ar: 'صنّفوا العناصر في الفئة الصحيحة!',
+    ru: 'Распределите предметы по правильной категории!',
+    en: 'Sort the items into the correct category!',
+  },
+  missingLetter: {
+    he: 'מצאו את האות שחסרה במילה!',
+    ar: 'ابحثوا عن الحرف المفقود في الكلمة!',
+    ru: 'Найдите пропущенную букву в слове!',
+    en: 'Find the missing letter in the word!',
+  },
+  sentenceBuilder: {
+    he: 'סדרו את המילים למשפט נכון!',
+    ar: 'رتّبوا الكلمات لتكوين جملة صحيحة!',
+    ru: 'Расставьте слова в правильном порядке!',
+    en: 'Arrange the words into a correct sentence!',
+  },
+};
+
+// Helper to get instruction text for current lang
+const getInstruction = (key, lang) => GAME_INSTRUCTIONS[key][lang] || GAME_INSTRUCTIONS[key].en;
+
 /* ── Shared components ── */
 function ConfettiBurst({ show }) {
   if (!show) return null;
@@ -207,7 +238,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'הקשיבו למילה ומצאו את התמונה הנכונה', lang: 'he' },
+          { text: getInstruction('listenPop', uiLang), lang: uiLang },
           { pause: 300 },
           { text: tgt.word, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
@@ -236,7 +267,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: opt.word, lang: 'en-US', rate: 0.75 },
           { pause: 100 },
-          { text: opt.translation, lang: 'he' },
+          { text: opt.translation, lang: uiLang },
         ], speak);
       }, 400));
       gameTimersRef.current.push(setTimeout(() => {
@@ -440,7 +471,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'מיינו את הפריטים לקטגוריה הנכונה!', lang: 'he' },
+          { text: getInstruction('categorySort', uiLang), lang: uiLang },
           { pause: 300 },
           { text: item.word, lang: 'en-US', rate: 0.75 },
         ], speakRef.current);
@@ -665,7 +696,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'מצאו את האות שחסרה במילה!', lang: 'he' },
+          { text: getInstruction('missingLetter', uiLang), lang: uiLang },
           { pause: 300 },
           { text: current.word, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
@@ -712,7 +743,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: current.word, lang: 'en-US', rate: 0.75 },
           { pause: 500 },
-          { text: current.translation, lang: 'he' },
+          { text: current.translation, lang: uiLang },
         ], speak, () => {
           audioDone = true;
           tryAdvance();
@@ -905,7 +936,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'סדרו את המילים למשפט נכון!', lang: 'he' },
+          { text: getInstruction('sentenceBuilder', uiLang), lang: uiLang },
           { pause: 300 },
           { text: current.sentence, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);

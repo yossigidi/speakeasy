@@ -434,7 +434,7 @@ export default function KidsTeacherPage({ onBack }) {
             {[...correctWords, ...wrongWords].map((w, i) => {
               const ok = correctWords.includes(w);
               return (
-                <button key={i} onClick={() => speakWordPair(w.word, w.translation)}
+                <button key={i} onClick={() => speakWordPair(w.word, w.translation, uiLang)}
                   className={`rounded-lg px-2 py-1 text-xs font-semibold flex items-center gap-1 ${ok ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'}`}>
                   🔊 {w.emoji} {w.word} {ok ? '✅' : '❌'}
                 </button>

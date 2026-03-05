@@ -650,11 +650,17 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         playWhoosh();
       }
 
-      // Hebrew praise
-      const praises = ['יוֹפִי!', 'נָכוֹן!', 'מְצוּיָּן!', 'כׇּל הַכָּבוֹד!', 'מַדְהִים!'];
+      // Praise in user's native language
+      const praisesByLang = {
+        he: ['יוֹפִי!', 'נָכוֹן!', 'מְצוּיָּן!', 'כׇּל הַכָּבוֹד!', 'מַדְהִים!'],
+        ar: ['رائع!', 'صحيح!', 'ممتاز!', 'أحسنت!', 'مذهل!'],
+        ru: ['Отлично!', 'Правильно!', 'Молодец!', 'Великолепно!', 'Потрясающе!'],
+        en: ['Great!', 'Correct!', 'Excellent!', 'Well done!', 'Amazing!'],
+      };
+      const praises = praisesByLang[uiLang] || praisesByLang.en;
       const praise = praises[Math.floor(Math.random() * praises.length)];
       setTimeout(() => {
-        playSequence([{ text: praise, lang: 'he' }], null);
+        playSequence([{ text: praise, lang: uiLang }], null);
       }, 300);
 
       // Next round after delay

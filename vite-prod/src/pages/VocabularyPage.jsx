@@ -136,7 +136,7 @@ function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVoc
                     <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">{mistake.correct}</span>
                   </div>
                   {mistake.explanation && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mr-6" dir="rtl">{mistake.explanation}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mr-6" dir={isRtl ? 'rtl' : 'ltr'}>{mistake.explanation}</p>
                   )}
                 </div>
               ))}
@@ -235,12 +235,12 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
     const answer = practiceAnswer.trim();
     if (answer === correct || answer === word.word) {
       setPracticeResult('correct');
-      // Speak the English word, then the Hebrew translation
-      speakWordPair(word.word, word.translation);
+      // Speak the English word, then the native-language translation
+      speakWordPair(word.word, word.translation, uiLang);
     } else {
       setPracticeResult('wrong');
-      // On wrong answer, speak the correct Hebrew translation
-      speak(word.translation, { lang: 'he', rate: 0.9 });
+      // On wrong answer, speak the correct translation
+      speak(word.translation, { lang: uiLang, rate: 0.9 });
     }
   };
 
@@ -299,7 +299,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 via-emerald-400 to-teal-400" />
 
             <button
-              onClick={() => speakWordPair(word.word, word.translation)}
+              onClick={() => speakWordPair(word.word, word.translation, uiLang)}
               className="mx-auto mb-3 w-14 h-14 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow active:scale-95"
             >
               <Volume2 size={24} className="text-white" />
@@ -331,8 +331,8 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
               <button
                 onClick={() => {
                   setShowTranslation(true);
-                  // Speak the Hebrew translation when revealed
-                  speak(word.translation, { lang: 'he', rate: 0.9 });
+                  // Speak the translation when revealed
+                  speak(word.translation, { lang: uiLang, rate: 0.9 });
                 }}
                 className="flex items-center justify-center gap-2 mx-auto text-brand-500 hover:text-brand-600 transition-colors"
               >
@@ -481,7 +481,7 @@ function LearnWordsFlow({ words, onComplete, onBack, onAddToVocab }) {
                         <span className="text-sm text-emerald-600 dark:text-emerald-400 font-bold">{mistake.correct}</span>
                       </div>
                       {mistake.explanation && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-2 mr-7" dir="rtl">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-2 mr-7" dir={isRtl ? 'rtl' : 'ltr'}>
                           {mistake.explanation}
                         </p>
                       )}
@@ -747,62 +747,62 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1' }
   const { uiLang } = useTheme();
 
   const categoryInfo = {
-    greetings: { emoji: '👋', labelHe: 'ברכות', color: 'from-yellow-400 to-orange-400' },
-    numbers: { emoji: '🔢', labelHe: 'מספרים', color: 'from-blue-400 to-indigo-400' },
-    family: { emoji: '👨‍👩‍👧‍👦', labelHe: 'משפחה', color: 'from-pink-400 to-rose-400' },
-    food: { emoji: '🍕', labelHe: 'אוכל', color: 'from-red-400 to-orange-400' },
-    home: { emoji: '🏠', labelHe: 'בית', color: 'from-amber-400 to-yellow-400' },
-    travel: { emoji: '✈️', labelHe: 'טיולים', color: 'from-cyan-400 to-blue-400' },
-    work: { emoji: '💼', labelHe: 'עבודה', color: 'from-gray-400 to-slate-400' },
-    body: { emoji: '🫀', labelHe: 'גוף', color: 'from-rose-400 to-pink-400' },
-    animals: { emoji: '🐕', labelHe: 'חיות', color: 'from-green-400 to-emerald-400' },
-    colors: { emoji: '🎨', labelHe: 'צבעים', color: 'from-purple-400 to-pink-400' },
-    clothes: { emoji: '👕', labelHe: 'בגדים', color: 'from-violet-400 to-purple-400' },
-    time: { emoji: '⏰', labelHe: 'זמן', color: 'from-orange-400 to-amber-400' },
-    weather: { emoji: '🌤️', labelHe: 'מזג אוויר', color: 'from-sky-400 to-blue-400' },
-    school: { emoji: '🏫', labelHe: 'בית ספר', color: 'from-indigo-400 to-blue-400' },
-    shopping: { emoji: '🛒', labelHe: 'קניות', color: 'from-emerald-400 to-teal-400' },
-    directions: { emoji: '🧭', labelHe: 'כיוונים', color: 'from-teal-400 to-cyan-400' },
-    emotions: { emoji: '😊', labelHe: 'רגשות', color: 'from-yellow-400 to-amber-400' },
-    sports: { emoji: '⚽', labelHe: 'ספורט', color: 'from-green-400 to-lime-400' },
-    'daily-routines': { emoji: '🌅', labelHe: 'שגרה יומית', color: 'from-orange-400 to-pink-400' },
-    nature: { emoji: '🌿', labelHe: 'טבע', color: 'from-lime-400 to-green-400' },
+    greetings: { emoji: '👋', labelHe: 'ברכות', labelEn: 'Greetings', labelAr: 'التحيات', labelRu: 'Приветствия', color: 'from-yellow-400 to-orange-400' },
+    numbers: { emoji: '🔢', labelHe: 'מספרים', labelEn: 'Numbers', labelAr: 'الأرقام', labelRu: 'Числа', color: 'from-blue-400 to-indigo-400' },
+    family: { emoji: '👨‍👩‍👧‍👦', labelHe: 'משפחה', labelEn: 'Family', labelAr: 'العائلة', labelRu: 'Семья', color: 'from-pink-400 to-rose-400' },
+    food: { emoji: '🍕', labelHe: 'אוכל', labelEn: 'Food', labelAr: 'الطعام', labelRu: 'Еда', color: 'from-red-400 to-orange-400' },
+    home: { emoji: '🏠', labelHe: 'בית', labelEn: 'Home', labelAr: 'البيت', labelRu: 'Дом', color: 'from-amber-400 to-yellow-400' },
+    travel: { emoji: '✈️', labelHe: 'טיולים', labelEn: 'Travel', labelAr: 'السفر', labelRu: 'Путешествия', color: 'from-cyan-400 to-blue-400' },
+    work: { emoji: '💼', labelHe: 'עבודה', labelEn: 'Work', labelAr: 'العمل', labelRu: 'Работа', color: 'from-gray-400 to-slate-400' },
+    body: { emoji: '🫀', labelHe: 'גוף', labelEn: 'Body', labelAr: 'الجسم', labelRu: 'Тело', color: 'from-rose-400 to-pink-400' },
+    animals: { emoji: '🐕', labelHe: 'חיות', labelEn: 'Animals', labelAr: 'الحيوانات', labelRu: 'Животные', color: 'from-green-400 to-emerald-400' },
+    colors: { emoji: '🎨', labelHe: 'צבעים', labelEn: 'Colors', labelAr: 'الألوان', labelRu: 'Цвета', color: 'from-purple-400 to-pink-400' },
+    clothes: { emoji: '👕', labelHe: 'בגדים', labelEn: 'Clothes', labelAr: 'الملابس', labelRu: 'Одежда', color: 'from-violet-400 to-purple-400' },
+    time: { emoji: '⏰', labelHe: 'זמן', labelEn: 'Time', labelAr: 'الوقت', labelRu: 'Время', color: 'from-orange-400 to-amber-400' },
+    weather: { emoji: '🌤️', labelHe: 'מזג אוויר', labelEn: 'Weather', labelAr: 'الطقس', labelRu: 'Погода', color: 'from-sky-400 to-blue-400' },
+    school: { emoji: '🏫', labelHe: 'בית ספר', labelEn: 'School', labelAr: 'المدرسة', labelRu: 'Школа', color: 'from-indigo-400 to-blue-400' },
+    shopping: { emoji: '🛒', labelHe: 'קניות', labelEn: 'Shopping', labelAr: 'التسوق', labelRu: 'Покупки', color: 'from-emerald-400 to-teal-400' },
+    directions: { emoji: '🧭', labelHe: 'כיוונים', labelEn: 'Directions', labelAr: 'الاتجاهات', labelRu: 'Направления', color: 'from-teal-400 to-cyan-400' },
+    emotions: { emoji: '😊', labelHe: 'רגשות', labelEn: 'Emotions', labelAr: 'المشاعر', labelRu: 'Эмоции', color: 'from-yellow-400 to-amber-400' },
+    sports: { emoji: '⚽', labelHe: 'ספורט', labelEn: 'Sports', labelAr: 'الرياضة', labelRu: 'Спорт', color: 'from-green-400 to-lime-400' },
+    'daily-routines': { emoji: '🌅', labelHe: 'שגרה יומית', labelEn: 'Daily Routines', labelAr: 'الروتين اليومي', labelRu: 'Распорядок дня', color: 'from-orange-400 to-pink-400' },
+    nature: { emoji: '🌿', labelHe: 'טבע', labelEn: 'Nature', labelAr: 'الطبيعة', labelRu: 'Природа', color: 'from-lime-400 to-green-400' },
     // A2 categories
-    health: { emoji: '🏥', labelHe: 'בריאות', color: 'from-red-400 to-rose-400' },
-    technology: { emoji: '💻', labelHe: 'טכנולוגיה', color: 'from-blue-400 to-cyan-400' },
-    culture: { emoji: '🎭', labelHe: 'תרבות', color: 'from-purple-400 to-violet-400' },
-    'travel-advanced': { emoji: '🌍', labelHe: 'טיולים מתקדם', color: 'from-teal-400 to-emerald-400' },
-    'work-advanced': { emoji: '📊', labelHe: 'עבודה מתקדם', color: 'from-slate-400 to-gray-400' },
-    'food-advanced': { emoji: '🍽️', labelHe: 'אוכל מתקדם', color: 'from-orange-400 to-red-400' },
-    education: { emoji: '🎓', labelHe: 'חינוך', color: 'from-indigo-400 to-purple-400' },
-    entertainment: { emoji: '🎬', labelHe: 'בידור', color: 'from-pink-400 to-purple-400' },
-    environment: { emoji: '🌎', labelHe: 'סביבה', color: 'from-green-400 to-teal-400' },
-    relationships: { emoji: '💕', labelHe: 'מערכות יחסים', color: 'from-rose-400 to-pink-400' },
-    hobbies: { emoji: '🎯', labelHe: 'תחביבים', color: 'from-amber-400 to-orange-400' },
-    city: { emoji: '🏙️', labelHe: 'עיר', color: 'from-gray-400 to-blue-400' },
-    transport: { emoji: '🚇', labelHe: 'תחבורה', color: 'from-blue-400 to-indigo-400' },
-    communication: { emoji: '💬', labelHe: 'תקשורת', color: 'from-cyan-400 to-blue-400' },
-    idioms: { emoji: '💡', labelHe: 'ביטויים', color: 'from-yellow-400 to-orange-400' },
+    health: { emoji: '🏥', labelHe: 'בריאות', labelEn: 'Health', labelAr: 'الصحة', labelRu: 'Здоровье', color: 'from-red-400 to-rose-400' },
+    technology: { emoji: '💻', labelHe: 'טכנולוגיה', labelEn: 'Technology', labelAr: 'التكنولوجيا', labelRu: 'Технологии', color: 'from-blue-400 to-cyan-400' },
+    culture: { emoji: '🎭', labelHe: 'תרבות', labelEn: 'Culture', labelAr: 'الثقافة', labelRu: 'Культура', color: 'from-purple-400 to-violet-400' },
+    'travel-advanced': { emoji: '🌍', labelHe: 'טיולים מתקדם', labelEn: 'Advanced Travel', labelAr: 'السفر المتقدم', labelRu: 'Путешествия (продв.)', color: 'from-teal-400 to-emerald-400' },
+    'work-advanced': { emoji: '📊', labelHe: 'עבודה מתקדם', labelEn: 'Advanced Work', labelAr: 'العمل المتقدم', labelRu: 'Работа (продв.)', color: 'from-slate-400 to-gray-400' },
+    'food-advanced': { emoji: '🍽️', labelHe: 'אוכל מתקדם', labelEn: 'Advanced Food', labelAr: 'الطعام المتقدم', labelRu: 'Еда (продв.)', color: 'from-orange-400 to-red-400' },
+    education: { emoji: '🎓', labelHe: 'חינוך', labelEn: 'Education', labelAr: 'التعليم', labelRu: 'Образование', color: 'from-indigo-400 to-purple-400' },
+    entertainment: { emoji: '🎬', labelHe: 'בידור', labelEn: 'Entertainment', labelAr: 'الترفيه', labelRu: 'Развлечения', color: 'from-pink-400 to-purple-400' },
+    environment: { emoji: '🌎', labelHe: 'סביבה', labelEn: 'Environment', labelAr: 'البيئة', labelRu: 'Окружающая среда', color: 'from-green-400 to-teal-400' },
+    relationships: { emoji: '💕', labelHe: 'מערכות יחסים', labelEn: 'Relationships', labelAr: 'العلاقات', labelRu: 'Отношения', color: 'from-rose-400 to-pink-400' },
+    hobbies: { emoji: '🎯', labelHe: 'תחביבים', labelEn: 'Hobbies', labelAr: 'الهوايات', labelRu: 'Хобби', color: 'from-amber-400 to-orange-400' },
+    city: { emoji: '🏙️', labelHe: 'עיר', labelEn: 'City', labelAr: 'المدينة', labelRu: 'Город', color: 'from-gray-400 to-blue-400' },
+    transport: { emoji: '🚇', labelHe: 'תחבורה', labelEn: 'Transport', labelAr: 'المواصلات', labelRu: 'Транспорт', color: 'from-blue-400 to-indigo-400' },
+    communication: { emoji: '💬', labelHe: 'תקשורת', labelEn: 'Communication', labelAr: 'التواصل', labelRu: 'Общение', color: 'from-cyan-400 to-blue-400' },
+    idioms: { emoji: '💡', labelHe: 'ביטויים', labelEn: 'Idioms', labelAr: 'التعابير', labelRu: 'Идиомы', color: 'from-yellow-400 to-orange-400' },
     // B1 categories
-    business: { emoji: '💼', labelHe: 'עסקים', color: 'from-slate-400 to-blue-400' },
+    business: { emoji: '💼', labelHe: 'עסקים', labelEn: 'Business', labelAr: 'الأعمال', labelRu: 'Бизнес', color: 'from-slate-400 to-blue-400' },
     // B2 categories
-    media: { emoji: '📺', labelHe: 'תקשורת', color: 'from-red-400 to-pink-400' },
-    politics: { emoji: '🏛️', labelHe: 'פוליטיקה', color: 'from-blue-400 to-indigo-400' },
-    science: { emoji: '🔬', labelHe: 'מדע', color: 'from-cyan-400 to-teal-400' },
-    finance: { emoji: '💰', labelHe: 'פיננסים', color: 'from-green-400 to-emerald-400' },
-    psychology: { emoji: '🧠', labelHe: 'פסיכולוגיה', color: 'from-purple-400 to-violet-400' },
-    law: { emoji: '⚖️', labelHe: 'משפט', color: 'from-gray-400 to-slate-400' },
-    'abstract-concepts': { emoji: '💭', labelHe: 'מושגים מופשטים', color: 'from-indigo-400 to-purple-400' },
-    career: { emoji: '📈', labelHe: 'קריירה', color: 'from-amber-400 to-orange-400' },
+    media: { emoji: '📺', labelHe: 'תקשורת', labelEn: 'Media', labelAr: 'الإعلام', labelRu: 'СМИ', color: 'from-red-400 to-pink-400' },
+    politics: { emoji: '🏛️', labelHe: 'פוליטיקה', labelEn: 'Politics', labelAr: 'السياسة', labelRu: 'Политика', color: 'from-blue-400 to-indigo-400' },
+    science: { emoji: '🔬', labelHe: 'מדע', labelEn: 'Science', labelAr: 'العلوم', labelRu: 'Наука', color: 'from-cyan-400 to-teal-400' },
+    finance: { emoji: '💰', labelHe: 'פיננסים', labelEn: 'Finance', labelAr: 'المالية', labelRu: 'Финансы', color: 'from-green-400 to-emerald-400' },
+    psychology: { emoji: '🧠', labelHe: 'פסיכולוגיה', labelEn: 'Psychology', labelAr: 'علم النفس', labelRu: 'Психология', color: 'from-purple-400 to-violet-400' },
+    law: { emoji: '⚖️', labelHe: 'משפט', labelEn: 'Law', labelAr: 'القانون', labelRu: 'Право', color: 'from-gray-400 to-slate-400' },
+    'abstract-concepts': { emoji: '💭', labelHe: 'מושגים מופשטים', labelEn: 'Abstract Concepts', labelAr: 'المفاهيم المجردة', labelRu: 'Абстрактные понятия', color: 'from-indigo-400 to-purple-400' },
+    career: { emoji: '📈', labelHe: 'קריירה', labelEn: 'Career', labelAr: 'المهنة', labelRu: 'Карьера', color: 'from-amber-400 to-orange-400' },
     // C1 categories
-    academic: { emoji: '🎓', labelHe: 'אקדמי', color: 'from-indigo-400 to-blue-400' },
-    literature: { emoji: '📜', labelHe: 'ספרות', color: 'from-rose-400 to-pink-400' },
-    rhetoric: { emoji: '🎤', labelHe: 'רטוריקה', color: 'from-orange-400 to-red-400' },
-    diplomacy: { emoji: '🤝', labelHe: 'דיפלומטיה', color: 'from-teal-400 to-cyan-400' },
-    economics: { emoji: '📊', labelHe: 'כלכלה', color: 'from-emerald-400 to-green-400' },
-    research: { emoji: '🔍', labelHe: 'מחקר', color: 'from-blue-400 to-cyan-400' },
-    journalism: { emoji: '📰', labelHe: 'עיתונאות', color: 'from-gray-400 to-blue-400' },
-    ethics: { emoji: '⚖️', labelHe: 'אתיקה', color: 'from-violet-400 to-purple-400' },
+    academic: { emoji: '🎓', labelHe: 'אקדמי', labelEn: 'Academic', labelAr: 'الأكاديمي', labelRu: 'Академический', color: 'from-indigo-400 to-blue-400' },
+    literature: { emoji: '📜', labelHe: 'ספרות', labelEn: 'Literature', labelAr: 'الأدب', labelRu: 'Литература', color: 'from-rose-400 to-pink-400' },
+    rhetoric: { emoji: '🎤', labelHe: 'רטוריקה', labelEn: 'Rhetoric', labelAr: 'الخطابة', labelRu: 'Риторика', color: 'from-orange-400 to-red-400' },
+    diplomacy: { emoji: '🤝', labelHe: 'דיפלומטיה', labelEn: 'Diplomacy', labelAr: 'الدبلوماسية', labelRu: 'Дипломатия', color: 'from-teal-400 to-cyan-400' },
+    economics: { emoji: '📊', labelHe: 'כלכלה', labelEn: 'Economics', labelAr: 'الاقتصاد', labelRu: 'Экономика', color: 'from-emerald-400 to-green-400' },
+    research: { emoji: '🔍', labelHe: 'מחקר', labelEn: 'Research', labelAr: 'البحث', labelRu: 'Исследования', color: 'from-blue-400 to-cyan-400' },
+    journalism: { emoji: '📰', labelHe: 'עיתונאות', labelEn: 'Journalism', labelAr: 'الصحافة', labelRu: 'Журналистика', color: 'from-gray-400 to-blue-400' },
+    ethics: { emoji: '⚖️', labelHe: 'אתיקה', labelEn: 'Ethics', labelAr: 'الأخلاق', labelRu: 'Этика', color: 'from-violet-400 to-purple-400' },
   };
 
   // Separate categories by CEFR level (memoized — data is constant)
@@ -911,61 +911,61 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
   }, [category]);
 
   const categoryInfo = {
-    greetings: { emoji: '👋', labelHe: 'ברכות' },
-    numbers: { emoji: '🔢', labelHe: 'מספרים' },
-    family: { emoji: '👨‍👩‍👧‍👦', labelHe: 'משפחה' },
-    food: { emoji: '🍕', labelHe: 'אוכל' },
-    home: { emoji: '🏠', labelHe: 'בית' },
-    travel: { emoji: '✈️', labelHe: 'טיולים' },
-    work: { emoji: '💼', labelHe: 'עבודה' },
-    body: { emoji: '🫀', labelHe: 'גוף' },
-    animals: { emoji: '🐕', labelHe: 'חיות' },
-    colors: { emoji: '🎨', labelHe: 'צבעים' },
-    clothes: { emoji: '👕', labelHe: 'בגדים' },
-    time: { emoji: '⏰', labelHe: 'זמן' },
-    weather: { emoji: '🌤️', labelHe: 'מזג אוויר' },
-    school: { emoji: '🏫', labelHe: 'בית ספר' },
-    shopping: { emoji: '🛒', labelHe: 'קניות' },
-    directions: { emoji: '🧭', labelHe: 'כיוונים' },
-    emotions: { emoji: '😊', labelHe: 'רגשות' },
-    sports: { emoji: '⚽', labelHe: 'ספורט' },
-    'daily-routines': { emoji: '🌅', labelHe: 'שגרה יומית' },
-    nature: { emoji: '🌿', labelHe: 'טבע' },
-    health: { emoji: '🏥', labelHe: 'בריאות' },
-    technology: { emoji: '💻', labelHe: 'טכנולוגיה' },
-    culture: { emoji: '🎭', labelHe: 'תרבות' },
-    'travel-advanced': { emoji: '🌍', labelHe: 'טיולים מתקדם' },
-    'work-advanced': { emoji: '📊', labelHe: 'עבודה מתקדם' },
-    'food-advanced': { emoji: '🍽️', labelHe: 'אוכל מתקדם' },
-    education: { emoji: '🎓', labelHe: 'חינוך' },
-    entertainment: { emoji: '🎬', labelHe: 'בידור' },
-    environment: { emoji: '🌎', labelHe: 'סביבה' },
-    relationships: { emoji: '💕', labelHe: 'מערכות יחסים' },
-    hobbies: { emoji: '🎯', labelHe: 'תחביבים' },
-    city: { emoji: '🏙️', labelHe: 'עיר' },
-    transport: { emoji: '🚇', labelHe: 'תחבורה' },
-    communication: { emoji: '💬', labelHe: 'תקשורת' },
-    idioms: { emoji: '💡', labelHe: 'ביטויים' },
+    greetings: { emoji: '👋', labelHe: 'ברכות', labelEn: 'Greetings', labelAr: 'التحيات', labelRu: 'Приветствия' },
+    numbers: { emoji: '🔢', labelHe: 'מספרים', labelEn: 'Numbers', labelAr: 'الأرقام', labelRu: 'Числа' },
+    family: { emoji: '👨‍👩‍👧‍👦', labelHe: 'משפחה', labelEn: 'Family', labelAr: 'العائلة', labelRu: 'Семья' },
+    food: { emoji: '🍕', labelHe: 'אוכל', labelEn: 'Food', labelAr: 'الطعام', labelRu: 'Еда' },
+    home: { emoji: '🏠', labelHe: 'בית', labelEn: 'Home', labelAr: 'البيت', labelRu: 'Дом' },
+    travel: { emoji: '✈️', labelHe: 'טיולים', labelEn: 'Travel', labelAr: 'السفر', labelRu: 'Путешествия' },
+    work: { emoji: '💼', labelHe: 'עבודה', labelEn: 'Work', labelAr: 'العمل', labelRu: 'Работа' },
+    body: { emoji: '🫀', labelHe: 'גוף', labelEn: 'Body', labelAr: 'الجسم', labelRu: 'Тело' },
+    animals: { emoji: '🐕', labelHe: 'חיות', labelEn: 'Animals', labelAr: 'الحيوانات', labelRu: 'Животные' },
+    colors: { emoji: '🎨', labelHe: 'צבעים', labelEn: 'Colors', labelAr: 'الألوان', labelRu: 'Цвета' },
+    clothes: { emoji: '👕', labelHe: 'בגדים', labelEn: 'Clothes', labelAr: 'الملابس', labelRu: 'Одежда' },
+    time: { emoji: '⏰', labelHe: 'זמן', labelEn: 'Time', labelAr: 'الوقت', labelRu: 'Время' },
+    weather: { emoji: '🌤️', labelHe: 'מזג אוויר', labelEn: 'Weather', labelAr: 'الطقس', labelRu: 'Погода' },
+    school: { emoji: '🏫', labelHe: 'בית ספר', labelEn: 'School', labelAr: 'المدرسة', labelRu: 'Школа' },
+    shopping: { emoji: '🛒', labelHe: 'קניות', labelEn: 'Shopping', labelAr: 'التسوق', labelRu: 'Покупки' },
+    directions: { emoji: '🧭', labelHe: 'כיוונים', labelEn: 'Directions', labelAr: 'الاتجاهات', labelRu: 'Направления' },
+    emotions: { emoji: '😊', labelHe: 'רגשות', labelEn: 'Emotions', labelAr: 'المشاعر', labelRu: 'Эмоции' },
+    sports: { emoji: '⚽', labelHe: 'ספורט', labelEn: 'Sports', labelAr: 'الرياضة', labelRu: 'Спорт' },
+    'daily-routines': { emoji: '🌅', labelHe: 'שגרה יומית', labelEn: 'Daily Routines', labelAr: 'الروتين اليومي', labelRu: 'Распорядок дня' },
+    nature: { emoji: '🌿', labelHe: 'טבע', labelEn: 'Nature', labelAr: 'الطبيعة', labelRu: 'Природа' },
+    health: { emoji: '🏥', labelHe: 'בריאות', labelEn: 'Health', labelAr: 'الصحة', labelRu: 'Здоровье' },
+    technology: { emoji: '💻', labelHe: 'טכנולוגיה', labelEn: 'Technology', labelAr: 'التكنولوجيا', labelRu: 'Технологии' },
+    culture: { emoji: '🎭', labelHe: 'תרבות', labelEn: 'Culture', labelAr: 'الثقافة', labelRu: 'Культура' },
+    'travel-advanced': { emoji: '🌍', labelHe: 'טיולים מתקדם', labelEn: 'Advanced Travel', labelAr: 'السفر المتقدم', labelRu: 'Путешествия (продв.)' },
+    'work-advanced': { emoji: '📊', labelHe: 'עבודה מתקדם', labelEn: 'Advanced Work', labelAr: 'العمل المتقدم', labelRu: 'Работа (продв.)' },
+    'food-advanced': { emoji: '🍽️', labelHe: 'אוכל מתקדם', labelEn: 'Advanced Food', labelAr: 'الطعام المتقدم', labelRu: 'Еда (продв.)' },
+    education: { emoji: '🎓', labelHe: 'חינוך', labelEn: 'Education', labelAr: 'التعليم', labelRu: 'Образование' },
+    entertainment: { emoji: '🎬', labelHe: 'בידור', labelEn: 'Entertainment', labelAr: 'الترفيه', labelRu: 'Развлечения' },
+    environment: { emoji: '🌎', labelHe: 'סביבה', labelEn: 'Environment', labelAr: 'البيئة', labelRu: 'Окружающая среда' },
+    relationships: { emoji: '💕', labelHe: 'מערכות יחסים', labelEn: 'Relationships', labelAr: 'العلاقات', labelRu: 'Отношения' },
+    hobbies: { emoji: '🎯', labelHe: 'תחביבים', labelEn: 'Hobbies', labelAr: 'الهوايات', labelRu: 'Хобби' },
+    city: { emoji: '🏙️', labelHe: 'עיר', labelEn: 'City', labelAr: 'المدينة', labelRu: 'Город' },
+    transport: { emoji: '🚇', labelHe: 'תחבורה', labelEn: 'Transport', labelAr: 'المواصلات', labelRu: 'Транспорт' },
+    communication: { emoji: '💬', labelHe: 'תקשורת', labelEn: 'Communication', labelAr: 'التواصل', labelRu: 'Общение' },
+    idioms: { emoji: '💡', labelHe: 'ביטויים', labelEn: 'Idioms', labelAr: 'التعابير', labelRu: 'Идиомы' },
     // B1
-    business: { emoji: '💼', labelHe: 'עסקים' },
+    business: { emoji: '💼', labelHe: 'עסקים', labelEn: 'Business', labelAr: 'الأعمال', labelRu: 'Бизнес' },
     // B2
-    media: { emoji: '📺', labelHe: 'תקשורת' },
-    politics: { emoji: '🏛️', labelHe: 'פוליטיקה' },
-    science: { emoji: '🔬', labelHe: 'מדע' },
-    finance: { emoji: '💰', labelHe: 'פיננסים' },
-    psychology: { emoji: '🧠', labelHe: 'פסיכולוגיה' },
-    law: { emoji: '⚖️', labelHe: 'משפט' },
-    'abstract-concepts': { emoji: '💭', labelHe: 'מושגים מופשטים' },
-    career: { emoji: '📈', labelHe: 'קריירה' },
+    media: { emoji: '📺', labelHe: 'תקשורת', labelEn: 'Media', labelAr: 'الإعلام', labelRu: 'СМИ' },
+    politics: { emoji: '🏛️', labelHe: 'פוליטיקה', labelEn: 'Politics', labelAr: 'السياسة', labelRu: 'Политика' },
+    science: { emoji: '🔬', labelHe: 'מדע', labelEn: 'Science', labelAr: 'العلوم', labelRu: 'Наука' },
+    finance: { emoji: '💰', labelHe: 'פיננסים', labelEn: 'Finance', labelAr: 'المالية', labelRu: 'Финансы' },
+    psychology: { emoji: '🧠', labelHe: 'פסיכולוגיה', labelEn: 'Psychology', labelAr: 'علم النفس', labelRu: 'Психология' },
+    law: { emoji: '⚖️', labelHe: 'משפט', labelEn: 'Law', labelAr: 'القانون', labelRu: 'Право' },
+    'abstract-concepts': { emoji: '💭', labelHe: 'מושגים מופשטים', labelEn: 'Abstract Concepts', labelAr: 'المفاهيم المجردة', labelRu: 'Абстрактные понятия' },
+    career: { emoji: '📈', labelHe: 'קריירה', labelEn: 'Career', labelAr: 'المهنة', labelRu: 'Карьера' },
     // C1
-    academic: { emoji: '🎓', labelHe: 'אקדמי' },
-    literature: { emoji: '📜', labelHe: 'ספרות' },
-    rhetoric: { emoji: '🎤', labelHe: 'רטוריקה' },
-    diplomacy: { emoji: '🤝', labelHe: 'דיפלומטיה' },
-    economics: { emoji: '📊', labelHe: 'כלכלה' },
-    research: { emoji: '🔍', labelHe: 'מחקר' },
-    journalism: { emoji: '📰', labelHe: 'עיתונאות' },
-    ethics: { emoji: '⚖️', labelHe: 'אתיקה' },
+    academic: { emoji: '🎓', labelHe: 'אקדמי', labelEn: 'Academic', labelAr: 'الأكاديمي', labelRu: 'Академический' },
+    literature: { emoji: '📜', labelHe: 'ספרות', labelEn: 'Literature', labelAr: 'الأدب', labelRu: 'Литература' },
+    rhetoric: { emoji: '🎤', labelHe: 'רטוריקה', labelEn: 'Rhetoric', labelAr: 'الخطابة', labelRu: 'Риторика' },
+    diplomacy: { emoji: '🤝', labelHe: 'דיפלומטיה', labelEn: 'Diplomacy', labelAr: 'الدبلوماسية', labelRu: 'Дипломатия' },
+    economics: { emoji: '📊', labelHe: 'כלכלה', labelEn: 'Economics', labelAr: 'الاقتصاد', labelRu: 'Экономика' },
+    research: { emoji: '🔍', labelHe: 'מחקר', labelEn: 'Research', labelAr: 'البحث', labelRu: 'Исследования' },
+    journalism: { emoji: '📰', labelHe: 'עיתונאות', labelEn: 'Journalism', labelAr: 'الصحافة', labelRu: 'Журналистика' },
+    ethics: { emoji: '⚖️', labelHe: 'אתיקה', labelEn: 'Ethics', labelAr: 'الأخلاق', labelRu: 'Этика' },
   };
 
   const info = categoryInfo[category] || { emoji: '📚', labelHe: category };
@@ -1005,7 +1005,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
             onClick={() => onSelectWord(word)}
           >
             <button
-              onClick={(e) => { e.stopPropagation(); speakWordPair(word.word, word.translation); }}
+              onClick={(e) => { e.stopPropagation(); speakWordPair(word.word, word.translation, uiLang); }}
               className="shrink-0 w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center"
             >
               <Volume2 size={16} className="text-brand-500" />
@@ -1016,7 +1016,7 @@ function CategoryWordsView({ category, onBack, onSelectWord, onLearn }) {
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{word.translation} - {word.definition}</p>
             </div>
-            <ChevronRight size={16} className="text-gray-300 shrink-0" />
+            <ChevronRight size={16} className="text-gray-300 shrink-0 rtl:rotate-180" />
           </div>
         ))}
       </div>
@@ -1123,12 +1123,18 @@ export default function VocabularyPage() {
         emoji="📚"
         title="Speakli's Words!"
         titleHe="המילים של ספיקלי!"
+        titleAr="كلمات سبيكلي!"
+        titleRu="Слова Спикли!"
         desc="Hi! Let's learn new words together! Let's start!"
         descHe="היי! בואו נלמד יחד מילים חדשות! בואו נתחיל!"
+        descAr="مرحباً! دعونا نتعلم كلمات جديدة معاً! هيا نبدأ!"
+        descRu="Привет! Давайте вместе учить новые слова! Начнём!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's learn with Speakli!"
         buttonLabelHe="בואו נלמד עם ספיקלי!"
+        buttonLabelAr="هيا نتعلم مع سبيكلي!"
+        buttonLabelRu="Учимся со Спикли!"
       />
       {/* Quick Learn - Random 5 Words (level-appropriate) */}
       <GlassCard
@@ -1191,7 +1197,7 @@ export default function VocabularyPage() {
                 </p>
               </div>
             </div>
-            <ChevronRight size={20} className="text-gray-400" />
+            <ChevronRight size={20} className="text-gray-400 rtl:rotate-180" />
           </div>
         </GlassCard>
       )}

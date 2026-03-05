@@ -1,6 +1,6 @@
 import React from 'react';
 import LessonNode from './LessonNode.jsx';
-import { t } from '../../utils/translations.js';
+import { t, lf } from '../../utils/translations.js';
 
 export default function UnitIsland({
   unit,
@@ -14,7 +14,7 @@ export default function UnitIsland({
   getLessonResult,
   currentLessonId,
 }) {
-  const unitName = unit[t('nameHeField', uiLang)];
+  const unitName = lf(unit, 'name', uiLang);
   const completedCount = unitProgress?.completed || 0;
   const totalCount = unitProgress?.total || 6;
   const progressPercent = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;

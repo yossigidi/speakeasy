@@ -12,20 +12,20 @@ import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 const PRACTICE_SENTENCES = [
-  { text: "Hello, how are you?", level: "A1", translation: "שלום, מה שלומך?" },
-  { text: "My name is", level: "A1", translation: "שמי הוא" },
-  { text: "Nice to meet you", level: "A1", translation: "נעים להכיר" },
-  { text: "Where is the bus stop?", level: "A1", translation: "איפה תחנת האוטובוס?" },
-  { text: "I would like a cup of coffee", level: "A2", translation: "הייתי רוצה כוס קפה" },
-  { text: "Can you help me please?", level: "A1", translation: "אתה יכול לעזור לי בבקשה?" },
-  { text: "The weather is beautiful today", level: "A2", translation: "מזג האוויר יפה היום" },
-  { text: "I need to go to the airport", level: "A2", translation: "אני צריך להגיע לשדה התעופה" },
-  { text: "What time does the meeting start?", level: "B1", translation: "באיזו שעה מתחילה הפגישה?" },
-  { text: "I have been studying English for two years", level: "B1", translation: "אני לומד אנגלית כבר שנתיים" },
-  { text: "Could you recommend a good restaurant?", level: "B1", translation: "אתה יכול להמליץ על מסעדה טובה?" },
-  { text: "I completely agree with your point of view", level: "B2", translation: "אני מסכים לחלוטין עם נקודת המבט שלך" },
-  { text: "The presentation went better than expected", level: "B2", translation: "המצגת הלכה טוב מהצפוי" },
-  { text: "I would have called you if I had known", level: "B2", translation: "הייתי מתקשר אליך אם הייתי יודע" },
+  { text: "Hello, how are you?", level: "A1", translation: "שלום, מה שלומך?", translationAr: "مرحباً، كيف حالك؟", translationRu: "Привет, как дела?" },
+  { text: "My name is", level: "A1", translation: "שמי הוא", translationAr: "اسمي هو", translationRu: "Меня зовут" },
+  { text: "Nice to meet you", level: "A1", translation: "נעים להכיר", translationAr: "يسعدني لقاؤك", translationRu: "Приятно познакомиться" },
+  { text: "Where is the bus stop?", level: "A1", translation: "איפה תחנת האוטובוס?", translationAr: "أين محطة الحافلة؟", translationRu: "Где автобусная остановка?" },
+  { text: "I would like a cup of coffee", level: "A2", translation: "הייתי רוצה כוס קפה", translationAr: "أريد فنجان قهوة", translationRu: "Я бы хотел чашку кофе" },
+  { text: "Can you help me please?", level: "A1", translation: "אתה יכול לעזור לי בבקשה?", translationAr: "هل يمكنك مساعدتي من فضلك؟", translationRu: "Вы можете мне помочь, пожалуйста?" },
+  { text: "The weather is beautiful today", level: "A2", translation: "מזג האוויר יפה היום", translationAr: "الطقس جميل اليوم", translationRu: "Сегодня прекрасная погода" },
+  { text: "I need to go to the airport", level: "A2", translation: "אני צריך להגיע לשדה התעופה", translationAr: "أحتاج إلى الذهاب إلى المطار", translationRu: "Мне нужно ехать в аэропорт" },
+  { text: "What time does the meeting start?", level: "B1", translation: "באיזו שעה מתחילה הפגישה?", translationAr: "في أي ساعة تبدأ الاجتماع؟", translationRu: "В котором часу начинается встреча?" },
+  { text: "I have been studying English for two years", level: "B1", translation: "אני לומד אנגלית כבר שנתיים", translationAr: "أدرس الإنجليزية منذ سنتين", translationRu: "Я изучаю английский уже два года" },
+  { text: "Could you recommend a good restaurant?", level: "B1", translation: "אתה יכול להמליץ על מסעדה טובה?", translationAr: "هل يمكنك أن توصي بمطعم جيد؟", translationRu: "Не могли бы вы порекомендовать хороший ресторан?" },
+  { text: "I completely agree with your point of view", level: "B2", translation: "אני מסכים לחלוטין עם נקודת המבט שלך", translationAr: "أوافقك الرأي تماماً", translationRu: "Я полностью согласен с вашей точкой зрения" },
+  { text: "The presentation went better than expected", level: "B2", translation: "המצגת הלכה טוב מהצפוי", translationAr: "سارت العرض التقديمي أفضل مما كان متوقعاً", translationRu: "Презентация прошла лучше, чем ожидалось" },
+  { text: "I would have called you if I had known", level: "B2", translation: "הייתי מתקשר אליך אם הייתי יודע", translationAr: "كنت سأتصل بك لو كنت أعلم", translationRu: "Я бы позвонил тебе, если бы знал" },
 ];
 
 function WaveformVisualizer({ isActive }) {
@@ -176,12 +176,18 @@ export default function PronunciationPage() {
         emoji="🎤"
         title="Talk with Speakli!"
         titleHe="דברו עם ספיקלי!"
+        titleAr="تحدث مع سبيكلي!"
+        titleRu="Говори со Спикли!"
         desc="Hi! Let's practice speaking English together! Listen and repeat after me!"
         descHe="היי! בואו נתרגל לדבר אנגלית ביחד! הקשיבו וחזרו אחריי!"
+        descAr="مرحباً! دعونا نتدرب على التحدث بالإنجليزية معاً! استمع وكرر بعدي!"
+        descRu="Привет! Давайте тренируем английский вместе! Слушай и повторяй за мной!"
         uiLang={uiLang}
         gradient="from-amber-500 via-orange-500 to-red-500"
         buttonLabel="Let's talk!"
         buttonLabelHe="בואו נדבר!"
+        buttonLabelAr="هيا نتحدث!"
+        buttonLabelRu="Давай поговорим!"
       />
 
       {/* Progress */}

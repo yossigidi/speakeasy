@@ -20,7 +20,7 @@ import VideoOverlay from './ui/VideoOverlay.jsx';
 import AchievementToast from '../gamification/AchievementToast.jsx';
 import { WORLDS } from '../../data/adventure/worlds.js';
 import achievementsData from '../../data/achievements.json';
-import { t, tReplace, lf } from '../../utils/translations.js';
+import { t, tReplace, lf, RTL_LANGS } from '../../utils/translations.js';
 
 // Lazy-load world map separately
 const WorldMap = React.lazy(() => import('./worlds/WorldMap.js').then(m => ({ default: m.default || m })));
@@ -254,7 +254,7 @@ export default function AdventureGame({ onBack }) {
           src={videoData.src}
           narration={videoData.narration}
           autoPlay={videoData.autoPlay}
-          onSpeak={(text) => speak(text, { lang: 'he' })}
+          onSpeak={(text) => speak(text, { lang: uiLang })}
           onStopSpeaking={stopSpeaking}
           onComplete={handleVideoComplete}
         />
@@ -276,7 +276,7 @@ export default function AdventureGame({ onBack }) {
               onClick={handleQuit}
               className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-xl"
             >
-              ←
+              {RTL_LANGS.includes(uiLang) ? '→' : '←'}
             </button>
             <h1 className="text-white font-black text-lg">
               {t('adventureTitle', uiLang)}

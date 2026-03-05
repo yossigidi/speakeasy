@@ -12,12 +12,12 @@ export default function useSpeechSynthesis() {
     return ctxSpeak(text, { rate: 0.6 });
   }, [ctxSpeak]);
 
-  // Speak English word then Hebrew translation with minimal gap
-  const speakWordPair = useCallback((englishWord, hebrewTranslation) => {
+  // Speak English word then native-language translation with minimal gap
+  const speakWordPair = useCallback((englishWord, translation, translationLang = 'he') => {
     speakSequence([
       { text: englishWord, lang: 'en-US', rate: 0.92 },
       { pause: 150 },
-      { text: hebrewTranslation, lang: 'he', rate: 0.9 },
+      { text: translation, lang: translationLang, rate: 0.9 },
     ]);
   }, [speakSequence]);
 

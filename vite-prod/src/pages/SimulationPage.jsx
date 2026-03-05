@@ -348,7 +348,7 @@ export default function SimulationPage() {
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <button onClick={backToSelection} className="p-2 rounded-xl glass-card">
-            <ArrowLeft size={20} />
+            <ArrowLeft size={20} className="rtl:rotate-180" />
           </button>
           <h1 className="text-lg font-bold text-gray-900 dark:text-white">{t('yourPerformance', uiLang)}</h1>
         </div>
@@ -417,7 +417,7 @@ export default function SimulationPage() {
           )}
           <button onClick={backToSelection}
             className="w-full py-3 rounded-2xl glass-card font-semibold text-sm text-gray-700 dark:text-gray-300 flex items-center justify-center gap-2">
-            <ChevronRight size={16} /> {t('nextScenario', uiLang)}
+            <ChevronRight size={16} className="rtl:rotate-180" /> {t('nextScenario', uiLang)}
           </button>
         </div>
       </div>
@@ -436,7 +436,7 @@ export default function SimulationPage() {
         <div className="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 px-4 py-3">
           <div className="flex items-center justify-between">
             <button onClick={backToSelection} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-              <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300" />
+              <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300 rtl:rotate-180" />
             </button>
             <div className="text-center flex-1 mx-3">
               <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
@@ -582,12 +582,18 @@ export default function SimulationPage() {
         emoji="💬"
         title="Talk to Speakli!"
         titleHe="דברו עם ספיקלי!"
+        titleAr="تحدث مع سبيكلي!"
+        titleRu="Говори со Спикли!"
         desc="Hi! Let's practice speaking English together! I'll help you learn to talk!"
         descHe="היי! בואו נתרגל לדבר אנגלית ביחד! אני אעזור לכם ללמוד לדבר!"
+        descAr="مرحباً! دعونا نتدرب على التحدث بالإنجليزية معاً! سأساعدك على التعلم!"
+        descRu="Привет! Давайте вместе тренируем английский! Я помогу тебе научиться говорить!"
         uiLang={uiLang}
         gradient="from-amber-500 via-orange-500 to-red-500"
         buttonLabel="Let's talk!"
         buttonLabelHe="בואו נדבר!"
+        buttonLabelAr="هيا نتحدث!"
+        buttonLabelRu="Давай поговорим!"
       />
 
       {/* Header */}
@@ -690,7 +696,7 @@ export default function SimulationPage() {
                       </div>
                     )}
                     {isUnlocked && !completed && (
-                      <ChevronRight size={16} className="text-gray-400" />
+                      <ChevronRight size={16} className="text-gray-400 rtl:rotate-180" />
                     )}
                   </div>
                 );

@@ -19,6 +19,49 @@ const GAME_PHRASES = [
   'בּוֹנִים מִלָּה! הַקְשִׁיבוּ לַמִּלָּה וְלִחֲצוּ עַל הָאוֹתִיּוֹת בַּסֵּדֶר הַנָּכוֹן',
   'אֵיפֹה הָאוֹת','יוֹפִי!','נָכוֹן!','מְצוּיָּן!','כׇּל הַכָּבוֹד!','מַדְהִים!','נַסּוּ שׁוּב',
 ];
+
+// Game instruction strings by language
+const KIDS_GAME_INSTRUCTIONS = {
+  bubblePop: {
+    he: 'היי! מצאו את הבועה עם האות הנכונה ולחצו עליה',
+    ar: 'مرحباً! ابحثوا عن الفقاعة التي تحتوي على الحرف الصحيح واضغطوا عليها',
+    ru: 'Привет! Найдите пузырь с правильной буквой и нажмите на него',
+    en: 'Hi! Find the bubble with the correct letter and tap it',
+  },
+  whereIsLetter: {
+    he: 'איפה האות',
+    ar: 'أين الحرف',
+    ru: 'Где буква',
+    en: 'Where is the letter',
+  },
+  memoryMatch: {
+    he: 'משחק זיכרון! לחצו על קלף ומצאו את הזוג שלו. בהצלחה!',
+    ar: 'لعبة الذاكرة! اضغطوا على بطاقة وابحثوا عن زوجها. بالتوفيق!',
+    ru: 'Игра на память! Нажмите на карточку и найдите её пару. Удачи!',
+    en: 'Memory game! Tap a card and find its match. Good luck!',
+  },
+  wordBuilder: {
+    he: 'בונים מילה! הקשיבו למילה ולחצו על האותיות בסדר הנכון',
+    ar: 'نبني كلمة! استمعوا إلى الكلمة واضغطوا على الحروف بالترتيب الصحيح',
+    ru: 'Строим слово! Слушайте слово и нажимайте на буквы в правильном порядке',
+    en: 'Build a word! Listen to the word and tap the letters in the correct order',
+  },
+  correct: {
+    he: 'נכון!',
+    ar: 'صحيح!',
+    ru: 'Правильно!',
+    en: 'Correct!',
+  },
+  bravo: {
+    he: 'יופי!',
+    ar: 'رائع!',
+    ru: 'Отлично!',
+    en: 'Great!',
+  },
+};
+
+// Helper to get game instruction text for current lang
+const getKidsInstruction = (key, lang) => KIDS_GAME_INSTRUCTIONS[key]?.[lang] || KIDS_GAME_INSTRUCTIONS[key]?.en || '';
 import alphabetData from '../data/alphabet-kids.json';
 
 /* ── Confetti burst ── */
@@ -151,9 +194,9 @@ function BubblePopGame({ onComplete, onBack }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'היי! מצאו את הבועה עם האות הנכונה ולחצו עליה', lang: 'he' },
+          { text: getKidsInstruction('bubblePop', uiLang), lang: uiLang },
           { pause: 200 },
-          { text: 'איפה האות', lang: 'he' },
+          { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
           { pause: 150 },
           { text: target.letter, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
@@ -162,7 +205,7 @@ function BubblePopGame({ onComplete, onBack }) {
     } else {
       const t = setTimeout(() => {
         playSequence([
-          { text: 'איפה האות', lang: 'he' },
+          { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
           { pause: 150 },
           { text: target.letter, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
@@ -415,11 +458,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     lockRef.current = false;
   }, [round, currentPairs]);
 
-  // Voice instructions on game start - pre-recorded Hebrew audio
+  // Voice instructions on game start
   useEffect(() => {
     const t = setTimeout(() => {
       playSequence([
-        { text: 'משחק זיכרון! לחצו על קלף ומצאו את הזוג שלו. בהצלחה!', lang: 'he' },
+        { text: getKidsInstruction('memoryMatch', uiLang), lang: uiLang },
       ], speak);
     }, 500);
     return () => clearTimeout(t);
@@ -435,11 +478,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     if (lockRef.current || flipped.includes(card.id) || matched.includes(card.pairId) || showRoundComplete) return;
     playTap();
 
-    // Speak the English word clearly, then Hebrew (pre-recorded)
+    // Speak the English word clearly, then native-language translation
     playSequence([
       { text: card.word, lang: 'en-US', rate: 0.75 },
       { pause: 150 },
-      { text: card.translation, lang: 'he' },
+      { text: card.translation, lang: uiLang },
     ], speak);
 
     const newFlipped = [...flipped, card.id];
@@ -457,11 +500,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         playCorrect();
         const t1 = setTimeout(() => {
           playSequence([
-            { text: 'יופי!', lang: 'he' },
+            { text: getKidsInstruction('bravo', uiLang), lang: uiLang },
             { pause: 100 },
             { text: first.word, lang: 'en-US', rate: 0.75 },
             { pause: 150 },
-            { text: first.translation, lang: 'he' },
+            { text: first.translation, lang: uiLang },
           ], speak);
         }, 400);
         matchTimersRef.current.push(t1);
@@ -765,7 +808,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
         playSequence([
-          { text: 'בונים מילה! הקשיבו למילה ולחצו על האותיות בסדר הנכון', lang: 'he' },
+          { text: getKidsInstruction('wordBuilder', uiLang), lang: uiLang },
           { pause: 200 },
           { text: w.word, lang: 'en-US', rate: 0.7 },
         ], speakRef.current);
@@ -798,11 +841,11 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         setScore(s => s + 1);
         setTimeout(() => {
           playSequence([
-            { text: 'נכון!', lang: 'he' },
+            { text: getKidsInstruction('correct', uiLang), lang: uiLang },
             { pause: 100 },
             { text: currentWord.word, lang: 'en-US', rate: 0.75 },
             { pause: 150 },
-            { text: currentWord.translation, lang: 'he' },
+            { text: currentWord.translation, lang: uiLang },
           ], speak);
         }, 300);
       }

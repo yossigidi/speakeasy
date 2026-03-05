@@ -12,15 +12,15 @@ import Modal from '../components/shared/Modal.jsx';
 
 const STORIES = [
   {
-    id: 's1', level: 'A1', topic: 'Daily Life', topicHe: 'חיי יומיום',
-    title: 'My Morning', titleHe: 'הבוקר שלי', readTime: 2,
+    id: 's1', level: 'A1', topic: 'Daily Life', topicHe: 'חיי יומיום', topicAr: 'الحياة اليومية', topicRu: 'Повседневная жизнь',
+    title: 'My Morning', titleHe: 'הבוקר שלי', titleAr: 'صباحي', titleRu: 'Моё утро', readTime: 2,
     text: `Every morning, I wake up at seven o'clock. I brush my teeth and wash my face. Then I go to the kitchen and make breakfast. I usually eat toast with butter and drink a cup of coffee. After breakfast, I get dressed and go to work. I take the bus because my office is far from my house. The bus ride takes about thirty minutes. I like to listen to music on the bus.`,
     vocabulary: [
-      { word: 'wake up', translation: 'להתעורר', definition: 'To stop sleeping' },
-      { word: 'brush', translation: 'לצחצח', definition: 'To clean with a brush' },
-      { word: 'kitchen', translation: 'מטבח', definition: 'Room where you cook food' },
-      { word: 'usually', translation: 'בדרך כלל', definition: 'Most of the time' },
-      { word: 'office', translation: 'משרד', definition: 'Place where you work' },
+      { word: 'wake up', translation: 'להתעורר', translationAr: 'يستيقظ', translationRu: 'просыпаться', definition: 'To stop sleeping' },
+      { word: 'brush', translation: 'לצחצח', translationAr: 'يفرش', translationRu: 'чистить', definition: 'To clean with a brush' },
+      { word: 'kitchen', translation: 'מטבח', translationAr: 'مطبخ', translationRu: 'кухня', definition: 'Room where you cook food' },
+      { word: 'usually', translation: 'בדרך כלל', translationAr: 'عادةً', translationRu: 'обычно', definition: 'Most of the time' },
+      { word: 'office', translation: 'משרד', translationAr: 'مكتب', translationRu: 'офис', definition: 'Place where you work' },
     ],
     questions: [
       { question: 'What time does the person wake up?', options: ['6:00', '7:00', '8:00', '9:00'], correct: 1 },
@@ -29,15 +29,15 @@ const STORIES = [
     ]
   },
   {
-    id: 's2', level: 'A1', topic: 'Shopping', topicHe: 'קניות',
-    title: 'At the Supermarket', titleHe: 'בסופרמרקט', readTime: 2,
+    id: 's2', level: 'A1', topic: 'Shopping', topicHe: 'קניות', topicAr: 'التسوق', topicRu: 'Покупки',
+    title: 'At the Supermarket', titleHe: 'בסופרמרקט', titleAr: 'في السوبرماركت', titleRu: 'В супермаркете', readTime: 2,
     text: `Today I need to go to the supermarket. I have a shopping list. I need to buy milk, bread, eggs, and vegetables. The supermarket is near my house, so I can walk there. When I arrive, I take a shopping cart. First, I go to the fruit and vegetable section. I choose some tomatoes, cucumbers, and apples. Then I go to the dairy section for milk and cheese. Finally, I pay at the checkout and walk home.`,
     vocabulary: [
-      { word: 'shopping list', translation: 'רשימת קניות', definition: 'A list of things to buy' },
-      { word: 'supermarket', translation: 'סופרמרקט', definition: 'A large store that sells food' },
-      { word: 'shopping cart', translation: 'עגלת קניות', definition: 'A cart for carrying items in a store' },
-      { word: 'section', translation: 'מחלקה', definition: 'A part of something' },
-      { word: 'checkout', translation: 'קופה', definition: 'The place where you pay in a store' },
+      { word: 'shopping list', translation: 'רשימת קניות', translationAr: 'قائمة التسوق', translationRu: 'список покупок', definition: 'A list of things to buy' },
+      { word: 'supermarket', translation: 'סופרמרקט', translationAr: 'سوبرماركت', translationRu: 'супермаркет', definition: 'A large store that sells food' },
+      { word: 'shopping cart', translation: 'עגלת קניות', translationAr: 'عربة التسوق', translationRu: 'тележка для покупок', definition: 'A cart for carrying items in a store' },
+      { word: 'section', translation: 'מחלקה', translationAr: 'قسم', translationRu: 'отдел', definition: 'A part of something' },
+      { word: 'checkout', translation: 'קופה', translationAr: 'صندوق الدفع', translationRu: 'касса', definition: 'The place where you pay in a store' },
     ],
     questions: [
       { question: 'How does the person get to the supermarket?', options: ['By car', 'By bus', 'Walking', 'By bicycle'], correct: 2 },
@@ -46,15 +46,15 @@ const STORIES = [
     ]
   },
   {
-    id: 's3', level: 'A2', topic: 'Travel', topicHe: 'טיולים',
-    title: 'A Weekend Trip', titleHe: 'טיול סוף שבוע', readTime: 3,
+    id: 's3', level: 'A2', topic: 'Travel', topicHe: 'טיולים', topicAr: 'السفر', topicRu: 'Путешествия',
+    title: 'A Weekend Trip', titleHe: 'טיול סוף שבוע', titleAr: 'رحلة نهاية الأسبوع', titleRu: 'Поездка на выходных', readTime: 3,
     text: `Last weekend, my friend Sarah and I decided to take a short trip to the beach. We left early in the morning and drove for two hours. The weather was perfect - sunny and warm. When we arrived, we found a nice spot near the water. We swam in the sea and built sandcastles. For lunch, we ate fish and chips at a small restaurant by the beach. In the afternoon, we walked along the shore and collected seashells. We took many beautiful photos. We drove home in the evening, tired but happy. It was a wonderful day!`,
     vocabulary: [
-      { word: 'decided', translation: 'החלטנו', definition: 'Made a choice' },
-      { word: 'perfect', translation: 'מושלם', definition: 'Completely good' },
-      { word: 'sandcastles', translation: 'ארמונות חול', definition: 'Structures made of sand on the beach' },
-      { word: 'shore', translation: 'חוף', definition: 'The edge of land next to the sea' },
-      { word: 'seashells', translation: 'צדפים', definition: 'Hard shells found on the beach' },
+      { word: 'decided', translation: 'החלטנו', translationAr: 'قررنا', translationRu: 'решили', definition: 'Made a choice' },
+      { word: 'perfect', translation: 'מושלם', translationAr: 'مثالي', translationRu: 'идеальный', definition: 'Completely good' },
+      { word: 'sandcastles', translation: 'ארמונות חול', translationAr: 'قلاع رملية', translationRu: 'замки из песка', definition: 'Structures made of sand on the beach' },
+      { word: 'shore', translation: 'חוף', translationAr: 'شاطئ', translationRu: 'берег', definition: 'The edge of land next to the sea' },
+      { word: 'seashells', translation: 'צדפים', translationAr: 'أصداف بحرية', translationRu: 'ракушки', definition: 'Hard shells found on the beach' },
     ],
     questions: [
       { question: 'How long was the drive to the beach?', options: ['One hour', 'Two hours', 'Three hours', 'Thirty minutes'], correct: 1 },
@@ -63,15 +63,15 @@ const STORIES = [
     ]
   },
   {
-    id: 's4', level: 'A2', topic: 'Work', topicHe: 'עבודה',
-    title: 'My New Job', titleHe: 'העבודה החדשה שלי', readTime: 3,
+    id: 's4', level: 'A2', topic: 'Work', topicHe: 'עבודה', topicAr: 'العمل', topicRu: 'Работа',
+    title: 'My New Job', titleHe: 'העבודה החדשה שלי', titleAr: 'وظيفتي الجديدة', titleRu: 'Моя новая работа', readTime: 3,
     text: `I started a new job last month. I work as a software developer at a technology company. My office is in a modern building in the city center. I work from Monday to Friday, from nine to five. My colleagues are very friendly and helpful. My manager, Tom, explains things clearly and is always patient. Every morning, we have a team meeting to discuss our tasks for the day. I really enjoy my work because I love solving problems with code. The company also has a nice cafeteria where I eat lunch every day. I am learning many new things and I am very happy with my new job.`,
     vocabulary: [
-      { word: 'software developer', translation: 'מפתח תוכנה', definition: 'Someone who writes computer programs' },
-      { word: 'colleagues', translation: 'עמיתים', definition: 'People you work with' },
-      { word: 'patient', translation: 'סבלני', definition: 'Able to wait without getting upset' },
-      { word: 'discuss', translation: 'לדון', definition: 'To talk about something' },
-      { word: 'cafeteria', translation: 'קפיטריה', definition: 'A place to eat in a building' },
+      { word: 'software developer', translation: 'מפתח תוכנה', translationAr: 'مطور برمجيات', translationRu: 'разработчик программного обеспечения', definition: 'Someone who writes computer programs' },
+      { word: 'colleagues', translation: 'עמיתים', translationAr: 'زملاء', translationRu: 'коллеги', definition: 'People you work with' },
+      { word: 'patient', translation: 'סבלני', translationAr: 'صبور', translationRu: 'терпеливый', definition: 'Able to wait without getting upset' },
+      { word: 'discuss', translation: 'לדון', translationAr: 'يناقش', translationRu: 'обсуждать', definition: 'To talk about something' },
+      { word: 'cafeteria', translation: 'קפיטריה', translationAr: 'كافيتيريا', translationRu: 'кафетерий', definition: 'A place to eat in a building' },
     ],
     questions: [
       { question: 'When did the person start the new job?', options: ['Last week', 'Last month', 'Last year', 'Yesterday'], correct: 1 },
@@ -80,15 +80,15 @@ const STORIES = [
     ]
   },
   {
-    id: 's5', level: 'B1', topic: 'Environment', topicHe: 'סביבה',
-    title: 'Saving Our Planet', titleHe: 'להציל את כדור הארץ', readTime: 4,
+    id: 's5', level: 'B1', topic: 'Environment', topicHe: 'סביבה', topicAr: 'البيئة', topicRu: 'Окружающая среда',
+    title: 'Saving Our Planet', titleHe: 'להציל את כדור הארץ', titleAr: 'إنقاذ كوكبنا', titleRu: 'Спасение нашей планеты', readTime: 4,
     text: `Climate change is one of the biggest challenges facing our world today. Every year, temperatures are rising and extreme weather events are becoming more common. Scientists say that human activities, especially burning fossil fuels, are the main cause of this problem. However, there are many things we can do to help. We can reduce our carbon footprint by using public transportation instead of driving, eating less meat, and saving energy at home. Recycling and reducing waste are also important steps. Many countries are now investing in renewable energy sources like solar and wind power. Young people around the world are organizing protests and demanding action from their governments. While the situation is serious, experts believe that if we act quickly, we can still make a difference. Every small action counts, and together we can create a more sustainable future for the next generations.`,
     vocabulary: [
-      { word: 'climate change', translation: 'שינוי אקלים', definition: 'Long-term changes in global temperatures' },
-      { word: 'carbon footprint', translation: 'טביעת פחמן', definition: 'The amount of CO2 produced by activities' },
-      { word: 'renewable energy', translation: 'אנרגיה מתחדשת', definition: 'Energy from sources that are not depleted' },
-      { word: 'sustainable', translation: 'בר-קיימא', definition: 'Able to continue without damaging the environment' },
-      { word: 'fossil fuels', translation: 'דלקי מאובנים', definition: 'Coal, oil, and natural gas' },
+      { word: 'climate change', translation: 'שינוי אקלים', translationAr: 'تغير المناخ', translationRu: 'изменение климата', definition: 'Long-term changes in global temperatures' },
+      { word: 'carbon footprint', translation: 'טביעת פחמן', translationAr: 'البصمة الكربونية', translationRu: 'углеродный след', definition: 'The amount of CO2 produced by activities' },
+      { word: 'renewable energy', translation: 'אנרגיה מתחדשת', translationAr: 'طاقة متجددة', translationRu: 'возобновляемая энергия', definition: 'Energy from sources that are not depleted' },
+      { word: 'sustainable', translation: 'בר-קיימא', translationAr: 'مستدام', translationRu: 'устойчивый', definition: 'Able to continue without damaging the environment' },
+      { word: 'fossil fuels', translation: 'דלקי מאובנים', translationAr: 'وقود أحفوري', translationRu: 'ископаемое топливо', definition: 'Coal, oil, and natural gas' },
     ],
     questions: [
       { question: 'What do scientists say is the main cause of climate change?', options: ['Natural cycles', 'Human activities', 'Solar energy', 'Volcanoes'], correct: 1 },
@@ -98,15 +98,15 @@ const STORIES = [
   },
   // B1 stories
   {
-    id: 's6', level: 'B1', topic: 'Hobbies', topicHe: 'תחביבים',
-    title: 'Finding a New Hobby', titleHe: 'למצוא תחביב חדש', readTime: 4,
+    id: 's6', level: 'B1', topic: 'Hobbies', topicHe: 'תחביבים', topicAr: 'الهوايات', topicRu: 'Хобби',
+    title: 'Finding a New Hobby', titleHe: 'למצוא תחביב חדש', titleAr: 'إيجاد هواية جديدة', titleRu: 'Поиск нового хобби', readTime: 4,
     text: `When I turned thirty, I realized I spent most of my free time watching television or scrolling through social media. I decided it was time to find a real hobby. My friend suggested I try painting, so I signed up for a beginner watercolor class at the local community center. At first, I was terrible. My paintings looked nothing like what the teacher showed us. But the teacher encouraged me to keep trying, saying that everyone starts somewhere. After a few weeks, I noticed I was improving. I could mix colors better and my brushstrokes were more confident. The best part was that painting helped me relax after long days at work. Now, six months later, I paint every weekend. I have even sold a few paintings at a local market. More importantly, I discovered that trying something new, even when you are not good at it, can bring a lot of joy into your life.`,
     vocabulary: [
-      { word: 'realized', translation: 'הבנתי', definition: 'Became aware of something' },
-      { word: 'scrolling', translation: 'גלילה', definition: 'Moving through content on a screen' },
-      { word: 'encouraged', translation: 'עודד', definition: 'Gave someone confidence to do something' },
-      { word: 'improving', translation: 'משתפר', definition: 'Getting better at something' },
-      { word: 'confident', translation: 'בטוח', definition: 'Sure of yourself or your abilities' },
+      { word: 'realized', translation: 'הבנתי', translationAr: 'أدركت', translationRu: 'осознал', definition: 'Became aware of something' },
+      { word: 'scrolling', translation: 'גלילה', translationAr: 'التمرير', translationRu: 'прокрутка', definition: 'Moving through content on a screen' },
+      { word: 'encouraged', translation: 'עודד', translationAr: 'شجع', translationRu: 'подбодрил', definition: 'Gave someone confidence to do something' },
+      { word: 'improving', translation: 'משתפר', translationAr: 'يتحسن', translationRu: 'улучшается', definition: 'Getting better at something' },
+      { word: 'confident', translation: 'בטוח', translationAr: 'واثق', translationRu: 'уверенный', definition: 'Sure of yourself or your abilities' },
     ],
     questions: [
       { question: 'Why did the person decide to find a hobby?', options: ['They were bored at work', 'They spent too much time on screens', 'Their doctor told them to', 'They wanted to make money'], correct: 1 },
@@ -115,15 +115,15 @@ const STORIES = [
     ]
   },
   {
-    id: 's7', level: 'B1', topic: 'Health', topicHe: 'בריאות',
-    title: 'A Healthier Lifestyle', titleHe: 'אורח חיים בריא יותר', readTime: 4,
+    id: 's7', level: 'B1', topic: 'Health', topicHe: 'בריאות', topicAr: 'الصحة', topicRu: 'Здоровье',
+    title: 'A Healthier Lifestyle', titleHe: 'אורח חיים בריא יותר', titleAr: 'نمط حياة أكثر صحة', titleRu: 'Более здоровый образ жизни', readTime: 4,
     text: `Last year, my doctor told me I needed to make some changes to my lifestyle. My blood pressure was too high, and I was not getting enough exercise. I decided to start small. First, I began walking for thirty minutes every morning before work. It was difficult at first because I had to wake up earlier, but soon it became a habit. Then I started cooking more meals at home instead of ordering fast food. I learned to make simple, healthy dishes like grilled chicken with vegetables and homemade soup. I also reduced the amount of sugar in my diet by replacing soft drinks with water and herbal tea. After three months, I went back to the doctor. My blood pressure had improved significantly, and I had lost five kilograms. The doctor was impressed and told me to keep going. The experience taught me that small, consistent changes can lead to big results over time.`,
     vocabulary: [
-      { word: 'lifestyle', translation: 'אורח חיים', definition: 'The way a person lives' },
-      { word: 'blood pressure', translation: 'לחץ דם', definition: 'The force of blood against artery walls' },
-      { word: 'habit', translation: 'הרגל', definition: 'Something you do regularly without thinking' },
-      { word: 'reduced', translation: 'הפחית', definition: 'Made something smaller or less' },
-      { word: 'consistent', translation: 'עקבי', definition: 'Doing something the same way over time' },
+      { word: 'lifestyle', translation: 'אורח חיים', translationAr: 'نمط الحياة', translationRu: 'образ жизни', definition: 'The way a person lives' },
+      { word: 'blood pressure', translation: 'לחץ דם', translationAr: 'ضغط الدم', translationRu: 'кровяное давление', definition: 'The force of blood against artery walls' },
+      { word: 'habit', translation: 'הרגל', translationAr: 'عادة', translationRu: 'привычка', definition: 'Something you do regularly without thinking' },
+      { word: 'reduced', translation: 'הפחית', translationAr: 'خفّض', translationRu: 'снизил', definition: 'Made something smaller or less' },
+      { word: 'consistent', translation: 'עקבי', translationAr: 'منتظم', translationRu: 'последовательный', definition: 'Doing something the same way over time' },
     ],
     questions: [
       { question: 'Why did the person need to change their lifestyle?', options: ['To save money', 'High blood pressure', 'To run a marathon', 'They were bored'], correct: 1 },
@@ -133,15 +133,15 @@ const STORIES = [
   },
   // B2 stories
   {
-    id: 's8', level: 'B2', topic: 'Technology', topicHe: 'טכנולוגיה',
-    title: 'The Digital Divide', titleHe: 'הפער הדיגיטלי', readTime: 5,
+    id: 's8', level: 'B2', topic: 'Technology', topicHe: 'טכנולוגיה', topicAr: 'التكنولوجيا', topicRu: 'Технологии',
+    title: 'The Digital Divide', titleHe: 'הפער הדיגיטלי', titleAr: 'الهوة الرقمية', titleRu: 'Цифровое неравенство', readTime: 5,
     text: `While technology has transformed nearly every aspect of modern life, its benefits are not equally distributed. The term "digital divide" refers to the gap between those who have access to digital technology and those who do not. In many developing countries, millions of people still lack reliable internet connections. Even in wealthy nations, rural communities often struggle with slow or expensive internet service. This inequality has serious consequences. During the pandemic, students without internet access fell behind their peers who could attend online classes. Workers who could not connect remotely lost their jobs, while those with good internet connections adapted to working from home. Governments around the world are beginning to recognize that internet access is no longer a luxury but a necessity. Several countries have launched ambitious programs to bring high-speed internet to underserved areas. However, simply providing access is not enough. Digital literacy programs are also essential to ensure that people can effectively use the technology available to them. Bridging the digital divide will require sustained effort and investment from both the public and private sectors.`,
     vocabulary: [
-      { word: 'distributed', translation: 'מחולק', definition: 'Spread or shared among people' },
-      { word: 'consequences', translation: 'השלכות', definition: 'Results or effects of an action' },
-      { word: 'adapted', translation: 'הסתגל', definition: 'Changed to fit a new situation' },
-      { word: 'ambitious', translation: 'שאפתני', definition: 'Having a strong desire to succeed' },
-      { word: 'sustained', translation: 'מתמשך', definition: 'Continuing for a long time' },
+      { word: 'distributed', translation: 'מחולק', translationAr: 'موزع', translationRu: 'распределённый', definition: 'Spread or shared among people' },
+      { word: 'consequences', translation: 'השלכות', translationAr: 'عواقب', translationRu: 'последствия', definition: 'Results or effects of an action' },
+      { word: 'adapted', translation: 'הסתגל', translationAr: 'تكيّف', translationRu: 'приспособился', definition: 'Changed to fit a new situation' },
+      { word: 'ambitious', translation: 'שאפתני', translationAr: 'طموح', translationRu: 'амбициозный', definition: 'Having a strong desire to succeed' },
+      { word: 'sustained', translation: 'מתמשך', translationAr: 'مستمر', translationRu: 'продолжительный', definition: 'Continuing for a long time' },
     ],
     questions: [
       { question: 'What does "digital divide" refer to?', options: ['A type of software', 'The gap in access to technology', 'A new smartphone', 'Social media platforms'], correct: 1 },
@@ -150,15 +150,15 @@ const STORIES = [
     ]
   },
   {
-    id: 's9', level: 'B2', topic: 'Culture', topicHe: 'תרבות',
-    title: 'The Power of Music', titleHe: 'כוחה של המוזיקה', readTime: 5,
+    id: 's9', level: 'B2', topic: 'Culture', topicHe: 'תרבות', topicAr: 'الثقافة', topicRu: 'Культура',
+    title: 'The Power of Music', titleHe: 'כוחה של המוזיקה', titleAr: 'قوة الموسيقى', titleRu: 'Сила музыки', readTime: 5,
     text: `Music is often described as a universal language, and research increasingly supports this idea. Studies have shown that people from different cultures can recognize basic emotions in music, even when they have never heard that particular style before. A happy melody sounds happy whether you are in Tokyo, Lagos, or Buenos Aires. But music does more than just convey emotions. Neuroscientists have discovered that listening to music activates multiple areas of the brain simultaneously, including regions responsible for memory, movement, and emotion. This is why a familiar song can instantly transport you back to a specific moment in your past. Hospitals are now using music therapy to help patients recover from strokes, manage chronic pain, and cope with anxiety. In schools, children who learn to play musical instruments often show improved performance in mathematics and reading. Some researchers even suggest that making music together strengthens social bonds, which may explain why every known human culture has developed some form of musical expression. Whether you are a professional musician or someone who simply enjoys singing in the shower, music has a profound impact on your brain and your well-being.`,
     vocabulary: [
-      { word: 'universal', translation: 'אוניברסלי', definition: 'Relating to everyone in the world' },
-      { word: 'convey', translation: 'להעביר', definition: 'To communicate or express' },
-      { word: 'simultaneously', translation: 'בו-זמנית', definition: 'At the same time' },
-      { word: 'chronic', translation: 'כרוני', definition: 'Lasting a long time, especially of illness' },
-      { word: 'profound', translation: 'עמוק', definition: 'Very deep or great' },
+      { word: 'universal', translation: 'אוניברסלי', translationAr: 'عالمي', translationRu: 'универсальный', definition: 'Relating to everyone in the world' },
+      { word: 'convey', translation: 'להעביר', translationAr: 'ينقل', translationRu: 'передавать', definition: 'To communicate or express' },
+      { word: 'simultaneously', translation: 'בו-זמנית', translationAr: 'في آنٍ واحد', translationRu: 'одновременно', definition: 'At the same time' },
+      { word: 'chronic', translation: 'כרוני', translationAr: 'مزمن', translationRu: 'хронический', definition: 'Lasting a long time, especially of illness' },
+      { word: 'profound', translation: 'עמוק', translationAr: 'عميق', translationRu: 'глубокий', definition: 'Very deep or great' },
     ],
     questions: [
       { question: 'What can people from different cultures recognize in music?', options: ['Specific instruments', 'Song lyrics', 'Basic emotions', 'Musical theory'], correct: 2 },
@@ -168,15 +168,15 @@ const STORIES = [
   },
   // C1 story
   {
-    id: 's10', level: 'C1', topic: 'Opinion', topicHe: 'דעה',
-    title: 'The Case for Boredom', titleHe: 'למה שעמום זה דבר טוב', readTime: 5,
+    id: 's10', level: 'C1', topic: 'Opinion', topicHe: 'דעה', topicAr: 'رأي', topicRu: 'Мнение',
+    title: 'The Case for Boredom', titleHe: 'למה שעמום זה דבר טוב', titleAr: 'الحجة لصالح الملل', titleRu: 'В защиту скуки', readTime: 5,
     text: `In an age of constant stimulation, boredom has become something we desperately try to avoid. The moment we find ourselves with nothing to do, we instinctively reach for our smartphones, seeking the instant gratification of a notification, a video, or a social media update. Yet a growing body of psychological research suggests that this reflexive avoidance of boredom may be doing us more harm than good. When the mind is allowed to wander without direction, it enters a state that psychologists call the "default mode network." This is the mental space where creativity flourishes, where we make unexpected connections between ideas, and where we engage in the kind of deep self-reflection that is essential for personal growth. Some of history's greatest breakthroughs came during moments of apparent idleness. Newton supposedly conceived his theory of gravity while sitting under an apple tree with nothing particular to do. By constantly filling every quiet moment with digital distraction, we may be robbing ourselves of the mental space needed for innovation and self-understanding. This does not mean we should seek out boredom deliberately, but perhaps we should resist the urge to eliminate it the moment it appears. The next time you find yourself bored, consider putting your phone away and simply letting your mind drift. You might be surprised by where it takes you.`,
     vocabulary: [
-      { word: 'stimulation', translation: 'גירוי', definition: 'Something that causes interest or excitement' },
-      { word: 'instinctively', translation: 'באופן אינסטינקטיבי', definition: 'Done without conscious thought' },
-      { word: 'gratification', translation: 'סיפוק', definition: 'The feeling of being satisfied' },
-      { word: 'flourishes', translation: 'פורח', definition: 'Grows or develops successfully' },
-      { word: 'innovation', translation: 'חדשנות', definition: 'A new idea, method, or invention' },
+      { word: 'stimulation', translation: 'גירוי', translationAr: 'تحفيز', translationRu: 'стимуляция', definition: 'Something that causes interest or excitement' },
+      { word: 'instinctively', translation: 'באופן אינסטינקטיבי', translationAr: 'بشكل غريزي', translationRu: 'инстинктивно', definition: 'Done without conscious thought' },
+      { word: 'gratification', translation: 'סיפוק', translationAr: 'إشباع', translationRu: 'удовлетворение', definition: 'The feeling of being satisfied' },
+      { word: 'flourishes', translation: 'פורח', translationAr: 'يزدهر', translationRu: 'процветает', definition: 'Grows or develops successfully' },
+      { word: 'innovation', translation: 'חדשנות', translationAr: 'ابتكار', translationRu: 'инновация', definition: 'A new idea, method, or invention' },
     ],
     questions: [
       { question: 'What do people typically do when they feel bored?', options: ['Exercise', 'Read books', 'Reach for smartphones', 'Talk to friends'], correct: 2 },
@@ -215,7 +215,7 @@ function StoryCard({ story, onClick }) {
             <Clock size={12} /> {story.readTime} {t('min', uiLang)}
           </div>
         </div>
-        <ChevronRight size={18} className="text-gray-400 mt-3" />
+        <ChevronRight size={18} className="text-gray-400 mt-3 rtl:rotate-180" />
       </div>
     </GlassCard>
   );
@@ -395,7 +395,7 @@ function ReadingView({ story, onBack }) {
         <h3 className="font-bold text-gray-900 dark:text-white mb-2">{t('vocabulary', uiLang)}</h3>
         <div className="space-y-2">
           {story.vocabulary.map((v, i) => (
-            <GlassCard key={i} onClick={() => speakWordPair(v.word, v.translation)} className="cursor-pointer !p-3 flex items-center justify-between">
+            <GlassCard key={i} onClick={() => speakWordPair(v.word, v.translation, uiLang)} className="cursor-pointer !p-3 flex items-center justify-between">
               <div>
                 <span className="font-semibold text-gray-900 dark:text-white">{v.word}</span>
                 <span className="text-gray-400 mx-2">-</span>
@@ -427,7 +427,7 @@ function ReadingView({ story, onBack }) {
         {selectedWord && (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <button onClick={() => speakWordPair(selectedWord.word, selectedWord.translation)} className="p-2 rounded-full bg-brand-100 dark:bg-brand-900/30">
+              <button onClick={() => speakWordPair(selectedWord.word, selectedWord.translation, uiLang)} className="p-2 rounded-full bg-brand-100 dark:bg-brand-900/30">
                 <Volume2 size={18} className="text-brand-600" />
               </button>
               <span className="text-xl font-bold text-gray-900 dark:text-white">{selectedWord.word}</span>
@@ -481,12 +481,18 @@ export default function ReadingPage() {
         emoji="📖"
         title="Speakli's Stories!"
         titleHe="הסיפורים של ספיקלי!"
+        titleAr="قصص سبيكلي!"
+        titleRu="Истории Спикли!"
         desc="Read Speakli's stories and learn new words along the way!"
         descHe="קראו את הסיפורים של ספיקלי ולמדו מילים חדשות בדרך!"
+        descAr="اقرأ قصص سبيكلي وتعلم كلمات جديدة في الطريق!"
+        descRu="Читайте истории Спикли и учите новые слова по пути!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's read with Speakli!"
         buttonLabelHe="בואו נקרא עם ספיקלי!"
+        buttonLabelAr="هيا نقرأ مع سبيكلي!"
+        buttonLabelRu="Читаем со Спикли!"
       />
       <h2 className="text-xl font-bold text-gray-900 dark:text-white">
         {t('stories', uiLang)}

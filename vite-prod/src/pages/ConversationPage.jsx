@@ -12,13 +12,13 @@ import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 
 const SCENARIOS = [
-  { id: 'free', emoji: '💬', label: 'Free Chat', labelHe: 'שיחה חופשית', desc: 'Talk about anything', descHe: 'דברו על מה שתרצו' },
-  { id: 'restaurant', emoji: '🍽️', label: 'Restaurant', labelHe: 'מסעדה', desc: 'Order food & drinks', descHe: 'הזמנת אוכל ושתייה' },
-  { id: 'airport', emoji: '✈️', label: 'Airport', labelHe: 'שדה תעופה', desc: 'Navigate the airport', descHe: 'ניווט בשדה התעופה' },
-  { id: 'job-interview', emoji: '💼', label: 'Job Interview', labelHe: 'ראיון עבודה', desc: 'Practice interviews', descHe: 'תרגול ראיונות' },
-  { id: 'doctor', emoji: '🏥', label: 'Doctor', labelHe: 'רופא', desc: 'Medical appointment', descHe: 'ביקור אצל הרופא' },
-  { id: 'hotel', emoji: '🏨', label: 'Hotel', labelHe: 'מלון', desc: 'Check in & requests', descHe: 'צ\'ק-אין ובקשות' },
-  { id: 'small-talk', emoji: '☕', label: 'Small Talk', labelHe: 'שיחת חולין', desc: 'Casual conversation', descHe: 'שיחה יומיומית' },
+  { id: 'free', emoji: '💬', label: 'Free Chat', labelHe: 'שיחה חופשית', labelAr: 'محادثة حرة', labelRu: 'Свободный разговор', desc: 'Talk about anything', descHe: 'דברו על מה שתרצו', descAr: 'تحدث عن أي شيء تريد', descRu: 'Говори на любую тему' },
+  { id: 'restaurant', emoji: '🍽️', label: 'Restaurant', labelHe: 'מסעדה', labelAr: 'مطعم', labelRu: 'Ресторан', desc: 'Order food & drinks', descHe: 'הזמנת אוכל ושתייה', descAr: 'طلب الطعام والمشروبات', descRu: 'Заказ еды и напитков' },
+  { id: 'airport', emoji: '✈️', label: 'Airport', labelHe: 'שדה תעופה', labelAr: 'المطار', labelRu: 'Аэропорт', desc: 'Navigate the airport', descHe: 'ניווט בשדה התעופה', descAr: 'التنقل في المطار', descRu: 'Навигация в аэропорту' },
+  { id: 'job-interview', emoji: '💼', label: 'Job Interview', labelHe: 'ראיון עבודה', labelAr: 'مقابلة عمل', labelRu: 'Собеседование', desc: 'Practice interviews', descHe: 'תרגול ראיונות', descAr: 'تدريب على المقابلات', descRu: 'Практика собеседований' },
+  { id: 'doctor', emoji: '🏥', label: 'Doctor', labelHe: 'רופא', labelAr: 'طبيب', labelRu: 'Врач', desc: 'Medical appointment', descHe: 'ביקור אצל הרופא', descAr: 'موعد طبي', descRu: 'Визит к врачу' },
+  { id: 'hotel', emoji: '🏨', label: 'Hotel', labelHe: 'מלון', labelAr: 'فندق', labelRu: 'Гостиница', desc: 'Check in & requests', descHe: 'צ\'ק-אין ובקשות', descAr: 'تسجيل الوصول والطلبات', descRu: 'Заселение и запросы' },
+  { id: 'small-talk', emoji: '☕', label: 'Small Talk', labelHe: 'שיחת חולין', labelAr: 'دردشة عابرة', labelRu: 'Светская беседа', desc: 'Casual conversation', descHe: 'שיחה יומיומית', descAr: 'محادثة يومية غير رسمية', descRu: 'Непринуждённый разговор' },
 ];
 
 function ChatBubble({ message, onSpeak }) {

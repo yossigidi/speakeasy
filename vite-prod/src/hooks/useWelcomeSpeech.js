@@ -10,8 +10,10 @@ import { t } from '../utils/translations.js';
  * @param {string} key    - unique sessionStorage key (e.g. 'alphabet', 'games')
  * @param {string} textHe - Hebrew welcome text
  * @param {string} textEn - English welcome text
+ * @param {string} [textAr] - Arabic welcome text (optional)
+ * @param {string} [textRu] - Russian welcome text (optional)
  */
-export default function useWelcomeSpeech(key, textHe, textEn) {
+export default function useWelcomeSpeech(key, textHe, textEn, textAr, textRu) {
   const { speak, isSpeaking } = useSpeech();
   const { uiLang } = useTheme();
   const spokenRef = useRef(false);
@@ -28,6 +30,10 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
   textHeRef.current = textHe;
   const textEnRef = useRef(textEn);
   textEnRef.current = textEn;
+  const textArRef = useRef(textAr);
+  textArRef.current = textAr;
+  const textRuRef = useRef(textRu);
+  textRuRef.current = textRu;
 
   useEffect(() => {
     if (spokenRef.current) return;
@@ -47,8 +53,14 @@ export default function useWelcomeSpeech(key, textHe, textEn) {
       // Wait a bit, then only speak if nothing else is playing
       timerRef.current = setTimeout(() => {
         if (isSpeakingRef.current) return; // another click handler is already speaking
-        const isHe = uiLangRef.current === 'he';
-        speakRef.current(isHe ? textHeRef.current : textEnRef.current, { lang: t('speechLang', uiLangRef.current), rate: 0.9 });
+        const lang = uiLangRef.current;
+        const textMap = {
+          he: textHeRef.current,
+          ar: textArRef.current,
+          ru: textRuRef.current,
+        };
+        const text = textMap[lang] || textEnRef.current;
+        speakRef.current(text, { lang: t('speechLang', lang), rate: 0.9 });
       }, 500);
     };
 

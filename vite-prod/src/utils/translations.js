@@ -772,6 +772,20 @@ const translations = {
     // Skills - additional
     vocabShort: 'מילים',
 
+    // English Quest scenes/bosses
+    questFindThe: 'מצאו את ה-',
+    questSceneForest: 'היער הקסום',
+    questBossForest: 'דרקון היער',
+    questSceneSchool: 'בית הספר',
+    questBossSchool: 'מנהל בית הספר',
+    questSceneSpace: 'החלל החיצון',
+    questBossSpace: 'מלך הכוכבים',
+    questSceneOcean: 'האוקיינוס',
+    questBossOcean: 'מלכת הים',
+
+    // Vocabulary additional
+    learnCountWords: 'למדו {count} מילים',
+
     // Misc
     speechLang: 'he-IL',
     introGreeting: 'שלום!',
@@ -1524,6 +1538,20 @@ const translations = {
 
     // Skills - additional
     vocabShort: 'Words',
+
+    // English Quest scenes/bosses
+    questFindThe: 'Find the',
+    questSceneForest: 'The Magic Forest',
+    questBossForest: 'Forest Dragon',
+    questSceneSchool: 'The School',
+    questBossSchool: 'School Principal',
+    questSceneSpace: 'Outer Space',
+    questBossSpace: 'Star King',
+    questSceneOcean: 'The Ocean',
+    questBossOcean: 'Sea Queen',
+
+    // Vocabulary additional
+    learnCountWords: 'Learn {count} words',
 
     // Misc
     speechLang: 'en-US',
@@ -2301,6 +2329,20 @@ const translations = {
     // Skills - additional
     vocabShort: 'كلمات',
 
+    // English Quest scenes/bosses
+    questFindThe: 'جِدوا الـ',
+    questSceneForest: 'الغابة السحرية',
+    questBossForest: 'تنين الغابة',
+    questSceneSchool: 'المدرسة',
+    questBossSchool: 'مدير المدرسة',
+    questSceneSpace: 'الفضاء الخارجي',
+    questBossSpace: 'ملك النجوم',
+    questSceneOcean: 'المحيط',
+    questBossOcean: 'ملكة البحر',
+
+    // Vocabulary additional
+    learnCountWords: 'تعلّموا {count} كلمة',
+
     // Misc
     speechLang: 'ar-SA',
     introGreeting: 'مرحبًا!',
@@ -3076,6 +3118,20 @@ const translations = {
 
     // Skills - additional
     vocabShort: 'Слова',
+
+    // English Quest scenes/bosses
+    questFindThe: 'Найдите',
+    questSceneForest: 'Волшебный лес',
+    questBossForest: 'Лесной дракон',
+    questSceneSchool: 'Школа',
+    questBossSchool: 'Директор школы',
+    questSceneSpace: 'Космос',
+    questBossSpace: 'Звёздный король',
+    questSceneOcean: 'Океан',
+    questBossOcean: 'ملكة البحر',
+
+    // Vocabulary additional
+    learnCountWords: 'Выучите {count} слов',
 
     // Misc
     speechLang: 'ru-RU',

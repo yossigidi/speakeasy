@@ -25,7 +25,7 @@ export function daysBetween(date1, date2) {
 
 export function formatDate(dateStr, lang = 'en') {
   const date = new Date(dateStr);
-  return date.toLocaleDateString(lang === 'he' ? 'he-IL' : 'en-US', {
+  return date.toLocaleDateString(({ he: 'he-IL', ar: 'ar-SA', ru: 'ru-RU' }[lang] || 'en-US'), {
     month: 'short',
     day: 'numeric',
   });

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { LEVEL_META } from '../../data/curriculum/curriculum-index.js';
-import { t } from '../../utils/translations.js';
+import { t, lf } from '../../utils/translations.js';
 
 export default function LevelSelector({ selectedLevel, onSelect, unlockedLevels, uiLang }) {
   const scrollRef = useRef(null);
@@ -25,7 +25,7 @@ export default function LevelSelector({ selectedLevel, onSelect, unlockedLevels,
       {LEVEL_META.map((level) => {
         const isActive = level.id === selectedLevel;
         const isLocked = !unlockedLevels.includes(level.id);
-        const levelName = level[t('nameHeField', uiLang)];
+        const levelName = lf(level, 'name', uiLang);
 
         return (
           <button

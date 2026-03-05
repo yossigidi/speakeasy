@@ -79,12 +79,18 @@ function LetterGrid({ onSelect, completedLetters }) {
         emoji="🔤"
         title="Speakli's Letters!"
         titleHe="האותיות של ספיקלי!"
+        titleAr="حروف سبيكلي!"
+        titleRu="Буквы Спикли!"
         desc="Hi! Let's learn the letters with Speakli! Tap the letters to learn!"
         descHe="היי! בואו נלמד את האותיות עם ספיקלי! לחצו על האותיות כדי ללמוד!"
+        descAr="مرحباً! دعونا نتعلم الحروف مع سبيكلي! اضغط على الحروف للتعلم!"
+        descRu="Привет! Учим буквы вместе со Спикли! Нажимай на буквы, чтобы учиться!"
         uiLang={uiLang}
         gradient="from-blue-500 via-sky-500 to-cyan-500"
         buttonLabel="Let's learn with Speakli!"
         buttonLabelHe="בואו נלמד עם ספיקלי!"
+        buttonLabelAr="هيا نتعلم مع سبيكلي!"
+        buttonLabelRu="Учимся со Спикли!"
       />
 
       <div className="relative z-10 stagger-children">
@@ -190,7 +196,7 @@ function LetterDetail({ letter, onBack, onStartGame }) {
     speak(wordObj.word, {
       rate: 0.85,
       onEnd: () => {
-        speak(wordObj.translation, { lang: 'he', rate: 0.9, _queued: true });
+        speak(wordObj.translation, { lang: uiLang, rate: 0.9, _queued: true });
       }
     });
   };
@@ -456,8 +462,8 @@ function MatchWordGame({ letter, onComplete }) {
       const newMatched = [...matched, w.id];
       setMatched(newMatched);
       setSelectedWord(null);
-      // Speak Hebrew translation on match
-      speak(w.translation, { lang: 'he', rate: 0.9 });
+      // Speak translation in user's native language on match
+      speak(w.translation, { lang: uiLang, rate: 0.9 });
       if (newMatched.length >= words.length) {
         setShowConfetti(true);
         matchTimersRef.current.push(setTimeout(onComplete, 1000));
@@ -525,12 +531,32 @@ function MatchWordGame({ letter, onComplete }) {
 }
 
 /* Game 3: Uppercase/Lowercase Match */
-const ENCOURAGEMENT_PHRASES = [
-  'לא נורא, נסו שוב!',
-  'כמעט! בואו ננסה שוב',
-  'בואו ננסה פעם נוספת!',
-  'לא קרה כלום, נסו שוב!',
-];
+const ENCOURAGEMENT_PHRASES_BY_LANG = {
+  he: [
+    'לא נורא, נסו שוב!',
+    'כמעט! בואו ננסה שוב',
+    'בואו ננסה פעם נוספת!',
+    'לא קרה כלום, נסו שוב!',
+  ],
+  ar: [
+    'لا بأس، حاولوا مرة أخرى!',
+    'تقريباً! هيا نحاول مرة أخرى',
+    'هيا نحاول مرة أخرى!',
+    'لا شيء، حاولوا مرة أخرى!',
+  ],
+  ru: [
+    'Ничего страшного, попробуйте снова!',
+    'Почти! Давайте попробуем ещё раз',
+    'Давайте попробуем ещё раз!',
+    'Не беда, попробуйте снова!',
+  ],
+  en: [
+    'No worries, try again!',
+    'Almost! Let\'s try again',
+    'Let\'s try one more time!',
+    'No problem, try again!',
+  ],
+};
 
 function CaseMatchGame({ letter, onComplete }) {
   const { uiLang } = useTheme();
@@ -593,9 +619,10 @@ function CaseMatchGame({ letter, onComplete }) {
       // Wrong answer — show feedback, don't advance
       playWrong();
       setWrongAnswer(opt);
-      const phrase = ENCOURAGEMENT_PHRASES[Math.floor(Math.random() * ENCOURAGEMENT_PHRASES.length)];
+      const phrases = ENCOURAGEMENT_PHRASES_BY_LANG[uiLang] || ENCOURAGEMENT_PHRASES_BY_LANG.en;
+      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
       setEncourageMsg(phrase);
-      caseTimersRef.current.push(setTimeout(() => speak(phrase, { lang: 'he', rate: 0.95, _queued: true }), 300));
+      caseTimersRef.current.push(setTimeout(() => speak(phrase, { lang: uiLang, rate: 0.95, _queued: true }), 300));
     }
   };
 
@@ -731,7 +758,7 @@ function ListenChooseGame({ letter, onComplete }) {
       speak(opt.word, {
         rate: 0.75,
         onEnd: () => {
-          listenTimersRef.current.push(setTimeout(() => speak(opt.translation, { lang: 'he', rate: 0.9, _queued: true }), 100));
+          listenTimersRef.current.push(setTimeout(() => speak(opt.translation, { lang: uiLang, rate: 0.9, _queued: true }), 100));
         }
       });
       listenTimersRef.current.push(setTimeout(() => {

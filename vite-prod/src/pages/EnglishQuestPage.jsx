@@ -134,7 +134,7 @@ function QuestHeader({ scene, onBack, missionIndex, uiLang }) {
     <div className={`sticky top-0 z-30 bg-gradient-to-r ${scene.bg} shadow-lg`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center top' } : undefined}>
       <div className="flex items-center justify-between px-3 py-2">
         <button onClick={onBack} className="p-2 rounded-full bg-white/20 active:scale-90 transition-transform">
-          <ArrowLeft size={20} className="text-white" />
+          <ArrowLeft size={20} className="text-white rtl:rotate-180" />
         </button>
         <div className="text-center">
           <span className="text-white font-black text-sm">
@@ -929,7 +929,7 @@ function HeroCustomizer({ hero, questCoins, onBuy, onBack, uiLang }) {
     <div className="min-h-screen bg-gradient-to-b from-indigo-800 to-purple-900 pt-2 pb-6 px-4">
       {/* Back */}
       <button onClick={onBack} className="p-2 rounded-full bg-white/20 active:scale-90 transition-transform mb-4">
-        <ArrowLeft size={20} className="text-white" />
+        <ArrowLeft size={20} className="text-white rtl:rotate-180" />
       </button>
 
       {/* Hero preview */}
@@ -1191,9 +1191,9 @@ export default function EnglishQuestPage({ onBack }) {
       {phase === 'intro' && (
         <button
           onClick={onBack}
-          className="fixed top-4 left-4 z-40 p-2 rounded-full bg-black/30 backdrop-blur-sm active:scale-90 transition-transform"
+          className="fixed top-4 ltr:left-4 rtl:right-4 z-40 p-2 rounded-full bg-black/30 backdrop-blur-sm active:scale-90 transition-transform"
         >
-          <ArrowLeft size={20} className="text-white" />
+          <ArrowLeft size={20} className="text-white rtl:rotate-180" />
         </button>
       )}
 

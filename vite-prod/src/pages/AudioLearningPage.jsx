@@ -66,6 +66,7 @@ export default function AudioLearningPage({ onBack }) {
   const repeatModeRef = useRef(false);
   const timeoutRef = useRef(null);
   const abortRef = useRef(false);
+  const uiLangRef = useRef(uiLang);
 
   // Sync refs
   useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
@@ -74,6 +75,7 @@ export default function AudioLearningPage({ onBack }) {
   useEffect(() => { speedRef.current = speed; }, [speed]);
   useEffect(() => { phaseRef.current = phase; }, [phase]);
   useEffect(() => { repeatModeRef.current = repeatMode; }, [repeatMode]);
+  useEffect(() => { uiLangRef.current = uiLang; }, [uiLang]);
 
   // ── Filtered word list ─────────────────────────────────
   const words = useMemo(() => {
@@ -121,8 +123,8 @@ export default function AudioLearningPage({ onBack }) {
     sequence.push({ text: wordObj.word, lang: 'en-US', rate: 0.85 * spd });
     sequence.push({ pause: 900 / spd });
 
-    // Hebrew translation
-    sequence.push({ text: wordObj.translation, lang: 'he', rate: 0.95 * spd });
+    // Native-language translation
+    sequence.push({ text: wordObj.translation, lang: uiLangRef.current, rate: 0.95 * spd });
 
     // Example sentence (only in full mode)
     if (modeRef.current === 'full' && wordObj.examples && wordObj.examples.length > 0) {
@@ -473,7 +475,7 @@ export default function AudioLearningPage({ onBack }) {
             <div className={`transition-all duration-500 ${
               phase === PHASE.HEBREW_TRANSLATION ? 'scale-110 opacity-100' : 'scale-100 opacity-70'
             }`}>
-              <p className="text-2xl font-bold text-white/90 mb-1" dir="rtl">
+              <p className="text-2xl font-bold text-white/90 mb-1" dir={isRtl ? 'rtl' : 'ltr'}>
                 {currentWord?.translation}
               </p>
             </div>
