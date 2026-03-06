@@ -10,6 +10,7 @@ import { calcSpeakingCoachXP } from '../utils/xpCalculator.js';
 import { t, tReplace, lf } from '../utils/translations.js';
 import { KIDS_SCENARIOS, ADULT_SCENARIOS } from '../data/speaking-scenarios.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
+import ChatBubble from '../components/shared/ChatBubble.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 
 /* ── Helpers ── */
@@ -34,49 +35,6 @@ function ScoreCircle({ label, score, color }) {
         <span className="text-lg font-bold" style={{ color }}>{score}</span>
       </div>
       <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">{label}</span>
-    </div>
-  );
-}
-
-/* ── Chat Bubble ── */
-function ChatBubble({ role, content, corrections, isChild, uiLang, onPlayAudio }) {
-  const isAI = role === 'assistant';
-  return (
-    <div className={`flex ${isAI ? 'justify-start' : 'justify-end'} mb-3`}>
-      <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-        isAI
-          ? 'bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700'
-          : 'bg-gradient-to-br from-brand-500 to-emerald-500 text-white'
-      }`}>
-        {isAI && (
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold text-brand-600 dark:text-brand-400">
-              {isChild ? <><SpeakliAvatar mode="idle" size="xs" shadow={false} glow={false} /> Speakli</> : <><img src="/images/emma-avatar.webp" alt="Emma" className="inline-block w-6 h-6 rounded-full" /> Emma</>}
-            </span>
-            {onPlayAudio && (
-              <button onClick={onPlayAudio} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-                <Volume2 size={14} className="text-brand-500" />
-              </button>
-            )}
-          </div>
-        )}
-        <p className={`text-sm leading-relaxed ${isAI ? 'text-gray-800 dark:text-gray-200' : 'text-white'}`}>
-          {content}
-        </p>
-        {corrections && corrections.length > 0 && (
-          <div className="mt-2 space-y-1.5 border-t border-gray-200 dark:border-gray-600 pt-2">
-            <span className="text-xs font-bold text-amber-600 dark:text-amber-400">{t('corrections', uiLang)}</span>
-            {corrections.map((c, i) => (
-              <div key={i} className="text-xs bg-amber-50 dark:bg-amber-900/20 rounded-lg px-2 py-1.5">
-                <span className="text-red-500 line-through">{c.wrong}</span>
-                {' → '}
-                <span className="text-green-600 dark:text-green-400 font-semibold">{c.correct}</span>
-                {c.explanation && <p className="text-gray-500 dark:text-gray-400 mt-0.5">{c.explanation}</p>}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
@@ -183,7 +141,7 @@ function ExercisePanel({ exercise, uiLang, onComplete }) {
 export default function SpeakingCoachPage({ onBack }) {
   const { uiLang, dir } = useTheme();
   const { user } = useAuth();
-  const { progress, addXP, isChildMode } = useUserProgress();
+  const { progress, addXP, addSpeakingMinutes, isChildMode, activeChildId } = useUserProgress();
   const { transcript, interimTranscript, isListening, startListening, stopListening, confidence, sttSupported } = useSpeechRecognition();
 
   const isChild = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
@@ -203,6 +161,8 @@ export default function SpeakingCoachPage({ onBack }) {
 
   const chatEndRef = useRef(null);
   const abortRef = useRef(null);
+  const lastProcessedTranscript = useRef('');
+  const endingRef = useRef(false);
 
   // Auto-scroll chat
   useEffect(() => {
@@ -213,8 +173,8 @@ export default function SpeakingCoachPage({ onBack }) {
   useEffect(() => {
     if (!user?.uid || !window.firestore || !window.db) return;
     try {
-      const uid = isChild && progress.activeChildId ? progress.activeChildId : user.uid;
-      const col = isChild && progress.activeChildId ? 'childProfiles' : 'users';
+      const uid = isChild && activeChildId ? activeChildId : user.uid;
+      const col = isChild && activeChildId ? 'childProfiles' : 'users';
       const docRef = window.firestore.doc(window.db, col, uid, 'speakingProfile', 'data');
       window.firestore.getDoc(docRef)
         .then(snap => {
@@ -226,19 +186,21 @@ export default function SpeakingCoachPage({ onBack }) {
     } catch (e) {
       console.warn('Speaking coach: failed to load weaknesses', e);
     }
-  }, [user, isChild, progress.activeChildId]);
+  }, [user, isChild, activeChildId]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       stopAllAudio();
+      stopListening();
       if (abortRef.current) abortRef.current.abort();
     };
   }, []);
 
-  // Handle transcript ready after recording stops
+  // Handle transcript ready after recording stops — guard against stale/duplicate transcripts
   useEffect(() => {
-    if (!isListening && transcript && recordingStartTime && phase === 'session') {
+    if (!isListening && transcript && transcript !== lastProcessedTranscript.current && recordingStartTime && phase === 'session') {
+      lastProcessedTranscript.current = transcript;
       const speakingTime = (Date.now() - recordingStartTime) / 1000;
       setRecordingStartTime(null);
       handleUserTranscript(transcript, speakingTime);
@@ -254,6 +216,8 @@ export default function SpeakingCoachPage({ onBack }) {
     setTurnCount(0);
     setSessionScores({ grammar: [], pronunciation: [], fluency: [] });
     setSpeakingTimes([]);
+    endingRef.current = false;
+    lastProcessedTranscript.current = '';
     // Play opener TTS
     playAI(s.opener);
   };
@@ -295,13 +259,15 @@ export default function SpeakingCoachPage({ onBack }) {
     setTurnCount(prev => prev + 1);
     setIsAnalyzing(true);
 
-    // Build history for API (only content, not corrections metadata)
-    const history = [...messages, userMsg].map(m => ({ role: m.role, content: m.content }));
+    // Build history for API (only prior messages, not corrections metadata; API adds current transcript separately)
+    const history = messages.map(m => ({ role: m.role, content: m.content }));
 
     try {
+      abortRef.current = new AbortController();
       const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/speaking-coach', {
         method: 'POST',
+        signal: abortRef.current.signal,
         headers: {
           'Content-Type': 'application/json',
           ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
@@ -370,7 +336,11 @@ export default function SpeakingCoachPage({ onBack }) {
 
   /* ── End session & show results ── */
   const endSession = async () => {
+    if (endingRef.current) return;
+    endingRef.current = true;
     stopAllAudio();
+    stopListening();
+    if (abortRef.current) abortRef.current.abort();
     setPhase('results');
 
     // Calculate XP
@@ -380,16 +350,18 @@ export default function SpeakingCoachPage({ onBack }) {
     const avgOverall = Math.round((avgGrammar + avgPron + avgFluency) / 3);
     const xpResult = calcSpeakingCoachXP(avgOverall, turnCount);
 
-    // Award XP
+    // Award XP and track speaking minutes
     try {
       await addXP(xpResult.total, 'speakingCoach');
+      const totalMinutes = speakingTimes.reduce((a, b) => a + b, 0) / 60;
+      if (totalMinutes > 0) await addSpeakingMinutes(totalMinutes, 'speakingCoach');
     } catch {}
 
     // Save speaking profile to Firestore
     try {
       if (user?.uid && window.firestore && window.db) {
-        const uid = isChild && progress.activeChildId ? progress.activeChildId : user.uid;
-        const col = isChild && progress.activeChildId ? 'childProfiles' : 'users';
+        const uid = isChild && activeChildId ? activeChildId : user.uid;
+        const col = isChild && activeChildId ? 'childProfiles' : 'users';
         const docRef = window.firestore.doc(window.db, col, uid, 'speakingProfile', 'data');
         const snap = await window.firestore.getDoc(docRef);
         const prev = snap.exists() ? snap.data() : {};

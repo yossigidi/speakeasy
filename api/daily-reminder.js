@@ -27,13 +27,15 @@ function getFirestoreAdmin() {
 
 const REMINDER_MESSAGES = {
     he: {
-        title: 'Speakli - זמן ללמוד! 📚',
-        body: 'אל תשבור את הרצף! בוא לתרגל אנגלית היום 🔥'
+        zero: { title: 'Speakli - בואו נדבר! 💬', body: 'עוד לא דיברתם אנגלית היום! בואו נשוחח 2 דקות 🗣️' },
+        partial: { title: 'Speakli - כמעט שם! ⏱️', body: 'עוד {remaining} דקות ליעד הדיבור! 💪' },
+        default: { title: 'Speakli - זמן ללמוד! 📚', body: 'אל תשבור את הרצף! בוא לתרגל אנגלית היום 🔥' },
     },
     en: {
-        title: 'Speakli - Time to learn! 📚',
-        body: "Don't break your streak! Practice English today 🔥"
-    }
+        zero: { title: 'Speakli - Let\'s talk! 💬', body: 'You haven\'t spoken English today! Let\'s chat for 2 minutes 🗣️' },
+        partial: { title: 'Speakli - Almost there! ⏱️', body: '{remaining} more minutes to hit your speaking goal! 💪' },
+        default: { title: 'Speakli - Time to learn! 📚', body: "Don't break your streak! Practice English today 🔥" },
+    },
 };
 
 module.exports = async function handler(req, res) {
@@ -63,10 +65,35 @@ module.exports = async function handler(req, res) {
             (process.env.VAPID_PRIVATE_KEY || '').trim()
         );
 
+        const today = new Date().toISOString().split('T')[0];
+
         for (const subDoc of subsSnapshot.docs) {
             const subData = subDoc.data();
             const lang = subData.language || 'he';
-            const message = REMINDER_MESSAGES[lang] || REMINDER_MESSAGES.he;
+            const msgs = REMINDER_MESSAGES[lang] || REMINDER_MESSAGES.he;
+            const userId = subData.userId;
+
+            // Check today's speaking minutes if userId available
+            let message = msgs.default;
+            if (userId) {
+                try {
+                    const activityRef = db.collection('users').doc(userId).collection('dailyActivity').doc(today);
+                    const actSnap = await activityRef.get();
+                    const minutes = actSnap.exists ? (actSnap.data().minutes || 0) : 0;
+                    if (minutes >= 5) {
+                        // Goal met — skip notification
+                        results.skippedGoalMet = (results.skippedGoalMet || 0) + 1;
+                        continue;
+                    } else if (minutes > 0) {
+                        const remaining = Math.ceil(5 - minutes);
+                        message = { title: msgs.partial.title, body: msgs.partial.body.replace('{remaining}', remaining) };
+                    } else {
+                        message = msgs.zero;
+                    }
+                } catch (e) {
+                    // Fallback to default message
+                }
+            }
 
             const pushPayload = JSON.stringify({
                 title: message.title,

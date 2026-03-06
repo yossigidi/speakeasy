@@ -423,6 +423,57 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
   }, [user, activeChildId, checkAndGrantAchievements]);
 
+  const addSpeakingMinutes = useCallback((minutes, source = 'unknown') => {
+    if (!user || minutes <= 0) return Promise.resolve();
+
+    const task = xpQueueRef.current.then(async () => {
+      try {
+        const docRef = activeChildId
+          ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
+          : window.firestore.doc(window.db, 'users', user.uid);
+
+        const freshSnap = await window.firestore.getDoc(docRef);
+        const freshData = freshSnap.exists() ? { ...DEFAULT_PROGRESS, ...freshSnap.data() } : { ...DEFAULT_PROGRESS };
+
+        const today = new Date().toISOString().split('T')[0];
+        const roundedMinutes = Math.round(minutes * 10) / 10;
+        const newDailyMinutes = (freshData.lastActiveDate === today ? freshData.dailyMinutes : 0) + roundedMinutes;
+
+        await window.firestore.setDoc(docRef, { dailyMinutes: newDailyMinutes }, { merge: true });
+
+        // Update dailyActivity subcollection
+        try {
+          const activityPath = activeChildId
+            ? ['childProfiles', activeChildId, 'dailyActivity', today]
+            : ['users', user.uid, 'dailyActivity', today];
+          const activityRef = window.firestore.doc(window.db, ...activityPath);
+          const activitySnap = await window.firestore.getDoc(activityRef);
+          if (activitySnap.exists()) {
+            await window.firestore.updateDoc(activityRef, {
+              minutes: window.firestore.increment(roundedMinutes),
+              [`speakingSources.${source}`]: window.firestore.increment(roundedMinutes),
+            });
+          } else {
+            await window.firestore.setDoc(activityRef, {
+              date: today,
+              xp: 0,
+              minutes: roundedMinutes,
+              sources: {},
+              speakingSources: { [source]: roundedMinutes },
+            });
+          }
+        } catch (activityErr) {
+          console.warn('Failed to log speaking minutes:', activityErr);
+        }
+      } catch (err) {
+        console.error('addSpeakingMinutes failed:', err);
+      }
+    });
+
+    xpQueueRef.current = task.catch(() => {});
+    return task;
+  }, [user, activeChildId]);
+
   const addXP = useCallback((amount, source = 'unknown') => {
     if (!user || amount <= 0) return Promise.resolve({ leveledUp: false, newLevel: progress.level });
 
@@ -835,6 +886,7 @@ export function UserProgressProvider({ children: reactChildren }) {
     loading,
     updateProgress,
     addXP,
+    addSpeakingMinutes,
     levelInfo,
     // Achievements
     achievementToast,
@@ -855,7 +907,7 @@ export function UserProgressProvider({ children: reactChildren }) {
     resetChildPin,
     updateChildLevel,
     deleteAllUserData,
-  }), [progress, loading, updateProgress, addXP, levelInfo, achievementToast, dismissAchievementToast,
+  }), [progress, loading, updateProgress, addXP, addSpeakingMinutes, levelInfo, achievementToast, dismissAchievementToast,
        activeChildId, activeChild,
        isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
        addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData]);

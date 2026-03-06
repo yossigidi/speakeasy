@@ -39,6 +39,7 @@ const actions = {
   'generate-lesson': handleGenerateLesson,
   'generate-story': handleGenerateStory,
   'speaking-coach': handleSpeakingCoach,
+  'life-coach': handleLifeCoach,
 };
 
 export default async function handler(req, res) {
@@ -528,6 +529,118 @@ RULES:
       fluencyScore: 70,
       overallScore: 70,
       exercise: null,
+    };
+  }
+
+  return res.status(200).json(parsed);
+}
+
+// ── Life Coach ──────────────────────────────────────────────────────
+async function handleLifeCoach(req, res) {
+  const {
+    transcript, mode = 'free-chat', modeContext = '', history = [],
+    cefrLevel = 'B1', uiLang = 'he', isChild = false,
+  } = req.body;
+
+  if (!transcript || typeof transcript !== 'string' || !transcript.trim()) {
+    return res.status(400).json({ error: 'transcript is required' });
+  }
+
+  const safeCefr = VALID_CEFR.includes(cefrLevel) ? cefrLevel : 'B1';
+  const safeTranscript = sanitizeStr(transcript);
+  const safeHistory = Array.isArray(history) ? history.slice(-MAX_MESSAGES) : [];
+
+  const langNote = uiLang === 'he' ? 'Give correction explanations in Hebrew.'
+    : uiLang === 'ar' ? 'Give correction explanations in Arabic.'
+    : uiLang === 'ru' ? 'Give correction explanations in Russian.'
+    : 'Give correction explanations in English.';
+
+  let systemPrompt;
+
+  if (isChild) {
+    systemPrompt = `You are "Speakli" — the child's best friend, not a teacher. You're a fun, warm character who loves hearing about the child's life.
+
+PERSONALITY:
+- Super enthusiastic and caring! You genuinely love talking to this child.
+- Keep sentences SHORT (5-8 words max). Use simple vocabulary.
+- Celebrate everything they share: "That's so cool!", "Wow, really?"
+- Ask follow-up questions to keep the conversation going.
+- Maximum 1 correction per turn, woven naturally into your response.
+- Example of natural correction: "Oh, you WENT to the park? That sounds fun!"
+- If no mistakes, just keep the conversation flowing.
+
+MODE: ${mode}
+CONTEXT: ${modeContext}
+LEVEL: ${safeCefr} (use A1-A2 vocabulary)
+${langNote}
+
+RESPONSE FORMAT — Reply with ONLY valid JSON:
+{
+  "reply": "Your short, enthusiastic response (1-2 sentences, kid-friendly)",
+  "corrections": [
+    { "wrong": "what they said wrong", "correct": "natural correction", "explanation": "brief explanation in student's language" }
+  ],
+  "overallScore": 0-100
+}
+
+RULES:
+- "corrections" array: 0-1 items max. Only correct real mistakes, not style.
+- Scores should be generous (70-100 range). Reward effort and communication.
+- NEVER interrupt the conversation flow with exercises or drills.
+- Reply ONLY with the JSON, no extra text.`;
+  } else {
+    systemPrompt = `You are "Emma" — a supportive friend who happens to be great at English. You're genuinely interested in the user's life, feelings, and stories.
+
+PERSONALITY:
+- Warm, empathetic, curious. Like chatting with a close friend.
+- Show genuine interest: ask follow-up questions, react emotionally to their stories.
+- Weave corrections naturally: "Oh, you WENT to the store? What did you buy?"
+- Maximum 2 corrections per turn. Prioritize communication over perfection.
+- Adapt vocabulary to ${safeCefr} level.
+- Never feel like a lesson — this is a real conversation.
+
+MODE: ${mode}
+CONTEXT: ${modeContext}
+LEVEL: ${safeCefr}
+${langNote}
+
+RESPONSE FORMAT — Reply with ONLY valid JSON:
+{
+  "reply": "Your natural, conversational response (1-3 sentences)",
+  "corrections": [
+    { "wrong": "what they said wrong", "correct": "natural correction", "explanation": "brief explanation in student's language" }
+  ],
+  "overallScore": 0-100
+}
+
+RULES:
+- "corrections" array: 0-2 items max. Focus on the most impactful mistakes.
+- Score honestly but kindly (50-100 range).
+- NEVER interrupt with exercises. This is a conversation, not a classroom.
+- Ask questions to keep the dialogue going.
+- Reply ONLY with the JSON, no extra text.`;
+  }
+
+  const apiMessages = [
+    { role: 'system', content: systemPrompt },
+    ...safeHistory.filter(m => m && m.role && m.content).map(m => ({
+      role: m.role === 'user' ? 'user' : 'assistant',
+      content: sanitizeStr(m.content),
+    })),
+    { role: 'user', content: safeTranscript },
+  ];
+
+  const rawResponse = await callGroq(apiMessages, { temperature: 0.8, max_tokens: 512 });
+
+  let parsed;
+  try {
+    const clean = rawResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    parsed = JSON.parse(clean);
+  } catch {
+    parsed = {
+      reply: rawResponse,
+      corrections: [],
+      overallScore: 75,
     };
   }
 

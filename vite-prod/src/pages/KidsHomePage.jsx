@@ -9,6 +9,7 @@ import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { loadWordData } from '../utils/lazyData.js';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
 import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
+import SpeakingMinutesCard from '../components/gamification/SpeakingMinutesCard.jsx';
 
 /* ── Floating background decorations (Speakli-themed) ── */
 function FloatingDecorations() {
@@ -88,6 +89,21 @@ function LevelBadge({ childLevel, uiLang }) {
 
 /* ── Game cards data (Speakli character colors: blue, cyan, orange, green, red) ── */
 const GAME_CARDS = [
+  {
+    id: 'life-coach',
+    emoji: '💬',
+    titleHe: 'דברו עם ספיקלי!',
+    titleEn: "Chat with Speakli!",
+    titleAr: 'تحدث مع سبيكلي!',
+    titleRu: 'Чат со Спикли!',
+    descHe: 'ספרו על היום שלכם!',
+    descEn: 'Tell me about your day!',
+    descAr: 'أخبرني عن يومك!',
+    descRu: 'Расскажи о своём дне!',
+    gradient: 'from-purple-400 via-pink-500 to-rose-500',
+    shadowColor: 'shadow-purple-400/30',
+    page: 'life-coach',
+  },
   {
     id: 'speaking-coach',
     emoji: '🗣️',
@@ -497,6 +513,9 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
 
         {/* Stats bar */}
         <KidsStatsBar progress={progress} uiLang={uiLang} />
+
+        {/* Speaking Minutes */}
+        <SpeakingMinutesCard uiLang={uiLang} onNavigate={onNavigate} />
 
         {/* Level badge */}
         <LevelBadge childLevel={progress.curriculumLevel || progress.childLevel || 1} uiLang={uiLang} />

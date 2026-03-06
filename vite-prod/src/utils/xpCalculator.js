@@ -19,6 +19,9 @@ export const XP_REWARDS = {
   speakingCoachBase: 25,
   speakingCoachMax: 70,
   speakingCoachPerfectBonus: 40,
+  lifeCoachBase: 15,
+  lifeCoachMax: 45,
+  lifeCoachMinuteBonus: 5,
 };
 
 export function calcLessonXP(accuracy, exerciseCount) {
@@ -61,4 +64,11 @@ export function calcSpeakingCoachXP(avgScore, turnCount) {
   const turnsBonus = Math.min(turnCount * 3, 15);
   const perfectBonus = avgScore >= 90 ? XP_REWARDS.speakingCoachPerfectBonus : 0;
   return { base, turnsBonus, perfectBonus, total: base + turnsBonus + perfectBonus };
+}
+
+export function calcLifeCoachXP(turnCount, speakingMinutes) {
+  const base = XP_REWARDS.lifeCoachBase;
+  const turnsBonus = Math.min(turnCount * 2, 20);
+  const minuteBonus = Math.min(Math.round(speakingMinutes * XP_REWARDS.lifeCoachMinuteBonus), 25);
+  return { base, turnsBonus, minuteBonus, total: base + turnsBonus + minuteBonus };
 }

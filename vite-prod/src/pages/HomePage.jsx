@@ -11,6 +11,7 @@ import XPBar from '../components/gamification/XPBar.jsx';
 import DailyGoalRing from '../components/gamification/DailyGoalRing.jsx';
 import { loadWordData } from '../utils/lazyData.js';
 
+import SpeakingMinutesCard from '../components/gamification/SpeakingMinutesCard.jsx';
 import grammarRules from '../data/grammar-rules.json';
 
 export default function HomePage({ onNavigate, reviewCount = 0 }) {
@@ -79,6 +80,34 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
         <StreakDisplay />
         <XPBar />
       </div>
+
+      {/* Speaking Minutes Card */}
+      <SpeakingMinutesCard uiLang={uiLang} onNavigate={onNavigate} />
+
+      {/* Life Coach Card */}
+      <GlassCard
+        variant="strong"
+        className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-purple-50/80 to-pink-50/80 dark:from-purple-950/30 dark:to-pink-950/30"
+        onClick={() => onNavigate('life-coach')}
+      >
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-bl-full" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-500/25">
+              <MessageCircle size={22} className="text-white" />
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900 dark:text-white">
+                {t('lifeCoach', uiLang)}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {t('lifeCoachDesc', uiLang)}
+              </p>
+            </div>
+          </div>
+          <ChevronRight size={20} className={`text-gray-400 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
+        </div>
+      </GlassCard>
 
       {/* Kids Alphabet Card - shown for kids curriculum level */}
       {(!progress.curriculumLevel || progress.curriculumLevel <= 2) && (

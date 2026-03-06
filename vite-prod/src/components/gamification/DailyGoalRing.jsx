@@ -9,7 +9,8 @@ export default function DailyGoalRing({ size = 80 }) {
   const { uiLang } = useTheme();
 
   const goalMinutes = progress.dailyGoalMinutes || 10;
-  const currentMinutes = progress.dailyMinutes || 0;
+  const today = new Date().toISOString().split('T')[0];
+  const currentMinutes = progress.lastActiveDate === today ? (progress.dailyMinutes || 0) : 0;
   const percent = Math.min((currentMinutes / goalMinutes) * 100, 100);
   const isComplete = percent >= 100;
 
