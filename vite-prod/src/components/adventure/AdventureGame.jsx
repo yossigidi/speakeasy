@@ -84,9 +84,9 @@ export default function AdventureGame({ onBack }) {
     return new Promise((resolve) => {
       videoResolveRef.current = resolve;
       if (typeof videoInfo === 'string') {
-        setVideoData({ src: videoInfo, narration: null });
+        setVideoData({ src: videoInfo, narration: null, autoPlay: true });
       } else {
-        setVideoData(videoInfo);
+        setVideoData({ autoPlay: true, ...videoInfo });
       }
     });
   }, []);
@@ -216,7 +216,7 @@ export default function AdventureGame({ onBack }) {
           engineRef.current.sceneManager.startWorld(worldId);
         }
       };
-      setVideoData({ src: worldDef.introVideo, narration: worldDef.videoNarration || null });
+      setVideoData({ src: worldDef.introVideo, narration: worldDef.videoNarration || null, autoPlay: true });
     } else {
       setShowWorldMap(false);
       if (engineRef.current?.sceneManager) {

@@ -192,7 +192,7 @@ export default class SceneManager {
 
     // 0. Scene intro video (if defined) — pass narration for TTS
     if (scene.introVideo && this.options.onSceneVideo) {
-      await this.options.onSceneVideo({ src: scene.introVideo, narration: scene.videoNarration || null });
+      await this.options.onSceneVideo({ src: scene.introVideo, narration: scene.videoNarration || null, autoPlay: true });
       if (this._destroyed) return;
     }
 

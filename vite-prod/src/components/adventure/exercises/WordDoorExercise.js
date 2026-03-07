@@ -19,15 +19,19 @@ export default class WordDoorExercise extends ExerciseBase {
   _build() {
     const { w, h } = this;
     const suffix = {he:'He',ar:'Ar',ru:'Ru'}[this.uiLang] || '';
-    const prompt = this.config['prompt' + suffix] || this.config.prompt || 'Choose the right word!';
-    this.showPrompt(prompt);
+    const isPictureMode = this.config.pictureMode && this.config.pictureOptions;
 
-    // Door graphic
+    if (!isPictureMode) {
+      const prompt = this.config['prompt' + suffix] || this.config.prompt || 'Choose the right word!';
+      this.showPrompt(prompt);
+    }
+
+    // Door graphic — always shown (it's the fun part)
     const door = new Graphics();
-    const doorW = 100;
-    const doorH = 140;
+    const doorW = isPictureMode ? 80 : 100;
+    const doorH = isPictureMode ? 110 : 140;
+    const doorY = isPictureMode ? h * 0.1 : h * 0.18;
     const doorX = w / 2 - doorW / 2;
-    const doorY = h * 0.18;
     door.roundRect(doorX, doorY, doorW, doorH, 8);
     door.fill({ color: 0x8B4513 });
     // Door frame
@@ -37,7 +41,7 @@ export default class WordDoorExercise extends ExerciseBase {
     door.circle(doorX + doorW - 18, doorY + doorH / 2, 5);
     door.fill({ color: 0xFBBF24 });
     // Lock icon
-    const lockText = new Text({ text: '🔒', style: { fontSize: 24 } });
+    const lockText = new Text({ text: '🔒', style: { fontSize: isPictureMode ? 20 : 24 } });
     lockText.anchor.set(0.5);
     lockText.x = w / 2;
     lockText.y = doorY + doorH / 2 - 15;
@@ -45,47 +49,81 @@ export default class WordDoorExercise extends ExerciseBase {
     this._lockIcon = lockText;
     this._door = door;
 
-    // Translation hint
-    const LANG_SUFFIX = {he:'He',ar:'Ar',ru:'Ru'};
-    const translationText = new Text({
-      text: this.targetWord['translation' + (LANG_SUFFIX[this.uiLang] || '')] || this.targetWord.translation,
-      style: {
-        fontFamily: 'Arial, sans-serif',
-        fontSize: 20,
-        fontWeight: 'bold',
-        fill: 0xFBBF24,
-        align: 'center',
-      },
-    });
-    translationText.anchor.set(0.5);
-    translationText.x = w / 2;
-    translationText.y = h * 0.18 + 150;
-    this.panel.addChild(translationText);
+    if (isPictureMode) {
+      // --- Picture mode for levels 1-2 ---
 
-    // Shuffle options
-    const allOptions = [this.targetWord.word, ...this.distractors];
-    const shuffled = allOptions.sort(() => Math.random() - 0.5);
-
-    // Option buttons
-    const btnW = Math.min(w * 0.38, 140);
-    const btnH = 48;
-    const gap = 12;
-    const cols = 2;
-    const startY = h * 0.55;
-
-    shuffled.forEach((word, i) => {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      const x = w / 2 + (col === 0 ? -btnW / 2 - gap / 2 : btnW / 2 + gap / 2);
-      const y = startY + row * (btnH + gap);
-
-      this.createButton(word, x, y, btnW, btnH, 0x3B82F6, () => {
-        this._handleChoice(word);
+      // Speaker button below door
+      this.createSpeakerButton(w / 2, doorY + doorH + 30, () => {
+        this.speakWithTranslation(this.targetWord.word, this.targetWord);
       });
-    });
 
-    // Speak the translation
-    setTimeout(() => this.speak(this.targetWord.word), 500);
+      // 2×2 picture card grid
+      const cardSize = 88;
+      const cardGap = 14;
+      const totalW = cardSize * 2 + cardGap;
+      const startX = (w - totalW) / 2;
+      const startY = doorY + doorH + 65;
+
+      const shuffled = [...this.config.pictureOptions].sort(() => Math.random() - 0.5);
+      shuffled.forEach((opt, i) => {
+        const col = i % 2;
+        const row = Math.floor(i / 2);
+        const x = startX + col * (cardSize + cardGap);
+        const y = startY + row * (cardSize + 15 + cardGap);
+        const label = opt['translation' + suffix] || opt.translation;
+
+        this.createPictureCard(opt.emoji, label, x, y, cardSize, () => {
+          this._handlePictureChoice(opt.word);
+        });
+      });
+
+      // Auto-speak English + translation
+      setTimeout(() => this.speakWithTranslation(this.targetWord.word, this.targetWord), 500);
+    } else {
+      // --- Standard text mode (levels 3-4) ---
+
+      // Translation hint
+      const LANG_SUFFIX = {he:'He',ar:'Ar',ru:'Ru'};
+      const translationText = new Text({
+        text: this.targetWord['translation' + (LANG_SUFFIX[this.uiLang] || '')] || this.targetWord.translation,
+        style: {
+          fontFamily: 'Arial, sans-serif',
+          fontSize: 20,
+          fontWeight: 'bold',
+          fill: 0xFBBF24,
+          align: 'center',
+        },
+      });
+      translationText.anchor.set(0.5);
+      translationText.x = w / 2;
+      translationText.y = h * 0.18 + 150;
+      this.panel.addChild(translationText);
+
+      // Shuffle options
+      const allOptions = [this.targetWord.word, ...this.distractors];
+      const shuffled = allOptions.sort(() => Math.random() - 0.5);
+
+      // Option buttons
+      const btnW = Math.min(w * 0.38, 140);
+      const btnH = 48;
+      const gap = 12;
+      const cols = 2;
+      const startY = h * 0.55;
+
+      shuffled.forEach((word, i) => {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const x = w / 2 + (col === 0 ? -btnW / 2 - gap / 2 : btnW / 2 + gap / 2);
+        const y = startY + row * (btnH + gap);
+
+        this.createButton(word, x, y, btnW, btnH, 0x3B82F6, () => {
+          this._handleChoice(word);
+        });
+      });
+
+      // Speak the translation
+      setTimeout(() => this.speak(this.targetWord.word), 500);
+    }
   }
 
   _handleChoice(word) {
@@ -102,6 +140,26 @@ export default class WordDoorExercise extends ExerciseBase {
       });
     } else {
       this.showFeedback(false);
+    }
+  }
+
+  _handlePictureChoice(word) {
+    if (this._locked) return;
+    this.attempts++;
+    if (word === this.targetWord.word) {
+      this._locked = true;
+      this._lockIcon.text = '🔓';
+      this.showFeedback(true, () => {
+        this._animateDoorOpen(() => {
+          this.complete(true);
+        });
+      });
+    } else {
+      this.showFeedback(false);
+      // Re-speak the target word after wrong answer
+      setTimeout(() => {
+        if (!this.destroyed) this.speakWithTranslation(this.targetWord.word, this.targetWord);
+      }, 900);
     }
   }
 

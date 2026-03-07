@@ -33,6 +33,16 @@ export function adaptExercise(exerciseDef, childLevel, uiLang) {
   }
 }
 
+// Words with clearly recognizable emoji (exclude abstract concepts)
+const VISUAL_WORD_SET = new Set([
+  'cat','dog','fish','bird','duck','frog',
+  'apple','banana','milk','cake','orange','grape',
+  'sun','star','ball','moon','rain','tree','flower',
+  'red','blue','green','yellow','pink',
+  'book','hat','shoe','car','bus','house','door','bed',
+  'mom','dad','baby','hand','eye','water',
+]);
+
 // --- Helpers ---
 
 function shuffle(arr) {
@@ -65,27 +75,45 @@ function adaptMultipleChoice(def, childLevel, uiLang) {
   if (words.length < 4) return def;
 
   const isEasy = childLevel <= 2;
-  const numOptions = isEasy ? 3 : 4;
   const numQuestions = def.config?.questions?.length || 3;
 
+  if (isEasy) {
+    // Picture mode: 4 picture cards with emoji + native label
+    const visualWords = words.filter(w => VISUAL_WORD_SET.has(w.word));
+    const pool = visualWords.length >= 4 ? visualWords : words;
+    const selected = pickRandom(pool, numQuestions);
+
+    const questions = selected.map(w => {
+      const others = shuffle(pool.filter(o => o.word !== w.word)).slice(0, 3);
+      const pictureOptions = shuffle([w, ...others]).map(o => ({
+        word: o.word,
+        emoji: o.emoji,
+        translation: o.translation,
+        translationAr: o.translationAr,
+        translationRu: o.translationRu,
+      }));
+
+      return {
+        answer: w.word,
+        options: pictureOptions.map(o => o.word),
+        pictureMode: true,
+        pictureOptions,
+      };
+    });
+
+    return {
+      type: 'multipleChoice',
+      config: { ...def.config, questions },
+    };
+  }
+
+  // Standard text mode for levels 3-4
+  const numOptions = 4;
   const selected = pickRandom(words, numQuestions);
   const questions = selected.map(w => {
     const others = shuffle(words.filter(o => o.word !== w.word)).slice(0, numOptions - 1);
     const options = shuffle([w.word, ...others.map(o => o.word)]);
 
-    if (isEasy) {
-      // Emoji-based question: "What is this? 🐱"
-      return {
-        question: `What is this? ${w.emoji}`,
-        questionHe: `?${w.emoji} מה זה`,
-        questionAr: `ما هذا؟ ${w.emoji}`,
-        questionRu: `Что это? ${w.emoji}`,
-        answer: w.word,
-        options,
-        image: w.emoji,
-      };
-    }
-    // Harder question: "Which word means [translation]?"
     const trans = getTranslation(w, uiLang);
     return {
       question: `Which word means "${trans}"?`,
@@ -111,8 +139,42 @@ function adaptWordDoor(def, childLevel, uiLang) {
   if (words.length < 3) return def;
 
   const isEasy = childLevel <= 2;
-  const numDistractors = isEasy ? 2 : 3;
 
+  if (isEasy) {
+    // Picture mode: 4 picture cards
+    const visualWords = words.filter(w => VISUAL_WORD_SET.has(w.word));
+    const pool = visualWords.length >= 4 ? visualWords : words;
+
+    const target = pickRandom(pool, 1)[0];
+    const distractorObjs = shuffle(pool.filter(w => w.word !== target.word)).slice(0, 3);
+    const pictureOptions = shuffle([target, ...distractorObjs]).map(o => ({
+      word: o.word,
+      emoji: o.emoji,
+      translation: o.translation,
+      translationAr: o.translationAr,
+      translationRu: o.translationRu,
+    }));
+
+    return {
+      type: 'wordDoor',
+      config: {
+        ...def.config,
+        targetWord: {
+          word: target.word,
+          emoji: target.emoji,
+          translation: target.translation,
+          translationAr: target.translationAr,
+          translationRu: target.translationRu,
+        },
+        distractors: distractorObjs.map(w => w.word),
+        pictureMode: true,
+        pictureOptions,
+      },
+    };
+  }
+
+  // Standard text mode for levels 3-4
+  const numDistractors = 3;
   const target = pickRandom(words, 1)[0];
   const distractors = shuffle(words.filter(w => w.word !== target.word))
     .slice(0, numDistractors)
@@ -129,18 +191,10 @@ function adaptWordDoor(def, childLevel, uiLang) {
         translationRu: target.translationRu,
       },
       distractors,
-      // Prompts with emoji hint (easy) or word hint (hard)
-      ...(isEasy ? {
-        prompt: `Choose: ${target.emoji} ${target.word}`,
-        promptHe: `${target.emoji} ${target.translation} :בחרו`,
-        promptAr: `${target.emoji} ${getTranslation(target, 'ar')} :اختاروا`,
-        promptRu: `Выберите: ${target.emoji} ${getTranslation(target, 'ru')}`,
-      } : {
-        prompt: `Which word means "${target.translation}"? ${target.emoji}`,
-        promptHe: `?${target.emoji} "${target.translation}" איזו מילה פירושה`,
-        promptAr: `أي كلمة تعني "${getTranslation(target, 'ar')}"؟ ${target.emoji}`,
-        promptRu: `Какое слово означает "${getTranslation(target, 'ru')}"? ${target.emoji}`,
-      }),
+      prompt: `Which word means "${target.translation}"? ${target.emoji}`,
+      promptHe: `?${target.emoji} "${target.translation}" איזו מילה פירושה`,
+      promptAr: `أي كلمة تعني "${getTranslation(target, 'ar')}"؟ ${target.emoji}`,
+      promptRu: `Какое слово означает "${getTranslation(target, 'ru')}"? ${target.emoji}`,
     },
   };
 }

@@ -31,7 +31,7 @@ const WORLDS = [
     farEmojis: ['🏔️', '🌋', '🌴', '🌴', '🏔️', '🌴'],
     midEmojis: ['🦒', '🐘', '🌳', '🦜', '🌿', '🐒', '🌳', '🦁'],
     categories: ['animals', 'nature'],
-    filterWords: w => /cat|dog|fish|bird|lion|elephant|monkey|bear|rabbit|frog|snake|horse|cow|sheep|duck|tiger/i.test(w.word) || true,
+    filterWords: w => true,
   },
   {
     id: 'food',
@@ -90,7 +90,7 @@ const DIFFICULTY = {
   4: { options: 4, showEmoji: false, showHebrew: false, rounds: 10, ttsRate: 0.7, useSentences: true  },
 };
 
-// ── ConfettiBurst (same pattern as NewGames) ──
+// ── ConfettiBurst ──
 function ConfettiBurst({ show }) {
   if (!show) return null;
   const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'];
@@ -205,7 +205,7 @@ function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
 }
 
 // ── Countdown overlay ──
-function Countdown({ onDone }) {
+function Countdown({ onDone, world }) {
   const [count, setCount] = useState(3);
 
   useEffect(() => {
@@ -221,13 +221,56 @@ function Countdown({ onDone }) {
   }, [count, onDone]);
 
   return (
-    <div className="absolute inset-0 z-40 flex items-center justify-center bg-black/30">
-      <div
-        key={count}
-        className="text-8xl font-black text-white drop-shadow-lg"
-        style={{ animation: 'countdownPop 0.6s ease-out' }}
-      >
-        {count === 0 ? 'Go!' : count}
+    <div className="absolute inset-0 z-40 flex items-center justify-center">
+      {/* Dim overlay */}
+      <div className="absolute inset-0 bg-black/40" />
+      <div className="relative flex flex-col items-center gap-4">
+        <div
+          key={count}
+          className="font-black text-white drop-shadow-lg"
+          style={{
+            fontSize: count === 0 ? '5rem' : '7rem',
+            animation: 'countdownPop 0.6s ease-out',
+            textShadow: '0 0 40px rgba(255,255,255,0.5), 0 4px 20px rgba(0,0,0,0.3)',
+          }}
+        >
+          {count === 0 ? 'Go! 🏁' : count}
+        </div>
+        {count > 0 && (
+          <p className="text-white/80 text-lg font-bold animate-pulse">
+            {world?.emoji} Get ready...
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Race Track Progress ──
+function RaceTrack({ round, totalRounds, world }) {
+  const progress = round / totalRounds;
+  return (
+    <div className="absolute bottom-[23%] left-0 right-0 z-[15] px-4 pointer-events-none">
+      <div className="relative h-4 bg-black/20 rounded-full overflow-hidden backdrop-blur-sm border border-white/10">
+        {/* Track fill */}
+        <div
+          className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
+          style={{
+            width: `${Math.max(progress * 100, 3)}%`,
+            background: 'linear-gradient(90deg, #22c55e, #3b82f6, #8b5cf6)',
+          }}
+        />
+        {/* Speakli marker */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 transition-all duration-1000 ease-out"
+          style={{ left: `calc(${Math.max(progress * 100, 2)}% - 10px)` }}
+        >
+          <span className="text-sm drop-shadow-lg">🏃</span>
+        </div>
+        {/* Finish flag */}
+        <div className="absolute top-1/2 -translate-y-1/2 right-1">
+          <span className="text-xs">🏁</span>
+        </div>
       </div>
     </div>
   );
@@ -236,39 +279,42 @@ function Countdown({ onDone }) {
 // ── RunHUD ──
 function RunHUD({ score, coins, streak, round, totalRounds, onBack, isPowerMode, uiLang }) {
   return (
-    <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-3 py-2">
-      <button
-        onClick={onBack}
-        className="text-white/80 hover:text-white bg-black/20 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center"
-      >
-        <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
-      </button>
+    <>
+      {/* Back button — z-40 so it's always above challenge overlay */}
+      <div className="absolute top-3 left-3 z-40">
+        <button
+          onClick={(e) => { e.stopPropagation(); onBack(); }}
+          className="text-white/90 bg-black/30 rounded-full p-3 backdrop-blur-md active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center shadow-lg border border-white/10"
+        >
+          <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+        </button>
+      </div>
 
-      <div className="flex items-center gap-3">
-        <div className="bg-black/20 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1.5">
+      {/* Stats bar */}
+      <div className="absolute top-3 right-3 z-30 flex items-center gap-2">
+        <div className="bg-black/30 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-1.5 border border-white/10 shadow-lg">
           <span className="text-yellow-300 text-sm">🪙</span>
-          <span className="text-white font-bold text-sm">{coins}</span>
+          <span className="text-white font-black text-sm">{coins}</span>
         </div>
-        <div className="bg-black/20 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1.5">
+        <div className="bg-black/30 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-1.5 border border-white/10 shadow-lg">
           <Star size={14} className="text-yellow-300 fill-yellow-300" />
-          <span className="text-white font-bold text-sm">{score}</span>
+          <span className="text-white font-black text-sm">{score}</span>
         </div>
         {streak >= 2 && (
-          <div className="bg-orange-500/80 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1 animate-pulse">
-            <Zap size={12} className="text-yellow-200" />
-            <span className="text-white font-bold text-xs">{streak}x</span>
+          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-full px-2.5 py-1.5 flex items-center gap-1 animate-pulse shadow-lg border border-orange-300/30">
+            <Zap size={12} className="text-yellow-200 fill-yellow-200" />
+            <span className="text-white font-black text-xs">{streak}x</span>
           </div>
         )}
       </div>
 
-      {/* Progress bar */}
-      <div className="bg-black/20 backdrop-blur-sm rounded-full h-2 w-16 overflow-hidden">
-        <div
-          className="h-full bg-white/80 rounded-full transition-all duration-500"
-          style={{ width: `${(round / totalRounds) * 100}%` }}
-        />
+      {/* Round counter */}
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30">
+        <div className="bg-black/30 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/10 shadow-lg">
+          <span className="text-white/90 font-bold text-sm">{round}/{totalRounds}</span>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -283,25 +329,28 @@ function WordBox({ word, emoji, translation, showEmoji, showHebrew, onClick, sta
       onClick={onClick}
       disabled={disabled || !!state}
       className={`
-        relative px-4 py-3 rounded-2xl font-bold text-lg shadow-lg
+        relative rounded-2xl font-bold shadow-xl
         active:scale-95 transition-transform
-        ${state === 'correct' ? 'bg-green-400 text-white ring-4 ring-green-300' :
-          state === 'wrong' ? 'bg-red-400 text-white' :
-          'bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white hover:bg-white'}
-        ${!state ? 'backdrop-blur-sm' : ''}
+        ${state === 'correct'
+          ? 'bg-gradient-to-br from-green-400 to-emerald-500 text-white ring-4 ring-green-300/50'
+          : state === 'wrong'
+          ? 'bg-gradient-to-br from-red-400 to-red-500 text-white'
+          : 'bg-white/95 dark:bg-gray-800/95 text-gray-800 dark:text-white hover:bg-white border-2 border-white/50'}
       `}
       style={{
         animation: state
           ? `${stateClass} 0.5s ease-out forwards`
-          : `wordBoxSlideIn 0.5s ease-out ${index * 0.1}s both`,
-        minWidth: '120px',
+          : `wordBoxSlideIn 0.5s ease-out ${index * 0.08}s both`,
+        minWidth: showEmoji ? '130px' : '120px',
+        padding: showEmoji ? '10px 16px' : '12px 16px',
+        backdropFilter: !state ? 'blur(8px)' : undefined,
       }}
     >
-      <div className="flex flex-col items-center gap-1">
-        {showEmoji && emoji && <span className="text-2xl">{emoji}</span>}
-        <span className="text-base font-black">{word}</span>
+      <div className="flex flex-col items-center gap-0.5">
+        {showEmoji && emoji && <span className="text-3xl leading-tight">{emoji}</span>}
+        <span className={`font-black ${showEmoji ? 'text-sm' : 'text-base'}`}>{word}</span>
         {showHebrew && translation && (
-          <span className="text-xs text-gray-500 dark:text-gray-400">{translation}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">{translation}</span>
         )}
       </div>
       {state === 'correct' && <SparkleEffect show={true} />}
@@ -310,11 +359,15 @@ function WordBox({ word, emoji, translation, showEmoji, showHebrew, onClick, sta
 }
 
 // ── RunnerViewport ──
-function RunnerViewport({ world, isPaused, isPowerMode, children }) {
-  const farSpeed = isPowerMode ? '8s' : '15s';
-  const midSpeed = isPowerMode ? '4s' : '8s';
-  const groundSpeed = isPowerMode ? '2s' : '4s';
-  const roadSpeed = isPowerMode ? '1s' : '2s';
+function RunnerViewport({ world, phase, isPowerMode, children }) {
+  // During challenges: slow down instead of fully stopping
+  const isChallenge = phase === 'word-challenge';
+  const isCountdown = phase === 'countdown';
+
+  const farSpeed = isPowerMode ? '8s' : isChallenge ? '30s' : '15s';
+  const midSpeed = isPowerMode ? '4s' : isChallenge ? '16s' : '8s';
+  const groundSpeed = isPowerMode ? '2s' : isChallenge ? '8s' : '4s';
+  const roadSpeed = isPowerMode ? '1s' : isChallenge ? '4s' : '2s';
 
   const renderLayerContent = (emojis, spacing, fontSize = '2rem') => {
     const items = [...emojis, ...emojis, ...emojis];
@@ -329,12 +382,12 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
 
   return (
     <div
-      className={`relative w-full h-full overflow-hidden ${isPowerMode ? 'runner-power' : ''} ${isPaused ? 'runner-paused' : ''}`}
+      className={`relative w-full h-full overflow-hidden ${isPowerMode ? 'runner-power' : ''} ${isCountdown ? 'runner-paused' : ''}`}
       style={{ background: world.skyGradient, minHeight: '100dvh' }}
     >
       {/* Animated clouds */}
       <div className="absolute top-[5%] w-[300%] pointer-events-none"
-        style={{ animation: `runnerScroll ${isPowerMode ? '20s' : '40s'} linear infinite`, opacity: 0.4 }}>
+        style={{ animation: `runnerScroll ${isPowerMode ? '20s' : isChallenge ? '60s' : '40s'} linear infinite`, opacity: 0.4 }}>
         {['☁️', '☁️', '☁️', '☁️', '☁️', '☁️'].map((c, i) => (
           <span key={i} className="inline-block" style={{
             marginLeft: `${80 + i * 30}px`,
@@ -344,7 +397,7 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
         ))}
       </div>
 
-      {/* Far BG layer — large scenery */}
+      {/* Far BG layer */}
       <div
         className="runner-layer absolute bottom-[28%] w-[300%] flex items-end"
         style={{ animation: `runnerScroll ${farSpeed} linear infinite`, opacity: 0.5 }}
@@ -352,7 +405,7 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
         {renderLayerContent(world.farEmojis, 100, '2.5rem')}
       </div>
 
-      {/* Mid BG layer — animals/objects */}
+      {/* Mid BG layer */}
       <div
         className="runner-layer absolute bottom-[20%] w-[300%] flex items-end"
         style={{ animation: `runnerScroll ${midSpeed} linear infinite`, opacity: 0.75 }}
@@ -360,10 +413,9 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
         {renderLayerContent(world.midEmojis, 70, '2.2rem')}
       </div>
 
-      {/* Ground — elevated road surface */}
+      {/* Ground */}
       <div className="absolute bottom-0 left-0 right-0 h-[22%]"
         style={{ background: `linear-gradient(180deg, ${world.groundColor}dd 0%, ${world.groundColor} 30%, ${world.groundColor}cc 100%)` }}>
-        {/* Ground emoji decorations */}
         <div
           className="runner-layer absolute top-1 w-[300%] flex items-center"
           style={{ animation: `runnerScroll ${groundSpeed} linear infinite` }}
@@ -371,10 +423,9 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
           {renderLayerContent(world.groundEmojis, 55, '1.6rem')}
         </div>
 
-        {/* Road with dashed center line */}
+        {/* Road */}
         <div className="absolute bottom-0 left-0 right-0 h-[55%] overflow-hidden"
           style={{ background: `linear-gradient(180deg, ${world.groundColor}99 0%, #374151 20%, #4B5563 50%, #374151 80%, ${world.groundColor}99 100%)` }}>
-          {/* Road markings — dashed center line */}
           <div className="absolute top-[48%] w-[300%] h-[4px] flex items-center gap-0"
             style={{ animation: `runnerScroll ${roadSpeed} linear infinite` }}>
             {Array.from({ length: 40 }).map((_, i) => (
@@ -384,14 +435,13 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
               }} />
             ))}
           </div>
-          {/* Road edge lines */}
           <div className="absolute top-[15%] left-0 right-0 h-[2px]" style={{ background: 'rgba(255,255,255,0.15)' }} />
           <div className="absolute bottom-[15%] left-0 right-0 h-[2px]" style={{ background: 'rgba(255,255,255,0.15)' }} />
         </div>
       </div>
 
-      {/* Speed lines */}
-      {!isPaused && (
+      {/* Speed lines — only during running */}
+      {phase === 'running' && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {Array.from({ length: 7 }).map((_, i) => (
             <div
@@ -410,8 +460,8 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
         </div>
       )}
 
-      {/* Dust trail behind character */}
-      {!isPaused && (
+      {/* Dust trail — only during running */}
+      {phase === 'running' && (
         <div className="absolute z-[9] pointer-events-none" style={{ left: '8%', bottom: '22%' }}>
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="absolute rounded-full" style={{
@@ -426,25 +476,57 @@ function RunnerViewport({ world, isPaused, isPowerMode, children }) {
         </div>
       )}
 
-      {/* Speakli character — with run lean */}
+      {/* Speakli character */}
       <div
-        className={`absolute z-10 speakli-run ${isPaused ? 'runner-paused-char' : 'runner-leaning'}`}
+        className={`absolute z-10 speakli-run ${isCountdown ? 'runner-paused-char' : isChallenge ? '' : 'runner-leaning'}`}
         style={{ left: '15%', bottom: '22%' }}
       >
         <SpeakliAvatar
-          mode={isPaused ? 'idle' : 'bounce'}
+          mode={isChallenge ? 'idle' : isCountdown ? 'idle' : 'bounce'}
           size="lg"
           glow={isPowerMode}
         />
       </div>
 
-      {/* Children overlay (HUD, word boxes, countdown) */}
+      {/* Children (HUD, overlays) */}
       {children}
     </div>
   );
 }
 
-// ── GameOverScreen (runner-themed) ──
+// ── Target Word Display ──
+function TargetWordBubble({ target, diff, uiLang, onReplay }) {
+  return (
+    <div className="flex flex-col items-center gap-2 mb-4">
+      {/* Big emoji + replay button */}
+      <div className="relative">
+        <div
+          className="w-24 h-24 rounded-3xl bg-white/20 backdrop-blur-md border-2 border-white/30 flex items-center justify-center shadow-2xl"
+          style={{ animation: 'countdownPop 0.4s ease-out' }}
+        >
+          <span className="text-5xl">{target.emoji || '🔊'}</span>
+        </div>
+        {/* Speaker badge */}
+        <button
+          onClick={onReplay}
+          className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center shadow-lg active:scale-90 transition-transform border-2 border-white/50"
+          style={{ animation: 'pulse 2s ease-in-out infinite' }}
+        >
+          <Volume2 size={18} className="text-white" />
+        </button>
+      </div>
+
+      {/* "Find this word" instruction */}
+      <div className="bg-black/30 backdrop-blur-md rounded-full px-5 py-2 border border-white/15 shadow-lg">
+        <p className="text-white font-bold text-sm text-center">
+          {t('listenAndTapCorrect', uiLang)} 👆
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ── GameOverScreen ──
 function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, world, uiLang }) {
   const stars = correctCount >= totalRounds ? 3 : correctCount >= totalRounds * 0.7 ? 2 : correctCount >= 1 ? 1 : 0;
 
@@ -562,7 +644,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   // Build word pool when world is selected
   const buildWordPool = useCallback((selectedWorld) => {
     if (selectedWorld.sentencesOnly && diff.useSentences && SENTENCES_BY_LEVEL[childLevel]) {
-      // Space world at level 3+: use sentences
       const sentences = SENTENCES_BY_LEVEL[childLevel] || SENTENCES_BY_LEVEL[3];
       return shuffle(sentences).map(s => ({
         word: s.sentence,
@@ -570,7 +651,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         translation: lf(s, 'translation', uiLang),
       }));
     }
-    // Regular words
     const allWords = getWordsForLevel(childLevel);
     return shuffle(allWords);
   }, [childLevel, diff.useSentences]);
@@ -582,15 +662,12 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       return;
     }
 
-    // Pick target word
     const targetIdx = roundNum % pool.length;
     const targetWord = pool[targetIdx];
 
-    // Pick distractors from pool (excluding target)
     const others = pool.filter((_, i) => i !== targetIdx);
     const distractors = shuffle(others).slice(0, diff.options - 1);
 
-    // Build options and shuffle
     const allOptions = shuffle([targetWord, ...distractors]);
 
     setTarget(targetWord);
@@ -624,11 +701,17 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   const handleCountdownDone = useCallback(() => {
     setPhase('running');
     clearRoundTimers();
-    // After 2-3s of running, show first challenge
     pushTimer(setTimeout(() => {
       startChallenge(wordPoolRef.current, 0);
     }, 2500));
   }, [startChallenge]);
+
+  // Handle back button — clean up everything
+  const handleBack = useCallback(() => {
+    clearRoundTimers();
+    stopAllAudio();
+    onBack();
+  }, [onBack]);
 
   // Handle word tap
   const handleWordTap = useCallback((tappedWord, index) => {
@@ -638,7 +721,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     const isCorrect = tappedWord.word === target.word;
 
     if (isCorrect) {
-      // Correct answer
       setChallengeDisabled(true);
       playCorrect();
       setBoxStates(prev => ({ ...prev, [index]: 'correct' }));
@@ -650,22 +732,19 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       setStreak(newStreak);
       setCorrectCount(c => c + 1);
 
-      // Score
       const streakBonus = newStreak >= 3 ? 5 * newStreak : 0;
       const roundScore = 10 + streakBonus;
       setScore(s => s + roundScore);
 
-      // Coins
       const coinAmount = (newStreak >= 3 || isPowerMode) ? 2 : 1;
       setCoins(c => c + coinAmount);
 
-      // Power mode at 3-streak
       if (newStreak >= 3 && !isPowerMode) {
         setIsPowerMode(true);
         playWhoosh();
       }
 
-      // Praise in user's native language
+      // Praise
       const praisesByLang = {
         he: ['יוֹפִי!', 'נָכוֹן!', 'מְצוּיָּן!', 'כׇּל הַכָּבוֹד!', 'מַדְהִים!'],
         ar: ['رائع!', 'صحيح!', 'ممتاز!', 'أحسنت!', 'مذهل!'],
@@ -688,14 +767,12 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         setRound(nextRound);
         setPhase('running');
 
-        // Run for 2-3s then next challenge
         pushTimer(setTimeout(() => {
           startChallenge(wordPoolRef.current, nextRound);
         }, 2000 + Math.random() * 1000));
       }, 1500));
 
     } else {
-      // Wrong answer
       playWrong();
       setBoxStates(prev => ({ ...prev, [index]: 'wrong' }));
       setStreak(0);
@@ -704,7 +781,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       setAttempts(newAttempts);
 
       if (newAttempts >= 2) {
-        // Auto-reveal correct answer after 2 wrong attempts
         setChallengeDisabled(true);
         const correctIdx = options.findIndex(o => o.word === target.word);
         setTimeout(() => {
@@ -716,7 +792,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
           ], speak);
         }, 500);
 
-        // Move on after showing correct
         const nextRound = round + 1;
         clearRoundTimers();
         pushTimer(setTimeout(() => {
@@ -743,7 +818,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
   // ── RENDER ──
 
-  // World selection screen
   if (showInstructions) {
     return (
       <GameInstructionOverlay
@@ -757,7 +831,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   }
 
   if (phase === 'world-select') {
-    return <WorldSelector onSelect={handleWorldSelect} onBack={onBack} childLevel={childLevel} uiLang={uiLang} />;
+    return <WorldSelector onSelect={handleWorldSelect} onBack={handleBack} childLevel={childLevel} uiLang={uiLang} />;
   }
 
   // Game over screen
@@ -777,69 +851,70 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     );
   }
 
-  // Main game viewport (countdown, running, word-challenge)
-  const isPaused = phase === 'word-challenge' || phase === 'countdown';
-
+  // Main game viewport
   return (
     <div className="h-screen relative overflow-hidden" style={{ touchAction: 'manipulation' }}>
       <RunnerViewport
         world={world}
-        isPaused={isPaused}
+        phase={phase}
         isPowerMode={isPowerMode}
       >
-        {/* HUD */}
+        {/* HUD — always visible, z-40 for back button */}
         <RunHUD
           score={score}
           coins={coins}
           streak={streak}
           round={round}
           totalRounds={diff.rounds}
-          onBack={onBack}
+          onBack={handleBack}
           isPowerMode={isPowerMode}
           uiLang={uiLang}
         />
 
+        {/* Race track progress */}
+        <RaceTrack round={round} totalRounds={diff.rounds} world={world} />
+
         {/* Countdown overlay */}
         {phase === 'countdown' && (
-          <Countdown onDone={handleCountdownDone} />
+          <Countdown onDone={handleCountdownDone} world={world} />
         )}
 
         {/* Word challenge overlay */}
         {phase === 'word-challenge' && target && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center">
-            {/* Replay button */}
-            <button
-              onClick={handleReplay}
-              className="mb-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full p-3 shadow-lg active:scale-90 transition-transform animate-pulse"
-            >
-              <Volume2 size={28} className="text-blue-500" />
-            </button>
+          <div className="absolute inset-x-0 top-14 bottom-[28%] z-20 flex flex-col items-center justify-center px-4">
+            {/* Dim backdrop */}
+            <div className="absolute inset-0 bg-black/25 rounded-3xl mx-2" style={{ backdropFilter: 'blur(2px)' }} />
 
-            {/* Instruction text */}
-            <p className="text-white font-bold text-sm drop-shadow mb-3 text-center px-4">
-              {t('listenAndTapCorrect', uiLang)}
-            </p>
+            <div className="relative flex flex-col items-center">
+              {/* Target word display */}
+              <TargetWordBubble
+                target={target}
+                diff={diff}
+                uiLang={uiLang}
+                onReplay={handleReplay}
+              />
 
-            {/* Word boxes */}
-            <div className="flex flex-wrap gap-3 justify-center px-4 max-w-sm">
-              {options.map((opt, i) => (
-                <WordBox
-                  key={`${round}-${i}`}
-                  word={opt.word}
-                  emoji={opt.emoji}
-                  translation={lf(opt, 'translation', uiLang)}
-                  showEmoji={diff.showEmoji}
-                  showHebrew={diff.showHebrew}
-                  onClick={() => handleWordTap(opt, i)}
-                  state={boxStates[i]}
-                  index={i}
-                  disabled={challengeDisabled}
-                />
-              ))}
+              {/* Word option boxes */}
+              <div className="flex flex-wrap gap-3 justify-center max-w-sm">
+                {options.map((opt, i) => (
+                  <WordBox
+                    key={`${round}-${i}`}
+                    word={opt.word}
+                    emoji={opt.emoji}
+                    translation={lf(opt, 'translation', uiLang)}
+                    showEmoji={diff.showEmoji}
+                    showHebrew={diff.showHebrew}
+                    onClick={() => handleWordTap(opt, i)}
+                    state={boxStates[i]}
+                    index={i}
+                    disabled={challengeDisabled}
+                  />
+                ))}
+              </div>
+
+              {/* Coin fly animation */}
+              {showCoin && <CoinAnimation show={true} />}
             </div>
-
-            {/* Coin fly animation */}
-            {showCoin && <CoinAnimation show={true} />}
           </div>
         )}
       </RunnerViewport>

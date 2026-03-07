@@ -43,6 +43,11 @@ const PHRASE_MAP = {
   'בסדר הנכון': 'builder_intro_3',
 };
 
+// Strip Hebrew niqqud (vowel diacritics) — TTS engines mispronounce them
+function stripNiqqud(text) {
+  return text.replace(/[\u0591-\u05C7]/g, '');
+}
+
 // Audio cache - reuse Audio objects
 const audioCache = {};
 
@@ -84,7 +89,7 @@ export function unlockAudioContext() {
 }
 
 function cacheKey(text, lang) {
-  return `${lang || 'auto'}::${text.trim()}`;
+  return `${lang || 'auto'}::${stripNiqqud(text.trim())}`;
 }
 
 /**
@@ -145,7 +150,7 @@ export async function preloadEnglishAudio(texts) {
  */
 export async function playFromAPI(text, lang, signal) {
   try {
-    const trimmed = text.trim();
+    const trimmed = stripNiqqud(text.trim());
     if (!trimmed) return { started: false };
 
     const ctx = getAudioContext();
@@ -236,7 +241,7 @@ function getAudio(filename) {
  * Find audio file for a Hebrew text (exact match or word match)
  */
 function findAudioFile(text) {
-  const trimmed = text.trim();
+  const trimmed = stripNiqqud(text.trim());
   // Check phrases first (exact match)
   if (PHRASE_MAP[trimmed]) return PHRASE_MAP[trimmed];
   // Normalize: remove punctuation for matching

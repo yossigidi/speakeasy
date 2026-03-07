@@ -188,6 +188,113 @@ export default class ExerciseBase {
     }
   }
 
+  /**
+   * Speak English word then native-language translation.
+   */
+  speakWithTranslation(word, translationObj) {
+    if (!this.options.speak) return;
+    const langMap = { he: 'he-IL', ar: 'ar-SA', ru: 'ru-RU' };
+    const SUFFIX = { he: 'He', ar: 'Ar', ru: 'Ru' };
+    const trans = translationObj['translation' + (SUFFIX[this.uiLang] || '')] || translationObj.translation;
+    const ttsLang = langMap[this.uiLang] || 'he-IL';
+    this.options.speak(word, { lang: 'en-US', rate: 0.6, onEnd: () => {
+      setTimeout(() => {
+        if (this.destroyed) return;
+        this.options.speak(trans, { lang: ttsLang, rate: 0.85, _queued: true });
+      }, 400);
+    }});
+  }
+
+  /**
+   * Create a picture card with large emoji and native-language label.
+   */
+  createPictureCard(emoji, label, x, y, size, onClick) {
+    const card = new Container();
+    card.eventMode = 'static';
+    card.cursor = 'pointer';
+
+    const cardH = size + 15;
+    const bg = new Graphics();
+    bg.roundRect(0, 0, size, cardH, 16);
+    bg.fill({ color: 0xffffff, alpha: 0.12 });
+    bg.roundRect(0, 0, size, cardH, 16);
+    bg.stroke({ width: 2, color: 0xffffff, alpha: 0.3 });
+    card.addChild(bg);
+
+    const emojiText = new Text({
+      text: emoji,
+      style: { fontSize: 48 },
+    });
+    emojiText.anchor.set(0.5);
+    emojiText.x = size / 2;
+    emojiText.y = cardH * 0.4;
+    card.addChild(emojiText);
+
+    const labelText = new Text({
+      text: label,
+      style: {
+        fontFamily: 'Arial, sans-serif',
+        fontSize: 13,
+        fontWeight: 'bold',
+        fill: 0xffffff,
+        align: 'center',
+      },
+    });
+    labelText.anchor.set(0.5);
+    labelText.x = size / 2;
+    labelText.y = cardH * 0.78;
+    card.addChild(labelText);
+
+    card.x = x;
+    card.y = y;
+
+    card.on('pointerdown', () => {
+      try { playTap(); } catch {}
+      card.scale.set(0.92);
+      setTimeout(() => { if (!card.destroyed) card.scale.set(1); }, 100);
+      if (onClick) onClick();
+    });
+
+    // Store bg reference for highlight effects
+    card._bg = bg;
+    this.panel.addChild(card);
+    return card;
+  }
+
+  /**
+   * Create a speaker (🔊) replay button.
+   */
+  createSpeakerButton(x, y, onTap) {
+    const btn = new Container();
+    btn.eventMode = 'static';
+    btn.cursor = 'pointer';
+
+    const circle = new Graphics();
+    circle.circle(0, 0, 28);
+    circle.fill({ color: 0x3B82F6, alpha: 0.9 });
+    btn.addChild(circle);
+
+    const icon = new Text({
+      text: '🔊',
+      style: { fontSize: 22 },
+    });
+    icon.anchor.set(0.5);
+    btn.addChild(icon);
+
+    btn.x = x;
+    btn.y = y;
+
+    btn.on('pointerdown', () => {
+      try { playTap(); } catch {}
+      btn.scale.set(0.88);
+      setTimeout(() => { if (!btn.destroyed) btn.scale.set(1); }, 120);
+      if (onTap) onTap();
+    });
+
+    this.panel.addChild(btn);
+    return btn;
+  }
+
   complete(success = true) {
     if (this.onComplete) this.onComplete(success);
   }

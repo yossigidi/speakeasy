@@ -1544,9 +1544,14 @@ select:focus {
   100% { transform: translate(var(--sx, 20px), var(--sy, -20px)) scale(0); opacity: 0; }
 }
 
-/* Paused state — stops all layer animations */
+/* Paused state — stops all layer animations (countdown only) */
 .runner-paused .runner-layer {
   animation-play-state: paused !important;
+}
+
+/* Smooth speed transitions for layers */
+.runner-layer {
+  transition: animation-duration 0.5s ease;
 }
 
 /* Power mode — speeds up layers + golden glow */
