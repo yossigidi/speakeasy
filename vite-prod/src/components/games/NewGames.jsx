@@ -692,11 +692,10 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const huntTimersRef = useRef([]);
   const completedWordsRef = useRef([]);
 
-  const TOTAL_ROUNDS = 8;
+  // Fewer rounds for younger kids
+  const TOTAL_ROUNDS = childLevel <= 2 ? 5 : 8;
   // Options by level: 1→2, 2→3, 3→4, 4→4
   const NUM_OPTIONS = childLevel === 1 ? 2 : childLevel === 2 ? 3 : 4;
-  // Word length by level: 1→3, 2→3-4, 3→4-5, 4→4+
-  const maxWordLen = childLevel === 1 ? 3 : childLevel === 2 ? 4 : 5;
 
   // Preload Hebrew instruction phrases on mount
   useEffect(() => {
@@ -715,7 +714,8 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       childLevel === 2 ? w.word.length <= 4 :
       w.word.length <= 5
     );
-    const source = filtered.length >= TOTAL_ROUNDS ? filtered : MISSING_LETTER_WORDS;
+    // Always use filtered words — if not enough, just use what we have
+    const source = filtered.length > 0 ? filtered : MISSING_LETTER_WORDS;
     const picked = shuffle(source).slice(0, TOTAL_ROUNDS);
     return picked.map(w => {
       // Pick a random position to remove
@@ -1018,6 +1018,30 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     }
   }, [round, showInstructions]);
 
+  const wrongCountRef = useRef(0);
+
+  const autoPlaceCorrect = () => {
+    // Auto-place the correct word so the child isn't stuck
+    const nextIndex = placed.length;
+    const expectedWord = current.words[nextIndex];
+    const correctObj = available.find(a => !a.used && a.word === expectedWord);
+    if (!correctObj) return;
+    wrongCountRef.current = 0;
+    const newPlaced = [...placed, correctObj.word];
+    setPlaced(newPlaced);
+    setAvailable(prev => prev.map(a => a.id === correctObj.id ? { ...a, used: true } : a));
+    if (newPlaced.length === current.words.length) {
+      setIsCorrect(true);
+      sentenceTimersRef.current.push(setTimeout(() => {
+        playSequence([
+          { text: current.sentence, lang: 'en-US', rate: 0.55 },
+          { pause: 500 },
+          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        ], speak);
+      }, 400));
+    }
+  };
+
   const handleWordTap = (wordObj) => {
     if (wordObj.used || isCorrect !== null) return;
     playTap();
@@ -1026,6 +1050,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     const expectedWord = current.words[nextIndex];
 
     if (wordObj.word === expectedWord) {
+      wrongCountRef.current = 0;
       const newPlaced = [...placed, wordObj.word];
       setPlaced(newPlaced);
       setAvailable(prev => prev.map(a => a.id === wordObj.id ? { ...a, used: true } : a));
@@ -1047,7 +1072,12 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       // Wrong word - flash red and shake
       playWrong();
       setWrongTapId(wordObj.id);
+      wrongCountRef.current += 1;
       sentenceTimersRef.current.push(setTimeout(() => setWrongTapId(null), 500));
+      // After 3 wrong taps, auto-place the correct word
+      if (wrongCountRef.current >= 3) {
+        sentenceTimersRef.current.push(setTimeout(autoPlaceCorrect, 600));
+      }
     }
   };
 

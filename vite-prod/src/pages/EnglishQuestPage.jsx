@@ -329,7 +329,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
         { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
       ], speak);
     }, 400);
-  }, [words, optionCount, uiLang, speakSequence]);
+  }, [words, optionCount, uiLang, speak]);
 
   useEffect(() => {
     if (!roundInitRef.current) {
