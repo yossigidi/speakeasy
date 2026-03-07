@@ -132,8 +132,8 @@ function GameOverScreen({ emoji, title, subtitle, score, total, xp, onContinue, 
 function GameHeader({ onBack, title, emoji, right, uiLang }) {
   return (
     <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
-      <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform">
-        <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+      <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center">
+        <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
       </button>
       <div className="text-center">
         <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
@@ -557,7 +557,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       <GameOverScreen
         emoji="📦" title={t('greatSorting', uiLang)}
         subtitle={tReplace('sortedItems', uiLang, { count: correct })}
-        score={Math.min(correct, 6)} total={6} xp={xp}
+        score={Math.min(correct, totalItems)} total={totalItems} xp={xp}
         onContinue={() => onComplete(xp)}
         gradient="from-green-400 to-emerald-500" uiLang={uiLang}
       />
@@ -1020,18 +1020,24 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
 
   const wrongCountRef = useRef(0);
 
+  const autoPlacingRef = useRef(false);
   const autoPlaceCorrect = () => {
+    // Guard against double-fire from rapid taps
+    if (autoPlacingRef.current) return;
+    autoPlacingRef.current = true;
     // Auto-place the correct word so the child isn't stuck
     const nextIndex = placed.length;
     const expectedWord = current.words[nextIndex];
     const correctObj = available.find(a => !a.used && a.word === expectedWord);
-    if (!correctObj) return;
+    if (!correctObj) { autoPlacingRef.current = false; return; }
     wrongCountRef.current = 0;
     const newPlaced = [...placed, correctObj.word];
     setPlaced(newPlaced);
     setAvailable(prev => prev.map(a => a.id === correctObj.id ? { ...a, used: true } : a));
     if (newPlaced.length === current.words.length) {
       setIsCorrect(true);
+      setScore(s => s + 1);
+      playCorrect();
       sentenceTimersRef.current.push(setTimeout(() => {
         playSequence([
           { text: current.sentence, lang: 'en-US', rate: 0.55 },
@@ -1040,6 +1046,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         ], speak);
       }, 400));
     }
+    sentenceTimersRef.current.push(setTimeout(() => { autoPlacingRef.current = false; }, 700));
   };
 
   const handleWordTap = (wordObj) => {

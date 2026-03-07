@@ -162,9 +162,9 @@ function WorldSelector({ onSelect, onBack, childLevel, uiLang }) {
       <div className="absolute top-3 left-3 z-20">
         <button
           onClick={onBack}
-          className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform"
+          className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center"
         >
-          <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
       </div>
       <div className="relative z-10 flex flex-col items-center px-4 pt-6 pb-4 flex-1">
@@ -227,7 +227,7 @@ function Countdown({ onDone }) {
         className="text-8xl font-black text-white drop-shadow-lg"
         style={{ animation: 'countdownPop 0.6s ease-out' }}
       >
-        {count === 0 ? '!Go' : count}
+        {count === 0 ? 'Go!' : count}
       </div>
     </div>
   );
@@ -239,9 +239,9 @@ function RunHUD({ score, coins, streak, round, totalRounds, onBack, isPowerMode,
     <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-3 py-2">
       <button
         onClick={onBack}
-        className="text-white/80 hover:text-white bg-black/20 rounded-full p-2 backdrop-blur-sm active:scale-90 transition-transform"
+        className="text-white/80 hover:text-white bg-black/20 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center"
       >
-        <ArrowLeft size={18} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+        <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
       </button>
 
       <div className="flex items-center gap-3">

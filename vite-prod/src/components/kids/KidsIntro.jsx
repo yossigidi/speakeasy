@@ -91,10 +91,8 @@ export default function KidsIntro({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, visible]);
 
-  // Fallback: if auto-speak didn't fire (iOS audio lock), speak on tap
+  // Tap to re-speak (useful on iOS where auto-speak may silently fail)
   const handleCardTouch = useCallback(() => {
-    if (spokenRef.current) return; // Already spoken, don't repeat
-    spokenRef.current = true;
     unlockAudioContext();
     stopAllAudio();
     const { text, lang } = getSpeechText();
@@ -132,7 +130,7 @@ export default function KidsIntro({
         paddingTop: 'calc(env(safe-area-inset-top, 0px) + 24px)',
         paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)',
       }}
-      onClick={dismiss}
+      onClick={e => e.stopPropagation()}
     >
       <div
         className={`relative w-full max-w-sm rounded-[2rem] bg-gradient-to-br ${gradient} p-1 shadow-2xl`}

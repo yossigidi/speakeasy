@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
+import { stopAllAudio } from '../../utils/hebrewAudio.js';
 import { t, RTL_LANGS } from '../../utils/translations.js';
 
 /**
  * Pre-game instruction overlay.
  * Shows Speakli avatar + game emoji, instruction text, TTS, and animated start button.
- *
- * @param {string} gameEmoji - Emoji for the game
- * @param {string} title - Game title
- * @param {string} instruction - Instruction text in child's language
- * @param {string} uiLang - 'he'|'ar'|'ru'|'en'
- * @param {function} onStart - Called when user taps start
  */
 export default function GameInstructionOverlay({ gameEmoji, title, instruction, uiLang, onStart }) {
-  const { speak } = useSpeech();
+  const { speak, stopSpeaking } = useSpeech();
   const [visible, setVisible] = useState(true);
   const spokenRef = useRef(false);
 
@@ -30,6 +25,8 @@ export default function GameInstructionOverlay({ gameEmoji, title, instruction, 
   }, [instruction, uiLang, speak]);
 
   const handleStart = () => {
+    stopSpeaking();
+    stopAllAudio();
     setVisible(false);
     onStart();
   };
@@ -54,13 +51,13 @@ export default function GameInstructionOverlay({ gameEmoji, title, instruction, 
           {title}
         </h2>
 
-        <p className="text-sm text-gray-600 dark:text-gray-300 font-medium mb-5 leading-relaxed px-2">
+        <p className="text-base text-gray-600 dark:text-gray-300 font-medium mb-5 leading-relaxed px-2">
           {instruction}
         </p>
 
         <button
           onClick={handleStart}
-          className="w-full py-4 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-green-400 to-emerald-500 shadow-lg active:scale-95 transition-transform animate-pulse-soft"
+          className="w-full py-4 rounded-2xl font-black text-white text-xl bg-gradient-to-r from-green-400 to-emerald-500 shadow-lg active:scale-95 transition-transform animate-pulse"
         >
           {t('letsStart', uiLang)} ✨
         </button>
