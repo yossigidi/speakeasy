@@ -129,13 +129,18 @@ function adaptWordDoor(def, childLevel, uiLang) {
         translationRu: target.translationRu,
       },
       distractors,
-      // Override prompts with emoji hint for easy levels
+      // Prompts with emoji hint (easy) or word hint (hard)
       ...(isEasy ? {
         prompt: `Choose: ${target.emoji} ${target.word}`,
         promptHe: `${target.emoji} ${target.translation} :בחרו`,
         promptAr: `${target.emoji} ${getTranslation(target, 'ar')} :اختاروا`,
         promptRu: `Выберите: ${target.emoji} ${getTranslation(target, 'ru')}`,
-      } : {}),
+      } : {
+        prompt: `Which word means "${target.translation}"? ${target.emoji}`,
+        promptHe: `?${target.emoji} "${target.translation}" איזו מילה פירושה`,
+        promptAr: `أي كلمة تعني "${getTranslation(target, 'ar')}"؟ ${target.emoji}`,
+        promptRu: `Какое слово означает "${getTranslation(target, 'ru')}"? ${target.emoji}`,
+      }),
     },
   };
 }

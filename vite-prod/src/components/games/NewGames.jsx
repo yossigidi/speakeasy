@@ -48,7 +48,7 @@ const GAME_INSTRUCTIONS = {
 };
 
 // Helper to get instruction text for current lang
-const getInstruction = (key, lang) => GAME_INSTRUCTIONS[key][lang] || GAME_INSTRUCTIONS[key].en;
+const getInstruction = (key, lang) => GAME_INSTRUCTIONS[key]?.[lang] || GAME_INSTRUCTIONS[key]?.en || '';
 
 /* ── Shared components ── */
 function ConfettiBurst({ show }) {
@@ -483,7 +483,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   const totalItems = TOTAL_SETS * currentSet.items.length;
 
   useEffect(() => {
-    if (!item) return;
+    if (!item || showInstructions) return;
     // Voice instructions on first item
     if (!instructionsGiven.current) {
       instructionsGiven.current = true;
@@ -500,7 +500,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
       const t2 = setTimeout(() => speak(item.word, { rate: 0.75 }), 400);
       return () => clearTimeout(t2);
     }
-  }, [currentItem, setIndex]);
+  }, [currentItem, setIndex, showInstructions]);
 
   const handleSort = (categoryIndex) => {
     if (!item || lastResult) return;
@@ -721,7 +721,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const current = rounds[round];
 
   useEffect(() => {
-    if (!current) return;
+    if (!current || showInstructions) return;
     if (!instructionsGiven.current) {
       instructionsGiven.current = true;
       const t = setTimeout(() => {
@@ -739,7 +739,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       }, 300);
       return () => clearTimeout(t);
     }
-  }, [round]);
+  }, [round, showInstructions]);
 
   const handlePick = (letter) => {
     if (selectedLetter !== null) return;
@@ -967,7 +967,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const current = sentences[round];
 
   useEffect(() => {
-    if (!current) return;
+    if (!current || showInstructions) return;
     setPlaced([]);
     setIsCorrect(null);
     // Shuffle the words
@@ -990,7 +990,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       }, 400);
       return () => clearTimeout(t);
     }
-  }, [round]);
+  }, [round, showInstructions]);
 
   const handleWordTap = (wordObj) => {
     if (wordObj.used || isCorrect !== null) return;
