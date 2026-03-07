@@ -8,7 +8,7 @@ import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import alphabetData from '../data/alphabet-kids.json';
 import { shuffle } from '../utils/shuffle.js';
-import { stopAllAudio } from '../utils/hebrewAudio.js';
+import { playSequence, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playWrong } from '../utils/gameSounds.js';
 import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
@@ -151,7 +151,7 @@ function LetterGrid({ onSelect, completedLetters }) {
               <button
                 key={item.letter}
                 onClick={() => {
-                  speak(item.letter, { rate: 0.8 });
+                  speak(item.letter, { rate: 0.6 });
                   onSelect(item);
                 }}
                 className={`relative aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all duration-200 active:scale-[0.88] hover:scale-[1.05] ${
@@ -190,15 +190,14 @@ function LetterDetail({ letter, onBack, onStartGame }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
 
-  const speakLetter = () => speak(letter.letter, { rate: 0.7 });
-  const speakSound = () => speak(letter.soundWord, { rate: 0.7 });
+  const speakLetter = () => speak(letter.letter, { rate: 0.6 });
+  const speakSound = () => speak(letter.soundWord, { rate: 0.6 });
   const speakWord = (wordObj) => {
-    speak(wordObj.word, {
-      rate: 0.85,
-      onEnd: () => {
-        speak(lf(wordObj, 'translation', uiLang), { lang: uiLang, rate: 0.9, _queued: true });
-      }
-    });
+    playSequence([
+      { text: wordObj.word, lang: 'en-US', rate: 0.6 },
+      { pause: 400 },
+      { text: lf(wordObj, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+    ], speak);
   };
 
   return (
@@ -357,7 +356,7 @@ function FindLetterGame({ letter, onComplete }) {
 
   const handleTap = (l, i) => {
     if (found.includes(i)) return;
-    speak(l.char, { rate: 0.8 });
+    speak(l.char, { rate: 0.6 });
     if (l.isTarget) {
       const newFound = [...found, i];
       setFound(newFound);
@@ -451,7 +450,11 @@ function MatchWordGame({ letter, onComplete }) {
       setSelectedWord(null);
       return;
     }
-    speak(w.word, { rate: 0.75 });
+    playSequence([
+      { text: w.word, lang: 'en-US', rate: 0.6 },
+      { pause: 400 },
+      { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+    ], speak);
     setSelectedWord(w.id);
     setWrongPair(null);
   };
@@ -463,7 +466,11 @@ function MatchWordGame({ letter, onComplete }) {
       setMatched(newMatched);
       setSelectedWord(null);
       // Speak translation in user's native language on match
-      speak(lf(w, 'translation', uiLang), { lang: uiLang, rate: 0.9 });
+      playSequence([
+        { text: w.word, lang: 'en-US', rate: 0.6 },
+        { pause: 300 },
+        { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speak);
       if (newMatched.length >= words.length) {
         setShowConfetti(true);
         matchTimersRef.current.push(setTimeout(onComplete, 1000));
@@ -597,7 +604,7 @@ function CaseMatchGame({ letter, onComplete }) {
   }, [letter]);
 
   const handleAnswer = (opt) => {
-    speak(opt, { rate: 0.8 });
+    speak(opt, { rate: 0.6 });
     const isCorrect = opt === questions[current].correct;
 
     if (isCorrect) {
@@ -744,7 +751,7 @@ function ListenChooseGame({ letter, onComplete }) {
       const speakTimer = setTimeout(() => {
         // Cancel any ongoing speech before speaking next question
         if (stopSpeakingRef.current) stopSpeakingRef.current();
-        speakRef.current(questions[current].targetWord, { rate: 0.7 });
+        speakRef.current(questions[current].targetWord, { rate: 0.6 });
       }, 600);
       return () => clearTimeout(speakTimer);
     }
@@ -755,12 +762,11 @@ function ListenChooseGame({ letter, onComplete }) {
     if (opt.isCorrect) {
       setResult('correct');
       setScore(s => s + 1);
-      speak(opt.word, {
-        rate: 0.75,
-        onEnd: () => {
-          listenTimersRef.current.push(setTimeout(() => speak(lf(opt, 'translation', uiLang), { lang: uiLang, rate: 0.9, _queued: true }), 100));
-        }
-      });
+      playSequence([
+        { text: opt.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(opt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speak);
       listenTimersRef.current.push(setTimeout(() => {
         setResult(null);
         if (current + 1 >= questions.length) {
@@ -793,7 +799,7 @@ function ListenChooseGame({ letter, onComplete }) {
 
       {/* Big speaker button */}
       <button
-        onClick={() => speak(q.targetWord, { rate: 0.7 })}
+        onClick={() => speak(q.targetWord, { rate: 0.6 })}
         className={`w-24 h-24 rounded-full bg-gradient-to-br ${letter.color} flex items-center justify-center mx-auto mb-6 shadow-2xl active:scale-90 transition-transform relative`}
       >
         <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ background: 'inherit' }} />

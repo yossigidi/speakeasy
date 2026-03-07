@@ -281,7 +281,7 @@ function BubblePopGame({ onComplete, onBack }) {
           { pause: 200 },
           { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
           { pause: 150 },
-          { text: target.letter, lang: 'en-US', rate: 0.7 },
+          { text: target.letter, lang: 'en-US', rate: 0.6 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
@@ -290,7 +290,7 @@ function BubblePopGame({ onComplete, onBack }) {
         playSequence([
           { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
           { pause: 150 },
-          { text: target.letter, lang: 'en-US', rate: 0.7 },
+          { text: target.letter, lang: 'en-US', rate: 0.6 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
@@ -318,7 +318,7 @@ function BubblePopGame({ onComplete, onBack }) {
 
   const handlePop = (bubble) => {
     if (popped.includes(bubble.id)) return;
-    speak(bubble.letter, { rate: 0.8 });
+    speak(bubble.letter, { rate: 0.6 });
 
     if (bubble.isTarget) {
       playPop();
@@ -427,7 +427,7 @@ function BubblePopGame({ onComplete, onBack }) {
         {targetLetter && (
           <div className="text-center mb-2 px-4">
             <button
-              onClick={() => speak(targetLetter.letter, { rate: 0.7 })}
+              onClick={() => speak(targetLetter.letter, { rate: 0.6 })}
               className="inline-flex items-center gap-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg"
             >
               <span className="text-sm font-bold text-gray-600 dark:text-gray-300">
@@ -591,9 +591,9 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
 
     // Speak the English word clearly, then native-language translation
     playSequence([
-      { text: card.word, lang: 'en-US', rate: 0.75 },
-      { pause: 150 },
-      { text: lf(card, 'translation', uiLang), lang: uiLang },
+      { text: card.word, lang: 'en-US', rate: 0.6 },
+      { pause: 400 },
+      { text: lf(card, 'translation', uiLang), lang: uiLang, rate: 0.85 },
     ], speak);
 
     const newFlipped = [...flipped, card.id];
@@ -614,9 +614,9 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
           playSequence([
             { text: getKidsInstruction('bravo', uiLang), lang: uiLang },
             { pause: 100 },
-            { text: first.word, lang: 'en-US', rate: 0.75 },
-            { pause: 150 },
-            { text: lf(first, 'translation', uiLang), lang: uiLang },
+            { text: first.word, lang: 'en-US', rate: 0.6 },
+            { pause: 400 },
+            { text: lf(first, 'translation', uiLang), lang: uiLang, rate: 0.85 },
           ], speak);
         }, 400);
         matchTimersRef.current.push(t1);
@@ -925,12 +925,18 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: getKidsInstruction('wordBuilder', uiLang), lang: uiLang },
           { pause: 200 },
-          { text: w.word, lang: 'en-US', rate: 0.7 },
+          { text: w.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
       }, 400);
       return () => clearTimeout(t);
     } else {
-      const t = setTimeout(() => speakRef.current(w.word, { rate: 0.7 }), 400);
+      const t = setTimeout(() => playSequence([
+        { text: w.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speakRef.current), 400);
       return () => clearTimeout(t);
     }
   }, [round, words, showInstructions]);
@@ -944,7 +950,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     if (letterObj.letter === expectedLetter) {
       // Correct!
       playTap();
-      speak(letterObj.letter, { rate: 0.8 });
+      speak(letterObj.letter, { rate: 0.6 });
       const newPlaced = [...placed, letterObj.letter];
       setPlaced(newPlaced);
       setAvailable(prev => prev.map(a => a.id === letterObj.id ? { ...a, used: true } : a));
@@ -959,9 +965,9 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
           playSequence([
             { text: getKidsInstruction('correct', uiLang), lang: uiLang },
             { pause: 100 },
-            { text: currentWord.word, lang: 'en-US', rate: 0.75 },
-            { pause: 150 },
-            { text: lf(currentWord, 'translation', uiLang), lang: uiLang },
+            { text: currentWord.word, lang: 'en-US', rate: 0.6 },
+            { pause: 400 },
+            { text: lf(currentWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
           ], speak);
         }, 300);
       }
@@ -1065,7 +1071,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Word display: emoji + hint */}
         <div className="text-center mb-6 px-4">
           <button
-            onClick={() => speak(currentWord.word, { rate: 0.7 })}
+            onClick={() => playSequence([{ text: currentWord.word, lang: 'en-US', rate: 0.6 }, { pause: 400 }, { text: lf(currentWord, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)}
             className="inline-block"
           >
             <span className="text-7xl block mb-2 animate-jelly">{currentWord.emoji}</span>
@@ -1074,7 +1080,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             {lf(currentWord, 'translation', uiLang)}
           </p>
           <button
-            onClick={() => speak(currentWord.word, { rate: 0.7 })}
+            onClick={() => playSequence([{ text: currentWord.word, lang: 'en-US', rate: 0.6 }, { pause: 400 }, { text: lf(currentWord, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)}
             className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-sm font-bold text-blue-500 active:scale-95 transition-transform"
           >
             <Volume2 size={16} /> {t('listenBtn', uiLang)}

@@ -78,7 +78,7 @@ export default class DialogueSystem {
     if (this.options.speak) {
       this.options.speak(text, {
         lang: speakLang,
-        rate: speakLang === 'he' ? 0.9 : 0.85,
+        rate: speakLang === 'he' ? 0.85 : 0.6,
         onEnd: () => {
           // Auto-advance after TTS finishes + small delay
           this._autoAdvanceTimer = setTimeout(() => {

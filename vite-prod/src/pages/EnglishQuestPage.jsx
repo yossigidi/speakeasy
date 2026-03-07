@@ -4,7 +4,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
-import { stopAllAudio } from '../utils/hebrewAudio.js';
+import { playSequence, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete, playStar, playTap } from '../utils/gameSounds.js';
 import { WORDS_BY_LEVEL, SENTENCES_BY_LEVEL, getWordsForLevel } from '../data/kids-vocabulary.js';
 import { QUEST_GRAMMAR } from '../data/kids-vocabulary.js';
@@ -321,11 +321,13 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
 
     // Voice instruction
     setTimeout(() => {
-      speakSequence([
+      playSequence([
         { text: t('questFindThe', uiLang), lang: uiLang, rate: 0.9 },
         { pause: 200 },
-        { text: targetWord.word, lang: 'en-US', rate: 0.85 },
-      ]);
+        { text: targetWord.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speak);
     }, 400);
   }, [words, optionCount, uiLang, speakSequence]);
 
@@ -389,7 +391,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
         <h2 className="text-white font-black text-3xl">{target?.word || ''}</h2>
         <p className="text-white/50 text-xs mt-1" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(target, 'translation', uiLang) || ''}</p>
         <button
-          onClick={() => speak(target?.word, { lang: 'en-US', rate: 0.8 })}
+          onClick={() => target && playSequence([{ text: target.word, lang: 'en-US', rate: 0.6 }, { pause: 400 }, { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)}
           className="mt-2 p-2 rounded-full bg-white/20 active:scale-90 transition-transform inline-flex"
         >
           <Volume2 size={18} className="text-white" />
@@ -683,7 +685,7 @@ function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }
           </p>
           <p className="text-white/50 text-sm" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
           <button
-            onClick={() => speakFn(current.sentence, { lang: 'en-US', rate: 0.8 })}
+            onClick={() => playSequence([{ text: current.sentence, lang: 'en-US', rate: 0.55 }, { pause: 500 }, { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speakFn)}
             className="mt-3 p-2.5 rounded-full bg-white/20 active:scale-90 transition-transform inline-flex"
           >
             <Volume2 size={20} className="text-white" />

@@ -449,9 +449,9 @@ function KidsWordOfDay({ speak, speakSequence, uiLang }) {
         <button
           onClick={() => {
             speakSequence([
-              { text: word.word, lang: 'en-US', rate: 0.85 },
-              { pause: 600 },
-              { text: lf(word, 'translation', uiLang), lang: uiLang, rate: 0.95 },
+              { text: word.word, lang: 'en-US', rate: 0.6 },
+              { pause: 400 },
+              { text: lf(word, 'translation', uiLang), lang: uiLang, rate: 0.85 },
             ]);
           }}
           className="w-12 h-12 rounded-full bg-white/25 flex items-center justify-center active:scale-90 transition-transform"

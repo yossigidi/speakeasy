@@ -184,7 +184,7 @@ export default class ExerciseBase {
    */
   speak(text, lang = 'en-US') {
     if (this.options.speak) {
-      this.options.speak(text, { lang, rate: 0.8 });
+      this.options.speak(text, { lang, rate: 0.6 });
     }
   }
 

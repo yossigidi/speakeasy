@@ -122,16 +122,16 @@ export default function AudioLearningPage({ onBack }) {
     const spd = speedRef.current;
 
     // English word
-    sequence.push({ text: wordObj.word, lang: 'en-US', rate: 0.85 * spd });
+    sequence.push({ text: wordObj.word, lang: 'en-US', rate: 0.6 * spd });
     sequence.push({ pause: 900 / spd });
 
     // Native-language translation
-    sequence.push({ text: lf(wordObj, 'translation', uiLangRef.current), lang: uiLangRef.current, rate: 0.95 * spd });
+    sequence.push({ text: lf(wordObj, 'translation', uiLangRef.current), lang: uiLangRef.current, rate: 0.85 * spd });
 
     // Example sentence (only in full mode)
     if (modeRef.current === 'full' && wordObj.examples && wordObj.examples.length > 0) {
       sequence.push({ pause: 1200 / spd });
-      sequence.push({ text: wordObj.examples[0], lang: 'en-US', rate: 0.9 * spd });
+      sequence.push({ text: wordObj.examples[0], lang: 'en-US', rate: 0.6 * spd });
     }
 
     // Play the whole sequence smoothly

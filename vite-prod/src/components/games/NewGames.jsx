@@ -247,14 +247,18 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: getInstruction('listenPop', uiLang), lang: uiLang },
           { pause: 300 },
-          { text: tgt.word, lang: 'en-US', rate: 0.7 },
+          { text: tgt.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
     } else {
       const t = setTimeout(() => {
         playSequence([
-          { text: tgt.word, lang: 'en-US', rate: 0.7 },
+          { text: tgt.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
@@ -273,9 +277,9 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       playCorrect();
       gameTimersRef.current.push(setTimeout(() => {
         playSequence([
-          { text: opt.word, lang: 'en-US', rate: 0.75 },
-          { pause: 100 },
-          { text: lf(opt, 'translation', uiLang), lang: uiLang },
+          { text: opt.word, lang: 'en-US', rate: 0.6 },
+          { pause: 300 },
+          { text: lf(opt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speak);
       }, 400));
       gameTimersRef.current.push(setTimeout(() => {
@@ -290,7 +294,11 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   };
 
   const replayWord = () => {
-    if (target) speak(target.word, { rate: 0.7 });
+    if (target) playSequence([
+      { text: target.word, lang: 'en-US', rate: 0.6 },
+      { pause: 400 },
+      { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+    ], speak);
   };
 
   if (gameOver) {
@@ -491,13 +499,19 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: getInstruction('categorySort', uiLang), lang: uiLang },
           { pause: 300 },
-          { text: item.word, lang: 'en-US', rate: 0.75 },
+          { text: item.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(item, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
     } else {
       // Delay to let previous answer's game sound finish
-      const t2 = setTimeout(() => speak(item.word, { rate: 0.75 }), 400);
+      const t2 = setTimeout(() => playSequence([
+        { text: item.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(item, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speak), 400);
       return () => clearTimeout(t2);
     }
   }, [currentItem, setIndex, showInstructions]);
@@ -728,14 +742,20 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: getInstruction('missingLetter', uiLang), lang: uiLang },
           { pause: 300 },
-          { text: current.word, lang: 'en-US', rate: 0.7 },
+          { text: current.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
     } else {
       // Small delay so previous audio is fully stopped
       const t = setTimeout(() => {
-        speak(current.word, { rate: 0.7 });
+        playSequence([
+          { text: current.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        ], speak);
       }, 300);
       return () => clearTimeout(t);
     }
@@ -773,9 +793,9 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       };
       huntTimersRef.current.push(setTimeout(() => {
         playSequence([
-          { text: current.word, lang: 'en-US', rate: 0.75 },
-          { pause: 500 },
-          { text: lf(current, 'translation', uiLang), lang: uiLang },
+          { text: current.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speak, () => {
           audioDone = true;
           tryAdvance();
@@ -840,7 +860,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
 
         {/* Emoji & word display */}
         <div className="text-center mb-8 px-4">
-          <button onClick={() => speak(current.word, { rate: 0.7 })} className="inline-block">
+          <button onClick={() => playSequence([{ text: current.word, lang: 'en-US', rate: 0.6 }, { pause: 400 }, { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)} className="inline-block">
             <span className="text-7xl block mb-3 animate-jelly">{current.emoji}</span>
           </button>
           <p className="text-sm text-gray-400 mb-2" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
@@ -869,7 +889,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
             })}
           </div>
 
-          <button onClick={() => speak(current.word, { rate: 0.7 })}
+          <button onClick={() => playSequence([{ text: current.word, lang: 'en-US', rate: 0.6 }, { pause: 400 }, { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)}
             className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-500 active:scale-95 transition-transform"
           >
             <Volume2 size={14} /> {t('listenBtn', uiLang)}
@@ -980,13 +1000,19 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         playSequence([
           { text: getInstruction('sentenceBuilder', uiLang), lang: uiLang },
           { pause: 300 },
-          { text: current.sentence, lang: 'en-US', rate: 0.7 },
+          { text: current.sentence, lang: 'en-US', rate: 0.55 },
+          { pause: 500 },
+          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
       }, 500);
       return () => clearTimeout(t);
     } else {
       const t = setTimeout(() => {
-        speak(current.sentence, { rate: 0.7 });
+        playSequence([
+          { text: current.sentence, lang: 'en-US', rate: 0.55 },
+          { pause: 500 },
+          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        ], speak);
       }, 400);
       return () => clearTimeout(t);
     }
@@ -1011,7 +1037,9 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         playCorrect();
         sentenceTimersRef.current.push(setTimeout(() => {
           playSequence([
-            { text: current.sentence, lang: 'en-US', rate: 0.75 },
+            { text: current.sentence, lang: 'en-US', rate: 0.55 },
+            { pause: 500 },
+            { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
           ], speak);
         }, 400));
       }
@@ -1086,11 +1114,11 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
 
         {/* Image & translation */}
         <div className="text-center mb-4 px-4">
-          <button onClick={() => speak(current.sentence, { rate: 0.7 })} className="inline-block">
+          <button onClick={() => playSequence([{ text: current.sentence, lang: 'en-US', rate: 0.55 }, { pause: 500 }, { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)} className="inline-block">
             <span className="text-6xl block mb-2 animate-jelly">{current.emoji}</span>
           </button>
           <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(current, 'translation', uiLang)}</p>
-          <button onClick={() => speak(current.sentence, { rate: 0.7 })}
+          <button onClick={() => playSequence([{ text: current.sentence, lang: 'en-US', rate: 0.55 }, { pause: 500 }, { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 }], speak)}
             className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-500 active:scale-95"
           >
             <Volume2 size={14} /> {t('listenBtn', uiLang)}

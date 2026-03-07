@@ -15,9 +15,9 @@ export default function useSpeechSynthesis() {
   // Speak English word then native-language translation with minimal gap
   const speakWordPair = useCallback((englishWord, translation, translationLang = 'he') => {
     speakSequence([
-      { text: englishWord, lang: 'en-US', rate: 0.92 },
-      { pause: 150 },
-      { text: translation, lang: translationLang, rate: 0.9 },
+      { text: englishWord, lang: 'en-US', rate: 0.6 },
+      { pause: 400 },
+      { text: translation, lang: translationLang, rate: 0.85 },
     ]);
   }, [speakSequence]);
 

@@ -84,10 +84,10 @@ const WORLDS = [
 
 // Difficulty config by child level
 const DIFFICULTY = {
-  1: { options: 3, showEmoji: true,  showHebrew: true,  rounds: 6,  ttsRate: 0.65, useSentences: false },
-  2: { options: 3, showEmoji: true,  showHebrew: false, rounds: 8,  ttsRate: 0.7,  useSentences: false },
-  3: { options: 4, showEmoji: false, showHebrew: false, rounds: 8,  ttsRate: 0.8,  useSentences: false },
-  4: { options: 4, showEmoji: false, showHebrew: false, rounds: 10, ttsRate: 0.85, useSentences: true  },
+  1: { options: 3, showEmoji: true,  showHebrew: true,  rounds: 6,  ttsRate: 0.55, useSentences: false },
+  2: { options: 3, showEmoji: true,  showHebrew: false, rounds: 8,  ttsRate: 0.6,  useSentences: false },
+  3: { options: 4, showEmoji: false, showHebrew: false, rounds: 8,  ttsRate: 0.65, useSentences: false },
+  4: { options: 4, showEmoji: false, showHebrew: false, rounds: 10, ttsRate: 0.7, useSentences: true  },
 };
 
 // ── ConfettiBurst (same pattern as NewGames) ──
@@ -602,9 +602,13 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     setShowSparkle(false);
     setPhase('word-challenge');
 
-    // Speak the target word after a brief delay
+    // Speak the target word after a brief delay, then translate
     setTimeout(() => {
-      speak(targetWord.word, { lang: 'en-US', rate: diff.ttsRate });
+      playSequence([
+        { text: targetWord.word, lang: 'en-US', rate: diff.ttsRate },
+        { pause: 400 },
+        { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speak);
     }, 600);
   }, [diff, speak]);
 
@@ -705,7 +709,11 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         const correctIdx = options.findIndex(o => o.word === target.word);
         setTimeout(() => {
           setBoxStates(prev => ({ ...prev, [correctIdx]: 'correct' }));
-          speak(target.word, { lang: 'en-US', rate: diff.ttsRate });
+          playSequence([
+            { text: target.word, lang: 'en-US', rate: diff.ttsRate },
+            { pause: 400 },
+            { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+          ], speak);
         }, 500);
 
         // Move on after showing correct
@@ -725,9 +733,13 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   // Re-speak target word
   const handleReplay = useCallback(() => {
     if (target) {
-      speak(target.word, { lang: 'en-US', rate: diff.ttsRate });
+      playSequence([
+        { text: target.word, lang: 'en-US', rate: diff.ttsRate },
+        { pause: 400 },
+        { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speak);
     }
-  }, [target, speak, diff.ttsRate]);
+  }, [target, speak, diff.ttsRate, uiLang]);
 
   // ── RENDER ──
 
