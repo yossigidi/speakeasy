@@ -635,10 +635,10 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   };
   const pushTimer = (id) => { roundTimersRef.current.push(id); return id; };
 
-  // Preload Hebrew audio + cleanup
+  // Preload Hebrew audio (delayed to not compete with instruction speech) + cleanup
   useEffect(() => {
-    preloadHebrewAudio(RUN_PHRASES);
-    return () => { stopAllAudio(); clearRoundTimers(); };
+    const t = setTimeout(() => preloadHebrewAudio(RUN_PHRASES), 3000);
+    return () => { clearTimeout(t); stopAllAudio(); clearRoundTimers(); };
   }, []);
 
   // Build word pool when world is selected
@@ -679,14 +679,12 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     setShowSparkle(false);
     setPhase('word-challenge');
 
-    // Speak the target word after a brief delay, then translate
-    setTimeout(() => {
-      playSequence([
-        { text: targetWord.word, lang: 'en-US', rate: diff.ttsRate },
-        { pause: 400 },
-        { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-      ], speak);
-    }, 600);
+    // Speak the target word immediately (in parallel with popup)
+    playSequence([
+      { text: targetWord.word, lang: 'en-US', rate: diff.ttsRate },
+      { pause: 400 },
+      { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+    ], null);
   }, [diff, speak]);
 
   // Handle world selection

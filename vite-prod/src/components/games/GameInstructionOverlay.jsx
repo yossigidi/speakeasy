@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
-import { useSpeech } from '../../contexts/SpeechContext.jsx';
-import { stopAllAudio } from '../../utils/hebrewAudio.js';
+import { playSequence, stopAllAudio } from '../../utils/hebrewAudio.js';
 import { t, RTL_LANGS } from '../../utils/translations.js';
 
 /**
@@ -9,20 +8,18 @@ import { t, RTL_LANGS } from '../../utils/translations.js';
  * Shows Speakli avatar + game emoji, instruction text, TTS, and animated start button.
  */
 export default function GameInstructionOverlay({ gameEmoji, title, instruction, uiLang, onStart }) {
-  const { speak, stopSpeaking } = useSpeech();
   const [visible, setVisible] = useState(true);
   const spokenRef = useRef(false);
 
-  // Auto-speak instruction immediately — no delay
+  // Auto-speak instruction immediately via Cloud TTS (more reliable than SpeechContext)
   useEffect(() => {
     if (!spokenRef.current && instruction) {
       spokenRef.current = true;
-      speak(instruction, { lang: uiLang });
+      playSequence([{ text: instruction, lang: uiLang, rate: 0.85 }], null);
     }
-  }, [instruction, uiLang, speak]);
+  }, [instruction, uiLang]);
 
   const handleStart = () => {
-    stopSpeaking();
     stopAllAudio();
     setVisible(false);
     onStart();

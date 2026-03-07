@@ -107,7 +107,7 @@ export async function preloadHebrewAudio(texts, lang) {
   if (toLoad.length === 0) return;
 
   await Promise.allSettled(toLoad.map(async (text) => {
-    const trimmed = text.trim();
+    const trimmed = stripNiqqud(text.trim());
     try {
       const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/tts', {
