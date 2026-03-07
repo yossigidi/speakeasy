@@ -336,8 +336,7 @@ function FindLetterGame({ letter, onComplete }) {
   // Read instruction aloud when game loads
   useEffect(() => {
     const instruction = tReplace('findAllLettersInstruction', uiLang, { upper: letter.letter, lower: letter.lower });
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
-    return () => clearTimeout(timer);
+    speak(instruction, { lang: uiLang, rate: 0.9 });
   }, []);
 
   const letters = useMemo(() => {
@@ -436,8 +435,7 @@ function MatchWordGame({ letter, onComplete }) {
   // Read instruction aloud when game loads
   useEffect(() => {
     const instruction = t('tapWordThenPicture', uiLang);
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
-    return () => clearTimeout(timer);
+    speak(instruction, { lang: uiLang, rate: 0.9 });
   }, []);
 
   // Limit to 3 words for young kids (ages 3-8) - 5 pairs is too overwhelming
@@ -579,8 +577,7 @@ function CaseMatchGame({ letter, onComplete }) {
   // Read instruction aloud when game loads
   useEffect(() => {
     const instruction = tReplace('uppercaseFindLowercaseInstruction', uiLang, { letter: letter.letter });
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
-    return () => clearTimeout(timer);
+    speak(instruction, { lang: uiLang, rate: 0.9 });
   }, []);
 
   // All questions are about the SAME letter the child chose to learn.
@@ -728,8 +725,7 @@ function ListenChooseGame({ letter, onComplete }) {
   // Read instruction aloud with Jessica voice on mount
   useEffect(() => {
     const instruction = t('tapSpeakerPickPicture', uiLang);
-    const timer = setTimeout(() => speak(instruction, { lang: uiLang, rate: 0.9 }), 400);
-    return () => clearTimeout(timer);
+    speak(instruction, { lang: uiLang, rate: 0.9 });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const questions = useMemo(() => {

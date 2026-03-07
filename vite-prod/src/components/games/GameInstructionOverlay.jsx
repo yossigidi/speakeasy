@@ -13,14 +13,11 @@ export default function GameInstructionOverlay({ gameEmoji, title, instruction, 
   const [visible, setVisible] = useState(true);
   const spokenRef = useRef(false);
 
-  // Auto-speak instruction
+  // Auto-speak instruction immediately — no delay
   useEffect(() => {
     if (!spokenRef.current && instruction) {
       spokenRef.current = true;
-      const timer = setTimeout(() => {
-        speak(instruction, { lang: uiLang });
-      }, 400);
-      return () => clearTimeout(timer);
+      speak(instruction, { lang: uiLang });
     }
   }, [instruction, uiLang, speak]);
 

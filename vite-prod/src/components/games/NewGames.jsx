@@ -240,19 +240,16 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     }));
     setOptions(all);
 
-    // Voice instructions on first round, then just the word
+    // Speak word immediately — overlay already gave the instruction
     if (round === 0 && !instructionsGiven.current) {
       instructionsGiven.current = true;
-      const t = setTimeout(() => {
-        playSequence([
-          { text: getInstruction('listenPop', uiLang), lang: uiLang },
-          { pause: 300 },
-          { text: tgt.word, lang: 'en-US', rate: 0.6 },
-          { pause: 400 },
-          { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-        ], speakRef.current);
-      }, 500);
-      return () => clearTimeout(t);
+    }
+    if (round === 0) {
+      playSequence([
+        { text: tgt.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speakRef.current);
     } else {
       const t = setTimeout(() => {
         playSequence([
@@ -260,7 +257,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
           { pause: 400 },
           { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speakRef.current);
-      }, 500);
+      }, 300);
       return () => clearTimeout(t);
     }
   }, [round, words, showInstructions]);
@@ -495,23 +492,19 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
     // Voice instructions on first item
     if (!instructionsGiven.current) {
       instructionsGiven.current = true;
-      const t = setTimeout(() => {
-        playSequence([
-          { text: getInstruction('categorySort', uiLang), lang: uiLang },
-          { pause: 300 },
-          { text: item.word, lang: 'en-US', rate: 0.6 },
-          { pause: 400 },
-          { text: lf(item, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-        ], speakRef.current);
-      }, 500);
-      return () => clearTimeout(t);
+      // Speak first word immediately — overlay already gave the instruction
+      playSequence([
+        { text: item.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(item, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speakRef.current);
     } else {
-      // Delay to let previous answer's game sound finish
+      // Small delay to let previous answer's game sound finish
       const t2 = setTimeout(() => playSequence([
         { text: item.word, lang: 'en-US', rate: 0.6 },
         { pause: 400 },
         { text: lf(item, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-      ], speak), 400);
+      ], speak), 300);
       return () => clearTimeout(t2);
     }
   }, [currentItem, setIndex, showInstructions]);
@@ -738,16 +731,12 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
     if (!current || showInstructions) return;
     if (!instructionsGiven.current) {
       instructionsGiven.current = true;
-      const t = setTimeout(() => {
-        playSequence([
-          { text: getInstruction('missingLetter', uiLang), lang: uiLang },
-          { pause: 300 },
-          { text: current.word, lang: 'en-US', rate: 0.6 },
-          { pause: 400 },
-          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-        ], speakRef.current);
-      }, 500);
-      return () => clearTimeout(t);
+      // Speak word immediately — overlay already gave the instruction
+      playSequence([
+        { text: current.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speakRef.current);
     } else {
       // Small delay so previous audio is fully stopped
       const t = setTimeout(() => {
@@ -993,19 +982,14 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     // Shuffle the words
     setAvailable(shuffle(current.words.map((w, i) => ({ id: i, word: w, used: false }))));
 
-    // Voice instructions on first round, then just the sentence
+    // Speak sentence immediately — overlay already gave the instruction
     if (!instructionsGiven.current) {
       instructionsGiven.current = true;
-      const t = setTimeout(() => {
-        playSequence([
-          { text: getInstruction('sentenceBuilder', uiLang), lang: uiLang },
-          { pause: 300 },
-          { text: current.sentence, lang: 'en-US', rate: 0.55 },
-          { pause: 500 },
-          { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-        ], speakRef.current);
-      }, 500);
-      return () => clearTimeout(t);
+      playSequence([
+        { text: current.sentence, lang: 'en-US', rate: 0.55 },
+        { pause: 500 },
+        { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speakRef.current);
     } else {
       const t = setTimeout(() => {
         playSequence([
@@ -1013,7 +997,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
           { pause: 500 },
           { text: lf(current, 'translation', uiLang), lang: uiLang, rate: 0.85 },
         ], speak);
-      }, 400);
+      }, 300);
       return () => clearTimeout(t);
     }
   }, [round, showInstructions]);

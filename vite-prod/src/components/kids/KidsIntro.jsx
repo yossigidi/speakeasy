@@ -49,20 +49,6 @@ export default function KidsIntro({
   const dismissTimerRef = useRef(null);
   useEffect(() => () => clearTimeout(dismissTimerRef.current), []);
 
-  useEffect(() => {
-    const seen = getSeenSet();
-    if (seen.has(id)) {
-      setVisible(false);
-      return;
-    }
-    setVisible(true);
-    requestAnimationFrame(() => setPhase('visible'));
-
-    // Avatar animation sequence: fly → talk (immediate speech)
-    const waveTimer = setTimeout(() => setAvatarMode('talk'), 300);
-    return () => clearTimeout(waveTimer);
-  }, [id]);
-
   const spokenRef = useRef(false);
 
   // Build the full description text to speak (Speakli's unique voice)
@@ -75,21 +61,29 @@ export default function KidsIntro({
     return { text: d, lang: TTS_LANG[uiLang] || 'en-US' };
   }, [uiLang, desc, descHe, descAr, descRu]);
 
-  // Fire speech once when overlay appears — no delay, guarded by ref
   useEffect(() => {
-    if (phase !== 'visible' || !visible || spokenRef.current) return;
-    spokenRef.current = true;
-    stopAllAudio();
-    const { text, lang } = getSpeechText();
-    setAvatarMode('talk');
-    speak(text, {
-      lang,
-      rate: 0.9,
-      noWebSpeechFallback: true,
-      onEnd: () => setAvatarMode('idle'),
-    });
+    const seen = getSeenSet();
+    if (seen.has(id)) {
+      setVisible(false);
+      return;
+    }
+    setVisible(true);
+    requestAnimationFrame(() => setPhase('visible'));
+
+    // Speak immediately when popup appears — no delay
+    if (!spokenRef.current) {
+      spokenRef.current = true;
+      stopAllAudio();
+      const { text, lang } = getSpeechText();
+      setAvatarMode('talk');
+      speak(text, {
+        lang,
+        rate: 0.9,
+        onEnd: () => setAvatarMode('idle'),
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, visible]);
+  }, [id]);
 
   // Tap to re-speak (useful on iOS where auto-speak may silently fail)
   const handleCardTouch = useCallback(() => {

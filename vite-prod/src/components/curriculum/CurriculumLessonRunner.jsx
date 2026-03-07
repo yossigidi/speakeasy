@@ -96,12 +96,10 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       const title = lf(lessonData.lesson, 'title', uiLang);
       const desc = t(introKey, uiLang);
 
-      // Speak title then description
-      introTimerRef.current = setTimeout(() => {
-        speak(title, { lang: uiLang, rate: 0.9, onEnd: () => {
-          introTimerRef.current = setTimeout(() => speak(desc, { lang: uiLang, rate: 0.9, _queued: true }), 200);
-        }});
-      }, 200);
+      // Speak title then description — immediately
+      speak(title, { lang: uiLang, rate: 0.9, onEnd: () => {
+        introTimerRef.current = setTimeout(() => speak(desc, { lang: uiLang, rate: 0.9, _queued: true }), 200);
+      }});
     }
   }, [phase, lessonData]);
 

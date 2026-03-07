@@ -272,19 +272,16 @@ function BubblePopGame({ onComplete, onBack }) {
 
     setBubbles(allBubbles);
 
-    // Voice instructions on first round, then just say the letter
+    // Speak letter immediately — overlay already gave the instruction
     if (round === 0 && !instructionsGiven.current) {
       instructionsGiven.current = true;
-      const t = setTimeout(() => {
-        playSequence([
-          { text: getKidsInstruction('bubblePop', uiLang), lang: uiLang },
-          { pause: 200 },
-          { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
-          { pause: 150 },
-          { text: target.letter, lang: 'en-US', rate: 0.6 },
-        ], speakRef.current);
-      }, 500);
-      return () => clearTimeout(t);
+    }
+    if (round === 0) {
+      playSequence([
+        { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
+        { pause: 150 },
+        { text: target.letter, lang: 'en-US', rate: 0.6 },
+      ], speakRef.current);
     } else {
       const t = setTimeout(() => {
         playSequence([
@@ -292,7 +289,7 @@ function BubblePopGame({ onComplete, onBack }) {
           { pause: 150 },
           { text: target.letter, lang: 'en-US', rate: 0.6 },
         ], speakRef.current);
-      }, 500);
+      }, 300);
       return () => clearTimeout(t);
     }
   }, [round, rounds, showInstructions]);
@@ -909,25 +906,22 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     setRoundComplete(false);
     setWrongSlot(null);
 
-    // Voice instructions on first round, then just say the word
+    // Speak word immediately — overlay already gave the instruction
     if (round === 0 && !instructionsGiven.current) {
       instructionsGiven.current = true;
-      const t = setTimeout(() => {
-        playSequence([
-          { text: getKidsInstruction('wordBuilder', uiLang), lang: uiLang },
-          { pause: 200 },
-          { text: w.word, lang: 'en-US', rate: 0.6 },
-          { pause: 400 },
-          { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-        ], speakRef.current);
-      }, 400);
-      return () => clearTimeout(t);
+    }
+    if (round === 0) {
+      playSequence([
+        { text: w.word, lang: 'en-US', rate: 0.6 },
+        { pause: 400 },
+        { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      ], speakRef.current);
     } else {
       const t = setTimeout(() => playSequence([
         { text: w.word, lang: 'en-US', rate: 0.6 },
         { pause: 400 },
         { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-      ], speakRef.current), 400);
+      ], speakRef.current), 300);
       return () => clearTimeout(t);
     }
   }, [round, words, showInstructions]);
