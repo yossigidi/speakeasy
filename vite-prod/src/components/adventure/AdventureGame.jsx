@@ -105,6 +105,8 @@ export default function AdventureGame({ onBack }) {
     }
   }, [stopSpeaking]);
 
+  const childLevel = progress.curriculumLevel || progress.childLevel || 1;
+
   // Bridge options from React contexts to engine
   const optionsRef = useRef({});
   optionsRef.current = {
@@ -115,6 +117,7 @@ export default function AdventureGame({ onBack }) {
     onProgress: (data) => updateProgress({ adventure: { ...(progress.adventure || {}), ...data } }),
     adventureProgress: progress.adventure || {},
     uiLang,
+    childLevel,
     onPause: () => setShowPause(true),
     onWorldMap: () => setShowWorldMap(true),
     onBack,

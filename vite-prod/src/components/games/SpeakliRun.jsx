@@ -7,6 +7,7 @@ import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playW
 import { getWordsForLevel, SENTENCES_BY_LEVEL } from '../../data/kids-vocabulary.js';
 import { shuffle } from '../../utils/shuffle.js';
 import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
+import GameInstructionOverlay from './GameInstructionOverlay.jsx';
 import { t, tReplace, lf, RTL_LANGS } from '../../utils/translations.js';
 
 // Hebrew phrases preloaded for instant feedback
@@ -517,6 +518,8 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
 
+  const [showInstructions, setShowInstructions] = useState(true);
+
   // Game state machine: world-select → countdown → running → word-challenge → game-over
   const [phase, setPhase] = useState('world-select');
   const [world, setWorld] = useState(null);
@@ -729,6 +732,18 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   // ── RENDER ──
 
   // World selection screen
+  if (showInstructions) {
+    return (
+      <GameInstructionOverlay
+        gameEmoji="🏃"
+        title={t('gameSpeakliRunTitle', uiLang)}
+        instruction={uiLang === 'he' ? 'רוצו עם ספיקלי! הקשיבו למילה ולחצו על התשובה' : uiLang === 'ar' ? 'اركضوا مع سبيكلي! استمعوا للكلمة واضغطوا على الإجابة' : uiLang === 'ru' ? 'Бегите со Спикли! Слушайте слово и нажимайте на ответ' : 'Run with Speakli! Listen to the word and tap the answer'}
+        uiLang={uiLang}
+        onStart={() => setShowInstructions(false)}
+      />
+    );
+  }
+
   if (phase === 'world-select') {
     return <WorldSelector onSelect={handleWorldSelect} onBack={onBack} childLevel={childLevel} uiLang={uiLang} />;
   }

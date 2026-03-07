@@ -1,5 +1,6 @@
 import { Sprite, Assets } from 'pixi.js';
 import { playCorrect, playComplete, playStar } from '../../../utils/gameSounds.js';
+import { adaptExercise } from '../../../utils/adventure/exerciseGenerator.js';
 
 /**
  * Scene lifecycle manager.
@@ -216,10 +217,12 @@ export default class SceneManager {
       if (this._destroyed) return;
     }
 
-    // 3. Exercise
+    // 3. Exercise (adapted to child's level)
     if (scene.exercise) {
       this.isExerciseActive = true;
-      await this._runExercise(scene.exercise);
+      const childLevel = this.options.childLevel || 1;
+      const adapted = adaptExercise(scene.exercise, childLevel, this.options.uiLang || 'he');
+      await this._runExercise(adapted);
       this.isExerciseActive = false;
       if (this._destroyed) return;
 

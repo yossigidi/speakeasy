@@ -24,6 +24,7 @@ const DEFAULT_PROGRESS = {
   onboardingComplete: false,
   ageGroup: null,
   lettersCompleted: [],
+  wordsLearned: [],
   curriculum: null,
   simulation: {
     industry: null,
@@ -474,6 +475,31 @@ export function UserProgressProvider({ children: reactChildren }) {
     return task;
   }, [user, activeChildId]);
 
+  const recordWordPractice = useCallback(async (words) => {
+    if (!user || !words || words.length === 0) return;
+    try {
+      const docRef = activeChildId
+        ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
+        : window.firestore.doc(window.db, 'users', user.uid);
+      // Use arrayUnion to add only new words (Firestore deduplicates)
+      await window.firestore.setDoc(docRef, {
+        wordsLearned: window.firestore.arrayUnion(...words),
+        totalWordsLearned: window.firestore.increment(0), // will be corrected below
+      }, { merge: true });
+      // Read back to get accurate count
+      const snap = await window.firestore.getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        const count = (data.wordsLearned || []).length;
+        if (count !== data.totalWordsLearned) {
+          await window.firestore.setDoc(docRef, { totalWordsLearned: count }, { merge: true });
+        }
+      }
+    } catch (err) {
+      console.warn('recordWordPractice failed:', err);
+    }
+  }, [user, activeChildId]);
+
   const addXP = useCallback((amount, source = 'unknown') => {
     if (!user || amount <= 0) return Promise.resolve({ leveledUp: false, newLevel: progress.level });
 
@@ -887,6 +913,7 @@ export function UserProgressProvider({ children: reactChildren }) {
     updateProgress,
     addXP,
     addSpeakingMinutes,
+    recordWordPractice,
     levelInfo,
     // Achievements
     achievementToast,
@@ -907,7 +934,7 @@ export function UserProgressProvider({ children: reactChildren }) {
     resetChildPin,
     updateChildLevel,
     deleteAllUserData,
-  }), [progress, loading, updateProgress, addXP, addSpeakingMinutes, levelInfo, achievementToast, dismissAchievementToast,
+  }), [progress, loading, updateProgress, addXP, addSpeakingMinutes, recordWordPractice, levelInfo, achievementToast, dismissAchievementToast,
        activeChildId, activeChild,
        isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
        addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData]);

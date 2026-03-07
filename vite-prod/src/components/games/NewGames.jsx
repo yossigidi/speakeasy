@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Check } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
+import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../../utils/gameSounds.js';
 import { getWordsForLevel, SENTENCES_BY_LEVEL, CATEGORIES_BY_LEVEL } from '../../data/kids-vocabulary.js';
 import { shuffle } from '../../utils/shuffle.js';
 import { t, tReplace, lf, RTL_LANGS } from '../../utils/translations.js';
+import GameInstructionOverlay from './GameInstructionOverlay.jsx';
 
 // Hebrew instruction phrases for new games — preloaded on mount
 const NEW_GAME_PHRASES = [
@@ -174,6 +176,7 @@ const LISTEN_POP_WORDS = [
 export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
+  const { recordWordPractice } = useUserProgress();
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [options, setOptions] = useState([]);
@@ -182,10 +185,12 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   const [wrongId, setWrongId] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
   const gameTimersRef = useRef([]);
+  const correctWordsRef = useRef([]);
 
   const TOTAL_ROUNDS = 6;
   // Options count by level: 1→4, 2→6, 3→6, 4→8
@@ -213,10 +218,12 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   }, []);
 
   useEffect(() => {
+    if (showInstructions) return;
     if (round >= TOTAL_ROUNDS) {
       setGameOver(true);
       setShowConfetti(true);
       playComplete();
+      if (correctWordsRef.current.length > 0) recordWordPractice(correctWordsRef.current);
       return;
     }
     const tgt = words[round];
@@ -252,7 +259,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       }, 500);
       return () => clearTimeout(t);
     }
-  }, [round, words]);
+  }, [round, words, showInstructions]);
 
   const poppingRef = useRef(false);
   const handlePop = (opt) => {
@@ -262,6 +269,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       poppingRef.current = true;
       setPopped(opt.id);
       setScore(s => s + 1);
+      correctWordsRef.current.push(opt.word);
       playCorrect();
       gameTimersRef.current.push(setTimeout(() => {
         playSequence([
@@ -301,6 +309,15 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   return (
     <div className="kids-bg min-h-screen relative">
       <FloatingDecorations />
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="🎧"
+          title={t('gameListenPopTitle', uiLang)}
+          instruction={getInstruction('listenPop', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="🎧"
           title={t('listenAndPop', uiLang)}
@@ -428,9 +445,10 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   const [currentItem, setCurrentItem] = useState(0);
   const [sorted, setSorted] = useState([]);
   const [correct, setCorrect] = useState(0);
-  const [lastResult, setLastResult] = useState(null); // 'correct' | 'wrong' | null
+  const [lastResult, setLastResult] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
   const sortTimersRef = useRef([]);
 
   // Sets by level: 1-2→1 set, 3-4→2 sets
@@ -537,6 +555,15 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   return (
     <div className="kids-bg min-h-screen relative">
       <FloatingDecorations />
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="📦"
+          title={t('gameCategorySortTitle', uiLang)}
+          instruction={getInstruction('categorySort', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="📦"
           title={t('categorySort', uiLang)}
@@ -639,14 +666,17 @@ const MISSING_LETTER_WORDS = [
 export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
+  const { recordWordPractice } = useUserProgress();
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedLetter, setSelectedLetter] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
   const huntTimersRef = useRef([]);
+  const completedWordsRef = useRef([]);
 
   const TOTAL_ROUNDS = 8;
   // Options by level: 1→2, 2→3, 3→4, 4→4
@@ -724,6 +754,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
       if (round + 1 >= TOTAL_ROUNDS) {
         setGameOver(true);
         playComplete();
+        if (completedWordsRef.current.length > 0) recordWordPractice(completedWordsRef.current);
       } else {
         setRound(r => r + 1);
       }
@@ -732,6 +763,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
     if (isCorrect) {
       playCorrect();
       setScore(s => s + 1);
+      completedWordsRef.current.push(current.word);
       // Play English word, short pause, then Hebrew translation
       // Wait for audio to finish before advancing
       let audioDone = false;
@@ -778,6 +810,15 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   return (
     <div className="kids-bg min-h-screen relative">
       <FloatingDecorations />
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="🔤"
+          title={t('gameMissingLetterTitle', uiLang)}
+          instruction={getInstruction('missingLetter', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="🔤"
           title={t('missingLetter', uiLang)}
@@ -892,6 +933,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const [available, setAvailable] = useState([]);
   const [isCorrect, setIsCorrect] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
@@ -1014,6 +1056,15 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   return (
     <div className="kids-bg min-h-screen pb-24 relative">
       <FloatingDecorations />
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="📝"
+          title={t('gameSentenceBuilderTitle', uiLang)}
+          instruction={getInstruction('sentenceBuilder', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
       <div className="relative z-10">
         <GameHeader onBack={onBack} emoji="📝"
           title={t('sentenceBuilder', uiLang)}

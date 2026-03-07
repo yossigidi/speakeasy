@@ -7,9 +7,11 @@ import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../u
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
+import GameInstructionOverlay from '../components/games/GameInstructionOverlay.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { shuffle } from '../utils/shuffle.js';
+import { getWordsForLevel } from '../data/kids-vocabulary.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
@@ -63,6 +65,33 @@ const KIDS_GAME_INSTRUCTIONS = {
 // Helper to get game instruction text for current lang
 const getKidsInstruction = (key, lang) => KIDS_GAME_INSTRUCTIONS[key]?.[lang] || KIDS_GAME_INSTRUCTIONS[key]?.en || '';
 import alphabetData from '../data/alphabet-kids.json';
+
+// Progressive letter groups for BubblePop
+const LETTER_GROUPS = [
+  ['A','B','C','D','E','F'],
+  ['G','H','I','J','K','L'],
+  ['M','N','O','P','Q','R'],
+  ['S','T','U','V','W','X','Y','Z'],
+];
+
+// Smart word pool: prioritize unlearned words, mix in review
+function buildSmartWordPool(levelWords, wordsLearned, count) {
+  const mastered = new Set(wordsLearned || []);
+  const unlearned = levelWords.filter(w => !mastered.has(w.word));
+  const review = levelWords.filter(w => mastered.has(w.word));
+  const newCount = Math.ceil(count * 0.7);
+  const reviewCount = count - newCount;
+  const pool = [
+    ...shuffle(unlearned).slice(0, newCount),
+    ...shuffle(review).slice(0, reviewCount),
+  ];
+  // If not enough, fill from whatever is available
+  if (pool.length < count) {
+    const remaining = shuffle(levelWords.filter(w => !pool.find(p => p.word === w.word)));
+    pool.push(...remaining.slice(0, count - pool.length));
+  }
+  return shuffle(pool).slice(0, count);
+}
 
 /* ── Confetti burst ── */
 function ConfettiBurst({ show }) {
@@ -121,6 +150,7 @@ function FloatingDecorations() {
 function BubblePopGame({ onComplete, onBack }) {
   const { uiLang } = useTheme();
   const { speak, speakSequence } = useSpeech();
+  const { progress, updateProgress } = useUserProgress();
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [bubbles, setBubbles] = useState([]);
@@ -129,34 +159,87 @@ function BubblePopGame({ onComplete, onBack }) {
   const [wrongId, setWrongId] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
+  const [showGroupComplete, setShowGroupComplete] = useState(false);
   const animRef = useRef(null);
   const containerRef = useRef(null);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
   const popTimersRef = useRef([]);
+  const correctLettersRef = useRef(new Set());
   useEffect(() => () => { popTimersRef.current.forEach(clearTimeout); }, []);
 
   const TOTAL_ROUNDS = 6;
   const BUBBLES_PER_ROUND = 8;
+
+  // Progressive letter tracking
+  const lettersCompleted = progress.lettersCompleted || [];
+  const completedSet = useMemo(() => new Set(lettersCompleted), [lettersCompleted]);
+
+  // Determine active group (first group not fully mastered)
+  const activeGroupIndex = useMemo(() => {
+    for (let i = 0; i < LETTER_GROUPS.length; i++) {
+      const allMastered = LETTER_GROUPS[i].every(l => completedSet.has(l));
+      if (!allMastered) return i;
+    }
+    return LETTER_GROUPS.length - 1; // all done, cycle last
+  }, [completedSet]);
+
+  const activeGroup = LETTER_GROUPS[activeGroupIndex];
 
   // Stop all audio on unmount (back button)
   useEffect(() => {
     return () => stopAllAudio();
   }, []);
 
-  // Pick random letters for each round
+  // Pick letters for each round: prioritize unlearned from active group, fill with review
   const rounds = useMemo(() => {
-    const shuffled = shuffle(alphabetData);
-    return shuffled.slice(0, TOTAL_ROUNDS);
-  }, []);
+    const unlearned = activeGroup.filter(l => !completedSet.has(l));
+    const reviewPool = LETTER_GROUPS.slice(0, activeGroupIndex).flat();
+
+    // Build target letters: prioritize unlearned, fill with review
+    const targets = [];
+    const unlShuffle = shuffle(unlearned);
+    for (let i = 0; i < Math.min(TOTAL_ROUNDS, unlShuffle.length); i++) {
+      targets.push(unlShuffle[i]);
+    }
+    if (targets.length < TOTAL_ROUNDS) {
+      const reviewShuffle = shuffle(reviewPool);
+      for (let i = 0; targets.length < TOTAL_ROUNDS && i < reviewShuffle.length; i++) {
+        targets.push(reviewShuffle[i]);
+      }
+    }
+    // If still not enough, fill from active group
+    if (targets.length < TOTAL_ROUNDS) {
+      const allShuffle = shuffle(activeGroup);
+      for (let i = 0; targets.length < TOTAL_ROUNDS && i < allShuffle.length; i++) {
+        if (!targets.includes(allShuffle[i])) targets.push(allShuffle[i]);
+      }
+    }
+
+    return targets.map(letter => alphabetData.find(a => a.letter === letter) || alphabetData[0]);
+  }, [activeGroup, activeGroupIndex, completedSet]);
 
   // Generate bubbles for current round
   useEffect(() => {
+    if (showInstructions) return;
     if (round >= TOTAL_ROUNDS) {
       setGameOver(true);
       setShowConfetti(true);
       playComplete();
+      // Save newly mastered letters
+      const newLetters = [...correctLettersRef.current].filter(l => !completedSet.has(l));
+      if (newLetters.length > 0) {
+        const updated = [...lettersCompleted, ...newLetters];
+        updateProgress({ lettersCompleted: updated });
+        // Check if active group is now complete
+        const groupDone = activeGroup.every(l => updated.includes(l));
+        if (groupDone) {
+          setShowGroupComplete(true);
+          setTimeout(() => setShowGroupComplete(false), 2500);
+        }
+      }
       return;
     }
     const target = rounds[round];
@@ -212,7 +295,7 @@ function BubblePopGame({ onComplete, onBack }) {
       }, 500);
       return () => clearTimeout(t);
     }
-  }, [round, rounds]);
+  }, [round, rounds, showInstructions]);
 
   // Animate bubbles floating up
   useEffect(() => {
@@ -240,6 +323,8 @@ function BubblePopGame({ onComplete, onBack }) {
     if (bubble.isTarget) {
       playPop();
       playCorrect();
+      // Track this letter as correctly identified
+      if (targetLetter) correctLettersRef.current.add(targetLetter.letter);
       setPopped(prev => {
         const next = [...prev, bubble.id];
         if (next.length >= 2) {
@@ -258,10 +343,21 @@ function BubblePopGame({ onComplete, onBack }) {
   };
 
   if (gameOver) {
+    const totalLearned = new Set([...lettersCompleted, ...correctLettersRef.current]).size;
     return (
       <div className="kids-bg min-h-screen relative">
         <FloatingDecorations />
         <ConfettiBurst show={showConfetti} />
+        {showGroupComplete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl px-8 py-6 text-center shadow-2xl animate-pop-in">
+              <SpeakliAvatar mode="celebrate" size="md" />
+              <h3 className="text-2xl font-black mt-2 text-gray-800 dark:text-white">
+                {t('groupComplete', uiLang)}
+              </h3>
+            </div>
+          </div>
+        )}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
           <SpeakliAvatar mode="celebrate" size="lg" glow />
           <h2 className="text-4xl font-black py-2 mb-2 mt-2" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
@@ -270,6 +366,12 @@ function BubblePopGame({ onComplete, onBack }) {
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-2 font-medium">
             {tReplace('poppedBubbles', uiLang, { score })}
           </p>
+          {/* Letter progress bar */}
+          <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-4 py-2 mb-3">
+            <span className="text-sm font-bold text-gray-600 dark:text-gray-300">
+              {tReplace('lettersLearnedProgress', uiLang, { done: totalLearned, total: 26 })}
+            </span>
+          </div>
           <div className="flex gap-2 mb-6">
             {[...Array(TOTAL_ROUNDS)].map((_, i) => (
               <Star key={i} size={32} className={`${i < score ? 'text-yellow-400 fill-yellow-400 animate-pop-in' : 'text-gray-300'}`} style={{ animationDelay: `${i * 0.1}s` }} />
@@ -292,6 +394,16 @@ function BubblePopGame({ onComplete, onBack }) {
   return (
     <div className="kids-bg min-h-screen relative overflow-hidden" ref={containerRef}>
       <FloatingDecorations />
+      {/* Instruction overlay */}
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="🫧"
+          title={t('gameBubblePopTitle', uiLang)}
+          instruction={getKidsInstruction('bubblePop', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
@@ -322,7 +434,7 @@ function BubblePopGame({ onComplete, onBack }) {
                 {t('findTheLetter', uiLang)}
               </span>
               <span className={`text-4xl font-black bg-gradient-to-r ${targetLetter.color} bg-clip-text text-transparent animate-jelly`}>
-                {targetLetter.letter}
+                {targetLetter.letter}{targetLetter.lower}
               </span>
               <Volume2 size={18} className="text-gray-400" />
             </button>
@@ -375,35 +487,18 @@ function BubblePopGame({ onComplete, onBack }) {
    fruits, animals). Match word to picture.
    ══════════════════════════════════════════════════════ */
 
-// Simple, visual words kids already know
-const MEMORY_WORDS = [
-  // Fruits
-  { word: 'apple', emoji: '🍎', translation: 'תַּפּוּחַ', translationAr: 'تفاحة', translationRu: 'яблоко', bg: 'from-red-300 to-red-400' },
-  { word: 'banana', emoji: '🍌', translation: 'בָּנָנָה', translationAr: 'موزة', translationRu: 'банан', bg: 'from-yellow-200 to-yellow-400' },
-  { word: 'orange', emoji: '🍊', translation: 'תַּפּוּז', translationAr: 'برتقالة', translationRu: 'апельсин', bg: 'from-orange-300 to-orange-400' },
-  { word: 'grape', emoji: '🍇', translation: 'עֲנָבִים', translationAr: 'عنب', translationRu: 'виноград', bg: 'from-purple-300 to-purple-400' },
-  // Animals
-  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка', bg: 'from-amber-200 to-amber-400' },
-  { word: 'dog', emoji: '🐶', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака', bg: 'from-yellow-300 to-amber-400' },
-  { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба', bg: 'from-blue-200 to-blue-400' },
-  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица', bg: 'from-sky-200 to-sky-400' },
-  // Colors
-  { word: 'red', emoji: '🔴', translation: 'אָדֹם', translationAr: 'أحمر', translationRu: 'красный', bg: 'from-red-300 to-red-500' },
-  { word: 'blue', emoji: '🔵', translation: 'כָּחֹל', translationAr: 'أزرق', translationRu: 'синий', bg: 'from-blue-300 to-blue-500' },
-  { word: 'green', emoji: '🟢', translation: 'יָרֹק', translationAr: 'أخضر', translationRu: 'зелёный', bg: 'from-green-300 to-green-500' },
-  { word: 'yellow', emoji: '🟡', translation: 'צָהֹב', translationAr: 'أصفر', translationRu: 'жёлтый', bg: 'from-yellow-200 to-yellow-400' },
-  // Simple things
-  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', translationAr: 'شمس', translationRu: 'солнце', bg: 'from-yellow-200 to-orange-300' },
-  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна', bg: 'from-indigo-200 to-indigo-400' },
-  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', translationAr: 'نجمة', translationRu: 'звезда', bg: 'from-yellow-200 to-yellow-400' },
-  { word: 'heart', emoji: '❤️', translation: 'לֵב', translationAr: 'قلب', translationRu: 'сердце', bg: 'from-pink-300 to-rose-400' },
-  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч', bg: 'from-green-200 to-emerald-400' },
-  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт', bg: 'from-pink-200 to-pink-400' },
+// Color gradients for memory cards (cycled based on index)
+const MEMORY_CARD_BG = [
+  'from-red-300 to-red-400', 'from-yellow-200 to-yellow-400', 'from-orange-300 to-orange-400',
+  'from-purple-300 to-purple-400', 'from-amber-200 to-amber-400', 'from-blue-200 to-blue-400',
+  'from-sky-200 to-sky-400', 'from-green-300 to-green-500', 'from-pink-300 to-rose-400',
+  'from-indigo-200 to-indigo-400', 'from-green-200 to-emerald-400', 'from-pink-200 to-pink-400',
 ];
 
 function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak, speakSequence } = useSpeech();
+  const { progress, recordWordPractice } = useUserProgress();
   const [cards, setCards] = useState([]);
   const [flipped, setFlipped] = useState([]);
   const [matched, setMatched] = useState([]);
@@ -414,13 +509,21 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   const [round, setRound] = useState(0);
   const [roundStars, setRoundStars] = useState([]);
   const [showRoundComplete, setShowRoundComplete] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
   const lockRef = useRef(false);
   const matchTimersRef = useRef([]);
   const usedWordsRef = useRef(new Set());
+  const matchedWordsRef = useRef([]);
 
   const TOTAL_ROUNDS = 3;
   const basePairs = childLevel === 1 ? 4 : childLevel === 2 ? 5 : 6;
   const currentPairs = basePairs + round;
+
+  // Level-appropriate word pool
+  const levelWords = useMemo(() => {
+    const words = getWordsForLevel(childLevel);
+    return words.map((w, i) => ({ ...w, bg: MEMORY_CARD_BG[i % MEMORY_CARD_BG.length] }));
+  }, [childLevel]);
 
   // Stop all audio + clear timers on unmount (back button)
   useEffect(() => {
@@ -433,11 +536,18 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
 
   // Build cards for current round — runs on mount and when round changes
   useEffect(() => {
-    // Pick fresh words not used in previous rounds
-    const available = MEMORY_WORDS.filter(w => !usedWordsRef.current.has(w.word));
+    if (showInstructions) return;
+    // Smart pool: prioritize unlearned words
+    const wordsLearned = progress.wordsLearned || [];
+    const available = buildSmartWordPool(
+      levelWords.filter(w => !usedWordsRef.current.has(w.word)),
+      wordsLearned,
+      currentPairs
+    );
     // If pool is too small, allow reuse
-    const pool = available.length >= currentPairs ? available : MEMORY_WORDS;
-    const picked = shuffle(pool).slice(0, currentPairs);
+    const picked = available.length >= currentPairs
+      ? available.slice(0, currentPairs)
+      : shuffle(levelWords).slice(0, currentPairs);
     picked.forEach(w => usedWordsRef.current.add(w.word));
 
     const deck = [];
@@ -456,10 +566,11 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     setMatched([]);
     setMoves(0);
     lockRef.current = false;
-  }, [round, currentPairs]);
+  }, [round, currentPairs, showInstructions]);
 
-  // Voice instructions on game start
+  // Voice instructions on game start (skip if overlay is shown - overlay handles TTS)
   useEffect(() => {
+    if (showInstructions) return;
     const t = setTimeout(() => {
       playSequence([
         { text: getKidsInstruction('memoryMatch', uiLang), lang: uiLang },
@@ -496,7 +607,8 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
       const [first, second] = newFlipped.map(id => cards.find(c => c.id === id));
 
       if (first.pairId === second.pairId) {
-        // Match found!
+        // Match found! Track matched word
+        matchedWordsRef.current.push(first.word);
         playCorrect();
         const t1 = setTimeout(() => {
           playSequence([
@@ -531,7 +643,10 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
                   }, 1500);
                   matchTimersRef.current.push(t4);
                 } else {
-                  // Final round done
+                  // Final round done — record practiced words
+                  if (matchedWordsRef.current.length > 0) {
+                    recordWordPractice(matchedWordsRef.current);
+                  }
                   setGameOver(true);
                 }
               }, 800);
@@ -599,6 +714,17 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     <div className="kids-bg h-[100dvh] overflow-hidden relative flex flex-col">
       <FloatingDecorations />
       <ConfettiBurst show={showConfetti} />
+
+      {/* Instruction overlay */}
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="🧠"
+          title={t('gameMemoryTitle', uiLang)}
+          instruction={getKidsInstruction('memoryMatch', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
 
       {/* Round-complete overlay */}
       {showRoundComplete && (
@@ -715,33 +841,12 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
    Shows picture + plays sound, child arranges letters.
    ══════════════════════════════════════════════════════ */
 
-// Simple words data for word builder (3-5 letters, kids-friendly)
-const BUILDER_WORDS = [
-  { word: 'cat', emoji: '🐱', translation: 'חָתוּל', translationAr: 'قطة', translationRu: 'кошка' },
-  { word: 'dog', emoji: '🐕', translation: 'כֶּלֶב', translationAr: 'كلب', translationRu: 'собака' },
-  { word: 'sun', emoji: '☀️', translation: 'שֶׁמֶשׁ', translationAr: 'شمس', translationRu: 'солнце' },
-  { word: 'hat', emoji: '🎩', translation: 'כּוֹבַע', translationAr: 'قبعة', translationRu: 'шляпа' },
-  { word: 'cup', emoji: '🥤', translation: 'כּוֹס', translationAr: 'كوب', translationRu: 'стакан' },
-  { word: 'bed', emoji: '🛏️', translation: 'מִטָּה', translationAr: 'سرير', translationRu: 'кровать' },
-  { word: 'bus', emoji: '🚌', translation: 'אוֹטוֹבּוּס', translationAr: 'حافلة', translationRu: 'автобус' },
-  { word: 'fish', emoji: '🐟', translation: 'דָּג', translationAr: 'سمكة', translationRu: 'рыба' },
-  { word: 'bird', emoji: '🐦', translation: 'צִפּוֹר', translationAr: 'طائر', translationRu: 'птица' },
-  { word: 'star', emoji: '⭐', translation: 'כּוֹכָב', translationAr: 'نجمة', translationRu: 'звезда' },
-  { word: 'moon', emoji: '🌙', translation: 'יָרֵחַ', translationAr: 'قمر', translationRu: 'луна' },
-  { word: 'tree', emoji: '🌳', translation: 'עֵץ', translationAr: 'شجرة', translationRu: 'дерево' },
-  { word: 'book', emoji: '📖', translation: 'סֵפֶר', translationAr: 'كتاب', translationRu: 'книга' },
-  { word: 'ball', emoji: '⚽', translation: 'כַּדּוּר', translationAr: 'كرة', translationRu: 'мяч' },
-  { word: 'cake', emoji: '🎂', translation: 'עוּגָה', translationAr: 'كعكة', translationRu: 'торт' },
-  { word: 'frog', emoji: '🐸', translation: 'צְפַרְדֵּעַ', translationAr: 'ضفدع', translationRu: 'лягушка' },
-  { word: 'duck', emoji: '🦆', translation: 'בַּרְוָז', translationAr: 'بطة', translationRu: 'утка' },
-  { word: 'rain', emoji: '🌧️', translation: 'גֶּשֶׁם', translationAr: 'مطر', translationRu: 'дождь' },
-  { word: 'milk', emoji: '🥛', translation: 'חָלָב', translationAr: 'حليب', translationRu: 'молоко' },
-  { word: 'hand', emoji: '✋', translation: 'יָד', translationAr: 'يد', translationRu: 'рука' },
-];
+// No more hardcoded BUILDER_WORDS — uses getWordsForLevel at runtime
 
 function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const { uiLang } = useTheme();
   const { speak, speakSequence } = useSpeech();
+  const { progress, recordWordPractice } = useUserProgress();
   const [round, setRound] = useState(0);
   const [placed, setPlaced] = useState([]);
   const [available, setAvailable] = useState([]);
@@ -750,11 +855,13 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [roundComplete, setRoundComplete] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const speakSeqRef = useRef(speakSequence);
   speakSeqRef.current = speakSequence;
   const instructionsGiven = useRef(false);
+  const builtWordsRef = useRef([]);
 
   const TOTAL_ROUNDS = 6;
 
@@ -763,25 +870,33 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
     return () => stopAllAudio();
   }, []);
 
-  // Filter words by level: 1→3 letters, 2→3-4, 3→4, 4→4-5
+  // Filter words by level: 1→3 letters, 2-3→3-4, 4→3-5
   const maxLen = childLevel >= 4 ? 5 : childLevel >= 3 ? 4 : 4;
   const minLen = childLevel <= 1 ? 3 : 3;
   // Distractors by level: 1→1, 2→2, 3→3, 4→3
   const numDistractors = childLevel === 1 ? 1 : childLevel === 2 ? 2 : 3;
 
   const words = useMemo(() => {
-    const filtered = BUILDER_WORDS.filter(w => w.word.length >= minLen && w.word.length <= maxLen);
-    return shuffle(filtered).slice(0, TOTAL_ROUNDS);
-  }, []);
+    const levelWords = getWordsForLevel(childLevel);
+    const filtered = levelWords.filter(w => w.word.length >= minLen && w.word.length <= maxLen);
+    const wordsLearned = progress.wordsLearned || [];
+    const pool = buildSmartWordPool(filtered, wordsLearned, TOTAL_ROUNDS);
+    return pool.length >= TOTAL_ROUNDS ? pool : shuffle(filtered).slice(0, TOTAL_ROUNDS);
+  }, [childLevel]);
 
   const currentWord = words[round] || words[0];
 
   // Setup letters for current round
   useEffect(() => {
+    if (showInstructions) return;
     if (round >= TOTAL_ROUNDS) {
       setGameOver(true);
       setShowConfetti(true);
       playComplete();
+      // Record practiced words
+      if (builtWordsRef.current.length > 0) {
+        recordWordPractice(builtWordsRef.current);
+      }
       return;
     }
     const w = words[round];
@@ -818,7 +933,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       const t = setTimeout(() => speakRef.current(w.word, { rate: 0.7 }), 400);
       return () => clearTimeout(t);
     }
-  }, [round, words]);
+  }, [round, words, showInstructions]);
 
   const handleLetterTap = (letterObj) => {
     if (letterObj.used || roundComplete) return;
@@ -839,6 +954,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         playCorrect();
         setRoundComplete(true);
         setScore(s => s + 1);
+        builtWordsRef.current.push(currentWord.word);
         setTimeout(() => {
           playSequence([
             { text: getKidsInstruction('correct', uiLang), lang: uiLang },
@@ -908,6 +1024,16 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   return (
     <div className="kids-bg min-h-screen pb-24 relative">
       <FloatingDecorations />
+      {/* Instruction overlay */}
+      {showInstructions && (
+        <GameInstructionOverlay
+          gameEmoji="🏗️"
+          title={t('gameWordBuilderTitle', uiLang)}
+          instruction={getKidsInstruction('wordBuilder', uiLang)}
+          uiLang={uiLang}
+          onStart={() => setShowInstructions(false)}
+        />
+      )}
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
@@ -1186,21 +1312,21 @@ function GameSelector({ onSelectGame, onBack }) {
               }`}
               style={{ animationDelay: `${i * 0.05}s` }}
             >
-              <div className={`bg-gradient-to-br ${game.gradient} p-4 relative overflow-hidden h-full`}
+              <div className={`bg-gradient-to-br ${game.gradient} p-5 relative overflow-hidden h-full`}
                 style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)' }}
               >
                 {/* Decorative circle */}
                 <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
                 <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-white/10" />
 
-                <div className="relative flex flex-col items-center text-center gap-1.5">
-                  <div className="w-14 h-14 rounded-2xl bg-white/25 flex items-center justify-center text-3xl">
+                <div className="relative flex flex-col items-center text-center gap-2">
+                  <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl">
                     {game.emoji}
                   </div>
-                  <h3 className="text-sm font-black text-white drop-shadow-md leading-tight">
+                  <h3 className="text-base font-black text-white drop-shadow-md leading-tight">
                     {t(game.titleKey, uiLang)}
                   </h3>
-                  <p className="text-[11px] text-white/75 font-medium leading-tight">
+                  <p className="text-xs text-white/80 font-semibold leading-tight">
                     {t(game.descKey, uiLang)}
                   </p>
                 </div>
