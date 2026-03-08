@@ -125,9 +125,12 @@ function BossHPBar({ hp, maxHP, bossEmoji, bossImage, bossName }) {
   return (
     <div className="flex items-center gap-3 px-4 py-2">
       {bossImage ? (
-        <img src={bossImage} alt="" className="w-8 h-8 object-contain" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
-      ) : null}
-      <span className="text-3xl" style={bossImage ? { display: 'none' } : {}}>{bossEmoji}</span>
+        <div className="w-9 h-9 rounded-lg overflow-hidden bg-gradient-to-br from-red-500/30 to-purple-600/30 ring-1 ring-white/20 flex-shrink-0">
+          <img src={bossImage} alt="" className="w-full h-full object-cover" onError={e => { e.target.parentElement.style.display = 'none'; }} />
+        </div>
+      ) : (
+        <span className="text-3xl">{bossEmoji}</span>
+      )}
       <div className="flex-1">
         <div className="flex justify-between text-xs font-bold text-white/80 mb-1">
           <span>{bossName}</span>
@@ -182,89 +185,86 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLa
   const petEmoji = hero?.pet != null ? PETS[hero.pet] : null;
   const guidePlayed = useRef(false);
 
-  // Teacher guidance TTS on mount
+  // Teacher guidance TTS on mount — use speak() directly for reliable iOS playback
   useEffect(() => {
     if (guidePlayed.current) return;
     guidePlayed.current = true;
+    const TTS_LANG = { he: 'he-IL', ar: 'ar-SA', ru: 'ru-RU' };
     const timer = setTimeout(() => {
-      playSequence([
-        { text: t('questGuideWelcome', uiLang), lang: uiLang, rate: 0.9 },
-      ], speak);
+      const text = t('questGuideWelcome', uiLang);
+      if (text && speak) {
+        speak(text, { lang: TTS_LANG[uiLang] || 'en-US', rate: 0.9 });
+      }
     }, 800);
     return () => clearTimeout(timer);
   }, [uiLang, speak]);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex flex-col items-center justify-center p-6 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
-      <SceneBgVideo src="/videos/quest/intro.mp4" />
-      <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />
-      {/* Background scene emojis */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-float opacity-20 text-4xl"
-            style={{
-              left: `${(i * 13) % 90}%`,
-              top: `${(i * 11) % 80}%`,
-              animationDelay: `${i * 0.3}s`,
-              animationDuration: `${3 + (i % 3)}s`,
-            }}
-          >
-            {scene.emoji}
-          </div>
-        ))}
-      </div>
-
-      <div className="relative z-10 text-center space-y-4 max-w-sm w-full">
-        {/* Hero display */}
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 pb-6 overflow-auto">
+      {/* Header area with hero */}
+      <div className="text-center pt-4 pb-2">
         <div className="relative inline-block">
-          <div className="animate-jelly"><HeroDisplay heroIdx={heroIdx} /></div>
-          <div className="absolute -top-1 -right-2 text-3xl">{outfitEmoji}</div>
-          {petEmoji && <div className="absolute -bottom-1 -left-2 text-3xl animate-wiggle">{petEmoji}</div>}
+          <div className="animate-jelly"><HeroDisplay heroIdx={heroIdx} imgClass="w-20 h-20" /></div>
+          <div className="absolute -top-1 -right-2 text-2xl">{outfitEmoji}</div>
+          {petEmoji && <div className="absolute -bottom-1 -left-2 text-2xl animate-wiggle">{petEmoji}</div>}
         </div>
-
-        {/* Quest level badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
-          <Shield size={16} className="text-yellow-300" />
-          <span className="text-white font-bold text-sm">
-            {tReplace('questHeroLevel', uiLang, { level: questLevel })}
-          </span>
-        </div>
-
-        {/* Coins */}
-        <div className="flex items-center justify-center gap-2">
-          <span className="text-2xl">🪙</span>
-          <span className="text-white font-black text-xl">{questCoins}</span>
-        </div>
-
-        {/* Scene info */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-          {scene.icon ? (
-            <img src={scene.icon} alt="" className="w-16 h-16 rounded-full object-cover mx-auto mb-2 shadow-lg" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
-          ) : null}
-          <div className="text-4xl mb-2" style={scene.icon ? { display: 'none' } : {}}>{scene.emoji}</div>
-          <h2 className="text-white font-black text-xl mb-1">
-            {t(scene.nameKey, uiLang)}
-          </h2>
-          <p className="text-white/70 text-sm">
-            {tReplace('questDefeatBoss', uiLang, { boss: t(scene.bossNameKey, uiLang) })}
-          </p>
-          <div className="flex items-center justify-center gap-1 mt-2">
-            {scene.bossImage ? (
-              <img src={scene.bossImage} alt="" className="w-8 h-8 object-contain" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
-            ) : null}
-            <span className="text-2xl" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</span>
-            <span className="text-white/60 text-xs">
-              {tReplace('questBossLabel', uiLang, { boss: t(scene.bossNameKey, uiLang) })}
+        <div className="flex items-center justify-center gap-3 mt-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40">
+            <Shield size={14} className="text-blue-500" />
+            <span className="text-blue-700 dark:text-blue-300 font-bold text-xs">
+              {tReplace('questHeroLevel', uiLang, { level: questLevel })}
             </span>
           </div>
+          <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/40">
+            <span className="text-sm">🪙</span>
+            <span className="text-yellow-700 dark:text-yellow-300 font-bold text-xs">{questCoins}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Scene card — TalkingWorld style */}
+      <div className="px-4 max-w-lg mx-auto">
+        <div
+          className="w-full rounded-3xl p-5 relative overflow-hidden"
+          style={{ background: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url(${scene.bgImage}) center/cover` }}
+        >
+          {/* Scene icon badge */}
+          {scene.icon && (
+            <img
+              src={scene.icon}
+              alt=""
+              className="absolute top-3 right-3 w-14 h-14 rounded-full object-cover border-2 border-white/40 shadow-lg"
+            />
+          )}
+
+          <div className="relative z-10 mt-10">
+            <h2 className="text-white font-black text-2xl">
+              {t(scene.nameKey, uiLang)}
+            </h2>
+            <p className="text-white/70 text-sm font-medium mt-1">
+              {tReplace('questDefeatBoss', uiLang, { boss: t(scene.bossNameKey, uiLang) })}
+            </p>
+
+            {/* Boss + mission preview as avatar row */}
+            <div className="flex items-center gap-2 mt-3">
+              {scene.bossImage && (
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-red-300 shadow-md flex-shrink-0">
+                  <img src={scene.bossImage} alt="" className="w-full h-full object-cover" />
+                </div>
+              )}
+              {MISSION_EMOJIS.map((e, i) => (
+                <div key={i} className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm border border-white/30">
+                  {e}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Missions preview */}
-        <div className="flex justify-center gap-2">
+        {/* Mission types */}
+        <div className="flex justify-center gap-2 mt-4">
           {MISSION_EMOJIS.map((e, i) => (
-            <div key={i} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/15 text-white text-xs font-bold">
+            <div key={i} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold">
               <span>{e}</span>
               <span>{t(MISSION_NAME_KEYS[i], uiLang)}</span>
             </div>
@@ -274,7 +274,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLa
         {/* Start button */}
         <button
           onClick={onStart}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-black text-xl shadow-xl active:scale-95 transition-transform"
+          className="w-full mt-5 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-black text-xl shadow-xl active:scale-95 transition-transform"
         >
           {t('questStart', uiLang)}
         </button>
@@ -282,7 +282,7 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLa
         {/* Hero button */}
         <button
           onClick={onHero}
-          className="w-full py-3 rounded-2xl bg-white/20 text-white font-bold text-sm active:scale-95 transition-transform"
+          className="w-full mt-3 py-3 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold text-sm active:scale-95 transition-transform"
         >
           {t('questCustomizeHero', uiLang)}
         </button>
@@ -597,12 +597,15 @@ function BossBattleMission({ scene, childLevel, difficulty, bossHP, bossMaxHP, o
       <div className="text-center mb-4 relative z-10">
         <div className={`inline-block transition-all duration-500 ${bossAnim}`}>
           {scene.bossImage ? (
-            <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')}
-              className="w-24 h-24 object-contain drop-shadow-lg mx-auto"
-              onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }}
-            />
-          ) : null}
-          <span className="text-8xl" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</span>
+            <div className="w-24 h-24 rounded-2xl overflow-hidden bg-gradient-to-br from-red-500/30 to-purple-600/30 ring-2 ring-white/20 mx-auto drop-shadow-lg">
+              <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')}
+                className="w-full h-full object-cover"
+                onError={e => { e.target.parentElement.innerHTML = `<span class="text-8xl flex items-center justify-center h-full">${scene.boss}</span>`; }}
+              />
+            </div>
+          ) : (
+            <span className="text-8xl">{scene.boss}</span>
+          )}
         </div>
         {attackAnim && (
           <div className="absolute left-1/2 top-1/3 -translate-x-1/2 text-5xl animate-pop-in">
@@ -899,9 +902,12 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
         {/* Boss defeated */}
         <div className="relative inline-block">
           {scene.bossImage ? (
-            <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')} className="w-20 h-20 object-contain opacity-50 grayscale mx-auto" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = ''; }} />
-          ) : null}
-          <div className="text-7xl opacity-50 grayscale" style={scene.bossImage ? { display: 'none' } : {}}>{scene.boss}</div>
+            <div className="w-20 h-20 rounded-2xl overflow-hidden opacity-50 grayscale mx-auto">
+              <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')} className="w-full h-full object-cover" onError={e => { e.target.parentElement.innerHTML = `<span class="text-7xl flex items-center justify-center h-full">${scene.boss}</span>`; }} />
+            </div>
+          ) : (
+            <div className="text-7xl opacity-50 grayscale">{scene.boss}</div>
+          )}
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-5xl">💥</span>
           </div>
@@ -1471,7 +1477,8 @@ export default function EnglishQuestPage({ onBack }) {
       {phase === 'intro' && (
         <button
           onClick={onBack}
-          className="fixed top-4 ltr:left-4 rtl:right-4 z-40 p-2 rounded-full bg-black/30 backdrop-blur-sm active:scale-90 transition-transform"
+          className="fixed ltr:left-4 rtl:right-4 z-40 p-2 rounded-full bg-black/30 backdrop-blur-sm active:scale-90 transition-transform"
+          style={{ top: 'calc(env(safe-area-inset-top, 0px) + 52px)' }}
         >
           <ArrowLeft size={20} className="text-white rtl:rotate-180" />
         </button>

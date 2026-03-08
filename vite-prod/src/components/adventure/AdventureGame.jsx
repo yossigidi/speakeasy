@@ -256,6 +256,17 @@ export default function AdventureGame({ onBack }) {
         style={{ width: '100%', height: '100%', touchAction: 'none' }}
       />
 
+      {/* Back button during gameplay (not on world map or video) */}
+      {!showWorldMap && !videoData && !showPause && (
+        <button
+          onClick={() => setShowPause(true)}
+          className="absolute z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white text-lg active:scale-90 transition-transform"
+          style={{ top: 'calc(env(safe-area-inset-top, 0px) + 12px)', left: RTL_LANGS.includes(uiLang) ? 'auto' : '12px', right: RTL_LANGS.includes(uiLang) ? '12px' : 'auto' }}
+        >
+          {RTL_LANGS.includes(uiLang) ? '→' : '←'}
+        </button>
+      )}
+
       {/* Video intro overlay */}
       {videoData && (
         <VideoOverlay
@@ -276,106 +287,111 @@ export default function AdventureGame({ onBack }) {
         />
       )}
 
-      {/* World map overlay */}
+      {/* World map overlay — card style like Talking World */}
       {showWorldMap && (
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10, background: 'linear-gradient(to bottom, #0c4a6e, #075985, #064e3b)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10, background: 'linear-gradient(to bottom, #f0fdf4, #ecfdf5, #f0f9ff)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <div className="flex items-center justify-between px-4 shrink-0" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}>
             <button
               onClick={handleQuit}
-              className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-xl"
+              className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center text-gray-700 text-xl"
             >
               {RTL_LANGS.includes(uiLang) ? '→' : '←'}
             </button>
-            <h1 className="text-white font-black text-lg">
+            <h1 className="text-gray-800 font-black text-lg">
               {t('adventureTitle', uiLang)}
             </h1>
             <div className="w-10" />
           </div>
 
-          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '16px 24px', WebkitOverflowScrolling: 'touch' }}>
-            {[
-              { id: 'forest', emoji: '🌲', nameKey: 'worldForest', gradient: ['#22c55e', '#16a34a', '#15803d'], shadow: 'rgba(22, 163, 74, 0.4)', scenes: 6, requiresWorld: null },
-              { id: 'ocean', emoji: '🌊', nameKey: 'worldOcean', gradient: ['#0ea5e9', '#0284c7', '#0369a1'], shadow: 'rgba(14, 165, 233, 0.4)', scenes: 6, requiresWorld: 'forest' },
-              { id: 'space', emoji: '🚀', nameKey: 'worldSpace', gradient: ['#6366f1', '#4f46e5', '#4338ca'], shadow: 'rgba(99, 102, 241, 0.4)', scenes: 6, requiresWorld: 'ocean' },
-              { id: 'castle', emoji: '🏰', nameKey: 'worldCastle', gradient: ['#f59e0b', '#d97706', '#b45309'], shadow: 'rgba(245, 158, 11, 0.4)', scenes: 6, requiresWorld: 'space' },
-            ].map((world, worldIdx) => {
-              const worldProgress = progress.adventure?.worldProgress || {};
-              const requiredCompleted = world.requiresWorld
-                ? (worldProgress[world.requiresWorld]?.scenesCompleted || 0)
-                : Infinity;
-              const requiredTotal = world.requiresWorld ? 6 : 0;
-              const isPremiumLocked = isContentLocked('adventureWorlds', worldIdx);
-              const isUnlocked = !isPremiumLocked && (!world.requiresWorld || requiredCompleted >= requiredTotal);
-              const myCompleted = worldProgress[world.id]?.scenesCompleted || 0;
-              const hasStarted = myCompleted > 0;
-              const isComplete = myCompleted >= world.scenes;
+          <div style={{ flex: 1, overflowY: 'auto', padding: '16px', WebkitOverflowScrolling: 'touch' }}>
+            <div className="space-y-4 max-w-lg mx-auto">
+              {WORLDS.map((world, worldIdx) => {
+                const worldProg = progress.adventure?.worldProgress || {};
+                const requiredCompleted = world.requiresWorld
+                  ? (worldProg[world.requiresWorld]?.scenesCompleted || 0)
+                  : Infinity;
+                const requiredTotal = world.requiresWorld ? 6 : 0;
+                const isPremiumLocked = isContentLocked('adventureWorlds', worldIdx);
+                const isUnlocked = !isPremiumLocked && (!world.requiresWorld || requiredCompleted >= requiredTotal);
+                const myCompleted = worldProg[world.id]?.scenesCompleted || 0;
+                const isComplete = myCompleted >= world.scenes;
+                const locked = !isUnlocked;
 
-              // Worlds with no scenes file yet (space, castle)
-              const hasContent = true; // All 4 worlds now have content
+                const langKey = { he: 'nameHe', ar: 'nameAr', ru: 'nameRu' }[uiLang] || 'nameEn';
+                const worldName = world[langKey] || world.nameEn;
 
-              if (isUnlocked && hasContent) {
                 return (
                   <button
                     key={world.id}
-                    onClick={() => handleStartWorld(world.id)}
-                    className="w-full max-w-sm rounded-3xl p-6 text-center active:scale-95 transition-transform"
-                    style={{
-                      background: `linear-gradient(135deg, ${world.gradient[0]} 0%, ${world.gradient[1]} 50%, ${world.gradient[2]} 100%)`,
-                      boxShadow: `0 8px 30px ${world.shadow}`,
+                    onClick={() => {
+                      if (isPremiumLocked) { setShowPaywall(true); return; }
+                      if (locked) return;
+                      handleStartWorld(world.id);
                     }}
+                    disabled={locked && !isPremiumLocked}
+                    className={`w-full rounded-3xl overflow-hidden text-left transition-all duration-300 relative ${
+                      locked ? 'opacity-50 grayscale' : 'active:scale-[0.97]'
+                    }`}
                   >
-                    <span className="text-5xl block mb-3">{world.emoji}</span>
-                    <h2 className="text-white font-black text-xl mb-1">
-                      {t(world.nameKey, uiLang)}
-                    </h2>
-                    <p className="text-white/80 text-sm">
-                      {isComplete
-                        ? tReplace('worldComplete', uiLang, { done: world.scenes, total: world.scenes })
-                        : hasStarted
-                          ? tReplace('worldProgress', uiLang, { done: myCompleted, total: world.scenes })
-                          : tReplace('worldNew', uiLang, { scenes: world.scenes })
-                      }
-                    </p>
-                    <div className="mt-3 inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5">
-                      <span className="text-white font-bold text-sm">
-                        {isComplete
-                          ? t('adventurePlayAgain', uiLang)
-                          : hasStarted
-                            ? t('adventureContinue', uiLang)
-                            : t('adventureStart', uiLang)
-                        }
-                      </span>
-                      <span className="text-white">▶</span>
+                    <div
+                      className="w-full rounded-3xl p-5 relative overflow-hidden"
+                      style={{ background: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.55)), url(${world.bg}) center/cover` }}
+                    >
+                      {/* World icon badge */}
+                      <img
+                        src={world.icon}
+                        alt=""
+                        className="absolute top-3 right-3 w-14 h-14 rounded-full object-cover border-2 border-white/40 shadow-lg"
+                      />
+
+                      {locked && (
+                        <div className="absolute top-5 right-5 bg-black/40 rounded-full p-1.5 z-10">
+                          <Lock size={14} className="text-white" />
+                        </div>
+                      )}
+
+                      {isComplete && (
+                        <div className="absolute top-3 left-3 bg-yellow-400 rounded-full px-2 py-0.5 text-xs font-bold text-yellow-900">
+                          ⭐ {t('adventureComplete', uiLang) || 'Complete'}
+                        </div>
+                      )}
+
+                      <div className="relative z-10 mt-8">
+                        <h3 className="text-white font-black text-xl">
+                          {worldName}
+                        </h3>
+                        <p className="text-white/70 text-sm font-medium mt-1">
+                          {locked
+                            ? (isPremiumLocked ? 'Premium' : t('comingSoon', uiLang))
+                            : isComplete
+                              ? tReplace('worldComplete', uiLang, { done: world.scenes, total: world.scenes })
+                              : myCompleted > 0
+                                ? tReplace('worldProgress', uiLang, { done: myCompleted, total: world.scenes })
+                                : tReplace('worldNew', uiLang, { scenes: world.scenes })
+                          }
+                        </p>
+
+                        {/* NPC character preview */}
+                        {!locked && world.npcImages && (
+                          <div className="flex gap-2 mt-3">
+                            {world.npcImages.map((img, i) => (
+                              <img
+                                key={i}
+                                src={img}
+                                alt=""
+                                className={`w-10 h-10 rounded-full object-cover border-2 ${
+                                  i < myCompleted ? 'border-yellow-300 shadow-md' : 'border-white/30 opacity-70'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </button>
                 );
-              }
-
-              // Locked world
-              return (
-                <div
-                  key={world.id}
-                  onClick={isPremiumLocked ? () => setShowPaywall(true) : undefined}
-                  className={`w-full max-w-sm rounded-3xl p-4 text-center opacity-50 ${isPremiumLocked ? 'cursor-pointer active:scale-95 transition-transform' : ''}`}
-                  style={{ background: 'rgba(255,255,255,0.1)' }}
-                >
-                  <span className="text-3xl">{world.emoji}</span>
-                  <p className="text-white/60 font-bold text-sm mt-1">
-                    {t(world.nameKey, uiLang)}
-                  </p>
-                  {isPremiumLocked ? (
-                    <div className="flex items-center justify-center gap-1 mt-1">
-                      <Lock size={12} className="text-amber-400" />
-                      <p className="text-amber-400 text-xs font-semibold">Premium</p>
-                    </div>
-                  ) : (
-                    <p className="text-white/40 text-xs">
-                      {t('comingSoon', uiLang)}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
+              })}
+            </div>
           </div>
         </div>
       )}

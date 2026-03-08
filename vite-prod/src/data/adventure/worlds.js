@@ -17,6 +17,14 @@ export const WORLDS = [
     videoNarration: 'ברוכים הבאים ליער הקסמים! כאן נפגוש חיות מדהימות ונלמד מילים חדשות באנגלית!',
     videoNarrationAr: 'مرحباً بكم في الغابة السحرية! هنا سنلتقي بحيوانات رائعة ونتعلم كلمات إنجليزية جديدة!',
     videoNarrationRu: 'Добро пожаловать в Волшебный лес! Здесь мы встретим удивительных животных и выучим новые слова по-английски!',
+    bg: '/images/adventure/backgrounds/forest-sky.jpg',
+    icon: '/images/adventure/objects/world-icon-forest.jpg',
+    npcImages: [
+      '/images/adventure/characters/fox-felix.jpg',
+      '/images/adventure/characters/owl-oliver.jpg',
+      '/images/adventure/characters/bunny-bella.jpg',
+      '/images/adventure/characters/deer-danny.jpg',
+    ],
   },
   {
     id: 'ocean',
@@ -34,6 +42,14 @@ export const WORLDS = [
     videoNarration: 'צוללים לעולם האוקיינוס! מוכנים לפגוש יצורים מופלאים מתחת למים?',
     videoNarrationAr: 'نغطس إلى عالم المحيط! هل أنتم مستعدون لمقابلة كائنات رائعة تحت الماء؟',
     videoNarrationRu: 'Погружаемся в мир океана! Готовы встретить удивительных существ под водой?',
+    bg: '/images/adventure/backgrounds/ocean-scene1-reef.jpg',
+    icon: '/images/adventure/objects/world-icon-ocean.jpg',
+    npcImages: [
+      '/images/adventure/characters/turtle-tami.jpg',
+      '/images/adventure/characters/seahorse-sandy.jpg',
+      '/images/adventure/characters/crab-carlos.jpg',
+      '/images/adventure/characters/dolphin-dina.jpg',
+    ],
   },
   {
     id: 'space',
@@ -51,6 +67,14 @@ export const WORLDS = [
     videoNarration: 'שלוש, שתיים, אחת, שיגור! יוצאים להרפתקה מטורפת בחלל החיצון!',
     videoNarrationAr: 'ثلاثة، اثنان، واحد، انطلاق! نخرج لمغامرة جنونية في الفضاء الخارجي!',
     videoNarrationRu: 'Три, два, один, пуск! Отправляемся в безумное приключение в открытый космос!',
+    bg: '/images/adventure/backgrounds/space-scene1-launchpad.jpg',
+    icon: '/images/adventure/objects/world-icon-space.jpg',
+    npcImages: [
+      '/images/adventure/characters/star-stella.jpg',
+      '/images/adventure/characters/comet-cosmo.jpg',
+      '/images/adventure/characters/alien-luna.jpg',
+      '/images/adventure/characters/robot-buzz.jpg',
+    ],
   },
   {
     id: 'castle',
@@ -67,6 +91,14 @@ export const WORLDS = [
     introVideo: '/videos/adventure/castle-world-intro.mp4',
     videoNarration: 'הנה הטירה הקסומה! בואו נגלה את הסודות שמסתתרים בפנים!',
     videoNarrationAr: 'ها هي القلعة السحرية! هيا نكتشف الأسرار المخبأة بداخلها!',
-    videoNarrationRu: 'Вот волшебный замок! Давайте откроем тайны, спрятанные внутри!',
+    videoNarrationRu: 'Вот волшебный замок! Давайте откроем тайны، спрятанные بداخلها!',
+    bg: '/images/adventure/backgrounds/castle-scene1-gate.jpg',
+    icon: '/images/adventure/objects/world-icon-castle.jpg',
+    npcImages: [
+      '/images/adventure/characters/knight-kevin.jpg',
+      '/images/adventure/characters/princess-penelope.jpg',
+      '/images/adventure/characters/wizard-wally.jpg',
+      '/images/adventure/characters/fairy-fiona.jpg',
+    ],
   },
 ];

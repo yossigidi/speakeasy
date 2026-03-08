@@ -192,7 +192,10 @@ export default class SceneManager {
 
     // 0. Scene intro video (if defined) — pass narration for TTS
     if (scene.introVideo && this.options.onSceneVideo) {
-      await this.options.onSceneVideo({ src: scene.introVideo, narration: scene.videoNarration || null, autoPlay: true });
+      // Pick language-appropriate narration
+      const langSuffix = { ar: 'Ar', ru: 'Ru' }[this.options.uiLang] || '';
+      const narration = (langSuffix && scene['videoNarration' + langSuffix]) || scene.videoNarration || null;
+      await this.options.onSceneVideo({ src: scene.introVideo, narration, autoPlay: true });
       if (this._destroyed) return;
     }
 
@@ -276,18 +279,24 @@ export default class SceneManager {
 
     return new Promise(resolve => {
       this._exerciseResolve = resolve;
-      this.currentExercise = new ExerciseClass(this.engine, {
-        ...exerciseDef.config,
-        options: this.options,
-        onComplete: (success) => {
-          this._exerciseResolve = null;
-          if (this.currentExercise) {
-            this.currentExercise.destroy();
-            this.currentExercise = null;
-          }
-          resolve(success);
-        },
-      });
+      try {
+        this.currentExercise = new ExerciseClass(this.engine, {
+          ...exerciseDef.config,
+          options: this.options,
+          onComplete: (success) => {
+            this._exerciseResolve = null;
+            if (this.currentExercise) {
+              this.currentExercise.destroy();
+              this.currentExercise = null;
+            }
+            resolve(success);
+          },
+        });
+      } catch (e) {
+        console.error('Exercise creation failed:', e);
+        this._exerciseResolve = null;
+        resolve(false);
+      }
     });
   }
 

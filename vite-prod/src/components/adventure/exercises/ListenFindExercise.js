@@ -86,8 +86,8 @@ export default class ListenFindExercise extends ExerciseBase {
 
       const bg = new Graphics();
       bg.roundRect(0, 0, gridSize, gridSize, 16);
-      bg.fill({ color: 0xffffff, alpha: 0.15 });
-      bg.stroke({ color: 0xffffff, width: 2, alpha: 0.3 });
+      bg.fill({ color: 0xffffff, alpha: 0.25 });
+      bg.stroke({ color: 0xffffff, width: 2, alpha: 0.5 });
       btn.addChild(bg);
 
       const emoji = new Text({
