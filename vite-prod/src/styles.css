@@ -1473,6 +1473,10 @@ select:focus {
    ═══════════════════════════════════════════════════════ */
 
 /* Infinite parallax scroll — layer moves left 33.33% (for 300% width) then resets */
+/* ═══════════════════════════════════════════════
+   SPEAKLI RUN — PROFESSIONAL ANIMATION SYSTEM
+   ═══════════════════════════════════════════════ */
+
 @keyframes runnerScroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-33.33%); }
@@ -1492,29 +1496,35 @@ select:focus {
   100% { transform: translateX(-20vw); opacity: 0; }
 }
 
-/* Word boxes slide in from right with bounce */
-@keyframes wordBoxSlideIn {
-  0%   { transform: translateX(120%) scale(0.8); opacity: 0; }
-  60%  { transform: translateX(-5%) scale(1.05); opacity: 1; }
-  80%  { transform: translateX(2%) scale(0.98); }
-  100% { transform: translateX(0) scale(1); opacity: 1; }
+/* Word boxes — spring slide up from bottom */
+@keyframes wordBoxSlideUp {
+  0%   { transform: translateY(80px) scale(0.85); opacity: 0; }
+  50%  { transform: translateY(-8px) scale(1.04); opacity: 1; }
+  70%  { transform: translateY(4px) scale(0.98); }
+  85%  { transform: translateY(-2px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* Correct answer — scale up and float away */
+/* Correct answer — golden glow burst + scale float */
 @keyframes wordBoxCorrect {
-  0%   { transform: scale(1); opacity: 1; }
-  40%  { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(1.5) translateY(-30px); opacity: 0; }
+  0%   { transform: scale(1); opacity: 1; box-shadow: 0 0 0 rgba(255,200,0,0); }
+  30%  { transform: scale(1.15); box-shadow: 0 0 30px rgba(255,200,0,0.6); }
+  60%  { transform: scale(1.25) translateY(-10px); opacity: 1; box-shadow: 0 0 50px rgba(255,200,0,0.8); }
+  100% { transform: scale(1.4) translateY(-40px); opacity: 0; box-shadow: 0 0 0 rgba(255,200,0,0); }
 }
 
-/* Wrong answer — shake and shrink */
+/* Wrong answer — vibration shake */
 @keyframes wordBoxBreak {
-  0%   { transform: rotate(0) scale(1); }
-  20%  { transform: rotate(-8deg) scale(0.95); }
-  40%  { transform: rotate(8deg) scale(0.9); }
-  60%  { transform: rotate(-5deg) scale(0.85); }
-  80%  { transform: rotate(3deg) scale(0.8); opacity: 0.5; }
-  100% { transform: rotate(0) scale(0.7); opacity: 0.3; }
+  0%    { transform: translateX(0); }
+  10%   { transform: translateX(-6px); }
+  20%   { transform: translateX(6px); }
+  30%   { transform: translateX(-5px); }
+  40%   { transform: translateX(5px); }
+  50%   { transform: translateX(-3px); }
+  60%   { transform: translateX(3px); }
+  70%   { transform: translateX(-2px); opacity: 0.7; }
+  80%   { transform: translateX(1px); opacity: 0.5; }
+  100%  { transform: translateX(0) scale(0.95); opacity: 0.35; }
 }
 
 /* Coin flies up to HUD */
@@ -1524,10 +1534,10 @@ select:focus {
   100% { transform: translateY(-120px) scale(0.5); opacity: 0; }
 }
 
-/* Power mode golden glow */
+/* Power mode golden glow — enhanced */
 @keyframes powerModeGlow {
-  0%, 100% { box-shadow: inset 0 0 30px rgba(255, 200, 0, 0.3); }
-  50%      { box-shadow: inset 0 0 60px rgba(255, 200, 0, 0.5); }
+  0%, 100% { box-shadow: inset 0 0 40px rgba(255, 200, 0, 0.35), inset 0 0 80px rgba(255, 150, 0, 0.1); }
+  50%      { box-shadow: inset 0 0 70px rgba(255, 200, 0, 0.55), inset 0 0 120px rgba(255, 150, 0, 0.2); }
 }
 
 /* Countdown 3-2-1-Go! pop in */
@@ -1544,41 +1554,96 @@ select:focus {
   100% { transform: translate(var(--sx, 20px), var(--sy, -20px)) scale(0); opacity: 0; }
 }
 
-/* Paused state — stops all layer animations (countdown only) */
-.runner-paused .runner-layer {
-  animation-play-state: paused !important;
+/* Camera shake on wrong answer */
+@keyframes cameraShake {
+  0%    { transform: translate(0, 0); }
+  10%   { transform: translate(-3px, 2px); }
+  20%   { transform: translate(4px, -2px); }
+  30%   { transform: translate(-4px, 3px); }
+  40%   { transform: translate(3px, -3px); }
+  50%   { transform: translate(-2px, 2px); }
+  60%   { transform: translate(3px, -1px); }
+  70%   { transform: translate(-2px, 1px); }
+  80%   { transform: translate(1px, -1px); }
+  100%  { transform: translate(0, 0); }
+}
+.runner-shake {
+  animation: cameraShake 0.4s ease-out;
 }
 
-/* Smooth speed transitions for layers */
-.runner-layer {
-  transition: animation-duration 0.5s ease;
+/* Golden flash overlay on correct */
+@keyframes goldenFlash {
+  0%   { opacity: 0; }
+  30%  { opacity: 0.25; }
+  100% { opacity: 0; }
 }
 
-/* Power mode — speeds up layers + golden glow */
-.runner-power {
-  animation: powerModeGlow 1s ease-in-out infinite;
+/* Character jump on correct */
+@keyframes charJump {
+  0%   { transform: translateY(0) rotate(-8deg); }
+  35%  { transform: translateY(-28px) rotate(-4deg) scaleX(0.92) scaleY(1.1); }
+  60%  { transform: translateY(-10px) rotate(-6deg); }
+  80%  { transform: translateY(4px) rotate(-8deg) scaleX(1.08) scaleY(0.92); }
+  100% { transform: translateY(0) rotate(-8deg) scaleX(1) scaleY(1); }
 }
-.runner-power .runner-layer {
-  animation-duration: 2s !important;
-}
-
-/* Speakli run character animation class */
-.speakli-run .speakli-img {
-  animation: speakliRun 0.4s ease-in-out infinite;
-}
-.speakli-run.runner-paused-char .speakli-img {
-  animation: none;
-  transform: scaleX(1) scaleY(1);
+.runner-jump {
+  animation: charJump 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Character leaning forward while running */
-.runner-leaning {
-  transform: rotate(-8deg);
-  transition: transform 0.3s ease;
+/* Character stumble on wrong */
+@keyframes charStumble {
+  0%   { transform: rotate(-8deg) translateX(0); }
+  25%  { transform: rotate(6deg) translateX(-6px); }
+  50%  { transform: rotate(-3deg) translateX(-12px); }
+  75%  { transform: rotate(2deg) translateX(-6px); }
+  100% { transform: rotate(-8deg) translateX(0); }
 }
-.runner-paused-char.runner-leaning,
-.runner-leaning.runner-paused-char {
-  transform: rotate(0deg);
+.runner-stumble {
+  animation: charStumble 0.5s ease-out forwards;
+}
+
+/* Running shadow under character */
+@keyframes runningShadow {
+  0%, 100% { transform: scaleX(1) scaleY(1); opacity: 0.3; }
+  25%      { transform: scaleX(0.85) scaleY(0.85); opacity: 0.2; }
+  50%      { transform: scaleX(1.1) scaleY(1.1); opacity: 0.35; }
+  75%      { transform: scaleX(0.9) scaleY(0.9); opacity: 0.25; }
+}
+
+/* Power mode speed trail */
+@keyframes speedTrail {
+  0%   { opacity: 0.4; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(2.5); }
+}
+
+/* Floating road collectibles */
+@keyframes collectibleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Cloud drift — subtle vertical bob */
+@keyframes cloudDrift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* Sky gradient shift */
+@keyframes skyShift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50%      { filter: hue-rotate(8deg); }
+}
+
+/* Sun/moon glow pulse */
+@keyframes celestialGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 0.9; transform: scale(1.05); }
+}
+
+/* Power mode pulsing overlay */
+@keyframes powerPulse {
+  0%, 100% { opacity: 0.05; }
+  50%      { opacity: 0.12; }
 }
 
 /* Dust puff particles behind running character */
@@ -1588,8 +1653,156 @@ select:focus {
   100% { transform: scale(2) translateX(-16px); opacity: 0; }
 }
 
+/* ── Runner layer base ── */
+.runner-paused .runner-layer {
+  animation-play-state: paused !important;
+}
+.runner-layer {
+  transition: animation-duration 0.5s ease;
+}
+
+/* ── Power mode ── */
+.runner-power {
+  animation: powerModeGlow 1s ease-in-out infinite;
+  filter: saturate(1.3) brightness(1.1);
+}
+.runner-power .runner-layer {
+  animation-duration: 2s !important;
+}
+
+/* ── Character animation ── */
+.speakli-run .speakli-img {
+  animation: speakliRun 0.4s ease-in-out infinite;
+}
+.speakli-run.runner-paused-char .speakli-img {
+  animation: none;
+  transform: scaleX(1) scaleY(1);
+}
+.runner-leaning {
+  transform: rotate(-8deg);
+  transition: transform 0.3s ease;
+}
+.runner-paused-char.runner-leaning,
+.runner-leaning.runner-paused-char {
+  transform: rotate(0deg);
+}
+
+/* ── Vignette overlay ── */
+.runner-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.35) 100%);
+}
+
+/* ── 3D Perspective Road ── */
+.runner-road-3d {
+  perspective: 500px;
+  perspective-origin: center bottom;
+}
+.runner-road-surface {
+  transform: rotateX(18deg);
+  transform-origin: center bottom;
+}
+
+/* ── Road markings with depth ── */
+.runner-road-marking {
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+}
+
+/* ── Mountain/silhouette shapes ── */
+.runner-mountain {
+  position: absolute;
+  bottom: 0;
+  border-radius: 40% 45% 0 0;
+}
+.runner-building {
+  position: absolute;
+  bottom: 0;
+  border-radius: 4px 4px 0 0;
+}
+
+/* ── Word card glassmorphism ── */
+.runner-word-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  min-width: 140px;
+}
+.runner-word-card-accent {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ── Collectible items ── */
+.runner-collectible {
+  position: absolute;
+  font-size: 1.4rem;
+  animation: collectibleFloat 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* ── Cloud shapes (CSS, no emoji) ── */
+.runner-cloud {
+  position: absolute;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+.runner-cloud::before,
+.runner-cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+.runner-cloud::before {
+  width: 60%;
+  height: 70%;
+  top: -30%;
+  left: 15%;
+}
+.runner-cloud::after {
+  width: 50%;
+  height: 55%;
+  top: -20%;
+  right: 10%;
+}
+
 /* Ground dash decorations */
 @keyframes groundDash {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* Timer urgent pulse */
+.run-timer-urgent { animation: timerUrgentPulse 0.5s ease-in-out infinite; }
+@keyframes timerUrgentPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.15); }
+}
+
+/* Boss appear */
+@keyframes bossAppear {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60%  { transform: scale(1.3) rotate(5deg); opacity: 1; }
+  80%  { transform: scale(0.9) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Boss border pulse */
+.run-boss-border {
+  border: 3px solid rgba(239, 68, 68, 0.4);
+  animation: bossBorderPulse 0.8s ease-in-out infinite;
+}
+@keyframes bossBorderPulse {
+  0%, 100% { border-color: rgba(239, 68, 68, 0.2); }
+  50% { border-color: rgba(239, 68, 68, 0.6); }
 }

@@ -736,6 +736,14 @@ const translations = {
     coins: 'מטבעות',
     points: 'נקודות',
     listenAndTapCorrect: 'הקשיבו ולחצו על הנכון',
+    storyIntroText: 'עזרו לספיקלי לאסוף מילים קסומות ולנצח במרוץ!',
+    startRace: 'התחילו מרוץ!',
+    bossChallenge: 'אתגר הבוס!',
+    bossDefeated: 'הבוס נוצח!',
+    youWon: 'ניצחת!',
+    almostTryAgain: 'כמעט! נסו שוב!',
+    timeBonus: 'בונוס זמן',
+    you: 'את/ה',
 
     // English Quest
     questStart: 'התחילו מסע',
@@ -1608,6 +1616,14 @@ const translations = {
     coins: 'Coins',
     points: 'Points',
     listenAndTapCorrect: 'Listen and tap the correct one',
+    storyIntroText: 'Help Speakli collect magic words and win the race!',
+    startRace: 'Start Race!',
+    bossChallenge: 'Boss Challenge!',
+    bossDefeated: 'Boss defeated!',
+    youWon: 'You won!',
+    almostTryAgain: 'Almost! Try again!',
+    timeBonus: 'Time bonus',
+    you: 'You',
 
     // English Quest
     questStart: 'Start quest',
@@ -2503,6 +2519,14 @@ const translations = {
     coins: 'عملات',
     points: 'نقاط',
     listenAndTapCorrect: 'استمعوا واضغطوا على الصحيح',
+    storyIntroText: 'ساعدوا سبيكلي في جمع الكلمات السحرية والفوز بالسباق!',
+    startRace: 'ابدأوا السباق!',
+    bossChallenge: 'تحدي الزعيم!',
+    bossDefeated: 'تم هزيمة الزعيم!',
+    youWon: 'فزت!',
+    almostTryAgain: 'قريب! حاولوا مرة أخرى!',
+    timeBonus: 'مكافأة الوقت',
+    you: 'أنت',
 
     // English Quest
     questStart: 'ابدأوا المهمة',
@@ -3398,6 +3422,14 @@ const translations = {
     coins: 'Монеты',
     points: 'Очки',
     listenAndTapCorrect: 'Слушайте и нажмите на правильный',
+    storyIntroText: 'Помогите Спикли собрать волшебные слова и выиграть гонку!',
+    startRace: 'Начать гонку!',
+    bossChallenge: 'Испытание босса!',
+    bossDefeated: 'Босс побежден!',
+    youWon: 'Вы победили!',
+    almostTryAgain: 'Почти! Попробуйте снова!',
+    timeBonus: 'Бонус за время',
+    you: 'Вы',
 
     // English Quest
     questStart: 'Начать квест',
