@@ -7,6 +7,7 @@ import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../u
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
+import { SpeakliFlightGame } from '../components/games/SpeakliFlight.jsx';
 import GameInstructionOverlay from '../components/games/GameInstructionOverlay.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
@@ -1234,6 +1235,14 @@ const GAMES = [
     descKey: 'gameSpeakliRunDesc',
     gradient: 'from-green-400 via-emerald-400 to-teal-400',
     component: SpeakliRunGame,
+  },
+  {
+    id: 'speakli-flight',
+    emoji: '🚀',
+    titleKey: 'gameSpeakliFlightTitle',
+    descKey: 'gameSpeakliFlightDesc',
+    gradient: 'from-indigo-400 via-purple-400 to-pink-400',
+    component: SpeakliFlightGame,
   },
 ];
 
