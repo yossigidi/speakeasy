@@ -79,6 +79,22 @@ const WORLDS = [
     sentencesOnly: true,
     minLevel: 3,
   },
+  {
+    id: 'ocean',
+    emoji: '🐙',
+    nameHe: 'מעמקי האוקיינוס',
+    nameEn: 'Ocean Deep',
+    nameAr: 'أعماق المحيط',
+    nameRu: 'Глубины океана',
+    skyGradient: 'linear-gradient(180deg, #0ea5e9 0%, #0369a1 50%, #0c4a6e 100%)',
+    groundColor: '#164e63',
+    groundEmojis: ['🐚', '🪸', '🫧', '🦀', '🐡'],
+    farEmojis: ['🌊', '🏝️', '⛵', '🌊', '🏝️', '🌊'],
+    midEmojis: ['🐙', '🐬', '🐢', '🦈', '🐠', '🪼', '🐳', '🦑'],
+    categories: ['animals', 'nature'],
+    filterWords: w => true,
+    minLevel: 3,
+  },
 ];
 
 // Difficulty config by child level
@@ -99,7 +115,7 @@ const WRONG_PENALTY = 3;
 const TIMER_DURATIONS = { 1: 15, 2: 12, 3: 10, 4: 8 };
 const TIME_BONUS_THRESHOLD = 4; // seconds
 const TIME_BONUS_POINTS = 3;
-const BOSS_EMOJIS = { jungle: '🐉', food: '🤖', school: '👾', space: '👽' };
+const BOSS_EMOJIS = { jungle: '🐉', food: '🤖', school: '👾', space: '👽', ocean: '🦈' };
 const BOT_LEVEL_MULTIPLIER = { 1: 1.0, 2: 1.05, 3: 1.12, 4: 1.2 };
 
 // ── ConfettiBurst ──
