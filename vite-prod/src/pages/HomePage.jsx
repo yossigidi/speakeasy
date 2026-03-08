@@ -13,11 +13,13 @@ import { loadWordData } from '../utils/lazyData.js';
 
 import SpeakingMinutesCard from '../components/gamification/SpeakingMinutesCard.jsx';
 import grammarRules from '../data/grammar-rules.json';
+import useSubscription from '../hooks/useSubscription.js';
 
 export default function HomePage({ onNavigate, reviewCount = 0 }) {
   const { uiLang, dir } = useTheme();
   const { progress } = useUserProgress();
   const { speak, speakSequence, ttsSupported } = useSpeech();
+  const { isPremium } = useSubscription();
   useWelcomeSpeech('home', 'ברוכים הבאים לספיקלי, המורה שלכם לאנגלית!', 'Welcome to Speakli, your English teacher!', 'مرحباً بكم في سبيكلي، معلّمكم للإنجليزية!', 'Добро пожаловать в Спикли, ваш учитель английского!');
 
   // Lazy-load word data for "Word of the Day"
@@ -83,6 +85,33 @@ export default function HomePage({ onNavigate, reviewCount = 0 }) {
 
       {/* Speaking Minutes Card */}
       <SpeakingMinutesCard uiLang={uiLang} onNavigate={onNavigate} />
+
+      {/* Upgrade to Premium — free users only */}
+      {!isPremium && (
+        <GlassCard
+          variant="strong"
+          className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-purple-50/80 to-amber-50/80 dark:from-purple-950/30 dark:to-amber-950/30"
+          onClick={() => onNavigate('pricing')}
+        >
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-indigo-500 to-amber-500" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/25 text-xl">
+                👑
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900 dark:text-white">
+                  {t('upgradeNow', uiLang)}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {t('unlockUnlimited', uiLang)}
+                </p>
+              </div>
+            </div>
+            <ChevronRight size={20} className={`text-gray-400 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
+          </div>
+        </GlassCard>
+      )}
 
       {/* Life Coach Card */}
       <GlassCard

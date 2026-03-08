@@ -12,6 +12,8 @@ import { KIDS_SCENARIOS, ADULT_SCENARIOS } from '../data/speaking-scenarios.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import ChatBubble from '../components/shared/ChatBubble.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
+import useUsageLimit from '../hooks/useUsageLimit.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 /* ── Helpers ── */
 function avg(arr) {
@@ -146,6 +148,8 @@ export default function SpeakingCoachPage({ onBack }) {
 
   const isChild = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
   const scenarios = isChild ? KIDS_SCENARIOS : ADULT_SCENARIOS;
+  const { isBlocked, increment: incrementUsage } = useUsageLimit('speakingCoach');
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const [phase, setPhase] = useState('scenario-select'); // scenario-select | session | exercise | results
   const [scenario, setScenario] = useState(null);
@@ -210,6 +214,8 @@ export default function SpeakingCoachPage({ onBack }) {
 
   /* ── Select scenario & start ── */
   const selectScenario = (s) => {
+    if (isBlocked) { setShowPaywall(true); return; }
+    incrementUsage();
     setScenario(s);
     setPhase('session');
     setMessages([{ role: 'assistant', content: s.opener }]);
@@ -662,6 +668,7 @@ export default function SpeakingCoachPage({ onBack }) {
           )}
         </div>
       )}
+      {showPaywall && <PaywallModal feature="speakingCoach" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

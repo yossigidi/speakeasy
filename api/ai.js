@@ -2,6 +2,26 @@ import { callGroq } from '../lib/groq.js';
 import { handleCors } from '../lib/cors.js';
 import admin from 'firebase-admin';
 import { rateLimit } from '../lib/rateLimit.js';
+import { getFirestore } from '../lib/firebase.js';
+
+// Free tier daily limits per feature (server-side source of truth)
+const FREE_LIMITS = {
+  'speaking-coach': 2,
+  'life-coach': 2,
+  'simulation': 2,
+  'pronunciation-feedback': 5,
+  'generate-lesson': 1,
+  'generate-story': 1,
+};
+
+const ACTION_TO_FEATURE_KEY = {
+  'speaking-coach': 'speakingCoach',
+  'life-coach': 'lifeCoach',
+  'simulation': 'simulation',
+  'pronunciation-feedback': 'pronunciation',
+  'generate-lesson': 'generateLesson',
+  'generate-story': 'generateStory',
+};
 
 // Ensure Firebase Admin is initialised (shared with lib/firebase.js)
 function ensureApp() {
@@ -54,6 +74,39 @@ export default async function handler(req, res) {
   const action = req.query.action;
   const fn = actions[action];
   if (!fn) return res.status(400).json({ error: `Unknown action: ${action}` });
+
+  // ── Usage gating for free tier ──
+  const freeLimit = FREE_LIMITS[action];
+  const featureKey = ACTION_TO_FEATURE_KEY[action];
+  if (freeLimit !== undefined && featureKey) {
+    try {
+      const db = getFirestore();
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      const userData = userDoc.data() || {};
+      const sub = userData.subscription || {};
+      const isPremium = (sub.plan === 'personal' || sub.plan === 'family') && (sub.status === 'active' || sub.status === 'trialing');
+
+      if (!isPremium) {
+        const today = new Date();
+        const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const activityRef = db.collection('users').doc(user.uid).collection('dailyActivity').doc(todayKey);
+        const activityDoc = await activityRef.get();
+        const used = activityDoc.data()?.featureUsage?.[featureKey] || 0;
+
+        if (used >= freeLimit) {
+          return res.status(403).json({ error: 'limit_reached', limit: freeLimit, used, plan: 'free', feature: featureKey });
+        }
+
+        // Increment usage counter (before processing to prevent racing)
+        await activityRef.set({
+          featureUsage: { [featureKey]: admin.firestore.FieldValue.increment(1) },
+        }, { merge: true });
+      }
+    } catch (err) {
+      console.error('Usage gating error:', err);
+      // Don't block on usage check failure — let the request through
+    }
+  }
 
   try {
     return await fn(req, res);

@@ -5,7 +5,8 @@
   "framework": null,
   "functions": {
     "api/precache-tts.js": { "maxDuration": 60 },
-    "api/tts.js": { "maxDuration": 30 }
+    "api/tts.js": { "maxDuration": 30 },
+    "api/stripe-webhook.js": { "maxDuration": 30 }
   },
   "crons": [
     { "path": "/api/precache-tts", "schedule": "0 6 * * *" },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Languages, LogOut, Trash2, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle, Music, Volume2 } from 'lucide-react';
+import { Moon, Sun, Languages, LogOut, Trash2, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle, Music, Volume2, Crown } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -10,14 +10,17 @@ import { useMusic } from '../contexts/MusicContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import LevelBadge from '../components/gamification/LevelBadge.jsx';
 import XPBar from '../components/gamification/XPBar.jsx';
+import useSubscription from '../hooks/useSubscription.js';
 
 export default function ProfilePage({ onNavigate }) {
   const { uiLang, setLang, isDark, toggleTheme } = useTheme();
   const { user, signOut, deleteAccount } = useAuth();
   const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild, deleteAllUserData } = useUserProgress();
   const { musicEnabled, soundsEnabled, toggleMusic, toggleSounds } = useMusic();
+  const { plan: currentPlan, isPremium, status: subStatus } = useSubscription();
 
   const [pushEnabled, setPushEnabled] = useState(false);
+  const [portalLoading, setPortalLoading] = useState(false);
   const [pushLoading, setPushLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -91,6 +94,24 @@ export default function ProfilePage({ onNavigate }) {
       console.error('Push toggle error:', e);
     } finally {
       setPushLoading(false);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    if (!user) return;
+    setPortalLoading(true);
+    try {
+      const token = await user.getIdToken();
+      const res = await fetch('/api/customer-portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      console.error('Portal error:', err);
+    } finally {
+      setPortalLoading(false);
     }
   };
 
@@ -206,6 +227,42 @@ export default function ProfilePage({ onNavigate }) {
               <p className="text-xs text-gray-500">{t('helpCenterDesc', uiLang)}</p>
             </div>
             <Star size={18} className="text-teal-500" fill="currentColor" />
+          </div>
+        </GlassCard>
+      )}
+
+      {/* Subscription */}
+      {!isChildMode && (
+        <GlassCard
+          variant="strong"
+          className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-purple-50/80 to-amber-50/80 dark:from-purple-950/30 dark:to-amber-950/30"
+          onClick={() => isPremium ? handleManageSubscription() : onNavigate('pricing')}
+        >
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-indigo-500 to-amber-500" />
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${isPremium ? 'from-amber-400 to-orange-500' : 'from-purple-500 to-indigo-600'} flex items-center justify-center`}>
+              <Crown size={20} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-gray-900 dark:text-white">
+                  {isPremium ? t(currentPlan === 'family' ? 'familyPlan' : 'personalPlan', uiLang) : t('freePlan', uiLang)}
+                </h3>
+                {isPremium && (
+                  <span className="text-[10px] bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full font-bold uppercase">
+                    {t('active', uiLang)}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                {isPremium ? t('manageSub', uiLang) : t('upgradeNow', uiLang)}
+              </p>
+            </div>
+            {isPremium ? (
+              portalLoading ? <span className="text-xs text-gray-400">...</span> : <Star size={18} className="text-amber-500" fill="currentColor" />
+            ) : (
+              <Star size={18} className="text-purple-500" fill="currentColor" />
+            )}
           </div>
         </GlassCard>
       )}

@@ -11,6 +11,8 @@ import { ADULT_MODES, KIDS_MODES } from '../data/life-coach-modes.js';
 import ChatBubble from '../components/shared/ChatBubble.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
+import useUsageLimit from '../hooks/useUsageLimit.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 /* ── Timer display ── */
 function SessionTimer({ startTime }) {
@@ -41,6 +43,8 @@ export default function LifeCoachPage({ onBack }) {
 
   const isChild = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
   const modes = isChild ? KIDS_MODES : ADULT_MODES;
+  const { isBlocked, increment: incrementUsage } = useUsageLimit('lifeCoach');
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const [phase, setPhase] = useState('mode-select');
   const [mode, setMode] = useState(null);
@@ -83,6 +87,8 @@ export default function LifeCoachPage({ onBack }) {
   }, [isListening, transcript]);
 
   const selectMode = (m) => {
+    if (isBlocked) { setShowPaywall(true); return; }
+    incrementUsage();
     setMode(m);
     setPhase('session');
     setMessages([{ role: 'assistant', content: m.opener }]);
@@ -465,6 +471,7 @@ export default function LifeCoachPage({ onBack }) {
           </div>
         )}
       </div>
+      {showPaywall && <PaywallModal feature="lifeCoach" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

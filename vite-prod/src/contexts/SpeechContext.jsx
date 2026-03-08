@@ -105,11 +105,13 @@ const HEBREW_PRONUNCIATION_MAP = {
   'פה': 'פֶּה',   // pe (mouth), not po (here)
 };
 
-// Clean Hebrew text for TTS: strip parentheses, fix ambiguous words
+// Clean Hebrew text for TTS: strip nikud, parentheses, fix ambiguous words
 function cleanHebrewForTTS(text) {
   let cleaned = text;
   // Remove parenthetical content (e.g. "יד (כף יד)" → "יד")
   cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
+  // Strip nikud (Hebrew diacritical marks U+0591–U+05C7) — TTS reads them wrong
+  cleaned = cleaned.replace(/[\u0591-\u05C7]/g, '');
   cleaned = cleaned.trim();
   // Fix ambiguous single words
   if (HEBREW_PRONUNCIATION_MAP[cleaned]) {

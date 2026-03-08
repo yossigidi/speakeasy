@@ -17,11 +17,18 @@ export function AuthProvider({ children }) {
 
   // Handle redirect result (for Apple Sign-In on iOS/Safari)
   useEffect(() => {
-    window.firebaseAuth.getRedirectResult(window.auth).catch((err) => {
-      if (err.code !== 'auth/null-user') {
-        console.warn('Redirect sign-in error:', err);
-      }
-    });
+    window.firebaseAuth.getRedirectResult(window.auth)
+      .then((result) => {
+        if (result?.user) {
+          // Redirect auth succeeded — user is set via onAuthStateChanged
+          console.log('Redirect sign-in success:', result.user.email);
+        }
+      })
+      .catch((err) => {
+        if (err.code !== 'auth/null-user') {
+          console.warn('Redirect sign-in error:', err);
+        }
+      });
   }, []);
 
   const signInWithGoogle = useCallback(async () => {
@@ -56,6 +63,10 @@ export function AuthProvider({ children }) {
     return window.firebaseAuth.signInWithEmailAndPassword(window.auth, email, password);
   }, []);
 
+  const resetPassword = useCallback(async (email) => {
+    return window.firebaseAuth.sendPasswordResetEmail(window.auth, email);
+  }, []);
+
   const signOut = useCallback(async () => {
     return window.firebaseAuth.signOut(window.auth);
   }, []);
@@ -77,10 +88,11 @@ export function AuthProvider({ children }) {
     signInWithApple,
     signUpWithEmail,
     signInWithEmail,
+    resetPassword,
     signOut,
     deleteAccount,
     isAuthenticated: !!user,
-  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, signOut, deleteAccount]);
+  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, signOut, deleteAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

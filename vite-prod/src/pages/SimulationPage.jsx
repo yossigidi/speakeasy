@@ -11,6 +11,8 @@ import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
+import useUsageLimit from '../hooks/useUsageLimit.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 // ── Metric Bar ──────────────────────────────────────────
 function MetricBar({ label, value, color }) {
@@ -98,6 +100,8 @@ export default function SimulationPage() {
   const [timer, setTimer] = useState(0);
   const [lastCorrection, setLastCorrection] = useState(null);
   const [lastMistakes, setLastMistakes] = useState([]);
+  const { isBlocked, increment: incrementUsage } = useUsageLimit('simulation');
+  const [showPaywall, setShowPaywall] = useState(false);
   const timerRef = useRef(null);
   const speechTimersRef = useRef([]);
 
@@ -134,6 +138,8 @@ export default function SimulationPage() {
 
   // ── Start scenario ──
   const startScenario = (scenario) => {
+    if (isBlocked) { setShowPaywall(true); return; }
+    incrementUsage();
     setActiveScenario(scenario);
     setCurrentStep(0);
     setMessages([{ role: 'npc', content: scenario.steps[0].npc }]);
@@ -150,6 +156,8 @@ export default function SimulationPage() {
 
   // ── Start free mode ──
   const startFreeMode = () => {
+    if (isBlocked) { setShowPaywall(true); return; }
+    incrementUsage();
     setFreeMode(true);
     setActiveScenario(null);
     setCurrentStep(0);
@@ -730,6 +738,7 @@ export default function SimulationPage() {
           <Play size={18} className="opacity-80" />
         </div>
       </div>
+      {showPaywall && <PaywallModal feature="simulation" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

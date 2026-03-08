@@ -260,10 +260,10 @@ export function getWordsForLevel(level) {
 // Level metadata for display
 export const LEVEL_INFO = [
   null, // index 0 unused
-  { name: 'צעדים ראשונים', nameEn: 'First Steps', nameAr: 'الخطوات الأولى', nameRu: 'Первые шаги', emoji: '🌱', color: 'from-green-400 to-emerald-500', textColor: 'text-green-600 dark:text-green-400' },
-  { name: 'חוקר', nameEn: 'Explorer', nameAr: 'المستكشف', nameRu: 'Исследователь', emoji: '🔭', color: 'from-blue-400 to-indigo-500', textColor: 'text-blue-600 dark:text-blue-400' },
-  { name: 'קורא', nameEn: 'Reader', nameAr: 'القارئ', nameRu: 'Читатель', emoji: '📖', color: 'from-purple-400 to-violet-500', textColor: 'text-purple-600 dark:text-purple-400' },
-  { name: 'אלוף', nameEn: 'Champion', nameAr: 'البطل', nameRu: 'Чемпион', emoji: '🏆', color: 'from-orange-400 to-amber-500', textColor: 'text-orange-600 dark:text-orange-400' },
+  { nameHe: 'צעדים ראשונים', nameEn: 'First Steps', nameAr: 'الخطوات الأولى', nameRu: 'Первые шаги', emoji: '🌱', color: 'from-green-400 to-emerald-500', textColor: 'text-green-600 dark:text-green-400' },
+  { nameHe: 'חוקר', nameEn: 'Explorer', nameAr: 'المستكشف', nameRu: 'Исследователь', emoji: '🔭', color: 'from-blue-400 to-indigo-500', textColor: 'text-blue-600 dark:text-blue-400' },
+  { nameHe: 'קורא', nameEn: 'Reader', nameAr: 'القارئ', nameRu: 'Читатель', emoji: '📖', color: 'from-purple-400 to-violet-500', textColor: 'text-purple-600 dark:text-purple-400' },
+  { nameHe: 'אלוף', nameEn: 'Champion', nameAr: 'البطل', nameRu: 'Чемпион', emoji: '🏆', color: 'from-orange-400 to-amber-500', textColor: 'text-orange-600 dark:text-orange-400' },
 ];
 
 // Quest grammar fill-in-blank sentences per level
