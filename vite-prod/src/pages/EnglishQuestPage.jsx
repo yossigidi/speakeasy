@@ -14,10 +14,10 @@ import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 /* ─── Constants ─── */
 
 const QUEST_SCENES = [
-  { id: 'forest', emoji: '🌲', nameKey: 'questSceneForest', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameKey: 'questBossForest', bgImage: '/images/adventure/backgrounds/forest-sky.jpg', bossImage: '/images/adventure/characters/dragon-drago.jpg', icon: '/images/adventure/objects/world-icon-forest.jpg' },
-  { id: 'school', emoji: '🏫', nameKey: 'questSceneSchool', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameKey: 'questBossSchool', bgImage: '/images/adventure/backgrounds/castle-scene3-library.jpg', bossImage: '/images/adventure/characters/owl-oliver.jpg', icon: '/images/adventure/objects/world-icon-castle.jpg' },
-  { id: 'space', emoji: '🚀', nameKey: 'questSceneSpace', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameKey: 'questBossSpace', bgImage: '/images/adventure/backgrounds/space-scene5-nebula.jpg', bossImage: '/images/adventure/characters/alien-luna.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
-  { id: 'ocean', emoji: '🌊', nameKey: 'questSceneOcean', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameKey: 'questBossOcean', bgImage: '/images/adventure/backgrounds/ocean-scene1-reef.jpg', bossImage: '/images/adventure/characters/octopus-oscar.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
+  { id: 'forest', emoji: '🌲', nameKey: 'questSceneForest', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameKey: 'questBossForest', bgImage: '/images/adventure/backgrounds/forest-sky.jpg', bgVideo: '/videos/quest/forest.mp4', bossImage: '/images/adventure/characters/dragon-drago.jpg', icon: '/images/adventure/objects/world-icon-forest.jpg' },
+  { id: 'school', emoji: '🏫', nameKey: 'questSceneSchool', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameKey: 'questBossSchool', bgImage: '/images/adventure/backgrounds/castle-scene3-library.jpg', bgVideo: '/videos/quest/school.mp4', bossImage: '/images/adventure/characters/owl-oliver.jpg', icon: '/images/adventure/objects/world-icon-castle.jpg' },
+  { id: 'space', emoji: '🚀', nameKey: 'questSceneSpace', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameKey: 'questBossSpace', bgImage: '/images/adventure/backgrounds/space-scene5-nebula.jpg', bgVideo: '/videos/quest/space.mp4', bossImage: '/images/adventure/characters/alien-luna.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
+  { id: 'ocean', emoji: '🌊', nameKey: 'questSceneOcean', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameKey: 'questBossOcean', bgImage: '/images/adventure/backgrounds/ocean-scene1-reef.jpg', bgVideo: '/videos/quest/ocean.mp4', bossImage: '/images/adventure/characters/octopus-oscar.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
 ];
 
 // First hero is Speakli (avatar image), rest are emoji heroes
@@ -102,6 +102,20 @@ function FloatingXP({ amount, x, y }) {
   );
 }
 
+/* ─── Video background for quest scenes ─── */
+function SceneBgVideo({ src }) {
+  if (!src) return null;
+  return (
+    <video
+      autoPlay muted loop playsInline
+      className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+      style={{ zIndex: 0 }}
+      src={src}
+      onError={(e) => { e.target.style.display = 'none'; }}
+    />
+  );
+}
+
 /* ─── Boss HP Bar ─── */
 function BossHPBar({ hp, maxHP, bossEmoji, bossImage, bossName }) {
   const pct = Math.max(0, (hp / maxHP) * 100);
@@ -167,6 +181,8 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLa
 
   return (
     <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex flex-col items-center justify-center p-6 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+      <SceneBgVideo src={scene.bgVideo} />
+      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
       {/* Background scene emojis */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {Array.from({ length: 8 }).map((_, i) => (
@@ -270,8 +286,10 @@ function MissionTransition({ missionIndex, scene, uiLang, onReady }) {
   }, [onReady]);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
-      <div className="text-center animate-pop-in space-y-4">
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+      <SceneBgVideo src={scene.bgVideo} />
+      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
+      <div className="text-center animate-pop-in space-y-4 relative z-10">
         <div className="text-6xl">{MISSION_EMOJIS[missionIndex]}</div>
         <h2 className="text-white font-black text-2xl">
           {tReplace('questMissionNumber', uiLang, { num: missionIndex + 1 })}
@@ -372,9 +390,11 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+      <SceneBgVideo src={scene.bgVideo} />
+      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
       {/* Round counter */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 relative z-10">
         <span className="text-white/70 text-sm font-bold">
           {tReplace('questRoundCounter', uiLang, { current: round + 1, total: TOTAL_ROUNDS })}
         </span>
@@ -493,9 +513,11 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
   const parts = current.sentence.split('___');
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+      <SceneBgVideo src={scene.bgVideo} />
+      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
       {/* Boss */}
-      <div className="text-center mb-4">
+      <div className="text-center mb-4 relative z-10">
         <div className={`inline-block transition-all duration-500 ${bossAnim}`}>
           {scene.bossImage ? (
             <img src={scene.bossImage} alt={t(scene.bossNameKey, 'en')}
@@ -655,9 +677,11 @@ function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} pt-2 pb-6 px-4 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+      <SceneBgVideo src={scene.bgVideo} />
+      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
       {/* Round */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 relative z-10">
         <span className="text-white/70 text-sm font-bold">
           {tReplace('questRoundCounter', uiLang, { current: round + 1, total: TOTAL_ROUNDS })}
         </span>
@@ -765,7 +789,9 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
   }, []);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center p-6 relative`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+    <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center p-6 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
+      <SceneBgVideo src={scene.bgVideo} />
+      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
       <ConfettiBurst show={showConfetti} />
 
       <div className="text-center space-y-5 animate-pop-in relative z-10 max-w-sm w-full">
