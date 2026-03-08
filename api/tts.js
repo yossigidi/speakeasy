@@ -71,9 +71,9 @@ function cleanForTTS(text, lang) {
   return cleaned.replace(/\s+/g, ' ').trim();
 }
 
-// Use multilingual v2 for Arabic and Russian (better support than v3)
+// Use multilingual v2 for Hebrew, Arabic and Russian (v3 mispronounces non-English)
 const MULTILINGUAL_MODEL_ID = 'eleven_multilingual_v2';
-const MULTILINGUAL_LANGS = new Set(['ar', 'ru']);
+const MULTILINGUAL_LANGS = new Set(['he', 'ar', 'ru']);
 
 async function callElevenLabsTTS(text, voiceId, lang) {
   const modelId = MULTILINGUAL_LANGS.has(lang) ? MULTILINGUAL_MODEL_ID : MODEL_ID;
@@ -131,7 +131,8 @@ export default async function handler(req, res) {
 
   // Use cleaned text for cache key so niqqud variants hit the same cache entry
   const cleanedText = cleanForTTS(trimmed, detectedLang);
-  const cacheKey = Buffer.from(`${cleanedText}__el_${voiceId}`).toString('base64url');
+  const modelId = MULTILINGUAL_LANGS.has(detectedLang) ? MULTILINGUAL_MODEL_ID : MODEL_ID;
+  const cacheKey = Buffer.from(`${cleanedText}__el_${voiceId}_${modelId}`).toString('base64url');
 
   // 1. Check Firestore cache
   try {

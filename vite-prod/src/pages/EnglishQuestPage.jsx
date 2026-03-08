@@ -15,9 +15,9 @@ import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
 const QUEST_SCENES = [
   { id: 'forest', emoji: '🌲', nameKey: 'questSceneForest', bg: 'from-green-600 to-emerald-800', boss: '🐲', bossNameKey: 'questBossForest', bgImage: '/images/adventure/backgrounds/forest-sky.jpg', bossImage: '/images/adventure/characters/dragon-drago.jpg', icon: '/images/adventure/objects/world-icon-forest.jpg' },
-  { id: 'school', emoji: '🏫', nameKey: 'questSceneSchool', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameKey: 'questBossSchool', bgImage: '/images/quest/backgrounds/school-bg.jpg', bossImage: '/images/quest/bosses/ghost-boss.jpg', icon: '/images/quest/icons/school-icon.jpg' },
-  { id: 'space', emoji: '🚀', nameKey: 'questSceneSpace', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameKey: 'questBossSpace', bgImage: '/images/quest/backgrounds/space-bg.jpg', bossImage: '/images/quest/bosses/alien-boss.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
-  { id: 'ocean', emoji: '🌊', nameKey: 'questSceneOcean', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameKey: 'questBossOcean', bgImage: '/images/quest/backgrounds/ocean-bg.jpg', bossImage: '/images/quest/bosses/octopus-boss.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
+  { id: 'school', emoji: '🏫', nameKey: 'questSceneSchool', bg: 'from-purple-600 to-indigo-800', boss: '👻', bossNameKey: 'questBossSchool', bgImage: '/images/adventure/backgrounds/castle-scene3-library.jpg', bossImage: '/images/adventure/characters/owl-oliver.jpg', icon: '/images/adventure/objects/world-icon-castle.jpg' },
+  { id: 'space', emoji: '🚀', nameKey: 'questSceneSpace', bg: 'from-blue-800 to-slate-900', boss: '👾', bossNameKey: 'questBossSpace', bgImage: '/images/adventure/backgrounds/space-scene5-nebula.jpg', bossImage: '/images/adventure/characters/alien-luna.jpg', icon: '/images/adventure/objects/world-icon-space.jpg' },
+  { id: 'ocean', emoji: '🌊', nameKey: 'questSceneOcean', bg: 'from-cyan-600 to-blue-900', boss: '🐙', bossNameKey: 'questBossOcean', bgImage: '/images/adventure/backgrounds/ocean-scene1-reef.jpg', bossImage: '/images/adventure/characters/octopus-oscar.jpg', icon: '/images/adventure/objects/world-icon-ocean.jpg' },
 ];
 
 // First hero is Speakli (avatar image), rest are emoji heroes
