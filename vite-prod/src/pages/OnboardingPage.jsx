@@ -524,12 +524,13 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({ email }),
                     });
-                    if (!resp.ok) throw new Error('failed');
+                    const data = await resp.json();
+                    if (!resp.ok) throw new Error(data.detail || data.error || 'failed');
                     setResetSent(true);
                     setAuthError('');
                   } catch (err) {
                     console.error('Password reset error:', err);
-                    setAuthError(t('resetError', uiLang));
+                    setAuthError(t('resetError', uiLang) + (err.message ? ` (${err.message})` : ''));
                   }
                 }}
                 style={{
