@@ -207,7 +207,7 @@ function AppContent() {
     }} /></Suspense>;
   }
 
-  const isKids = isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2);
+  const isKids = isChildMode;
 
   const pageTitles = {
     home: null,

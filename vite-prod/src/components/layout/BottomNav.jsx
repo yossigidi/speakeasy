@@ -22,7 +22,7 @@ const kidsTabs = [
 export default function BottomNav({ currentPage, onNavigate, reviewCount = 0 }) {
   const { uiLang, isDark } = useTheme();
   const { progress, isChildMode } = useUserProgress();
-  const tabs = (isChildMode && (!progress.curriculumLevel || progress.curriculumLevel <= 2)) ? kidsTabs : adultTabs;
+  const tabs = isChildMode ? kidsTabs : adultTabs;
 
   return (
     <nav
