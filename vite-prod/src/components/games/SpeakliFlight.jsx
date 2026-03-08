@@ -235,51 +235,80 @@ function FlightStoryIntro({ onStart, uiLang }) {
 
 // ── ZoneSelector ──
 function ZoneSelector({ onSelect, onBack, childLevel, uiLang }) {
-  const availableZones = ZONES.filter(z => !z.minLevel || childLevel >= z.minLevel);
+  const isRtl = RTL_LANGS.includes(uiLang);
 
   return (
     <div className="kids-bg min-h-screen relative flex flex-col">
       {/* Back button */}
-      <div className="absolute top-3 left-3 z-20">
+      <div className="absolute z-20" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 12px)', left: isRtl ? 'auto' : 12, right: isRtl ? 12 : 'auto' }}>
         <button
           onClick={onBack}
-          className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center active:scale-90 transition-transform"
         >
-          <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+          <ArrowLeft size={20} className={`text-gray-700 ${isRtl ? 'rotate-180' : ''}`} />
         </button>
       </div>
-      <div className="relative z-10 flex flex-col items-center px-4 pt-6 pb-4 flex-1">
-        <div className="mb-4">
+
+      <div className="relative z-10 flex flex-col items-center px-4 pb-6 flex-1 overflow-auto" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)' }}>
+        <div className="mb-3">
           <SpeakliAvatar mode="bounce" size="lg" />
         </div>
         <h2 className="text-2xl font-black text-gray-800 dark:text-white mb-1 text-center">
           {t('gameSpeakliFlightTitle', uiLang)} 🚀
         </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 text-center">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-5 text-center">
           {t('pickZoneAndFly', uiLang)}
         </p>
 
-        <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
-          {availableZones.map(zone => (
-            <button
-              key={zone.id}
-              onClick={() => { playTap(); onSelect(zone); }}
-              className="btn-3d rounded-2xl p-4 flex flex-col items-center gap-2 text-white font-bold shadow-xl active:scale-95 transition-transform"
-              style={{ background: zone.skyGradient }}
-            >
-              <span className="text-4xl">{zone.emoji}</span>
-              <span className="text-sm font-black leading-tight">
-                {lf(zone, 'name', uiLang)}
-              </span>
-            </button>
-          ))}
-        </div>
+        <div className="space-y-4 w-full max-w-lg">
+          {ZONES.map(zone => {
+            const locked = zone.minLevel && childLevel < zone.minLevel;
+            return (
+              <button
+                key={zone.id}
+                onClick={() => { if (!locked) { playTap(); onSelect(zone); } }}
+                disabled={locked}
+                className={`w-full rounded-3xl p-5 text-left transition-all duration-300 relative overflow-hidden ${
+                  locked ? 'opacity-50 grayscale' : 'active:scale-[0.97]'
+                }`}
+                style={{ background: zone.skyGradient }}
+              >
+                {/* Decorative circles */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10" />
+                <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-white/10" />
 
-        {ZONES.some(z => z.minLevel && childLevel < z.minLevel) && (
-          <p className="text-xs text-gray-400 mt-4 text-center">
-            {t('moreZonesUnlock', uiLang)}
-          </p>
-        )}
+                {locked && (
+                  <div className="absolute top-3 right-3 bg-black/30 rounded-full p-1.5 z-10">
+                    <span className="text-white text-xs">🔒</span>
+                  </div>
+                )}
+
+                <div className="relative z-10">
+                  <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-white/30">
+                    {zone.emoji}
+                  </div>
+                  <h3 className="text-white font-black text-xl">
+                    {lf(zone, 'name', uiLang)}
+                  </h3>
+                  <p className="text-white/70 text-sm font-medium mt-1">
+                    {locked ? `🔒 ${t('moreZonesUnlock', uiLang)}` : `🚀 ${lf(zone, 'name', 'en')}`}
+                  </p>
+
+                  {/* Preview obstacles */}
+                  {!locked && (
+                    <div className="flex gap-2 mt-3">
+                      {zone.obstacleEmojis.map((e, i) => (
+                        <div key={i} className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg border border-white/30">
+                          {e}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
