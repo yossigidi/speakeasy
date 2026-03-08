@@ -758,7 +758,7 @@ function TargetWordBubble({ target, diff, uiLang, onReplay }) {
 }
 
 // ── GameOverScreen with Podium ──
-function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, world, uiLang, playerPos, botPositions, timeBonusTotal, bossDefeated }) {
+function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, onBack, world, uiLang, playerPos, botPositions, timeBonusTotal, bossDefeated }) {
   // Compute placement
   const racers = [
     { id: 'player', label: t('you', uiLang), emoji: '🏃', pos: playerPos },
@@ -859,13 +859,21 @@ function RunGameOver({ score, coins, totalRounds, correctCount, xp, onContinue, 
           </div>
         </div>
 
-        <button
-          onClick={onContinue}
-          className="btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl"
-          style={{ background: world.skyGradient, boxShadow: 'none' }}
-        >
-          {t('continue', uiLang)} ✨
-        </button>
+        <div className="flex flex-col gap-3 w-full max-w-xs">
+          <button
+            onClick={onContinue}
+            className="btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl w-full"
+            style={{ background: world.skyGradient, boxShadow: 'none' }}
+          >
+            {t('continue', uiLang)} ✨
+          </button>
+          <button
+            onClick={onBack}
+            className="px-8 py-3 rounded-2xl font-bold text-gray-600 dark:text-gray-300 text-base bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm active:scale-95 transition-transform w-full"
+          >
+            {t('backHome', uiLang)} 🏠
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -1285,6 +1293,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         correctCount={correctCount}
         xp={xp}
         onContinue={() => onComplete(xp)}
+        onBack={handleBack}
         world={world}
         uiLang={uiLang}
         playerPos={playerPos}
