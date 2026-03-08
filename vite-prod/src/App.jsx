@@ -45,6 +45,7 @@ const SkillsPage = lazy(() => import('./pages/SkillsPage.jsx'));
 const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
 const SpeakingCoachPage = lazy(() => import('./pages/SpeakingCoachPage.jsx'));
 const LifeCoachPage = lazy(() => import('./pages/LifeCoachPage.jsx'));
+const PricingPage = lazy(() => import('./pages/PricingPage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -104,11 +105,16 @@ function AppContent() {
     }
   }, [user]);
 
-  // Check URL for childJoin parameter
+  // Check URL for childJoin or subscription return parameter
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('childJoin')) {
       setShowChildLogin(true);
+    }
+    if (params.get('subscription') === 'success') {
+      setCurrentPage('profile');
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
 
@@ -229,11 +235,12 @@ function AppContent() {
     'adventure': null,
     'speaking-coach': t('speakingCoach', uiLang),
     'life-coach': t('lifeCoach', uiLang),
+    'pricing': t('premium', uiLang),
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure', 'speaking-coach', 'life-coach'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure', 'speaking-coach', 'life-coach', 'pricing'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure' && currentPage !== 'speaking-coach' && currentPage !== 'life-coach';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure' && currentPage !== 'speaking-coach' && currentPage !== 'life-coach' && currentPage !== 'pricing';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -302,6 +309,8 @@ function AppContent() {
         return <PageErrorBoundary><SpeakingCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'life-coach':
         return <PageErrorBoundary><LifeCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+      case 'pricing':
+        return <PricingPage onBack={() => navigateTo('profile')} />;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -319,7 +328,7 @@ function AppContent() {
         />
       )}
 
-      <main className={showHeader ? '' : 'pt-4'} style={!showHeader ? { paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)' } : undefined}>
+      <main className={showHeader ? '' : isChildMode ? '' : 'pt-4'} style={!showHeader && !isChildMode ? { paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)' } : undefined}>
         <Suspense fallback={<PageLoader />}>
           <PageTransition pageKey={currentPage}>
             {renderPage()}
