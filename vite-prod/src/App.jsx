@@ -93,7 +93,6 @@ function AppContent() {
       lessons: 'kids-lessons', 'kids-teacher': 'kids-lessons', curriculum: 'kids-lessons',
       'english-quest': 'kids-quest',
       'adventure': 'kids-adventure',
-      'talking-world': 'kids-adventure',
     };
     setSection(map[currentPage] || null);
   }, [currentPage, isChildMode, setSection]);

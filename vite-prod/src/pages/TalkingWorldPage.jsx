@@ -380,7 +380,7 @@ export default function TalkingWorldPage({ onBack }) {
                   : undefined,
               }}
             >
-              <div className={`w-full rounded-3xl bg-gradient-to-br ${world.gradient} p-5 relative overflow-hidden`}>
+              <div className="w-full rounded-3xl p-5 relative overflow-hidden" style={{ background: `linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.55)), url(${world.bg}) center/cover` }}>
                 {/* Decorative circles */}
                 <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10" />
                 <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-white/10" />
@@ -398,7 +398,7 @@ export default function TalkingWorldPage({ onBack }) {
                 )}
 
                 <div className="relative z-10">
-                  <span className="text-5xl block mb-2">{world.emoji}</span>
+                  <img src={world.icon} alt="" className="w-16 h-16 rounded-full object-cover mb-2 shadow-lg border-2 border-white/30" />
                   <h3 className="text-white font-black text-xl">
                     {lf(world, 'name', uiLang)}
                   </h3>
@@ -409,18 +409,18 @@ export default function TalkingWorldPage({ onBack }) {
                     }
                   </p>
 
-                  {/* NPC emoji preview */}
+                  {/* NPC image preview */}
                   {!locked && (
                     <div className="flex gap-2 mt-3">
                       {world.npcs.map(npc => (
-                        <div
+                        <img
                           key={npc.id}
-                          className={`w-10 h-10 rounded-full flex items-center justify-center text-xl ${
-                            npcsCompleted.includes(npc.id) ? 'bg-white/30' : 'bg-white/15'
+                          src={npc.image}
+                          alt={lf(npc, 'name', 'en')}
+                          className={`w-10 h-10 rounded-full object-cover border-2 ${
+                            npcsCompleted.includes(npc.id) ? 'border-yellow-300 shadow-md' : 'border-white/30 opacity-70'
                           }`}
-                        >
-                          {npc.emoji}
-                        </div>
+                        />
                       ))}
                     </div>
                   )}
@@ -441,9 +441,9 @@ export default function TalkingWorldPage({ onBack }) {
     const npcsCompleted = getNpcsCompleted(world.id);
 
     return (
-      <div className="px-4 pt-4 pb-24">
+      <div className="px-4 pt-4 pb-24 min-h-screen" style={{ background: `linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,255,255,0.95)), url(${world.bg}) center/cover fixed` }}>
         <div className="text-center mb-6">
-          <span className="text-5xl block mb-2">{world.emoji}</span>
+          <img src={world.icon} alt="" className="w-20 h-20 rounded-full object-cover mx-auto mb-2 shadow-lg border-3 border-white/50" />
           <h2 className="text-2xl font-black text-gray-800 dark:text-white">
             {lf(world, 'name', uiLang)}
           </h2>
@@ -478,15 +478,19 @@ export default function TalkingWorldPage({ onBack }) {
                       : 'bg-gray-100 dark:bg-gray-800/50 opacity-50'
                   }`}
                 >
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center text-3xl shrink-0 ${
-                    isCompleted
-                      ? 'bg-gradient-to-br from-yellow-300 to-amber-400 shadow-md'
-                      : isUnlocked
-                        ? `bg-gradient-to-br ${world.gradient} shadow-md`
-                        : 'bg-gray-200 dark:bg-gray-700'
-                  }`}>
-                    {isUnlocked ? npc.emoji : <Lock size={20} className="text-gray-400" />}
-                  </div>
+                  {isUnlocked ? (
+                    <img
+                      src={npc.image}
+                      alt={lf(npc, 'name', 'en')}
+                      className={`w-16 h-16 rounded-full object-cover shrink-0 border-3 shadow-md ${
+                        isCompleted ? 'border-yellow-400' : 'border-white/50'
+                      }`}
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center shrink-0 bg-gray-200 dark:bg-gray-700">
+                      <Lock size={20} className="text-gray-400" />
+                    </div>
+                  )}
 
                   <div className="flex-1 text-left" dir={isRTL ? 'rtl' : 'ltr'}>
                     <h3 className="font-bold text-gray-800 dark:text-white">
@@ -539,9 +543,7 @@ export default function TalkingWorldPage({ onBack }) {
           <button onClick={() => setPhase('npc-path')} className="text-white/80 hover:text-white">
             <ArrowLeft size={22} />
           </button>
-          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl">
-            {npc.emoji}
-          </div>
+          <img src={npc.image} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-white/30" />
           <div className="flex-1">
             <h3 className="text-white font-bold text-sm">{lf(npc, 'name', uiLang)}</h3>
             <p className="text-white/70 text-xs">
@@ -708,7 +710,7 @@ export default function TalkingWorldPage({ onBack }) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
         <div className="animate-pop-in">
-          <div className="text-7xl mb-4 animate-float">{npc.emoji}</div>
+          <img src={npc.image} alt="" className="w-28 h-28 rounded-full object-cover mx-auto mb-4 shadow-xl border-4 border-yellow-300 animate-float" />
           <h2 className="text-2xl font-black text-gray-800 dark:text-white mb-2">
             {t('twGreatJob', uiLang)}
           </h2>

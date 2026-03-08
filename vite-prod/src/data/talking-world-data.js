@@ -34,7 +34,7 @@ export const WORLDS = [
     nameRu: 'Волшебный лес',
     gradient: 'from-green-400 via-emerald-500 to-teal-500',
     bg: '/images/talking-world/backgrounds/tw-bg-magic-forest.jpg',
-    icon: '/images/talking-world/icons/tw-icon-magic-forest.png',
+    icon: '/images/talking-world/icons/tw-icon-magic-forest.jpg',
     topics: ['colors', 'animals', 'numbers'],
     npcs: [
       {
@@ -44,7 +44,7 @@ export const WORLDS = [
         nameAr: 'فيليكس الثعلب',
         nameRu: 'Лис Феликс',
         emoji: '🦊',
-        image: '/images/talking-world/characters/tw-char-fox-felix.png',
+        image: '/images/talking-world/characters/tw-char-fox-felix.jpg',
         personality: 'Playful, curious, loves colors',
         greetingEn: 'Hi there! I\'m Felix! Do you like colors?',
         tasks: [
@@ -84,7 +84,7 @@ export const WORLDS = [
         nameAr: 'أوليفيا البومة',
         nameRu: 'Сова Оливия',
         emoji: '🦉',
-        image: '/images/talking-world/characters/tw-char-owl-olivia.png',
+        image: '/images/talking-world/characters/tw-char-owl-olivia.jpg',
         personality: 'Wise, gentle, loves counting',
         greetingEn: 'Hello little one! I\'m Olivia! Let\'s count together!',
         tasks: [
@@ -127,7 +127,7 @@ export const WORLDS = [
         nameAr: 'بيلا الأرنبة',
         nameRu: 'Зайка Белла',
         emoji: '🐰',
-        image: '/images/talking-world/characters/tw-char-bunny-bella.png',
+        image: '/images/talking-world/characters/tw-char-bunny-bella.jpg',
         personality: 'Shy, sweet, loves animals',
         greetingEn: 'Hi! I\'m Bella! I love animals! Do you?',
         tasks: [
@@ -177,7 +177,7 @@ export const WORLDS = [
         nameAr: 'باري الدب',
         nameRu: 'Медведь Барри',
         emoji: '🐻',
-        image: '/images/talking-world/characters/tw-char-bear-barry.png',
+        image: '/images/talking-world/characters/tw-char-bear-barry.jpg',
         personality: 'Big, gentle, loves hugs and colors',
         greetingEn: 'Hey buddy! I\'m Barry! Give me a high five!',
         tasks: [
@@ -227,7 +227,7 @@ export const WORLDS = [
     nameRu: 'Весёлый город',
     gradient: 'from-pink-400 via-rose-500 to-red-500',
     bg: '/images/talking-world/backgrounds/tw-bg-happy-town.jpg',
-    icon: '/images/talking-world/icons/tw-icon-happy-town.png',
+    icon: '/images/talking-world/icons/tw-icon-happy-town.jpg',
     topics: ['food', 'family', 'school'],
     npcs: [
       {
@@ -237,7 +237,7 @@ export const WORLDS = [
         nameAr: 'كارلو الطباخ',
         nameRu: 'Повар Карло',
         emoji: '👨‍🍳',
-        image: '/images/talking-world/characters/tw-char-chef-carlo.png',
+        image: '/images/talking-world/characters/tw-char-chef-carlo.jpg',
         personality: 'Jolly, enthusiastic about food, funny accent',
         greetingEn: 'Buongiorno! I\'m Chef Carlo! Are you hungry?',
         tasks: [
@@ -287,7 +287,7 @@ export const WORLDS = [
         nameAr: 'جريس الجدة',
         nameRu: 'Бабушка Грейс',
         emoji: '👵',
-        image: '/images/talking-world/characters/tw-char-grandma-grace.png',
+        image: '/images/talking-world/characters/tw-char-grandma-grace.jpg',
         personality: 'Warm, loving, bakes cookies, asks about family',
         greetingEn: 'Oh hello dear! I\'m Grandma Grace! Come sit with me!',
         tasks: [
@@ -329,7 +329,7 @@ export const WORLDS = [
         nameAr: 'توم المعلم',
         nameRu: 'Учитель Том',
         emoji: '👨‍🏫',
-        image: '/images/talking-world/characters/tw-char-teacher-tom.png',
+        image: '/images/talking-world/characters/tw-char-teacher-tom.jpg',
         personality: 'Encouraging, patient, makes learning fun',
         greetingEn: 'Good morning class! I\'m Mr. Tom! Ready to learn?',
         tasks: [
@@ -370,7 +370,7 @@ export const WORLDS = [
         nameAr: 'سام البائع',
         nameRu: 'Продавец Сэм',
         emoji: '🧑‍💼',
-        image: '/images/talking-world/characters/tw-char-shopkeeper-sam.png',
+        image: '/images/talking-world/characters/tw-char-shopkeeper-sam.jpg',
         personality: 'Friendly, sells fruits & school supplies, helpful',
         greetingEn: 'Welcome to my shop! I\'m Sam! What do you need?',
         tasks: [
@@ -419,7 +419,7 @@ export const WORLDS = [
     nameRu: 'Остров природы',
     gradient: 'from-cyan-400 via-blue-500 to-indigo-500',
     bg: '/images/talking-world/backgrounds/tw-bg-nature-island.jpg',
-    icon: '/images/talking-world/icons/tw-icon-nature-island.png',
+    icon: '/images/talking-world/icons/tw-icon-nature-island.jpg',
     topics: ['home', 'nature', 'weather'],
     npcs: [
       {
@@ -429,7 +429,7 @@ export const WORLDS = [
         nameAr: 'فلورا المزارعة',
         nameRu: 'Фермер Флора',
         emoji: '👩‍🌾',
-        image: '/images/talking-world/characters/tw-char-farmer-flora.png',
+        image: '/images/talking-world/characters/tw-char-farmer-flora.jpg',
         personality: 'Cheerful, loves nature, grows flowers and vegetables',
         greetingEn: 'Howdy! I\'m Flora! Welcome to my farm!',
         tasks: [
@@ -477,7 +477,7 @@ export const WORLDS = [
         nameAr: 'سكيب البحار',
         nameRu: 'Моряк Скип',
         emoji: '⛵',
-        image: '/images/talking-world/characters/tw-char-sailor-skip.png',
+        image: '/images/talking-world/characters/tw-char-sailor-skip.jpg',
         personality: 'Adventurous, tells sea stories, jolly',
         greetingEn: 'Ahoy! I\'m Skip! Welcome aboard!',
         tasks: [
@@ -518,7 +518,7 @@ export const WORLDS = [
         nameAr: 'غيمة السحابة',
         nameRu: 'Облачко',
         emoji: '☁️',
-        image: '/images/talking-world/characters/tw-char-cloud-cloudy.png',
+        image: '/images/talking-world/characters/tw-char-cloud-cloudy.jpg',
         personality: 'Fluffy, dreamy, knows all about weather',
         greetingEn: 'Hello down there! I\'m Cloudy! Let\'s talk about weather!',
         tasks: [
@@ -557,7 +557,7 @@ export const WORLDS = [
         nameAr: 'ديف السائق',
         nameRu: 'Водитель Дейв',
         emoji: '🚌',
-        image: '/images/talking-world/characters/tw-char-driver-dave.png',
+        image: '/images/talking-world/characters/tw-char-driver-dave.jpg',
         personality: 'Friendly, drives the school bus, knows the town',
         greetingEn: 'Hop on! I\'m Dave! Where do you want to go?',
         tasks: [
@@ -607,7 +607,7 @@ export const WORLDS = [
     nameRu: 'Страна приключений',
     gradient: 'from-amber-400 via-orange-500 to-red-500',
     bg: '/images/talking-world/backgrounds/tw-bg-adventure-land.jpg',
-    icon: '/images/talking-world/icons/tw-icon-adventure-land.png',
+    icon: '/images/talking-world/icons/tw-icon-adventure-land.jpg',
     topics: ['verbs', 'sentences', 'stories'],
     npcs: [
       {
@@ -617,7 +617,7 @@ export const WORLDS = [
         nameAr: 'ماكس المستكشف',
         nameRu: 'Исследователь Макс',
         emoji: '🧭',
-        image: '/images/talking-world/characters/tw-char-explorer-max.png',
+        image: '/images/talking-world/characters/tw-char-explorer-max.jpg',
         personality: 'Brave, excited, loves discovering new things',
         greetingEn: 'Hey adventurer! I\'m Max! Let\'s explore together!',
         tasks: [
@@ -655,7 +655,7 @@ export const WORLDS = [
         nameAr: 'د. سبارك',
         nameRu: 'Доктор Спарк',
         emoji: '🔬',
-        image: '/images/talking-world/characters/tw-char-scientist-spark.png',
+        image: '/images/talking-world/characters/tw-char-scientist-spark.jpg',
         personality: 'Quirky, amazed by science, wild experiments',
         greetingEn: 'Amazing! I\'m Dr. Spark! Want to do an experiment?',
         tasks: [
@@ -693,7 +693,7 @@ export const WORLDS = [
         nameAr: 'القبطان سلطعون',
         nameRu: 'Капитан Краб',
         emoji: '🦀',
-        image: '/images/talking-world/characters/tw-char-pirate-crab.png',
+        image: '/images/talking-world/characters/tw-char-pirate-crab.jpg',
         personality: 'Funny pirate, tells treasure stories, adventurous',
         greetingEn: 'Arr! I\'m Captain Crab! Want to find treasure?',
         tasks: [
@@ -731,7 +731,7 @@ export const WORLDS = [
         nameAr: 'ميرلين الساحر',
         nameRu: 'Волшебник Мерлин',
         emoji: '🧙‍♂️',
-        image: '/images/talking-world/characters/tw-char-wizard-merlin.png',
+        image: '/images/talking-world/characters/tw-char-wizard-merlin.jpg',
         personality: 'Wise, magical, tells stories, makes words appear',
         greetingEn: 'Greetings young one! I am Merlin! Shall we make magic with words?',
         tasks: [
