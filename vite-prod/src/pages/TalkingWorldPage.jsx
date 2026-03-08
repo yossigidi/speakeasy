@@ -9,7 +9,7 @@ import { playFromAPI } from '../utils/hebrewAudio.js';
 import { playCorrect, playComplete, playStar, playWrong } from '../utils/gameSounds.js';
 import { WORLDS, TW_XP, TW_STARS, scoreToStars } from '../data/talking-world-data.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
-import KidsIntro from '../components/kids/KidsIntro.jsx';
+// KidsIntro replaced by video intro
 
 /* ════════════════════════════════════════════════════════════════
    TALKING WORLD PAGE
@@ -35,9 +35,11 @@ export default function TalkingWorldPage({ onBack }) {
   const [showHint, setShowHint] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [worldStarsEarned, setWorldStarsEarned] = useState(0);
+  const [showIntroVideo, setShowIntroVideo] = useState(false);
 
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
+  const videoRef = useRef(null);
   const isRTL = RTL_LANGS.includes(uiLang);
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
 
@@ -383,7 +385,7 @@ export default function TalkingWorldPage({ onBack }) {
               onClick={() => {
                 if (locked) return;
                 setSelectedWorld(world.id);
-                setPhase('npc-path');
+                setPhase('world-intro');
               }}
               disabled={locked}
               className={`w-full rounded-3xl p-5 text-left transition-all duration-300 relative overflow-hidden ${
@@ -834,30 +836,67 @@ export default function TalkingWorldPage({ onBack }) {
   // MAIN RENDER
   // ══════════════════════════════════════════
 
+  // Check if intro video was seen before
+  useEffect(() => {
+    const seen = localStorage.getItem('tw-intro-seen');
+    if (!seen) setShowIntroVideo(true);
+  }, []);
+
+  function handleIntroDone() {
+    localStorage.setItem('tw-intro-seen', '1');
+    setShowIntroVideo(false);
+  }
+
+  // ── Phase: World Intro (video before NPC path) ──
+  function renderWorldIntro() {
+    const world = WORLDS.find(w => w.id === selectedWorld);
+    if (!world) return null;
+
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black relative">
+        <video
+          ref={videoRef}
+          src={world.video}
+          autoPlay
+          playsInline
+          muted={false}
+          className="w-full max-h-[70vh] object-contain"
+          onEnded={() => setPhase('npc-path')}
+        />
+        <button
+          onClick={() => setPhase('npc-path')}
+          className="absolute bottom-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
+        >
+          {t('skip', uiLang) || 'Skip'}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
-      <KidsIntro
-        id="friends-talk-v1"
-        name={progress.displayName}
-        emoji="🌍"
-        title="Friends Talk!"
-        titleHe="חברים מדברים!"
-        titleAr="أصدقاء يتحدثون!"
-        titleRu="Друзья говорят!"
-        desc="Meet fun characters and talk to them in English! They'll help you learn new words and sentences!"
-        descHe="הַכִּירוּ דְּמוּיוֹת כֵּיפִיּוֹת וְדַבְּרוּ אִתָּם בְּאַנְגְלִית! הֵם יַעַזְרוּ לָכֶם לִלְמוֹד מִילִים וּמִשְׁפָּטִים חֲדָשִׁים!"
-        descAr="تعرف على شخصيات ممتعة وتحدث معهم بالإنجليزية! سيساعدونك في تعلم كلمات وجمل جديدة!"
-        descRu="Познакомься с весёлыми персонажами и поговори с ними по-английски! Они помогут тебе выучить новые слова и предложения!"
-        uiLang={uiLang}
-        gradient="from-violet-500 via-purple-500 to-indigo-500"
-        buttonLabel="Let's meet them!"
-        buttonLabelHe="בואו נכיר אותם!"
-        buttonLabelAr="هيا نتعرف عليهم!"
-        buttonLabelRu="Давай познакомимся!"
-      />
+      {/* Video Intro (first time only) */}
+      {showIntroVideo && (
+        <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
+          <video
+            autoPlay
+            playsInline
+            muted={false}
+            src="/videos/talking-world/tw-intro-main.mp4"
+            className="w-full max-h-[70vh] object-contain"
+            onEnded={handleIntroDone}
+          />
+          <button
+            onClick={handleIntroDone}
+            className="absolute bottom-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
+          >
+            {t('skip', uiLang) || 'Skip'}
+          </button>
+        </div>
+      )}
 
       {/* Back header (for non-conversation phases) */}
-      {phase !== 'conversation' && (
+      {phase !== 'conversation' && phase !== 'world-intro' && (
         <div className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm px-4 py-3 flex items-center gap-3"
           style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
         >
@@ -878,6 +917,7 @@ export default function TalkingWorldPage({ onBack }) {
       )}
 
       {phase === 'world-select' && renderWorldSelect()}
+      {phase === 'world-intro' && renderWorldIntro()}
       {phase === 'npc-path' && renderNpcPath()}
       {phase === 'conversation' && renderConversation()}
       {phase === 'npc-complete' && renderNpcComplete()}

@@ -35,6 +35,7 @@ export const WORLDS = [
     gradient: 'from-green-400 via-emerald-500 to-teal-500',
     bg: '/images/talking-world/backgrounds/tw-bg-magic-forest.jpg',
     icon: '/images/talking-world/icons/tw-icon-magic-forest.jpg',
+    video: '/videos/talking-world/tw-world-magic-forest.mp4',
     topics: ['colors', 'animals', 'numbers'],
     npcs: [
       {
@@ -232,6 +233,7 @@ export const WORLDS = [
     gradient: 'from-pink-400 via-rose-500 to-red-500',
     bg: '/images/talking-world/backgrounds/tw-bg-happy-town.jpg',
     icon: '/images/talking-world/icons/tw-icon-happy-town.jpg',
+    video: '/videos/talking-world/tw-world-happy-town.mp4',
     topics: ['food', 'family', 'school'],
     npcs: [
       {
@@ -428,6 +430,7 @@ export const WORLDS = [
     gradient: 'from-cyan-400 via-blue-500 to-indigo-500',
     bg: '/images/talking-world/backgrounds/tw-bg-nature-island.jpg',
     icon: '/images/talking-world/icons/tw-icon-nature-island.jpg',
+    video: '/videos/talking-world/tw-world-nature-island.mp4',
     topics: ['home', 'nature', 'weather'],
     npcs: [
       {
@@ -620,6 +623,7 @@ export const WORLDS = [
     gradient: 'from-amber-400 via-orange-500 to-red-500',
     bg: '/images/talking-world/backgrounds/tw-bg-adventure-land.jpg',
     icon: '/images/talking-world/icons/tw-icon-adventure-land.jpg',
+    video: '/videos/talking-world/tw-world-adventure-land.mp4',
     topics: ['verbs', 'sentences', 'stories'],
     npcs: [
       {
