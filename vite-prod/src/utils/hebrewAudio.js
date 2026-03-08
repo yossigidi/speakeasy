@@ -107,7 +107,7 @@ export async function preloadHebrewAudio(texts, lang) {
   if (toLoad.length === 0) return;
 
   await Promise.allSettled(toLoad.map(async (text) => {
-    const trimmed = stripNiqqud(text.trim());
+    const trimmed = text.trim(); // Keep niqqud for TTS pronunciation
     try {
       const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/tts', {
@@ -150,13 +150,13 @@ export async function preloadEnglishAudio(texts) {
  */
 export async function playFromAPI(text, lang, signal) {
   try {
-    const trimmed = stripNiqqud(text.trim());
-    if (!trimmed) return { started: false };
+    const trimmed = text.trim(); // Keep niqqud for TTS pronunciation
+    if (!trimmed || !stripNiqqud(trimmed)) return { started: false };
 
     const ctx = getAudioContext();
     if (ctx.state === 'suspended') await ctx.resume();
 
-    const key = cacheKey(trimmed, lang);
+    const key = cacheKey(trimmed, lang); // cacheKey still normalizes via stripNiqqud
 
     // Helper to play a cached AudioBuffer
     const playBuffer = (audioBuffer) => {

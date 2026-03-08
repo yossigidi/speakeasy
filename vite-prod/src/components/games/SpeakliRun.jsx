@@ -318,7 +318,7 @@ function Countdown({ onDone, world }) {
 function RaceTrack({ playerPos, botPositions, world }) {
   const playerPct = Math.min(playerPos, TOTAL_DISTANCE) / TOTAL_DISTANCE;
   return (
-    <div className="absolute bottom-[23%] left-0 right-0 z-[15] px-4 pointer-events-none">
+    <div className="absolute bottom-3 left-0 right-0 z-[15] px-4 pointer-events-none">
       <div className="relative h-5 bg-black/20 rounded-full overflow-hidden backdrop-blur-sm border border-white/10">
         {/* Track fill (player) */}
         <div
@@ -552,154 +552,10 @@ function WordBox({ word, emoji, translation, showEmoji, showHebrew, onClick, sta
   );
 }
 
-// ── World-specific scenery configs ──
-const WORLD_SCENERY = {
-  jungle: {
-    farShapes: [
-      { w: 120, h: 70, color: '#14532d', left: 0 },
-      { w: 90, h: 55, color: '#166534', left: 100 },
-      { w: 140, h: 80, color: '#15803d', left: 200 },
-      { w: 80, h: 50, color: '#14532d', left: 320 },
-      { w: 110, h: 65, color: '#166534', left: 410 },
-      { w: 130, h: 75, color: '#15803d', left: 530 },
-    ],
-    midShapes: [
-      { w: 30, h: 60, color: '#166534', left: 20, radius: '50% 50% 0 0' },
-      { w: 25, h: 50, color: '#15803d', left: 90, radius: '50% 50% 0 0' },
-      { w: 35, h: 70, color: '#14532d', left: 160, radius: '50% 50% 0 0' },
-      { w: 28, h: 55, color: '#166534', left: 240, radius: '50% 50% 0 0' },
-      { w: 32, h: 65, color: '#15803d', left: 310, radius: '50% 50% 0 0' },
-      { w: 22, h: 45, color: '#14532d', left: 380, radius: '50% 50% 0 0' },
-      { w: 30, h: 58, color: '#166534', left: 440, radius: '50% 50% 0 0' },
-      { w: 36, h: 72, color: '#15803d', left: 520, radius: '50% 50% 0 0' },
-    ],
-    collectibles: ['⭐', '💎', '🌟', '🪙'],
-    celestial: '☀️',
-    celestialColor: 'rgba(255,220,50,0.3)',
-  },
-  food: {
-    farShapes: [
-      { w: 50, h: 80, color: '#9d174d', left: 0, type: 'building' },
-      { w: 40, h: 60, color: '#be185d', left: 60, type: 'building' },
-      { w: 60, h: 100, color: '#9d174d', left: 120, type: 'building' },
-      { w: 45, h: 70, color: '#be185d', left: 200, type: 'building' },
-      { w: 55, h: 90, color: '#9d174d', left: 260, type: 'building' },
-      { w: 50, h: 75, color: '#be185d', left: 330, type: 'building' },
-      { w: 65, h: 95, color: '#9d174d', left: 400, type: 'building' },
-      { w: 40, h: 65, color: '#be185d', left: 480, type: 'building' },
-      { w: 55, h: 85, color: '#9d174d', left: 540, type: 'building' },
-    ],
-    midShapes: [
-      { w: 35, h: 50, color: '#f472b6', left: 30, type: 'building' },
-      { w: 45, h: 65, color: '#ec4899', left: 110, type: 'building' },
-      { w: 30, h: 45, color: '#f472b6', left: 180, type: 'building' },
-      { w: 50, h: 70, color: '#ec4899', left: 250, type: 'building' },
-      { w: 38, h: 55, color: '#f472b6', left: 330, type: 'building' },
-      { w: 42, h: 60, color: '#ec4899', left: 410, type: 'building' },
-      { w: 48, h: 68, color: '#f472b6', left: 490, type: 'building' },
-    ],
-    collectibles: ['⭐', '🪙', '💎', '🌟'],
-    celestial: '🌤️',
-    celestialColor: 'rgba(255,200,50,0.25)',
-  },
-  school: {
-    farShapes: [
-      { w: 50, h: 90, color: '#312e81', left: 0, type: 'building' },
-      { w: 40, h: 70, color: '#3730a3', left: 65, type: 'building' },
-      { w: 60, h: 110, color: '#312e81', left: 130, type: 'building' },
-      { w: 45, h: 80, color: '#4338ca', left: 210, type: 'building' },
-      { w: 55, h: 95, color: '#312e81', left: 275, type: 'building' },
-      { w: 48, h: 85, color: '#3730a3', left: 350, type: 'building' },
-      { w: 58, h: 100, color: '#312e81', left: 420, type: 'building' },
-      { w: 42, h: 72, color: '#4338ca', left: 500, type: 'building' },
-    ],
-    midShapes: [
-      { w: 35, h: 55, color: '#6366f1', left: 25, type: 'building' },
-      { w: 30, h: 45, color: '#818cf8', left: 100, type: 'building' },
-      { w: 40, h: 60, color: '#6366f1', left: 170, type: 'building' },
-      { w: 32, h: 50, color: '#818cf8', left: 250, type: 'building' },
-      { w: 38, h: 58, color: '#6366f1', left: 320, type: 'building' },
-      { w: 28, h: 42, color: '#818cf8', left: 400, type: 'building' },
-      { w: 44, h: 62, color: '#6366f1', left: 470, type: 'building' },
-    ],
-    collectibles: ['⭐', '🪙', '💎', '🌟'],
-    celestial: '🌙',
-    celestialColor: 'rgba(180,160,255,0.25)',
-  },
-  space: {
-    farShapes: [
-      { w: 60, h: 40, color: '#581c87', left: 20, radius: '50%' },
-      { w: 40, h: 35, color: '#7e22ce', left: 130, radius: '50%' },
-      { w: 80, h: 50, color: '#581c87', left: 230, radius: '50%' },
-      { w: 50, h: 38, color: '#6b21a8', left: 360, radius: '50%' },
-      { w: 70, h: 45, color: '#581c87', left: 450, radius: '50%' },
-      { w: 45, h: 32, color: '#7e22ce', left: 560, radius: '50%' },
-    ],
-    midShapes: [
-      { w: 35, h: 30, color: '#a855f7', left: 40, radius: '50%' },
-      { w: 25, h: 22, color: '#c084fc', left: 120, radius: '50%' },
-      { w: 40, h: 35, color: '#a855f7', left: 210, radius: '50%' },
-      { w: 30, h: 28, color: '#c084fc', left: 300, radius: '50%' },
-      { w: 38, h: 32, color: '#a855f7', left: 380, radius: '50%' },
-      { w: 28, h: 25, color: '#c084fc', left: 460, radius: '50%' },
-    ],
-    collectibles: ['⭐', '💫', '🌟', '✨'],
-    celestial: '🌕',
-    celestialColor: 'rgba(255,255,200,0.2)',
-  },
-};
-
-// ── Cloud data (stable across renders) ──
-const CLOUD_DATA = [
-  { w: 70, h: 28, top: 6, offsetX: 0, speed: 0 },
-  { w: 50, h: 20, top: 3, offsetX: 160, speed: 1.5 },
-  { w: 90, h: 34, top: 10, offsetX: 320, speed: 0.8 },
-  { w: 55, h: 22, top: 5, offsetX: 480, speed: 2 },
-  { w: 75, h: 30, top: 8, offsetX: 640, speed: 1.2 },
-  { w: 60, h: 24, top: 12, offsetX: 800, speed: 0.5 },
-  { w: 45, h: 18, top: 4, offsetX: 950, speed: 1.8 },
-  { w: 80, h: 32, top: 9, offsetX: 1100, speed: 0.3 },
-];
-
-// ── Collectible positions (stable) ──
-const COLLECTIBLE_POSITIONS = [
-  { left: 80, bottom: 5 },
-  { left: 250, bottom: 8 },
-  { left: 420, bottom: 3 },
-  { left: 600, bottom: 7 },
-];
-
-// ── RunnerViewport — Professional animated game viewport ──
+// ── RunnerViewport — Video-based game viewport ──
 function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, botPositions, playerPos, children }) {
   const isChallenge = phase === 'word-challenge';
   const isCountdown = phase === 'countdown';
-
-  const farSpeed = isPowerMode ? '8s' : isChallenge ? '30s' : '15s';
-  const midSpeed = isPowerMode ? '4s' : isChallenge ? '16s' : '8s';
-  const groundSpeed = isPowerMode ? '2s' : isChallenge ? '8s' : '4s';
-  const roadSpeed = isPowerMode ? '1s' : isChallenge ? '4s' : '2s';
-  const cloudSpeed = isPowerMode ? '20s' : isChallenge ? '60s' : '40s';
-
-  const scenery = WORLD_SCENERY[world.id] || WORLD_SCENERY.jungle;
-
-  // Render silhouette shapes (mountains or buildings)
-  const renderShapes = (shapes) => {
-    // Triple for seamless scroll
-    const tripled = [...shapes, ...shapes.map((s, i) => ({ ...s, left: s.left + 660 })), ...shapes.map((s, i) => ({ ...s, left: s.left + 1320 }))];
-    return tripled.map((s, i) => (
-      <div
-        key={i}
-        className={s.type === 'building' ? 'runner-building' : 'runner-mountain'}
-        style={{
-          width: s.w,
-          height: s.h,
-          background: s.color,
-          left: s.left,
-          borderRadius: s.radius || (s.type === 'building' ? '4px 4px 0 0' : '40% 45% 0 0'),
-        }}
-      />
-    ));
-  };
 
   return (
     <div
@@ -710,152 +566,47 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
         animation: `skyShift 30s ease-in-out infinite`,
       }}
     >
-      {/* Video background layer */}
+      {/* Video background — full screen, no CSS scenery */}
       <video
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ zIndex: 0, opacity: 0.35 }}
+        style={{ zIndex: 0 }}
         src={`/videos/race/${world.id}.mp4`}
       />
 
-      {/* Celestial body (sun/moon) */}
+      {/* Subtle dark gradient at bottom for character contrast */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{
-          top: '5%',
-          right: '8%',
-          fontSize: '3rem',
-          animation: 'celestialGlow 4s ease-in-out infinite',
-          filter: `drop-shadow(0 0 20px ${scenery.celestialColor})`,
+          height: '30%',
+          background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%)',
           zIndex: 1,
         }}
-      >{scenery.celestial}</div>
+      />
 
-      {/* CSS Clouds */}
-      <div
-        className="runner-layer absolute w-[300%] pointer-events-none"
-        style={{ animation: `runnerScroll ${cloudSpeed} linear infinite`, top: 0, height: '20%', zIndex: 2 }}
-      >
-        {CLOUD_DATA.map((c, i) => (
+      {/* Bot rivals on screen */}
+      {botPositions && BOTS.map((bot, i) => {
+        const botPos = botPositions[i] || 0;
+        const relativeOffset = botPos - (playerPos || 0);
+        const screenLeft = Math.min(Math.max(15 + relativeOffset * 0.6, -5), 85);
+        const bottomPos = i === 0 ? '12%' : '8%';
+        const scale = 0.9 + (botPos / TOTAL_DISTANCE) * 0.2;
+        return (
           <div
-            key={i}
-            className="runner-cloud"
+            key={bot.id}
+            className="absolute pointer-events-none transition-all duration-1000 ease-out"
             style={{
-              width: c.w,
-              height: c.h,
-              top: `${c.top}%`,
-              left: c.offsetX,
-              animation: `cloudDrift ${3 + c.speed}s ease-in-out infinite`,
-              animationDelay: `${c.speed}s`,
-              opacity: isPowerMode ? 0.15 : 0.25,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Far BG layer — gradient silhouettes */}
-      <div
-        className="runner-layer absolute bottom-[28%] w-[300%]"
-        style={{
-          animation: `runnerScroll ${farSpeed} linear infinite`,
-          opacity: 0.5,
-          height: '120px',
-          zIndex: 3,
-        }}
-      >
-        {renderShapes(scenery.farShapes)}
-      </div>
-
-      {/* Mid BG layer — taller overlapping shapes */}
-      <div
-        className="runner-layer absolute bottom-[22%] w-[300%]"
-        style={{
-          animation: `runnerScroll ${midSpeed} linear infinite`,
-          opacity: 0.7,
-          height: '100px',
-          zIndex: 4,
-        }}
-      >
-        {renderShapes(scenery.midShapes)}
-      </div>
-
-      {/* Ground */}
-      <div className="absolute bottom-0 left-0 right-0 h-[22%]" style={{ zIndex: 5, background: `linear-gradient(180deg, ${world.groundColor}dd 0%, ${world.groundColor} 30%, ${world.groundColor}cc 100%)` }}>
-        {/* Ground detail emojis */}
-        <div
-          className="runner-layer absolute top-1 w-[300%] flex items-center"
-          style={{ animation: `runnerScroll ${groundSpeed} linear infinite` }}
-        >
-          {[...world.groundEmojis, ...world.groundEmojis, ...world.groundEmojis].map((e, i) => (
-            <span key={i} className="inline-block" style={{ marginLeft: '55px', fontSize: '1.6rem' }}>{e}</span>
-          ))}
-        </div>
-
-        {/* 3D Perspective Road */}
-        <div className="absolute bottom-0 left-0 right-0 h-[55%] overflow-hidden runner-road-3d">
-          <div
-            className="w-full h-full runner-road-surface"
-            style={{
-              background: `linear-gradient(180deg, ${world.groundColor}99 0%, #374151 15%, #4B5563 45%, #374151 85%, ${world.groundColor}99 100%)`,
+              left: `${screenLeft}%`,
+              bottom: bottomPos,
+              fontSize: `${1.8 * scale}rem`,
+              zIndex: 8,
+              filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.5))',
             }}
           >
-            {/* Center dashes */}
-            <div className="absolute top-[46%] w-[300%] h-[5px] flex items-center gap-0"
-              style={{ animation: `runnerScroll ${roadSpeed} linear infinite` }}>
-              {Array.from({ length: 40 }).map((_, i) => (
-                <div key={i} className="shrink-0 runner-road-marking" style={{
-                  width: `${25 + i % 3 * 3}px`, height: '5px', marginRight: '22px',
-                }} />
-              ))}
-            </div>
-            {/* Lane lines */}
-            <div className="absolute top-[18%] left-0 right-0 h-[2px]" style={{ background: 'rgba(255,255,255,0.18)' }} />
-            <div className="absolute bottom-[18%] left-0 right-0 h-[2px]" style={{ background: 'rgba(255,255,255,0.18)' }} />
-
-            {/* Road collectibles */}
-            <div
-              className="runner-layer absolute w-[300%] h-full pointer-events-none"
-              style={{ animation: `runnerScroll ${roadSpeed} linear infinite` }}
-            >
-              {COLLECTIBLE_POSITIONS.map((pos, i) => (
-                <span
-                  key={i}
-                  className="runner-collectible"
-                  style={{
-                    left: pos.left,
-                    bottom: `${pos.bottom + 20}%`,
-                    animationDelay: `${i * 0.3}s`,
-                  }}
-                >{scenery.collectibles[i % scenery.collectibles.length]}</span>
-              ))}
-            </div>
-
-            {/* Bot rivals on road */}
-            {botPositions && BOTS.map((bot, i) => {
-              const botPos = botPositions[i] || 0;
-              const relativeOffset = botPos - (playerPos || 0);
-              const screenLeft = Math.min(Math.max(15 + relativeOffset * 0.6, -5), 85);
-              const laneBottom = i === 0 ? '24%' : '20%';
-              const scale = 0.9 + (botPos / TOTAL_DISTANCE) * 0.2;
-              return (
-                <div
-                  key={bot.id}
-                  className="absolute pointer-events-none transition-all duration-1000 ease-out"
-                  style={{
-                    left: `${screenLeft}%`,
-                    bottom: laneBottom,
-                    fontSize: `${1.4 * scale}rem`,
-                    zIndex: 8,
-                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-                  }}
-                >
-                  {bot.emoji}
-                </div>
-              );
-            })}
+            {bot.emoji}
           </div>
-        </div>
-      </div>
+        );
+      })}
 
       {/* Speed lines */}
       {(phase === 'running' || isPowerMode) && (
@@ -881,7 +632,7 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
 
       {/* Dust trail */}
       {phase === 'running' && (
-        <div className="absolute pointer-events-none" style={{ left: '8%', bottom: '22%', zIndex: 9 }}>
+        <div className="absolute pointer-events-none" style={{ left: '8%', bottom: '10%', zIndex: 9 }}>
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="absolute rounded-full" style={{
               width: `${6 + i * 3}px`, height: `${6 + i * 3}px`,
@@ -900,11 +651,11 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
         className="absolute pointer-events-none"
         style={{
           left: '15%',
-          bottom: '21.5%',
+          bottom: '9%',
           width: '50px',
           height: '10px',
           borderRadius: '50%',
-          background: 'rgba(0,0,0,0.25)',
+          background: 'rgba(0,0,0,0.35)',
           filter: 'blur(3px)',
           zIndex: 9,
           animation: phase === 'running' ? 'runningShadow 0.4s ease-in-out infinite' : 'none',
@@ -919,7 +670,7 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
           className="absolute pointer-events-none"
           style={{
             left: '5%',
-            bottom: '23%',
+            bottom: '11%',
             width: '60px',
             height: '40px',
             background: 'linear-gradient(90deg, rgba(255,200,0,0) 0%, rgba(255,200,0,0.3) 100%)',
@@ -945,7 +696,7 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
       {/* Speakli character */}
       <div
         className={`absolute z-10 speakli-run ${isCountdown ? 'runner-paused-char' : isChallenge ? '' : 'runner-leaning'} ${charEffect || ''}`}
-        style={{ left: '15%', bottom: '22%' }}
+        style={{ left: '15%', bottom: '10%' }}
       >
         {/* Afterimage ghosts in power mode */}
         {isPowerMode && phase === 'running' && (
@@ -1607,7 +1358,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
         {/* Word challenge overlay */}
         {phase === 'word-challenge' && target && (
-          <div className={`absolute inset-x-0 top-14 bottom-[28%] z-20 flex flex-col items-center justify-center px-4 ${isBossRound ? 'run-boss-border rounded-3xl mx-2' : ''}`}>
+          <div className={`absolute inset-x-0 top-14 bottom-[15%] z-20 flex flex-col items-center justify-center px-4 ${isBossRound ? 'run-boss-border rounded-3xl mx-2' : ''}`}>
             {/* Dim backdrop */}
             <div
               className="absolute inset-0 rounded-3xl mx-2"
