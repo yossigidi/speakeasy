@@ -12,6 +12,7 @@ const FREE_LIMITS = {
   'pronunciation-feedback': 5,
   'generate-lesson': 1,
   'generate-story': 1,
+  'talking-world': 3,
 };
 
 const ACTION_TO_FEATURE_KEY = {
@@ -21,6 +22,7 @@ const ACTION_TO_FEATURE_KEY = {
   'pronunciation-feedback': 'pronunciation',
   'generate-lesson': 'generateLesson',
   'generate-story': 'generateStory',
+  'talking-world': 'talkingWorld',
 };
 
 // Ensure Firebase Admin is initialised (shared with lib/firebase.js)
@@ -60,6 +62,7 @@ const actions = {
   'generate-story': handleGenerateStory,
   'speaking-coach': handleSpeakingCoach,
   'life-coach': handleLifeCoach,
+  'talking-world': handleTalkingWorld,
 };
 
 export default async function handler(req, res) {
@@ -694,6 +697,83 @@ RULES:
       reply: rawResponse,
       corrections: [],
       overallScore: 75,
+    };
+  }
+
+  return res.status(200).json(parsed);
+}
+
+// ── Talking World ──────────────────────────────────────────────────
+async function handleTalkingWorld(req, res) {
+  const {
+    transcript, npcName, npcPersonality, taskPrompt, topic,
+    worldLevel = 1, history = [], uiLang = 'he',
+  } = req.body;
+
+  if (!transcript || typeof transcript !== 'string' || !transcript.trim()) {
+    return res.status(400).json({ error: 'transcript is required' });
+  }
+
+  const safeTranscript = sanitizeStr(transcript);
+  const safeHistory = Array.isArray(history) ? history.slice(-10) : [];
+
+  const langNote = uiLang === 'he' ? 'Give corrections in Hebrew.'
+    : uiLang === 'ar' ? 'Give corrections in Arabic.'
+    : uiLang === 'ru' ? 'Give corrections in Russian.'
+    : 'Give corrections in English.';
+
+  const systemPrompt = `You are "${npcName || 'a friendly character'}" in a kids' English learning game.
+Personality: ${npcPersonality || 'friendly and encouraging'}
+Topic: ${topic || 'general English'}
+Level: ${worldLevel} (1=ages 4-5, 2=ages 6-7, 3=ages 7-8, 4=ages 9-10)
+
+TASK CONTEXT: ${taskPrompt || 'Have a fun conversation to practice English.'}
+
+RULES:
+- Stay in character as ${npcName || 'your character'}.
+- Keep sentences SHORT (5-8 words). Use simple vocabulary matching the age level.
+- Be VERY encouraging and generous with scoring (60-100 range for kids).
+- Score 80+ if the child made any reasonable attempt. Score 90+ if mostly correct.
+- Maximum 1 correction per turn. Only correct real mistakes.
+- Celebrate effort: "Great job!", "Wow!", "You're amazing!"
+- If the child's response doesn't quite match the task, still be positive and gently guide them.
+- ${langNote}
+
+RESPONSE FORMAT — Reply with ONLY valid JSON:
+{
+  "reply": "Your short in-character response (1-2 sentences, kid-friendly)",
+  "score": 60-100,
+  "correction": null or "brief correction in the student's UI language",
+  "understood": true or false
+}
+
+RULES for JSON:
+- "score": 60-100 (generous for kids, reward any effort)
+- "correction": null if no mistakes, or a short string with the correction
+- "understood": true if the child said something meaningful in English, false only if completely unintelligible
+- Reply ONLY with the JSON, no extra text.`;
+
+  const apiMessages = [
+    { role: 'system', content: systemPrompt },
+    ...safeHistory.filter(m => m && m.role && m.content).map(m => ({
+      role: m.role === 'user' ? 'user' : 'assistant',
+      content: sanitizeStr(m.content),
+    })),
+    { role: 'user', content: safeTranscript },
+  ];
+
+  const rawResponse = await callGroq(apiMessages, { temperature: 0.7, max_tokens: 256 });
+
+  let parsed;
+  try {
+    const clean = rawResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    parsed = JSON.parse(clean);
+  } catch {
+    parsed = {
+      reply: rawResponse,
+      score: 75,
+      correction: null,
+      understood: true,
     };
   }
 

@@ -8,6 +8,7 @@ export const FREE_LIMITS = {
   generateStory: 1,
   adventure: 2,       // max worlds (not sessions)
   englishQuest: 1,
+  talkingWorld: 3,
 };
 
 // Map API action names → feature keys
@@ -18,6 +19,7 @@ export const ACTION_TO_FEATURE = {
   'pronunciation-feedback': 'pronunciation',
   'generate-lesson': 'generateLesson',
   'generate-story': 'generateStory',
+  'talking-world': 'talkingWorld',
 };
 
 // Subscription plans

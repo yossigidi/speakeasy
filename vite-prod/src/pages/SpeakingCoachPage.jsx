@@ -229,11 +229,12 @@ export default function SpeakingCoachPage({ onBack }) {
   };
 
   /* ── Play AI message via ElevenLabs TTS ── */
+  const ttsRate = isChild ? 0.82 : 1.0; // Slower for kids — teacher-like pace
   const playAI = async (text) => {
     if (!text) return;
     setIsSpeaking(true);
     try {
-      const result = await playFromAPI(text, 'en');
+      const result = await playFromAPI(text, 'en', undefined, { rate: ttsRate });
       if (result?.started && result.endPromise) await result.endPromise;
     } catch {}
     setIsSpeaking(false);

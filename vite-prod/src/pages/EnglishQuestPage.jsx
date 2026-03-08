@@ -6,8 +6,7 @@ import { useSpeech } from '../contexts/SpeechContext.jsx';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import { playSequence, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playComplete, playStar, playTap } from '../utils/gameSounds.js';
-import { WORDS_BY_LEVEL, SENTENCES_BY_LEVEL, getWordsForLevel } from '../data/kids-vocabulary.js';
-import { QUEST_GRAMMAR } from '../data/kids-vocabulary.js';
+import { WORDS_BY_LEVEL, SENTENCES_BY_LEVEL, getWordsForLevel, QUEST_GRAMMAR, QUEST_LEVEL_THEMES, QUEST_DIFFICULTY } from '../data/kids-vocabulary.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
@@ -330,10 +329,11 @@ function MissionTransition({ missionIndex, scene, uiLang, onReady, speak }) {
 /* ══════════════════════════════════════════════════════
    STAGE 1: VOCABULARY HUNT
    ══════════════════════════════════════════════════════ */
-function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, speakSequence }) {
-  const words = useMemo(() => getWordsForLevel(childLevel), [childLevel]);
-  const optionCount = childLevel <= 2 ? 4 : 6;
-  const TOTAL_ROUNDS = 5;
+function VocabularyHuntMission({ scene, childLevel, difficulty, onComplete, uiLang, speak, speakSequence }) {
+  const diff = difficulty || QUEST_DIFFICULTY[childLevel] || QUEST_DIFFICULTY[1];
+  const words = useMemo(() => WORDS_BY_LEVEL[childLevel] || WORDS_BY_LEVEL[1], [childLevel]);
+  const optionCount = diff.vocabOptions;
+  const TOTAL_ROUNDS = diff.vocabRounds;
 
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
@@ -395,6 +395,22 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
     }
   }, [setupRound]);
 
+  const handleTimeout = useCallback(() => {
+    if (tapped !== null) return;
+    playWrong();
+    setShakeWrong(-1); // flash all
+    setTimeout(() => {
+      setShakeWrong(null);
+      const nextRound = round + 1;
+      if (nextRound >= TOTAL_ROUNDS) {
+        onComplete(xpRef.current, scoreRef.current);
+      } else {
+        setRound(nextRound);
+        setupRound(nextRound);
+      }
+    }, 1200);
+  }, [tapped, round, TOTAL_ROUNDS, onComplete, setupRound]);
+
   const handleTap = (word, idx) => {
     if (tapped !== null) return;
     setTapped(idx);
@@ -403,7 +419,7 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
     if (word.word === target.word) {
       setCorrect(idx);
       playCorrect();
-      const xp = 10;
+      const xp = diff.vocabXP;
       scoreRef.current += 1;
       xpRef.current += xp;
       setScore(s => s + 1);
@@ -441,6 +457,11 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
           <span className="text-yellow-300 text-sm font-bold">⚡ {xpEarned} XP</span>
         </div>
       </div>
+
+      {/* Timer for levels 3-4 */}
+      {diff.timerEnabled && tapped === null && (
+        <CountdownTimer seconds={diff.timerSeconds} onTimeout={handleTimeout} roundKey={round} />
+      )}
 
       {/* Instruction */}
       <div className="text-center mb-6">
@@ -489,13 +510,14 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
 /* ══════════════════════════════════════════════════════
    STAGE 2: BOSS BATTLE
    ══════════════════════════════════════════════════════ */
-function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, onBossHPChange, uiLang, speak }) {
+function BossBattleMission({ scene, childLevel, difficulty, bossHP, bossMaxHP, onComplete, onBossHPChange, uiLang, speak }) {
+  const diff = difficulty || QUEST_DIFFICULTY[childLevel] || QUEST_DIFFICULTY[1];
   const grammar = useMemo(() => {
     const lvl = QUEST_GRAMMAR[childLevel] || QUEST_GRAMMAR[1];
-    return shuffle(lvl).slice(0, 4);
-  }, [childLevel]);
+    return shuffle(lvl).slice(0, diff.grammarRounds);
+  }, [childLevel, diff.grammarRounds]);
 
-  const TOTAL_ROUNDS = 4;
+  const TOTAL_ROUNDS = diff.grammarRounds;
   const [round, setRound] = useState(0);
   const [xpEarned, setXpEarned] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -530,8 +552,8 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
       playStar();
       const dmg = bossMaxHP / TOTAL_ROUNDS;
       onBossHPChange(Math.max(0, bossHP - dmg));
-      bossXpRef.current += 15;
-      setXpEarned(x => x + 15);
+      bossXpRef.current += diff.grammarXP;
+      setXpEarned(x => x + diff.grammarXP);
       setBossAnim('animate-shake');
 
       setTimeout(() => {
@@ -634,11 +656,12 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
 /* ══════════════════════════════════════════════════════
    STAGE 3: SPEECH MISSION
    ══════════════════════════════════════════════════════ */
-function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }) {
+function SpeechMission({ scene, childLevel, difficulty, onComplete, uiLang, speak: speakFn }) {
+  const diff = difficulty || QUEST_DIFFICULTY[childLevel] || QUEST_DIFFICULTY[1];
   const sentences = useMemo(() => {
     const lvl = SENTENCES_BY_LEVEL[childLevel] || SENTENCES_BY_LEVEL[1];
-    return shuffle(lvl).slice(0, 3);
-  }, [childLevel]);
+    return shuffle(lvl).slice(0, diff.speechRounds);
+  }, [childLevel, diff.speechRounds]);
 
   const { transcript, isListening, startListening, stopListening, sttSupported: supported } = useSpeechRecognition();
 
@@ -660,7 +683,7 @@ function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }
     return () => clearTimeout(timer);
   }, [uiLang, speakFn]);
 
-  const TOTAL_ROUNDS = 3;
+  const TOTAL_ROUNDS = diff.speechRounds;
   const [round, setRound] = useState(0);
   const [xpEarned, setXpEarned] = useState(0);
   const [result, setResult] = useState(null); // 'correct' | 'wrong' | null
@@ -698,7 +721,7 @@ function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }
       setResult('correct');
       playCorrect();
       stopListening();
-      const xp = 15;
+      const xp = diff.speechXP;
       speechXpRef.current += xp;
       setXpEarned(x => x + xp);
 
@@ -1075,6 +1098,111 @@ function HeroCustomizer({ hero, questCoins, onBuy, onBack, uiLang }) {
   );
 }
 
+/* ══════════════════════════════════════════════════════
+   QUEST LEVEL SELECTOR
+   ══════════════════════════════════════════════════════ */
+function QuestLevelSelector({ childLevel, onSelect, onBack, uiLang, speak }) {
+  const guidePlayed = useRef(false);
+  const langKey = uiLang === 'ar' ? 'nameAr' : uiLang === 'ru' ? 'nameRu' : uiLang === 'he' ? 'nameHe' : 'nameEn';
+
+  useEffect(() => {
+    if (guidePlayed.current) return;
+    guidePlayed.current = true;
+    const timer = setTimeout(() => {
+      playSequence([
+        { text: t('questGuidePickLevel', uiLang), lang: uiLang, rate: 0.9 },
+      ], speak);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [uiLang, speak]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-indigo-800 to-purple-900 flex flex-col items-center p-6">
+      <button onClick={onBack} className="self-start p-2 rounded-full bg-white/20 active:scale-90 transition-transform mb-4">
+        <ArrowLeft size={20} className="text-white rtl:rotate-180" />
+      </button>
+
+      <h2 className="text-white font-black text-2xl mb-1">{t('questPickLevel', uiLang)}</h2>
+      <p className="text-white/60 text-sm mb-6">{t('questPickLevelDesc', uiLang)}</p>
+
+      <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
+        {[1, 2, 3, 4].map(level => {
+          const theme = QUEST_LEVEL_THEMES[level];
+          const unlocked = level <= childLevel;
+          return (
+            <button
+              key={level}
+              onClick={() => unlocked && onSelect(level)}
+              disabled={!unlocked}
+              className={`relative rounded-2xl p-4 flex flex-col items-center gap-2 transition-all active:scale-95 ${
+                unlocked
+                  ? `bg-gradient-to-br ${theme.color} shadow-lg`
+                  : 'bg-white/10 opacity-50'
+              }`}
+            >
+              <span className="text-4xl">{unlocked ? theme.emoji : '🔒'}</span>
+              <span className="text-white font-black text-sm">
+                {tReplace('questLevelLabel', uiLang, { level })}
+              </span>
+              <span className="text-white/80 text-xs font-medium">
+                {theme[langKey]}
+              </span>
+              <span className="text-white/60 text-[10px]">
+                {unlocked
+                  ? tReplace('questAges', uiLang, { ages: theme.ageRange })
+                  : t('questLevelLocked', uiLang)}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <p className="text-white/40 text-xs mt-6 text-center">
+        {t('questMoreLevelsUnlock', uiLang)}
+      </p>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════
+   COUNTDOWN TIMER BAR (for levels 3-4)
+   ══════════════════════════════════════════════════════ */
+function CountdownTimer({ seconds, onTimeout, roundKey }) {
+  const [timeLeft, setTimeLeft] = useState(seconds);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    setTimeLeft(seconds);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          onTimeout();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timerRef.current);
+  }, [seconds, roundKey]);
+
+  const pct = (timeLeft / seconds) * 100;
+  const barColor = pct > 50 ? 'bg-green-400' : pct > 25 ? 'bg-yellow-400' : 'bg-red-500 animate-pulse';
+
+  return (
+    <div className="px-4 mb-2">
+      <div className="h-2 rounded-full bg-black/20 overflow-hidden">
+        <div
+          className={`h-full rounded-full ${barColor} transition-all duration-1000 ease-linear`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <p className="text-white/60 text-xs text-center mt-1">{timeLeft}s</p>
+    </div>
+  );
+}
+
 /* ══════════════════════════════════════════════════════════
    MAIN ORCHESTRATOR — EnglishQuestPage
    ══════════════════════════════════════════════════════════ */
@@ -1091,11 +1219,15 @@ export default function EnglishQuestPage({ onBack }) {
 
   const scene = QUEST_SCENES[questsCompleted % QUEST_SCENES.length];
 
-  const [phase, setPhase] = useState('intro'); // intro | transition | mission | complete | hero
+  const [phase, setPhase] = useState('intro'); // intro | level-select | transition | mission | complete | hero
   const [missionIndex, setMissionIndex] = useState(0);
   const [totalXp, setTotalXp] = useState(0);
-  const [bossHP, setBossHP] = useState(100);
-  const BOSS_MAX_HP = 100;
+  const [selectedQuestLevel, setSelectedQuestLevel] = useState(null);
+
+  // Difficulty config based on selected level
+  const diff = QUEST_DIFFICULTY[selectedQuestLevel || childLevel] || QUEST_DIFFICULTY[1];
+  const [bossHP, setBossHP] = useState(diff.bossHP);
+  const BOSS_MAX_HP = diff.bossHP;
 
   // Stop audio on unmount
   useEffect(() => {
@@ -1104,9 +1236,16 @@ export default function EnglishQuestPage({ onBack }) {
 
   const startQuest = () => {
     playTap();
+    setPhase('level-select');
+  };
+
+  const handleLevelSelect = (level) => {
+    playTap();
+    setSelectedQuestLevel(level);
+    const d = QUEST_DIFFICULTY[level] || QUEST_DIFFICULTY[1];
     setMissionIndex(0);
     setTotalXp(0);
-    setBossHP(BOSS_MAX_HP);
+    setBossHP(d.bossHP);
     setPhase('transition');
   };
 
@@ -1181,6 +1320,8 @@ export default function EnglishQuestPage({ onBack }) {
   // Use same formula as handleMissionComplete for consistency
   const coinsEarned = Math.floor(totalXp / 5);
 
+  const effectiveLevel = selectedQuestLevel || childLevel;
+
   const renderContent = () => {
     switch (phase) {
       case 'intro':
@@ -1192,6 +1333,17 @@ export default function EnglishQuestPage({ onBack }) {
             questLevel={questLevel}
             onStart={startQuest}
             onHero={() => { playTap(); setPhase('hero'); }}
+            uiLang={uiLang}
+            speak={speak}
+          />
+        );
+
+      case 'level-select':
+        return (
+          <QuestLevelSelector
+            childLevel={childLevel}
+            onSelect={handleLevelSelect}
+            onBack={() => setPhase('intro')}
             uiLang={uiLang}
             speak={speak}
           />
@@ -1219,8 +1371,10 @@ export default function EnglishQuestPage({ onBack }) {
             />
             {missionIndex === 0 && (
               <VocabularyHuntMission
+                key={`vocab-${effectiveLevel}`}
                 scene={scene}
-                childLevel={childLevel}
+                childLevel={effectiveLevel}
+                difficulty={diff}
                 onComplete={handleMissionComplete}
                 uiLang={uiLang}
                 speak={speak}
@@ -1229,8 +1383,10 @@ export default function EnglishQuestPage({ onBack }) {
             )}
             {missionIndex === 1 && (
               <BossBattleMission
+                key={`boss-${effectiveLevel}`}
                 scene={scene}
-                childLevel={childLevel}
+                childLevel={effectiveLevel}
+                difficulty={diff}
                 bossHP={bossHP}
                 bossMaxHP={BOSS_MAX_HP}
                 onComplete={handleMissionComplete}
@@ -1241,8 +1397,10 @@ export default function EnglishQuestPage({ onBack }) {
             )}
             {missionIndex === 2 && (
               <SpeechMission
+                key={`speech-${effectiveLevel}`}
                 scene={scene}
-                childLevel={childLevel}
+                childLevel={effectiveLevel}
+                difficulty={diff}
                 onComplete={handleMissionComplete}
                 uiLang={uiLang}
                 speak={speak}

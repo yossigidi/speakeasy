@@ -21,6 +21,7 @@
     { "source": "/api/generate-story", "destination": "/api/ai?action=generate-story" },
     { "source": "/api/speaking-coach", "destination": "/api/ai?action=speaking-coach" },
     { "source": "/api/life-coach", "destination": "/api/ai?action=life-coach" },
+    { "source": "/api/talking-world", "destination": "/api/ai?action=talking-world" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/app", "destination": "/app.html" },
     { "source": "/((?!api|assets|sw\\.js|manifest\\.json|icons|sounds|support\\.html|privacy\\.html|terms\\.html|app\\.html|index\\.html).*)", "destination": "/app.html" }

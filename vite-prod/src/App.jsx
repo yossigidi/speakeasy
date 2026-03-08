@@ -46,6 +46,7 @@ const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
 const SpeakingCoachPage = lazy(() => import('./pages/SpeakingCoachPage.jsx'));
 const LifeCoachPage = lazy(() => import('./pages/LifeCoachPage.jsx'));
 const PricingPage = lazy(() => import('./pages/PricingPage.jsx'));
+const TalkingWorldPage = lazy(() => import('./pages/TalkingWorldPage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';
@@ -92,6 +93,7 @@ function AppContent() {
       lessons: 'kids-lessons', 'kids-teacher': 'kids-lessons', curriculum: 'kids-lessons',
       'english-quest': 'kids-quest',
       'adventure': 'kids-adventure',
+      'talking-world': 'kids-adventure',
     };
     setSection(map[currentPage] || null);
   }, [currentPage, isChildMode, setSection]);
@@ -236,11 +238,12 @@ function AppContent() {
     'speaking-coach': t('speakingCoach', uiLang),
     'life-coach': t('lifeCoach', uiLang),
     'pricing': t('premium', uiLang),
+    'talking-world': null,
   };
 
-  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure', 'speaking-coach', 'life-coach', 'pricing'].includes(currentPage);
+  const isSubPage = ['pronunciation', 'reading', 'achievements', 'lesson', 'audio-learn', 'kids-games', 'english-quest', 'family', 'child-progress', 'kids-teacher', 'curriculum', 'support', 'support-faq', 'support-contact', 'support-tickets', 'skills', 'adventure', 'speaking-coach', 'life-coach', 'pricing', 'talking-world'].includes(currentPage);
   const showNav = !isSubPage;
-  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure' && currentPage !== 'speaking-coach' && currentPage !== 'life-coach' && currentPage !== 'pricing';
+  const showHeader = currentPage !== 'home' && currentPage !== 'audio-learn' && currentPage !== 'kids-games' && currentPage !== 'english-quest' && currentPage !== 'family' && currentPage !== 'child-progress' && currentPage !== 'kids-teacher' && currentPage !== 'curriculum' && currentPage !== 'support' && currentPage !== 'support-faq' && currentPage !== 'support-contact' && currentPage !== 'support-tickets' && currentPage !== 'achievements' && currentPage !== 'lesson' && currentPage !== 'skills' && currentPage !== 'adventure' && currentPage !== 'speaking-coach' && currentPage !== 'life-coach' && currentPage !== 'pricing' && currentPage !== 'talking-world';
 
   const navigateTo = (page, data) => {
     if (page === 'child-progress' && data) {
@@ -311,6 +314,8 @@ function AppContent() {
         return <PageErrorBoundary><LifeCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'pricing':
         return <PricingPage onBack={() => navigateTo('profile')} />;
+      case 'talking-world':
+        return <PageErrorBoundary><TalkingWorldPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
@@ -402,6 +407,8 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         return <PageErrorBoundary><SpeakingCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'life-coach':
         return <PageErrorBoundary><LifeCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+      case 'talking-world':
+        return <PageErrorBoundary><TalkingWorldPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
         return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }

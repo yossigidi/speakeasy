@@ -90,6 +90,21 @@ function LevelBadge({ childLevel, uiLang }) {
 /* ── Game cards data (Speakli character colors: blue, cyan, orange, green, red) ── */
 const GAME_CARDS = [
   {
+    id: 'talking-world',
+    emoji: '🌍',
+    titleHe: 'עולם המדברים!',
+    titleEn: "Talking World!",
+    titleAr: 'عالم المتحدثين!',
+    titleRu: 'Мир разговоров!',
+    descHe: 'דברו עם דמויות באנגלית!',
+    descEn: 'Talk to characters in English!',
+    descAr: 'تحدث مع شخصيات بالإنجليزية!',
+    descRu: 'Говори с персонажами по-английски!',
+    gradient: 'from-violet-400 via-purple-500 to-indigo-500',
+    shadowColor: 'shadow-violet-400/30',
+    page: 'talking-world',
+  },
+  {
     id: 'life-coach',
     emoji: '💬',
     titleHe: 'דברו עם ספיקלי!',
@@ -554,7 +569,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
             {t('kidsLetsPlay', uiLang)}
           </h2>
           <div className="grid grid-cols-2 gap-3">
-            {GAME_CARDS.map((card, i) => (
+            {GAME_CARDS.filter(c => c.id !== 'conversation').map((card, i) => (
               <button
                 key={card.id}
                 onClick={() => onNavigate(card.page)}

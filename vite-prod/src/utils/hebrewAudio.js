@@ -148,7 +148,7 @@ export async function preloadEnglishAudio(texts) {
  * The caller can use `started` to know audio began immediately,
  * and `endPromise` to chain actions after playback finishes.
  */
-export async function playFromAPI(text, lang, signal) {
+export async function playFromAPI(text, lang, signal, { rate = 1.0 } = {}) {
   try {
     const trimmed = text.trim(); // Keep niqqud for TTS pronunciation
     if (!trimmed || !stripNiqqud(trimmed)) return { started: false };
@@ -163,6 +163,7 @@ export async function playFromAPI(text, lang, signal) {
       if (signal && signal.aborted) return { started: false };
       const source = ctx.createBufferSource();
       source.buffer = audioBuffer;
+      if (rate && rate !== 1.0) source.playbackRate.value = rate;
       source.connect(ctx.destination);
       activeSources.add(source);
       const endPromise = new Promise(resolve => {
