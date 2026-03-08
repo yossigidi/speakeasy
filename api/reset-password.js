@@ -56,9 +56,7 @@ export default async function handler(req, res) {
     ensureApp();
 
     // Generate Firebase password reset link
-    const resetLink = await admin.auth().generatePasswordResetLink(trimmed, {
-      url: 'https://www.speakli.co.il',
-    });
+    const resetLink = await admin.auth().generatePasswordResetLink(trimmed);
 
     // Send via Brevo
     await sendBrevoEmail({
