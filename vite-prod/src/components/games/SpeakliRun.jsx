@@ -167,45 +167,57 @@ function CoinAnimation({ show }) {
 // ── StoryIntro (replaces GameInstructionOverlay) ──
 function StoryIntro({ onStart, uiLang }) {
   return (
-    <div className="kids-bg min-h-screen relative flex flex-col items-center justify-center px-6">
-      {/* Speakli avatar */}
-      <div className="mb-4">
-        <SpeakliAvatar mode="bounce" size="xl" />
-      </div>
+    <div className="min-h-screen relative flex flex-col items-center justify-center px-6 overflow-hidden">
+      {/* Video background */}
+      <video
+        autoPlay muted loop playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ zIndex: 0 }}
+        src="/videos/race/intro.mp4"
+      />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/40" style={{ zIndex: 1 }} />
 
-      {/* Speech bubble */}
-      <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl px-6 py-5 shadow-2xl max-w-sm mb-6 border border-white/30">
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-white/90 dark:bg-gray-800/90 rotate-45 rounded-sm" />
-        <p className="text-center text-gray-800 dark:text-white font-bold text-lg relative z-10">
-          {t('storyIntroText', uiLang)}
-        </p>
-      </div>
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Speakli avatar */}
+        <div className="mb-4">
+          <SpeakliAvatar mode="bounce" size="xl" />
+        </div>
 
-      {/* Rival characters */}
-      <div className="flex gap-8 mb-8">
-        {BOTS.map(bot => (
-          <div key={bot.id} className="flex flex-col items-center gap-1">
-            <div
-              className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md border-2 border-white/30 flex items-center justify-center shadow-xl"
-              style={{ animation: 'countdownPop 0.5s ease-out' }}
-            >
-              <span className="text-3xl">{bot.emoji}</span>
+        {/* Speech bubble */}
+        <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl px-6 py-5 shadow-2xl max-w-sm mb-6 border border-white/30">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-white/90 dark:bg-gray-800/90 rotate-45 rounded-sm" />
+          <p className="text-center text-gray-800 dark:text-white font-bold text-lg relative z-10">
+            {t('storyIntroText', uiLang)}
+          </p>
+        </div>
+
+        {/* Rival characters */}
+        <div className="flex gap-8 mb-8">
+          {BOTS.map(bot => (
+            <div key={bot.id} className="flex flex-col items-center gap-1">
+              <div
+                className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md border-2 border-white/30 flex items-center justify-center shadow-xl"
+                style={{ animation: 'countdownPop 0.5s ease-out' }}
+              >
+                <span className="text-3xl">{bot.emoji}</span>
+              </div>
+              <span className="text-sm font-bold text-white drop-shadow-lg">
+                {lf(bot, 'name', uiLang)}
+              </span>
             </div>
-            <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-              {lf(bot, 'name', uiLang)}
-            </span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Start button */}
-      <button
-        onClick={() => { playTap(); onStart(); }}
-        className="btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl active:scale-95 transition-transform"
-        style={{ background: 'linear-gradient(135deg, #22c55e, #3b82f6)' }}
-      >
-        {t('startRace', uiLang)} 🏁
-      </button>
+        {/* Start button */}
+        <button
+          onClick={() => { playTap(); onStart(); }}
+          className="btn-3d px-10 py-4 rounded-2xl font-black text-white text-xl shadow-2xl active:scale-95 transition-transform"
+          style={{ background: 'linear-gradient(135deg, #22c55e, #3b82f6)' }}
+        >
+          {t('startRace', uiLang)} 🏁
+        </button>
+      </div>
     </div>
   );
 }
@@ -700,6 +712,14 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
         animation: `skyShift 30s ease-in-out infinite`,
       }}
     >
+      {/* Video background layer */}
+      <video
+        autoPlay muted loop playsInline
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ zIndex: 0, opacity: 0.35 }}
+        src={`/videos/race/${world.id}.mp4`}
+      />
+
       {/* Celestial body (sun/moon) */}
       <div
         className="absolute pointer-events-none"
