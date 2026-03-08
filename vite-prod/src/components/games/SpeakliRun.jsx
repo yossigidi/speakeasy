@@ -193,16 +193,14 @@ function StoryIntro({ onStart, uiLang }) {
         </div>
 
         {/* Rival characters */}
-        <div className="flex gap-8 mb-8">
+        <p className="text-white/80 font-bold text-sm mb-2 drop-shadow-lg">
+          {t('yourRivals', uiLang)} ⚔️
+        </p>
+        <div className="flex gap-6 mb-8 bg-red-900/30 backdrop-blur-md rounded-2xl px-5 py-3 border border-red-400/30">
           {BOTS.map(bot => (
-            <div key={bot.id} className="flex flex-col items-center gap-1">
-              <div
-                className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md border-2 border-white/30 flex items-center justify-center shadow-xl"
-                style={{ animation: 'countdownPop 0.5s ease-out' }}
-              >
-                <span className="text-3xl">{bot.emoji}</span>
-              </div>
-              <span className="text-sm font-bold text-white drop-shadow-lg">
+            <div key={bot.id} className="flex items-center gap-2">
+              <span className="text-2xl">{bot.emoji}</span>
+              <span className="text-sm font-bold text-red-200 drop-shadow-lg">
                 {lf(bot, 'name', uiLang)}
               </span>
             </div>
