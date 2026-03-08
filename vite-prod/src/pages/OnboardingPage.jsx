@@ -523,8 +523,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
                     setResetSent(true);
                     setAuthError('');
                   } catch (err) {
+                    console.error('Password reset error:', err.code, err.message);
                     if (err.code === 'auth/user-not-found') setAuthError(t('userNotFound', uiLang));
-                    else setAuthError(t('resetError', uiLang));
+                    else setAuthError(t('resetError', uiLang) + (err.code ? ` (${err.code})` : ''));
                   }
                 }}
                 style={{
