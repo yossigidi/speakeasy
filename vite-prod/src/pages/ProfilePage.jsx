@@ -158,7 +158,7 @@ export default function ProfilePage({ onNavigate }) {
               {isChildMode && activeChild ? activeChild.name : (user?.displayName || user?.email?.split('@')[0] || 'User')}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {getLevelTitle(levelInfo.level, uiLang)} · {t('level', uiLang)} {progress.curriculumLevel || 1}
+              {getLevelTitle(levelInfo?.level || 1, uiLang)} · {t('level', uiLang)} {progress.curriculumLevel || 1}
             </p>
           </div>
         </div>

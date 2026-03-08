@@ -1456,7 +1456,7 @@ export default function EnglishQuestPage({ onBack }) {
     <div className="min-h-screen bg-black">
       <KidsIntro
         id="english-quest-v3"
-        name={progress.displayName}
+        name={progress?.displayName || ''}
         emoji="⚔️"
         title="Speakli's Quest!"
         titleHe="המשימה של ספיקלי!"

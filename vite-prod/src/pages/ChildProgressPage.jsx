@@ -115,7 +115,7 @@ export default function ChildProgressPage({ childId, onBack }) {
 
   // Fetch daily activity data
   useEffect(() => {
-    if (!childId) return;
+    if (!childId || !window.firestore || !window.db) return;
 
     async function fetchActivity() {
       setLoadingActivity(true);
