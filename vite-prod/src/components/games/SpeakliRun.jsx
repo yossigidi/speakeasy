@@ -589,7 +589,7 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
         const botPos = botPositions[i] || 0;
         const relativeOffset = botPos - (playerPos || 0);
         const screenLeft = Math.min(Math.max(15 + relativeOffset * 0.6, -5), 85);
-        const bottomPos = i === 0 ? '12%' : '8%';
+        const bottomPos = i === 0 ? '12%' : '6%';
         const scale = 0.9 + (botPos / TOTAL_DISTANCE) * 0.2;
         return (
           <div
@@ -598,9 +598,9 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
             style={{
               left: `${screenLeft}%`,
               bottom: bottomPos,
-              fontSize: `${1.8 * scale}rem`,
+              fontSize: `${3.5 * scale}rem`,
               zIndex: 8,
-              filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.5))',
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.5))',
             }}
           >
             {bot.emoji}
@@ -632,7 +632,7 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
 
       {/* Dust trail */}
       {phase === 'running' && (
-        <div className="absolute pointer-events-none" style={{ left: '8%', bottom: '10%', zIndex: 9 }}>
+        <div className="absolute pointer-events-none" style={{ left: '6%', bottom: '8%', zIndex: 9 }}>
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="absolute rounded-full" style={{
               width: `${6 + i * 3}px`, height: `${6 + i * 3}px`,
@@ -650,10 +650,10 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
       <div
         className="absolute pointer-events-none"
         style={{
-          left: '15%',
-          bottom: '9%',
-          width: '50px',
-          height: '10px',
+          left: '14%',
+          bottom: '6%',
+          width: '70px',
+          height: '14px',
           borderRadius: '50%',
           background: 'rgba(0,0,0,0.35)',
           filter: 'blur(3px)',
@@ -696,22 +696,22 @@ function RunnerViewport({ world, phase, isPowerMode, shakeClass, charEffect, bot
       {/* Speakli character */}
       <div
         className={`absolute z-10 speakli-run ${isCountdown ? 'runner-paused-char' : isChallenge ? '' : 'runner-leaning'} ${charEffect || ''}`}
-        style={{ left: '15%', bottom: '10%' }}
+        style={{ left: '12%', bottom: '8%' }}
       >
         {/* Afterimage ghosts in power mode */}
         {isPowerMode && phase === 'running' && (
           <>
-            <div className="absolute inset-0" style={{ opacity: 0.15, transform: 'translateX(-20px)', filter: 'blur(2px)' }}>
-              <SpeakliAvatar mode="bounce" size="lg" />
+            <div className="absolute inset-0" style={{ opacity: 0.15, transform: 'translateX(-30px)', filter: 'blur(2px)' }}>
+              <SpeakliAvatar mode="bounce" size="2xl" />
             </div>
-            <div className="absolute inset-0" style={{ opacity: 0.08, transform: 'translateX(-38px)', filter: 'blur(3px)' }}>
-              <SpeakliAvatar mode="bounce" size="lg" />
+            <div className="absolute inset-0" style={{ opacity: 0.08, transform: 'translateX(-55px)', filter: 'blur(3px)' }}>
+              <SpeakliAvatar mode="bounce" size="2xl" />
             </div>
           </>
         )}
         <SpeakliAvatar
           mode={isChallenge ? 'idle' : isCountdown ? 'idle' : 'bounce'}
-          size="lg"
+          size="2xl"
           glow={isPowerMode}
         />
       </div>

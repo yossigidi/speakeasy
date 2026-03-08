@@ -43,10 +43,17 @@ function detectLang(text) {
   return 'en';
 }
 
+// Strip Hebrew niqqud (vowel diacritics) — TTS engines mispronounce with them
+function stripNiqqud(text) {
+  return text.replace(/[\u0591-\u05C7]/g, '');
+}
+
 // Clean text for natural pronunciation
 function cleanForTTS(text, lang) {
   let cleaned = text;
   if (lang === 'he') {
+    // Strip niqqud — ElevenLabs pronounces plain Hebrew more naturally
+    cleaned = stripNiqqud(cleaned);
     // Remove parenthetical content (e.g. "יד (כף יד)" → "יד")
     cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
     cleaned = cleaned.replace(/\s*\/\s*/g, ' או ');
@@ -122,7 +129,9 @@ export default async function handler(req, res) {
   const detectedLang = (lang && ALLOWED_LANGS.includes(lang)) ? lang : detectLang(trimmed);
   const voiceId = VOICE_ID;
 
-  const cacheKey = Buffer.from(`${trimmed}__el_${voiceId}`).toString('base64url');
+  // Use cleaned text for cache key so niqqud variants hit the same cache entry
+  const cleanedText = cleanForTTS(trimmed, detectedLang);
+  const cacheKey = Buffer.from(`${cleanedText}__el_${voiceId}`).toString('base64url');
 
   // 1. Check Firestore cache
   try {

@@ -61,6 +61,7 @@ export default function SpeakliAvatar({
     md: 'w-20 h-20',
     lg: 'w-28 h-28',
     xl: 'w-36 h-36',
+    '2xl': 'w-48 h-48',
   };
 
   const animClass = MODES[mode] || MODES.idle;
