@@ -4,3 +4,5 @@ node_modules
 dist
 .env*.local
 *-adminsdk-*.json
+assets/
+.DS_Store
