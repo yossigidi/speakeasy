@@ -61,7 +61,7 @@ export default function MathGateModal({ isOpen, onClose, onSuccess }) {
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
             {t('mathQuestion', uiLang)}
           </p>
-          <div className="text-4xl font-bold text-gray-900 dark:text-white py-4">
+          <div className="text-4xl font-bold text-gray-900 dark:text-white py-4" dir="ltr">
             {question.question}
           </div>
         </div>
@@ -70,6 +70,7 @@ export default function MathGateModal({ isOpen, onClose, onSuccess }) {
         <input
           type="number"
           inputMode="numeric"
+          dir="ltr"
           value={answer}
           onChange={e => setAnswer(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && answer && handleCheck()}
