@@ -174,15 +174,28 @@ function QuestHeader({ scene, onBack, missionIndex, uiLang }) {
 /* ══════════════════════════════════════════════════════
    QUEST INTRO — Scene selection + hero display
    ══════════════════════════════════════════════════════ */
-function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLang }) {
+function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLang, speak }) {
   const heroIdx = hero?.character || 0;
   const outfitEmoji = OUTFITS[hero?.outfit || 0];
   const petEmoji = hero?.pet != null ? PETS[hero.pet] : null;
+  const guidePlayed = useRef(false);
+
+  // Teacher guidance TTS on mount
+  useEffect(() => {
+    if (guidePlayed.current) return;
+    guidePlayed.current = true;
+    const timer = setTimeout(() => {
+      playSequence([
+        { text: t('questGuideWelcome', uiLang), lang: uiLang, rate: 0.9 },
+      ], speak);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [uiLang, speak]);
 
   return (
     <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex flex-col items-center justify-center p-6 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
-      <SceneBgVideo src={scene.bgVideo} />
-      {scene.bgVideo && <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />}
+      <SceneBgVideo src="/videos/quest/intro.mp4" />
+      <div className="absolute inset-0 bg-black/30" style={{ zIndex: 1 }} />
       {/* Background scene emojis */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {Array.from({ length: 8 }).map((_, i) => (
@@ -279,11 +292,18 @@ function QuestIntro({ scene, hero, questCoins, questLevel, onStart, onHero, uiLa
 /* ══════════════════════════════════════════════════════
    MISSION TRANSITION — Between stages
    ══════════════════════════════════════════════════════ */
-function MissionTransition({ missionIndex, scene, uiLang, onReady }) {
+function MissionTransition({ missionIndex, scene, uiLang, onReady, speak }) {
+  const MISSION_GUIDE_KEYS = ['questGuideMission1', 'questGuideMission2', 'questGuideMission3'];
+
   useEffect(() => {
-    const tid = setTimeout(onReady, 2500);
+    // Play mission guidance TTS
+    playSequence([
+      { text: t(MISSION_GUIDE_KEYS[missionIndex], uiLang), lang: uiLang, rate: 0.9 },
+    ], speak);
+
+    const tid = setTimeout(onReady, 3500); // Extended from 2500 to allow TTS to finish
     return () => clearTimeout(tid);
-  }, [onReady]);
+  }, [onReady, missionIndex, uiLang, speak]);
 
   return (
     <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
@@ -327,6 +347,8 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
   const xpRef = useRef(0);
   const scoreRef = useRef(0);
 
+  const guidePlayed = useRef(false);
+
   const setupRound = useCallback((r) => {
     const targetWord = words[Math.floor(Math.random() * words.length)];
     const distractors = pickRandom(words, optionCount - 1, [targetWord]);
@@ -337,16 +359,33 @@ function VocabularyHuntMission({ scene, childLevel, onComplete, uiLang, speak, s
     setCorrect(null);
     setShakeWrong(null);
 
-    // Voice instruction
-    setTimeout(() => {
-      playSequence([
-        { text: t('questFindThe', uiLang), lang: uiLang, rate: 0.9 },
-        { pause: 200 },
-        { text: targetWord.word, lang: 'en-US', rate: 0.6 },
-        { pause: 400 },
-        { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-      ], speak);
-    }, 400);
+    // Opening guidance on first round, then per-round word instruction
+    const delay = (!guidePlayed.current && r === 0) ? 1200 : 400;
+    if (!guidePlayed.current && r === 0) {
+      guidePlayed.current = true;
+      setTimeout(() => {
+        playSequence([
+          { text: t('questGuideVocabStart', uiLang), lang: uiLang, rate: 0.9 },
+          { pause: 600 },
+          { text: t('questFindThe', uiLang), lang: uiLang, rate: 0.9 },
+          { pause: 200 },
+          { text: targetWord.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        ], speak);
+      }, 400);
+    } else {
+      // Regular round voice instruction
+      setTimeout(() => {
+        playSequence([
+          { text: t('questFindThe', uiLang), lang: uiLang, rate: 0.9 },
+          { pause: 200 },
+          { text: targetWord.word, lang: 'en-US', rate: 0.6 },
+          { pause: 400 },
+          { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        ], speak);
+      }, 400);
+    }
   }, [words, optionCount, uiLang, speak]);
 
   useEffect(() => {
@@ -464,6 +503,19 @@ function BossBattleMission({ scene, childLevel, bossHP, bossMaxHP, onComplete, o
   const [bossAnim, setBossAnim] = useState('');
   const [attackAnim, setAttackAnim] = useState(false);
   const bossXpRef = useRef(0);
+  const guidePlayed = useRef(false);
+
+  // Teacher guidance on mount
+  useEffect(() => {
+    if (guidePlayed.current) return;
+    guidePlayed.current = true;
+    const timer = setTimeout(() => {
+      playSequence([
+        { text: t('questGuideBossStart', uiLang), lang: uiLang, rate: 0.9 },
+      ], speak);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [uiLang, speak]);
 
   const current = grammar[round] || grammar[0];
 
@@ -594,6 +646,19 @@ function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }
   useEffect(() => {
     return () => stopListening();
   }, [stopListening]);
+
+  // Teacher guidance on mount
+  const guidePlayed = useRef(false);
+  useEffect(() => {
+    if (guidePlayed.current) return;
+    guidePlayed.current = true;
+    const timer = setTimeout(() => {
+      playSequence([
+        { text: t('questGuideSpeechStart', uiLang), lang: uiLang, rate: 0.9 },
+      ], speakFn);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [uiLang, speakFn]);
 
   const TOTAL_ROUNDS = 3;
   const [round, setRound] = useState(0);
@@ -779,7 +844,7 @@ function SpeechMission({ scene, childLevel, onComplete, uiLang, speak: speakFn }
 /* ══════════════════════════════════════════════════════
    QUEST COMPLETE SCREEN
    ══════════════════════════════════════════════════════ */
-function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContinue, uiLang }) {
+function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContinue, uiLang, speak }) {
   const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
@@ -787,6 +852,16 @@ function QuestCompleteScreen({ scene, totalXp, coinsEarned, questLevel, onContin
     const tid = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(tid);
   }, []);
+
+  // Teacher congratulations TTS
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      playSequence([
+        { text: t('questGuideComplete', uiLang), lang: uiLang, rate: 0.9 },
+      ], speak);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [uiLang, speak]);
 
   return (
     <div className={`min-h-screen bg-gradient-to-b ${scene.bg} flex items-center justify-center p-6 relative overflow-hidden`} style={scene.bgImage ? { backgroundImage: `url(${scene.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
@@ -1118,6 +1193,7 @@ export default function EnglishQuestPage({ onBack }) {
             onStart={startQuest}
             onHero={() => { playTap(); setPhase('hero'); }}
             uiLang={uiLang}
+            speak={speak}
           />
         );
 
@@ -1128,6 +1204,7 @@ export default function EnglishQuestPage({ onBack }) {
             scene={scene}
             uiLang={uiLang}
             onReady={handleTransitionReady}
+            speak={speak}
           />
         );
 
@@ -1183,6 +1260,7 @@ export default function EnglishQuestPage({ onBack }) {
             questLevel={Math.floor((questsCompleted + 1) / 3) + 1}
             onContinue={onBack}
             uiLang={uiLang}
+            speak={speak}
           />
         );
 

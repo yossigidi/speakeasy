@@ -790,6 +790,16 @@ const translations = {
     questDefeatedBoss: 'ניצחתם את הבוס!',
     questHeroLevelShort: 'רמה {level}',
 
+    // Quest teacher guidance (TTS)
+    questGuideWelcome: 'שלום חברים! ברוכים הבאים למשימה של ספיקלי! היום נלמד מילים חדשות באנגלית ונילחם במפלצות!',
+    questGuideMission1: 'משימה ראשונה, ציד מילים! הקשיבו למילה באנגלית ומצאו את התמונה הנכונה',
+    questGuideMission2: 'משימה שנייה, קרב בוס! השלימו את המשפט כדי לתקוף את המפלצת',
+    questGuideMission3: 'משימה שלישית, דיבור! הקשיבו למשפט ואמרו אותו בקול רם',
+    questGuideVocabStart: 'מצאו את המילה הנכונה! הקשיבו טוב ובחרו את התמונה',
+    questGuideBossStart: 'בחרו את המילה הנכונה כדי להשלים את המשפט ולתקוף!',
+    questGuideSpeechStart: 'עכשיו תורכם לדבר! הקשיבו למשפט ואמרו אותו בקול',
+    questGuideComplete: 'כל הכבוד! סיימתם את המשימה בהצלחה! אתם אלופים!',
+
     // Adventure
     adventureTitle: 'הרפתקה',
     adventureWelcomeNarration: 'ברוכים הבאים להרפתקה! בואו נלמד ביחד.',
@@ -1687,6 +1697,16 @@ const translations = {
     questComplete: 'Quest complete!',
     questDefeatedBoss: 'You defeated the boss!',
     questHeroLevelShort: 'Level {level}',
+
+    // Quest teacher guidance (TTS)
+    questGuideWelcome: 'Hello friends! Welcome to Speakli\'s quest! Today we\'ll learn new English words and fight monsters!',
+    questGuideMission1: 'First mission, word hunt! Listen to the English word and find the right picture',
+    questGuideMission2: 'Second mission, boss battle! Complete the sentence to attack the monster',
+    questGuideMission3: 'Third mission, speaking! Listen to the sentence and say it out loud',
+    questGuideVocabStart: 'Find the right word! Listen carefully and choose the picture',
+    questGuideBossStart: 'Choose the right word to complete the sentence and attack!',
+    questGuideSpeechStart: 'Now it\'s your turn to speak! Listen to the sentence and say it out loud',
+    questGuideComplete: 'Great job! You completed the mission successfully! You\'re champions!',
 
     // Adventure
     adventureTitle: 'Adventure',
@@ -2609,6 +2629,16 @@ const translations = {
     questDefeatedBoss: 'هزمتم الزعيم!',
     questHeroLevelShort: 'مستوى {level}',
 
+    // Quest teacher guidance (TTS)
+    questGuideWelcome: 'مرحبًا يا أصدقاء! أهلاً بكم في مهمة سبيكلي! اليوم سنتعلم كلمات جديدة بالإنجليزية ونحارب الوحوش!',
+    questGuideMission1: 'المهمة الأولى، صيد الكلمات! استمعوا للكلمة بالإنجليزية وجدوا الصورة الصحيحة',
+    questGuideMission2: 'المهمة الثانية، معركة الزعيم! أكملوا الجملة لمهاجمة الوحش',
+    questGuideMission3: 'المهمة الثالثة، تحدث! استمعوا للجملة وقولوها بصوت عالٍ',
+    questGuideVocabStart: 'جدوا الكلمة الصحيحة! استمعوا جيدًا واختاروا الصورة',
+    questGuideBossStart: 'اختاروا الكلمة الصحيحة لإكمال الجملة والهجوم!',
+    questGuideSpeechStart: 'الآن دوركم للتحدث! استمعوا للجملة وقولوها بصوت عالٍ',
+    questGuideComplete: 'أحسنتم! أكملتم المهمة بنجاح! أنتم أبطال!',
+
     // Adventure
     adventureTitle: 'مغامرة',
     adventureWelcomeNarration: 'مرحبًا بكم في المغامرة! لنتعلّم معًا.',
@@ -3529,6 +3559,16 @@ const translations = {
     questComplete: 'Квест завершён!',
     questDefeatedBoss: 'Вы победили босса!',
     questHeroLevelShort: 'Уровень {level}',
+
+    // Quest teacher guidance (TTS)
+    questGuideWelcome: 'Привет, друзья! Добро пожаловать в миссию Спикли! Сегодня мы выучим новые английские слова и будем сражаться с монстрами!',
+    questGuideMission1: 'Первая миссия — охота за словами! Слушайте английское слово и найдите правильную картинку',
+    questGuideMission2: 'Вторая миссия — битва с боссом! Дополните предложение, чтобы атаковать монстра',
+    questGuideMission3: 'Третья миссия — говорение! Послушайте предложение и произнесите его вслух',
+    questGuideVocabStart: 'Найдите правильное слово! Слушайте внимательно и выберите картинку',
+    questGuideBossStart: 'Выберите правильное слово, чтобы дополнить предложение и атаковать!',
+    questGuideSpeechStart: 'Теперь ваша очередь говорить! Послушайте предложение и произнесите его вслух',
+    questGuideComplete: 'Молодцы! Вы успешно выполнили миссию! Вы чемпионы!',
 
     // Adventure
     adventureTitle: 'Приключение',
