@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { ArrowLeft, Volume2, Star, Zap, Trophy, Coins } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
-import { playSequence, preloadHebrewAudio, stopAllAudio } from '../../utils/hebrewAudio.js';
+import { playSequence, preloadHebrewAudio, preloadEnglishAudio, stopAllAudio } from '../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playWhoosh } from '../../utils/gameSounds.js';
 import { getWordsForLevel, SENTENCES_BY_LEVEL } from '../../data/kids-vocabulary.js';
 import { shuffle } from '../../utils/shuffle.js';
@@ -1208,6 +1208,21 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     });
   }, [distPerCorrect, childLevel]);
 
+  // Prefetch audio for the upcoming round so TTS plays instantly with popup
+  const prefetchRoundAudio = useCallback((pool, roundNum) => {
+    if (roundNum >= diff.rounds) return;
+    const targetIdx = roundNum % pool.length;
+    const targetWord = pool[targetIdx];
+    if (!targetWord) return;
+    // Preload both English word and UI-language translation in parallel
+    const translation = lf(targetWord, 'translation', uiLang);
+    preloadEnglishAudio([targetWord.word]);
+    if (translation) {
+      const langMap = { he: 'he', ar: 'ar', ru: 'ru', en: 'en' };
+      preloadHebrewAudio([translation], langMap[uiLang] || 'he');
+    }
+  }, [diff.rounds, uiLang]);
+
   // Build word pool when world is selected
   const buildWordPool = useCallback((selectedWorld) => {
     if (selectedWorld.sentencesOnly && diff.useSentences && SENTENCES_BY_LEVEL[childLevel]) {
@@ -1299,11 +1314,12 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   // Handle countdown done → start running
   const handleCountdownDone = useCallback(() => {
     setPhase('running');
+    prefetchRoundAudio(wordPoolRef.current, 0); // preload audio during running phase
     clearRoundTimers();
     pushTimer(setTimeout(() => {
       startChallenge(wordPoolRef.current, 0);
     }, 2500));
-  }, [startChallenge]);
+  }, [startChallenge, prefetchRoundAudio]);
 
   // Handle back button — clean up everything
   const handleBack = useCallback(() => {
@@ -1345,6 +1361,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
     const nextRound = round + 1;
     clearRoundTimers();
+    prefetchRoundAudio(wordPoolRef.current, nextRound);
     pushTimer(setTimeout(() => {
       setRound(nextRound);
       setPhase('running');
@@ -1352,7 +1369,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         startChallenge(wordPoolRef.current, nextRound);
       }, 2000 + Math.random() * 1000));
     }, 2000));
-  }, [target, options, round, diff, speak, startChallenge, challengeDisabled, advanceBots, uiLang]);
+  }, [target, options, round, diff, speak, startChallenge, challengeDisabled, advanceBots, uiLang, prefetchRoundAudio]);
 
   // Handle word tap
   const handleWordTap = useCallback((tappedWord, index) => {
@@ -1424,6 +1441,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       // Next round after delay
       const nextRound = round + 1;
       clearRoundTimers();
+      prefetchRoundAudio(wordPoolRef.current, nextRound);
       pushTimer(setTimeout(() => {
         setAvatarMode('idle');
         setShowSparkle(false);
@@ -1468,6 +1486,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
         const nextRound = round + 1;
         clearRoundTimers();
+        prefetchRoundAudio(wordPoolRef.current, nextRound);
         pushTimer(setTimeout(() => {
           setRound(nextRound);
           setPhase('running');
@@ -1477,7 +1496,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
         }, 2000));
       }
     }
-  }, [target, streak, isPowerMode, attempts, round, options, diff, speak, startChallenge, challengeDisabled, isBossRound, distPerCorrect, advanceBots, uiLang]);
+  }, [target, streak, isPowerMode, attempts, round, options, diff, speak, startChallenge, challengeDisabled, isBossRound, distPerCorrect, advanceBots, uiLang, prefetchRoundAudio]);
 
   // Re-speak target word
   const handleReplay = useCallback(() => {
