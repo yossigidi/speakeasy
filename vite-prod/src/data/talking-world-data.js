@@ -47,6 +47,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-fox-felix.jpg',
         personality: 'Playful, curious, loves colors',
         greetingEn: 'Hi there! I\'m Felix! Do you like colors?',
+        greetingHe: 'היי! אני פליקס! אתם אוהבים צבעים?',
         tasks: [
           {
             id: 'fox-1',
@@ -87,6 +88,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-owl-olivia.jpg',
         personality: 'Wise, gentle, loves counting',
         greetingEn: 'Hello little one! I\'m Olivia! Let\'s count together!',
+        greetingHe: 'שלום קטנטנים! אני אוליביה! בואו נספור ביחד!',
         tasks: [
           {
             id: 'owl-1',
@@ -130,6 +132,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-bunny-bella.jpg',
         personality: 'Shy, sweet, loves animals',
         greetingEn: 'Hi! I\'m Bella! I love animals! Do you?',
+        greetingHe: 'היי! אני בלה! אני אוהבת חיות! גם אתם?',
         tasks: [
           {
             id: 'bunny-1',
@@ -180,6 +183,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-bear-barry.jpg',
         personality: 'Big, gentle, loves hugs and colors',
         greetingEn: 'Hey buddy! I\'m Barry! Give me a high five!',
+        greetingHe: 'היי חבר! אני בארי! תנו לי חמישה!',
         tasks: [
           {
             id: 'bear-1',
@@ -240,6 +244,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-chef-carlo.jpg',
         personality: 'Jolly, enthusiastic about food, funny accent',
         greetingEn: 'Buongiorno! I\'m Chef Carlo! Are you hungry?',
+        greetingHe: 'בונג\'ורנו! אני השף קרלו! אתם רעבים?',
         tasks: [
           {
             id: 'chef-1',
@@ -290,6 +295,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-grandma-grace.jpg',
         personality: 'Warm, loving, bakes cookies, asks about family',
         greetingEn: 'Oh hello dear! I\'m Grandma Grace! Come sit with me!',
+        greetingHe: 'אוי שלום מתוקים! אני סבתא גרייס! בואו שבו איתי!',
         tasks: [
           {
             id: 'grandma-1',
@@ -332,6 +338,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-teacher-tom.jpg',
         personality: 'Encouraging, patient, makes learning fun',
         greetingEn: 'Good morning class! I\'m Mr. Tom! Ready to learn?',
+        greetingHe: 'בוקר טוב כיתה! אני המורה טום! מוכנים ללמוד?',
         tasks: [
           {
             id: 'teacher-1',
@@ -373,6 +380,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-shopkeeper-sam.jpg',
         personality: 'Friendly, sells fruits & school supplies, helpful',
         greetingEn: 'Welcome to my shop! I\'m Sam! What do you need?',
+        greetingHe: 'ברוכים הבאים לחנות שלי! אני סם! מה אתם צריכים?',
         tasks: [
           {
             id: 'shop-1',
@@ -432,6 +440,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-farmer-flora.jpg',
         personality: 'Cheerful, loves nature, grows flowers and vegetables',
         greetingEn: 'Howdy! I\'m Flora! Welcome to my farm!',
+        greetingHe: 'היי! אני פלורה! ברוכים הבאים לחווה שלי!',
         tasks: [
           {
             id: 'flora-1',
@@ -480,6 +489,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-sailor-skip.jpg',
         personality: 'Adventurous, tells sea stories, jolly',
         greetingEn: 'Ahoy! I\'m Skip! Welcome aboard!',
+        greetingHe: 'אהוי! אני סקיפ! ברוכים הבאים לסיפון!',
         tasks: [
           {
             id: 'skip-1',
@@ -521,6 +531,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-cloud-cloudy.jpg',
         personality: 'Fluffy, dreamy, knows all about weather',
         greetingEn: 'Hello down there! I\'m Cloudy! Let\'s talk about weather!',
+        greetingHe: 'שלום למטה! אני ענני! בואו נדבר על מזג האוויר!',
         tasks: [
           {
             id: 'cloud-1',
@@ -560,6 +571,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-driver-dave.jpg',
         personality: 'Friendly, drives the school bus, knows the town',
         greetingEn: 'Hop on! I\'m Dave! Where do you want to go?',
+        greetingHe: 'עלו! אני דייב! לאן אתם רוצים לנסוע?',
         tasks: [
           {
             id: 'dave-1',
@@ -620,6 +632,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-explorer-max.jpg',
         personality: 'Brave, excited, loves discovering new things',
         greetingEn: 'Hey adventurer! I\'m Max! Let\'s explore together!',
+        greetingHe: 'היי הרפתקן! אני מקס! בואו נחקור ביחד!',
         tasks: [
           {
             id: 'max-1',
@@ -658,6 +671,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-scientist-spark.jpg',
         personality: 'Quirky, amazed by science, wild experiments',
         greetingEn: 'Amazing! I\'m Dr. Spark! Want to do an experiment?',
+        greetingHe: 'מדהים! אני ד"ר ספארק! רוצים לעשות ניסוי?',
         tasks: [
           {
             id: 'spark-1',
@@ -696,6 +710,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-pirate-crab.jpg',
         personality: 'Funny pirate, tells treasure stories, adventurous',
         greetingEn: 'Arr! I\'m Captain Crab! Want to find treasure?',
+        greetingHe: 'אר! אני קפטן סרטן! רוצים למצוא אוצר?',
         tasks: [
           {
             id: 'crab-1',
@@ -734,6 +749,7 @@ export const WORLDS = [
         image: '/images/talking-world/characters/tw-char-wizard-merlin.jpg',
         personality: 'Wise, magical, tells stories, makes words appear',
         greetingEn: 'Greetings young one! I am Merlin! Shall we make magic with words?',
+        greetingHe: 'שלום צעירים! אני מרלין! נעשה קסם עם מילים?',
         tasks: [
           {
             id: 'merlin-1',

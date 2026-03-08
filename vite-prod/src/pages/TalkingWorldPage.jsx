@@ -9,6 +9,7 @@ import { playFromAPI } from '../utils/hebrewAudio.js';
 import { playCorrect, playComplete, playStar, playWrong } from '../utils/gameSounds.js';
 import { WORLDS, TW_XP, TW_STARS, scoreToStars } from '../data/talking-world-data.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
+import KidsIntro from '../components/kids/KidsIntro.jsx';
 
 /* ════════════════════════════════════════════════════════════════
    TALKING WORLD PAGE
@@ -81,14 +82,21 @@ export default function TalkingWorldPage({ onBack }) {
     await updateProgress({ talkingWorld: merged });
   }, [progress.talkingWorld, updateProgress]);
 
-  // ── TTS at kid-friendly rate ──
-  const speakNpc = useCallback(async (text) => {
+  // ── TTS at kid-friendly rate (English then Hebrew translation) ──
+  const speakNpc = useCallback(async (textEn, textHe) => {
     setIsSpeaking(true);
     try {
-      await playFromAPI(text, 'en', undefined, { rate: 0.82 });
+      // Speak Hebrew translation first so kid understands
+      if (textHe && uiLang === 'he') {
+        await playFromAPI(textHe, 'he', undefined, { rate: 0.9 });
+        // Small pause between languages
+        await new Promise(r => setTimeout(r, 400));
+      }
+      // Then speak English (the actual learning part)
+      await playFromAPI(textEn, 'en', undefined, { rate: 0.82 });
     } catch (_) {}
     setIsSpeaking(false);
-  }, []);
+  }, [uiLang]);
 
   // ── Local evaluation for say-word / say-sentence ──
   function evaluateLocally(task, userText) {
@@ -247,10 +255,14 @@ export default function TalkingWorldPage({ onBack }) {
       const nextIndex = taskIndex + 1;
       if (nextIndex < (npc?.tasks?.length || 0)) {
         setTaskIndex(nextIndex);
-        // Speak next task prompt
+        // Show & speak next task prompt with translation
         const nextTask = npc.tasks[nextIndex];
         if (nextTask) {
-          setTimeout(() => speakNpc(nextTask.promptEn), 800);
+          setTimeout(() => {
+            const taskHe = nextTask.promptHe || null;
+            setChatHistory(prev => [...prev, { role: 'npc', text: nextTask.promptEn, isTask: true, translation: taskHe }]);
+            speakNpc(nextTask.promptEn, taskHe);
+          }, 800);
         }
       } else {
         // NPC complete
@@ -326,12 +338,15 @@ export default function TalkingWorldPage({ onBack }) {
 
     // NPC greeting + first task
     setTimeout(() => {
-      setChatHistory([{ role: 'npc', text: npc.greetingEn }]);
-      speakNpc(npc.greetingEn);
+      const greetHe = npc.greetingHe || null;
+      setChatHistory([{ role: 'npc', text: npc.greetingEn, translation: greetHe }]);
+      speakNpc(npc.greetingEn, greetHe);
       setTimeout(() => {
-        setChatHistory(prev => [...prev, { role: 'npc', text: npc.tasks[0].promptEn, isTask: true }]);
-        speakNpc(npc.tasks[0].promptEn);
-      }, 2500);
+        const task0 = npc.tasks[0];
+        const taskHe = task0.promptHe || null;
+        setChatHistory(prev => [...prev, { role: 'npc', text: task0.promptEn, isTask: true, translation: taskHe }]);
+        speakNpc(task0.promptEn, taskHe);
+      }, 4000);
     }, 500);
   }
 
@@ -569,6 +584,13 @@ export default function TalkingWorldPage({ onBack }) {
                     : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-white shadow-sm rounded-bl-md'
               }`}>
                 <p className="text-sm leading-relaxed">{msg.text}</p>
+
+                {/* Hebrew/UI language translation */}
+                {msg.role === 'npc' && msg.translation && (
+                  <p className="text-xs mt-1.5 pt-1 border-t border-black/10 text-gray-500 dark:text-gray-400" dir={isRTL ? 'rtl' : 'ltr'}>
+                    {msg.translation}
+                  </p>
+                )}
 
                 {/* Score stars */}
                 {msg.score !== undefined && msg.score > 0 && (
@@ -814,6 +836,26 @@ export default function TalkingWorldPage({ onBack }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
+      <KidsIntro
+        id="friends-talk-v1"
+        name={progress.displayName}
+        emoji="🌍"
+        title="Friends Talk!"
+        titleHe="חברים מדברים!"
+        titleAr="أصدقاء يتحدثون!"
+        titleRu="Друзья говорят!"
+        desc="Meet fun characters and talk to them in English! They'll help you learn new words and sentences!"
+        descHe="הַכִּירוּ דְּמוּיוֹת כֵּיפִיּוֹת וְדַבְּרוּ אִתָּם בְּאַנְגְלִית! הֵם יַעַזְרוּ לָכֶם לִלְמוֹד מִילִים וּמִשְׁפָּטִים חֲדָשִׁים!"
+        descAr="تعرف على شخصيات ممتعة وتحدث معهم بالإنجليزية! سيساعدونك في تعلم كلمات وجمل جديدة!"
+        descRu="Познакомься с весёлыми персонажами и поговори с ними по-английски! Они помогут тебе выучить новые слова и предложения!"
+        uiLang={uiLang}
+        gradient="from-violet-500 via-purple-500 to-indigo-500"
+        buttonLabel="Let's meet them!"
+        buttonLabelHe="בואו נכיר אותם!"
+        buttonLabelAr="هيا نتعرف عليهم!"
+        buttonLabelRu="Давай познакомимся!"
+      />
+
       {/* Back header (for non-conversation phases) */}
       {phase !== 'conversation' && (
         <div className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm px-4 py-3 flex items-center gap-3"
