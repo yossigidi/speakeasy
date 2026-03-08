@@ -24,7 +24,7 @@ function MultipleChoice({ exercise, onAnswer, uiLang }) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white">{exercise.question}</h3>
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white" dir="ltr">{exercise.question}</h3>
       {uiLang !== 'en' && lf(exercise, 'question', uiLang) && lf(exercise, 'question', uiLang) !== exercise.question && (
         <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(exercise, 'question', uiLang)}</p>
       )}
@@ -82,7 +82,7 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
 
   return (
     <div className="space-y-4">
-      <div className="text-lg font-medium text-gray-900 dark:text-white">
+      <div className="text-lg font-medium text-gray-900 dark:text-white" dir="ltr">
         {parts[0]}
         <span className={`inline-block min-w-[80px] border-b-2 mx-1 ${
           answered ? (correct ? 'border-emerald-500' : 'border-red-500') : 'border-brand-500'
@@ -222,7 +222,7 @@ function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
     <div className="space-y-4">
       <p className="text-sm text-gray-500 dark:text-gray-400 text-center">{t('translate', uiLang)}:</p>
       <div className="text-center">
-        <span className="text-xl font-bold text-gray-900 dark:text-white">{exercise.source}</span>
+        <span className="text-xl font-bold text-gray-900 dark:text-white" dir="auto">{exercise.source}</span>
       </div>
       {!answered && (
         <>

@@ -399,7 +399,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
           {t('chooseAnswer', uiLang)}
         </div>
         {exercise.emoji && <span style={{ fontSize: 32, display: 'block', marginBottom: 8 }}>{exercise.emoji}</span>}
-        <div style={{ fontSize: 18, fontWeight: 600, color: '#1F2937', marginBottom: 20, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 18, fontWeight: 600, color: '#1F2937', marginBottom: 20, lineHeight: 1.5, direction: 'ltr', textAlign: 'center' }}>
           {exercise.question}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 320, margin: '0 auto' }}>
@@ -436,7 +436,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         <div style={{
           fontSize: 20, fontWeight: 600, color: '#1F2937', marginBottom: 24,
           lineHeight: 1.6, padding: '12px 16px', background: '#F9FAFB', borderRadius: 12,
-          maxWidth: 320, margin: '0 auto 20px',
+          maxWidth: 320, margin: '0 auto 20px', direction: 'ltr', textAlign: 'center',
         }}>
           {exercise.question}
         </div>
@@ -583,7 +583,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         <div style={{
           fontSize: 20, fontWeight: 600, color: '#1F2937', marginBottom: 24,
           padding: '12px 16px', background: '#F9FAFB', borderRadius: 12,
-          maxWidth: 320, margin: '0 auto 20px',
+          maxWidth: 320, margin: '0 auto 20px', direction: 'ltr', textAlign: 'center',
         }}>
           {exercise.question}
         </div>

@@ -312,7 +312,7 @@ const KIDS_VIDEOS = [
   },
   {
     id: 'greetings',
-    videoId: 'gVIYbQuNMBc',
+    videoId: 'tVlcKp3bWH8',
     titleHe: 'ברכות ופתיחות',
     titleEn: 'Greetings',
     titleAr: 'التحيات',
@@ -325,7 +325,7 @@ const KIDS_VIDEOS = [
   },
   {
     id: 'fruits',
-    videoId: 'mfReSbQ7JzU',
+    videoId: 'OESBH5SK_9c',
     titleHe: 'פירות באנגלית',
     titleEn: 'Fruits Song',
     titleAr: 'أغنية الفواكه',

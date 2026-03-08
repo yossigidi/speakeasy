@@ -272,39 +272,39 @@ function AppContent() {
       case 'vocabulary':
         return <PageErrorBoundary><VocabularyPage /></PageErrorBoundary>;
       case 'pronunciation':
-        return <PronunciationPage />;
+        return <PageErrorBoundary><PronunciationPage /></PageErrorBoundary>;
       case 'reading':
-        return <ReadingPage />;
+        return <PageErrorBoundary><ReadingPage /></PageErrorBoundary>;
       case 'profile':
-        return <ProfilePage onNavigate={navigateTo} />;
+        return <PageErrorBoundary><ProfilePage onNavigate={navigateTo} /></PageErrorBoundary>;
       case 'achievements':
-        return <AchievementsPage onBack={() => navigateTo('profile')} />;
+        return <PageErrorBoundary><AchievementsPage onBack={() => navigateTo('profile')} /></PageErrorBoundary>;
       case 'alphabet':
-        return <KidsAlphabetPage />;
+        return <PageErrorBoundary><KidsAlphabetPage /></PageErrorBoundary>;
       case 'kids-games':
         return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} onNavigate={navigateTo} /></PageErrorBoundary>;
       case 'english-quest':
         return <PageErrorBoundary><EnglishQuestPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'audio-learn':
-        return <AudioLearningPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><AudioLearningPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'family':
-        return <FamilyPage onNavigate={navigateTo} />;
+        return <PageErrorBoundary><FamilyPage onNavigate={navigateTo} /></PageErrorBoundary>;
       case 'child-progress':
-        return <ChildProgressPage childId={progressChildId} onBack={() => navigateTo('family')} />;
+        return <PageErrorBoundary><ChildProgressPage childId={progressChildId} onBack={() => navigateTo('family')} /></PageErrorBoundary>;
       case 'kids-teacher':
-        return <KidsTeacherPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><KidsTeacherPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'curriculum':
         return <PageErrorBoundary><CurriculumPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'support':
-        return <SupportPage onNavigate={navigateTo} onBack={() => navigateTo('profile')} />;
+        return <PageErrorBoundary><SupportPage onNavigate={navigateTo} onBack={() => navigateTo('profile')} /></PageErrorBoundary>;
       case 'support-faq':
-        return <SupportFAQPage onBack={() => navigateTo('support')} />;
+        return <PageErrorBoundary><SupportFAQPage onBack={() => navigateTo('support')} /></PageErrorBoundary>;
       case 'support-contact':
-        return <SupportContactPage onBack={() => navigateTo('support')} />;
+        return <PageErrorBoundary><SupportContactPage onBack={() => navigateTo('support')} /></PageErrorBoundary>;
       case 'support-tickets':
-        return <SupportTicketsPage onBack={() => navigateTo('support')} />;
+        return <PageErrorBoundary><SupportTicketsPage onBack={() => navigateTo('support')} /></PageErrorBoundary>;
       case 'skills':
-        return <SkillsPage onBack={() => navigateTo('home')} />;
+        return <PageErrorBoundary><SkillsPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'adventure':
         return <PageErrorBoundary><AdventurePage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'speaking-coach':
@@ -312,7 +312,7 @@ function AppContent() {
       case 'life-coach':
         return <PageErrorBoundary><LifeCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'pricing':
-        return <PricingPage onBack={() => navigateTo('profile')} />;
+        return <PageErrorBoundary><PricingPage onBack={() => navigateTo('profile')} /></PageErrorBoundary>;
       case 'talking-world':
         return <PageErrorBoundary><TalkingWorldPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       default:
@@ -391,7 +391,7 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
       case 'vocabulary':
         return <PageErrorBoundary><VocabularyPage /></PageErrorBoundary>;
       case 'alphabet':
-        return <KidsAlphabetPage />;
+        return <PageErrorBoundary><KidsAlphabetPage /></PageErrorBoundary>;
       case 'kids-games':
         return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} onNavigate={navigateTo} /></PageErrorBoundary>;
       case 'english-quest':

@@ -298,7 +298,7 @@ export default function AdventureGame({ onBack }) {
               {RTL_LANGS.includes(uiLang) ? '→' : '←'}
             </button>
             <h1 className="text-gray-800 font-black text-lg">
-              {t('adventureTitle', uiLang)}
+              {t('gameAdventureTitle', uiLang)}
             </h1>
             <div className="w-10" />
           </div>

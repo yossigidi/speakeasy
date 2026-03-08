@@ -1474,11 +1474,11 @@ export default function EnglishQuestPage({ onBack }) {
         buttonLabelRu="Вперёд со Спикли!"
       />
 
-      {phase === 'intro' && (
+      {(phase === 'intro' || phase === 'level-select' || phase === 'transition') && (
         <button
           onClick={onBack}
-          className="fixed ltr:left-4 rtl:right-4 z-40 p-2 rounded-full bg-black/30 backdrop-blur-sm active:scale-90 transition-transform"
-          style={{ top: 'calc(env(safe-area-inset-top, 0px) + 52px)' }}
+          className="fixed ltr:left-4 rtl:right-4 z-40 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm active:scale-90 transition-transform shadow-lg"
+          style={{ top: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
         >
           <ArrowLeft size={20} className="text-white rtl:rotate-180" />
         </button>
