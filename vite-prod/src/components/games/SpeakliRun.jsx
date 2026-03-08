@@ -166,6 +166,20 @@ function CoinAnimation({ show }) {
 
 // ── StoryIntro (replaces GameInstructionOverlay) ──
 function StoryIntro({ onStart, uiLang }) {
+  const spokenRef = React.useRef(false);
+
+  useEffect(() => {
+    if (spokenRef.current) return;
+    spokenRef.current = true;
+    const langMap = { he: 'he', ar: 'ar', ru: 'ru', en: 'en' };
+    const storyText = t('storyIntroText', uiLang);
+    if (storyText) {
+      playSequence([
+        { text: storyText, lang: langMap[uiLang] || 'he' },
+      ], null);
+    }
+  }, [uiLang]);
+
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-center px-6 overflow-hidden">
       {/* Video background */}
