@@ -280,7 +280,7 @@ function AppContent() {
       case 'alphabet':
         return <KidsAlphabetPage />;
       case 'kids-games':
-        return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+        return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} onNavigate={navigateTo} /></PageErrorBoundary>;
       case 'english-quest':
         return <PageErrorBoundary><EnglishQuestPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'audio-learn':
@@ -389,7 +389,7 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
       case 'alphabet':
         return <KidsAlphabetPage />;
       case 'kids-games':
-        return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+        return <PageErrorBoundary><KidsGamesPage onBack={() => navigateTo('home')} onNavigate={navigateTo} /></PageErrorBoundary>;
       case 'english-quest':
         return <PageErrorBoundary><EnglishQuestPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'kids-teacher':

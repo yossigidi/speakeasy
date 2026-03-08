@@ -1244,9 +1244,25 @@ const GAMES = [
     gradient: 'from-indigo-400 via-purple-400 to-pink-400',
     component: SpeakliFlightGame,
   },
+  {
+    id: 'adventure',
+    emoji: '🗺️',
+    titleKey: 'gameAdventureTitle',
+    descKey: 'gameAdventureDesc',
+    gradient: 'from-emerald-400 via-green-500 to-teal-500',
+    page: 'adventure',
+  },
+  {
+    id: 'english-quest',
+    emoji: '⚔️',
+    titleKey: 'gameQuestTitle',
+    descKey: 'gameQuestDesc',
+    gradient: 'from-orange-400 via-amber-500 to-yellow-500',
+    page: 'english-quest',
+  },
 ];
 
-function GameSelector({ onSelectGame, onBack }) {
+function GameSelector({ onSelectGame, onBack, onNavigate }) {
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
   const [cardPops, setCardPops] = useState([]);
@@ -1310,7 +1326,7 @@ function GameSelector({ onSelectGame, onBack }) {
           {GAMES.map((game, i) => (
             <button
               key={game.id}
-              onClick={() => { playTap(); onSelectGame(game); }}
+              onClick={() => { playTap(); game.page ? onNavigate(game.page) : onSelectGame(game); }}
               className={`rounded-2xl overflow-hidden active:scale-[0.95] transition-all duration-300 shadow-lg ${
                 cardPops.includes(i) ? 'animate-pop-in' : 'opacity-0 scale-0'
               }`}
@@ -1346,7 +1362,7 @@ function GameSelector({ onSelectGame, onBack }) {
 /* ══════════════════════════════════════════════════════
    KIDS GAMES PAGE - Main orchestrator
    ══════════════════════════════════════════════════════ */
-export default function KidsGamesPage({ onBack }) {
+export default function KidsGamesPage({ onBack, onNavigate }) {
   const { addXP, progress, updateProgress } = useUserProgress();
   const [selectedGame, setSelectedGame] = useState(null);
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
@@ -1374,5 +1390,5 @@ export default function KidsGamesPage({ onBack }) {
     return <GameComponent onComplete={handleComplete} onBack={handleGameBack} childLevel={childLevel} />;
   }
 
-  return <GameSelector onSelectGame={setSelectedGame} onBack={onBack} />;
+  return <GameSelector onSelectGame={setSelectedGame} onBack={onBack} onNavigate={onNavigate} />;
 }
