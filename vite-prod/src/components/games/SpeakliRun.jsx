@@ -993,26 +993,6 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     return isBoss ? Math.ceil(baseDuration / 2) : baseDuration;
   }, [childLevel, diff.rounds]);
 
-  // Start a new challenge round
-  const startChallenge = useCallback((pool, roundNum) => {
-    if (roundNum >= diff.rounds) {
-      setPhase('game-over');
-      return;
-    }
-
-    const boss = roundNum === diff.rounds - 1;
-    setIsBossRound(boss);
-
-    // Boss intro overlay
-    if (boss) {
-      setShowBossOverlay(true);
-      return; // The overlay's onDone will continue
-    }
-
-    // Proceed to challenge
-    launchChallenge(pool, roundNum, boss);
-  }, [diff, launchChallenge]);
-
   // Actually launch the word challenge (called directly or after boss overlay)
   const launchChallenge = useCallback((pool, roundNum, boss) => {
     const targetIdx = roundNum % pool.length;
@@ -1045,6 +1025,26 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       { text: lf(targetWord, 'translation', uiLang), lang: uiLang, rate: 0.85 },
     ], null);
   }, [diff, uiLang]);
+
+  // Start a new challenge round
+  const startChallenge = useCallback((pool, roundNum) => {
+    if (roundNum >= diff.rounds) {
+      setPhase('game-over');
+      return;
+    }
+
+    const boss = roundNum === diff.rounds - 1;
+    setIsBossRound(boss);
+
+    // Boss intro overlay
+    if (boss) {
+      setShowBossOverlay(true);
+      return; // The overlay's onDone will continue
+    }
+
+    // Proceed to challenge
+    launchChallenge(pool, roundNum, boss);
+  }, [diff, launchChallenge]);
 
   // Handle boss overlay done
   const handleBossOverlayDone = useCallback(() => {
