@@ -1220,7 +1220,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     }
     const allWords = getWordsForLevel(childLevel);
     return shuffle(allWords);
-  }, [childLevel, diff.useSentences]);
+  }, [childLevel, diff.useSentences, uiLang]);
 
   // Get timer duration for current round
   const getTimerDuration = useCallback((roundNum) => {
@@ -1247,7 +1247,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
     // Proceed to challenge
     launchChallenge(pool, roundNum, boss);
-  }, [diff]);
+  }, [diff, launchChallenge]);
 
   // Actually launch the word challenge (called directly or after boss overlay)
   const launchChallenge = useCallback((pool, roundNum, boss) => {
@@ -1314,7 +1314,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
 
   // Handle time up
   const handleTimeUp = useCallback(() => {
-    if (challengeDisabled) return;
+    if (challengeDisabled || !target) return;
     setTimerActive(false);
     // Auto wrong answer — same effects as wrong
     playWrong();
@@ -1329,15 +1329,17 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
     advanceBots(round);
 
     setChallengeDisabled(true);
-    const correctIdx = options.findIndex(o => o.word === target?.word);
+    const currentTarget = target;
+    const currentOptions = options;
+    const correctIdx = currentOptions.findIndex(o => o.word === currentTarget.word);
     setTimeout(() => {
       if (correctIdx >= 0) {
         setBoxStates(prev => ({ ...prev, [correctIdx]: 'correct' }));
       }
       playSequence([
-        { text: target?.word, lang: 'en-US', rate: diff.ttsRate },
+        { text: currentTarget.word, lang: 'en-US', rate: diff.ttsRate },
         { pause: 400 },
-        { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        { text: lf(currentTarget, 'translation', uiLang), lang: uiLang, rate: 0.85 },
       ], speak);
     }, 500);
 
@@ -1439,6 +1441,7 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
       setBoxStates(prev => ({ ...prev, [index]: 'wrong' }));
       setStreak(0);
       setIsPowerMode(false);
+      setTimerActive(false); // Pause timer on wrong answer
       // Camera shake + character stumble
       setShakeClass('runner-shake');
       setCharEffect('runner-stumble');
