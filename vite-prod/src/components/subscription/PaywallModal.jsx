@@ -1,8 +1,8 @@
 import React from 'react';
-import { X, Crown, Zap } from 'lucide-react';
+import { X, Crown, Zap, Lock } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { t } from '../../utils/translations.js';
-import { FREE_LIMITS } from '../../data/subscription-plans.js';
+import { FREE_LIMITS, CONTENT_LIMITS } from '../../data/subscription-plans.js';
 
 const FEATURE_LABELS = {
   speakingCoach: 'speakingCoach',
@@ -13,11 +13,24 @@ const FEATURE_LABELS = {
   generateStory: 'reading',
   adventure: 'adventure',
   englishQuest: 'englishQuest',
+  // Content-gated features
+  alphabet: 'alphabet',
+  vocabulary: 'words',
+  games: 'speakliGames',
+  lessons: 'lessons',
+  reading: 'reading',
+  teacherTopics: 'teacherTime',
+  talkingWorld: 'twTitle',
+  questScenes: 'englishQuest',
+  skills: 'skillsTitle',
+  adventureWorlds: 'adventure',
+  audioLearning: 'audioLearning',
 };
 
 export default function PaywallModal({ feature, onClose, onNavigate }) {
   const { uiLang } = useTheme();
-  const limit = FREE_LIMITS[feature] || 0;
+  const limit = FREE_LIMITS[feature] ?? CONTENT_LIMITS[feature] ?? 0;
+  const isContentGated = feature in CONTENT_LIMITS;
   const featureLabel = t(FEATURE_LABELS[feature] || feature, uiLang);
 
   return (
@@ -40,13 +53,13 @@ export default function PaywallModal({ feature, onClose, onNavigate }) {
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/25">
-            <Crown size={32} className="text-white" />
+            {isContentGated ? <Lock size={32} className="text-white" /> : <Crown size={32} className="text-white" />}
           </div>
         </div>
 
         {/* Title */}
         <h3 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-2">
-          {t('limitReached', uiLang)}
+          {t(isContentGated ? 'premiumContent' : 'limitReached', uiLang)}
         </h3>
 
         {/* Description */}
@@ -55,16 +68,18 @@ export default function PaywallModal({ feature, onClose, onNavigate }) {
         </p>
 
         {/* Usage pill */}
-        <div className="flex justify-center mb-5">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm font-semibold">
-            <Zap size={16} />
-            {limit}/{limit} · {featureLabel}
+        {!isContentGated && (
+          <div className="flex justify-center mb-5">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm font-semibold">
+              <Zap size={16} />
+              {limit}/{limit} · {featureLabel}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Benefits */}
         <div className="space-y-2 mb-6">
-          {['unlimitedCoaching', 'unlimitedAIGeneration', 'allAdventureWorlds', 'prioritySupport'].map(key => (
+          {['unlimitedLessons', 'unlimitedKidsGames', 'unlimitedCoaching', 'allAdventureWorlds'].map(key => (
             <div key={key} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
               <span className="text-green-500">✓</span>
               {t(key, uiLang)}

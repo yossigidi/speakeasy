@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { BookOpen, Clock, Volume2, VolumeX, ArrowLeft, Plus, Check, ChevronRight } from 'lucide-react';
+import { BookOpen, Clock, Volume2, VolumeX, ArrowLeft, Plus, Check, ChevronRight, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t, lf, RTL_LANGS } from '../utils/translations.js';
@@ -9,6 +9,8 @@ import KidsIntro from '../components/kids/KidsIntro.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import Modal from '../components/shared/Modal.jsx';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 const STORIES = [
   {
@@ -461,6 +463,8 @@ export default function ReadingPage() {
   const { progress } = useUserProgress();
   const [selectedStory, setSelectedStory] = useState(null);
   const [levelFilter, setLevelFilter] = useState('all');
+  const { isLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   // Filter stories by user level
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1'];
@@ -533,10 +537,26 @@ export default function ReadingPage() {
       </div>
 
       <div className="space-y-3">
-        {filteredStories.map(story => (
-          <StoryCard key={story.id} story={story} onClick={() => setSelectedStory(story)} />
-        ))}
+        {filteredStories.map((story, i) => {
+          const storyIndex = STORIES.indexOf(story);
+          const locked = isLocked('reading', storyIndex);
+          return (
+            <div key={story.id} className={`relative ${locked ? 'opacity-60' : ''}`}>
+              {locked && (
+                <div className="absolute top-3 right-3 z-10 bg-black/40 rounded-full p-1.5">
+                  <Lock size={14} className="text-white" />
+                </div>
+              )}
+              <StoryCard story={story} onClick={() => {
+                if (locked) { setShowPaywall(true); return; }
+                setSelectedStory(story);
+              }} />
+            </div>
+          );
+        })}
       </div>
+
+      {showPaywall && <PaywallModal feature="reading" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

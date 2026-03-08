@@ -44,6 +44,19 @@ export function MusicProvider({ children }) {
     }
   }, [musicEnabled]);
 
+  // Pause music when screen locks / app goes to background
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.hidden) {
+        playerRef.current.pause();
+      } else if (musicEnabled && sectionRef.current && unlockedRef.current) {
+        playerRef.current.resume();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [musicEnabled]);
+
   const setSection = useCallback((id) => {
     sectionRef.current = id;
     if (!musicEnabled) return;

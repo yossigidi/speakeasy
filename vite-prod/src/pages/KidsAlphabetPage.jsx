@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
-import { Volume2, ArrowLeft, Star, Trophy, Sparkles, Check, Heart, Zap } from 'lucide-react';
+import { Volume2, ArrowLeft, Star, Trophy, Sparkles, Check, Heart, Zap, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
+import useContentGate from '../hooks/useContentGate.js';
 import alphabetData from '../data/alphabet-kids.json';
 import { shuffle } from '../utils/shuffle.js';
 import { playSequence, stopAllAudio } from '../utils/hebrewAudio.js';
@@ -68,6 +70,8 @@ function LetterGrid({ onSelect, completedLetters }) {
   const { uiLang } = useTheme();
   const { speak } = useSpeech();
   const { progress } = useUserProgress();
+  const { isLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   return (
     <div className="kids-bg min-h-screen pb-24 px-4 pt-2 relative">
@@ -147,21 +151,30 @@ function LetterGrid({ onSelect, completedLetters }) {
         <div className="grid grid-cols-4 gap-2.5">
           {alphabetData.map((item, i) => {
             const isDone = completedLetters.includes(item.letter);
+            const locked = isLocked('alphabet', i);
             return (
               <button
                 key={item.letter}
                 onClick={() => {
+                  if (locked) { setShowPaywall(true); return; }
                   speak(item.letter, { rate: 0.6 });
                   onSelect(item);
                 }}
                 className={`relative aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all duration-200 active:scale-[0.88] hover:scale-[1.05] ${
-                  isDone
+                  locked
+                    ? 'bg-gradient-to-br from-gray-400 to-gray-500 opacity-60'
+                    : isDone
                     ? 'bg-gradient-to-br from-emerald-400 to-green-500 shadow-lg shadow-emerald-400/40 ring-2 ring-emerald-300'
                     : `bg-gradient-to-br ${item.color} shadow-lg shadow-gray-300/50 dark:shadow-black/30`
                 }`}
                 style={{ animationDelay: `${i * 30}ms` }}
               >
-                {isDone && (
+                {locked && (
+                  <div className="absolute top-1 right-1 bg-black/40 rounded-full p-1">
+                    <Lock size={12} className="text-white" />
+                  </div>
+                )}
+                {!locked && isDone && (
                   <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-sm animate-pop-in">
                     <Check size={12} className="text-emerald-600" strokeWidth={3} />
                   </div>
@@ -171,7 +184,7 @@ function LetterGrid({ onSelect, completedLetters }) {
                 <span className="text-xs leading-none mt-0.5">{item.emoji}</span>
 
                 {/* Sparkle for uncompleted */}
-                {!isDone && (
+                {!isDone && !locked && (
                   <div className="absolute -top-1 -right-1 text-xs animate-sparkle">✨</div>
                 )}
               </button>
@@ -179,6 +192,8 @@ function LetterGrid({ onSelect, completedLetters }) {
           })}
         </div>
       </div>
+
+      {showPaywall && <PaywallModal feature="alphabet" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

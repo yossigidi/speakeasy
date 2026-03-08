@@ -20,7 +20,10 @@ import VideoOverlay from './ui/VideoOverlay.jsx';
 import AchievementToast from '../gamification/AchievementToast.jsx';
 import { WORLDS } from '../../data/adventure/worlds.js';
 import achievementsData from '../../data/achievements.json';
+import { Lock } from 'lucide-react';
 import { t, tReplace, lf, RTL_LANGS } from '../../utils/translations.js';
+import useContentGate from '../../hooks/useContentGate.js';
+import PaywallModal from '../subscription/PaywallModal.jsx';
 
 // Lazy-load world map separately
 const WorldMap = React.lazy(() => import('./worlds/WorldMap.js').then(m => ({ default: m.default || m })));
@@ -43,6 +46,8 @@ export default function AdventureGame({ onBack }) {
     autoPlay: true,
   });
   const [achievementToast, setAchievementToast] = useState(null);
+  const [showPaywall, setShowPaywall] = useState(false);
+  const { isLocked: isContentLocked } = useContentGate();
   const engineRef = useRef(null);
   const videoResolveRef = useRef(null);
   const grantedAchievementsRef = useRef(new Set());
@@ -293,13 +298,14 @@ export default function AdventureGame({ onBack }) {
               { id: 'ocean', emoji: '🌊', nameKey: 'worldOcean', gradient: ['#0ea5e9', '#0284c7', '#0369a1'], shadow: 'rgba(14, 165, 233, 0.4)', scenes: 6, requiresWorld: 'forest' },
               { id: 'space', emoji: '🚀', nameKey: 'worldSpace', gradient: ['#6366f1', '#4f46e5', '#4338ca'], shadow: 'rgba(99, 102, 241, 0.4)', scenes: 6, requiresWorld: 'ocean' },
               { id: 'castle', emoji: '🏰', nameKey: 'worldCastle', gradient: ['#f59e0b', '#d97706', '#b45309'], shadow: 'rgba(245, 158, 11, 0.4)', scenes: 6, requiresWorld: 'space' },
-            ].map((world) => {
+            ].map((world, worldIdx) => {
               const worldProgress = progress.adventure?.worldProgress || {};
               const requiredCompleted = world.requiresWorld
                 ? (worldProgress[world.requiresWorld]?.scenesCompleted || 0)
                 : Infinity;
               const requiredTotal = world.requiresWorld ? 6 : 0;
-              const isUnlocked = !world.requiresWorld || requiredCompleted >= requiredTotal;
+              const isPremiumLocked = isContentLocked('adventureWorlds', worldIdx);
+              const isUnlocked = !isPremiumLocked && (!world.requiresWorld || requiredCompleted >= requiredTotal);
               const myCompleted = worldProgress[world.id]?.scenesCompleted || 0;
               const hasStarted = myCompleted > 0;
               const isComplete = myCompleted >= world.scenes;
@@ -349,22 +355,33 @@ export default function AdventureGame({ onBack }) {
               return (
                 <div
                   key={world.id}
-                  className="w-full max-w-sm rounded-3xl p-4 text-center opacity-50"
+                  onClick={isPremiumLocked ? () => setShowPaywall(true) : undefined}
+                  className={`w-full max-w-sm rounded-3xl p-4 text-center opacity-50 ${isPremiumLocked ? 'cursor-pointer active:scale-95 transition-transform' : ''}`}
                   style={{ background: 'rgba(255,255,255,0.1)' }}
                 >
                   <span className="text-3xl">{world.emoji}</span>
                   <p className="text-white/60 font-bold text-sm mt-1">
                     {t(world.nameKey, uiLang)}
                   </p>
-                  <p className="text-white/40 text-xs">
-                    {t('comingSoon', uiLang)}
-                  </p>
+                  {isPremiumLocked ? (
+                    <div className="flex items-center justify-center gap-1 mt-1">
+                      <Lock size={12} className="text-amber-400" />
+                      <p className="text-amber-400 text-xs font-semibold">Premium</p>
+                    </div>
+                  ) : (
+                    <p className="text-white/40 text-xs">
+                      {t('comingSoon', uiLang)}
+                    </p>
+                  )}
                 </div>
               );
             })}
           </div>
         </div>
       )}
+
+      {/* Premium paywall */}
+      {showPaywall && <PaywallModal feature="adventureWorlds" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
 
       {/* Pause overlay */}
       {showPause && (

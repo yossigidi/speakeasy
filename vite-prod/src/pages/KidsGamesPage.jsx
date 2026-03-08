@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { ArrowLeft, Volume2, Star, Zap, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
@@ -14,6 +14,8 @@ import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { shuffle } from '../utils/shuffle.js';
 import { getWordsForLevel } from '../data/kids-vocabulary.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 // All Hebrew phrases used in game instructions — preloaded for smooth playback
 const GAME_PHRASES = [
@@ -1266,6 +1268,8 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
   const [cardPops, setCardPops] = useState([]);
+  const { isLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   useEffect(() => {
     const timers = GAMES.map((_, i) =>
@@ -1323,38 +1327,52 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
 
         {/* Game cards - 2 column grid */}
         <div className="grid grid-cols-2 gap-3">
-          {GAMES.map((game, i) => (
-            <button
-              key={game.id}
-              onClick={() => { playTap(); game.page ? onNavigate(game.page) : onSelectGame(game); }}
-              className={`rounded-2xl overflow-hidden active:scale-[0.95] transition-all duration-300 shadow-lg ${
-                cardPops.includes(i) ? 'animate-pop-in' : 'opacity-0 scale-0'
-              }`}
-              style={{ animationDelay: `${i * 0.05}s` }}
-            >
-              <div className={`bg-gradient-to-br ${game.gradient} p-5 relative overflow-hidden h-full`}
-                style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)' }}
+          {GAMES.map((game, i) => {
+            const locked = isLocked('games', i);
+            return (
+              <button
+                key={game.id}
+                onClick={() => {
+                  if (locked) { setShowPaywall(true); return; }
+                  playTap(); game.page ? onNavigate(game.page) : onSelectGame(game);
+                }}
+                className={`rounded-2xl overflow-hidden active:scale-[0.95] transition-all duration-300 shadow-lg ${
+                  cardPops.includes(i) ? 'animate-pop-in' : 'opacity-0 scale-0'
+                } ${locked ? 'opacity-60' : ''}`}
+                style={{ animationDelay: `${i * 0.05}s` }}
               >
-                {/* Decorative circle */}
-                <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
-                <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-white/10" />
+                <div className={`bg-gradient-to-br ${locked ? 'from-gray-400 to-gray-500' : game.gradient} p-5 relative overflow-hidden h-full`}
+                  style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)' }}
+                >
+                  {/* Decorative circle */}
+                  <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
+                  <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-white/10" />
 
-                <div className="relative flex flex-col items-center text-center gap-2">
-                  <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl">
-                    {game.emoji}
+                  {locked && (
+                    <div className="absolute top-2 right-2 bg-black/40 rounded-full p-1.5 z-10">
+                      <Lock size={14} className="text-white" />
+                    </div>
+                  )}
+
+                  <div className="relative flex flex-col items-center text-center gap-2">
+                    <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl">
+                      {game.emoji}
+                    </div>
+                    <h3 className="text-base font-black text-white drop-shadow-md leading-tight">
+                      {t(game.titleKey, uiLang)}
+                    </h3>
+                    <p className="text-xs text-white/80 font-semibold leading-tight">
+                      {t(game.descKey, uiLang)}
+                    </p>
                   </div>
-                  <h3 className="text-base font-black text-white drop-shadow-md leading-tight">
-                    {t(game.titleKey, uiLang)}
-                  </h3>
-                  <p className="text-xs text-white/80 font-semibold leading-tight">
-                    {t(game.descKey, uiLang)}
-                  </p>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       </div>
+
+      {showPaywall && <PaywallModal feature="games" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

@@ -72,11 +72,12 @@ export function getAudioContext() {
  */
 let audioUnlocked = false;
 export function unlockAudioContext() {
-  if (audioUnlocked) return;
   const ctx = getAudioContext();
+  // Always resume if suspended (iOS can re-suspend after music pauses)
   if (ctx.state === 'suspended') {
     ctx.resume().catch(() => {});
   }
+  if (audioUnlocked) return;
   // Play a silent buffer to fully unlock on iOS
   try {
     const buf = ctx.createBuffer(1, 1, 22050);
@@ -154,7 +155,10 @@ export async function playFromAPI(text, lang, signal, { rate = 1.0 } = {}) {
     if (!trimmed || !stripNiqqud(trimmed)) return { started: false };
 
     const ctx = getAudioContext();
-    if (ctx.state === 'suspended') await ctx.resume();
+    // Always try to resume — iOS can re-suspend AudioContext when music is paused
+    if (ctx.state !== 'running') {
+      try { await ctx.resume(); } catch (e) {}
+    }
 
     const key = cacheKey(trimmed, lang); // cacheKey still normalizes via stripNiqqud
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Mic, MicOff, Send, Lock, Star, ChevronRight, Sparkles, MessageCircle, Trophy, Eye } from 'lucide-react';
+import { ArrowLeft, Mic, MicOff, Send, Lock, Star, ChevronRight, Sparkles, MessageCircle, Trophy, Eye, Crown } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
@@ -9,6 +9,8 @@ import { playFromAPI } from '../utils/hebrewAudio.js';
 import { playCorrect, playComplete, playStar, playWrong } from '../utils/gameSounds.js';
 import { WORLDS, TW_XP, TW_STARS, scoreToStars } from '../data/talking-world-data.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 // KidsIntro replaced by video intro
 
 /* ════════════════════════════════════════════════════════════════
@@ -21,6 +23,8 @@ export default function TalkingWorldPage({ onBack }) {
   const { sttSupported } = useSpeech();
   const { transcript, interimTranscript, isListening, startListening, stopListening } = useSpeechRecognition();
   const { isBlocked: usageLimitBlocked, remaining: usageRemaining } = useUsageLimit('talkingWorld');
+  const { isLocked: isContentLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const [phase, setPhase] = useState('world-select');
   const [selectedWorld, setSelectedWorld] = useState(null);
@@ -379,8 +383,10 @@ export default function TalkingWorldPage({ onBack }) {
           {t('twMeetFriends', uiLang)}
         </p>
 
-        {WORLDS.map((world) => {
-          const locked = world.level > childLevel;
+        {WORLDS.map((world, worldIdx) => {
+          const levelLocked = world.level > childLevel;
+          const premiumLocked = isContentLocked('talkingWorldWorlds', worldIdx);
+          const locked = levelLocked || premiumLocked;
           const completed = isWorldCompleted(world.id);
           const npcsCompleted = getNpcsCompleted(world.id);
           const totalNpcs = world.npcs.length;
@@ -389,11 +395,12 @@ export default function TalkingWorldPage({ onBack }) {
             <button
               key={world.id}
               onClick={() => {
-                if (locked) return;
+                if (premiumLocked) { setShowPaywall(true); return; }
+                if (levelLocked) return;
                 setSelectedWorld(world.id);
                 setPhase('world-intro');
               }}
-              disabled={locked}
+              disabled={levelLocked}
               className={`w-full rounded-3xl p-5 text-left transition-all duration-300 relative overflow-hidden ${
                 locked ? 'opacity-50 grayscale' : 'active:scale-95'
               }`}
@@ -452,6 +459,8 @@ export default function TalkingWorldPage({ onBack }) {
             </button>
           );
         })}
+
+        {showPaywall && <PaywallModal feature="talkingWorld" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
       </div>
     );
   }
@@ -476,7 +485,8 @@ export default function TalkingWorldPage({ onBack }) {
         <div className="flex flex-col items-center gap-2">
           {world.npcs.map((npc, i) => {
             const isCompleted = npcsCompleted.includes(npc.id);
-            const isUnlocked = i === 0 || npcsCompleted.includes(world.npcs[i - 1].id);
+            const premiumNpcLocked = isContentLocked('talkingWorldNpcs', i);
+            const isUnlocked = !premiumNpcLocked && (i === 0 || npcsCompleted.includes(world.npcs[i - 1].id));
             const stars = getNpcStars(npc.id);
 
             return (
@@ -491,10 +501,11 @@ export default function TalkingWorldPage({ onBack }) {
 
                 <button
                   onClick={() => {
+                    if (premiumNpcLocked) { setShowPaywall(true); return; }
                     if (!isUnlocked) return;
                     startNpcConversation(npc.id);
                   }}
-                  disabled={!isUnlocked}
+                  disabled={!isUnlocked && !premiumNpcLocked}
                   className={`w-full max-w-sm rounded-2xl p-4 flex items-center gap-4 transition-all duration-300 ${
                     isUnlocked
                       ? 'bg-white dark:bg-gray-800 shadow-lg active:scale-95'

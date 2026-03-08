@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { RotateCcw, Grid3x3, Volume2, ChevronRight, ChevronLeft, Check, X, ArrowLeft, BookOpen, Lightbulb, AlertTriangle, Star, Sparkles, Eye, EyeOff, Bookmark, ArrowRight, Shuffle, Zap, GraduationCap, Brain, Trophy } from 'lucide-react';
+import { RotateCcw, Grid3x3, Volume2, ChevronRight, ChevronLeft, Check, X, ArrowLeft, BookOpen, Lightbulb, AlertTriangle, Star, Sparkles, Eye, EyeOff, Bookmark, ArrowRight, Shuffle, Zap, GraduationCap, Brain, Trophy, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -15,6 +15,8 @@ import LoadingSpinner from '../components/shared/LoadingSpinner.jsx';
 import Modal from '../components/shared/Modal.jsx';
 
 import { loadWordData } from '../utils/lazyData.js';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 // ── Word Detail Modal ────────────────────────────────────
 function WordDetailModal({ word, onClose, onSpeak, onAddToVocab, uiLang, isInVocab }) {
@@ -742,6 +744,8 @@ function ReviewSession({ dueWords, onReview, onBack, ALL_WORDS }) {
 // ── Category Browser ─────────────────────────────────────
 function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1', ALL_WORDS, CATEGORIES }) {
   const { uiLang } = useTheme();
+  const { isLocked: isContentLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const categoryInfo = {
     greetings: { emoji: '👋', labelHe: 'ברכות', labelEn: 'Greetings', labelAr: 'التحيات', labelRu: 'Приветствия', color: 'from-yellow-400 to-orange-400' },
@@ -834,40 +838,53 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1', 
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   const userLevelIndex = levelOrder.indexOf(userLevel || 'A1');
 
+  // Track cumulative category index for premium gating
+  let globalCatIndex = 0;
   const renderGrid = (categories, levelLabel) => {
-    const isLocked = levelOrder.indexOf(levelLabel) > userLevelIndex;
+    const isLevelLocked = levelOrder.indexOf(levelLabel) > userLevelIndex;
     return (
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <span className={`px-2 py-0.5 text-xs font-bold rounded-md ${
-            isLocked
+            isLevelLocked
               ? 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
               : 'bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-300'
           }`}>
-            {levelLabel} {isLocked ? '🔒' : ''}
+            {levelLabel} {isLevelLocked ? '🔒' : ''}
           </span>
           <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
-          {isLocked && (
+          {isLevelLocked && (
             <span className="text-[10px] text-gray-400">
               {tReplace('unlocksAtLevel', uiLang, { level: levelLabel })}
             </span>
           )}
         </div>
-        <div className={`grid grid-cols-3 gap-3 ${isLocked ? 'opacity-50' : ''}`}>
+        <div className={`grid grid-cols-3 gap-3 ${isLevelLocked ? 'opacity-50' : ''}`}>
           {categories.map(cat => {
             const info = categoryInfo[cat] || { emoji: '📚', labelHe: cat, color: 'from-gray-400 to-gray-500' };
             const wordCount = ALL_WORDS.filter(w => w.category === cat).length;
+            const premiumLocked = isContentLocked('vocabulary', globalCatIndex);
+            globalCatIndex++;
+            const locked = isLevelLocked || premiumLocked;
 
             return (
               <div
                 key={cat}
-                className={`relative group ${isLocked ? 'pointer-events-none' : 'cursor-pointer'}`}
-                onClick={() => !isLocked && onSelectCategory(cat)}
+                className={`relative group ${locked ? 'cursor-pointer' : 'cursor-pointer'}`}
+                onClick={() => {
+                  if (premiumLocked) { setShowPaywall(true); return; }
+                  if (!isLevelLocked) onSelectCategory(cat);
+                }}
               >
-                <GlassCard className="!p-3 text-center hover:shadow-lg transition-all">
-                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${isLocked ? 'from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700' : info.color} flex items-center justify-center mx-auto mb-2 shadow-sm`}>
+                <GlassCard className={`!p-3 text-center hover:shadow-lg transition-all ${premiumLocked ? 'opacity-60' : ''}`}>
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${locked ? 'from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700' : info.color} flex items-center justify-center mx-auto mb-2 shadow-sm`}>
                     <span className="text-lg">{info.emoji}</span>
                   </div>
+                  {premiumLocked && (
+                    <div className="absolute top-2 right-2 bg-black/40 rounded-full p-1">
+                      <Lock size={10} className="text-white" />
+                    </div>
+                  )}
                   <p className="text-xs font-semibold text-gray-800 dark:text-gray-200 capitalize truncate leading-tight">
                     {lf(info, 'label', uiLang) || cat.replace(/-/g, ' ')}
                   </p>
@@ -881,14 +898,18 @@ function CategoryBrowser({ onSelectCategory, onLearnCategory, userLevel = 'A1', 
     );
   };
 
+  globalCatIndex = 0;
   return (
-    <div className="space-y-6">
-      {a1Categories.length > 0 && renderGrid(a1Categories, 'A1')}
-      {a2Categories.length > 0 && renderGrid(a2Categories, 'A2')}
-      {b1Categories.length > 0 && renderGrid(b1Categories, 'B1')}
-      {b2Categories.length > 0 && renderGrid(b2Categories, 'B2')}
-      {c1Categories.length > 0 && renderGrid(c1Categories, 'C1')}
-    </div>
+    <>
+      <div className="space-y-6">
+        {a1Categories.length > 0 && renderGrid(a1Categories, 'A1')}
+        {a2Categories.length > 0 && renderGrid(a2Categories, 'A2')}
+        {b1Categories.length > 0 && renderGrid(b1Categories, 'B1')}
+        {b2Categories.length > 0 && renderGrid(b2Categories, 'B2')}
+        {c1Categories.length > 0 && renderGrid(c1Categories, 'C1')}
+      </div>
+      {showPaywall && <PaywallModal feature="vocabulary" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
+    </>
   );
 }
 

@@ -42,14 +42,31 @@ export const PLANS = {
   },
 };
 
+// How many items are free per feature (content gating)
+export const CONTENT_LIMITS = {
+  alphabet: 5,           // letters A-E free
+  vocabulary: 10,        // first 10 words (from level 1)
+  games: 2,              // first 2 games free
+  lessons: 3,            // first 3 lessons per unit
+  reading: 1,            // 1 story
+  teacherTopics: 3,      // first 3 topics (Colors, Animals, Numbers)
+  talkingWorldNpcs: 2,   // 2 NPCs per world
+  talkingWorldWorlds: 1, // 1 world free
+  questScenes: 1,        // 1 scene (Forest)
+  adventureWorlds: 1,    // 1 world (Forest)
+  skills: 0,             // fully locked
+  audioLearning: 10,     // first 10 words free
+};
+
 // Features list for PricingPage display
 export const FEATURES = {
   free: [
-    'unlimitedLessons',
-    'unlimitedVocabulary',
-    'unlimitedAlphabet',
-    'unlimitedReading',
-    'unlimitedKidsGames',
+    'limitedLessons',
+    'limitedVocabulary',
+    'limitedAlphabet',
+    'limitedReading',
+    'limitedGames',
+    'limitedTeacher',
     'limitedPronunciation',
     'limitedCoaching',
     'limitedAIGeneration',
@@ -67,6 +84,7 @@ export const FEATURES = {
     'unlimitedAIGeneration',
     'allAdventureWorlds',
     'unlimitedQuest',
+    'unlimitedTeacher',
     'skillsAccess',
     'audioLearningAccess',
     'prioritySupport',

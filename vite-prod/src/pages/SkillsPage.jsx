@@ -6,12 +6,16 @@ import { SKILLS, SKILL_LEVELS } from '../data/skills/skills-data.js';
 import { LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
 import useSkillsProgress from '../hooks/useSkillsProgress.js';
 import SkillsLessonRunner from '../components/skills/SkillsLessonRunner.jsx';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 export default function SkillsPage({ onBack }) {
   const { uiLang, dir } = useTheme();
   const { skills, isSkillLessonUnlocked, getLessonResult, getSkillProgress } = useSkillsProgress();
+  const { isLocked: isContentLocked } = useContentGate();
   const [activeLesson, setActiveLesson] = useState(null);
   const [bottomSheet, setBottomSheet] = useState(null);
+  const [showPaywall, setShowPaywall] = useState(false);
 
   // If running a lesson, show the lesson runner full-screen
   if (activeLesson) {
@@ -91,19 +95,22 @@ export default function SkillsPage({ onBack }) {
               </div>
 
               {/* Skill cards */}
-              {levelSkills.map(skill => {
+              {levelSkills.map((skill, skillIdx) => {
                 const progress = getSkillProgress(skill.id);
-                const isLocked = !isSkillLessonUnlocked(skill.lessons[0].id);
+                const isPremiumLocked = isContentLocked('skills', skillIdx);
+                const isLocked = isPremiumLocked || !isSkillLessonUnlocked(skill.lessons[0].id);
 
                 return (
                   <div
                     key={skill.id}
+                    onClick={isPremiumLocked ? () => setShowPaywall(true) : undefined}
                     style={{
                       background: 'white', borderRadius: 20, padding: '20px',
                       boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
                       marginBottom: 12, position: 'relative',
                       opacity: isLocked ? 0.5 : 1,
                       transition: 'all 0.3s',
+                      cursor: isPremiumLocked ? 'pointer' : undefined,
                     }}
                   >
                     {/* Lock overlay */}
@@ -114,10 +121,11 @@ export default function SkillsPage({ onBack }) {
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
                         <div style={{
-                          background: '#F3F4F6', borderRadius: '50%', padding: 12,
+                          background: isPremiumLocked ? 'linear-gradient(135deg, #F59E0B, #D97706)' : '#F3F4F6',
+                          borderRadius: '50%', padding: 12,
                           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                         }}>
-                          <Lock size={24} style={{ color: '#9CA3AF' }} />
+                          <Lock size={24} style={{ color: isPremiumLocked ? 'white' : '#9CA3AF' }} />
                         </div>
                       </div>
                     )}
@@ -287,6 +295,8 @@ export default function SkillsPage({ onBack }) {
           </div>
         </>
       )}
+
+      {showPaywall && <PaywallModal feature="skills" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
 
       <style>{`
         @keyframes sheet-slide-up {

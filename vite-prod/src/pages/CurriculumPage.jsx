@@ -9,6 +9,8 @@ import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import { getLevel, LEVEL_META, LESSON_TYPES } from '../data/curriculum/curriculum-index.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 export default function CurriculumPage({ onBack }) {
   const { uiLang } = useTheme();
@@ -25,6 +27,8 @@ export default function CurriculumPage({ onBack }) {
   const [selectedLessonInfo, setSelectedLessonInfo] = useState(null); // for bottom sheet
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const bottomSheetRef = useRef(null);
+  const { isLocked: isContentLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   // Clean up audio on unmount
   useEffect(() => {
@@ -181,26 +185,42 @@ export default function CurriculumPage({ onBack }) {
 
       {/* Map / scrollable area */}
       <div style={{ padding: '16px 16px 100px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-        {levelData ? levelData.units.map((unit, idx) => {
-          const unitProgress = getUnitProgress(unit.id);
-          const isUnitUnlocked = idx === 0 || (idx > 0 && getUnitProgress(levelData.units[idx - 1].id).isComplete);
+        {levelData ? (() => {
+          let globalLessonIdx = 0;
+          return levelData.units.map((unit, idx) => {
+            const unitProgress = getUnitProgress(unit.id);
+            const isUnitUnlocked = idx === 0 || (idx > 0 && getUnitProgress(levelData.units[idx - 1].id).isComplete);
+            const unitStartIdx = globalLessonIdx;
+            globalLessonIdx += unit.lessons.length;
 
-          return (
-            <UnitIsland
-              key={unit.id}
-              unit={unit}
-              unitProgress={unitProgress}
-              curriculum={curriculum}
-              levelColor={levelMeta.color}
-              isUnlocked={isUnitUnlocked}
-              onLessonTap={handleLessonTap}
-              uiLang={uiLang}
-              isLessonUnlocked={(lessonId) => isLessonUnlocked(lessonId, selectedLevel)}
-              getLessonResult={getLessonResult}
-              currentLessonId={currentLessonId}
-            />
-          );
-        }) : (
+            return (
+              <UnitIsland
+                key={unit.id}
+                unit={unit}
+                unitProgress={unitProgress}
+                curriculum={curriculum}
+                levelColor={levelMeta.color}
+                isUnlocked={isUnitUnlocked}
+                onLessonTap={(lesson) => {
+                  const lessonIdx = unitStartIdx + unit.lessons.indexOf(lesson);
+                  if (isContentLocked('lessons', lessonIdx)) {
+                    setShowPaywall(true);
+                    return;
+                  }
+                  handleLessonTap(lesson);
+                }}
+                uiLang={uiLang}
+                isLessonUnlocked={(lessonId) => {
+                  const lessonIdx = unitStartIdx + unit.lessons.findIndex(l => l.id === lessonId);
+                  if (isContentLocked('lessons', lessonIdx)) return false;
+                  return isLessonUnlocked(lessonId, selectedLevel);
+                }}
+                getLessonResult={getLessonResult}
+                currentLessonId={currentLessonId}
+              />
+            );
+          });
+        })() : (
           <div style={{ textAlign: 'center', padding: 40, color: '#9CA3AF' }}>
             {t('loading', uiLang)}
           </div>
@@ -302,6 +322,8 @@ export default function CurriculumPage({ onBack }) {
           </div>
         </>
       )}
+
+      {showPaywall && <PaywallModal feature="lessons" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
 
       {/* Inline styles */}
       <style>{`

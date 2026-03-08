@@ -12,6 +12,9 @@ import { playCorrect, playWrong, playComplete, playStar } from '../utils/gameSou
 import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { WORDS_BY_LEVEL } from '../data/kids-vocabulary.js';
 import { t, lf, RTL_LANGS } from '../utils/translations.js';
+import { Lock } from 'lucide-react';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 const TEACHER_TOPICS = [
   { id: 'colors', emoji: '🎨', titleHe: 'צבעים', titleEn: 'Colors', titleAr: 'الألوان', titleRu: 'Цвета', level: 1, gradient: 'linear-gradient(135deg, #FF6B6B, #FFE66D)' },
@@ -319,6 +322,9 @@ export default function KidsTeacherPage({ onBack }) {
   const { speakWordPair } = useSpeechSynthesis();
   const isRTL = RTL_LANGS.includes(uiLang);
 
+  const { isLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
+
   const [phase, setPhase] = useState('topic-select');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [exercises, setExercises] = useState([]);
@@ -458,16 +464,29 @@ export default function KidsTeacherPage({ onBack }) {
           <SpeechBubble text={speechText} direction={isRTL ? 'rtl' : 'ltr'} visible={showSpeech} />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {TEACHER_TOPICS.map(topic => (
-            <button key={topic.id} onClick={() => handleTopicSelect(topic)}
-              className="rounded-2xl p-4 flex flex-col items-center gap-1 active:scale-95 transition-transform shadow-lg"
-              style={{ background: topic.gradient }}>
-              <span className="text-3xl">{topic.emoji}</span>
-              <span className="text-sm font-bold text-white drop-shadow">{isRTL ? topic.titleHe : topic.titleEn}</span>
-              <span className="text-xs text-white/80">Level {topic.level}</span>
-            </button>
-          ))}
+          {TEACHER_TOPICS.map((topic, i) => {
+            const locked = isLocked('teacherTopics', i);
+            return (
+              <button key={topic.id} onClick={() => {
+                if (locked) { setShowPaywall(true); return; }
+                handleTopicSelect(topic);
+              }}
+                className={`rounded-2xl p-4 flex flex-col items-center gap-1 active:scale-95 transition-transform shadow-lg relative ${locked ? 'opacity-60' : ''}`}
+                style={{ background: locked ? 'linear-gradient(135deg, #9ca3af, #6b7280)' : topic.gradient }}>
+                {locked && (
+                  <div className="absolute top-2 right-2 bg-black/40 rounded-full p-1.5">
+                    <Lock size={14} className="text-white" />
+                  </div>
+                )}
+                <span className="text-3xl">{topic.emoji}</span>
+                <span className="text-sm font-bold text-white drop-shadow">{isRTL ? topic.titleHe : topic.titleEn}</span>
+                <span className="text-xs text-white/80">Level {topic.level}</span>
+              </button>
+            );
+          })}
         </div>
+
+        {showPaywall && <PaywallModal feature="teacherTopics" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
       </div>
     );
   }

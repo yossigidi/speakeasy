@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   Play, Pause, SkipForward, SkipBack, Volume2,
-  Repeat, ArrowLeft, Headphones, Settings, Zap
+  Repeat, ArrowLeft, Headphones, Settings, Zap, Lock
 } from 'lucide-react';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t, RTL_LANGS, lf } from '../utils/translations.js';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 import { loadWordData } from '../utils/lazyData.js';
 
@@ -38,6 +40,8 @@ export default function AudioLearningPage({ onBack }) {
   const { uiLang } = useTheme();
   const { progress } = useUserProgress();
   const isRtl = RTL_LANGS.includes(uiLang);
+  const { isLocked: isContentLocked } = useContentGate();
+  const [showPaywall, setShowPaywall] = useState(false);
 
   // ── Lazy-loaded word data ──────────────────────────────
   const [wordsA1, setWordsA1] = useState([]);
@@ -208,6 +212,15 @@ export default function AudioLearningPage({ onBack }) {
     while (idx < words.length) {
       if (!isPlayingRef.current || abortRef.current) break;
 
+      // Stop at premium content boundary
+      if (isContentLocked('audioLearning', idx)) {
+        setIsPlaying(false);
+        isPlayingRef.current = false;
+        setPhase(PHASE.IDLE);
+        setShowPaywall(true);
+        return;
+      }
+
       currentIndexRef.current = idx;
       setCurrentIndex(idx);
 
@@ -257,10 +270,15 @@ export default function AudioLearningPage({ onBack }) {
   }, [stopSpeaking]);
 
   const handleNext = useCallback(() => {
+    const nextIdx = Math.min(currentIndexRef.current + 1, words.length - 1);
+    if (isContentLocked('audioLearning', nextIdx)) {
+      handleStop();
+      setShowPaywall(true);
+      return;
+    }
     clearTimeout(timeoutRef.current);
     clearTimeout(navTimeoutRef.current);
     stopSpeaking();
-    const nextIdx = Math.min(currentIndexRef.current + 1, words.length - 1);
     currentIndexRef.current = nextIdx;
     setCurrentIndex(nextIdx);
     setPhase(PHASE.IDLE);
@@ -272,7 +290,7 @@ export default function AudioLearningPage({ onBack }) {
         runPlayback(nextIdx);
       }, 100);
     }
-  }, [words.length, stopSpeaking, runPlayback]);
+  }, [words.length, stopSpeaking, runPlayback, isContentLocked, handleStop]);
 
   const handlePrev = useCallback(() => {
     clearTimeout(timeoutRef.current);
@@ -605,6 +623,8 @@ export default function AudioLearningPage({ onBack }) {
           </div>
         </div>
       </div>
+
+      {showPaywall && <PaywallModal feature="audioLearning" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }

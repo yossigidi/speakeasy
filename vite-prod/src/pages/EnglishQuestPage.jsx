@@ -9,6 +9,9 @@ import { playCorrect, playWrong, playComplete, playStar, playTap } from '../util
 import { WORDS_BY_LEVEL, SENTENCES_BY_LEVEL, getWordsForLevel, QUEST_GRAMMAR, QUEST_LEVEL_THEMES, QUEST_DIFFICULTY } from '../data/kids-vocabulary.js';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
+import { Lock } from 'lucide-react';
+import useContentGate from '../hooks/useContentGate.js';
+import PaywallModal from '../components/subscription/PaywallModal.jsx';
 
 /* ─── Constants ─── */
 
@@ -311,7 +314,7 @@ function MissionTransition({ missionIndex, scene, uiLang, onReady, speak }) {
       <div className="text-center animate-pop-in space-y-4 relative z-10">
         <div className="text-6xl">{MISSION_EMOJIS[missionIndex]}</div>
         <h2 className="text-white font-black text-2xl">
-          {tReplace('questMissionNumber', uiLang, { num: missionIndex + 1 })}
+          {tReplace('questMissionNumber', uiLang, { number: missionIndex + 1 })}
         </h2>
         <p className="text-white/80 font-bold text-lg">
           {t(MISSION_NAME_KEYS[missionIndex], uiLang)}
@@ -1217,7 +1220,11 @@ export default function EnglishQuestPage({ onBack }) {
   const questLevel = progress.questLevel || 1;
   const questHero = progress.questHero || { character: 0, outfit: 0, pet: null, unlockedHeroes: [0, 1], unlockedOutfits: [0], unlockedPets: [] };
 
-  const scene = QUEST_SCENES[questsCompleted % QUEST_SCENES.length];
+  const sceneIndex = questsCompleted % QUEST_SCENES.length;
+  const scene = QUEST_SCENES[sceneIndex];
+  const { isLocked: isContentLocked } = useContentGate();
+  const questLocked = isContentLocked('questScenes', sceneIndex);
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const [phase, setPhase] = useState('intro'); // intro | level-select | transition | mission | complete | hero
   const [missionIndex, setMissionIndex] = useState(0);
@@ -1235,6 +1242,7 @@ export default function EnglishQuestPage({ onBack }) {
   }, []);
 
   const startQuest = () => {
+    if (questLocked) { setShowPaywall(true); return; }
     playTap();
     setPhase('level-select');
   };
@@ -1439,7 +1447,7 @@ export default function EnglishQuestPage({ onBack }) {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
       <KidsIntro
         id="english-quest-v3"
         name={progress.displayName}
@@ -1470,6 +1478,7 @@ export default function EnglishQuestPage({ onBack }) {
       )}
 
       {renderContent()}
+      {showPaywall && <PaywallModal feature="englishQuest" onClose={() => setShowPaywall(false)} onNavigate={() => {}} />}
     </div>
   );
 }
