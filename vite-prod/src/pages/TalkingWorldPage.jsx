@@ -63,6 +63,12 @@ export default function TalkingWorldPage({ onBack }) {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory]);
 
+  // Check if intro video was seen
+  useEffect(() => {
+    const seen = localStorage.getItem('tw-intro-seen');
+    if (!seen) setShowIntroVideo(true);
+  }, []);
+
   // Handle transcript from STT
   useEffect(() => {
     if (transcript && !isListening && phase === 'conversation' && !isProcessing) {
@@ -549,7 +555,6 @@ export default function TalkingWorldPage({ onBack }) {
     if (!npc) return null;
 
     const task = npc.tasks[taskIndex];
-    const isAiTask = task?.type === 'ai-conversation';
 
     return (
       <div className="flex flex-col h-[100dvh]">
@@ -836,18 +841,25 @@ export default function TalkingWorldPage({ onBack }) {
   // MAIN RENDER
   // ══════════════════════════════════════════
 
-  // Check if intro video was seen before
-  useEffect(() => {
-    const seen = localStorage.getItem('tw-intro-seen');
-    if (!seen) setShowIntroVideo(true);
-  }, []);
-
   function handleIntroDone() {
     localStorage.setItem('tw-intro-seen', '1');
     setShowIntroVideo(false);
   }
 
-  // ── Phase: World Intro (video before NPC path) ──
+  // Skip world intro if already seen
+  useEffect(() => {
+    if (phase === 'world-intro' && selectedWorld) {
+      const seen = localStorage.getItem(`tw-world-seen-${selectedWorld}`);
+      if (seen) setPhase('npc-path');
+    }
+  }, [phase, selectedWorld]);
+
+  function handleWorldIntroDone() {
+    if (selectedWorld) localStorage.setItem(`tw-world-seen-${selectedWorld}`, '1');
+    setPhase('npc-path');
+  }
+
+  // ── Phase: World Intro (video before NPC path, first time only) ──
   function renderWorldIntro() {
     const world = WORLDS.find(w => w.id === selectedWorld);
     if (!world) return null;
@@ -859,12 +871,12 @@ export default function TalkingWorldPage({ onBack }) {
           src={world.video}
           autoPlay
           playsInline
-          muted={false}
+          muted
           className="w-full max-h-[70vh] object-contain"
-          onEnded={() => setPhase('npc-path')}
+          onEnded={handleWorldIntroDone}
         />
         <button
-          onClick={() => setPhase('npc-path')}
+          onClick={handleWorldIntroDone}
           className="absolute bottom-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
         >
           {t('skip', uiLang) || 'Skip'}
@@ -881,7 +893,7 @@ export default function TalkingWorldPage({ onBack }) {
           <video
             autoPlay
             playsInline
-            muted={false}
+            muted
             src="/videos/talking-world/tw-intro-main.mp4"
             className="w-full max-h-[70vh] object-contain"
             onEnded={handleIntroDone}
