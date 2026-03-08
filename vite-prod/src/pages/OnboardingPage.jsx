@@ -519,13 +519,17 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
                 onClick={async () => {
                   if (!email) { setAuthError(t('enterEmail', uiLang)); return; }
                   try {
-                    await resetPassword(email);
+                    const resp = await fetch('/api/reset-password', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email }),
+                    });
+                    if (!resp.ok) throw new Error('failed');
                     setResetSent(true);
                     setAuthError('');
                   } catch (err) {
-                    console.error('Password reset error:', err.code, err.message);
-                    if (err.code === 'auth/user-not-found') setAuthError(t('userNotFound', uiLang));
-                    else setAuthError(t('resetError', uiLang) + (err.code ? ` (${err.code})` : ''));
+                    console.error('Password reset error:', err);
+                    setAuthError(t('resetError', uiLang));
                   }
                 }}
                 style={{
