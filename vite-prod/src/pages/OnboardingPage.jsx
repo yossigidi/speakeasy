@@ -513,24 +513,34 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           </div>
 
           {authMode === 'signin' && (
-            <button
-              type="button"
-              onClick={async () => {
-                if (!email) { setAuthError(t('enterEmail', uiLang)); return; }
-                try {
-                  await resetPassword(email);
-                  setResetSent(true);
-                  setAuthError('');
-                } catch (err) {
-                  if (err.code === 'auth/user-not-found') setAuthError(t('userNotFound', uiLang));
-                  else setAuthError(t('resetError', uiLang));
-                }
-              }}
-              className="landing-toggle-btn"
-              style={{ display: 'block', marginBottom: '10px', fontSize: '14px', textAlign: isRTL ? 'right' : 'left', padding: '4px 0' }}
-            >
-              {t('forgotPassword', uiLang)} →
-            </button>
+            <div style={{ textAlign: 'center', margin: '4px 0 12px' }}>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!email) { setAuthError(t('enterEmail', uiLang)); return; }
+                  try {
+                    await resetPassword(email);
+                    setResetSent(true);
+                    setAuthError('');
+                  } catch (err) {
+                    if (err.code === 'auth/user-not-found') setAuthError(t('userNotFound', uiLang));
+                    else setAuthError(t('resetError', uiLang));
+                  }
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#60a5fa',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  padding: '4px 8px',
+                }}
+              >
+                {t('forgotPassword', uiLang)}
+              </button>
+            </div>
           )}
 
           {resetSent && (
