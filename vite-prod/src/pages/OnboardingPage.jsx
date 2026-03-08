@@ -153,7 +153,7 @@ function calculateCurriculumLevel(answers) {
    ═══════════════════════════════════════════════ */
 export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { uiLang, dir, setLang } = useTheme();
-  const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, user } = useAuth();
+  const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, user } = useAuth();
   const { updateProgress, progress, addChild, familyCode } = useUserProgress();
 
   const [step, setStep] = useState(0);
@@ -183,6 +183,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   const isRTL = RTL_LANGS.includes(uiLang);
 
@@ -284,14 +285,20 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     setAuthError('');
     setAuthLoading(true);
     try {
-      await signInWithApple();
-      await handleAuthSuccess();
+      const result = await signInWithApple();
+      // signInWithRedirect returns undefined (browser navigates away)
+      if (result) await handleAuthSuccess();
     } catch (e) {
-      setAuthError(e.message);
+      // Don't show error for popup-closed (user cancelled)
+      if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') {
+        // User cancelled — do nothing
+      } else {
+        setAuthError(t('appleSignInError', uiLang));
+      }
     } finally {
       setAuthLoading(false);
     }
-  }, [signInWithApple, handleAuthSuccess]);
+  }, [signInWithApple, handleAuthSuccess, uiLang]);
 
   const handleEmailSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -504,6 +511,33 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+
+          {authMode === 'signin' && (
+            <button
+              type="button"
+              onClick={async () => {
+                if (!email) { setAuthError(t('enterEmail', uiLang)); return; }
+                try {
+                  await resetPassword(email);
+                  setResetSent(true);
+                  setAuthError('');
+                } catch (err) {
+                  if (err.code === 'auth/user-not-found') setAuthError(t('userNotFound', uiLang));
+                  else setAuthError(t('resetError', uiLang));
+                }
+              }}
+              className="landing-toggle-btn"
+              style={{ display: 'block', marginBottom: '10px', fontSize: '14px', textAlign: isRTL ? 'right' : 'left', padding: '4px 0' }}
+            >
+              {t('forgotPassword', uiLang)} →
+            </button>
+          )}
+
+          {resetSent && (
+            <p style={{ color: '#22c55e', fontSize: '13px', textAlign: 'center', marginBottom: '8px' }}>
+              {t('resetEmailSent', uiLang)}
+            </p>
+          )}
 
           {authError && (
             <p className="landing-error">{authError}</p>
