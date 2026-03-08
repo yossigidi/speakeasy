@@ -52,8 +52,7 @@ function stripNiqqud(text) {
 function cleanForTTS(text, lang) {
   let cleaned = text;
   if (lang === 'he') {
-    // Strip niqqud — ElevenLabs pronounces plain Hebrew more naturally
-    cleaned = stripNiqqud(cleaned);
+    // Keep niqqud (vowel diacritics) — helps v3 pronounce words correctly
     // Remove parenthetical content (e.g. "יד (כף יד)" → "יד")
     cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
     cleaned = cleaned.replace(/\s*\/\s*/g, ' או ');
@@ -71,9 +70,9 @@ function cleanForTTS(text, lang) {
   return cleaned.replace(/\s+/g, ' ').trim();
 }
 
-// Use multilingual v2 for Hebrew, Arabic and Russian (v3 mispronounces non-English)
+// Use multilingual v2 for Arabic and Russian (v3 is better for Hebrew + English)
 const MULTILINGUAL_MODEL_ID = 'eleven_multilingual_v2';
-const MULTILINGUAL_LANGS = new Set(['he', 'ar', 'ru']);
+const MULTILINGUAL_LANGS = new Set(['ar', 'ru']);
 
 async function callElevenLabsTTS(text, voiceId, lang) {
   const modelId = MULTILINGUAL_LANGS.has(lang) ? MULTILINGUAL_MODEL_ID : MODEL_ID;
@@ -129,7 +128,7 @@ export default async function handler(req, res) {
   const detectedLang = (lang && ALLOWED_LANGS.includes(lang)) ? lang : detectLang(trimmed);
   const voiceId = VOICE_ID;
 
-  // Use cleaned text for cache key so niqqud variants hit the same cache entry
+  // Use cleaned text for cache key (Hebrew now includes niqqud for better pronunciation)
   const cleanedText = cleanForTTS(trimmed, detectedLang);
   const modelId = MULTILINGUAL_LANGS.has(detectedLang) ? MULTILINGUAL_MODEL_ID : MODEL_ID;
   const cacheKey = Buffer.from(`${cleanedText}__el_${voiceId}_${modelId}`).toString('base64url');
