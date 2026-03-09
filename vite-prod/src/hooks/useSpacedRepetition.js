@@ -10,42 +10,39 @@ export default function useSpacedRepetition() {
 
   // Fetch due words from Firestore
   useEffect(() => {
-    if (!user) {
+    if (!user || !window.firestore || !window.db) {
       setDueWords([]);
       setIsLoading(false);
       return;
     }
 
-    const today = getToday();
-    const vocabRef = window.firestore.collection(window.db, 'users', user.uid, 'vocabulary');
-    let q;
     try {
-      q = window.firestore.query(
+      const today = getToday();
+      const vocabRef = window.firestore.collection(window.db, 'users', user.uid, 'vocabulary');
+      const q = window.firestore.query(
         vocabRef,
         window.firestore.where('nextReviewDate', '<=', today)
       );
+
+      const unsub = window.firestore.onSnapshot(q, (snap) => {
+        const words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        words.sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
+        setDueWords(words);
+        setIsLoading(false);
+      }, (err) => {
+        console.error('SpacedRepetition onSnapshot error:', err);
+        setIsLoading(false);
+      });
+
+      return unsub;
     } catch (err) {
-      console.error('SpacedRepetition query build error:', err);
+      console.error('SpacedRepetition init error:', err);
       setIsLoading(false);
-      return;
     }
-
-    const unsub = window.firestore.onSnapshot(q, (snap) => {
-      const words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      // Sort by most overdue first
-      words.sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
-      setDueWords(words);
-      setIsLoading(false);
-    }, (err) => {
-      console.error('SpacedRepetition onSnapshot error:', err);
-      setIsLoading(false);
-    });
-
-    return unsub;
   }, [user]);
 
   const reviewWord = useCallback(async (wordId, qualityLabel) => {
-    if (!user) return;
+    if (!user || !window.firestore || !window.db) return;
 
     const quality = QUALITY_MAP[qualityLabel] ?? qualityLabel;
     const wordRef = window.firestore.doc(window.db, 'users', user.uid, 'vocabulary', wordId);
@@ -71,7 +68,7 @@ export default function useSpacedRepetition() {
   }, [user]);
 
   const addWord = useCallback(async (wordData) => {
-    if (!user) return;
+    if (!user || !window.firestore || !window.db) return;
 
     const vocabRef = window.firestore.doc(
       window.db, 'users', user.uid, 'vocabulary', wordData.id || wordData.word
