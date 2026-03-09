@@ -155,6 +155,9 @@ export async function playFromAPI(text, lang, signal, { rate = 1.0 } = {}) {
     const trimmed = text.trim(); // Keep niqqud for TTS pronunciation
     if (!trimmed || !stripNiqqud(trimmed)) return { started: false };
 
+    // Duck background music while TTS plays
+    try { getMusicPlayer().duck(); } catch (e) {}
+
     const ctx = getAudioContext();
     // Always try to resume — iOS can re-suspend AudioContext when music is paused
     if (ctx.state !== 'running') {
@@ -172,7 +175,11 @@ export async function playFromAPI(text, lang, signal, { rate = 1.0 } = {}) {
       source.connect(ctx.destination);
       activeSources.add(source);
       const endPromise = new Promise(resolve => {
-        source.onended = () => { activeSources.delete(source); resolve(); };
+        source.onended = () => {
+          activeSources.delete(source);
+          try { getMusicPlayer().unduck(); } catch (e) {}
+          resolve();
+        };
       });
       source.start(0);
       return { started: true, endPromise };
@@ -199,12 +206,14 @@ export async function playFromAPI(text, lang, signal, { rate = 1.0 } = {}) {
 
     if (!res.ok) {
       console.warn('TTS API: HTTP', res.status);
+      try { getMusicPlayer().unduck(); } catch (ue) {}
       return { started: false };
     }
 
     const { audio } = await res.json();
     if (!audio) {
       console.warn('TTS API: no audio in response');
+      try { getMusicPlayer().unduck(); } catch (ue) {}
       return { started: false };
     }
 
@@ -220,6 +229,7 @@ export async function playFromAPI(text, lang, signal, { rate = 1.0 } = {}) {
 
     return playBuffer(audioBuffer);
   } catch (e) {
+    try { getMusicPlayer().unduck(); } catch (ue) {}
     if (e.name === 'AbortError') return { started: false };
     console.warn('TTS API failed:', e.message);
     return { started: false };
