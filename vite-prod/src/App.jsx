@@ -19,34 +19,46 @@ import HomePage from './pages/HomePage.jsx';
 import OnboardingPage from './pages/OnboardingPage.jsx';
 import KidsHomePage from './pages/KidsHomePage.jsx';
 
-/* ── Lazy loaded (loaded on demand) ── */
-const LessonPage = lazy(() => import('./pages/LessonPage.jsx'));
-const SimulationPage = lazy(() => import('./pages/SimulationPage.jsx'));
-const VocabularyPage = lazy(() => import('./pages/VocabularyPage.jsx'));
-const ReadingPage = lazy(() => import('./pages/ReadingPage.jsx'));
-const PronunciationPage = lazy(() => import('./pages/PronunciationPage.jsx'));
-const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
-const AchievementsPage = lazy(() => import('./pages/AchievementsPage.jsx'));
-const KidsAlphabetPage = lazy(() => import('./pages/KidsAlphabetPage.jsx'));
-const AudioLearningPage = lazy(() => import('./pages/AudioLearningPage.jsx'));
-const KidsGamesPage = lazy(() => import('./pages/KidsGamesPage.jsx'));
-const FamilyPage = lazy(() => import('./pages/FamilyPage.jsx'));
-const ChildLoginPage = lazy(() => import('./pages/ChildLoginPage.jsx'));
-const ProfilePickerPage = lazy(() => import('./pages/ProfilePickerPage.jsx'));
-const ChildProgressPage = lazy(() => import('./pages/ChildProgressPage.jsx'));
-const KidsTeacherPage = lazy(() => import('./pages/KidsTeacherPage.jsx'));
-const CurriculumPage = lazy(() => import('./pages/CurriculumPage.jsx'));
-const SupportPage = lazy(() => import('./pages/SupportPage.jsx'));
-const SupportFAQPage = lazy(() => import('./pages/SupportFAQPage.jsx'));
-const SupportContactPage = lazy(() => import('./pages/SupportContactPage.jsx'));
-const SupportTicketsPage = lazy(() => import('./pages/SupportTicketsPage.jsx'));
-const EnglishQuestPage = lazy(() => import('./pages/EnglishQuestPage.jsx'));
-const SkillsPage = lazy(() => import('./pages/SkillsPage.jsx'));
-const AdventurePage = lazy(() => import('./pages/AdventurePage.jsx'));
-const SpeakingCoachPage = lazy(() => import('./pages/SpeakingCoachPage.jsx'));
-const LifeCoachPage = lazy(() => import('./pages/LifeCoachPage.jsx'));
-const PricingPage = lazy(() => import('./pages/PricingPage.jsx'));
-const TalkingWorldPage = lazy(() => import('./pages/TalkingWorldPage.jsx'));
+/* ── Lazy loaded with auto-reload on stale chunks ── */
+function lazyRetry(importFn) {
+  return lazy(() => importFn().catch(() => {
+    const reloaded = sessionStorage.getItem('chunk_reload');
+    if (!reloaded) {
+      sessionStorage.setItem('chunk_reload', '1');
+      window.location.reload();
+    }
+    sessionStorage.removeItem('chunk_reload');
+    return importFn();
+  }));
+}
+
+const LessonPage = lazyRetry(() => import('./pages/LessonPage.jsx'));
+const SimulationPage = lazyRetry(() => import('./pages/SimulationPage.jsx'));
+const VocabularyPage = lazyRetry(() => import('./pages/VocabularyPage.jsx'));
+const ReadingPage = lazyRetry(() => import('./pages/ReadingPage.jsx'));
+const PronunciationPage = lazyRetry(() => import('./pages/PronunciationPage.jsx'));
+const ProfilePage = lazyRetry(() => import('./pages/ProfilePage.jsx'));
+const AchievementsPage = lazyRetry(() => import('./pages/AchievementsPage.jsx'));
+const KidsAlphabetPage = lazyRetry(() => import('./pages/KidsAlphabetPage.jsx'));
+const AudioLearningPage = lazyRetry(() => import('./pages/AudioLearningPage.jsx'));
+const KidsGamesPage = lazyRetry(() => import('./pages/KidsGamesPage.jsx'));
+const FamilyPage = lazyRetry(() => import('./pages/FamilyPage.jsx'));
+const ChildLoginPage = lazyRetry(() => import('./pages/ChildLoginPage.jsx'));
+const ProfilePickerPage = lazyRetry(() => import('./pages/ProfilePickerPage.jsx'));
+const ChildProgressPage = lazyRetry(() => import('./pages/ChildProgressPage.jsx'));
+const KidsTeacherPage = lazyRetry(() => import('./pages/KidsTeacherPage.jsx'));
+const CurriculumPage = lazyRetry(() => import('./pages/CurriculumPage.jsx'));
+const SupportPage = lazyRetry(() => import('./pages/SupportPage.jsx'));
+const SupportFAQPage = lazyRetry(() => import('./pages/SupportFAQPage.jsx'));
+const SupportContactPage = lazyRetry(() => import('./pages/SupportContactPage.jsx'));
+const SupportTicketsPage = lazyRetry(() => import('./pages/SupportTicketsPage.jsx'));
+const EnglishQuestPage = lazyRetry(() => import('./pages/EnglishQuestPage.jsx'));
+const SkillsPage = lazyRetry(() => import('./pages/SkillsPage.jsx'));
+const AdventurePage = lazyRetry(() => import('./pages/AdventurePage.jsx'));
+const SpeakingCoachPage = lazyRetry(() => import('./pages/SpeakingCoachPage.jsx'));
+const LifeCoachPage = lazyRetry(() => import('./pages/LifeCoachPage.jsx'));
+const PricingPage = lazyRetry(() => import('./pages/PricingPage.jsx'));
+const TalkingWorldPage = lazyRetry(() => import('./pages/TalkingWorldPage.jsx'));
 
 import ChildModeBanner from './components/family/ChildModeBanner.jsx';
 import MathGateModal from './components/family/MathGateModal.jsx';

@@ -54,7 +54,7 @@ export default function AudioLearningPage({ onBack }) {
   // ── State ──────────────────────────────────────────────
   const [levelFilter, setLevelFilter] = useState('all'); // 'A1' | 'A2' | 'all'
   const [mode, setMode] = useState('full'); // 'words' | 'full'
-  const [speed, setSpeed] = useState(1); // 0.7 | 1 | 1.3
+  const [speed, setSpeed] = useState(0.7); // 0.7 | 1 | 1.3
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState(PHASE.IDLE);
@@ -125,17 +125,17 @@ export default function AudioLearningPage({ onBack }) {
     const sequence = [];
     const spd = speedRef.current;
 
-    // English word
-    sequence.push({ text: wordObj.word, lang: 'en-US', rate: 0.6 * spd });
-    sequence.push({ pause: 900 / spd });
+    // English word — slow, teacher-like pace
+    sequence.push({ text: wordObj.word, lang: 'en-US', rate: 0.5 * spd });
+    sequence.push({ pause: 1100 / spd });
 
     // Native-language translation
-    sequence.push({ text: lf(wordObj, 'translation', uiLangRef.current), lang: uiLangRef.current, rate: 0.85 * spd });
+    sequence.push({ text: lf(wordObj, 'translation', uiLangRef.current), lang: uiLangRef.current, rate: 0.8 * spd });
 
     // Example sentence (only in full mode)
     if (modeRef.current === 'full' && wordObj.examples && wordObj.examples.length > 0) {
-      sequence.push({ pause: 1200 / spd });
-      sequence.push({ text: wordObj.examples[0], lang: 'en-US', rate: 0.6 * spd });
+      sequence.push({ pause: 1400 / spd });
+      sequence.push({ text: wordObj.examples[0], lang: 'en-US', rate: 0.5 * spd });
     }
 
     // Play the whole sequence smoothly
@@ -490,9 +490,6 @@ export default function AudioLearningPage({ onBack }) {
               <h2 className="text-5xl font-black text-white mb-2 tracking-tight drop-shadow-lg">
                 {currentWord?.word}
               </h2>
-              {currentWord?.ipa && (
-                <p className="text-white/50 text-sm font-mono mb-3">{currentWord.ipa}</p>
-              )}
             </div>
 
             {/* Translation */}
