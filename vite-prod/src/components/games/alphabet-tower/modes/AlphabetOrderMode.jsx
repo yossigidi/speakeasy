@@ -9,10 +9,10 @@ import { ArrowLeft } from 'lucide-react';
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
 
 const GUIDE = {
-  he: 'סדרו את האותיות לפי הסדר!',
-  ar: 'رتبوا الحروف بالترتيب!',
-  ru: 'Расставьте буквы по порядку!',
-  en: 'Arrange the letters in order!',
+  he: 'סדרו את האותיות!',
+  ar: 'رتبوا الحروف!',
+  ru: 'Расставьте буквы!',
+  en: 'Arrange the letters!',
 };
 
 const ENCOURAGEMENT = {
@@ -20,6 +20,13 @@ const ENCOURAGEMENT = {
   ar: ['رائع!', 'ممتاز!', 'أحسنت!', 'مذهل!', 'سوبر!'],
   ru: ['Отлично!', 'Молодец!', 'Замечательно!', 'Супер!', 'Класс!'],
   en: ['Great!', 'Excellent!', 'Well done!', 'Amazing!', 'Super!'],
+};
+
+const TRY_AGAIN = {
+  he: 'זו לא האות, בואו ננסה שוב',
+  ar: 'هذا ليس الحرف، هيا نحاول مرة أخرى',
+  ru: 'Это не та буква, давай попробуем ещё раз',
+  en: "That's not the letter, let's try again",
 };
 const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -147,13 +154,27 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         addTimer(() => setJustPlaced(null), 600);
         addTimer(() => setStarBurst(null), 900);
 
+        // Speak the letter + encouragement
+        addTimer(() => {
+          playSequence([
+            { text: item.letter, lang: 'en-US' },
+            { pause: 300 },
+            { text: pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en), lang: uiLang },
+          ]);
+        }, 200);
+
         checkAllPlaced(nextPlaced);
       } else {
-        // Wrong placement
+        // Wrong placement — say "that's not the letter, let's try again"
         try { playWrong(); } catch { /* */ }
         setIsAnimating(true);
         setWrongZone(zoneIndex);
         setWrongCube(itemId);
+        addTimer(() => {
+          playSequence([
+            { text: TRY_AGAIN[uiLang] || TRY_AGAIN.en, lang: uiLang },
+          ]);
+        }, 300);
         addTimer(() => {
           setWrongZone(null);
           setWrongCube(null);
