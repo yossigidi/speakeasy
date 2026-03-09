@@ -446,11 +446,6 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         {t('onboardingSub', uiLang)}
       </p>
 
-      {/* Child login — visible above auth card */}
-      <button onClick={onChildLogin} className="landing-child-btn">
-        👧 {t('loginAsChild', uiLang)}
-      </button>
-
       {/* Auth card */}
       <div className="landing-card">
         {/* Social buttons */}
@@ -585,6 +580,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           </button>
         </p>
 
+        {/* Child login */}
+        <button onClick={onChildLogin} className="landing-child-btn">
+          👧 {t('loginAsChild', uiLang)}
+        </button>
       </div>
 
       <style>{`

@@ -99,13 +99,13 @@ export default function ChildLoginPage({ onBack }) {
   return (
     <div className="min-h-[100dvh] bg-gradient-to-br from-teal-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-teal-950 flex flex-col">
       {/* Top bar */}
-      <div className="p-4">
+      <div className="p-4" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)' }}>
         <button
           onClick={() => step > 1 ? setStep(step - 1) : onBack()}
-          className="flex items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/80 dark:bg-white/10 shadow-sm text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-white/20 active:scale-95 transition-all font-medium"
         >
           <ArrowLeft size={20} className={isRTL ? 'rotate-180' : ''} />
-          <span className="text-sm">{t('back', uiLang)}</span>
+          <span>{t('back', uiLang)}</span>
         </button>
       </div>
 
