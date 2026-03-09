@@ -95,7 +95,7 @@ export function ChildAuthProvider({ children }) {
     }
   }, []);
 
-  // Login child from separate device
+  // Login child from separate device — uses server-side API to bypass Firestore rules
   const loginChild = useCallback(async (rawFamilyCode, childId, childName, pin) => {
     const familyCode = rawFamilyCode.toUpperCase();
     // Check rate limit
@@ -105,37 +105,24 @@ export function ChildAuthProvider({ children }) {
     }
 
     try {
-      await ensureAuth();
+      const resp = await fetch('/api/child-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ familyCode, childId, childName, pin }),
+      });
 
-      // Read child profile
-      const childRef = window.firestore.doc(window.db, 'childProfiles', childId);
-      const childSnap = await window.firestore.getDoc(childRef);
+      const data = await resp.json();
 
-      if (!childSnap.exists()) {
+      if (!resp.ok || !data.success) {
         recordFailedAttempt();
-        return { success: false, error: 'invalidPin' };
-      }
-
-      const childData = childSnap.data();
-
-      // Verify PIN hash
-      const hash = await hashCredentials(childName, pin, familyCode);
-      if (hash !== childData.pinHash) {
-        recordFailedAttempt();
-        return { success: false, error: 'invalidPin' };
+        return { success: false, error: data.error || 'invalidPin' };
       }
 
       // Success - clear rate limit and create session
       clearRateLimit();
 
       const session = {
-        childId,
-        name: childData.name,
-        avatar: childData.avatar,
-        avatarColor: childData.avatarColor,
-        age: childData.age,
-        parentUid: childData.parentUid,
-        familyCode,
+        ...data.child,
         isRemoteChild: true,
         loginAt: new Date().toISOString(),
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
@@ -148,7 +135,7 @@ export function ChildAuthProvider({ children }) {
       console.error('Child login error:', error);
       return { success: false, error: 'loginFailed' };
     }
-  }, [hashCredentials, checkRateLimit, recordFailedAttempt, clearRateLimit, ensureAuth]);
+  }, [checkRateLimit, recordFailedAttempt, clearRateLimit]);
 
   // Logout child
   const logoutChild = useCallback(() => {
