@@ -413,23 +413,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         <div className="landing-blob landing-blob-3" />
       </div>
 
-      {/* Floating sparkle particles */}
-      <div className="landing-particles">
-        {['✨','⭐','💫','🌟','✨','⭐','💫','🌟','✨','⭐'].map((s, i) => (
-          <span key={i} className="landing-particle" style={{
-            left: `${8 + (i * 9.5) % 84}%`,
-            top: `${4 + (i * 11.3) % 70}%`,
-            fontSize: `${10 + (i % 4) * 3}px`,
-            animationDelay: `${i * 0.6}s`,
-            animationDuration: `${4 + (i % 3) * 1.5}s`,
-          }}>{s}</span>
-        ))}
-      </div>
-
       {/* Hero: Speakli character with logo */}
       <div className="landing-hero">
         <div className="landing-glow" />
-        <div className="landing-ring" />
         <img
           src="/images/speakli-icon.webp"
           alt="Speakli"
@@ -591,8 +577,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           position: fixed; inset: 0;
           background: linear-gradient(160deg, #020c1b 0%, #0a1e3d 30%, #0f2d5a 60%, #0d1847 100%);
           display: flex; flex-direction: column; align-items: center;
+          justify-content: center;
           text-align: center;
-          padding: calc(env(safe-area-inset-top, 0px) + 16px) 20px calc(env(safe-area-inset-bottom, 0px) + 20px);
+          padding: calc(env(safe-area-inset-top, 0px) + 8px) 20px calc(env(safe-area-inset-bottom, 0px) + 8px);
           overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
 
@@ -639,7 +626,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         /* Hero section */
         .landing-hero {
           position: relative; flex-shrink: 0;
-          margin-bottom: 8px; margin-top: 8px;
+          margin-bottom: 4px; margin-top: 0;
         }
         .landing-glow {
           position: absolute; inset: -40%;
@@ -660,7 +647,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         }
         .landing-character {
           position: relative;
-          width: min(55vw, 220px); height: auto;
+          width: min(28vw, 120px); height: auto;
           animation: hero-float 4s ease-in-out infinite;
           filter: drop-shadow(0 20px 50px rgba(59,130,246,0.4));
         }
@@ -677,14 +664,14 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
         /* Tagline */
         .landing-tagline {
-          font-size: clamp(18px, 4.5vw, 22px); font-weight: 800;
+          font-size: clamp(16px, 4vw, 20px); font-weight: 800;
           background: linear-gradient(135deg, #93c5fd, #3b82f6, #f59e0b);
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-          margin: 0 0 4px; flex-shrink: 0; letter-spacing: 0.3px;
+          margin: 0 0 2px; flex-shrink: 0; letter-spacing: 0.3px;
         }
         .landing-sub {
-          font-size: clamp(12px, 3vw, 14px); color: rgba(148,163,184,0.7);
-          margin: 0 0 clamp(12px, 3vh, 24px); flex-shrink: 0; max-width: 300px;
+          font-size: clamp(11px, 2.5vw, 13px); color: rgba(148,163,184,0.7);
+          margin: 0 0 clamp(8px, 2vh, 14px); flex-shrink: 0; max-width: 300px;
         }
 
         /* Auth card */
@@ -692,16 +679,16 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           width: 100%; max-width: 380px;
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 24px; padding: 20px;
+          border-radius: 20px; padding: 16px;
           backdrop-filter: blur(20px);
-          display: flex; flex-direction: column; gap: 10px;
+          display: flex; flex-direction: column; gap: 8px;
           flex-shrink: 0;
         }
 
         /* Social buttons */
         .landing-social-btn {
           width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
-          padding: 13px 0; border-radius: 14px; font-weight: 600; font-size: 15px;
+          padding: 11px 0; border-radius: 12px; font-weight: 600; font-size: 14px;
           color: #fff; background: rgba(255,255,255,0.07);
           border: 1px solid rgba(255,255,255,0.1);
           cursor: pointer; transition: all 0.2s;
@@ -718,9 +705,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         .landing-divider span { font-size: 13px; color: rgba(255,255,255,0.25); }
 
         /* Form */
-        .landing-form { display: flex; flex-direction: column; gap: 10px; }
+        .landing-form { display: flex; flex-direction: column; gap: 8px; }
         .landing-input {
-          width: 100%; padding: 13px 16px; border-radius: 14px;
+          width: 100%; padding: 11px 14px; border-radius: 12px;
           outline: none; color: #fff; font-size: 16px;
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.08);
@@ -736,8 +723,8 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         .landing-error { font-size: 13px; color: #f87171; text-align: center; margin: 0; }
 
         .landing-submit-btn {
-          width: 100%; padding: 14px 0; border-radius: 14px;
-          font-weight: 700; font-size: 16px; color: #fff;
+          width: 100%; padding: 12px 0; border-radius: 12px;
+          font-weight: 700; font-size: 15px; color: #fff;
           background: linear-gradient(135deg, #2563eb, #3b82f6);
           border: none; cursor: pointer;
           box-shadow: 0 8px 30px rgba(37,99,235,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
@@ -757,9 +744,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         .landing-toggle-btn:hover { color: #60a5fa; }
 
         .landing-child-btn {
-          margin-top: 16px; font-size: 15px; color: rgba(255,255,255,0.7);
-          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-          border-radius: 12px; padding: 10px 24px; cursor: pointer;
+          margin-top: 4px; font-size: 13px; color: rgba(255,255,255,0.5);
+          background: none; border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 10px; padding: 8px 20px; cursor: pointer;
           font-weight: 600; transition: all 0.2s;
         }
         .landing-child-btn:hover { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
