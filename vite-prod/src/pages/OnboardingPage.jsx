@@ -335,7 +335,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* Step 0 — Language Selection */
   const renderLanguageSelection = () => (
-    <div className="landing-root">
+    <div className="landing-root" tabIndex={0}>
       <div className="landing-bg-blobs">
         <div className="landing-blob landing-blob-1" />
         <div className="landing-blob landing-blob-2" />
@@ -405,7 +405,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* Step 1 — Auth Screen (Beautiful Landing + Login/Register) */
   const renderAuth = () => (
-    <div className="landing-root">
+    <div className="landing-root" tabIndex={0}>
       {/* Animated background blobs */}
       <div className="landing-bg-blobs">
         <div className="landing-blob landing-blob-1" />
