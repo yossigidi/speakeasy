@@ -12,6 +12,7 @@ import GameInstructionOverlay from '../components/games/GameInstructionOverlay.j
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import { shuffle } from '../utils/shuffle.js';
+import AlphabetTowerGame from '../components/games/alphabet-tower/AlphabetTowerGame.jsx';
 import { getWordsForLevel } from '../data/kids-vocabulary.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
 import useContentGate from '../hooks/useContentGate.js';
@@ -1255,12 +1256,12 @@ const GAMES = [
     component: CategorySortGame,
   },
   {
-    id: 'word-builder',
+    id: 'alphabet-tower',
     emoji: '🏗️',
-    titleKey: 'gameWordBuilderTitle',
-    descKey: 'gameWordBuilderDesc',
+    titleKey: 'gameAlphabetTowerTitle',
+    descKey: 'gameAlphabetTowerDesc',
     gradient: 'from-orange-400 via-amber-400 to-yellow-400',
-    component: WordBuilderGame,
+    component: AlphabetTowerGame,
   },
   {
     id: 'sentence-builder',
