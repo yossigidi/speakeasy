@@ -230,19 +230,15 @@ export function UserProgressProvider({ children: reactChildren }) {
         const childrenIds = userData.childrenIds || [];
 
         if (childrenIds.length === 0) {
-          // Try to auto-restore children by parentUid (in case childrenIds was wiped)
+          // Try to auto-restore children via server API (Firestore rules block client-side query)
           try {
-            const cpRef = window.firestore.collection(window.db, 'childProfiles');
-            const cpQuery = window.firestore.query(cpRef, window.firestore.where('parentUid', '==', user.uid));
-            const cpSnap = await window.firestore.getDocs(cpQuery);
-            if (!cpSnap.empty) {
-              const restoredIds = cpSnap.docs.map(d => d.id);
-              console.log('Auto-restoring children:', restoredIds);
-              await window.firestore.setDoc(
-                window.firestore.doc(window.db, 'users', user.uid),
-                { childrenIds: restoredIds },
-                { merge: true }
-              );
+            const token = await user.getIdToken();
+            const res = await fetch('/api/restore-children', {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+            if (data.childrenIds && data.childrenIds.length > 0) {
+              console.log('Auto-restored children:', data.childrenIds);
               return; // listener will re-fire with restored childrenIds
             }
           } catch (e) {
