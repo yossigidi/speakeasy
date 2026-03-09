@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import LetterCube from '../components/LetterCube.jsx';
 import useDragAndDrop from '../hooks/useDragAndDrop.js';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
-import { playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
+import { playFromAPI, playSequence, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playPop, playComplete } from '../../../../utils/gameSounds.js';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Volume2 } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
 const TOTAL_ROUNDS = MODE_CONFIGS.wordBuilder.roundsPerGame;
@@ -49,6 +49,22 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     };
   }, []);
 
+  // Hear the word again (guidance + word + translation)
+  const hearAgain = useCallback(() => {
+    if (!roundData) return;
+    stopAllAudio();
+    const seq = [
+      { text: GUIDE[uiLang] || GUIDE.en, lang: uiLang },
+      { pause: 400 },
+      { text: roundData.answer, lang: 'en-US' },
+      { pause: 300 },
+    ];
+    if (roundData.translations && roundData.translations[uiLang]) {
+      seq.push({ text: roundData.translations[uiLang], lang: uiLang });
+    }
+    playSequence(seq);
+  }, [roundData, uiLang]);
+
   // Generate round data
   const initRound = useCallback((roundNum) => {
     const data = generateRound('wordBuilder', difficulty);
@@ -67,22 +83,23 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     }));
     setPoolCubes(cubes);
 
+    // Speak guidance + word
+    stopAllAudio();
+    const seq = [];
+    // On first round, speak the full guide instruction
+    if (roundNum === 1) {
+      seq.push({ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang });
+      seq.push({ pause: 400 });
+    }
     // Speak the word
-    if (abortRef.current) abortRef.current.abort();
-    const ac = new AbortController();
-    abortRef.current = ac;
-
-    const t = setTimeout(async () => {
-      try {
-        // Speak in English
-        await playFromAPI(data.answer, 'en', ac.signal, { rate: 1.0 });
-        // Then speak translation if available
-        if (data.translations && data.translations[uiLang]) {
-          await playFromAPI(data.translations[uiLang], uiLang, ac.signal, { rate: 0.8 });
-        }
-      } catch {
-        // aborted or failed, ignore
-      }
+    seq.push({ text: data.answer, lang: 'en-US' });
+    seq.push({ pause: 300 });
+    // Speak translation
+    if (data.translations && data.translations[uiLang]) {
+      seq.push({ text: data.translations[uiLang], lang: uiLang });
+    }
+    const t = setTimeout(() => {
+      playSequence(seq);
     }, 400);
     timersRef.current.push(t);
   }, [difficulty, uiLang]);
@@ -165,19 +182,14 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
       timersRef.current.push(t1, t2);
 
       // Speak the word again
-      if (abortRef.current) abortRef.current.abort();
-      const ac = new AbortController();
-      abortRef.current = ac;
-      const t3 = setTimeout(async () => {
-        try {
-          await playFromAPI(roundData.answer, 'en', ac.signal, { rate: 0.7 });
-          if (roundData.translations && roundData.translations[uiLang]) {
-            await playFromAPI(roundData.translations[uiLang], uiLang, ac.signal, { rate: 0.8 });
-          }
-        } catch {
-          // ignore
-        }
-      }, 800);
+      const celebSeq = [
+        { text: roundData.answer, lang: 'en-US' },
+        { pause: 300 },
+      ];
+      if (roundData.translations && roundData.translations[uiLang]) {
+        celebSeq.push({ text: roundData.translations[uiLang], lang: uiLang });
+      }
+      const t3 = setTimeout(() => playSequence(celebSeq), 800);
       timersRef.current.push(t3);
 
       if (onRoundComplete) onRoundComplete(earned);
@@ -278,29 +290,50 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         {GUIDE[uiLang] || GUIDE.en}
       </div>
 
-      {/* Emoji + translation */}
-      {emoji && (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 4,
-          marginTop: 4,
-        }}>
-          <span style={{ fontSize: '4.5rem', lineHeight: 1.1 }}>{emoji}</span>
-          {translation && (
-            <span style={{
-              fontSize: 20,
-              fontWeight: 700,
-              color: '#fbbf24',
-              textShadow: '0 2px 6px rgba(0,0,0,0.3)',
-              fontFamily: "'Fredoka', 'Heebo', sans-serif",
-            }}>
-              {translation}
-            </span>
-          )}
-        </div>
-      )}
+      {/* Emoji + translation + hear again button */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 4,
+        marginTop: 4,
+      }}>
+        {emoji && <span style={{ fontSize: '4.5rem', lineHeight: 1.1 }}>{emoji}</span>}
+        {translation && (
+          <span style={{
+            fontSize: 20,
+            fontWeight: 700,
+            color: '#fbbf24',
+            textShadow: '0 2px 6px rgba(0,0,0,0.3)',
+            fontFamily: "'Fredoka', 'Heebo', sans-serif",
+          }}>
+            {translation}
+          </span>
+        )}
+        {/* Hear again button */}
+        <button
+          onClick={hearAgain}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            marginTop: 6,
+            padding: '8px 18px',
+            background: 'rgba(255,255,255,0.15)',
+            border: '2px solid rgba(255,255,255,0.3)',
+            borderRadius: 20,
+            color: '#fff',
+            fontSize: 14,
+            fontWeight: 700,
+            fontFamily: "'Fredoka', 'Heebo', sans-serif",
+            cursor: 'pointer',
+          }}
+          aria-label="Hear again"
+        >
+          <Volume2 size={18} />
+          {uiLang === 'he' ? 'שמע שוב' : uiLang === 'ar' ? 'استمع مرة أخرى' : uiLang === 'ru' ? 'Послушать снова' : 'Hear again'}
+        </button>
+      </div>
 
       {/* Drop zones */}
       <div style={{
