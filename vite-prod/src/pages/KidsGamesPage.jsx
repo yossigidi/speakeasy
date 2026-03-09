@@ -473,7 +473,7 @@ function BubblePopGame({ onComplete, onBack }) {
               <span className="text-sm font-bold text-gray-600 dark:text-gray-300">
                 {t('findTheLetter', uiLang)}
               </span>
-              <span className={`text-4xl font-black bg-gradient-to-r ${targetLetter.color} bg-clip-text text-transparent animate-jelly`}>
+              <span className="text-4xl font-black text-blue-600 dark:text-blue-400 animate-jelly">
                 {targetLetter.letter}{targetLetter.lower}
               </span>
               <Volume2 size={18} className="text-gray-400" />
