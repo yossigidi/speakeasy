@@ -230,6 +230,25 @@ export function UserProgressProvider({ children: reactChildren }) {
         const childrenIds = userData.childrenIds || [];
 
         if (childrenIds.length === 0) {
+          // Try to auto-restore children by parentUid (in case childrenIds was wiped)
+          try {
+            const cpRef = window.firestore.collection(window.db, 'childProfiles');
+            const cpQuery = window.firestore.query(cpRef, window.firestore.where('parentUid', '==', user.uid));
+            const cpSnap = await window.firestore.getDocs(cpQuery);
+            if (!cpSnap.empty) {
+              const restoredIds = cpSnap.docs.map(d => d.id);
+              console.log('Auto-restoring children:', restoredIds);
+              await window.firestore.setDoc(
+                window.firestore.doc(window.db, 'users', user.uid),
+                { childrenIds: restoredIds },
+                { merge: true }
+              );
+              return; // listener will re-fire with restored childrenIds
+            }
+          } catch (e) {
+            console.warn('Auto-restore children failed:', e);
+          }
+          // Legacy subcollection migration
           try {
             const legacyRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
             const legacySnap = await window.firestore.getDocs(legacyRef);
