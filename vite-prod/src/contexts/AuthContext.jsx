@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
       return await window.firebaseAuth.signInWithPopup(window.auth, provider);
     } catch (err) {
       // Popup blocked (common on iOS Safari) — fall back to redirect
-      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+      if (err.code === 'auth/popup-blocked') {
         return window.firebaseAuth.signInWithRedirect(window.auth, provider);
       }
       throw err;
