@@ -21,14 +21,14 @@ import KidsHomePage from './pages/KidsHomePage.jsx';
 
 /* ── Lazy loaded with auto-reload on stale chunks ── */
 function lazyRetry(importFn) {
-  return lazy(() => importFn().catch(() => {
-    const reloaded = sessionStorage.getItem('chunk_reload');
-    if (!reloaded) {
+  return lazy(() => importFn().catch((err) => {
+    if (!sessionStorage.getItem('chunk_reload')) {
       sessionStorage.setItem('chunk_reload', '1');
       window.location.reload();
+      return new Promise(() => {}); // hang until reload completes
     }
     sessionStorage.removeItem('chunk_reload');
-    return importFn();
+    throw err;
   }));
 }
 
