@@ -82,6 +82,12 @@ const KIDS_GAME_INSTRUCTIONS = {
     ru: 'Замечательно!',
     en: 'Amazing!',
   },
+  tryAgain: {
+    he: 'זו לא האות, בואו ננסה שוב',
+    ar: 'هذا ليس الحرف، هيا نحاول مرة أخرى',
+    ru: 'Это не та буква, давай попробуем ещё раз',
+    en: "That's not the letter, let's try again",
+  },
 };
 
 // Helper to get game instruction text for current lang
@@ -354,30 +360,29 @@ function BubblePopGame({ onComplete, onBack }) {
       setPopped(prev => {
         const next = [...prev, bubble.id];
         if (next.length >= 2) {
-          // Round complete — speak encouragement
+          // Round complete — speak encouragement, then advance after it finishes
           setScore(s => s + 1);
           playStar();
           popTimersRef.current.push(setTimeout(() => {
             playSequence([
               { text: getRandomEncouragement(uiLang), lang: uiLang, rate: 0.9 },
-            ], speakRef.current);
+              { pause: 800 },
+            ], speakRef.current, () => {
+              // Advance to next round only after encouragement finishes
+              setRound(r => r + 1);
+            });
           }, 300));
-          popTimersRef.current.push(setTimeout(() => setRound(r => r + 1), 2200));
         }
         return next;
       });
     } else {
       playWrong();
       setWrongId(bubble.id);
-      // Re-announce the target letter after wrong answer
+      // Say "that's not the letter, let's try again"
       popTimersRef.current.push(setTimeout(() => {
-        if (targetLetter) {
-          playSequence([
-            { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang, rate: 0.9 },
-            { pause: 200 },
-            { text: targetLetter.letter, lang: 'en-US', rate: 0.5 },
-          ], speakRef.current);
-        }
+        playSequence([
+          { text: getKidsInstruction('tryAgain', uiLang), lang: uiLang, rate: 0.9 },
+        ], speakRef.current);
       }, 600));
       popTimersRef.current.push(setTimeout(() => setWrongId(null), 500));
     }
