@@ -1423,6 +1423,7 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
    ══════════════════════════════════════════════════════ */
 export default function KidsGamesPage({ onBack, onNavigate }) {
   const { addXP, progress, updateProgress } = useUserProgress();
+  const { uiLang } = useTheme();
   const [selectedGame, setSelectedGame] = useState(null);
   const childLevel = progress.curriculumLevel || progress.childLevel || 1;
 
