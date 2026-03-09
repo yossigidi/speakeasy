@@ -335,7 +335,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* Step 0 — Language Selection */
   const renderLanguageSelection = () => (
-    <div className="landing-root" tabIndex={0}>
+    <div className="landing-root" tabIndex={0} ref={el => el && el.focus()}>
       <div className="landing-bg-blobs">
         <div className="landing-blob landing-blob-1" />
         <div className="landing-blob landing-blob-2" />
@@ -380,7 +380,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
       </div>
       <style>{`
         .landing-root {
-          position: fixed; inset: 0;
+          position: fixed; inset: 0; outline: none;
           background: linear-gradient(160deg, #020c1b 0%, #0a1e3d 30%, #0f2d5a 60%, #0d1847 100%);
           display: flex; flex-direction: column; align-items: center;
           text-align: center;
@@ -405,7 +405,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* Step 1 — Auth Screen (Beautiful Landing + Login/Register) */
   const renderAuth = () => (
-    <div className="landing-root" tabIndex={0}>
+    <div className="landing-root" tabIndex={0} ref={el => el && el.focus()}>
       {/* Animated background blobs */}
       <div className="landing-bg-blobs">
         <div className="landing-blob landing-blob-1" />
@@ -574,7 +574,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
       <style>{`
         .landing-root {
-          position: fixed; inset: 0;
+          position: fixed; inset: 0; outline: none;
           background: linear-gradient(160deg, #020c1b 0%, #0a1e3d 30%, #0f2d5a 60%, #0d1847 100%);
           display: flex; flex-direction: column; align-items: center;
           justify-content: center;
