@@ -4,7 +4,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
-import { playFromAPI, stopAllAudio } from '../utils/hebrewAudio.js';
+import { playFromAPI, playSequence, stopAllAudio } from '../utils/hebrewAudio.js';
 import { pronunciationScore } from '../utils/stringDistance.js';
 import { calcSpeakingCoachXP } from '../utils/xpCalculator.js';
 import { t, tReplace, lf } from '../utils/translations.js';
@@ -191,6 +191,25 @@ export default function SpeakingCoachPage({ onBack }) {
       console.warn('Speaking coach: failed to load weaknesses', e);
     }
   }, [user, isChild, activeChildId]);
+
+  // Voice guidance on entry (kids mode)
+  const guidanceSpoken = useRef(false);
+  useEffect(() => {
+    if (!isChild || guidanceSpoken.current || phase !== 'scenario-select') return;
+    guidanceSpoken.current = true;
+    const GUIDE = {
+      he: 'היי! אני ספיקלי! בחרו נושא ונתחיל לדבר באנגלית!',
+      ar: 'مرحباً! أنا سبيكلي! اختاروا موضوعاً ولنبدأ بالتحدث بالإنجليزية!',
+      ru: 'Привет! Я Спикли! Выберите тему и начнём говорить по-английски!',
+      en: "Hi! I'm Speakli! Pick a topic and let's start speaking English!",
+    };
+    const langCode = uiLang === 'en' ? 'en-US' : `${uiLang}-${uiLang.toUpperCase()}`;
+    setTimeout(() => {
+      playSequence([
+        { text: GUIDE[uiLang] || GUIDE.en, lang: langCode, rate: 0.85 },
+      ]);
+    }, 600);
+  }, [isChild, phase, uiLang]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -1,10 +1,71 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Volume2, Star, Zap, Flame } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import KidsIntro from '../components/kids/KidsIntro.jsx';
 import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
+
+/* ── Video Intro Overlay ─────────────────────── */
+// Shows once per session (sessionStorage resets on app restart / new tab)
+function VideoIntro({ onDone }) {
+  const videoRef = useRef(null);
+  const [show, setShow] = useState(false);
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('speakli_intro_seen')) return;
+    setShow(true);
+  }, []);
+
+  const dismiss = useCallback(() => {
+    sessionStorage.setItem('speakli_intro_seen', '1');
+    setShow(false);
+    if (videoRef.current) { videoRef.current.pause(); videoRef.current.src = ''; }
+    if (onDone) onDone();
+  }, [onDone]);
+
+  // Tap to unmute (iOS requires user gesture for audio)
+  const handleTap = useCallback(() => {
+    if (videoRef.current && muted) {
+      videoRef.current.muted = false;
+      setMuted(false);
+    }
+  }, [muted]);
+
+  if (!show) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[200] bg-black flex items-center justify-center"
+      onClick={handleTap}
+    >
+      <video
+        ref={videoRef}
+        src="/videos/speakli-intro.mp4"
+        autoPlay
+        playsInline
+        muted
+        className="w-full h-full object-contain"
+        onEnded={dismiss}
+      />
+      {muted && (
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full bg-white/20 backdrop-blur text-white text-sm font-bold animate-pulse">
+          🔊 לחצו להפעלת סאונד
+        </div>
+      )}
+      <button
+        onClick={e => { e.stopPropagation(); dismiss(); }}
+        className="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/20 backdrop-blur text-white font-bold text-sm active:scale-95 transition-transform"
+        style={{ marginTop: 'env(safe-area-inset-top, 0px)' }}
+      >
+        דלג ❯
+      </button>
+    </div>,
+    document.body
+  );
+}
 
 import { loadWordData } from '../utils/lazyData.js';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
@@ -196,18 +257,18 @@ const GAME_CARDS = [
   },
   {
     id: 'lessons',
-    emoji: '🎯',
-    titleHe: 'תרגול עם ספיקלי!',
-    titleEn: 'Practice with Speakli!',
-    titleAr: 'تدرب مع سبيكلي!',
-    titleRu: 'Тренируйся со Спикли!',
-    descHe: 'משחקים ותרגילים',
-    descEn: 'Games & exercises',
-    descAr: 'ألعاب وتمارين',
-    descRu: 'Игры и упражнения',
+    emoji: '✨',
+    titleHe: 'שיעור חכם',
+    titleEn: 'Smart Lesson',
+    titleAr: 'درس ذكي',
+    titleRu: 'Умный урок',
+    descHe: 'שיעור מותאם אישית',
+    descEn: 'Personalized lesson',
+    descAr: 'درس مخصص لك',
+    descRu: 'Персональный урок',
     gradient: 'from-indigo-400 via-blue-400 to-sky-400',
     shadowColor: 'shadow-indigo-400/30',
-    page: 'lessons',
+    page: 'kids-ai-lesson',
   },
   {
     id: 'pronunciation',
@@ -470,6 +531,7 @@ export default function KidsHomePage({ onNavigate, reviewCount = 0 }) {
 
   return (
     <div className="kids-bg min-h-screen pb-24 relative">
+      <VideoIntro />
       <FloatingDecorations />
 
       <KidsIntro

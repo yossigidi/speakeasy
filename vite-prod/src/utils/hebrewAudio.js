@@ -3,6 +3,7 @@
  * Plays pre-recorded Hebrew MP3 files instead of robotic Web Speech API.
  * Files are in /sounds/he/*.mp3
  */
+import { getMusicPlayer } from './backgroundMusic.js';
 
 // Map of translation words to their audio file names
 const WORD_MAP = {
@@ -288,9 +289,13 @@ export function playHebrew(text) {
 export function playSequence(items, _speakEnglishUnused, onDone) {
   let index = 0;
 
+  // Duck background music while sequence plays
+  try { getMusicPlayer().duck(); } catch (e) {}
+
   const playNext = () => {
     if (sequenceCancelled) return;
     if (index >= items.length) {
+      try { getMusicPlayer().unduck(); } catch (e) {}
       if (onDone) onDone();
       return;
     }
@@ -390,4 +395,7 @@ export function stopAllAudio() {
     try { source.stop(); source.disconnect(); } catch (e) { /* already stopped */ }
   });
   activeSources.clear();
+
+  // Restore background music volume
+  try { getMusicPlayer().unduck(); } catch (e) {}
 }

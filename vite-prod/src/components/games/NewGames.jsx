@@ -244,23 +244,41 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
     if (round === 0 && !instructionsGiven.current) {
       instructionsGiven.current = true;
     }
-    if (round === 0) {
-      playSequence([
-        { text: tgt.word, lang: 'en-US', rate: 0.6 },
+    // Speak word clearly like a teacher — slow English, then translation
+    const speakTarget = (word, delay) => {
+      const fn = () => playSequence([
+        { text: word.word, lang: 'en-US', rate: 0.45 },
+        { pause: 500 },
+        { text: word.word, lang: 'en-US', rate: 0.45 },
         { pause: 400 },
-        { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+        { text: lf(word, 'translation', uiLang), lang: uiLang, rate: 0.8 },
       ], speakRef.current);
+      if (delay) {
+        const t = setTimeout(fn, delay);
+        return () => clearTimeout(t);
+      }
+      fn();
+    };
+
+    if (round === 0) {
+      speakTarget(tgt);
     } else {
-      const t = setTimeout(() => {
-        playSequence([
-          { text: tgt.word, lang: 'en-US', rate: 0.6 },
-          { pause: 400 },
-          { text: lf(tgt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-        ], speakRef.current);
-      }, 300);
-      return () => clearTimeout(t);
+      const cleanup = speakTarget(tgt, 300);
+      return cleanup;
     }
   }, [round, words, showInstructions]);
+
+  // Encouragement phrases
+  const ENCOURAGE = {
+    he: ['יופי!', 'נכון!', 'מצוין!', 'כל הכבוד!', 'מדהים!'],
+    ar: ['رائع!', 'صحيح!', 'ممتاز!', 'أحسنت!', 'مذهل!'],
+    ru: ['Отлично!', 'Правильно!', 'Молодец!', 'Замечательно!', 'Супер!'],
+    en: ['Great!', 'Correct!', 'Excellent!', 'Well done!', 'Amazing!'],
+  };
+  const getEncouragement = () => {
+    const phrases = ENCOURAGE[uiLang] || ENCOURAGE.en;
+    return phrases[Math.floor(Math.random() * phrases.length)];
+  };
 
   const poppingRef = useRef(false);
   const handlePop = (opt) => {
@@ -272,29 +290,42 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
       setScore(s => s + 1);
       correctWordsRef.current.push(opt.word);
       playCorrect();
+      // Speak encouragement + word
       gameTimersRef.current.push(setTimeout(() => {
         playSequence([
-          { text: opt.word, lang: 'en-US', rate: 0.6 },
+          { text: getEncouragement(), lang: uiLang, rate: 0.9 },
           { pause: 300 },
-          { text: lf(opt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+          { text: opt.word, lang: 'en-US', rate: 0.45 },
+          { pause: 300 },
+          { text: lf(opt, 'translation', uiLang), lang: uiLang, rate: 0.8 },
         ], speak);
       }, 400));
       gameTimersRef.current.push(setTimeout(() => {
         setRound(r => r + 1);
         poppingRef.current = false;
-      }, 1200));
+      }, 2200));
     } else {
       setWrongId(opt.id);
       playWrong();
+      // Re-speak the target word after wrong answer
+      gameTimersRef.current.push(setTimeout(() => {
+        if (target) playSequence([
+          { text: target.word, lang: 'en-US', rate: 0.45 },
+          { pause: 400 },
+          { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.8 },
+        ], speak);
+      }, 600));
       gameTimersRef.current.push(setTimeout(() => setWrongId(null), 500));
     }
   };
 
   const replayWord = () => {
     if (target) playSequence([
-      { text: target.word, lang: 'en-US', rate: 0.6 },
+      { text: target.word, lang: 'en-US', rate: 0.45 },
+      { pause: 500 },
+      { text: target.word, lang: 'en-US', rate: 0.45 },
       { pause: 400 },
-      { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.85 },
+      { text: lf(target, 'translation', uiLang), lang: uiLang, rate: 0.8 },
     ], speak);
   };
 

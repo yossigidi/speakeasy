@@ -34,10 +34,10 @@ const KIDS_GAME_INSTRUCTIONS = {
     en: 'Hi! Find the bubble with the correct letter and tap it',
   },
   whereIsLetter: {
-    he: 'איפה האות',
-    ar: 'أين الحرف',
-    ru: 'Где буква',
-    en: 'Where is the letter',
+    he: 'בואו נמצא את האות',
+    ar: 'هيا نجد الحرف',
+    ru: 'Давайте найдём букву',
+    en: "Let's find the letter",
   },
   memoryMatch: {
     he: 'משחק זיכרון! לחצו על קלף ומצאו את הזוג שלו. בהצלחה!',
@@ -63,10 +63,35 @@ const KIDS_GAME_INSTRUCTIONS = {
     ru: 'Отлично!',
     en: 'Great!',
   },
+  excellent: {
+    he: 'מצוין!',
+    ar: 'ممتاز!',
+    ru: 'Отлично!',
+    en: 'Excellent!',
+  },
+  wellDone: {
+    he: 'כל הכבוד!',
+    ar: 'أحسنت!',
+    ru: 'Молодец!',
+    en: 'Well done!',
+  },
+  amazing: {
+    he: 'מדהים!',
+    ar: 'مذهل!',
+    ru: 'Замечательно!',
+    en: 'Amazing!',
+  },
 };
 
 // Helper to get game instruction text for current lang
 const getKidsInstruction = (key, lang) => KIDS_GAME_INSTRUCTIONS[key]?.[lang] || KIDS_GAME_INSTRUCTIONS[key]?.en || '';
+
+// Random encouragement phrases for correct answers
+const ENCOURAGE_KEYS = ['correct', 'bravo', 'excellent', 'wellDone', 'amazing'];
+const getRandomEncouragement = (lang) => {
+  const key = ENCOURAGE_KEYS[Math.floor(Math.random() * ENCOURAGE_KEYS.length)];
+  return getKidsInstruction(key, lang);
+};
 import alphabetData from '../data/alphabet-kids.json';
 
 // Progressive letter groups for BubblePop
@@ -279,19 +304,19 @@ function BubblePopGame({ onComplete, onBack }) {
     if (round === 0 && !instructionsGiven.current) {
       instructionsGiven.current = true;
     }
+    // "Let's find the letter A!" — clear, slow, teacher-like
+    const announceLetterSeq = [
+      { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang, rate: 0.85 },
+      { pause: 250 },
+      { text: target.letter, lang: 'en-US', rate: 0.5 },
+      { pause: 300 },
+      { text: target.letter, lang: 'en-US', rate: 0.5 },
+    ];
     if (round === 0) {
-      playSequence([
-        { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
-        { pause: 150 },
-        { text: target.letter, lang: 'en-US', rate: 0.6 },
-      ], speakRef.current);
+      playSequence(announceLetterSeq, speakRef.current);
     } else {
       const t = setTimeout(() => {
-        playSequence([
-          { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang },
-          { pause: 150 },
-          { text: target.letter, lang: 'en-US', rate: 0.6 },
-        ], speakRef.current);
+        playSequence(announceLetterSeq, speakRef.current);
       }, 300);
       return () => clearTimeout(t);
     }
@@ -328,16 +353,31 @@ function BubblePopGame({ onComplete, onBack }) {
       setPopped(prev => {
         const next = [...prev, bubble.id];
         if (next.length >= 2) {
-          // Round complete
+          // Round complete — speak encouragement
           setScore(s => s + 1);
           playStar();
-          popTimersRef.current.push(setTimeout(() => setRound(r => r + 1), 800));
+          popTimersRef.current.push(setTimeout(() => {
+            playSequence([
+              { text: getRandomEncouragement(uiLang), lang: uiLang, rate: 0.9 },
+            ], speakRef.current);
+          }, 300));
+          popTimersRef.current.push(setTimeout(() => setRound(r => r + 1), 1400));
         }
         return next;
       });
     } else {
       playWrong();
       setWrongId(bubble.id);
+      // Re-announce the target letter after wrong answer
+      popTimersRef.current.push(setTimeout(() => {
+        if (targetLetter) {
+          playSequence([
+            { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang, rate: 0.9 },
+            { pause: 200 },
+            { text: targetLetter.letter, lang: 'en-US', rate: 0.5 },
+          ], speakRef.current);
+        }
+      }, 600));
       popTimersRef.current.push(setTimeout(() => setWrongId(null), 500));
     }
   };
