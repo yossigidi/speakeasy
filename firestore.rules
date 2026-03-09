@@ -37,6 +37,10 @@ service cloud.firestore {
         allow read, write: if request.auth != null
           && get(/databases/$(database)/documents/childProfiles/$(childId)).data.parentUid == request.auth.uid;
       }
+      match /achievements/{achId} {
+        allow read, write: if request.auth != null
+          && get(/databases/$(database)/documents/childProfiles/$(childId)).data.parentUid == request.auth.uid;
+      }
     }
 
     // Parent-children directory indexed by family code

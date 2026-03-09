@@ -12,12 +12,28 @@ import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 function VideoIntro({ onDone }) {
   const videoRef = useRef(null);
   const [show, setShow] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem('speakli_intro_seen')) return;
     setShow(true);
   }, []);
+
+  // Try to play unmuted; if browser blocks it, fall back to muted autoplay
+  useEffect(() => {
+    if (!show || !videoRef.current) return;
+    const v = videoRef.current;
+    v.muted = false;
+    const p = v.play();
+    if (p && p.catch) {
+      p.catch(() => {
+        // Autoplay with sound blocked — fall back to muted
+        v.muted = true;
+        setMuted(true);
+        v.play().catch(() => {});
+      });
+    }
+  }, [show]);
 
   const dismiss = useCallback(() => {
     sessionStorage.setItem('speakli_intro_seen', '1');
@@ -44,9 +60,7 @@ function VideoIntro({ onDone }) {
       <video
         ref={videoRef}
         src="/videos/speakli-intro.mp4"
-        autoPlay
         playsInline
-        muted
         className="w-full h-full object-contain"
         onEnded={dismiss}
       />
