@@ -87,7 +87,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       letter,
       color: CUBE_COLORS[i % CUBE_COLORS.length],
       left: positions[i],
-      duration: 5 + Math.random() * 3, // 5s - 8s (slow enough for kids)
+      duration: 8 + Math.random() * 4, // 8s - 12s (slow enough for kids)
       state: 'falling', // 'falling' | 'correct' | 'wrong' | 'gone'
     }));
 
@@ -105,7 +105,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     abortRef.current = ac;
     const t2 = setTimeout(async () => {
       try {
-        await playFromAPI(data.target, 'en', ac.signal, { rate: 0.85 });
+        await playFromAPI(data.target, 'en', ac.signal);
       } catch {
         // ignore
       }
