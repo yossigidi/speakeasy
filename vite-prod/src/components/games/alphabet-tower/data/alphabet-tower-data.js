@@ -95,12 +95,12 @@ export const REWARD_MILESTONES = [
 // 3. MODE_CONFIGS
 // -----------------------------------------------------------------------------
 export const MODE_CONFIGS = {
-  alphabetOrder: { roundsPerGame: 6, starsPerRound: 1, bonusStars: 2 },
-  missingLetter: { roundsPerGame: 8, starsPerRound: 1, bonusStars: 2 },
+  alphabetOrder: { roundsPerGame: 4, starsPerRound: 1, bonusStars: 2 },
+  missingLetter: { roundsPerGame: 5, starsPerRound: 1, bonusStars: 2 },
   wordBuilder: { roundsPerGame: 6, starsPerRound: 2, bonusStars: 3 },
-  fallingCubes: { roundsPerGame: 10, starsPerRound: 1, bonusStars: 3 },
-  alphabetTrain: { roundsPerGame: 5, starsPerRound: 2, bonusStars: 3 },
-  aiAdaptive: { roundsPerGame: 10, starsPerRound: 1, bonusStars: 5 },
+  fallingCubes: { roundsPerGame: 6, starsPerRound: 1, bonusStars: 3 },
+  alphabetTrain: { roundsPerGame: 4, starsPerRound: 2, bonusStars: 3 },
+  aiAdaptive: { roundsPerGame: 6, starsPerRound: 1, bonusStars: 5 },
 };
 
 // -----------------------------------------------------------------------------
@@ -284,7 +284,10 @@ export function generateRound(mode, level, letterStats = null) {
   switch (mode) {
     case 'alphabetOrder': {
       // Player must sort a subset of letters into correct order
-      const subset = pickRandom(letters || UPPERCASE_A_Z, 5);
+      // Use smaller subsets for small letter pools to keep it varied
+      const pool = letters || UPPERCASE_A_Z;
+      const subsetSize = pool.length <= 6 ? 3 + Math.floor(Math.random() * 2) : 5; // 3-4 for small pools, 5 for large
+      const subset = pickRandom(pool, subsetSize);
       const sorted = [...subset].sort((a, b) => a.localeCompare(b));
       return { type: 'sort', letters: subset, answer: sorted };
     }
@@ -292,8 +295,9 @@ export function generateRound(mode, level, letterStats = null) {
     case 'missingLetter': {
       // Show a sequence with one gap, player picks the missing letter
       const pool = letters || UPPERCASE_A_Z;
-      const startIdx = Math.floor(Math.random() * Math.max(1, pool.length - 4));
-      const sequence = pool.slice(startIdx, startIdx + 5);
+      const seqLen = pool.length <= 6 ? 4 : 5;
+      const startIdx = Math.floor(Math.random() * Math.max(1, pool.length - (seqLen - 1)));
+      const sequence = pool.slice(startIdx, startIdx + seqLen);
       const missingIdx = Math.floor(Math.random() * sequence.length);
       const answer = sequence[missingIdx];
       const display = sequence.map((l, i) => (i === missingIdx ? '_' : l));
