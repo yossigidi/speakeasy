@@ -210,98 +210,118 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     setChildrenLoaded(false);
     let unsub = null;
+    let retryTimer = null;
 
-    // Wait for auth token to be ready before querying Firestore
-    // This prevents "Missing or insufficient permissions" on page load
-    user.getIdToken().then(() => {
-    const userRef = window.firestore.doc(window.db, 'users', user.uid);
+    const startListener = () => {
+      if (unsub) unsub();
+      const userRef = window.firestore.doc(window.db, 'users', user.uid);
 
-    unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
-      if (!userSnap.exists()) {
-        setFamilyCode(null);
-        setChildrenList([]);
-        setChildrenLoaded(true);
-        return;
-      }
-
-      const userData = userSnap.data();
-
-      // Update familyCode from same snapshot
-      setFamilyCode(userData.familyCode || null);
-
-      const childrenIds = userData.childrenIds || [];
-
-      if (childrenIds.length === 0) {
-        // Check for legacy subcollection children and migrate
-        try {
-          const legacyRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
-          const legacySnap = await window.firestore.getDocs(legacyRef);
-          if (!legacySnap.empty) {
-            // Lazy migration from subcollection to top-level
-            await migrateChildren(user.uid, legacySnap.docs, userData.familyCode);
-            return; // The migration will trigger this listener again
-          }
-        } catch (e) {
-          console.warn('Legacy children check failed:', e);
+      unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
+        if (!userSnap.exists()) {
+          setFamilyCode(null);
+          setChildrenList([]);
+          setChildrenLoaded(true);
+          return;
         }
-        setChildrenList([]);
-        setChildrenLoaded(true);
-        return;
-      }
 
-      // Fetch all child profiles in parallel
-      const kidResults = await Promise.all(childrenIds.map(async (cid) => {
-        try {
-          const childSnap = await window.firestore.getDoc(
-            window.firestore.doc(window.db, 'childProfiles', cid)
-          );
-          if (childSnap.exists()) {
-            const childData = childSnap.data();
-            // Lazy migration: assign childLevel if missing
-            if (childData.childLevel == null) {
-              let defaultLevel = 1;
-              if (childData.age) {
-                const age = parseInt(childData.age, 10);
-                if (age >= 9) defaultLevel = 4;
-                else if (age >= 7) defaultLevel = 3;
-                else if (age >= 6) defaultLevel = 2;
-              }
-              childData.childLevel = defaultLevel;
-              // Also fix ageGroup if needed (old threshold was 8, new is 10)
-              if (childData.age) {
-                const age = parseInt(childData.age, 10);
-                childData.ageGroup = age >= 10 ? 'teens' : 'kids';
-              }
-              window.firestore.setDoc(
-                window.firestore.doc(window.db, 'childProfiles', cid),
-                { childLevel: defaultLevel, ageGroup: childData.ageGroup },
-                { merge: true }
-              ).catch(e => console.warn('Lazy migration failed:', cid, e));
+        const userData = userSnap.data();
+        setFamilyCode(userData.familyCode || null);
+
+        const childrenIds = userData.childrenIds || [];
+
+        if (childrenIds.length === 0) {
+          try {
+            const legacyRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
+            const legacySnap = await window.firestore.getDocs(legacyRef);
+            if (!legacySnap.empty) {
+              await migrateChildren(user.uid, legacySnap.docs, userData.familyCode);
+              return;
             }
-            return { id: childSnap.id, ...childData };
+          } catch (e) {
+            console.warn('Legacy children check failed:', e);
           }
-          return null;
-        } catch (e) {
-          console.warn('Failed to fetch child:', cid, e);
-          return null;
+          setChildrenList([]);
+          setChildrenLoaded(true);
+          return;
         }
-      }));
-      const kids = kidResults.filter(Boolean);
-      setChildrenList(kids);
-      setChildrenLoaded(true);
 
-      // Use ref to get current activeChildId (avoids stale closure)
-      const currentChildId = activeChildIdRef.current;
-      if (currentChildId && !kids.find(k => k.id === currentChildId)) {
-        setActiveChildId(null);
-      }
-    });
-    }).catch(e => {
+        // Fetch all child profiles in parallel
+        const orphanedIds = [];
+        const kidResults = await Promise.all(childrenIds.map(async (cid) => {
+          try {
+            const childSnap = await window.firestore.getDoc(
+              window.firestore.doc(window.db, 'childProfiles', cid)
+            );
+            if (childSnap.exists()) {
+              const childData = childSnap.data();
+              if (childData.childLevel == null) {
+                let defaultLevel = 1;
+                if (childData.age) {
+                  const age = parseInt(childData.age, 10);
+                  if (age >= 9) defaultLevel = 4;
+                  else if (age >= 7) defaultLevel = 3;
+                  else if (age >= 6) defaultLevel = 2;
+                }
+                childData.childLevel = defaultLevel;
+                if (childData.age) {
+                  const age = parseInt(childData.age, 10);
+                  childData.ageGroup = age >= 10 ? 'teens' : 'kids';
+                }
+                window.firestore.setDoc(
+                  window.firestore.doc(window.db, 'childProfiles', cid),
+                  { childLevel: defaultLevel, ageGroup: childData.ageGroup },
+                  { merge: true }
+                ).catch(e => console.warn('Lazy migration failed:', cid, e));
+              }
+              return { id: childSnap.id, ...childData };
+            }
+            // Child profile doesn't exist — mark as orphaned
+            orphanedIds.push(cid);
+            return null;
+          } catch (e) {
+            // Permission denied or other error — skip silently
+            if (e.code === 'permission-denied') orphanedIds.push(cid);
+            return null;
+          }
+        }));
+
+        // Clean up orphaned child IDs from parent doc
+        if (orphanedIds.length > 0) {
+          const cleanIds = childrenIds.filter(id => !orphanedIds.includes(id));
+          window.firestore.setDoc(
+            window.firestore.doc(window.db, 'users', user.uid),
+            { childrenIds: cleanIds },
+            { merge: true }
+          ).catch(e => console.warn('Failed to clean orphaned children:', e));
+        }
+
+        const kids = kidResults.filter(Boolean);
+        setChildrenList(kids);
+        setChildrenLoaded(true);
+
+        const currentChildId = activeChildIdRef.current;
+        if (currentChildId && !kids.find(k => k.id === currentChildId)) {
+          setActiveChildId(null);
+        }
+      }, (err) => {
+        if (err.code === 'permission-denied' && !retryTimer) {
+          retryTimer = setTimeout(() => {
+            retryTimer = null;
+            user.getIdToken(true).then(() => startListener()).catch(() => setChildrenLoaded(true));
+          }, 1500);
+        } else {
+          console.warn('Children listener:', err.code);
+          setChildrenLoaded(true);
+        }
+      });
+    };
+
+    user.getIdToken().then(() => startListener()).catch(e => {
       console.warn('Auth token not ready:', e);
       setChildrenLoaded(true);
     });
 
-    return () => { if (unsub) unsub(); };
+    return () => { if (unsub) unsub(); clearTimeout(retryTimer); };
   }, [user]);
 
   // Lazy migration helper
@@ -373,10 +393,10 @@ export function UserProgressProvider({ children: reactChildren }) {
 
     setLoading(true);
     let unsub = null;
+    let retryTimer = null;
 
-    // Wait for auth token so Firestore security rules recognize the user
-    user.getIdToken().then(() => {
-      // Child profiles are now in top-level collection
+    const startListener = () => {
+      if (unsub) unsub();
       const docRef = activeChildId
         ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
         : window.firestore.doc(window.db, 'users', user.uid);
@@ -386,34 +406,38 @@ export function UserProgressProvider({ children: reactChildren }) {
       unsub = window.firestore.onSnapshot(docRef, (snap) => {
         if (snap.exists()) {
           const data = snap.data();
-          // Backward-compat migration: cefrLevel → curriculumLevel
           if (data.cefrLevel && !data.curriculumLevel) {
             const mapped = cefrToLevel[data.cefrLevel] || 1;
             data.curriculumLevel = mapped;
-            // Persist the migration
             window.firestore.setDoc(docRef, { curriculumLevel: mapped }, { merge: true })
               .catch(e => console.warn('curriculumLevel migration failed:', e));
           }
           setProgress({ ...DEFAULT_PROGRESS, ...data });
         } else if (!activeChildId) {
-          // Create initial parent user doc
           window.firestore.setDoc(docRef, {
             displayName: user.displayName || '',
             email: user.email || '',
             createdAt: window.firestore.serverTimestamp(),
           }, { merge: true });
         } else {
-          // Child doc was deleted while active — switch to parent
           setActiveChildId(null);
         }
         setLoading(false);
       }, (err) => {
-        console.error('UserProgress onSnapshot error:', err);
-        setLoading(false);
+        if (err.code === 'permission-denied' && !retryTimer) {
+          retryTimer = setTimeout(() => {
+            retryTimer = null;
+            user.getIdToken(true).then(() => startListener()).catch(() => setLoading(false));
+          }, 1500);
+        } else {
+          setLoading(false);
+        }
       });
-    }).catch(() => setLoading(false));
+    };
 
-    return () => { if (unsub) unsub(); };
+    user.getIdToken().then(() => startListener()).catch(() => setLoading(false));
+
+    return () => { if (unsub) unsub(); clearTimeout(retryTimer); };
   }, [user, activeChildId]);
 
   const updateProgress = useCallback(async (updates) => {

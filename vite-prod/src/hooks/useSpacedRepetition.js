@@ -17,9 +17,9 @@ export default function useSpacedRepetition() {
     }
 
     let unsub = null;
+    let retryTimer = null;
 
-    // Wait for auth token so Firestore security rules recognize the user
-    user.getIdToken().then(() => {
+    const startListener = (attempt = 0) => {
       const today = getToday();
       const vocabRef = window.firestore.collection(window.db, 'users', user.uid, 'vocabulary');
       const q = window.firestore.query(
@@ -33,12 +33,20 @@ export default function useSpacedRepetition() {
         setDueWords(words);
         setIsLoading(false);
       }, (err) => {
-        console.error('SpacedRepetition onSnapshot error:', err);
-        setIsLoading(false);
+        // Retry once after 1.5s on permission error (auth may not be synced yet)
+        if (err.code === 'permission-denied' && attempt < 1) {
+          retryTimer = setTimeout(() => startListener(attempt + 1), 1500);
+        } else {
+          console.warn('SpacedRepetition:', err.code);
+          setIsLoading(false);
+        }
       });
-    }).catch(() => setIsLoading(false));
+    };
 
-    return () => { if (unsub) unsub(); };
+    // Wait for auth token then start listener
+    user.getIdToken().then(() => startListener()).catch(() => setIsLoading(false));
+
+    return () => { if (unsub) unsub(); clearTimeout(retryTimer); };
   }, [user]);
 
   const reviewWord = useCallback(async (wordId, qualityLabel) => {
