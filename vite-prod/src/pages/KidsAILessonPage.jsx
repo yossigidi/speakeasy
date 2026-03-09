@@ -399,16 +399,15 @@ function LearnPhase({ words, uiLang, speak, onDone }) {
     const langCode = getLangCode(uiLang);
     const t2 = setTimeout(() => {
       const seq = [];
-      // Teacher guidance already played in IntroPhase, so skip here
+      // Small delay on first word (guidance already played in IntroPhase)
       if (idx === 0) {
-        seq.push({ pause: 300 });
-        seq.push({ pause: 600 });
+        seq.push({ pause: 200 });
       }
       seq.push(
         { text: word.word, lang: 'en-US', rate: 0.45 },
-        { pause: 600 },
+        { pause: 300 },
         { text: word.word, lang: 'en-US', rate: 0.45 },
-        { pause: 500 },
+        { pause: 150 },
         { text: wt(word, uiLang), lang: langCode, rate: 0.8 },
       );
       playSequence(seq, speakRef.current);
@@ -428,7 +427,7 @@ function LearnPhase({ words, uiLang, speak, onDone }) {
   const replay = () => {
     playSequence([
       { text: word.word, lang: 'en-US', rate: 0.45 },
-      { pause: 500 },
+      { pause: 150 },
       { text: wt(word, uiLang), lang: uiLang === 'en' ? 'en-US' : `${uiLang}-${uiLang.toUpperCase()}`, rate: 0.8 },
     ], speakRef.current);
   };
