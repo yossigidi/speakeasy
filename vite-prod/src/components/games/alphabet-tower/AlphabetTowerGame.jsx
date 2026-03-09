@@ -396,6 +396,7 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
     difficulty,
     onRoundComplete: handleRoundComplete,
     onGameComplete: handleGameComplete,
+    onBack: handlePlayAgain,
     uiLang: lang,
   };
 

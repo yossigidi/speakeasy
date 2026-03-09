@@ -4,6 +4,7 @@ import { generateRound, MODE_CONFIGS, getWeakLetters } from '../data/alphabet-to
 import { playSequence, playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playComplete } from '../../../../utils/gameSounds.js';
 import SpeakliAvatar from '../../../../components/kids/SpeakliAvatar.jsx';
+import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
 
@@ -36,10 +37,17 @@ const THIS_IS = {
 };
 
 const WHICH_LETTER = {
-  he: 'איזו אות זו?',
-  ar: 'أي حرف هذا؟',
-  ru: 'Какая это буква?',
-  en: 'Which letter is this?',
+  he: 'איזו אות שמעתם?',
+  ar: 'أي حرف سمعتم؟',
+  ru: 'Какую букву вы услышали?',
+  en: 'Which letter did you hear?',
+};
+
+const LISTEN_AGAIN = {
+  he: 'לחצו לשמוע שוב',
+  ar: 'اضغطوا للسماع مرة أخرى',
+  ru: 'Нажмите, чтобы послушать ещё раз',
+  en: 'Tap to hear again',
 };
 
 const REPORT_TITLE = {
@@ -56,6 +64,7 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
   letterStats,
   onRoundComplete,
   onGameComplete,
+  onBack,
   onLetterResult,
   uiLang,
 }) {
@@ -102,10 +111,10 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
       if (currentRound === 0) {
         playSequence([{ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang }]);
       }
-      // Speak the target letter after a short delay
+      // Speak the target letter after a short delay (always English — teaching English letters)
       const timer = setTimeout(() => {
         try {
-          playFromAPI(roundData.target, uiLang || 'en');
+          playFromAPI(roundData.target, 'en');
         } catch { /* ignore */ }
       }, currentRound === 0 ? 1500 : 500);
       timersRef.current.push(timer);
@@ -399,6 +408,13 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         WebkitUserSelect: 'none',
       }}
     >
+      {/* ── Back button ── */}
+      {onBack && (
+        <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
+          <ArrowLeft size={20} color="#475569" />
+        </button>
+      )}
+
       {/* ── Progress dots ── */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
         {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
@@ -450,24 +466,34 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         {WHICH_LETTER[uiLang] || WHICH_LETTER.en}
       </div>
 
-      {/* ── Target letter ── */}
-      <div
-        style={{
-          fontSize: 80,
-          fontWeight: 800,
-          color: CUBE_COLORS[currentRound % CUBE_COLORS.length],
-          lineHeight: 1,
-          fontFamily: "'Fredoka', 'Heebo', 'Inter', sans-serif",
-          textShadow: '0 4px 12px rgba(0,0,0,0.15), 0 0 24px rgba(99,102,241,0.2)',
-          marginBottom: 8,
-          animation: 'letter-appear 0.4s ease-out',
-          cursor: 'pointer',
-        }}
+      {/* ── Listen button (audio-only challenge) ── */}
+      <button
         onClick={() => {
-          try { playFromAPI(roundData.target, uiLang || 'en'); } catch { /* */ }
+          try { playFromAPI(roundData.target, 'en'); } catch { /* */ }
         }}
+        style={{
+          width: 100,
+          height: 100,
+          borderRadius: '50%',
+          border: 'none',
+          background: `linear-gradient(135deg, ${CUBE_COLORS[currentRound % CUBE_COLORS.length]}, ${CUBE_COLORS[(currentRound + 1) % CUBE_COLORS.length]})`,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          boxShadow: '0 6px 24px rgba(0,0,0,0.2)',
+          animation: 'letter-appear 0.4s ease-out',
+          marginBottom: 4,
+          transition: 'transform 0.15s',
+        }}
+        onPointerDown={(e) => { e.currentTarget.style.transform = 'scale(0.9)'; }}
+        onPointerUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
       >
-        {roundData.target}
+        <span style={{ fontSize: 44, lineHeight: 1 }}>🔊</span>
+      </button>
+      <div style={{ fontSize: 12, fontWeight: 600, color: '#94a3b8', marginBottom: 8, fontFamily: "'Fredoka', 'Heebo', sans-serif" }}>
+        {LISTEN_AGAIN[uiLang] || LISTEN_AGAIN.en}
       </div>
 
       {/* ── Encouragement / feedback text ── */}

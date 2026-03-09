@@ -4,6 +4,7 @@ import useDragAndDrop from '../hooks/useDragAndDrop.js';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
 import { playSequence, playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playComplete } from '../../../../utils/gameSounds.js';
+import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
 
@@ -28,6 +29,7 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
   difficulty,
   onRoundComplete,
   onGameComplete,
+  onBack,
   uiLang,
 }) {
   // ─── state ──────────────────────────────────────────────────────────
@@ -251,6 +253,13 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         overflow: 'hidden',
       }}
     >
+      {/* ── Back button ── */}
+      {onBack && (
+        <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
+          <ArrowLeft size={20} color="#475569" />
+        </button>
+      )}
+
       {/* ── Sky + ground background ── */}
       <div className="train-bg" />
 
