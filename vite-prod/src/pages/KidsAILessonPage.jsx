@@ -542,31 +542,45 @@ function PracticePhase({ words, allWords, uiLang, speak, onDone }) {
 
   const exercise = exercises[idx];
 
-  // Auto-speak: teacher guidance at start + listen-pick words
+  // Auto-speak: teacher guidance at start + read question word for all types
   useEffect(() => {
+    if (!exercise) return;
     const langCode = getLangCode(uiLang);
+    // Get the English word for any exercise type
+    const engWord = exercise.type === 'emoji-pick' ? exercise.question
+      : exercise.type === 'translation-pick' ? exercise.question.word
+      : exercise.question.word;
+    // Get the translated word
+    const transWord = exercise.type === 'emoji-pick' ? wt(exercise.correct, uiLang)
+      : exercise.type === 'translation-pick' ? null  // translation is the question itself
+      : wt(exercise.question, uiLang);
+
     if (idx === 0) {
-      // Teacher introduces the practice phase
+      // Teacher introduces the practice phase + read first question
       const t = setTimeout(() => {
         const seq = [
           { text: tg('practiceStart', uiLang), lang: langCode, rate: 0.85 },
+          { pause: 300 },
+          { text: engWord, lang: 'en-US', rate: 0.45 },
         ];
-        if (exercise?.type === 'listen-pick') {
-          seq.push({ pause: 600 });
-          seq.push({ text: exercise.question.word, lang: 'en-US', rate: 0.45 });
-          seq.push({ pause: 500 });
-          seq.push({ text: exercise.question.word, lang: 'en-US', rate: 0.45 });
+        if (transWord) {
+          seq.push({ pause: 150 });
+          seq.push({ text: transWord, lang: langCode, rate: 0.8 });
         }
         playSequence(seq, speakRef.current);
       }, 400);
       return () => { clearTimeout(t); stopAllAudio(); };
-    } else if (exercise?.type === 'listen-pick') {
+    } else {
+      // Read question word for every exercise
       const t = setTimeout(() => {
-        playSequence([
-          { text: exercise.question.word, lang: 'en-US', rate: 0.45 },
-          { pause: 500 },
-          { text: exercise.question.word, lang: 'en-US', rate: 0.45 },
-        ], speakRef.current);
+        const seq = [
+          { text: engWord, lang: 'en-US', rate: 0.45 },
+        ];
+        if (transWord) {
+          seq.push({ pause: 150 });
+          seq.push({ text: transWord, lang: langCode, rate: 0.8 });
+        }
+        playSequence(seq, speakRef.current);
       }, 400);
       return () => { clearTimeout(t); stopAllAudio(); };
     }
