@@ -87,7 +87,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       letter,
       color: CUBE_COLORS[i % CUBE_COLORS.length],
       left: positions[i],
-      duration: 2.5 + Math.random() * 2, // 2.5s - 4.5s
+      duration: 5 + Math.random() * 3, // 5s - 8s (slow enough for kids)
       state: 'falling', // 'falling' | 'correct' | 'wrong' | 'gone'
     }));
 
@@ -378,7 +378,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
         position: 'relative',
         width: '100%',
         overflow: 'hidden',
-        minHeight: 300,
+        minHeight: '50vh',
       }}>
         {roundActive && fallingCubes.map((cube) => {
           if (cube.state === 'gone') return null;
@@ -424,7 +424,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
             >
               <LetterCube
                 letter={cube.letter}
-                size={52}
+                size={62}
                 color={isWrongTap ? '#ef4444' : cube.color}
                 isWrong={isWrongTap}
                 isPlaced={isCorrectTap}
