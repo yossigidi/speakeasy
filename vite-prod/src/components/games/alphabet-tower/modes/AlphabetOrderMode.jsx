@@ -14,6 +14,14 @@ const GUIDE = {
   en: 'Arrange the letters in order!',
 };
 
+const ENCOURAGEMENT = {
+  he: ['יופי!', 'מצוין!', 'כל הכבוד!', 'נהדר!', 'סופר!'],
+  ar: ['رائع!', 'ممتاز!', 'أحسنت!', 'مذهل!', 'سوبر!'],
+  ru: ['Отлично!', 'Молодец!', 'Замечательно!', 'Супер!', 'Класс!'],
+  en: ['Great!', 'Excellent!', 'Well done!', 'Amazing!', 'Super!'],
+};
+const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
 const TOTAL_ROUNDS = MODE_CONFIGS.alphabetOrder.roundsPerGame; // 6
 
 const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
@@ -63,7 +71,10 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
   // ─── speak on round start ──────────────────────────────────────────
   useEffect(() => {
     try {
-      playSequence([{ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang }]);
+      const text = currentRound === 0
+        ? (GUIDE[uiLang] || GUIDE.en)
+        : pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+      playSequence([{ text, lang: uiLang }]);
     } catch { /* ignore */ }
   }, [currentRound, uiLang]);
 
