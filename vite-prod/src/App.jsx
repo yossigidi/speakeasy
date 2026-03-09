@@ -164,24 +164,7 @@ function AppContent() {
     }
   }, [user, progress.onboardingComplete, profileSelected, children.length]);
 
-  // Show loading while auth initializes or children are loading
-  if (authLoading || (user && progressLoading) || (user && progress.onboardingComplete && !childrenLoaded)) {
-    return (
-      <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d1847 100%)' }}>
-        <div className="text-center">
-          <img src="/images/speakli-icon.webp" alt="Speakli" style={{ width: '120px', height: 'auto', margin: '0 auto 16px', filter: 'drop-shadow(0 8px 32px rgba(59,130,246,0.3))' }} />
-          <LoadingSpinner />
-        </div>
-      </div>
-    );
-  }
-
-  // Child login page (standalone, from separate device)
-  if (showChildLogin && !childUser) {
-    return <Suspense fallback={<PageLoader />}><ChildLoginPage onBack={() => setShowChildLogin(false)} /></Suspense>;
-  }
-
-  // Remote child mode (child logged in via family code — takes priority even if parent is signed in)
+  // Remote child mode — takes priority over everything (even loading)
   if (childUser?.isRemoteChild) {
     return (
       <RemoteChildAppContent
@@ -194,6 +177,23 @@ function AppContent() {
         }}
         onMathClose={() => setShowMathGate(false)}
       />
+    );
+  }
+
+  // Child login page (standalone, from separate device)
+  if (showChildLogin && !childUser) {
+    return <Suspense fallback={<PageLoader />}><ChildLoginPage onBack={() => setShowChildLogin(false)} /></Suspense>;
+  }
+
+  // Show loading while auth initializes or children are loading
+  if (authLoading || (user && progressLoading) || (user && progress.onboardingComplete && !childrenLoaded)) {
+    return (
+      <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #030712 0%, #0f172a 60%, #0d1847 100%)' }}>
+        <div className="text-center">
+          <img src="/images/speakli-icon.webp" alt="Speakli" style={{ width: '120px', height: 'auto', margin: '0 auto 16px', filter: 'drop-shadow(0 8px 32px rgba(59,130,246,0.3))' }} />
+          <LoadingSpinner />
+        </div>
+      </div>
     );
   }
 
