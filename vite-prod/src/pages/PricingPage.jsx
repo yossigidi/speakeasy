@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Check, X, Crown, Users, Sparkles } from 'lucide-react';
+import { ArrowLeft, Check, X, Crown, Users, Sparkles, Tag } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import useSubscription from '../hooks/useSubscription.js';
@@ -14,6 +14,9 @@ export default function PricingPage({ onBack }) {
   const [interval, setInterval] = useState('month');
   const [loading, setLoading] = useState(null); // 'personal' | 'family' | null
   const [portalLoading, setPortalLoading] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoApplied, setPromoApplied] = useState(false);
+  const [promoError, setPromoError] = useState('');
 
   const handleCheckout = async (plan) => {
     if (!user) return;
@@ -23,9 +26,14 @@ export default function PricingPage({ onBack }) {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ plan, interval: interval === 'annual' ? 'year' : 'month' }),
+        body: JSON.stringify({ plan, interval: interval === 'annual' ? 'year' : 'month', promoCode: promoCode.trim() || undefined }),
       });
       const data = await res.json();
+      if (data.error === 'Invalid promo code') {
+        setPromoError(t('promoCodeInvalid', uiLang));
+        setPromoApplied(false);
+        return;
+      }
       if (data.url) window.location.href = data.url;
     } catch (err) {
       console.error('Checkout error:', err);
@@ -208,6 +216,41 @@ export default function PricingPage({ onBack }) {
           );
         })}
       </div>
+
+      {/* Promo Code */}
+      {!isPremium && (
+        <div className="mt-6">
+          <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-1.5">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/30 shrink-0">
+              <Tag size={18} className="text-purple-500" />
+            </div>
+            <input
+              type="text"
+              dir="ltr"
+              value={promoCode}
+              onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoError(''); setPromoApplied(false); }}
+              placeholder={t('promoCodePlaceholder', uiLang)}
+              className="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 outline-none font-mono tracking-wider px-2"
+            />
+            {promoCode && (
+              <button
+                onClick={() => { setPromoApplied(true); setPromoError(''); }}
+                className="px-4 py-2 rounded-xl bg-purple-500 text-white text-sm font-bold shrink-0 active:scale-95 transition-transform"
+              >
+                {t('apply', uiLang)}
+              </button>
+            )}
+          </div>
+          {promoApplied && !promoError && (
+            <p className="text-xs text-green-500 font-medium mt-1.5 px-2">
+              {t('promoCodeApplied', uiLang)}
+            </p>
+          )}
+          {promoError && (
+            <p className="text-xs text-red-500 font-medium mt-1.5 px-2">{promoError}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

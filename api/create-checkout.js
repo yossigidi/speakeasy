@@ -38,7 +38,7 @@ export default async function handler(req, res) {
   const user = await verifyAuth(req);
   if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
-  const { plan, interval } = req.body;
+  const { plan, interval, promoCode } = req.body;
   if (!['personal', 'family'].includes(plan)) {
     return res.status(400).json({ error: 'Invalid plan' });
   }
@@ -65,8 +65,23 @@ export default async function handler(req, res) {
     await userRef.set({ stripeCustomerId: customerId }, { merge: true });
   }
 
+  // Look up promotion code if provided
+  let discounts;
+  if (promoCode) {
+    try {
+      const promoCodes = await stripe.promotionCodes.list({ code: promoCode, active: true, limit: 1 });
+      if (promoCodes.data.length > 0) {
+        discounts = [{ promotion_code: promoCodes.data[0].id }];
+      } else {
+        return res.status(400).json({ error: 'Invalid promo code' });
+      }
+    } catch {
+      return res.status(400).json({ error: 'Invalid promo code' });
+    }
+  }
+
   // Create Checkout Session
-  const session = await stripe.checkout.sessions.create({
+  const sessionParams = {
     customer: customerId,
     mode: 'subscription',
     line_items: [{ price: priceId, quantity: 1 }],
@@ -76,7 +91,11 @@ export default async function handler(req, res) {
     subscription_data: {
       metadata: { firebaseUid: user.uid, plan },
     },
-  });
+  };
+  if (discounts) sessionParams.discounts = discounts;
+  else sessionParams.allow_promotion_codes = true;
+
+  const session = await stripe.checkout.sessions.create(sessionParams);
 
   return res.status(200).json({ url: session.url });
 }
