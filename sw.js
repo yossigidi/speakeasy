@@ -1,5 +1,5 @@
-const CACHE_NAME = 'speakli-v96';
-const STATIC_CACHE = 'speakli-static-v95';
+const CACHE_NAME = 'speakli-v97';
+const STATIC_CACHE = 'speakli-static-v97';
 
 const urlsToCache = [
   '/',
@@ -10,12 +10,17 @@ const urlsToCache = [
 // Install event - cache essential files and skip waiting immediately
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
+    caches.open(CACHE_NAME).then(async cache => {
       console.log('Speakli: Caching app shell');
-      return cache.addAll(urlsToCache);
+      // Cache each URL individually so one failure doesn't block install
+      await Promise.allSettled(
+        urlsToCache.map(url => cache.add(url).catch(e => console.warn('SW cache skip:', url, e.message)))
+      );
     }).then(() => self.skipWaiting())
     .catch(err => {
       console.error('Speakli: SW install failed:', err);
+      // Still skip waiting so the SW activates even if caching fails
+      self.skipWaiting();
     })
   );
 });
