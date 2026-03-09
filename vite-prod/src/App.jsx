@@ -387,9 +387,9 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
   const [currentPage, setCurrentPage] = useState('home');
   const { dueCount } = useSpacedRepetition();
 
-  // Guard: children can't access family or profile pages
+  // Guard: children can't access family, profile, or settings pages
   const navigateTo = (page) => {
-    if (page === 'family') return;
+    if (page === 'family' || page === 'settings') return;
     setCurrentPage(page);
     window.scrollTo(0, 0);
   };
@@ -426,8 +426,26 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         return <PageErrorBoundary><LifeCoachPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
       case 'talking-world':
         return <PageErrorBoundary><TalkingWorldPage onBack={() => navigateTo('home')} /></PageErrorBoundary>;
+      case 'profile':
+        return (
+          <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
+            <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${childUser.avatarColor || 'from-teal-400 to-emerald-500'} flex items-center justify-center text-5xl shadow-xl mb-4`}>
+              {childUser.avatar}
+            </div>
+            <h2 className="text-2xl font-bold mb-1">{childUser.name}</h2>
+            {childUser.age && <p className="text-gray-500 dark:text-gray-400 mb-6">{t('age', uiLang)}: {childUser.age}</p>}
+            <button
+              onClick={onLogout}
+              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-400 to-red-500 text-white font-bold shadow-lg active:scale-95 transition-transform"
+            >
+              {t('backToLogin', uiLang)}
+            </button>
+          </div>
+        );
       default:
-        return <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
+        return isKids
+          ? <KidsHomePage onNavigate={navigateTo} reviewCount={dueCount} />
+          : <HomePage onNavigate={navigateTo} reviewCount={dueCount} />;
     }
   };
 
