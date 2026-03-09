@@ -96,6 +96,12 @@ const TEACHER_GUIDE = {
     ru: 'Ничего! Практика делает совершенным! Попробуем снова!',
     en: "No worries! Practice makes perfect! Let's try again!",
   },
+  selectWelcome: {
+    he: 'היי! אני ספיקלי! בחרו שיעור ובואו נלמד ביחד!',
+    ar: 'مرحباً! أنا سبيكلي! اختاروا درساً ولنتعلم معاً!',
+    ru: 'Привет! Я Спикли! Выберите урок и давайте учиться вместе!',
+    en: "Hi! I'm Speakli! Pick a lesson and let's learn together!",
+  },
 };
 const tg = (key, lang) => TEACHER_GUIDE[key]?.[lang] || TEACHER_GUIDE[key]?.en || '';
 const getLangCode = (lang) => lang === 'en' ? 'en-US' : `${lang}-${lang.toUpperCase()}`;
@@ -160,6 +166,17 @@ function SelectPhase({ onSelectTopic, onBack, progress, uiLang }) {
   const [tab, setTab] = useState('recommended'); // recommended | all | reinforce
   const lessonProgress = progress.kidsLessonProgress || {};
   const isRTL = RTL_LANGS.includes(uiLang);
+  const guidanceSpoken = useRef(false);
+
+  // Voice guidance on entry
+  useEffect(() => {
+    if (guidanceSpoken.current) return;
+    guidanceSpoken.current = true;
+    const langCode = uiLang === 'en' ? 'en' : uiLang === 'ar' ? 'ar' : uiLang === 'ru' ? 'ru' : 'he';
+    setTimeout(() => {
+      playSequence([{ text: tg('selectWelcome', uiLang), lang: langCode }]);
+    }, 500);
+  }, [uiLang]);
 
   const tabLabels = {
     recommended: { he: 'מומלץ', ar: 'موصى', ru: 'Рекомендуемый', en: 'Recommended' },
@@ -382,9 +399,9 @@ function LearnPhase({ words, uiLang, speak, onDone }) {
     const langCode = getLangCode(uiLang);
     const t2 = setTimeout(() => {
       const seq = [];
-      // On first word, add teacher guidance
+      // Teacher guidance already played in IntroPhase, so skip here
       if (idx === 0) {
-        seq.push({ text: tg('learnStart', uiLang), lang: langCode, rate: 0.85 });
+        seq.push({ pause: 300 });
         seq.push({ pause: 600 });
       }
       seq.push(
