@@ -380,11 +380,10 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
 
       {/* Falling area */}
       <div style={{
-        flex: 1,
         position: 'relative',
         width: '100%',
         overflow: 'hidden',
-        containerType: 'size',
+        height: 'calc(100vh - 200px)',
       }}>
         {roundActive && fallingCubes.map((cube) => {
           if (cube.state === 'gone') return null;

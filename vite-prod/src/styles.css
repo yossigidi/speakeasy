@@ -1899,7 +1899,7 @@ select:focus {
 @keyframes cube-fall {
   0% { transform: translateY(-70px) rotate(0deg); opacity: 1; }
   90% { opacity: 1; }
-  100% { transform: translateY(calc(100cqh - 10px)) rotate(180deg); opacity: 0.2; }
+  100% { transform: translateY(calc(100vh - 260px)) rotate(180deg); opacity: 0.2; }
 }
 
 @keyframes train-chug {
