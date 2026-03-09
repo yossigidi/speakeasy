@@ -232,7 +232,7 @@ export default function ProfilePage({ onNavigate }) {
       )}
 
       {/* Subscription */}
-      {!isChildMode && (
+      {(
         <GlassCard
           variant="strong"
           className="relative overflow-hidden cursor-pointer !bg-gradient-to-br from-purple-50/80 to-amber-50/80 dark:from-purple-950/30 dark:to-amber-950/30"
