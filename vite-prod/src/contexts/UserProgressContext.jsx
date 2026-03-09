@@ -275,12 +275,13 @@ export function UserProgressProvider({ children: reactChildren }) {
               }
               return { id: childSnap.id, ...childData };
             }
-            // Child profile doesn't exist — mark as orphaned
+            // Child profile confirmed not to exist — mark as orphaned
             orphanedIds.push(cid);
             return null;
           } catch (e) {
-            // Permission denied or other error — skip silently
-            if (e.code === 'permission-denied') orphanedIds.push(cid);
+            // Permission denied or network error — do NOT treat as orphaned
+            // (auth may not be synced yet)
+            console.warn('Failed to fetch child:', cid, e.code || e.message);
             return null;
           }
         }));
