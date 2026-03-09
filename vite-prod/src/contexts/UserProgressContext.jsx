@@ -209,10 +209,14 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
 
     setChildrenLoaded(false);
+    let unsub = null;
 
+    // Wait for auth token to be ready before querying Firestore
+    // This prevents "Missing or insufficient permissions" on page load
+    user.getIdToken().then(() => {
     const userRef = window.firestore.doc(window.db, 'users', user.uid);
 
-    const unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
+    unsub = window.firestore.onSnapshot(userRef, async (userSnap) => {
       if (!userSnap.exists()) {
         setFamilyCode(null);
         setChildrenList([]);
@@ -292,8 +296,12 @@ export function UserProgressProvider({ children: reactChildren }) {
         setActiveChildId(null);
       }
     });
+    }).catch(e => {
+      console.warn('Auth token not ready:', e);
+      setChildrenLoaded(true);
+    });
 
-    return unsub;
+    return () => { if (unsub) unsub(); };
   }, [user]);
 
   // Lazy migration helper
@@ -364,44 +372,48 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
 
     setLoading(true);
+    let unsub = null;
 
-    // Child profiles are now in top-level collection
-    const docRef = activeChildId
-      ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
-      : window.firestore.doc(window.db, 'users', user.uid);
+    // Wait for auth token so Firestore security rules recognize the user
+    user.getIdToken().then(() => {
+      // Child profiles are now in top-level collection
+      const docRef = activeChildId
+        ? window.firestore.doc(window.db, 'childProfiles', activeChildId)
+        : window.firestore.doc(window.db, 'users', user.uid);
 
-    const cefrToLevel = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
+      const cefrToLevel = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
 
-    const unsub = window.firestore.onSnapshot(docRef, (snap) => {
-      if (snap.exists()) {
-        const data = snap.data();
-        // Backward-compat migration: cefrLevel → curriculumLevel
-        if (data.cefrLevel && !data.curriculumLevel) {
-          const mapped = cefrToLevel[data.cefrLevel] || 1;
-          data.curriculumLevel = mapped;
-          // Persist the migration
-          window.firestore.setDoc(docRef, { curriculumLevel: mapped }, { merge: true })
-            .catch(e => console.warn('curriculumLevel migration failed:', e));
+      unsub = window.firestore.onSnapshot(docRef, (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          // Backward-compat migration: cefrLevel → curriculumLevel
+          if (data.cefrLevel && !data.curriculumLevel) {
+            const mapped = cefrToLevel[data.cefrLevel] || 1;
+            data.curriculumLevel = mapped;
+            // Persist the migration
+            window.firestore.setDoc(docRef, { curriculumLevel: mapped }, { merge: true })
+              .catch(e => console.warn('curriculumLevel migration failed:', e));
+          }
+          setProgress({ ...DEFAULT_PROGRESS, ...data });
+        } else if (!activeChildId) {
+          // Create initial parent user doc
+          window.firestore.setDoc(docRef, {
+            displayName: user.displayName || '',
+            email: user.email || '',
+            createdAt: window.firestore.serverTimestamp(),
+          }, { merge: true });
+        } else {
+          // Child doc was deleted while active — switch to parent
+          setActiveChildId(null);
         }
-        setProgress({ ...DEFAULT_PROGRESS, ...data });
-      } else if (!activeChildId) {
-        // Create initial parent user doc
-        window.firestore.setDoc(docRef, {
-          displayName: user.displayName || '',
-          email: user.email || '',
-          createdAt: window.firestore.serverTimestamp(),
-        }, { merge: true });
-      } else {
-        // Child doc was deleted while active — switch to parent
-        setActiveChildId(null);
-      }
-      setLoading(false);
-    }, (err) => {
-      console.error('UserProgress onSnapshot error:', err);
-      setLoading(false);
-    });
+        setLoading(false);
+      }, (err) => {
+        console.error('UserProgress onSnapshot error:', err);
+        setLoading(false);
+      });
+    }).catch(() => setLoading(false));
 
-    return unsub;
+    return () => { if (unsub) unsub(); };
   }, [user, activeChildId]);
 
   const updateProgress = useCallback(async (updates) => {

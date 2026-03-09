@@ -16,7 +16,10 @@ export default function useSpacedRepetition() {
       return;
     }
 
-    try {
+    let unsub = null;
+
+    // Wait for auth token so Firestore security rules recognize the user
+    user.getIdToken().then(() => {
       const today = getToday();
       const vocabRef = window.firestore.collection(window.db, 'users', user.uid, 'vocabulary');
       const q = window.firestore.query(
@@ -24,7 +27,7 @@ export default function useSpacedRepetition() {
         window.firestore.where('nextReviewDate', '<=', today)
       );
 
-      const unsub = window.firestore.onSnapshot(q, (snap) => {
+      unsub = window.firestore.onSnapshot(q, (snap) => {
         const words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         words.sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
         setDueWords(words);
@@ -33,12 +36,9 @@ export default function useSpacedRepetition() {
         console.error('SpacedRepetition onSnapshot error:', err);
         setIsLoading(false);
       });
+    }).catch(() => setIsLoading(false));
 
-      return unsub;
-    } catch (err) {
-      console.error('SpacedRepetition init error:', err);
-      setIsLoading(false);
-    }
+    return () => { if (unsub) unsub(); };
   }, [user]);
 
   const reviewWord = useCallback(async (wordId, qualityLabel) => {
