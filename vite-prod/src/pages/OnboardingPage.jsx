@@ -446,6 +446,11 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         {t('onboardingSub', uiLang)}
       </p>
 
+      {/* Child login — visible above auth card */}
+      <button onClick={onChildLogin} className="landing-child-btn">
+        👧 {t('loginAsChild', uiLang)}
+      </button>
+
       {/* Auth card */}
       <div className="landing-card">
         {/* Social buttons */}
@@ -580,10 +585,6 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           </button>
         </p>
 
-        {/* Child login */}
-        <button onClick={onChildLogin} className="landing-child-btn">
-          {t('loginAsChild', uiLang)}
-        </button>
       </div>
 
       <style>{`
@@ -757,10 +758,12 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         .landing-toggle-btn:hover { color: #60a5fa; }
 
         .landing-child-btn {
-          margin-top: 4px; font-size: 13px; color: rgba(255,255,255,0.2);
-          background: none; border: none; cursor: pointer;
+          margin-top: 16px; font-size: 15px; color: rgba(255,255,255,0.7);
+          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 12px; padding: 10px 24px; cursor: pointer;
+          font-weight: 600; transition: all 0.2s;
         }
-        .landing-child-btn:hover { color: rgba(255,255,255,0.4); }
+        .landing-child-btn:hover { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
       `}</style>
     </div>
   );
