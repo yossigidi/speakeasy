@@ -878,13 +878,17 @@ export default function TalkingWorldPage({ onBack }) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black relative">
         <video
-          ref={videoRef}
           src={world.video}
-          autoPlay
           playsInline
-          muted
           className="w-full max-h-[70vh] object-contain"
           onEnded={handleWorldIntroDone}
+          ref={el => {
+            videoRef.current = el;
+            if (!el) return;
+            el.muted = false;
+            const p = el.play();
+            if (p && p.catch) p.catch(() => { el.muted = true; el.play().catch(() => {}); });
+          }}
         />
         <button
           onClick={handleWorldIntroDone}
@@ -902,12 +906,16 @@ export default function TalkingWorldPage({ onBack }) {
       {showIntroVideo && (
         <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
           <video
-            autoPlay
             playsInline
-            muted
             src="/videos/talking-world/tw-intro-main.mp4"
             className="w-full max-h-[70vh] object-contain"
             onEnded={handleIntroDone}
+            ref={el => {
+              if (!el) return;
+              el.muted = false;
+              const p = el.play();
+              if (p && p.catch) p.catch(() => { el.muted = true; el.play().catch(() => {}); });
+            }}
           />
           <button
             onClick={handleIntroDone}
