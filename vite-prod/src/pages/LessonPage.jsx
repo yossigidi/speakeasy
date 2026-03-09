@@ -13,18 +13,47 @@ import GlassCard from '../components/shared/GlassCard.jsx';
 import AnimatedButton from '../components/shared/AnimatedButton.jsx';
 import ConfettiExplosion from '../components/shared/ConfettiExplosion.jsx';
 
-function MultipleChoice({ exercise, onAnswer, uiLang }) {
+// ── Speak button helper ──────────────────────────────────
+function SpeakBtn({ text, speak, rate = 0.85, size = 18 }) {
+  if (!text || !speak) return null;
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); speak(text, { rate }); }}
+      aria-label="Listen"
+      className="inline-flex items-center justify-center p-1.5 rounded-full hover:bg-brand-50 dark:hover:bg-brand-900/30 transition-colors"
+    >
+      <Volume2 size={size} className="text-brand-500" />
+    </button>
+  );
+}
+
+function MultipleChoice({ exercise, onAnswer, uiLang, speak }) {
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
 
+  // Auto-speak question on mount
+  useEffect(() => {
+    if (speak && exercise.question) {
+      const timer = setTimeout(() => speak(exercise.question, { rate: 0.85 }), 300);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const check = () => {
     setAnswered(true);
-    onAnswer(selected === exercise.correct);
+    const isCorrect = selected === exercise.correct;
+    if (isCorrect && speak) {
+      speak(exercise.options[exercise.correct], { rate: 0.85 });
+    }
+    onAnswer(isCorrect);
   };
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white" dir="ltr">{exercise.question}</h3>
+      <div className="flex items-center gap-2">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white flex-1" dir="ltr">{exercise.question}</h3>
+        <SpeakBtn text={exercise.question} speak={speak} />
+      </div>
       {uiLang !== 'en' && lf(exercise, 'question', uiLang) && lf(exercise, 'question', uiLang) !== exercise.question && (
         <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>{lf(exercise, 'question', uiLang)}</p>
       )}
@@ -64,36 +93,56 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
   const [correct, setCorrect] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
+  // Auto-speak sentence on mount
+  useEffect(() => {
+    if (speak && exercise.sentence) {
+      const fullSentence = exercise.sentence.replace('___', '...');
+      const timer = setTimeout(() => speak(fullSentence, { rate: 0.8 }), 300);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const check = () => {
     const isCorrect = fuzzyMatch(exercise.answer, input) ||
       (exercise.alternatives || []).some(alt => fuzzyMatch(alt, input));
     setCorrect(isCorrect);
     setAnswered(true);
-    if (isCorrect && speak) {
-      speak(exercise.answer, { rate: 0.85, onEnd: () => {
-        const fullSentence = exercise.sentence.replace('___', exercise.answer);
-        speak(fullSentence, { rate: 0.9, _queued: true });
-      }});
+    if (speak) {
+      const fullSentence = exercise.sentence.replace('___', exercise.answer);
+      if (isCorrect) {
+        speak(exercise.answer, { rate: 0.85, onEnd: () => {
+          speak(fullSentence, { rate: 0.9, _queued: true });
+        }});
+      } else {
+        // Speak correct answer on wrong too
+        speak(fullSentence, { rate: 0.8 });
+      }
     }
     onAnswer(isCorrect);
   };
 
   const parts = exercise.sentence.split('___');
+  const speakSentence = () => {
+    if (speak) speak(exercise.sentence.replace('___', '...'), { rate: 0.8 });
+  };
 
   return (
     <div className="space-y-4">
-      <div className="text-lg font-medium text-gray-900 dark:text-white" dir="ltr">
-        {parts[0]}
-        <span className={`inline-block min-w-[80px] border-b-2 mx-1 ${
-          answered ? (correct ? 'border-emerald-500' : 'border-red-500') : 'border-brand-500'
-        }`}>
-          {answered ? (
-            <span className={correct ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}>
-              {input || '___'}
-            </span>
-          ) : null}
-        </span>
-        {parts[1]}
+      <div className="flex items-center gap-2">
+        <div className="text-lg font-medium text-gray-900 dark:text-white flex-1" dir="ltr">
+          {parts[0]}
+          <span className={`inline-block min-w-[80px] border-b-2 mx-1 ${
+            answered ? (correct ? 'border-emerald-500' : 'border-red-500') : 'border-brand-500'
+          }`}>
+            {answered ? (
+              <span className={correct ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}>
+                {input || '___'}
+              </span>
+            ) : null}
+          </span>
+          {parts[1]}
+        </div>
+        <SpeakBtn text={exercise.sentence.replace('___', exercise.answer)} speak={speak} rate={0.8} />
       </div>
       {exercise.hint && <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>💡 {exercise.hint}</p>}
       {!answered && (
@@ -137,7 +186,7 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
   );
 }
 
-function WordArrange({ exercise, onAnswer, uiLang }) {
+function WordArrange({ exercise, onAnswer, uiLang, speak }) {
   const [selected, setSelected] = useState([]);
   const [available, setAvailable] = useState(() => shuffle(exercise.words));
   const [answered, setAnswered] = useState(false);
@@ -155,6 +204,8 @@ function WordArrange({ exercise, onAnswer, uiLang }) {
   const check = () => {
     const isCorrect = selected.join(' ') === exercise.correct;
     setAnswered(true);
+    // Always speak the correct sentence
+    if (speak) speak(exercise.correct, { rate: 0.85 });
     onAnswer(isCorrect);
   };
 
@@ -195,7 +246,10 @@ function WordArrange({ exercise, onAnswer, uiLang }) {
         <AnimatedButton onClick={check} size="full">{t('check', uiLang)}</AnimatedButton>
       )}
       {answered && selected.join(' ') !== exercise.correct && (
-        <p className="text-sm text-center text-emerald-600 dark:text-emerald-400 font-medium">{exercise.correct}</p>
+        <div className="flex items-center justify-center gap-2">
+          <p className="text-sm text-center text-emerald-600 dark:text-emerald-400 font-medium">{exercise.correct}</p>
+          <SpeakBtn text={exercise.correct} speak={speak} size={16} />
+        </div>
       )}
     </div>
   );
@@ -212,9 +266,8 @@ function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
       (exercise.alternatives || []).some(alt => fuzzyMatch(alt, input, 0.75));
     setCorrect(isCorrect);
     setAnswered(true);
-    if (isCorrect && speak) {
-      speak(exercise.target, { rate: 0.9 });
-    }
+    // Always speak the correct answer
+    if (speak) speak(exercise.target, { rate: 0.85 });
     onAnswer(isCorrect);
   };
 
@@ -258,14 +311,19 @@ function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
           <p className={`font-medium ${correct ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
             {input}
           </p>
-          {!correct && <p className="text-sm text-gray-500 mt-1">Answer: <span className="font-bold text-emerald-600">{exercise.target}</span></p>}
+          {!correct && (
+            <div className="flex items-center justify-center gap-2 mt-1">
+              <p className="text-sm text-gray-500">Answer: <span className="font-bold text-emerald-600">{exercise.target}</span></p>
+              <SpeakBtn text={exercise.target} speak={speak} size={16} />
+            </div>
+          )}
         </div>
       )}
     </div>
   );
 }
 
-function MatchPairs({ exercise, onAnswer }) {
+function MatchPairs({ exercise, onAnswer, speak }) {
   const [selected, setSelected] = useState(null);
   const [matched, setMatched] = useState([]);
   const [wrong, setWrong] = useState(null);
@@ -281,6 +339,9 @@ function MatchPairs({ exercise, onAnswer }) {
 
   const handleTap = (side, item) => {
     if (matched.includes(item)) return;
+
+    // Speak the word when tapped (left side = English)
+    if (speak && side === 'left') speak(item, { rate: 0.85 });
 
     if (!selected) {
       setSelected({ side, item });
@@ -300,6 +361,8 @@ function MatchPairs({ exercise, onAnswer }) {
     if (pair) {
       setMatched([...matched, pair[0], pair[1]]);
       setSelected(null);
+      // Speak the English word on match
+      if (speak) speak(pair[0], { rate: 0.85 });
       if (matched.length + 2 >= pairs.length * 2) {
         onAnswer(true);
       }
@@ -380,8 +443,18 @@ function ListeningExercise({ exercise, onAnswer, speak, uiLang }) {
   );
 }
 
-function ExerciseFeedback({ correct, explanation, onContinue }) {
+// ── Enhanced feedback — teaches on wrong answers ─────────
+function ExerciseFeedback({ correct, explanation, correctAnswer, speak, onContinue }) {
   const { uiLang } = useTheme();
+
+  // Speak the correct answer when wrong
+  useEffect(() => {
+    if (!correct && correctAnswer && speak) {
+      const timer = setTimeout(() => speak(correctAnswer, { rate: 0.75 }), 400);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <div className={`animate-slide-up p-4 rounded-xl ${
       correct ? 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
@@ -392,12 +465,42 @@ function ExerciseFeedback({ correct, explanation, onContinue }) {
           {correct ? t('correct', uiLang) : t('incorrect', uiLang)}
         </span>
       </div>
+
+      {/* Show correct answer when wrong */}
+      {!correct && correctAnswer && (
+        <div className="flex items-center gap-2 mb-3 p-3 rounded-lg bg-white/60 dark:bg-gray-800/60">
+          <div className="flex-1">
+            <p className="text-xs text-gray-500 mb-0.5">{t('correctAnswerIs', uiLang)}</p>
+            <p className="font-bold text-emerald-700 dark:text-emerald-400 text-lg" dir="ltr">{correctAnswer}</p>
+          </div>
+          <SpeakBtn text={correctAnswer} speak={speak} size={22} />
+        </div>
+      )}
+
       {explanation && <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{explanation}</p>}
       <AnimatedButton onClick={onContinue} variant={correct ? 'success' : 'primary'} size="full">
         {t('continue', uiLang)}
       </AnimatedButton>
     </div>
   );
+}
+
+// ── Helper to extract correct answer text from exercise ──
+function getCorrectAnswer(exercise) {
+  switch (exercise.type) {
+    case 'multiple-choice':
+      return exercise.options[exercise.correct];
+    case 'fill-blank':
+      return exercise.sentence.replace('___', exercise.answer);
+    case 'word-arrange':
+      return exercise.correct;
+    case 'translation':
+      return exercise.target;
+    case 'listening':
+      return exercise.options[exercise.correct];
+    default:
+      return null;
+  }
 }
 
 export default function LessonPage({ lesson, onComplete, onBack }) {
@@ -442,7 +545,11 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
       playWrong();
       setHearts(h => h - 1);
     }
-    setShowFeedback({ correct: isCorrect, explanation: exercise.explanation });
+    setShowFeedback({
+      correct: isCorrect,
+      explanation: exercise.explanation,
+      correctAnswer: isCorrect ? null : getCorrectAnswer(exercise),
+    });
   };
 
   const handleContinue = () => {
@@ -515,7 +622,7 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
         )}
         <div className="flex gap-3 mt-8">
           {failed && (
-            <AnimatedButton onClick={() => { setCurrentExercise(0); setHearts(3); setCorrectCount(0); setLessonDone(false); }} variant="secondary">
+            <AnimatedButton onClick={() => { setCurrentExercise(0); setHearts(3); setCorrectCount(0); correctCountRef.current = 0; setLessonDone(false); }} variant="secondary">
               {t('tryAgain', uiLang)}
             </AnimatedButton>
           )}
@@ -529,13 +636,13 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
 
   const renderExercise = () => {
     switch (exercise.type) {
-      case 'multiple-choice': return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
+      case 'multiple-choice': return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
       case 'fill-blank': return <FillInBlank exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
-      case 'word-arrange': return <WordArrange exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
+      case 'word-arrange': return <WordArrange exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
       case 'translation': return <TranslationExercise exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
-      case 'match-pairs': return <MatchPairs exercise={exercise} onAnswer={handleAnswer} />;
+      case 'match-pairs': return <MatchPairs exercise={exercise} onAnswer={handleAnswer} speak={speak} />;
       case 'listening': return <ListeningExercise exercise={exercise} onAnswer={handleAnswer} speak={speak} uiLang={uiLang} />;
-      default: return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} />;
+      default: return <MultipleChoice exercise={exercise} onAnswer={handleAnswer} uiLang={uiLang} speak={speak} />;
     }
   };
 
@@ -564,7 +671,7 @@ export default function LessonPage({ lesson, onComplete, onBack }) {
       {/* Exercise */}
       <GlassCard variant="strong" className="min-h-[200px]">
         {showFeedback ? (
-          <ExerciseFeedback {...showFeedback} onContinue={handleContinue} />
+          <ExerciseFeedback {...showFeedback} speak={speak} onContinue={handleContinue} />
         ) : (
           <div key={currentExercise} className="animate-fade-in">
             {renderExercise()}
