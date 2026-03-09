@@ -1110,6 +1110,15 @@ export default function VocabularyPage() {
     setLearnWords([]);
   };
 
+  // Wrap reviewWord to also increment vocabReviews counter for achievements
+  const handleReviewWord = useCallback(async (wordId, quality) => {
+    const result = await reviewWord(wordId, quality);
+    updateProgress({
+      vocabReviews: (progress.vocabReviews || 0) + 1,
+    });
+    return result;
+  }, [reviewWord, updateProgress, progress]);
+
   if (isLoading) return <LoadingSpinner text={t('loading', uiLang)} />;
 
   // ── Learn Flow ──
@@ -1123,15 +1132,6 @@ export default function VocabularyPage() {
       />
     );
   }
-
-  // Wrap reviewWord to also increment vocabReviews counter for achievements
-  const handleReviewWord = useCallback(async (wordId, quality) => {
-    const result = await reviewWord(wordId, quality);
-    updateProgress({
-      vocabReviews: (progress.vocabReviews || 0) + 1,
-    });
-    return result;
-  }, [reviewWord, updateProgress, progress]);
 
   // ── Review Flow ──
   if (view === 'review') {
