@@ -189,6 +189,7 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
 
   // ─── completion actions ───────────────────────────────────────────────
   const handlePlayAgain = useCallback(() => {
+    try { stopAllAudio(); } catch { /* */ }
     setCurrentMode(null);
     setSessionStars(0);
     setNewReward(null);

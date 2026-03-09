@@ -362,7 +362,7 @@ function BubblePopGame({ onComplete, onBack }) {
               { text: getRandomEncouragement(uiLang), lang: uiLang, rate: 0.9 },
             ], speakRef.current);
           }, 300));
-          popTimersRef.current.push(setTimeout(() => setRound(r => r + 1), 1400));
+          popTimersRef.current.push(setTimeout(() => setRound(r => r + 1), 2200));
         }
         return next;
       });
