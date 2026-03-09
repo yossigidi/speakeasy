@@ -177,12 +177,12 @@ function AppContent() {
   }
 
   // Child login page (standalone, from separate device)
-  if (showChildLogin && !user && !childUser) {
+  if (showChildLogin && !childUser) {
     return <Suspense fallback={<PageLoader />}><ChildLoginPage onBack={() => setShowChildLogin(false)} /></Suspense>;
   }
 
-  // Remote child mode (child logged in from separate device)
-  if (!user && childUser) {
+  // Remote child mode (child logged in via family code — takes priority even if parent is signed in)
+  if (childUser?.isRemoteChild) {
     return (
       <RemoteChildAppContent
         childUser={childUser}
