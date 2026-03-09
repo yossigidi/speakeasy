@@ -87,7 +87,7 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
     if (!hasPlayedWelcomeRef.current) {
       hasPlayedWelcomeRef.current = true;
       try {
-        playSequence([WELCOME[lang] || WELCOME.en], lang);
+        playSequence([{ text: WELCOME[lang] || WELCOME.en, lang }]);
       } catch { /* ignore */ }
     }
   }, [lang]);

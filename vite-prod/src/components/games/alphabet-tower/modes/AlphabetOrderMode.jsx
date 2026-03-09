@@ -63,7 +63,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
   // ─── speak on round start ──────────────────────────────────────────
   useEffect(() => {
     try {
-      playSequence([GUIDE[uiLang] || GUIDE.en], uiLang);
+      playSequence([{ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang }]);
     } catch { /* ignore */ }
   }, [currentRound, uiLang]);
 

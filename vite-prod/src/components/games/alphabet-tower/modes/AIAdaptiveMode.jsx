@@ -100,7 +100,7 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
   useEffect(() => {
     try {
       if (currentRound === 0) {
-        playSequence([GUIDE[uiLang] || GUIDE.en], uiLang);
+        playSequence([{ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang }]);
       }
       // Speak the target letter after a short delay
       const timer = setTimeout(() => {

@@ -1446,7 +1446,7 @@ export default function KidsGamesPage({ onBack, onNavigate }) {
 
   if (selectedGame) {
     const GameComponent = selectedGame.component;
-    return <GameComponent onComplete={handleComplete} onBack={handleGameBack} childLevel={childLevel} />;
+    return <GameComponent onComplete={handleComplete} onBack={handleGameBack} childLevel={childLevel} uiLang={uiLang} />;
   }
 
   return <GameSelector onSelectGame={setSelectedGame} onBack={onBack} onNavigate={onNavigate} />;

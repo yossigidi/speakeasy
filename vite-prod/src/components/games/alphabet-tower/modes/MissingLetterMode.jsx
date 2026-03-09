@@ -71,7 +71,7 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
   // ─── speak on round start ──────────────────────────────────────────
   useEffect(() => {
     try {
-      playSequence([GUIDE[uiLang] || GUIDE.en], uiLang);
+      playSequence([{ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang }]);
     } catch { /* ignore */ }
   }, [currentRound, uiLang]);
 
@@ -138,7 +138,7 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
           ru: 'Попробуйте ещё!',
           en: 'Try again!',
         };
-        try { playSequence([tryAgain[uiLang] || tryAgain.en], uiLang); } catch { /* */ }
+        try { playSequence([{ text: tryAgain[uiLang] || tryAgain.en, lang: uiLang }]); } catch { /* */ }
 
         addTimer(() => {
           setWrongOption(null);
