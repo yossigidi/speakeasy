@@ -147,6 +147,26 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
       // Track result
       setRoundResults((prev) => [...prev, { letter: roundData.target, correct }]);
 
+      // Helper to advance to next round
+      const goNext = (earnedStars) => {
+        setShowEncouragement(null);
+        setAvatarMode('idle');
+        if (earnedStars > 0) onRoundComplete(earnedStars);
+
+        const nextRound = currentRound + 1;
+        if (nextRound >= TOTAL_ROUNDS) {
+          setShowReport(true);
+          try { playComplete(); } catch { /* */ }
+        } else {
+          const newRoundData = generateRound('aiAdaptive', difficulty, letterStats);
+          setCurrentRound(nextRound);
+          setRoundData(newRoundData);
+          setSelectedOption(null);
+          setIsCorrect(null);
+          setIsAnimating(false);
+        }
+      };
+
       if (correct) {
         // Correct answer
         try { playCorrect(); } catch { /* */ }
@@ -159,58 +179,31 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         const newTotal = totalStars + stars;
         setTotalStars(newTotal);
 
+        // Speak the letter + encouragement, then advance after speech ends
         addTimer(() => {
-          onRoundComplete(stars);
-          setShowEncouragement(null);
-          setAvatarMode('idle');
-
-          const nextRound = currentRound + 1;
-          if (nextRound >= TOTAL_ROUNDS) {
-            // Show report card
-            setShowReport(true);
-            try { playComplete(); } catch { /* */ }
-          } else {
-            const newRoundData = generateRound('aiAdaptive', difficulty, letterStats);
-            setCurrentRound(nextRound);
-            setRoundData(newRoundData);
-            setSelectedOption(null);
-            setIsCorrect(null);
-            setIsAnimating(false);
-          }
-        }, 1500);
+          playSequence([
+            { text: letter, lang: 'en-US' },
+            { pause: 300 },
+            { text: enc, lang: uiLang },
+            { pause: 600 },
+          ], null, () => goNext(stars));
+        }, 300);
       } else {
         // Wrong answer
         try { playWrong(); } catch { /* */ }
         setAvatarMode('talk');
-
-        // Show correct answer and speak it
-        addTimer(() => {
-          try {
-            const lang = uiLang || 'en';
-            const text = `${THIS_IS[lang]} ${roundData.target}`;
-            playFromAPI(text, lang);
-          } catch { /* */ }
-        }, 600);
-
         setShowEncouragement(TRY_AGAIN[uiLang] || TRY_AGAIN.en);
 
+        // Speak "this is [letter]" + try again, then advance after speech ends
         addTimer(() => {
-          setShowEncouragement(null);
-          setAvatarMode('idle');
-
-          const nextRound = currentRound + 1;
-          if (nextRound >= TOTAL_ROUNDS) {
-            setShowReport(true);
-            try { playComplete(); } catch { /* */ }
-          } else {
-            const newRoundData = generateRound('aiAdaptive', difficulty, letterStats);
-            setCurrentRound(nextRound);
-            setRoundData(newRoundData);
-            setSelectedOption(null);
-            setIsCorrect(null);
-            setIsAnimating(false);
-          }
-        }, 2200);
+          const lang = uiLang || 'en';
+          playSequence([
+            { text: `${THIS_IS[lang]} ${roundData.target}`, lang },
+            { pause: 400 },
+            { text: TRY_AGAIN[uiLang] || TRY_AGAIN.en, lang: uiLang },
+            { pause: 600 },
+          ], null, () => goNext(0));
+        }, 500);
       }
     },
     [
