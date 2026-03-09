@@ -16,16 +16,34 @@ export default async function handler(req, res) {
     const decoded = await admin.auth().verifyIdToken(token);
     const uid = decoded.uid;
 
-    // Find all childProfiles where parentUid matches this user
+    let childrenIds = [];
+
+    // 1. Try childProfiles collection (primary)
     const childSnaps = await db.collection('childProfiles')
       .where('parentUid', '==', uid)
       .get();
 
-    if (childSnaps.empty) {
-      return res.json({ message: 'No child profiles found for this user', childrenIds: [] });
+    if (!childSnaps.empty) {
+      childrenIds = childSnaps.docs.map(d => d.id);
     }
 
-    const childrenIds = childSnaps.docs.map(d => d.id);
+    // 2. Fallback: check parentChildren collection
+    if (childrenIds.length === 0) {
+      const pcSnaps = await db.collection('parentChildren')
+        .where('parentUid', '==', uid)
+        .get();
+
+      if (!pcSnaps.empty) {
+        const pcData = pcSnaps.docs[0].data();
+        if (pcData.children && pcData.children.length > 0) {
+          childrenIds = pcData.children.map(c => c.childId).filter(Boolean);
+        }
+      }
+    }
+
+    if (childrenIds.length === 0) {
+      return res.json({ message: 'No children found for this user', childrenIds: [] });
+    }
 
     // Restore childrenIds on the user doc
     await db.doc(`users/${uid}`).set({ childrenIds }, { merge: true });
