@@ -130,6 +130,8 @@ export function ChildAuthProvider({ children }) {
       localStorage.setItem('speakeasy_activeChildId', childId);
       // Mark profile as selected so we skip the profile picker
       sessionStorage.setItem('speakeasy_profileSelected', '1');
+      // Reset intro flags so child sees their own intro experience
+      sessionStorage.removeItem('speakli_intro_seen');
 
       const session = {
         ...data.child,
