@@ -10,7 +10,7 @@ import PaywallModal from '../components/subscription/PaywallModal.jsx';
 import useContentGate from '../hooks/useContentGate.js';
 import alphabetData from '../data/alphabet-kids.json';
 import { shuffle } from '../utils/shuffle.js';
-import { playSequence, stopAllAudio } from '../utils/hebrewAudio.js';
+import { stopAllAudio } from '../utils/hebrewAudio.js';
 import { playWrong } from '../utils/gameSounds.js';
 import { t, tReplace, RTL_LANGS, lf } from '../utils/translations.js';
 
@@ -203,16 +203,16 @@ function LetterGrid({ onSelect, completedLetters }) {
    ══════════════════════════════════════════ */
 function LetterDetail({ letter, onBack, onStartGame }) {
   const { uiLang } = useTheme();
-  const { speak } = useSpeech();
+  const { speak, speakSequence } = useSpeech();
 
   const speakLetter = () => speak(letter.letter, { rate: 0.6 });
   const speakSound = () => speak(letter.soundWord, { rate: 0.6 });
   const speakWord = (wordObj) => {
-    playSequence([
+    speakSequence([
       { text: wordObj.word, lang: 'en-US', rate: 0.6 },
       { pause: 400 },
       { text: lf(wordObj, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-    ], speak);
+    ]);
   };
 
   return (
@@ -439,7 +439,7 @@ function FindLetterGame({ letter, onComplete }) {
 /* Game 2: Match Word to Emoji - Drag-style matching */
 function MatchWordGame({ letter, onComplete }) {
   const { uiLang } = useTheme();
-  const { speak } = useSpeech();
+  const { speak, speakSequence } = useSpeech();
   const [matched, setMatched] = useState([]);
   const [selectedWord, setSelectedWord] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -463,11 +463,11 @@ function MatchWordGame({ letter, onComplete }) {
       setSelectedWord(null);
       return;
     }
-    playSequence([
+    speakSequence([
       { text: w.word, lang: 'en-US', rate: 0.6 },
       { pause: 400 },
       { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-    ], speak);
+    ]);
     setSelectedWord(w.id);
     setWrongPair(null);
   };
@@ -479,11 +479,11 @@ function MatchWordGame({ letter, onComplete }) {
       setMatched(newMatched);
       setSelectedWord(null);
       // Speak translation in user's native language on match
-      playSequence([
+      speakSequence([
         { text: w.word, lang: 'en-US', rate: 0.6 },
         { pause: 300 },
         { text: lf(w, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-      ], speak);
+      ]);
       if (newMatched.length >= words.length) {
         setShowConfetti(true);
         matchTimersRef.current.push(setTimeout(onComplete, 1000));
@@ -724,7 +724,7 @@ function CaseMatchGame({ letter, onComplete }) {
 /* Game 4: Listen & Choose - hear a word, pick the right emoji */
 function ListenChooseGame({ letter, onComplete }) {
   const { uiLang } = useTheme();
-  const { speak, stopSpeaking } = useSpeech();
+  const { speak, speakSequence, stopSpeaking } = useSpeech();
   const listenTimersRef = useRef([]);
   useEffect(() => () => { listenTimersRef.current.forEach(clearTimeout); }, []);
   const [current, setCurrent] = useState(0);
@@ -773,11 +773,11 @@ function ListenChooseGame({ letter, onComplete }) {
     if (opt.isCorrect) {
       setResult('correct');
       setScore(s => s + 1);
-      playSequence([
+      speakSequence([
         { text: opt.word, lang: 'en-US', rate: 0.6 },
         { pause: 400 },
         { text: lf(opt, 'translation', uiLang), lang: uiLang, rate: 0.85 },
-      ], speak);
+      ]);
       listenTimersRef.current.push(setTimeout(() => {
         setResult(null);
         if (current + 1 >= questions.length) {
