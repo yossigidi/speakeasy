@@ -148,13 +148,20 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     roundDataRef.current = roundData;
   }, [roundData]);
 
-  const advanceRound = useCallback(() => {
+  const advanceRound = useCallback((wasCorrect) => {
     setRoundActive(false);
     const t = setTimeout(() => {
       setShowResult(null);
       if (round >= TOTAL_ROUNDS) {
-        playComplete();
-        if (onGameComplete) onGameComplete(stars + BONUS_STARS);
+        // Only celebrate if player earned at least 1 star
+        const finalStars = stars + (wasCorrect ? STARS_PER_ROUND : 0);
+        if (finalStars > 0) {
+          playComplete();
+          if (onGameComplete) onGameComplete(finalStars + BONUS_STARS);
+        } else {
+          // No stars at all — still end the game but no bonus
+          if (onGameComplete) onGameComplete(0);
+        }
       } else {
         const nextRound = round + 1;
         setRound(nextRound);
@@ -169,9 +176,8 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     if (!roundActiveRef.current) return;
     setRoundActive(false);
     setShowResult('miss');
-    // Sad feedback - use playWrong as stand-in
     playWrong();
-    advanceRound();
+    advanceRound(false);
   }, [advanceRound]);
 
   const handleMissRef = useRef(handleMiss);
@@ -211,7 +217,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       timersRef.current.push(t1);
 
       if (onRoundComplete) onRoundComplete(earned);
-      advanceRound();
+      advanceRound(true);
     } else {
       // Wrong tap
       playWrong();
