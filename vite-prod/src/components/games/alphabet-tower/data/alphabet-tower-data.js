@@ -334,10 +334,13 @@ export function generateRound(mode, level, letterStats = null) {
     case 'alphabetTrain': {
       // Fill in blank train cars in a sequence
       const pool = letters || UPPERCASE_A_Z;
-      const startIdx = Math.floor(Math.random() * Math.max(1, pool.length - 5));
-      const sequence = pool.slice(startIdx, startIdx + 6);
-      // Remove 2 random cars
-      const blanks = pickRandom([0, 1, 2, 3, 4, 5], 2).sort((a, b) => a - b);
+      const trainLen = pool.length <= 6 ? 4 : 6;
+      const numBlanks = pool.length <= 6 ? 1 : 2;
+      const startIdx = Math.floor(Math.random() * Math.max(1, pool.length - (trainLen - 1)));
+      const sequence = pool.slice(startIdx, startIdx + trainLen);
+      // Remove random cars
+      const indices = Array.from({ length: trainLen }, (_, i) => i);
+      const blanks = pickRandom(indices, numBlanks).sort((a, b) => a - b);
       const display = sequence.map((l, i) => (blanks.includes(i) ? '_' : l));
       const answers = blanks.map((i) => sequence[i]);
       return { type: 'trainFill', display, answers, blanks };
