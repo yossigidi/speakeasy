@@ -75,7 +75,7 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     const t = setTimeout(async () => {
       try {
         // Speak in English
-        await playFromAPI(data.answer, 'en', ac.signal, { rate: 0.5 });
+        await playFromAPI(data.answer, 'en', ac.signal, { rate: 0.85 });
         // Then speak translation if available
         if (data.translations && data.translations[uiLang]) {
           await playFromAPI(data.translations[uiLang], uiLang, ac.signal, { rate: 0.8 });

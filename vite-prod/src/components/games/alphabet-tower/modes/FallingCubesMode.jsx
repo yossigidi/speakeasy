@@ -105,7 +105,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     abortRef.current = ac;
     const t2 = setTimeout(async () => {
       try {
-        await playFromAPI(data.target, 'en', ac.signal, { rate: 0.5 });
+        await playFromAPI(data.target, 'en', ac.signal, { rate: 0.85 });
       } catch {
         // ignore
       }

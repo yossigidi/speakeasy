@@ -315,9 +315,9 @@ function BubblePopGame({ onComplete, onBack }) {
     const announceLetterSeq = [
       { text: getKidsInstruction('whereIsLetter', uiLang), lang: uiLang, rate: 0.85 },
       { pause: 250 },
-      { text: target.letter, lang: 'en-US', rate: 0.5 },
+      { text: target.letter, lang: 'en-US', rate: 0.85 },
       { pause: 300 },
-      { text: target.letter, lang: 'en-US', rate: 0.5 },
+      { text: target.letter, lang: 'en-US', rate: 0.85 },
     ];
     if (round === 0) {
       playSequence(announceLetterSeq, speakRef.current);
