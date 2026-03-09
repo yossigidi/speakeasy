@@ -1,4 +1,5 @@
 import { handleCors } from '../lib/cors.js';
+import admin from 'firebase-admin';
 import { getFirestore } from '../lib/firebase.js';
 import crypto from 'crypto';
 
@@ -37,9 +38,17 @@ export default async function handler(req, res) {
       return res.status(403).json({ error: 'invalidPin' });
     }
 
-    // Success — return child session data
+    // Create a custom token for the parent UID so the child device
+    // has the same Firestore access as the parent (can read/write childProfiles)
+    const customToken = await admin.auth().createCustomToken(childData.parentUid, {
+      isChildLogin: true,
+      childId,
+    });
+
+    // Success — return child session data + custom auth token
     return res.status(200).json({
       success: true,
+      customToken,
       child: {
         childId,
         name: childData.name,

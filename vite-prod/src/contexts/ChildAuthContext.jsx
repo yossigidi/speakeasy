@@ -118,8 +118,18 @@ export function ChildAuthProvider({ children }) {
         return { success: false, error: data.error || 'invalidPin' };
       }
 
-      // Success - clear rate limit and create session
+      // Success - clear rate limit
       clearRateLimit();
+
+      // Sign in with custom token so we have full Firestore access (as parent)
+      if (data.customToken) {
+        await window.firebaseAuth.signInWithCustomToken(window.auth, data.customToken);
+      }
+
+      // Set activeChildId so UserProgressContext loads this child's data
+      localStorage.setItem('speakeasy_activeChildId', childId);
+      // Mark profile as selected so we skip the profile picker
+      sessionStorage.setItem('speakeasy_profileSelected', '1');
 
       const session = {
         ...data.child,
@@ -140,7 +150,11 @@ export function ChildAuthProvider({ children }) {
   // Logout child
   const logoutChild = useCallback(() => {
     localStorage.removeItem('speakeasy_childSession');
+    localStorage.removeItem('speakeasy_activeChildId');
+    sessionStorage.removeItem('speakeasy_profileSelected');
     setChildUser(null);
+    // Sign out the custom token session so user returns to login screen
+    try { window.firebaseAuth.signOut(window.auth); } catch (e) {}
   }, []);
 
   // Fetch children list by family code

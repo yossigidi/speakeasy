@@ -164,8 +164,9 @@ function AppContent() {
     }
   }, [user, progress.onboardingComplete, profileSelected, children.length]);
 
-  // Remote child mode — takes priority over everything (even loading)
-  if (childUser?.isRemoteChild) {
+  // Remote child mode — fallback only when custom token auth hasn't completed
+  // (normally the custom token signs in as parent, so the regular flow handles it)
+  if (childUser?.isRemoteChild && !user) {
     return (
       <RemoteChildAppContent
         childUser={childUser}
