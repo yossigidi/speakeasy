@@ -21,6 +21,13 @@ const ENCOURAGEMENT = {
   ru: ['Отлично!', 'Молодец!', 'Замечательно!', 'Супер!', 'Класс!'],
   en: ['Great!', 'Excellent!', 'Well done!', 'Amazing!', 'Super!'],
 };
+const TRAIN_COMPLETE = {
+  he: 'הרכבת מושלמת!',
+  ar: 'القطار مكتمل!',
+  ru: 'Поезд готов!',
+  en: 'The train is complete!',
+};
+
 const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const TOTAL_ROUNDS = MODE_CONFIGS.alphabetTrain.roundsPerGame; // 5
@@ -73,12 +80,23 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
   // ─── speak on round start ──────────────────────────────────────────
   useEffect(() => {
     try {
-      const text = currentRound === 0
-        ? (GUIDE[uiLang] || GUIDE.en)
-        : pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
-      playSequence([{ text, lang: uiLang }]);
+      stopAllAudio();
+      // Read the train sequence aloud, saying "hmm?" for blanks
+      const seq = [];
+      roundData.display.forEach((item) => {
+        if (item === '_') {
+          seq.push({ text: 'hmm?', lang: 'en-US' });
+        } else {
+          seq.push({ text: item, lang: 'en-US' });
+        }
+        seq.push({ pause: 300 });
+      });
+      // Then say "Complete the train!" in uiLang
+      seq.push({ pause: 400 });
+      seq.push({ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang });
+      playSequence(seq);
     } catch { /* ignore */ }
-  }, [currentRound, uiLang]);
+  }, [currentRound, uiLang, roundData.display]);
 
   // ─── derive data ───────────────────────────────────────────────────
   const display = useMemo(() => roundData.display, [roundData]);
@@ -122,6 +140,12 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
       if (Object.keys(nextFilled).length === blanks.length) {
         setIsAnimating(true);
 
+        // Say "The train is complete!" before the train moves
+        try {
+          stopAllAudio();
+          playSequence([{ text: TRAIN_COMPLETE[uiLang] || TRAIN_COMPLETE.en, lang: uiLang }]);
+        } catch { /* */ }
+
         // Train completion sequence
         addTimer(() => setShowWhistle(true), 500);
         addTimer(() => setShowSmoke(true), 600);
@@ -154,7 +178,7 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         }, 2500);
       }
     },
-    [blanks, totalStars, currentRound, difficulty, onRoundComplete, onGameComplete, addTimer],
+    [blanks, totalStars, currentRound, difficulty, onRoundComplete, onGameComplete, addTimer, uiLang],
   );
 
   // ─── drag and drop ─────────────────────────────────────────────────
@@ -173,6 +197,16 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         // Correct
         try { playCorrect(); } catch { /* */ }
         try { playStar(); } catch { /* */ }
+        // Say the letter + encouragement
+        try {
+          stopAllAudio();
+          const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+          playSequence([
+            { text: item.letter, lang: 'en-US' },
+            { pause: 200 },
+            { text: enc, lang: uiLang },
+          ]);
+        } catch { /* */ }
 
         const nextFilled = { ...filledBlanks, [blankIdx]: item.letter };
         setFilledBlanks(nextFilled);
@@ -197,7 +231,7 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         }, 500);
       }
     },
-    [answers, blanks, availableCubes, filledBlanks, checkAllFilled, addTimer],
+    [answers, blanks, availableCubes, filledBlanks, checkAllFilled, addTimer, uiLang],
   );
 
   const handleMiss = useCallback(() => {}, []);

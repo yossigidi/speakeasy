@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import LetterCube from '../components/LetterCube.jsx';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
-import { playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
+import { playSequence, playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playStar, playComplete } from '../../../../utils/gameSounds.js';
 import { ArrowLeft } from 'lucide-react';
 
@@ -16,6 +16,29 @@ const GUIDE = {
   ru: '\u041F\u043E\u0439\u043C\u0430\u0439\u0442\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0443\u044E \u0431\u0443\u043A\u0432\u0443!',
   en: 'Catch the correct letter!',
 };
+
+const ENCOURAGEMENT = {
+  he: ['יופי!', 'מצוין!', 'כל הכבוד!', 'נהדר!', 'סופר!'],
+  ar: ['رائع!', 'ممتاز!', 'أحسنت!', 'مذهل!', 'سوبر!'],
+  ru: ['Отлично!', 'Молодец!', 'Замечательно!', 'Супер!', 'Класс!'],
+  en: ['Great!', 'Excellent!', 'Well done!', 'Amazing!', 'Super!'],
+};
+
+const FIND_LETTER = {
+  he: 'מצאו את האות',
+  ar: 'جدوا الحرف',
+  ru: 'Найдите букву',
+  en: 'Find the letter',
+};
+
+const MISSED_LETTER = {
+  he: 'אופס! האות הייתה',
+  ar: 'أوه! الحرف كان',
+  ru: 'Ой! Буква была',
+  en: 'Oops! The letter was',
+};
+
+const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 /**
  * FallingCubesMode - Tap the correct falling letter cube.
@@ -99,13 +122,19 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     }, 800);
     timersRef.current.push(t1);
 
-    // Speak the target letter
+    // Speak "Find the letter [X]!" in uiLang, then say the letter in English
+    stopAllAudio();
     if (abortRef.current) abortRef.current.abort();
     const ac = new AbortController();
     abortRef.current = ac;
     const t2 = setTimeout(async () => {
       try {
-        await playFromAPI(data.target, 'en', ac.signal);
+        const findText = (FIND_LETTER[uiLang] || FIND_LETTER.en) + ' ' + data.target + '!';
+        await playSequence([
+          { text: findText, lang: uiLang },
+          { pause: 300 },
+          { text: data.target, lang: 'en-US' },
+        ]);
       } catch {
         // ignore
       }
@@ -177,8 +206,21 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     setRoundActive(false);
     setShowResult('miss');
     playWrong();
+
+    // Say "Oops! The letter was [X]" in uiLang
+    try {
+      stopAllAudio();
+      const target = roundDataRef.current?.target || '';
+      const missText = (MISSED_LETTER[uiLang] || MISSED_LETTER.en) + ' ' + target;
+      playSequence([
+        { text: missText, lang: uiLang },
+        { pause: 200 },
+        { text: target, lang: 'en-US' },
+      ]);
+    } catch { /* */ }
+
     advanceRound(false);
-  }, [advanceRound]);
+  }, [advanceRound, uiLang]);
 
   const handleMissRef = useRef(handleMiss);
   useEffect(() => {
@@ -209,6 +251,17 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       const earned = STARS_PER_ROUND;
       setStars((prev) => prev + earned);
       setShowResult('correct');
+
+      // Say the letter + encouragement
+      try {
+        stopAllAudio();
+        const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+        playSequence([
+          { text: letter, lang: 'en-US' },
+          { pause: 200 },
+          { text: enc, lang: uiLang },
+        ]);
+      } catch { /* */ }
 
       const t1 = setTimeout(() => {
         playCorrect();
@@ -241,7 +294,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       }, 500);
       timersRef.current.push(t);
     }
-  }, [roundActive, frozen, roundData, advanceRound, onRoundComplete]);
+  }, [roundActive, frozen, roundData, advanceRound, onRoundComplete, uiLang]);
 
   if (!roundData) return null;
 

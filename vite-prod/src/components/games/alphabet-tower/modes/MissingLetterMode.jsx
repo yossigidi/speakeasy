@@ -81,12 +81,23 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
   // ─── speak on round start ──────────────────────────────────────────
   useEffect(() => {
     try {
-      const text = currentRound === 0
-        ? (GUIDE[uiLang] || GUIDE.en)
-        : pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
-      playSequence([{ text, lang: uiLang }]);
+      stopAllAudio();
+      // Build sequence: read letters one by one, say "hmm?" for the missing one
+      const seq = [];
+      roundData.display.forEach((item) => {
+        if (item === '_') {
+          seq.push({ text: 'hmm?', lang: 'en-US' });
+        } else {
+          seq.push({ text: item, lang: 'en-US' });
+        }
+        seq.push({ pause: 300 });
+      });
+      // Then say "Find the missing letter!" in uiLang
+      seq.push({ pause: 400 });
+      seq.push({ text: GUIDE[uiLang] || GUIDE.en, lang: uiLang });
+      playSequence(seq);
     } catch { /* ignore */ }
-  }, [currentRound, uiLang]);
+  }, [currentRound, uiLang, roundData.display]);
 
   // ─── advance to next round ─────────────────────────────────────────
   const advanceRound = useCallback(() => {
@@ -122,6 +133,16 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         // Correct!
         try { playCorrect(); } catch { /* */ }
         try { playStar(); } catch { /* */ }
+        // Say the letter + encouragement
+        try {
+          stopAllAudio();
+          const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+          playSequence([
+            { text: item.letter, lang: 'en-US' },
+            { pause: 200 },
+            { text: enc, lang: uiLang },
+          ]);
+        } catch { /* */ }
         setFilled(true);
         setFilledLetter(item.letter);
         setIsAnimating(true);
