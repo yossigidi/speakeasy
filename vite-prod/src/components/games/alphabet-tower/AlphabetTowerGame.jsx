@@ -88,15 +88,15 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
     };
   }, [clearTimers]);
 
-  // ─── welcome guidance on mount ────────────────────────────────────────
+  // ─── welcome guidance on mount (skip if intro video will handle it) ──
   useEffect(() => {
-    if (!hasPlayedWelcomeRef.current) {
+    if (!hasPlayedWelcomeRef.current && hasSeenIntro) {
       hasPlayedWelcomeRef.current = true;
       try {
         playSequence([{ text: WELCOME[lang] || WELCOME.en, lang }]);
       } catch { /* ignore */ }
     }
-  }, [lang]);
+  }, [lang, hasSeenIntro]);
 
   // ─── stop audio on screen transitions ─────────────────────────────────
   useEffect(() => {
