@@ -181,6 +181,15 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
   }, [activeChildId]);
 
+  // Sync activeChildId from localStorage when user changes
+  // (e.g. child login sets localStorage before signInWithCustomToken)
+  useEffect(() => {
+    const stored = localStorage.getItem(CHILD_LS_KEY);
+    if (stored && stored !== activeChildId) {
+      setActiveChildId(stored);
+    }
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Ensure parentChildren doc exists when familyCode + children are loaded
   useEffect(() => {
     if (!user || !familyCode || childrenList.length === 0) return;
