@@ -270,12 +270,13 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         flexDirection: 'column',
         alignItems: 'center',
         width: '100%',
-        minHeight: '100%',
-        padding: '12px 8px',
+        height: '100%',
+        padding: '8px 8px 4px',
         direction: isRTL ? 'rtl' : 'ltr',
         position: 'relative',
         userSelect: 'none',
         WebkitUserSelect: 'none',
+        overflow: 'hidden',
       }}
     >
       {/* ── Background image ── */}
@@ -307,7 +308,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
       )}
 
       {/* ── Progress dots ── */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 8, position: 'relative', zIndex: 1 }}>
+      <div style={{ display: 'flex', gap: 6, marginBottom: 4, position: 'relative', zIndex: 1 }}>
         {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
           <div
             key={i}
@@ -328,7 +329,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           fontSize: 14,
           fontWeight: 700,
           color: '#6b7280',
-          marginBottom: 6,
+          marginBottom: 2,
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
           position: 'relative',
           zIndex: 1,
@@ -343,7 +344,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         size="sm"
         isRTL={isRTL}
         speech={teacherSpeech || (isTower ? (GUIDE_TOWER[uiLang] || GUIDE_TOWER.en) : (GUIDE[uiLang] || GUIDE.en))}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 6 }}
       />
 
       {/* ── Drop zones (top / tower) ── */}
@@ -353,12 +354,12 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           position: 'relative',
           zIndex: 1,
           flexDirection: isTower ? 'column-reverse' : 'row',
-          gap: isTower ? 6 : 10,
+          gap: isTower ? 4 : 8,
           justifyContent: 'center',
           alignItems: isTower ? 'center' : undefined,
           flexWrap: isTower ? 'nowrap' : 'wrap',
-          marginBottom: isTower ? 20 : 36,
-          minHeight: isTower ? undefined : 90,
+          marginBottom: isTower ? 12 : 20,
+          minHeight: isTower ? undefined : 70,
           direction: 'ltr', // letters always LTR
         }}
       >
@@ -406,15 +407,27 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
                   letter={placedMap[idx]}
                   color={CUBE_COLORS[idx % CUBE_COLORS.length]}
                   isPlaced
-                  size={isTower ? 50 : 56}
+                  size={isTower ? 44 : 48}
                 />
               ) : (
-                <LetterCube
-                  letter={letter}
-                  color="#9ca3af"
-                  isGhost
-                  size={isTower ? 50 : 56}
-                />
+                <div style={{ position: 'relative' }}>
+                  <LetterCube
+                    letter={letter}
+                    color="#9ca3af"
+                    isGhost
+                    size={isTower ? 44 : 48}
+                  />
+                  {/* Visible drop zone indicator */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 2,
+                    borderRadius: 10,
+                    border: '2.5px dashed rgba(59,130,246,0.5)',
+                    background: 'rgba(59,130,246,0.08)',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                  }} />
+                </div>
               )}
 
               {/* Correct-placement green glow */}
@@ -476,12 +489,14 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
       <div
         style={{
           display: 'flex',
-          gap: 12,
+          gap: 8,
           justifyContent: 'center',
           flexWrap: 'wrap',
           direction: 'ltr',
           position: 'relative',
           zIndex: 1,
+          marginTop: 'auto',
+          paddingBottom: 8,
         }}
       >
         {availableLetters.map((item) => {
@@ -501,7 +516,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
               <LetterCube
                 letter={item.letter}
                 color={CUBE_COLORS[origIdx % CUBE_COLORS.length]}
-                size={56}
+                size={52}
                 onPointerDown={(e) => {
                   try { playTap(); } catch { /* */ }
                   dragHandlers.onPointerDown(e, item.id);
@@ -529,7 +544,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
             letter={draggedItem.letter}
             color={CUBE_COLORS[draggedOriginalIndex % CUBE_COLORS.length]}
             isDragging
-            size={56}
+            size={52}
           />
         </div>
       )}
