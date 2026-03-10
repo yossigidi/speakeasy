@@ -168,7 +168,17 @@ export default function ExerciseRenderer({ exercise, onAnswer, t, uiLang, speak,
         setListening(false);
         recognitionRef.current = null;
         setSpeakResult(correct ? 'correct' : 'wrong');
-        const t2 = setTimeout(() => { onAnswer(correct, exercise.wordData); setSpeakResult(null); }, 800);
+        // Show result, then read the correct word aloud (like a teacher), then advance
+        const t2 = setTimeout(() => {
+          speak(exercise.correctAnswer, {
+            lang: 'en-US',
+            rate: 0.85,
+            onEnd: () => {
+              const t3 = setTimeout(() => { onAnswer(correct, exercise.wordData); setSpeakResult(null); }, 400);
+              timersRef.current.push(t3);
+            },
+          });
+        }, 800);
         timersRef.current.push(t2);
       };
       recognition.onerror = () => { setListening(false); recognitionRef.current = null; onAnswer(true, exercise.wordData); };

@@ -1142,26 +1142,43 @@ export default function KidsAILessonPage({ onNavigate }) {
   // Cleanup on unmount
   useEffect(() => () => stopAllAudio(), []);
 
-  switch (phase) {
-    case 'select':
-      return <SelectPhase onSelectTopic={handleSelectTopic} onBack={goBack} progress={progress} uiLang={uiLang} />;
-    case 'intro':
-      return <IntroPhase topic={topic} lessonIndex={lessonIndex} uiLang={uiLang} speak={speak} onDone={() => {
-        // Boss lesson skips learn phase
-        setPhase(lessonIndex >= 3 ? 'practice' : 'learn');
-      }} />;
-    case 'learn':
-      return <LearnPhase words={lessonWords} uiLang={uiLang} speak={speak} onDone={() => setPhase('practice')} />;
-    case 'practice':
-      return <PracticePhase words={lessonWords} allWords={allTopicWords} uiLang={uiLang} speak={speak} onDone={handlePracticeDone} />;
-    case 'speak':
-      return <SpeakPhase words={lessonWords} uiLang={uiLang} speak={speak} onDone={() => setPhase('game')} />;
-    case 'game':
-      return <GamePhase words={lessonWords} allWords={allTopicWords} uiLang={uiLang} speak={speak} onDone={handleGameDone} />;
-    case 'summary':
-      return <SummaryPhase topic={topic} words={lessonWords} practiceScore={practiceScore} practiceTotal={practiceTotal}
-        gameScore={gameScore} gameTotal={gameTotal} uiLang={uiLang} speak={speak} onDone={handleSummaryDone} />;
-    default:
-      return null;
-  }
+  const phaseContent = (() => {
+    switch (phase) {
+      case 'select':
+        return <SelectPhase onSelectTopic={handleSelectTopic} onBack={goBack} progress={progress} uiLang={uiLang} />;
+      case 'intro':
+        return <IntroPhase topic={topic} lessonIndex={lessonIndex} uiLang={uiLang} speak={speak} onDone={() => {
+          // Boss lesson skips learn phase
+          setPhase(lessonIndex >= 3 ? 'practice' : 'learn');
+        }} />;
+      case 'learn':
+        return <LearnPhase words={lessonWords} uiLang={uiLang} speak={speak} onDone={() => setPhase('practice')} />;
+      case 'practice':
+        return <PracticePhase words={lessonWords} allWords={allTopicWords} uiLang={uiLang} speak={speak} onDone={handlePracticeDone} />;
+      case 'speak':
+        return <SpeakPhase words={lessonWords} uiLang={uiLang} speak={speak} onDone={() => setPhase('game')} />;
+      case 'game':
+        return <GamePhase words={lessonWords} allWords={allTopicWords} uiLang={uiLang} speak={speak} onDone={handleGameDone} />;
+      case 'summary':
+        return <SummaryPhase topic={topic} words={lessonWords} practiceScore={practiceScore} practiceTotal={practiceTotal}
+          gameScore={gameScore} gameTotal={gameTotal} uiLang={uiLang} speak={speak} onDone={handleSummaryDone} />;
+      default:
+        return null;
+    }
+  })();
+
+  return (
+    <>
+      {phaseContent}
+      {phase !== 'select' && (
+        <button
+          onClick={goBack}
+          className="fixed top-0 left-0 z-50 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-full p-2.5 shadow-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+          style={{ top: 'calc(env(safe-area-inset-top, 0px) + 12px)', left: '12px' }}
+        >
+          <span className="text-gray-600 dark:text-gray-300 text-xl">✕</span>
+        </button>
+      )}
+    </>
+  );
 }
