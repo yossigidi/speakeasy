@@ -8,6 +8,8 @@ const NEXT_REWARD_LABEL = { he: 'פרס הבא', ar: 'الجائزة التال�
 const STARS_MORE = { he: 'כוכבים נוספים!', ar: 'نجوم إضافية!', ru: 'звёзд ещё!', en: 'more stars!' };
 const ALL_UNLOCKED = { he: 'כל הפרסים נפתחו!', ar: 'تم فتح جميع الجوائز!', ru: 'Все награды открыты!', en: 'All rewards unlocked!' };
 const PICK_MODE = { he: 'בחרו משחק', ar: 'اختاروا لعبة', ru: 'Выберите игру', en: 'Pick a game' };
+const COMING_SOON = { he: 'בקרוב!', ar: 'قريباً!', ru: 'Скоро!', en: 'Coming soon!' };
+const PROGRESS_LABEL = { he: 'התקדמות', ar: 'تقدم', ru: 'Прогресс', en: 'Progress' };
 
 const getLangKey = (lang) => {
   if (lang === 'he') return 'He';
@@ -20,13 +22,14 @@ const getLabel = (obj, lang) => obj[`label${getLangKey(lang)}`] || obj.labelEn |
 const getDesc = (obj, lang) => obj[`desc${getLangKey(lang)}`] || obj.descEn || '';
 const getName = (obj, lang) => obj[`name${getLangKey(lang)}`] || obj.nameEn || '';
 
-const GRADIENT_MAP = {
-  'from-blue-400 to-blue-600': 'linear-gradient(135deg, #60a5fa, #2563eb)',
-  'from-purple-400 to-purple-600': 'linear-gradient(135deg, #c084fc, #9333ea)',
-  'from-green-400 to-green-600': 'linear-gradient(135deg, #4ade80, #16a34a)',
-  'from-orange-400 to-red-500': 'linear-gradient(135deg, #fb923c, #ef4444)',
-  'from-teal-400 to-cyan-500': 'linear-gradient(135deg, #2dd4bf, #06b6d4)',
-  'from-pink-400 to-rose-600': 'linear-gradient(135deg, #f472b6, #e11d48)',
+// Map mode id to background image
+const MODE_BG = {
+  alphabetOrder: '/images/games/bg-alphabet-order.jpg',
+  missingLetter: '/images/games/bg-missing-letter.jpg',
+  wordBuilder: '/images/games/bg-word-builder.jpg',
+  fallingCubes: '/images/games/bg-falling-cubes.jpg',
+  alphabetTrain: '/images/games/bg-alphabet-train.jpg',
+  aiAdaptive: '/images/games/bg-ai-challenge.jpg',
 };
 
 const ModeSelector = React.memo(function ModeSelector({
@@ -54,7 +57,7 @@ const ModeSelector = React.memo(function ModeSelector({
   const starsToNext = nextReward ? nextReward.stars - towerProgress.totalStars : 0;
 
   const handleDifficultyTap = (level) => {
-    if (level.unlockStars > towerProgress.totalStars) return; // locked
+    if (level.unlockStars > towerProgress.totalStars) return;
     setSelectedDifficulty(level.level);
     if (onSelectDifficulty) onSelectDifficulty(level.level);
   };
@@ -63,9 +66,8 @@ const ModeSelector = React.memo(function ModeSelector({
     onSelectMode(mode.id, selectedDifficulty);
   };
 
-  // progress bar for next reward
   const rewardProgressPct = nextReward
-    ? Math.min(100, Math.round(((towerProgress.totalStars) / nextReward.stars) * 100))
+    ? Math.min(100, Math.round((towerProgress.totalStars / nextReward.stars) * 100))
     : 100;
 
   return (
@@ -80,6 +82,7 @@ const ModeSelector = React.memo(function ModeSelector({
         userSelect: 'none',
         WebkitUserSelect: 'none',
         fontFamily: "'Fredoka', 'Heebo', 'Inter', sans-serif",
+        background: 'linear-gradient(180deg, #ecfdf5 0%, #f0f9ff 50%, #f5f3ff 100%)',
       }}
     >
       {/* ── Top bar: back + title + stars ── */}
@@ -183,6 +186,7 @@ const ModeSelector = React.memo(function ModeSelector({
                   transition: 'all 0.2s',
                   minWidth: 80,
                   position: 'relative',
+                  fontFamily: "'Fredoka', 'Heebo', sans-serif",
                 }}
               >
                 {isLocked && (
@@ -206,91 +210,202 @@ const ModeSelector = React.memo(function ModeSelector({
       </div>
 
       {/* ── Section label ── */}
-      <div style={{ fontSize: 16, fontWeight: 700, color: '#64748b', marginBottom: 12, textAlign: 'center' }}>
+      <div style={{ fontSize: 18, fontWeight: 800, color: '#1e293b', marginBottom: 14, textAlign: 'center' }}>
         {PICK_MODE[lang] || PICK_MODE.en}
       </div>
 
-      {/* ── Game mode cards — 2x3 grid ── */}
+      {/* ── Game mode cards — vertical panoramic list ── */}
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          display: 'flex',
+          flexDirection: 'column',
           gap: 14,
           marginBottom: 24,
         }}
       >
-        {GAME_MODES.map((mode) => {
-          const gradient = GRADIENT_MAP[mode.gradient] || 'linear-gradient(135deg, #60a5fa, #3b82f6)';
+        {GAME_MODES.map((mode, idx) => {
           const timesPlayed = towerProgress.modesCompleted?.[mode.id] || 0;
+          const bgImage = MODE_BG[mode.id];
 
           return (
             <button
               key={mode.id}
               onClick={() => handleModeTap(mode)}
-              className="mode-card"
+              className="mode-card-wide"
               style={{
-                background: gradient,
-                border: 'none',
-                borderRadius: 20,
-                padding: '20px 12px 16px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                cursor: 'pointer',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.08)',
-                transition: 'transform 0.15s, box-shadow 0.15s',
                 position: 'relative',
+                width: '100%',
+                height: 120,
+                borderRadius: 20,
+                border: 'none',
                 overflow: 'hidden',
+                cursor: 'pointer',
+                padding: 0,
+                boxShadow: '0 4px 16px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06)',
+                transition: 'transform 0.15s, box-shadow 0.15s',
+                animation: `card-slide-in 0.4s ease-out ${idx * 0.08}s both`,
               }}
             >
-              {/* Subtle shine overlay */}
+              {/* Background image */}
               <div
                 style={{
                   position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '50%',
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%)',
-                  borderRadius: '20px 20px 0 0',
-                  pointerEvents: 'none',
+                  inset: 0,
+                  backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  zIndex: 0,
                 }}
               />
 
-              {/* Emoji */}
-              <span style={{ fontSize: 42, lineHeight: 1, marginBottom: 8 }}>
-                {mode.emoji}
-              </span>
+              {/* Dark gradient overlay for text readability */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: isRTL
+                    ? 'linear-gradient(to left, rgba(0,0,0,0.55) 30%, rgba(0,0,0,0.1) 100%)'
+                    : 'linear-gradient(to right, rgba(0,0,0,0.55) 30%, rgba(0,0,0,0.1) 100%)',
+                  zIndex: 1,
+                }}
+              />
 
-              {/* Name */}
-              <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', textAlign: 'center', lineHeight: 1.2 }}>
-                {getName(mode, lang)}
-              </span>
-
-              {/* Description */}
-              <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.8)', textAlign: 'center', marginTop: 4, lineHeight: 1.3 }}>
-                {getDesc(mode, lang)}
-              </span>
-
-              {/* Times played badge */}
-              {timesPlayed > 0 && (
+              {/* Content */}
+              <div
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '14px 18px',
+                }}
+              >
+                {/* Left/start side: emoji icon area */}
                 <div
                   style={{
-                    position: 'absolute',
-                    top: 8,
-                    right: isRTL ? 'auto' : 8,
-                    left: isRTL ? 8 : 'auto',
-                    background: 'rgba(255,255,255,0.3)',
-                    borderRadius: 10,
-                    padding: '2px 7px',
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: '#fff',
+                    width: 60,
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 38,
+                    lineHeight: 1,
+                    flexShrink: 0,
+                    filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.3))',
                   }}
                 >
-                  x{timesPlayed}
+                  {mode.emoji}
                 </div>
-              )}
+
+                {/* Center: text */}
+                <div
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    padding: '0 12px',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 19,
+                      fontWeight: 800,
+                      color: '#fff',
+                      textShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                      lineHeight: 1.2,
+                      fontFamily: "'Fredoka', 'Heebo', sans-serif",
+                    }}
+                  >
+                    {getName(mode, lang)}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: 'rgba(255,255,255,0.8)',
+                      textShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                      marginTop: 4,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {getDesc(mode, lang)}
+                  </span>
+                </div>
+
+                {/* Right/end side: badge */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    flexShrink: 0,
+                    gap: 4,
+                  }}
+                >
+                  {timesPlayed > 0 ? (
+                    <>
+                      {/* Progress circle */}
+                      <div
+                        style={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(22,163,74,0.4)',
+                          border: '3px solid rgba(255,255,255,0.5)',
+                        }}
+                      >
+                        <span style={{ fontSize: 18, lineHeight: 1 }}>
+                          {'⭐'}
+                        </span>
+                      </div>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: 'rgba(255,255,255,0.9)',
+                          textShadow: '0 1px 4px rgba(0,0,0,0.4)',
+                        }}
+                      >
+                        {PROGRESS_LABEL[lang]} x{timesPlayed}
+                      </span>
+                    </>
+                  ) : (
+                    /* Play indicator */
+                    <div
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: '50%',
+                        background: 'rgba(255,255,255,0.2)',
+                        border: '2.5px solid rgba(255,255,255,0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backdropFilter: 'blur(4px)',
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: 20,
+                          color: '#fff',
+                          marginInlineStart: 2,
+                          filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
+                        }}
+                      >
+                        ▶
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </button>
           );
         })}
@@ -310,7 +425,6 @@ const ModeSelector = React.memo(function ModeSelector({
       >
         {nextReward ? (
           <>
-            {/* Reward emoji */}
             <span
               style={{
                 fontSize: 36,
@@ -322,7 +436,6 @@ const ModeSelector = React.memo(function ModeSelector({
               {nextReward.emoji}
             </span>
 
-            {/* Info + progress bar */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#1e293b' }}>
@@ -332,7 +445,6 @@ const ModeSelector = React.memo(function ModeSelector({
                   {starsToNext} {STARS_MORE[lang]}
                 </span>
               </div>
-              {/* Progress bar */}
               <div
                 style={{
                   width: '100%',
@@ -363,13 +475,17 @@ const ModeSelector = React.memo(function ModeSelector({
 
       {/* ── Styles ── */}
       <style>{`
-        .mode-card:active {
-          transform: scale(0.95) !important;
-          box-shadow: 0 3px 10px rgba(0,0,0,0.12) !important;
+        .mode-card-wide:active {
+          transform: scale(0.97) !important;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
         }
         @keyframes reward-bounce {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
+        }
+        @keyframes card-slide-in {
+          0% { transform: translateY(20px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
         }
       `}</style>
     </div>
