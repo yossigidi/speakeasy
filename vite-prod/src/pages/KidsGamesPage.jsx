@@ -865,9 +865,14 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
                     )}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-xl sm:rounded-2xl">
-                    <span className="text-3xl sm:text-4xl text-white/60 drop-shadow-md">❓</span>
-                    <span className="text-xs font-bold text-white/40">
+                  <div className="relative flex flex-col items-center justify-center h-full rounded-xl sm:rounded-2xl overflow-hidden">
+                    <img
+                      src="/images/games/memory-card-back.jpg"
+                      alt=""
+                      draggable={false}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <span className="relative text-xs font-bold text-white/50 drop-shadow-md mt-auto mb-1">
                       {t('tap', uiLang)}
                     </span>
                   </div>
