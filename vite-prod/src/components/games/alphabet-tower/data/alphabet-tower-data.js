@@ -347,16 +347,19 @@ export function generateRound(mode, level, letterStats = null) {
     }
 
     case 'aiAdaptive': {
-      // Focus on weak letters if stats are available
+      // Mix weak letters (50% chance) with random pool letters for variety
       const pool = letters || UPPERCASE_A_Z;
-      let focusLetters;
+      let target;
       if (letterStats) {
-        const weak = getWeakLetters(letterStats, 3);
-        focusLetters = weak.length > 0 ? weak : pickRandom(pool, 3);
+        const weak = getWeakLetters(letterStats, 4);
+        if (weak.length > 0 && Math.random() < 0.5) {
+          target = pickOne(weak);
+        } else {
+          target = pickOne(pool);
+        }
       } else {
-        focusLetters = pickRandom(pool, 3);
+        target = pickOne(pool);
       }
-      const target = pickOne(focusLetters);
       const distractors = pickRandom(
         pool.filter((l) => l !== target),
         3
