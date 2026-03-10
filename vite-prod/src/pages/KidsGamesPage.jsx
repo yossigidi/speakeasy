@@ -1403,12 +1403,22 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
                 } ${locked ? 'opacity-60' : ''}`}
                 style={{ animationDelay: `${i * 0.05}s` }}
               >
-                <div className={`bg-gradient-to-br ${locked ? 'from-gray-400 to-gray-500' : game.gradient} p-5 relative overflow-hidden h-full`}
-                  style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)' }}
+                <div className={`relative overflow-hidden h-full ${game.image ? '' : `bg-gradient-to-br ${locked ? 'from-gray-400 to-gray-500' : game.gradient} p-5`}`}
+                  style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)', minHeight: game.image ? 160 : undefined }}
                 >
-                  {/* Decorative circle */}
-                  <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
-                  <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-white/10" />
+                  {/* Background image or decorative circles */}
+                  {game.image ? (
+                    <>
+                      <img src={game.image} alt="" draggable={false} className="absolute inset-0 w-full h-full object-cover" />
+                      {locked && <div className="absolute inset-0 bg-gray-500/60" />}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    </>
+                  ) : (
+                    <>
+                      <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white/10" />
+                      <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-white/10" />
+                    </>
+                  )}
 
                   {locked && (
                     <div className="absolute top-2 right-2 bg-black/40 rounded-full p-1.5 z-10">
@@ -1416,14 +1426,12 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
                     </div>
                   )}
 
-                  <div className="relative flex flex-col items-center text-center gap-2">
-                    <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl overflow-hidden">
-                      {game.image ? (
-                        <img src={game.image} alt="" draggable={false} className="w-full h-full object-cover rounded-2xl" />
-                      ) : (
-                        game.emoji
-                      )}
-                    </div>
+                  <div className={`relative flex flex-col items-center text-center gap-2 ${game.image ? 'p-4 pt-10 justify-end h-full' : ''}`}>
+                    {!game.image && (
+                      <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl">
+                        {game.emoji}
+                      </div>
+                    )}
                     <h3 className="text-base font-black text-white drop-shadow-md leading-tight">
                       {t(game.titleKey, uiLang)}
                     </h3>
