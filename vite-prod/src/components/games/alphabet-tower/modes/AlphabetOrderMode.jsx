@@ -15,6 +15,13 @@ const GUIDE = {
   en: 'Arrange the letters!',
 };
 
+const GUIDE_TOWER = {
+  he: 'בנו את המגדל!',
+  ar: 'ابنوا البرج!',
+  ru: 'Постройте башню!',
+  en: 'Build the tower!',
+};
+
 const ENCOURAGEMENT = {
   he: ['יופי!', 'מצוין!', 'כל הכבוד!', 'נהדר!', 'סופר!'],
   ar: ['رائع!', 'ممتاز!', 'أحسنت!', 'مذهل!', 'سوبر!'],
@@ -80,16 +87,18 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
   // ─── speak on round start ──────────────────────────────────────────
   useEffect(() => {
     try {
+      const guide = roundData.layout === 'tower' ? GUIDE_TOWER : GUIDE;
       const text = currentRound === 0
-        ? (GUIDE[uiLang] || GUIDE.en)
+        ? (guide[uiLang] || guide.en)
         : pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
       playSequence([{ text, lang: uiLang }]);
     } catch { /* ignore */ }
-  }, [currentRound, uiLang]);
+  }, [currentRound, uiLang, roundData.layout]);
 
   // ─── derive answer order ───────────────────────────────────────────
   const answerLetters = useMemo(() => roundData.answer, [roundData]);
   const zoneCount = answerLetters.length;
+  const isTower = roundData.layout === 'tower';
 
   // ─── check round complete ──────────────────────────────────────────
   const checkAllPlaced = useCallback(
@@ -299,18 +308,20 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
         }}
       >
-        {GUIDE[uiLang] || GUIDE.en}
+        {isTower ? (GUIDE_TOWER[uiLang] || GUIDE_TOWER.en) : (GUIDE[uiLang] || GUIDE.en)}
       </div>
 
-      {/* ── Drop zones (top) ── */}
+      {/* ── Drop zones (top / tower) ── */}
       <div
         style={{
           display: 'flex',
-          gap: 10,
+          flexDirection: isTower ? 'column-reverse' : 'row',
+          gap: isTower ? 6 : 10,
           justifyContent: 'center',
-          flexWrap: 'wrap',
-          marginBottom: 36,
-          minHeight: 90,
+          alignItems: isTower ? 'center' : undefined,
+          flexWrap: isTower ? 'nowrap' : 'wrap',
+          marginBottom: isTower ? 20 : 36,
+          minHeight: isTower ? undefined : 90,
           direction: 'ltr', // letters always LTR
         }}
       >
@@ -358,14 +369,14 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
                   letter={placedMap[idx]}
                   color={CUBE_COLORS[idx % CUBE_COLORS.length]}
                   isPlaced
-                  size={56}
+                  size={isTower ? 50 : 56}
                 />
               ) : (
                 <LetterCube
                   letter={letter}
                   color="#9ca3af"
                   isGhost
-                  size={56}
+                  size={isTower ? 50 : 56}
                 />
               )}
 
@@ -401,15 +412,20 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
                 </div>
               )}
 
-              {/* Order label under ghost */}
+              {/* Order label */}
               <div
                 style={{
                   textAlign: 'center',
                   fontSize: 11,
                   fontWeight: 700,
                   color: '#9ca3af',
-                  marginTop: 2,
+                  marginTop: isTower ? 0 : 2,
+                  marginLeft: isTower ? 6 : 0,
                   fontFamily: "'Fredoka', sans-serif",
+                  position: isTower ? 'absolute' : 'static',
+                  right: isTower ? -20 : undefined,
+                  top: isTower ? '50%' : undefined,
+                  transform: isTower ? 'translateY(-50%)' : undefined,
                 }}
               >
                 {idx + 1}

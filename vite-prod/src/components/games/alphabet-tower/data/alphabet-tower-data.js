@@ -283,13 +283,16 @@ export function generateRound(mode, level, letterStats = null) {
 
   switch (mode) {
     case 'alphabetOrder': {
-      // Player must sort a subset of letters into correct order
-      // Use smaller subsets for small letter pools to keep it varied
+      // Player must arrange CONSECUTIVE letters in order (teaches real alphabet sequence)
       const pool = letters || UPPERCASE_A_Z;
-      const subsetSize = pool.length <= 6 ? 3 + Math.floor(Math.random() * 2) : 5; // 3-4 for small pools, 5 for large
-      const subset = pickRandom(pool, subsetSize);
-      const sorted = [...subset].sort((a, b) => a.localeCompare(b));
-      return { type: 'sort', letters: subset, answer: sorted };
+      const subsetSize = pool.length <= 6 ? 3 + Math.floor(Math.random() * 2) : 4 + Math.floor(Math.random() * 2); // 3-4 or 4-5
+      const maxStart = Math.max(0, pool.length - subsetSize);
+      const startIdx = Math.floor(Math.random() * (maxStart + 1));
+      const consecutive = pool.slice(startIdx, startIdx + subsetSize);
+      const scrambled = [...consecutive].sort(() => Math.random() - 0.5);
+      // Vary layout: row (horizontal) or tower (vertical stacking)
+      const layout = Math.random() < 0.5 ? 'row' : 'tower';
+      return { type: 'sort', letters: scrambled, answer: consecutive, layout };
     }
 
     case 'missingLetter': {
