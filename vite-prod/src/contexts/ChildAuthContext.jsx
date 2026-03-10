@@ -121,16 +121,10 @@ export function ChildAuthProvider({ children }) {
       // Success - clear rate limit
       clearRateLimit();
 
-      // Sign in with custom token so we have full Firestore access (as parent)
-      if (data.customToken) {
-        await window.firebaseAuth.signInWithCustomToken(window.auth, data.customToken);
-      }
-
-      // Set activeChildId so UserProgressContext loads this child's data
+      // Set activeChildId BEFORE signInWithCustomToken so App.jsx user-change
+      // effect sees it and skips the profile-picker reset
       localStorage.setItem('speakeasy_activeChildId', childId);
-      // Mark profile as selected so we skip the profile picker
       sessionStorage.setItem('speakeasy_profileSelected', '1');
-      // Reset intro flags so child sees their own intro experience
       sessionStorage.removeItem('speakli_intro_seen');
 
       const session = {
@@ -139,8 +133,12 @@ export function ChildAuthProvider({ children }) {
         loginAt: new Date().toISOString(),
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       };
-
       localStorage.setItem('speakeasy_childSession', JSON.stringify(session));
+
+      // Sign in with custom token so we have full Firestore access (as parent)
+      if (data.customToken) {
+        await window.firebaseAuth.signInWithCustomToken(window.auth, data.customToken);
+      }
       setChildUser(session);
       return { success: true };
     } catch (error) {

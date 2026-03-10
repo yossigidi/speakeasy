@@ -111,18 +111,17 @@ function AppContent() {
   }, [currentPage, isChildMode, setSection]);
 
   // Reset profile picker when user changes (logout/login)
-  // But NOT when signing in via child login (signInWithCustomToken sets activeChildId)
+  // Skip reset if child login is active (activeChildId is set during child login flow)
   useEffect(() => {
     if (user?.uid !== prevUserRef.current) {
-      const isChildSession = !!localStorage.getItem('speakeasy_childSession');
-      // If user logged out (null), always clear child session and reset
-      if (!user) {
-        localStorage.removeItem('speakeasy_childSession');
+      const hasActiveChild = !!localStorage.getItem('speakeasy_activeChildId');
+      if (!hasActiveChild) {
+        // Regular login/logout — reset profile picker
         setProfileSelected(false);
         sessionStorage.removeItem('speakeasy_profileSelected');
-      } else if (!isChildSession) {
-        setProfileSelected(false);
-        sessionStorage.removeItem('speakeasy_profileSelected');
+        if (!user) {
+          localStorage.removeItem('speakeasy_childSession');
+        }
       }
       prevUserRef.current = user?.uid;
     }

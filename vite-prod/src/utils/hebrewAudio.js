@@ -102,14 +102,13 @@ function cacheKey(text, lang) {
  * @param {string} [lang] - 'he' or 'en' (auto-detected if omitted)
  */
 export async function preloadHebrewAudio(texts, lang) {
-  const ctx = getAudioContext();
-  if (ctx.state === 'suspended') await ctx.resume();
-
+  // Don't create/resume AudioContext during preload — it can break iOS audio
+  // if called before user gesture. Just pre-fetch and cache the raw base64.
   const toLoad = texts.filter(t => t && !apiAudioCache.has(cacheKey(t, lang)));
   if (toLoad.length === 0) return;
 
   await Promise.allSettled(toLoad.map(async (text) => {
-    const trimmed = text.trim(); // Keep niqqud for TTS pronunciation
+    const trimmed = text.trim();
     try {
       const token = await window.auth?.currentUser?.getIdToken();
       const res = await fetch('/api/tts', {
@@ -123,6 +122,11 @@ export async function preloadHebrewAudio(texts, lang) {
       if (!res.ok) return;
       const { audio } = await res.json();
       if (!audio) return;
+      // Decode and cache the AudioBuffer
+      const ctx = getAudioContext();
+      if (ctx.state === 'suspended') {
+        try { await ctx.resume(); } catch (e) {}
+      }
       const raw = atob(audio);
       const buf = new ArrayBuffer(raw.length);
       const bytes = new Uint8Array(buf);
