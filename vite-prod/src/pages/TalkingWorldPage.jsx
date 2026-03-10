@@ -882,17 +882,25 @@ export default function TalkingWorldPage({ onBack }) {
           playsInline
           className="w-full max-h-[70vh] object-contain"
           onEnded={handleWorldIntroDone}
-          ref={el => {
-            videoRef.current = el;
-            if (!el) return;
-            el.muted = false;
-            const p = el.play();
-            if (p && p.catch) p.catch(() => { el.muted = true; el.play().catch(() => {}); });
-          }}
+          ref={el => { if (el) videoRef.current = el; }}
         />
+        {/* Tap-to-play overlay */}
+        <button
+          onClick={(e) => {
+            const v = videoRef.current;
+            if (v) { v.muted = false; v.play().catch(() => {}); }
+            e.currentTarget.style.display = 'none';
+          }}
+          className="absolute inset-0 flex items-center justify-center bg-black/30"
+          style={{ zIndex: 1 }}
+        >
+          <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="#1e293b"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </button>
         <button
           onClick={handleWorldIntroDone}
-          className="absolute bottom-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
+          className="absolute bottom-10 z-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
         >
           {t('skip', uiLang) || 'Skip'}
         </button>
@@ -910,16 +918,25 @@ export default function TalkingWorldPage({ onBack }) {
             src="/videos/talking-world/tw-intro-main.mp4"
             className="w-full max-h-[70vh] object-contain"
             onEnded={handleIntroDone}
-            ref={el => {
-              if (!el) return;
-              el.muted = false;
-              const p = el.play();
-              if (p && p.catch) p.catch(() => { el.muted = true; el.play().catch(() => {}); });
-            }}
+            ref={el => { if (el) videoRef.current = el; }}
           />
+          {/* Tap-to-play overlay — user gesture required for unmuted audio on mobile */}
+          <button
+            onClick={(e) => {
+              const v = videoRef.current;
+              if (v) { v.muted = false; v.play().catch(() => {}); }
+              e.currentTarget.style.display = 'none';
+            }}
+            className="absolute inset-0 flex items-center justify-center bg-black/30"
+            style={{ zIndex: 1 }}
+          >
+            <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="#1e293b"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </button>
           <button
             onClick={handleIntroDone}
-            className="absolute bottom-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
+            className="absolute bottom-10 z-10 bg-white/20 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold text-sm active:scale-95 transition-transform"
           >
             {t('skip', uiLang) || 'Skip'}
           </button>

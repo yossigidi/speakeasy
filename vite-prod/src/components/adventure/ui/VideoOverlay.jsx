@@ -50,15 +50,12 @@ export default function VideoOverlay({ src, narration, onSpeak, onStopSpeaking, 
     finish();
   }, [finish]);
 
-  // Start video + TTS
+  // Start video + TTS — must be called from user gesture for iOS audio
   const startPlayback = useCallback(() => {
     if (started) return;
     setStarted(true);
     if (videoRef.current) {
-      // In manual mode (user tapped Play), unmute the video
-      if (!autoPlay) {
-        videoRef.current.muted = false;
-      }
+      videoRef.current.muted = false;
       videoRef.current.play().catch(() => {
         finish();
       });
@@ -66,14 +63,7 @@ export default function VideoOverlay({ src, narration, onSpeak, onStopSpeaking, 
     if (narration && onSpeak) {
       onSpeak(narration);
     }
-  }, [started, autoPlay, finish, narration, onSpeak]);
-
-  // Auto-play: start immediately on mount
-  useEffect(() => {
-    if (autoPlay && !hasError) {
-      startPlayback();
-    }
-  }, [autoPlay, hasError, startPlayback]);
+  }, [started, finish, narration, onSpeak]);
 
   if (hasError) return null;
 
@@ -90,23 +80,22 @@ export default function VideoOverlay({ src, narration, onSpeak, onStopSpeaking, 
         src={src}
         className="w-full h-full object-contain"
         playsInline
-        muted={autoPlay || !started}
+        muted
         preload="auto"
         onEnded={handleEnded}
         onError={handleError}
       />
 
-      {/* Play button — only for manual mode */}
-      {!autoPlay && !started && (
+      {/* Play button — user gesture required for unmuted audio on mobile */}
+      {!started && (
         <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-4"
           onClick={startPlayback}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', zIndex: 1 }}
         >
-          <div className="w-20 h-20 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center active:scale-90 transition-transform">
-            <span className="text-white text-4xl ml-1">▶</span>
+          <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl active:scale-90 transition-transform">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="#1e293b"><path d="M8 5v14l11-7z"/></svg>
           </div>
-          <p className="text-white/70 text-sm font-medium">Tap to play</p>
         </div>
       )}
 
