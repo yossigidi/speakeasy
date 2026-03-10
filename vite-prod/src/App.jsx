@@ -115,7 +115,12 @@ function AppContent() {
   useEffect(() => {
     if (user?.uid !== prevUserRef.current) {
       const isChildSession = !!localStorage.getItem('speakeasy_childSession');
-      if (!isChildSession) {
+      // If user logged out (null), always clear child session and reset
+      if (!user) {
+        localStorage.removeItem('speakeasy_childSession');
+        setProfileSelected(false);
+        sessionStorage.removeItem('speakeasy_profileSelected');
+      } else if (!isChildSession) {
         setProfileSelected(false);
         sessionStorage.removeItem('speakeasy_profileSelected');
       }
