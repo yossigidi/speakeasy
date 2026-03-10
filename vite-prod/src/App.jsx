@@ -115,7 +115,10 @@ function AppContent() {
   useEffect(() => {
     if (user?.uid !== prevUserRef.current) {
       const hasActiveChild = !!localStorage.getItem('speakeasy_activeChildId');
-      if (!hasActiveChild) {
+      if (hasActiveChild) {
+        // Child login flow — ensure profile picker is skipped
+        setProfileSelected(true);
+      } else {
         // Regular login/logout — reset profile picker
         setProfileSelected(false);
         sessionStorage.removeItem('speakeasy_profileSelected');
