@@ -1228,6 +1228,7 @@ const GAMES = [
   {
     id: 'listen-pop',
     emoji: '🎧',
+    image: '/images/game-listen-pop.jpg',
     titleKey: 'gameListenPopTitle',
     descKey: 'gameListenPopDesc',
     gradient: 'from-cyan-400 via-sky-400 to-blue-500',
@@ -1236,6 +1237,7 @@ const GAMES = [
   {
     id: 'bubble-pop',
     emoji: '🫧',
+    image: '/images/game-bubble-pop.jpg',
     titleKey: 'gameBubblePopTitle',
     descKey: 'gameBubblePopDesc',
     gradient: 'from-cyan-400 via-blue-400 to-indigo-400',
@@ -1244,6 +1246,7 @@ const GAMES = [
   {
     id: 'missing-letter',
     emoji: '🔤',
+    image: '/images/game-missing-letter.jpg',
     titleKey: 'gameMissingLetterTitle',
     descKey: 'gameMissingLetterDesc',
     gradient: 'from-violet-400 via-purple-400 to-fuchsia-400',
@@ -1252,6 +1255,7 @@ const GAMES = [
   {
     id: 'memory',
     emoji: '🧠',
+    image: '/images/game-memory.jpg',
     titleKey: 'gameMemoryTitle',
     descKey: 'gameMemoryDesc',
     gradient: 'from-purple-400 via-pink-400 to-rose-400',
@@ -1260,6 +1264,7 @@ const GAMES = [
   {
     id: 'category-sort',
     emoji: '📦',
+    image: '/images/game-category-sort.jpg',
     titleKey: 'gameCategorySortTitle',
     descKey: 'gameCategorySortDesc',
     gradient: 'from-green-400 via-emerald-400 to-teal-400',
@@ -1268,6 +1273,7 @@ const GAMES = [
   {
     id: 'alphabet-tower',
     emoji: '🏗️',
+    image: '/images/game-alphabet-tower.jpg',
     titleKey: 'gameAlphabetTowerTitle',
     descKey: 'gameAlphabetTowerDesc',
     gradient: 'from-orange-400 via-amber-400 to-yellow-400',
@@ -1276,6 +1282,7 @@ const GAMES = [
   {
     id: 'sentence-builder',
     emoji: '📝',
+    image: '/images/game-sentence-builder.jpg',
     titleKey: 'gameSentenceBuilderTitle',
     descKey: 'gameSentenceBuilderDesc',
     gradient: 'from-indigo-400 via-blue-400 to-sky-400',
@@ -1284,6 +1291,7 @@ const GAMES = [
   {
     id: 'speakli-run',
     emoji: '🏃',
+    image: '/images/game-speakli-run.jpg',
     titleKey: 'gameSpeakliRunTitle',
     descKey: 'gameSpeakliRunDesc',
     gradient: 'from-green-400 via-emerald-400 to-teal-400',
@@ -1292,6 +1300,7 @@ const GAMES = [
   {
     id: 'speakli-flight',
     emoji: '🚀',
+    image: '/images/game-speakli-flight.jpg',
     titleKey: 'gameSpeakliFlightTitle',
     descKey: 'gameSpeakliFlightDesc',
     gradient: 'from-indigo-400 via-purple-400 to-pink-400',
@@ -1300,6 +1309,7 @@ const GAMES = [
   {
     id: 'adventure',
     emoji: '🗺️',
+    image: '/images/game-adventure.jpg',
     titleKey: 'gameAdventureTitle',
     descKey: 'gameAdventureDesc',
     gradient: 'from-emerald-400 via-green-500 to-teal-500',
@@ -1308,6 +1318,7 @@ const GAMES = [
   {
     id: 'english-quest',
     emoji: '⚔️',
+    image: '/images/game-english-quest.jpg',
     titleKey: 'gameQuestTitle',
     descKey: 'gameQuestDesc',
     gradient: 'from-orange-400 via-amber-500 to-yellow-500',
@@ -1406,8 +1417,12 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
                   )}
 
                   <div className="relative flex flex-col items-center text-center gap-2">
-                    <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl">
-                      {game.emoji}
+                    <div className="w-16 h-16 rounded-2xl bg-white/25 flex items-center justify-center text-4xl overflow-hidden">
+                      {game.image ? (
+                        <img src={game.image} alt="" draggable={false} className="w-full h-full object-cover rounded-2xl" />
+                      ) : (
+                        game.emoji
+                      )}
                     </div>
                     <h3 className="text-base font-black text-white drop-shadow-md leading-tight">
                       {t(game.titleKey, uiLang)}
