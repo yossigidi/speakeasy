@@ -4,6 +4,8 @@ import { generateRound, MODE_CONFIGS, getWeakLetters } from '../data/alphabet-to
 import { playSequence, playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playComplete } from '../../../../utils/gameSounds.js';
 import SpeakliAvatar from '../../../../components/kids/SpeakliAvatar.jsx';
+import SpeakliTeacher from '../components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements } from '../components/GameEffects.jsx';
 import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
@@ -79,6 +81,8 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
   const [showEncouragement, setShowEncouragement] = useState(null); // text to display
   const [totalStars, setTotalStars] = useState(0);
   const [avatarMode, setAvatarMode] = useState('talk');
+  const [teacherPose, setTeacherPose] = useState('happy');
+  const [showConfetti, setShowConfetti] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [roundResults, setRoundResults] = useState([]); // { letter, correct }
 
@@ -151,6 +155,7 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
       const goNext = (earnedStars) => {
         setShowEncouragement(null);
         setAvatarMode('idle');
+        setTeacherPose('happy');
         if (earnedStars > 0) onRoundComplete(earnedStars);
 
         const nextRound = currentRound + 1;
@@ -172,6 +177,9 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         try { playCorrect(); } catch { /* */ }
         try { playStar(); } catch { /* */ }
         setAvatarMode('celebrate');
+        setTeacherPose('clap');
+        setShowConfetti(true);
+        addTimer(() => setShowConfetti(false), 2000);
         const enc = getEncouragement();
         setShowEncouragement(enc);
 
@@ -192,6 +200,7 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         // Wrong answer
         try { playWrong(); } catch { /* */ }
         setAvatarMode('talk');
+        setTeacherPose('sad');
         setShowEncouragement(TRY_AGAIN[uiLang] || TRY_AGAIN.en);
 
         // Speak "this is [letter]" + try again, then advance after speech ends
@@ -414,6 +423,9 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         zIndex: 0,
       }} />
 
+      <FloatingElements type="stars" count={5} />
+      <ConfettiBurst active={showConfetti} count={20} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -456,8 +468,13 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         {currentRound + 1}/{TOTAL_ROUNDS}
       </div>
 
-      {/* ── Avatar ── */}
-      <SpeakliAvatar mode={avatarMode} size="md" />
+      {/* ── Teacher character ── */}
+      <SpeakliTeacher
+        pose={teacherPose}
+        size="md"
+        isRTL={isRTL}
+        style={{ marginBottom: 4 }}
+      />
 
       {/* ── Question text ── */}
       <div

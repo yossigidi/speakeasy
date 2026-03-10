@@ -6,6 +6,8 @@ import { DIFFICULTY_LEVELS, getUnlockedRewards, getNextReward, REWARD_MILESTONES
 import ModeSelector from './components/ModeSelector.jsx';
 import RewardOverlay from './components/RewardOverlay.jsx';
 import SpeakliAvatar from '../../../components/kids/SpeakliAvatar.jsx';
+import SpeakliTeacher from './components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements } from './components/GameEffects.jsx';
 import AlphabetOrderMode from './modes/AlphabetOrderMode.jsx';
 import MissingLetterMode from './modes/MissingLetterMode.jsx';
 import WordBuilderCubeMode from './modes/WordBuilderCubeMode.jsx';
@@ -21,6 +23,9 @@ const STARS_EARNED = { he: 'כוכבים שהרווחת', ar: 'النجوم ال
 const XP_EARNED_LABEL = { he: 'נקודות ניסיון', ar: 'نقاط خبرة', ru: 'Очки опыта', en: 'XP earned' };
 const PLAY_AGAIN = { he: 'שחק שוב', ar: 'العب مجدداً', ru: 'Играть снова', en: 'Play Again' };
 const BACK_TEXT = { he: 'חזרה', ar: 'رجوع', ru: 'Назад', en: 'Back' };
+const START_TEXT = { he: 'בואו נתחיל!', ar: 'هيا نبدأ!', ru: 'Начнём!', en: "Let's start!" };
+const SKIP_TEXT = { he: 'דלג', ar: 'تخطي', ru: 'Пропустить', en: 'Skip' };
+const INTRO_SEEN_KEY = 'alphabetTower_introSeen';
 
 const MODE_COMPONENTS = {
   alphabetOrder: AlphabetOrderMode,
@@ -52,7 +57,8 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
   }, [progress?.alphabetTower]);
 
   // ─── state machine ────────────────────────────────────────────────────
-  const [screen, setScreen] = useState('select'); // 'select' | 'playing' | 'reward' | 'complete'
+  const hasSeenIntro = sessionStorage.getItem(INTRO_SEEN_KEY);
+  const [screen, setScreen] = useState(hasSeenIntro ? 'select' : 'intro'); // 'intro' | 'select' | 'playing' | 'reward' | 'complete'
   const [currentMode, setCurrentMode] = useState(null);
   const [difficulty, setDifficulty] = useState(towerProgress.difficultyUnlocked || 1);
   const [sessionStars, setSessionStars] = useState(0);
@@ -203,6 +209,153 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
     if (onBack) onBack();
   }, [sessionStars, onComplete, onBack]);
 
+  // ─── intro speech — plays automatically with the video ──────────────
+  const introSpokenRef = useRef(false);
+  useEffect(() => {
+    if (screen !== 'intro' || introSpokenRef.current) return;
+    introSpokenRef.current = true;
+    // Small delay so video starts first, then speech
+    const t = setTimeout(() => {
+      try {
+        playSequence([
+          { pause: 300 },
+          { text: WELCOME[lang] || WELCOME.en, lang },
+          { pause: 800 },
+          { text: START_TEXT[lang] || START_TEXT.en, lang },
+        ]);
+      } catch { /* ignore */ }
+    }, 500);
+    timersRef.current.push(t);
+  }, [screen, lang]);
+
+  // ─── handle intro end ────────────────────────────────────────────────
+  const handleIntroEnd = useCallback(() => {
+    try { stopAllAudio(); } catch { /* */ }
+    sessionStorage.setItem(INTRO_SEEN_KEY, '1');
+    setScreen('select');
+  }, []);
+
+  // ─── render: intro video ───────────────────────────────────────────────
+  if (screen === 'intro') {
+    return (
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          minHeight: '100dvh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#0f172a',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Video */}
+        <video
+          autoPlay
+          muted
+          playsInline
+          onEnded={handleIntroEnd}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            position: 'absolute',
+            inset: 0,
+          }}
+        >
+          <source src="/videos/intro-alphabet-tower.mp4" type="video/mp4" />
+        </video>
+
+        {/* Title overlay */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            textAlign: 'center',
+            animation: 'intro-title-in 1s ease-out 0.5s both',
+          }}
+        >
+          <div
+            style={{
+              fontSize: 32,
+              fontWeight: 900,
+              color: '#fff',
+              textShadow: '0 3px 12px rgba(0,0,0,0.5), 0 0 40px rgba(251,191,36,0.3)',
+              fontFamily: "'Fredoka', 'Heebo', sans-serif",
+              marginBottom: 8,
+            }}
+          >
+            {WELCOME[lang]}
+          </div>
+        </div>
+
+        {/* Bottom buttons */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 40,
+            zIndex: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 12,
+            animation: 'intro-btn-in 0.6s ease-out 1.5s both',
+          }}
+        >
+          <button
+            onClick={handleIntroEnd}
+            style={{
+              padding: '14px 40px',
+              fontSize: 20,
+              fontWeight: 800,
+              color: '#fff',
+              background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+              border: 'none',
+              borderRadius: 20,
+              cursor: 'pointer',
+              boxShadow: '0 4px 20px rgba(22,163,74,0.5)',
+              fontFamily: "'Fredoka', 'Heebo', sans-serif",
+              transition: 'transform 0.15s',
+            }}
+            onPointerDown={(e) => { e.currentTarget.style.transform = 'scale(0.93)'; }}
+            onPointerUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+          >
+            {START_TEXT[lang]}
+          </button>
+          <button
+            onClick={handleIntroEnd}
+            style={{
+              padding: '6px 20px',
+              fontSize: 14,
+              fontWeight: 600,
+              color: 'rgba(255,255,255,0.7)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: "'Fredoka', 'Heebo', sans-serif",
+            }}
+          >
+            {SKIP_TEXT[lang]}
+          </button>
+        </div>
+
+        <style>{`
+          @keyframes intro-title-in {
+            0% { transform: translateY(-30px) scale(0.8); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+          }
+          @keyframes intro-btn-in {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   // ─── render: mode selector ────────────────────────────────────────────
   if (screen === 'select') {
     return (
@@ -247,8 +400,16 @@ const AlphabetTowerGame = React.memo(function AlphabetTowerGame({
           WebkitUserSelect: 'none',
         }}
       >
-        {/* Avatar */}
-        <SpeakliAvatar mode="celebrate" size="lg" />
+        <FloatingElements type="stars" count={10} />
+        <ConfettiBurst active count={40} />
+
+        {/* Teacher character */}
+        <SpeakliTeacher
+          pose="star"
+          size="lg"
+          isRTL={isRTL}
+          style={{ marginBottom: 8 }}
+        />
 
         {/* Title */}
         <div

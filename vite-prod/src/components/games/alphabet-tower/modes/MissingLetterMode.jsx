@@ -4,6 +4,8 @@ import useDragAndDrop from '../hooks/useDragAndDrop.js';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
 import { playSequence, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playPop, playTap, playComplete } from '../../../../utils/gameSounds.js';
+import SpeakliTeacher from '../components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements, RoundTransition } from '../components/GameEffects.jsx';
 import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
@@ -43,6 +45,10 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
   const [showPlaceAnim, setShowPlaceAnim] = useState(false);
   const [showRoundStars, setShowRoundStars] = useState(false);
   const [totalStars, setTotalStars] = useState(0);
+  const [teacherPose, setTeacherPose] = useState('think');
+  const [teacherSpeech, setTeacherSpeech] = useState('');
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
 
   const timersRef = useRef([]);
   const isRTL = uiLang === 'he' || uiLang === 'ar';
@@ -118,6 +124,11 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
       setFilledLetter(null);
       setShowPlaceAnim(false);
       setIsAnimating(false);
+      setShowConfetti(false);
+      setShowTransition(true);
+      setTimeout(() => setShowTransition(false), 600);
+      setTeacherPose('think');
+      setTeacherSpeech('');
     }
   }, [totalStars, currentRound, difficulty, onRoundComplete, onGameComplete]);
 
@@ -133,7 +144,9 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         // Correct!
         try { playCorrect(); } catch { /* */ }
         try { playStar(); } catch { /* */ }
-        // Say the letter + encouragement
+        setTeacherPose('clap');
+        const enc2 = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+        setTeacherSpeech(enc2);
         try {
           stopAllAudio();
           const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
@@ -151,6 +164,8 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         addTimer(() => {
           setShowPlaceAnim(false);
           setShowRoundStars(true);
+          setShowConfetti(true);
+          setTeacherPose('star');
           try { playComplete(); } catch { /* */ }
         }, 600);
 
@@ -164,6 +179,8 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         setIsAnimating(true);
         setWrongOption(itemId);
         setShakeGap(true);
+        setTeacherPose('sad');
+        setTeacherSpeech('');
 
         // Speak "try again"
         const tryAgain = {
@@ -178,6 +195,7 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
           setWrongOption(null);
           setShakeGap(false);
           setIsAnimating(false);
+          setTeacherPose('think');
         }, 500);
       }
     },
@@ -252,6 +270,10 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         zIndex: 0,
       }} />
 
+      <FloatingElements type="stars" count={6} />
+      <ConfettiBurst active={showConfetti} />
+      <RoundTransition show={showTransition} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -290,21 +312,14 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         {currentRound + 1}/{TOTAL_ROUNDS}
       </div>
 
-      {/* ── Teacher guidance ── */}
-      <div
-        style={{
-          fontSize: 18,
-          fontWeight: 700,
-          color: '#1e293b',
-          marginBottom: 24,
-          textAlign: 'center',
-          fontFamily: "'Fredoka', 'Heebo', sans-serif",
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        {GUIDE[uiLang] || GUIDE.en}
-      </div>
+      {/* ── Teacher character ── */}
+      <SpeakliTeacher
+        pose={teacherPose}
+        size="sm"
+        isRTL={isRTL}
+        speech={teacherSpeech || (GUIDE[uiLang] || GUIDE.en)}
+        style={{ marginBottom: 16 }}
+      />
 
       {/* ── Sequence row ── */}
       <div

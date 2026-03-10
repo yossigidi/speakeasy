@@ -4,6 +4,8 @@ import useDragAndDrop from '../hooks/useDragAndDrop.js';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
 import { playSequence, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playPop, playTap, playComplete } from '../../../../utils/gameSounds.js';
+import SpeakliTeacher from '../components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements, RoundTransition } from '../components/GameEffects.jsx';
 import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
@@ -60,6 +62,10 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
   const [starBurst, setStarBurst] = useState(null); // zone index for star burst
   const [showRoundStars, setShowRoundStars] = useState(false);
   const [totalStars, setTotalStars] = useState(0);
+  const [teacherPose, setTeacherPose] = useState('happy');
+  const [teacherSpeech, setTeacherSpeech] = useState('');
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
 
   const timersRef = useRef([]);
   const isRTL = uiLang === 'he' || uiLang === 'ar';
@@ -106,6 +112,9 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
       if (Object.keys(nextPlacedMap).length === zoneCount) {
         setIsAnimating(true);
         setShowRoundStars(true);
+        setShowConfetti(true);
+        setTeacherPose('star');
+        setTeacherSpeech('');
         try { playComplete(); } catch { /* */ }
 
         const stars = MODE_CONFIGS.alphabetOrder.starsPerRound;
@@ -130,6 +139,11 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
               newRoundData.letters.map((l, i) => ({ id: `letter-${nextRound}-${i}`, letter: l }))
             );
             setIsAnimating(false);
+            setShowConfetti(false);
+            setShowTransition(true);
+            setTimeout(() => setShowTransition(false), 600);
+            setTeacherPose('happy');
+            setTeacherSpeech('');
           }
         }, 1500);
       }
@@ -152,6 +166,10 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         // Correct placement
         try { playCorrect(); } catch { /* */ }
         try { playStar(); } catch { /* */ }
+        setTeacherPose('clap');
+        const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+        setTeacherSpeech(enc);
+        addTimer(() => { setTeacherPose('think'); setTeacherSpeech(''); }, 1200);
 
         const nextPlaced = { ...placedMap, [zoneIndex]: item.letter };
         setPlacedMap(nextPlaced);
@@ -174,11 +192,13 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
 
         checkAllPlaced(nextPlaced);
       } else {
-        // Wrong placement — say "that's not the letter, let's try again"
+        // Wrong placement
         try { playWrong(); } catch { /* */ }
         setIsAnimating(true);
         setWrongZone(zoneIndex);
         setWrongCube(itemId);
+        setTeacherPose('sad');
+        setTeacherSpeech('');
         addTimer(() => {
           playSequence([
             { text: TRY_AGAIN[uiLang] || TRY_AGAIN.en, lang: uiLang },
@@ -188,6 +208,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           setWrongZone(null);
           setWrongCube(null);
           setIsAnimating(false);
+          setTeacherPose('think');
         }, 500);
       }
     },
@@ -270,6 +291,10 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         zIndex: 0,
       }} />
 
+      <FloatingElements type="stars" count={6} />
+      <ConfettiBurst active={showConfetti} />
+      <RoundTransition show={showTransition} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button
@@ -312,21 +337,14 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         {currentRound + 1}/{TOTAL_ROUNDS}
       </div>
 
-      {/* ── Teacher guidance ── */}
-      <div
-        style={{
-          fontSize: 18,
-          fontWeight: 700,
-          color: '#1e293b',
-          marginBottom: 20,
-          textAlign: 'center',
-          fontFamily: "'Fredoka', 'Heebo', sans-serif",
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        {isTower ? (GUIDE_TOWER[uiLang] || GUIDE_TOWER.en) : (GUIDE[uiLang] || GUIDE.en)}
-      </div>
+      {/* ── Teacher character ── */}
+      <SpeakliTeacher
+        pose={teacherPose}
+        size="sm"
+        isRTL={isRTL}
+        speech={teacherSpeech || (isTower ? (GUIDE_TOWER[uiLang] || GUIDE_TOWER.en) : (GUIDE[uiLang] || GUIDE.en))}
+        style={{ marginBottom: 12 }}
+      />
 
       {/* ── Drop zones (top / tower) ── */}
       <div

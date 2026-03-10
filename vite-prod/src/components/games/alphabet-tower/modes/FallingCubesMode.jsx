@@ -3,6 +3,8 @@ import LetterCube from '../components/LetterCube.jsx';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
 import { playSequence, playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playStar, playComplete } from '../../../../utils/gameSounds.js';
+import SpeakliTeacher from '../components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements } from '../components/GameEffects.jsx';
 import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
@@ -61,6 +63,8 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
   const [roundActive, setRoundActive] = useState(false);
   const [showResult, setShowResult] = useState(null); // 'correct' | 'miss' | null
   const [tappedCubeId, setTappedCubeId] = useState(null);
+  const [teacherPose, setTeacherPose] = useState('happy');
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const timersRef = useRef([]);
   const abortRef = useRef(null);
@@ -115,6 +119,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     }));
 
     setFallingCubes(cubes);
+    setTeacherPose('happy');
 
     // Start falling after a short delay for the announcement
     const t1 = setTimeout(() => {
@@ -205,6 +210,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
     if (!roundActiveRef.current) return;
     setRoundActive(false);
     setShowResult('miss');
+    setTeacherPose('sad');
     playWrong();
 
     // Say "Oops! The letter was [X]" in uiLang
@@ -241,6 +247,7 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       setRoundActive(false);
       setFrozen(true);
       playPop();
+      setTeacherPose('clap');
 
       setFallingCubes((prev) =>
         prev.map((c) =>
@@ -251,6 +258,9 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
       const earned = STARS_PER_ROUND;
       setStars((prev) => prev + earned);
       setShowResult('correct');
+      setShowConfetti(true);
+      const t0 = setTimeout(() => setShowConfetti(false), 2000);
+      timersRef.current.push(t0);
 
       // Say the letter + encouragement
       try {
@@ -327,6 +337,9 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
         zIndex: 0,
       }} />
 
+      <FloatingElements type="bubbles" count={5} />
+      <ConfettiBurst active={showConfetti} count={20} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [dir === 'rtl' ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: dir === 'rtl' ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -398,18 +411,13 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
         </div>
       </div>
 
-      {/* Teacher guidance */}
-      <div style={{
-        fontSize: 13,
-        color: '#e2e8f0',
-        fontWeight: 500,
-        textAlign: 'center',
-        opacity: 0.8,
-        marginBottom: 6,
-        zIndex: 10,
-      }}>
-        {GUIDE[uiLang] || GUIDE.en}
-      </div>
+      {/* Teacher character */}
+      <SpeakliTeacher
+        pose={teacherPose}
+        size="sm"
+        isRTL={isRTL}
+        style={{ marginBottom: 4, zIndex: 10 }}
+      />
 
       {/* Target letter display */}
       <div style={{

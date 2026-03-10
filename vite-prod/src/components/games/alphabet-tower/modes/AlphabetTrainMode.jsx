@@ -4,6 +4,8 @@ import useDragAndDrop from '../hooks/useDragAndDrop.js';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
 import { playSequence, playFromAPI, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playComplete } from '../../../../utils/gameSounds.js';
+import SpeakliTeacher from '../components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements, RoundTransition } from '../components/GameEffects.jsx';
 import { ArrowLeft } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
@@ -53,6 +55,10 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
   const [showSmoke, setShowSmoke] = useState(false);
   const [showWhistle, setShowWhistle] = useState(false);
   const [totalStars, setTotalStars] = useState(0);
+  const [teacherPose, setTeacherPose] = useState('happy');
+  const [teacherSpeech, setTeacherSpeech] = useState('');
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
 
   const timersRef = useRef([]);
   const isRTL = uiLang === 'he' || uiLang === 'ar';
@@ -139,6 +145,8 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
     (nextFilled) => {
       if (Object.keys(nextFilled).length === blanks.length) {
         setIsAnimating(true);
+        setTeacherPose('star');
+        setTeacherSpeech(TRAIN_COMPLETE[uiLang] || TRAIN_COMPLETE.en);
 
         // Say "The train is complete!" before the train moves
         try {
@@ -149,6 +157,7 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         // Train completion sequence
         addTimer(() => setShowWhistle(true), 500);
         addTimer(() => setShowSmoke(true), 600);
+        addTimer(() => setShowConfetti(true), 700);
         addTimer(() => setTrainMoving(true), 800);
         addTimer(() => setShowRoundStars(true), 900);
         try { playComplete(); } catch { /* */ }
@@ -162,6 +171,9 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
           setTrainMoving(false);
           setShowSmoke(false);
           setShowWhistle(false);
+          setShowConfetti(false);
+          setShowTransition(true);
+          setTimeout(() => setShowTransition(false), 600);
           onRoundComplete(stars);
 
           const nextRound = currentRound + 1;
@@ -174,6 +186,8 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
             setRoundData(newRoundData);
             setFilledBlanks({});
             setIsAnimating(false);
+            setTeacherPose('happy');
+            setTeacherSpeech('');
           }
         }, 2500);
       }
@@ -197,6 +211,10 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         // Correct
         try { playCorrect(); } catch { /* */ }
         try { playStar(); } catch { /* */ }
+        setTeacherPose('clap');
+        const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+        setTeacherSpeech(enc);
+        addTimer(() => { setTeacherPose('think'); setTeacherSpeech(''); }, 1200);
         // Say the letter + encouragement
         try {
           stopAllAudio();
@@ -224,10 +242,13 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         setIsAnimating(true);
         setWrongZone(blankIdx);
         setWrongCube(itemId);
+        setTeacherPose('sad');
+        setTeacherSpeech('');
         addTimer(() => {
           setWrongZone(null);
           setWrongCube(null);
           setIsAnimating(false);
+          setTeacherPose('think');
         }, 500);
       }
     },
@@ -287,6 +308,10 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         overflow: 'hidden',
       }}
     >
+      <FloatingElements type="bubbles" count={5} />
+      <ConfettiBurst active={showConfetti} />
+      <RoundTransition show={showTransition} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -327,20 +352,14 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         {currentRound + 1}/{TOTAL_ROUNDS}
       </div>
 
-      {/* ── Teacher guidance ── */}
-      <div
-        style={{
-          fontSize: 18,
-          fontWeight: 700,
-          color: '#1e293b',
-          marginBottom: 16,
-          textAlign: 'center',
-          fontFamily: "'Fredoka', 'Heebo', sans-serif",
-          zIndex: 2,
-        }}
-      >
-        {GUIDE[uiLang] || GUIDE.en}
-      </div>
+      {/* ── Teacher character ── */}
+      <SpeakliTeacher
+        pose={teacherPose}
+        size="sm"
+        isRTL={isRTL}
+        speech={teacherSpeech || (GUIDE[uiLang] || GUIDE.en)}
+        style={{ marginBottom: 10, zIndex: 2 }}
+      />
 
       {/* ── Train area ── */}
       <div

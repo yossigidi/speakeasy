@@ -4,6 +4,8 @@ import useDragAndDrop from '../hooks/useDragAndDrop.js';
 import { generateRound, MODE_CONFIGS } from '../data/alphabet-tower-data.js';
 import { playFromAPI, playSequence, stopAllAudio } from '../../../../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playStar, playPop, playComplete } from '../../../../utils/gameSounds.js';
+import SpeakliTeacher from '../components/SpeakliTeacher.jsx';
+import { ConfettiBurst, FloatingElements, RoundTransition } from '../components/GameEffects.jsx';
 import { ArrowLeft, Volume2 } from 'lucide-react';
 
 const CUBE_COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
@@ -50,6 +52,10 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
   const [roundComplete, setRoundComplete] = useState(false);
   const [stars, setStars] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [teacherPose, setTeacherPose] = useState('happy');
+  const [teacherSpeech, setTeacherSpeech] = useState('');
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
 
   const timersRef = useRef([]);
   const abortRef = useRef(null);
@@ -94,6 +100,8 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     setShowCelebration(false);
     setWrongZone(null);
     setIsAnimating(false);
+    setTeacherPose('happy');
+    setTeacherSpeech('');
 
     // Build pool cubes from scrambled letters
     const cubes = data.scrambled.map((letter, i) => ({
@@ -162,15 +170,19 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
       // Remove from pool
       setPoolCubes((prev) => prev.filter((c) => c.id !== cube.id));
 
+      setTeacherPose('clap');
+      const enc = pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en);
+      setTeacherSpeech(enc);
       const t = setTimeout(() => {
         playCorrect();
-        // Speak the letter with encouragement
         playSequence([
           { text: cube.letter.toUpperCase(), lang: 'en-US' },
           { pause: 200 },
-          { text: pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en), lang: uiLang },
+          { text: enc, lang: uiLang },
         ]);
         setIsAnimating(false);
+        const t2 = setTimeout(() => { setTeacherPose('think'); setTeacherSpeech(''); }, 1200);
+        timersRef.current.push(t2);
       }, 300);
       timersRef.current.push(t);
     } else {
@@ -178,9 +190,12 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
       playWrong();
       setWrongZone(zoneIndex);
       setIsAnimating(true);
+      setTeacherPose('sad');
+      setTeacherSpeech('');
       const t = setTimeout(() => {
         setWrongZone(null);
         setIsAnimating(false);
+        setTeacherPose('think');
       }, 500);
       timersRef.current.push(t);
     }
@@ -205,6 +220,9 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     if (filledSlots === totalSlots) {
       setRoundComplete(true);
       setShowCelebration(true);
+      setShowConfetti(true);
+      setTeacherPose('star');
+      setTeacherSpeech(WORD_COMPLETE[uiLang] || WORD_COMPLETE.en);
       const earned = STARS_PER_ROUND;
       setStars((prev) => prev + earned);
 
@@ -231,6 +249,9 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
       // Move to next round or complete game
       const t4 = setTimeout(() => {
         setShowCelebration(false);
+        setShowConfetti(false);
+        setShowTransition(true);
+        setTimeout(() => setShowTransition(false), 600);
         if (round >= TOTAL_ROUNDS) {
           const totalStars = stars + earned;
           if (onGameComplete) onGameComplete(totalStars + BONUS_STARS);
@@ -282,6 +303,10 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         zIndex: 0,
       }} />
 
+      <FloatingElements type="stars" count={6} />
+      <ConfettiBurst active={showConfetti} />
+      <RoundTransition show={showTransition} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [dir === 'rtl' ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: dir === 'rtl' ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -328,18 +353,14 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         <span style={{ fontSize: 14 }}>{'⭐'.repeat(Math.min(stars, 5))}</span>
       </div>
 
-      {/* Teacher guidance */}
-      <div style={{
-        fontSize: 14,
-        color: '#e2e8f0',
-        fontWeight: 500,
-        textAlign: 'center',
-        opacity: 0.85,
-        position: 'relative',
-        zIndex: 1,
-      }}>
-        {GUIDE[uiLang] || GUIDE.en}
-      </div>
+      {/* Teacher character */}
+      <SpeakliTeacher
+        pose={teacherPose}
+        size="sm"
+        isRTL={isRTL}
+        speech={teacherSpeech}
+        style={{ marginBottom: 4 }}
+      />
 
       {/* Emoji + translation + hear again button */}
       <div style={{

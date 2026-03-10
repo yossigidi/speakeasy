@@ -50,6 +50,22 @@ const LetterCube = React.memo(function LetterCube({
       }}
       onPointerDown={onPointerDown}
     >
+      {/* ---- Drag glow aura ---- */}
+      {isDragging && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: -6,
+            borderRadius: size * 0.22,
+            background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)',
+            boxShadow: `0 0 20px 6px ${baseColor}55, 0 0 40px 10px ${baseColor}22`,
+            animation: 'drag-glow 1s ease-in-out infinite alternate',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+      )}
+
       {/* ---- Front face ---- */}
       <div
         className="letter-cube-face letter-cube-front"
@@ -143,6 +159,15 @@ const LetterCube = React.memo(function LetterCube({
             boxShadow: 'inset -2px 0 6px rgba(0,0,0,0.15)',
           }}
         />
+      )}
+
+      {isDragging && (
+        <style>{`
+          @keyframes drag-glow {
+            0% { box-shadow: 0 0 16px 4px ${baseColor}44, 0 0 32px 8px ${baseColor}18; }
+            100% { box-shadow: 0 0 24px 8px ${baseColor}66, 0 0 48px 14px ${baseColor}28; }
+          }
+        `}</style>
       )}
     </div>
   );
