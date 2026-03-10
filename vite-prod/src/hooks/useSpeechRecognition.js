@@ -2,14 +2,20 @@ import { useState, useRef, useCallback } from 'react';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 
 export default function useSpeechRecognition() {
-  const { sttSupported, setIsListening, recognitionRef } = useSpeech();
+  const { sttSupported, setIsListening, recognitionRef, requestMicPermission } = useSpeech();
   const [transcript, setTranscript] = useState('');
   const [interimTranscript, setInterimTranscript] = useState('');
   const [confidence, setConfidence] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
-  const startListening = useCallback((options = {}) => {
+  const startListening = useCallback(async (options = {}) => {
     if (!sttSupported) return;
+
+    // Show pre-permission dialog if mic hasn't been granted yet
+    if (requestMicPermission) {
+      const allowed = await requestMicPermission();
+      if (!allowed) return;
+    }
 
     // Abort any existing recognition instance before starting a new one
     if (recognitionRef.current) {

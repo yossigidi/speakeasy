@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Moon, Sun, Languages, LogOut, Trash2, Trophy, BarChart3, Flame, Zap, BookOpen, BookA, Star, Users, Bell, BellOff, HelpCircle, Music, Volume2, Crown } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
@@ -11,6 +11,7 @@ import GlassCard from '../components/shared/GlassCard.jsx';
 import LevelBadge from '../components/gamification/LevelBadge.jsx';
 import XPBar from '../components/gamification/XPBar.jsx';
 import useSubscription from '../hooks/useSubscription.js';
+const PermissionDialog = lazy(() => import('../components/PermissionDialog.jsx'));
 
 export default function ProfilePage({ onNavigate }) {
   const { uiLang, setLang, isDark, toggleTheme } = useTheme();
@@ -24,6 +25,7 @@ export default function ProfilePage({ onNavigate }) {
   const [pushLoading, setPushLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [showNotifDialog, setShowNotifDialog] = useState(false);
 
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -60,8 +62,10 @@ export default function ProfilePage({ onNavigate }) {
         setPushEnabled(false);
       } else {
         if (Notification.permission === 'default') {
-          const perm = await Notification.requestPermission();
-          if (perm !== 'granted') return;
+          // Show our pre-permission dialog first (Apple requires clear explanation)
+          setShowNotifDialog(true);
+          setPushLoading(false);
+          return; // Will continue in handleNotifAllow
         }
         if (Notification.permission !== 'granted') return;
 
@@ -95,6 +99,50 @@ export default function ProfilePage({ onNavigate }) {
     } finally {
       setPushLoading(false);
     }
+  };
+
+  // Called after user taps "Allow" in our pre-permission dialog for notifications
+  const handleNotifAllow = async () => {
+    setShowNotifDialog(false);
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm !== 'granted') return;
+
+      setPushLoading(true);
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: window.VAPID_PUBLIC_KEY
+      });
+      setPushEnabled(true);
+
+      if (user && window.firestore && window.db) {
+        try {
+          const subJson = sub.toJSON();
+          await window.firestore.addDoc(
+            window.firestore.collection(window.db, 'push-subscriptions'),
+            {
+              endpoint: subJson.endpoint,
+              keys: { p256dh: subJson.keys.p256dh, auth: subJson.keys.auth },
+              userId: user.uid,
+              language: uiLang,
+              createdAt: new Date(),
+              userAgent: navigator.userAgent
+            }
+          );
+        } catch (err) {
+          console.error('Failed to save push subscription:', err);
+        }
+      }
+    } catch (e) {
+      console.error('Push enable error:', e);
+    } finally {
+      setPushLoading(false);
+    }
+  };
+
+  const handleNotifDeny = () => {
+    setShowNotifDialog(false);
   };
 
   const handleManageSubscription = async () => {
@@ -440,6 +488,17 @@ export default function ProfilePage({ onNavigate }) {
             </div>
           </div>
         </div>
+      )}
+      {/* Notification Permission Dialog */}
+      {showNotifDialog && (
+        <Suspense fallback={null}>
+          <PermissionDialog
+            type="notification"
+            lang={uiLang}
+            onAllow={handleNotifAllow}
+            onDeny={handleNotifDeny}
+          />
+        </Suspense>
       )}
     </div>
   );

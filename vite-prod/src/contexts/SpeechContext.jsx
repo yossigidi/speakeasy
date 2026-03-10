@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { playHebrew, playFromAPI, stopAllAudio, stopCloudTTS, unlockAudioContext } from '../utils/hebrewAudio';
 import { MusicContext } from './MusicContext.jsx';
+const PermissionDialogLazy = React.lazy(() => import('../components/PermissionDialog.jsx'));
 
 const SpeechContext = createContext(null);
 
@@ -127,6 +128,10 @@ export function SpeechProvider({ children }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voices, setVoices] = useState([]);
   const [preferredVoice, setPreferredVoice] = useState(null);
+  // Microphone permission state: 'unknown' | 'granted' | 'denied' | 'prompt'
+  const [micPermission, setMicPermission] = useState('unknown');
+  // Callback to invoke after user allows mic in our pre-permission dialog
+  const micResolveRef = useRef(null);
   const [hebrewVoice, setHebrewVoice] = useState(null);
   const [arabicVoice, setArabicVoice] = useState(null);
   const [russianVoice, setRussianVoice] = useState(null);
@@ -134,6 +139,48 @@ export function SpeechProvider({ children }) {
 
   // Promise that resolves when voices are loaded (or times out)
   const voicesReadyRef = useRef(null);
+
+  // Check microphone permission status on mount
+  useEffect(() => {
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: 'microphone' }).then((result) => {
+        setMicPermission(result.state); // 'granted', 'denied', or 'prompt'
+        result.onchange = () => setMicPermission(result.state);
+      }).catch(() => {
+        // Safari doesn't support querying microphone permission
+        setMicPermission('unknown');
+      });
+    }
+  }, []);
+
+  // Show pre-permission dialog, returns a promise that resolves to true (allowed) or false (denied)
+  const [showMicDialog, setShowMicDialog] = useState(false);
+  const requestMicPermission = useCallback(() => {
+    // Already granted — no dialog needed
+    if (micPermission === 'granted') return Promise.resolve(true);
+    // Already shown our dialog before in this session
+    if (sessionStorage.getItem('speakli_mic_asked')) {
+      return Promise.resolve(micPermission !== 'denied');
+    }
+    return new Promise((resolve) => {
+      micResolveRef.current = resolve;
+      setShowMicDialog(true);
+    });
+  }, [micPermission]);
+
+  const handleMicAllow = useCallback(() => {
+    sessionStorage.setItem('speakli_mic_asked', '1');
+    setShowMicDialog(false);
+    if (micResolveRef.current) micResolveRef.current(true);
+    micResolveRef.current = null;
+  }, []);
+
+  const handleMicDeny = useCallback(() => {
+    sessionStorage.setItem('speakli_mic_asked', '1');
+    setShowMicDialog(false);
+    if (micResolveRef.current) micResolveRef.current(false);
+    micResolveRef.current = null;
+  }, []);
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -454,9 +501,25 @@ export function SpeechProvider({ children }) {
     voices,
     preferredVoice,
     recognitionRef,
-  }), [sttSupported, ttsSupported, isListening, isSpeaking, speak, speakSequence, stopSpeaking, voices, preferredVoice]);
+    micPermission,
+    requestMicPermission,
+  }), [sttSupported, ttsSupported, isListening, isSpeaking, speak, speakSequence, stopSpeaking, voices, preferredVoice, micPermission, requestMicPermission]);
 
-  return <SpeechContext.Provider value={value}>{children}</SpeechContext.Provider>;
+  return (
+    <SpeechContext.Provider value={value}>
+      {children}
+      {showMicDialog && (
+        <React.Suspense fallback={null}>
+          <PermissionDialogLazy
+            type="microphone"
+            lang={document.documentElement.lang || 'he'}
+            onAllow={handleMicAllow}
+            onDeny={handleMicDeny}
+          />
+        </React.Suspense>
+      )}
+    </SpeechContext.Provider>
+  );
 }
 
 export function useSpeech() {

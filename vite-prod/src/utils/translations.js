@@ -913,6 +913,15 @@ const translations = {
     sessionXP: 'XP שהרווחתם',
     noMicPermission: 'אין גישה למיקרופון',
     micNotSupported: 'הדפדפן לא תומך בהקלטה',
+    micPermissionTitle: 'נדרשת גישה למיקרופון',
+    micPermissionDesc: 'Speakli צריכה גישה למיקרופון כדי לתרגל איתך דיבור באנגלית ולבדוק את ההגייה שלך. ההקלטות לא נשמרות ולא נשלחות לשום מקום.',
+    micPermissionAllow: 'אישור גישה למיקרופון',
+    micPermissionDeny: 'לא עכשיו',
+    micPermissionDenied: 'הגישה למיקרופון נדחתה. כדי לתרגל דיבור, יש לאשר גישה בהגדרות הדפדפן.',
+    notifPermissionTitle: 'תזכורות תרגול',
+    notifPermissionDesc: 'Speakli תשלח לך תזכורת יומית לתרגל אנגלית. אפשר לכבות בכל עת מהפרופיל.',
+    notifPermissionAllow: 'הפעלת תזכורות',
+    notifPermissionDeny: 'לא עכשיו',
 
     // Subscription & Premium
     premium: 'פרימיום',
@@ -1860,6 +1869,15 @@ const translations = {
     sessionXP: 'XP earned',
     noMicPermission: 'No microphone access',
     micNotSupported: 'Browser does not support recording',
+    micPermissionTitle: 'Microphone Access Required',
+    micPermissionDesc: 'Speakli needs microphone access to practice speaking English with you and check your pronunciation. Recordings are not stored or sent anywhere.',
+    micPermissionAllow: 'Allow Microphone',
+    micPermissionDeny: 'Not Now',
+    micPermissionDenied: 'Microphone access was denied. To practice speaking, please allow access in your browser settings.',
+    notifPermissionTitle: 'Practice Reminders',
+    notifPermissionDesc: 'Speakli will send you a daily reminder to practice English. You can turn this off anytime from your profile.',
+    notifPermissionAllow: 'Enable Reminders',
+    notifPermissionDeny: 'Not Now',
 
     // Subscription & Premium
     premium: 'Premium',
@@ -2830,6 +2848,15 @@ const translations = {
     sessionXP: 'XP المكتسبة',
     noMicPermission: 'لا يوجد وصول للميكروفون',
     micNotSupported: 'المتصفح لا يدعم التسجيل',
+    micPermissionTitle: 'مطلوب الوصول للميكروفون',
+    micPermissionDesc: 'يحتاج Speakli الوصول للميكروفون لممارسة التحدث بالإنجليزية والتحقق من نطقك. لا يتم حفظ التسجيلات أو إرسالها لأي مكان.',
+    micPermissionAllow: 'السماح بالميكروفون',
+    micPermissionDeny: 'ليس الآن',
+    micPermissionDenied: 'تم رفض الوصول للميكروفون. لممارسة التحدث، يرجى السماح بالوصول في إعدادات المتصفح.',
+    notifPermissionTitle: 'تذكيرات التمرين',
+    notifPermissionDesc: 'سيرسل لك Speakli تذكيرًا يوميًا لممارسة الإنجليزية. يمكنك إيقافه في أي وقت من ملفك الشخصي.',
+    notifPermissionAllow: 'تفعيل التذكيرات',
+    notifPermissionDeny: 'ليس الآن',
 
     // Subscription & Premium
     premium: 'بريميوم',
@@ -3800,6 +3827,15 @@ const translations = {
     sessionXP: 'Заработано XP',
     noMicPermission: 'Нет доступа к микрофону',
     micNotSupported: 'Браузер не поддерживает запись',
+    micPermissionTitle: 'Требуется доступ к микрофону',
+    micPermissionDesc: 'Speakli нужен доступ к микрофону, чтобы практиковать разговорный английский и проверять произношение. Записи не сохраняются и никуда не отправляются.',
+    micPermissionAllow: 'Разрешить микрофон',
+    micPermissionDeny: 'Не сейчас',
+    micPermissionDenied: 'Доступ к микрофону отклонён. Чтобы практиковать речь, разрешите доступ в настройках браузера.',
+    notifPermissionTitle: 'Напоминания о практике',
+    notifPermissionDesc: 'Speakli будет отправлять ежедневное напоминание для практики английского. Можно отключить в любой момент в профиле.',
+    notifPermissionAllow: 'Включить напоминания',
+    notifPermissionDeny: 'Не сейчас',
 
     // Subscription & Premium
     premium: 'Премиум',
