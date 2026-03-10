@@ -613,11 +613,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     setMoves(0);
     lockRef.current = false;
 
-    // Preload audio for all words in this round so speech is instant on flip
-    const englishWords = picked.map(w => w.word);
-    const hebrewWords = picked.map(w => w.translation).filter(Boolean);
-    preloadEnglishAudio(englishWords);
-    if (uiLang === 'he') preloadHebrewAudio(hebrewWords, 'he');
+    // Note: preloading removed — was causing rate-limit issues on iOS
   }, [round, currentPairs, showInstructions]);
 
   // Voice instructions on game start (skip if overlay is shown - overlay handles TTS)

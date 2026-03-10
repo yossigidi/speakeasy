@@ -39,6 +39,7 @@ const LetterCube = React.memo(function LetterCube({
           ? 'cube-ghost'
           : 'cube-idle';
 
+  // Ghost cube (drop zone placeholder)
   if (isGhost) {
     return (
       <div
@@ -58,8 +59,8 @@ const LetterCube = React.memo(function LetterCube({
           width: size,
           height: size,
           borderRadius: size * 0.16,
-          border: '2.5px dashed rgba(150,150,150,0.5)',
-          background: 'rgba(200,200,200,0.12)',
+          border: '2.5px dashed rgba(100,150,255,0.5)',
+          background: 'rgba(100,150,255,0.08)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -68,7 +69,7 @@ const LetterCube = React.memo(function LetterCube({
             <span style={{
               fontSize: size * 0.42,
               fontWeight: 800,
-              color: 'rgba(150,150,150,0.3)',
+              color: 'rgba(100,150,255,0.25)',
               fontFamily: "'Fredoka', 'Heebo', 'Inter', sans-serif",
               lineHeight: 1,
             }}>
@@ -79,6 +80,11 @@ const LetterCube = React.memo(function LetterCube({
       </div>
     );
   }
+
+  // The cube images are ~1024x1024 with the cube centered.
+  // We scale the image larger so the cube fills most of the container,
+  // and clip overflow. The cube sits roughly in the center 75% of the image.
+  const imgScale = 1.3;
 
   return (
     <div
@@ -92,6 +98,8 @@ const LetterCube = React.memo(function LetterCube({
         WebkitUserSelect: 'none',
         touchAction: 'none',
         zIndex: isDragging ? 50 : 1,
+        overflow: 'hidden',
+        borderRadius: size * 0.14,
         ...style,
       }}
       onPointerDown={onPointerDown}
@@ -110,32 +118,36 @@ const LetterCube = React.memo(function LetterCube({
         }} />
       )}
 
-      {/* Cube image */}
+      {/* Cube image — scaled up and centered to crop out background */}
       <img
         src={cubeImage}
         alt=""
         draggable={false}
         style={{
-          width: size,
-          height: size,
+          position: 'absolute',
+          width: size * imgScale,
+          height: size * imgScale,
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           objectFit: 'contain',
           pointerEvents: 'none',
           filter: isDragging
-            ? 'brightness(1.1) drop-shadow(0 6px 12px rgba(0,0,0,0.35))'
-            : 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))',
+            ? 'brightness(1.1)'
+            : undefined,
         }}
       />
 
-      {/* Letter overlay — positioned on the front face */}
+      {/* Letter overlay — centered on front face */}
       <span style={{
         position: 'absolute',
-        top: '46%',
-        left: '40%',
+        top: '50%',
+        left: '44%',
         transform: 'translate(-50%, -50%)',
-        fontSize: size * 0.46,
+        fontSize: size * 0.48,
         fontWeight: 900,
         color: '#fff',
-        textShadow: '0 2px 6px rgba(0,0,0,0.45), 0 0 10px rgba(255,255,255,0.2)',
+        textShadow: '0 2px 6px rgba(0,0,0,0.5), 0 0 12px rgba(255,255,255,0.2)',
         lineHeight: 1,
         fontFamily: "'Fredoka', 'Heebo', 'Inter', sans-serif",
         zIndex: 2,
