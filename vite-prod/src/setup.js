@@ -39,6 +39,7 @@ import {
   updateProfile,
   deleteUser,
   sendPasswordResetEmail,
+  signInWithCustomToken,
   browserLocalPersistence,
   setPersistence
 } from 'firebase/auth';
@@ -90,7 +91,8 @@ window.firebaseAuth = {
   onAuthStateChanged,
   updateProfile,
   deleteUser,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  signInWithCustomToken
 };
 
 // Remove loading skeleton
