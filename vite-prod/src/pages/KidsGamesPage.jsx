@@ -3,7 +3,7 @@ import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Lock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
-import { playSequence, playHebrew, preloadHebrewAudio, stopAllAudio } from '../utils/hebrewAudio.js';
+import { playSequence, playHebrew, preloadHebrewAudio, preloadEnglishAudio, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
 import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
@@ -612,6 +612,12 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
     setMatched([]);
     setMoves(0);
     lockRef.current = false;
+
+    // Preload audio for all words in this round so speech is instant on flip
+    const englishWords = picked.map(w => w.word);
+    const hebrewWords = picked.map(w => w.translation).filter(Boolean);
+    preloadEnglishAudio(englishWords);
+    if (uiLang === 'he') preloadHebrewAudio(hebrewWords, 'he');
   }, [round, currentPairs, showInstructions]);
 
   // Voice instructions on game start (skip if overlay is shown - overlay handles TTS)
@@ -1387,8 +1393,8 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
           {t('gamesGiveXP', uiLang)}
         </p>
 
-        {/* Game cards - 2 column grid */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Game cards - 2 column grid, capped width on desktop */}
+        <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
           {GAMES.map((game, i) => {
             const locked = isLocked('games', i);
             return (
@@ -1404,7 +1410,7 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
                 style={{ animationDelay: `${i * 0.05}s` }}
               >
                 <div className={`relative overflow-hidden h-full ${game.image ? '' : `bg-gradient-to-br ${locked ? 'from-gray-400 to-gray-500' : game.gradient} p-5`}`}
-                  style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)', minHeight: game.image ? 160 : undefined }}
+                  style={{ boxShadow: '0 4px 0 rgba(0,0,0,0.12)', aspectRatio: game.image ? '1 / 1' : undefined }}
                 >
                   {/* Background image or decorative circles */}
                   {game.image ? (

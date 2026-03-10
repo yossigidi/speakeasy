@@ -48,11 +48,23 @@ function stripNiqqud(text) {
   return text.replace(/[\u0591-\u05C7]/g, '');
 }
 
+// Hebrew pronunciation overrides — words that ElevenLabs mispronounces
+const HE_PRONUNCIATION = {
+  'ברווז': 'ברוז',
+  'בַּרְוָז': 'ברוז',
+};
+
 // Clean text for natural pronunciation
 function cleanForTTS(text, lang) {
   let cleaned = text;
   if (lang === 'he') {
-    // Keep niqqud (vowel diacritics) — helps v3 pronounce words correctly
+    // Apply pronunciation overrides for mispronounced words
+    const stripped = stripNiqqud(cleaned.trim());
+    if (HE_PRONUNCIATION[stripped]) {
+      cleaned = HE_PRONUNCIATION[stripped];
+    } else if (HE_PRONUNCIATION[cleaned.trim()]) {
+      cleaned = HE_PRONUNCIATION[cleaned.trim()];
+    }
     // Remove parenthetical content (e.g. "יד (כף יד)" → "יד")
     cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
     cleaned = cleaned.replace(/\s*\/\s*/g, ' או ');
