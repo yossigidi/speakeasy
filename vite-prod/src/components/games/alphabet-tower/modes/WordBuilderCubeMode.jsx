@@ -12,11 +12,27 @@ const STARS_PER_ROUND = MODE_CONFIGS.wordBuilder.starsPerRound;
 const BONUS_STARS = MODE_CONFIGS.wordBuilder.bonusStars;
 
 const GUIDE = {
-  he: '\u05D1\u05E0\u05D5 \u05D0\u05EA \u05D4\u05DE\u05D9\u05DC\u05D4 \u05DE\u05D4\u05D0\u05D5\u05EA\u05D9\u05D5\u05EA!',
-  ar: '\u0627\u0628\u0646\u0648\u0627 \u0627\u0644\u0643\u0644\u0645\u0629 \u0645\u0646 \u0627\u0644\u062D\u0631\u0648\u0641!',
-  ru: '\u0421\u043E\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0441\u043B\u043E\u0432\u043E \u0438\u0437 \u0431\u0443\u043A\u0432!',
+  he: 'בנו את המילה מהאותיות!',
+  ar: 'ابنوا الكلمة من الحروف!',
+  ru: 'Составьте слово из букв!',
   en: 'Build the word from the letters!',
 };
+
+const ENCOURAGEMENT = {
+  he: ['יופי!', 'מצוין!', 'כל הכבוד!', 'נהדר!', 'סופר!'],
+  ar: ['رائع!', 'ممتاز!', 'أحسنت!', 'مذهل!', 'سوبر!'],
+  ru: ['Отлично!', 'Молодец!', 'Замечательно!', 'Супер!', 'Класс!'],
+  en: ['Great!', 'Excellent!', 'Well done!', 'Amazing!', 'Super!'],
+};
+
+const WORD_COMPLETE = {
+  he: 'כל הכבוד! בניתם את המילה',
+  ar: 'أحسنتم! بنيتم الكلمة',
+  ru: 'Молодцы! Вы составили слово',
+  en: 'Well done! You built the word',
+};
+
+const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
   difficulty,
@@ -49,16 +65,20 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     };
   }, []);
 
-  // Hear the word again (guidance + word + translation)
+  // Hear the word again (word + spell letters + translation)
   const hearAgain = useCallback(() => {
     if (!roundData) return;
     stopAllAudio();
     const seq = [
-      { text: GUIDE[uiLang] || GUIDE.en, lang: uiLang },
-      { pause: 400 },
       { text: roundData.answer, lang: 'en-US' },
-      { pause: 300 },
+      { pause: 400 },
     ];
+    // Spell out each letter
+    for (const letter of roundData.answer.split('')) {
+      seq.push({ text: letter.toUpperCase(), lang: 'en-US' });
+      seq.push({ pause: 250 });
+    }
+    seq.push({ pause: 200 });
     if (roundData.translations && roundData.translations[uiLang]) {
       seq.push({ text: roundData.translations[uiLang], lang: uiLang });
     }
@@ -83,7 +103,7 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     }));
     setPoolCubes(cubes);
 
-    // Speak guidance + word
+    // Speak guidance + word + spell letters + translation (like a private tutor)
     stopAllAudio();
     const seq = [];
     // On first round, speak the full guide instruction
@@ -93,7 +113,13 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
     }
     // Speak the word
     seq.push({ text: data.answer, lang: 'en-US' });
-    seq.push({ pause: 300 });
+    seq.push({ pause: 400 });
+    // Spell out each letter
+    for (const letter of data.answer.split('')) {
+      seq.push({ text: letter.toUpperCase(), lang: 'en-US' });
+      seq.push({ pause: 250 });
+    }
+    seq.push({ pause: 200 });
     // Speak translation
     if (data.translations && data.translations[uiLang]) {
       seq.push({ text: data.translations[uiLang], lang: uiLang });
@@ -138,6 +164,12 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
 
       const t = setTimeout(() => {
         playCorrect();
+        // Speak the letter with encouragement
+        playSequence([
+          { text: cube.letter.toUpperCase(), lang: 'en-US' },
+          { pause: 200 },
+          { text: pickRandom(ENCOURAGEMENT[uiLang] || ENCOURAGEMENT.en), lang: uiLang },
+        ]);
         setIsAnimating(false);
       }, 300);
       timersRef.current.push(t);
@@ -181,8 +213,10 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
       const t2 = setTimeout(() => playComplete(), 600);
       timersRef.current.push(t1, t2);
 
-      // Speak the word again
+      // Speak celebration: "Well done! You built the word CAT — חתול!"
       const celebSeq = [
+        { text: WORD_COMPLETE[uiLang] || WORD_COMPLETE.en, lang: uiLang },
+        { pause: 300 },
         { text: roundData.answer, lang: 'en-US' },
         { pause: 300 },
       ];
