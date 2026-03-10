@@ -104,8 +104,68 @@ export const MODE_CONFIGS = {
 };
 
 // -----------------------------------------------------------------------------
-// 4. WORD_LIST (Level 5)
+// 4. WORD_LISTS (tiered by difficulty)
 // -----------------------------------------------------------------------------
+
+// Easy 3-letter words (levels 1-3)
+export const WORD_LIST_EASY = [
+  { word: 'cat', emoji: '🐱', he: 'חתול', ar: 'قطة', ru: 'кот' },
+  { word: 'dog', emoji: '🐶', he: 'כלב', ar: 'كلب', ru: 'пёс' },
+  { word: 'sun', emoji: '☀️', he: 'שמש', ar: 'شمس', ru: 'солнце' },
+  { word: 'hat', emoji: '🎩', he: 'כובע', ar: 'قبعة', ru: 'шляпа' },
+  { word: 'bed', emoji: '🛏️', he: 'מיטה', ar: 'سرير', ru: 'кровать' },
+  { word: 'cup', emoji: '☕', he: 'כוס', ar: 'كوب', ru: 'чашка' },
+  { word: 'fox', emoji: '🦊', he: 'שועל', ar: 'ثعلب', ru: 'лиса' },
+  { word: 'run', emoji: '🏃', he: 'לרוץ', ar: 'اركض', ru: 'бег' },
+  { word: 'red', emoji: '🔴', he: 'אדום', ar: 'أحمر', ru: 'красный' },
+  { word: 'big', emoji: '🐘', he: 'גדול', ar: 'كبير', ru: 'большой' },
+  { word: 'bus', emoji: '🚌', he: 'אוטובוס', ar: 'باص', ru: 'автобус' },
+  { word: 'pen', emoji: '🖊️', he: 'עט', ar: 'قلم', ru: 'ручка' },
+  { word: 'map', emoji: '🗺️', he: 'מפה', ar: 'خريطة', ru: 'карта' },
+  { word: 'box', emoji: '📦', he: 'קופסא', ar: 'صندوق', ru: 'коробка' },
+  { word: 'nut', emoji: '🥜', he: 'אגוז', ar: 'جوزة', ru: 'орех' },
+  { word: 'jam', emoji: '🍯', he: 'ריבה', ar: 'مربى', ru: 'джем' },
+  { word: 'egg', emoji: '🥚', he: 'ביצה', ar: 'بيضة', ru: 'яйцо' },
+  { word: 'ant', emoji: '🐜', he: 'נמלה', ar: 'نملة', ru: 'муравей' },
+  { word: 'bee', emoji: '🐝', he: 'דבורה', ar: 'نحلة', ru: 'пчела' },
+  { word: 'cow', emoji: '🐄', he: 'פרה', ar: 'بقرة', ru: 'корова' },
+  { word: 'ear', emoji: '👂', he: 'אוזן', ar: 'أذن', ru: 'ухо' },
+  { word: 'eye', emoji: '👁️', he: 'עין', ar: 'عين', ru: 'глаз' },
+  { word: 'leg', emoji: '🦵', he: 'רגל', ar: 'ساق', ru: 'нога' },
+  { word: 'net', emoji: '🥅', he: 'רשת', ar: 'شبكة', ru: 'сеть' },
+  { word: 'ice', emoji: '🧊', he: 'קרח', ar: 'ثلج', ru: 'лёд' },
+  { word: 'key', emoji: '🔑', he: 'מפתח', ar: 'مفتاح', ru: 'ключ' },
+  { word: 'car', emoji: '🚗', he: 'מכונית', ar: 'سيارة', ru: 'машина' },
+  { word: 'toy', emoji: '🧸', he: 'צעצוע', ar: 'لعبة', ru: 'игрушка' },
+  { word: 'pie', emoji: '🥧', he: 'פאי', ar: 'فطيرة', ru: 'пирог' },
+  { word: 'bat', emoji: '🦇', he: 'עטלף', ar: 'خفاش', ru: 'летучая мышь' },
+];
+
+// Medium 4-letter words (level 4)
+export const WORD_LIST_MEDIUM = [
+  { word: 'bird', emoji: '🐦', he: 'ציפור', ar: 'طائر', ru: 'птица' },
+  { word: 'fish', emoji: '🐟', he: 'דג', ar: 'سمكة', ru: 'рыба' },
+  { word: 'tree', emoji: '🌳', he: 'עץ', ar: 'شجرة', ru: 'дерево' },
+  { word: 'moon', emoji: '🌙', he: 'ירח', ar: 'قمر', ru: 'луна' },
+  { word: 'star', emoji: '⭐', he: 'כוכב', ar: 'نجمة', ru: 'звезда' },
+  { word: 'cake', emoji: '🎂', he: 'עוגה', ar: 'كعكة', ru: 'торт' },
+  { word: 'duck', emoji: '🦆', he: 'ברווז', ar: 'بطة', ru: 'утка' },
+  { word: 'frog', emoji: '🐸', he: 'צפרדע', ar: 'ضفدع', ru: 'лягушка' },
+  { word: 'hand', emoji: '✋', he: 'יד', ar: 'يد', ru: 'рука' },
+  { word: 'king', emoji: '👑', he: 'מלך', ar: 'ملك', ru: 'король' },
+  { word: 'lion', emoji: '🦁', he: 'אריה', ar: 'أسد', ru: 'лев' },
+  { word: 'ball', emoji: '⚽', he: 'כדור', ar: 'كرة', ru: 'мяч' },
+  { word: 'bell', emoji: '🔔', he: 'פעמון', ar: 'جرس', ru: 'колокол' },
+  { word: 'boat', emoji: '⛵', he: 'סירה', ar: 'قارب', ru: 'лодка' },
+  { word: 'book', emoji: '📖', he: 'ספר', ar: 'كتاب', ru: 'книга' },
+  { word: 'door', emoji: '🚪', he: 'דלת', ar: 'باب', ru: 'дверь' },
+  { word: 'gift', emoji: '🎁', he: 'מתנה', ar: 'هدية', ru: 'подарок' },
+  { word: 'milk', emoji: '🥛', he: 'חלב', ar: 'حليب', ru: 'молоко' },
+  { word: 'rain', emoji: '🌧️', he: 'גשם', ar: 'مطر', ru: 'дождь' },
+  { word: 'snow', emoji: '❄️', he: 'שלג', ar: 'ثلج', ru: 'снег' },
+];
+
+// Full word list (level 5 — mix of all)
 export const WORD_LIST = [
   { word: 'cat', emoji: '\u{1F431}', he: '\u05D7\u05EA\u05D5\u05DC', ar: '\u0642\u0637\u0629', ru: '\u043A\u043E\u0442' },
   { word: 'dog', emoji: '\u{1F436}', he: '\u05DB\u05DC\u05D1', ar: '\u0643\u0644\u0628', ru: '\u043F\u0451\u0441' },
@@ -221,9 +281,14 @@ export function getLettersForLevel(level) {
 }
 
 /**
- * Returns the word list used in level 5.
+ * Returns the word list for a given difficulty level.
+ * Levels 1-3: easy 3-letter words
+ * Level 4: medium 4-letter words
+ * Level 5: all words mixed
  */
-export function getWordsForLevel() {
+export function getWordsForLevel(level = 5) {
+  if (level <= 3) return WORD_LIST_EASY;
+  if (level === 4) return WORD_LIST_MEDIUM;
   return WORD_LIST;
 }
 
@@ -269,7 +334,7 @@ export function getWeakLetters(letterStats, count = 4) {
  */
 export function generateRound(mode, level, letterStats = null) {
   const letters = getLettersForLevel(level);
-  const words = getWordsForLevel();
+  const words = getWordsForLevel(level);
   const isWordLevel = level === 5;
 
   // Utility: pick N random items from an array
@@ -312,15 +377,10 @@ export function generateRound(mode, level, letterStats = null) {
     }
 
     case 'wordBuilder': {
-      if (isWordLevel) {
-        const wordObj = pickOne(words);
-        const scrambled = wordObj.word.split('').sort(() => Math.random() - 0.5);
-        return { type: 'buildWord', scrambled, answer: wordObj.word, hint: wordObj.emoji, translations: { he: wordObj.he, ar: wordObj.ar, ru: wordObj.ru } };
-      }
-      // For letter levels, build a short pseudo-sequence
-      const subset = pickRandom(letters, 4);
-      const sorted = [...subset].sort((a, b) => a.localeCompare(b));
-      return { type: 'buildWord', scrambled: subset, answer: sorted.join(''), hint: null, translations: null };
+      // Always use real words — easy 3-letter words for early levels, harder words for higher levels
+      const wordObj = pickOne(words);
+      const scrambled = wordObj.word.split('').sort(() => Math.random() - 0.5);
+      return { type: 'buildWord', scrambled, answer: wordObj.word, hint: wordObj.emoji, translations: { he: wordObj.he, ar: wordObj.ar, ru: wordObj.ru } };
     }
 
     case 'fallingCubes': {
