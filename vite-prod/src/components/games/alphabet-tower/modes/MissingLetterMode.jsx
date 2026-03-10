@@ -239,6 +239,19 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
         WebkitUserSelect: 'none',
       }}
     >
+      {/* ── Background image ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url(/images/games/bg-missing-letter.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.4,
+        borderRadius: 16,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -247,7 +260,7 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
       )}
 
       {/* ── Progress dots ── */}
-      <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 6, marginBottom: 8, position: 'relative', zIndex: 1 }}>
         {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
           <div
             key={i}
@@ -270,6 +283,8 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
           color: '#6b7280',
           marginBottom: 6,
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {currentRound + 1}/{TOTAL_ROUNDS}
@@ -284,6 +299,8 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
           marginBottom: 24,
           textAlign: 'center',
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {GUIDE[uiLang] || GUIDE.en}
@@ -299,6 +316,8 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
           flexWrap: 'wrap',
           marginBottom: 40,
           direction: 'ltr', // letters always LTR
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {roundData.display.map((item, idx) => {
@@ -395,6 +414,8 @@ const MissingLetterMode = React.memo(function MissingLetterMode({
             gap: 14,
             justifyItems: 'center',
             direction: 'ltr',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           {optionItems.map((item, idx) => {

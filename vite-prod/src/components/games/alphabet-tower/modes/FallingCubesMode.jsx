@@ -314,6 +314,19 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
         padding: '12px 8px',
       }}
     >
+      {/* ── Background image ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url(/images/games/bg-falling-cubes.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.4,
+        borderRadius: 16,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [dir === 'rtl' ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: dir === 'rtl' ? 'scaleX(-1)' : 'none' }} aria-label="Back">

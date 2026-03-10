@@ -401,6 +401,19 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
         WebkitUserSelect: 'none',
       }}
     >
+      {/* ── Background image ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url(/images/games/bg-ai-challenge.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.4,
+        borderRadius: 16,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [isRTL ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: isRTL ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -409,7 +422,7 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
       )}
 
       {/* ── Progress dots ── */}
-      <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 6, marginBottom: 8, position: 'relative', zIndex: 1 }}>
         {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
           <div
             key={i}
@@ -436,6 +449,8 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
           color: '#6b7280',
           marginBottom: 10,
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {currentRound + 1}/{TOTAL_ROUNDS}
@@ -454,6 +469,8 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
           marginBottom: 4,
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
           textAlign: 'center',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {WHICH_LETTER[uiLang] || WHICH_LETTER.en}
@@ -534,6 +551,8 @@ const AIAdaptiveMode = React.memo(function AIAdaptiveMode({
           direction: 'ltr',
           maxWidth: 280,
           width: '100%',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {roundData.allOptions.map((letter, idx) => {

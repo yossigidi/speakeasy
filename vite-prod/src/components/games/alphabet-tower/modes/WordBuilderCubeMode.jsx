@@ -269,6 +269,19 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         gap: 8,
       }}
     >
+      {/* ── Background image ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url(/images/games/bg-word-builder.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.4,
+        borderRadius: 16,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button onClick={onBack} style={{ position: 'absolute', top: 12, [dir === 'rtl' ? 'right' : 'left']: 12, background: 'rgba(255,255,255,0.85)', border: 'none', borderRadius: 12, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 50, transform: dir === 'rtl' ? 'scaleX(-1)' : 'none' }} aria-label="Back">
@@ -284,6 +297,8 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         alignItems: 'center',
         gap: 8,
         marginBottom: 4,
+        position: 'relative',
+        zIndex: 1,
       }}>
         <div style={{
           flex: 1,
@@ -320,6 +335,8 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         fontWeight: 500,
         textAlign: 'center',
         opacity: 0.85,
+        position: 'relative',
+        zIndex: 1,
       }}>
         {GUIDE[uiLang] || GUIDE.en}
       </div>
@@ -331,6 +348,8 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         alignItems: 'center',
         gap: 4,
         marginTop: 4,
+        position: 'relative',
+        zIndex: 1,
       }}>
         {emoji && <span style={{ fontSize: '4.5rem', lineHeight: 1.1 }}>{emoji}</span>}
         {translation && (
@@ -377,6 +396,8 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         flexWrap: 'wrap',
         marginTop: 12,
         minHeight: 80,
+        position: 'relative',
+        zIndex: 1,
       }}>
         {answerLetters.map((letter, i) => {
           const placed = placedLetters[i];
@@ -431,6 +452,8 @@ const WordBuilderCubeMode = React.memo(function WordBuilderCubeMode({
         flexWrap: 'wrap',
         marginTop: 20,
         minHeight: 80,
+        position: 'relative',
+        zIndex: 1,
       }}>
         {poolCubes.map((cube) => {
           const isBeingDragged = activeDrag?.id === cube.id;

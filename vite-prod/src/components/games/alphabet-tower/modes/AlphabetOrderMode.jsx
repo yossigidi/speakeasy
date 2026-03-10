@@ -257,6 +257,19 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         WebkitUserSelect: 'none',
       }}
     >
+      {/* ── Background image ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url(/images/games/bg-alphabet-order.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.4,
+        borderRadius: 16,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
       {/* ── Back button ── */}
       {onBack && (
         <button
@@ -269,7 +282,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
       )}
 
       {/* ── Progress dots ── */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 8, position: 'relative', zIndex: 1 }}>
         {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
           <div
             key={i}
@@ -292,6 +305,8 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           color: '#6b7280',
           marginBottom: 6,
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {currentRound + 1}/{TOTAL_ROUNDS}
@@ -306,6 +321,8 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           marginBottom: 20,
           textAlign: 'center',
           fontFamily: "'Fredoka', 'Heebo', sans-serif",
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {isTower ? (GUIDE_TOWER[uiLang] || GUIDE_TOWER.en) : (GUIDE[uiLang] || GUIDE.en)}
@@ -315,6 +332,8 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
       <div
         style={{
           display: 'flex',
+          position: 'relative',
+          zIndex: 1,
           flexDirection: isTower ? 'column-reverse' : 'row',
           gap: isTower ? 6 : 10,
           justifyContent: 'center',
@@ -443,6 +462,8 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
           justifyContent: 'center',
           flexWrap: 'wrap',
           direction: 'ltr',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {availableLetters.map((item) => {

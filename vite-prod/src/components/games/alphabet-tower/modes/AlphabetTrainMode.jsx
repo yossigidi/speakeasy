@@ -724,8 +724,10 @@ const AlphabetTrainMode = React.memo(function AlphabetTrainMode({
         .train-bg {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 45%, #86efac 45%, #22c55e 100%);
-          opacity: 0.35;
+          background-image: url(/images/games/bg-alphabet-train.jpg);
+          background-size: cover;
+          background-position: center;
+          opacity: 0.45;
           z-index: 0;
           pointer-events: none;
           border-radius: 16px;
