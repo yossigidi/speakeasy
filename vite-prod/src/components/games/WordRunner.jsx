@@ -458,7 +458,7 @@ function WorldSelect({ worlds, progress, onSelect, onBack, uiLang, childLevel })
             <ArrowLeft size={20} />
           </button>
           <h1 className="text-2xl font-black text-gray-800 dark:text-white flex items-center gap-2">
-            🎮 Word Runner
+            🎮 Speakli Jump
           </h1>
         </div>
 
@@ -912,7 +912,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
   // world-select, level-select, countdown, playing, challenge, boss, game-over
   const [selectedWorld, setSelectedWorld] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
-  const [showInstructions, setShowInstructions] = useState(true);
+  const spokenPhasesRef = useRef(new Set()); // track which intros we already spoke
 
   // ── Game state ──
   const [lives, setLives] = useState(MAX_LIVES);
@@ -956,6 +956,36 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
       stopAllAudio();
     };
   }, []);
+
+  // ── Voice instructions on phase change ──
+  useEffect(() => {
+    const isHe = uiLang === 'he';
+    const lang = isHe ? 'he-IL' : 'en-US';
+
+    if (phase === 'world-select' && !spokenPhasesRef.current.has('world-select')) {
+      spokenPhasesRef.current.add('world-select');
+      const msg = isHe
+        ? 'ברוכים הבאים לספיקלי ג׳אמפ! בחרו עולם כדי להתחיל ללמוד מילים חדשות באנגלית'
+        : 'Welcome to Speakli Jump! Choose a world to start learning new English words';
+      setTimeout(() => speak(msg, { lang, rate: 0.9 }), 500);
+    }
+
+    if (phase === 'level-select' && selectedWorld && !spokenPhasesRef.current.has(`level-${selectedWorld}`)) {
+      spokenPhasesRef.current.add(`level-${selectedWorld}`);
+      const worldNames = {
+        'abc-forest': isHe ? 'יער ה-אי בי סי! כאן נלמד את האותיות באנגלית' : 'ABC Forest! Here we learn the English letters',
+        'animal-valley': isHe ? 'עמק החיות! כאן נלמד שמות של חיות באנגלית' : 'Animal Valley! Here we learn animal names in English',
+        'color-hills': isHe ? 'גבעות הצבעים! כאן נלמד צבעים באנגלית' : 'Color Hills! Here we learn colors in English',
+        'food-city': isHe ? 'עיר האוכל! כאן נלמד שמות של אוכל באנגלית' : 'Food City! Here we learn food names in English',
+        'word-island': isHe ? 'אי המילים! כאן נלמד משפטים באנגלית' : 'Word Island! Here we learn English sentences',
+      };
+      const instructions = isHe
+        ? 'לחצו על החצים כדי לזוז, קפצו כדי לאסוף מטבעות, ותפגעו בקופסאות הזהב כדי לענות על שאלות. בהצלחה!'
+        : 'Use the arrows to move, jump to collect coins, and hit the golden blocks to answer questions. Good luck!';
+      const msg = (worldNames[selectedWorld] || '') + ' ' + instructions;
+      setTimeout(() => speak(msg, { lang, rate: 0.9 }), 500);
+    }
+  }, [phase, selectedWorld, uiLang, speak]);
 
   // ── Viewport dimensions ──
   const [viewSize, setViewSize] = useState({ w: VIEWPORT_W, h: VIEWPORT_H });
