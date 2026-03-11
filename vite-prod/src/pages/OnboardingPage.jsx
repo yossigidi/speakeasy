@@ -153,7 +153,7 @@ function calculateCurriculumLevel(answers) {
    ═══════════════════════════════════════════════ */
 export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { uiLang, dir, setLang } = useTheme();
-  const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, user } = useAuth();
+  const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, resendVerification, user } = useAuth();
   const { updateProgress, progress, addChild, familyCode } = useUserProgress();
 
   const [step, setStep] = useState(0);
@@ -184,6 +184,8 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [verificationResent, setVerificationResent] = useState(false);
 
   const isRTL = RTL_LANGS.includes(uiLang);
 
@@ -307,6 +309,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     try {
       if (authMode === 'signup') {
         await signUpWithEmail(email, password, displayName);
+        // Show email verification screen
+        setShowVerification(true);
+        setAuthLoading(false);
+        return;
       } else {
         await signInWithEmail(email, password);
       }
@@ -404,7 +410,61 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   );
 
   /* Step 1 — Auth Screen (Beautiful Landing + Login/Register) */
-  const renderAuth = () => (
+  const renderAuth = () => {
+    // Email verification screen
+    if (showVerification) {
+      return (
+        <div className="landing-root">
+          <div className="landing-bg-blobs">
+            <div className="landing-blob landing-blob-1" />
+            <div className="landing-blob landing-blob-2" />
+            <div className="landing-blob landing-blob-3" />
+          </div>
+          <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
+            <div className="text-6xl mb-4">📧</div>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">{t('verifyEmailTitle', uiLang)}</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-2 max-w-sm">{t('verifyEmailDesc', uiLang)}</p>
+            <p className="text-brand-600 dark:text-brand-400 font-bold mb-6">{email}</p>
+            <button
+              onClick={async () => {
+                // Reload user to check if verified
+                try {
+                  await window.auth.currentUser?.reload();
+                  if (window.auth.currentUser?.emailVerified) {
+                    setShowVerification(false);
+                    await handleAuthSuccess();
+                  } else {
+                    setAuthError(t('emailNotVerifiedYet', uiLang));
+                  }
+                } catch (e) {
+                  setAuthError(e.message);
+                }
+              }}
+              className="w-full max-w-xs py-3 rounded-xl font-bold text-white bg-gradient-to-r from-brand-500 to-indigo-500 shadow-lg mb-3"
+            >
+              {t('verifyEmailDone', uiLang)}
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  await resendVerification();
+                  setVerificationResent(true);
+                  setTimeout(() => setVerificationResent(false), 5000);
+                } catch (e) {
+                  setAuthError(e.message);
+                }
+              }}
+              className="text-sm text-brand-500 hover:text-brand-600 font-medium"
+            >
+              {verificationResent ? t('verificationResent', uiLang) : t('resendVerification', uiLang)}
+            </button>
+            {authError && <p className="text-red-500 text-sm mt-3">{authError}</p>}
+          </div>
+        </div>
+      );
+    }
+
+    return (
     <div className="landing-root">
       {/* Animated background blobs */}
       <div className="landing-bg-blobs">
@@ -753,6 +813,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
       `}</style>
     </div>
   );
+  };
 
   /* Step 1 — Placement Test */
   const renderPlacementTest = () => {

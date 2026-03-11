@@ -56,7 +56,20 @@ export function AuthProvider({ children }) {
     if (displayName) {
       await window.firebaseAuth.updateProfile(cred.user, { displayName });
     }
+    // Send email verification
+    try {
+      await window.firebaseAuth.sendEmailVerification(cred.user);
+    } catch (e) {
+      console.error('Email verification send failed:', e);
+    }
     return cred;
+  }, []);
+
+  const resendVerification = useCallback(async () => {
+    const currentUser = window.auth.currentUser;
+    if (currentUser && !currentUser.emailVerified) {
+      await window.firebaseAuth.sendEmailVerification(currentUser);
+    }
   }, []);
 
   const signInWithEmail = useCallback(async (email, password) => {
@@ -89,10 +102,11 @@ export function AuthProvider({ children }) {
     signUpWithEmail,
     signInWithEmail,
     resetPassword,
+    resendVerification,
     signOut,
     deleteAccount,
     isAuthenticated: !!user,
-  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, signOut, deleteAccount]);
+  }), [user, loading, signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, resendVerification, signOut, deleteAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
