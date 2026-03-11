@@ -39,6 +39,7 @@ import {
   updateProfile,
   deleteUser,
   sendPasswordResetEmail,
+  sendEmailVerification,
   signInWithCustomToken,
   browserLocalPersistence,
   setPersistence
@@ -92,6 +93,7 @@ window.firebaseAuth = {
   updateProfile,
   deleteUser,
   sendPasswordResetEmail,
+  sendEmailVerification,
   signInWithCustomToken
 };
 
