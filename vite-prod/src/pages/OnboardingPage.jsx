@@ -424,59 +424,6 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
   /* Step 1 — Auth Screen (Beautiful Landing + Login/Register) */
   const renderAuth = () => {
-    // Email verification screen
-    if (showVerification) {
-      return (
-        <div className="landing-root">
-          <div className="landing-bg-blobs">
-            <div className="landing-blob landing-blob-1" />
-            <div className="landing-blob landing-blob-2" />
-            <div className="landing-blob landing-blob-3" />
-          </div>
-          <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
-            <div className="text-6xl mb-4">📧</div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">{t('verifyEmailTitle', uiLang)}</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-2 max-w-sm">{t('verifyEmailDesc', uiLang)}</p>
-            <p className="text-brand-600 dark:text-brand-400 font-bold mb-6">{email}</p>
-            <button
-              onClick={async () => {
-                // Reload user to check if verified
-                try {
-                  await window.auth.currentUser?.reload();
-                  if (window.auth.currentUser?.emailVerified) {
-                    setShowVerification(false);
-                    await handleAuthSuccess();
-                  } else {
-                    setAuthError(t('emailNotVerifiedYet', uiLang));
-                  }
-                } catch (e) {
-                  setAuthError(e.message);
-                }
-              }}
-              className="w-full max-w-xs py-3 rounded-xl font-bold text-white bg-gradient-to-r from-brand-500 to-indigo-500 shadow-lg mb-3"
-            >
-              {t('verifyEmailDone', uiLang)}
-            </button>
-            <button
-              onClick={async () => {
-                try {
-                  await resendVerification();
-                  setVerificationResent(true);
-                  setTimeout(() => setVerificationResent(false), 5000);
-                } catch (e) {
-                  setAuthError(e.message);
-                }
-              }}
-              className="text-sm text-brand-500 hover:text-brand-600 font-medium"
-            >
-              {verificationResent ? t('verificationResent', uiLang) : t('resendVerification', uiLang)}
-            </button>
-            {authError && <p className="text-red-500 text-sm mt-3">{authError}</p>}
-          </div>
-        </div>
-      );
-    }
-
     return (
     <div className="landing-root">
       {/* Animated background blobs */}
@@ -1141,6 +1088,51 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               }`}
             />
           ))}
+        </div>
+      )}
+
+      {/* Email verification overlay — shown on top of everything after signup */}
+      {showVerification && (
+        <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center px-6 text-center"
+          style={{ background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #C7D2FE 100%)' }}>
+          <div className="text-6xl mb-4">📧</div>
+          <h2 className="text-2xl font-black text-gray-900 mb-3">{t('verifyEmailTitle', uiLang)}</h2>
+          <p className="text-gray-600 mb-2 max-w-sm">{t('verifyEmailDesc', uiLang)}</p>
+          <p className="text-indigo-600 font-bold mb-6">{email}</p>
+          <button
+            onClick={async () => {
+              setAuthError('');
+              try {
+                await window.auth.currentUser?.reload();
+                if (window.auth.currentUser?.emailVerified) {
+                  setShowVerification(false);
+                  await handleAuthSuccess();
+                } else {
+                  setAuthError(t('emailNotVerifiedYet', uiLang));
+                }
+              } catch (e) {
+                setAuthError(e.message);
+              }
+            }}
+            className="w-full max-w-xs py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg mb-3"
+          >
+            {t('verifyEmailDone', uiLang)}
+          </button>
+          <button
+            onClick={async () => {
+              try {
+                await resendVerification();
+                setVerificationResent(true);
+                setTimeout(() => setVerificationResent(false), 5000);
+              } catch (e) {
+                setAuthError(e.message);
+              }
+            }}
+            className="text-sm text-indigo-500 hover:text-indigo-600 font-medium"
+          >
+            {verificationResent ? t('verificationResent', uiLang) : t('resendVerification', uiLang)}
+          </button>
+          {authError && <p className="text-red-500 text-sm mt-3">{authError}</p>}
         </div>
       )}
 

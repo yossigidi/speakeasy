@@ -58,7 +58,13 @@ export function AuthProvider({ children }) {
     }
     // Send email verification
     try {
-      await window.firebaseAuth.sendEmailVerification(cred.user);
+      if (typeof window.firebaseAuth.sendEmailVerification === 'function') {
+        await window.firebaseAuth.sendEmailVerification(cred.user);
+      } else {
+        // Fallback: import directly
+        const { sendEmailVerification } = await import('firebase/auth');
+        await sendEmailVerification(cred.user);
+      }
     } catch (e) {
       console.error('Email verification send failed:', e);
     }
@@ -68,7 +74,12 @@ export function AuthProvider({ children }) {
   const resendVerification = useCallback(async () => {
     const currentUser = window.auth.currentUser;
     if (currentUser && !currentUser.emailVerified) {
-      await window.firebaseAuth.sendEmailVerification(currentUser);
+      if (typeof window.firebaseAuth.sendEmailVerification === 'function') {
+        await window.firebaseAuth.sendEmailVerification(currentUser);
+      } else {
+        const { sendEmailVerification } = await import('firebase/auth');
+        await sendEmailVerification(currentUser);
+      }
     }
   }, []);
 
