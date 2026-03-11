@@ -1611,72 +1611,82 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           </div>
         )}
 
-        {/* ═══ VIRTUAL GAMEPAD — absolute positions, immune to RTL ═══ */}
-        {/* D-Pad — fixed to bottom-LEFT */}
-        <div className="fixed z-40" style={{
-          left: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 16px)`,
-          display: 'flex', gap: 8,
-        }}>
-          <button
-            className="select-none"
-            style={{
-              width: 60, height: 60, borderRadius: 14,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 24,
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
-              backdropFilter: 'blur(10px)',
-              border: '2px solid rgba(255,255,255,0.35)',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
-              color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-              WebkitTapHighlightColor: 'transparent',
-            }}
-            onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
-            onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
-            onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; }}
-            onMouseDown={() => inputRef.current.left = true}
-            onMouseUp={() => inputRef.current.left = false}
-            onMouseLeave={() => inputRef.current.left = false}
-          >◀</button>
-          <button
-            className="select-none"
-            style={{
-              width: 60, height: 60, borderRadius: 14,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 24,
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
-              backdropFilter: 'blur(10px)',
-              border: '2px solid rgba(255,255,255,0.35)',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
-              color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-              WebkitTapHighlightColor: 'transparent',
-            }}
-            onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
-            onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
-            onTouchCancel={(e) => { e.preventDefault(); inputRef.current.right = false; }}
-            onMouseDown={() => inputRef.current.right = true}
-            onMouseUp={() => inputRef.current.right = false}
-            onMouseLeave={() => inputRef.current.right = false}
-          >▶</button>
+        {/* ═══ VIRTUAL JOYSTICK + JUMP BUTTON ═══ */}
+        {/* Joystick — fixed to bottom-LEFT */}
+        <div
+          className="fixed z-40 select-none"
+          style={{
+            left: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 16px)`,
+            width: 120, height: 120,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.25) 100%)',
+            border: '3px solid rgba(255,255,255,0.2)',
+            backdropFilter: 'blur(6px)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.2), inset 0 0 30px rgba(0,0,0,0.1)',
+            position: 'relative',
+            WebkitTapHighlightColor: 'transparent',
+            touchAction: 'none',
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            const rect = e.currentTarget.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const touch = e.touches[0];
+            if (touch.clientX < cx) inputRef.current.left = true;
+            else inputRef.current.right = true;
+          }}
+          onTouchMove={(e) => {
+            e.preventDefault();
+            const rect = e.currentTarget.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const touch = e.touches[0];
+            inputRef.current.left = touch.clientX < cx;
+            inputRef.current.right = touch.clientX >= cx;
+          }}
+          onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; inputRef.current.right = false; }}
+          onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; inputRef.current.right = false; }}
+          onMouseDown={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            if (e.clientX < cx) inputRef.current.left = true;
+            else inputRef.current.right = true;
+          }}
+          onMouseUp={() => { inputRef.current.left = false; inputRef.current.right = false; }}
+          onMouseLeave={() => { inputRef.current.left = false; inputRef.current.right = false; }}
+        >
+          {/* Inner joystick knob */}
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 52, height: 52, borderRadius: '50%',
+            background: 'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.5), rgba(255,255,255,0.15))',
+            border: '2px solid rgba(255,255,255,0.35)',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4)',
+          }} />
+          {/* Direction indicators */}
+          <div style={{ position: 'absolute', top: '50%', left: 12, transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.5)', fontSize: 16, fontWeight: 900 }}>◀</div>
+          <div style={{ position: 'absolute', top: '50%', right: 12, transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.5)', fontSize: 16, fontWeight: 900 }}>▶</div>
         </div>
 
         {/* Jump button — fixed to bottom-RIGHT */}
         <button
           className="fixed z-40 select-none"
           style={{
-            right: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 16px)`,
-            width: 72, height: 72, borderRadius: '50%',
+            right: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 24px)`,
+            width: 80, height: 80, borderRadius: '50%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 26, fontWeight: 900,
-            background: 'linear-gradient(145deg, rgba(99,102,241,0.75), rgba(59,130,246,0.65))',
+            fontSize: 14, fontWeight: 900, letterSpacing: 1,
+            background: 'radial-gradient(circle at 35% 35%, rgba(99,102,241,0.85), rgba(59,130,246,0.7))',
             backdropFilter: 'blur(10px)',
             border: '3px solid rgba(255,255,255,0.45)',
-            boxShadow: '0 4px 20px rgba(59,130,246,0.35), inset 0 2px 0 rgba(255,255,255,0.3)',
+            boxShadow: '0 4px 20px rgba(59,130,246,0.4), inset 0 2px 0 rgba(255,255,255,0.3), 0 0 30px rgba(99,102,241,0.15)',
             color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.3)',
             WebkitTapHighlightColor: 'transparent',
+            textTransform: 'uppercase',
           }}
           onTouchStart={(e) => { e.preventDefault(); inputRef.current.jump = true; }}
           onMouseDown={() => inputRef.current.jump = true}
-        >▲</button>
+        >JUMP</button>
 
         {/* Word challenge overlay */}
         {phase === 'challenge' && challengeData && (
