@@ -1401,19 +1401,34 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             }} />
           ))}
 
-          {/* Floating platforms — real images */}
+          {/* Floating platforms — styled CSS */}
           {level.platforms.filter(p => !p.isGround && p.x > visibleRange.left && p.x < visibleRange.right).map((plat, i) => (
             <div key={`p${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
-              width: plat.w * sx, height: (plat.h + 8) * sy,
-              borderRadius: 10,
-              overflow: 'hidden',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.35)',
+              width: plat.w * sx, height: plat.h * sy,
             }}>
-              <img src={IMG.platform[world.id]} alt="" style={{
-                width: '100%', height: '100%',
-                objectFit: 'cover',
-                display: 'block',
+              {/* Top surface with grass/texture */}
+              <div style={{
+                position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
+                background: `linear-gradient(180deg, ${world.platformTop}, ${world.platformTop}cc)`,
+                borderRadius: '8px 8px 0 0',
+              }} />
+              {/* Body */}
+              <div style={{
+                position: 'absolute', top: '35%', left: 0, right: 0, bottom: 0,
+                background: `linear-gradient(180deg, ${world.platformColor}, ${world.platformColor}dd)`,
+                borderRadius: '0 0 4px 4px',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+              }}>
+                {/* Brick lines for texture */}
+                <div style={{ position: 'absolute', top: '30%', left: 3, right: 3, height: 1, background: 'rgba(0,0,0,0.12)' }} />
+                <div style={{ position: 'absolute', top: '65%', left: 6, right: 6, height: 1, background: 'rgba(0,0,0,0.08)' }} />
+              </div>
+              {/* Highlight on top edge */}
+              <div style={{
+                position: 'absolute', top: 0, left: 2, right: 2, height: 3,
+                background: `${world.platformTop}88`,
+                borderRadius: '8px 8px 0 0',
               }} />
             </div>
           ))}
@@ -1565,12 +1580,12 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           </div>
         )}
 
-        {/* ═══ VIRTUAL GAMEPAD ═══ */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none"
-          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}>
-          <div className="flex items-end justify-between px-4 pb-2">
-            {/* D-Pad — larger, more responsive */}
-            <div className="flex gap-2 pointer-events-auto">
+        {/* ═══ VIRTUAL GAMEPAD — forced LTR so buttons stay correct ═══ */}
+        <div className="fixed bottom-0 z-40 pointer-events-none"
+          style={{ left: 0, right: 0, direction: 'ltr', paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 16px 8px' }}>
+            {/* D-Pad LEFT side — ◀ ▶ */}
+            <div style={{ display: 'flex', gap: 8 }} className="pointer-events-auto">
               <button
                 className="select-none"
                 style={{
@@ -1619,7 +1634,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
               </button>
             </div>
 
-            {/* Jump button — big, satisfying */}
+            {/* Jump button RIGHT side */}
             <button
               className="select-none pointer-events-auto"
               style={{
