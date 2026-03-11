@@ -323,6 +323,15 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
     setAuthLoading(true);
     try {
+      // reCAPTCHA v3 check
+      if (window.grecaptcha?.execute) {
+        try {
+          const token = await window.grecaptcha.execute('6LejKYcsAAAAAO8HoMjKdqHRh1a9fW0TKw5XyMpX', { action: authMode });
+          // Token available for server-side verification if needed
+          window._recaptchaToken = token;
+        } catch (_) { /* reCAPTCHA not loaded — continue anyway */ }
+      }
+
       if (authMode === 'signup') {
         // Set verification flag BEFORE creating user (so it persists across remount)
         sessionStorage.setItem('se_verify', '1');
@@ -630,6 +639,11 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         <button onClick={onChildLogin} className="landing-child-btn">
           👧 {t('loginAsChild', uiLang)}
         </button>
+
+        {/* reCAPTCHA notice */}
+        <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '16px', lineHeight: 1.5 }}>
+          {t('recaptchaNotice', uiLang)}
+        </p>
       </div>
 
       <style>{`
