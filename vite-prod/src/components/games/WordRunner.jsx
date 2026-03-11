@@ -28,16 +28,17 @@ import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 // ═══════════════════════════════════════════
 
 const GRAVITY = 0.55;
-const JUMP_VEL = -11.5;
-const PLAYER_W = 44;
-const PLAYER_H = 44;
+const JUMP_VEL = -12;
+const PLAYER_W = 56;
+const PLAYER_H = 56;
 const TILE = 40; // base tile size
 const GROUND_TILES = 2; // ground thickness in tiles
 const VIEWPORT_W = 375; // reference width
 const VIEWPORT_H = 600; // reference height — game scales to fit
 
-// Speeds scale with viewport
-const BASE_SCROLL_SPEED = 1.6;
+// Player movement (manual control, not auto-scroll)
+const PLAYER_SPEED = 3.5;
+const PLAYER_RUN_SPEED = 5;
 const ENEMY_SPEED = 0.6;
 const COIN_BOB_SPEED = 0.003;
 const COIN_BOB_AMP = 4;
@@ -173,17 +174,16 @@ function getWorldWords(worldId, childLevel) {
 
 function generateLevel(worldId, levelIndex, words, difficulty) {
   const isBoss = levelIndex === LEVELS_PER_WORLD - 1;
-  const isReview = levelIndex === 3; // level 4 is review
+  const isReview = levelIndex === 3;
 
   // Level length grows with difficulty
-  const levelLength = 4000 + levelIndex * 600 + difficulty * 200;
+  const levelLength = 3200 + levelIndex * 500 + difficulty * 200;
   const groundY = VIEWPORT_H - TILE * GROUND_TILES;
 
   // Words for this level: 2-3 new + review
   const wordsPerLevel = 2 + Math.min(1, Math.floor(levelIndex / 2));
   const startIdx = levelIndex * 2;
   const levelWords = words.slice(startIdx, startIdx + wordsPerLevel);
-  // Fill with more words for variety
   const allLevelWords = [...levelWords];
   if (allLevelWords.length < 4) {
     const extras = words.filter(w => !allLevelWords.find(lw => lw.word === w.word));
@@ -195,87 +195,93 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
   const blocks = [];
   const enemies = [];
 
-  // Generate platforms procedurally
-  let x = VIEWPORT_W + 100; // start after first screen
-  const gapBase = 120 + difficulty * 10;
-  const platWidthBase = TILE * 3;
+  // ── Build a structured level with sections ──
+  const sectionCount = 4 + levelIndex; // more sections in later levels
+  const sectionWidth = (levelLength - VIEWPORT_W) / sectionCount;
 
-  let coinIdx = 0;
-  let blockIdx = 0;
-  let enemyIdx = 0;
+  for (let s = 0; s < sectionCount; s++) {
+    const sx = VIEWPORT_W + s * sectionWidth;
+    const sectionType = s % 4; // 0=platforms, 1=coins, 2=enemies, 3=questions
 
-  while (x < levelLength - 200) {
-    const gap = gapBase + Math.random() * 60;
-    x += gap;
+    // Every section has 2-4 platforms at varied heights
+    const platCount = 2 + Math.floor(Math.random() * 2);
+    for (let p = 0; p < platCount; p++) {
+      const px = sx + p * (sectionWidth / platCount) + Math.random() * 30;
+      const tilesWide = 3 + Math.floor(Math.random() * 3);
+      const w = tilesWide * TILE;
+      const heightLevels = [groundY - TILE * 2, groundY - TILE * 3.5, groundY - TILE * 5];
+      const y = heightLevels[Math.floor(Math.random() * Math.min(heightLevels.length, 2 + Math.floor(difficulty / 2)))];
+      platforms.push({ x: px, y, w, h: TILE });
 
-    // Platform width: 2-5 tiles
-    const tilesWide = 2 + Math.floor(Math.random() * 3) + (difficulty < 2 ? 1 : 0);
-    const w = tilesWide * TILE;
-
-    // Platform height: varies
-    const heightOptions = [groundY - TILE * 2, groundY - TILE * 3, groundY - TILE * 4];
-    const y = heightOptions[Math.floor(Math.random() * Math.min(heightOptions.length, 1 + difficulty))];
-
-    platforms.push({ x, y, w, h: TILE });
-
-    // Place coins on platform
-    if (coinIdx < allLevelWords.length * 2) {
-      const word = allLevelWords[coinIdx % allLevelWords.length];
+      // Place coins on every platform
+      const word = allLevelWords[(coins.length) % allLevelWords.length];
       coins.push({
-        x: x + w / 2 - 15,
+        x: px + w / 2 - 15,
         y: y - TILE - 10,
         word: word.word,
         emoji: word.emoji,
         translation: lf(word, 'translation', 'he') || word.translation || word.word,
         collected: false,
       });
-      coinIdx++;
+
+      // Some platforms get extra coins
+      if (tilesWide >= 4 && coins.length < allLevelWords.length * 3) {
+        const word2 = allLevelWords[(coins.length) % allLevelWords.length];
+        coins.push({
+          x: px + TILE,
+          y: y - TILE - 10,
+          word: word2.word, emoji: word2.emoji,
+          translation: lf(word2, 'translation', 'he') || word2.translation || word2.word,
+          collected: false,
+        });
+      }
     }
 
-    // Place question block every 3rd platform
-    if (blockIdx % 3 === 1 && blockIdx < 4) {
-      const qWord = allLevelWords[blockIdx % allLevelWords.length];
+    // Question blocks — 1-2 per section, spread throughout level
+    if (s % 2 === 1 || s === 0) {
+      const qWord = allLevelWords[blocks.length % allLevelWords.length];
       const wrongWords = shuffle(words.filter(w => w.word !== qWord.word)).slice(0, 2);
+      const bx = sx + sectionWidth * 0.4 + Math.random() * 40;
       blocks.push({
-        x: x + TILE,
-        y: y - TILE * 2.5,
-        w: TILE,
-        h: TILE,
+        x: bx,
+        y: groundY - TILE * 3,
+        w: TILE + 4,
+        h: TILE + 4,
         activated: false,
         question: qWord,
         options: shuffle([qWord, ...wrongWords]),
       });
     }
-    blockIdx++;
 
-    // Place enemy every 4th platform (after level 1)
-    if (enemyIdx % 4 === 2 && levelIndex > 0 && enemyIdx < 3) {
-      const eWord = allLevelWords[enemyIdx % allLevelWords.length];
+    // Enemies — appear from level 1+, more in later sections
+    if (levelIndex > 0 && sectionType >= 2 && enemies.length < 2 + levelIndex) {
+      const eWord = allLevelWords[enemies.length % allLevelWords.length];
+      const ex = sx + sectionWidth * 0.5;
       enemies.push({
-        x: x + TILE,
-        y: y - PLAYER_H,
-        w: PLAYER_W,
-        h: PLAYER_H,
+        x: ex,
+        y: groundY - PLAYER_H,
+        w: 40,
+        h: 40,
         word: eWord,
         alive: true,
         dir: 1,
-        moveRange: w - TILE,
-        startX: x + TILE,
+        moveRange: 80 + Math.random() * 60,
+        startX: ex,
+        emoji: ['🐸', '🦀', '🐛', '🐍', '🦂'][enemies.length % 5],
       });
     }
-    enemyIdx++;
   }
 
-  // Ground platforms (continuous with some gaps)
+  // ── Ground: continuous with gaps for challenge ──
   const groundPlatforms = [];
   let gx = 0;
-  while (gx < levelLength) {
-    const gw = 200 + Math.random() * 300;
+  while (gx < levelLength + 200) {
+    const gw = 250 + Math.random() * 350;
     groundPlatforms.push({ x: gx, y: groundY, w: gw, h: TILE * GROUND_TILES, isGround: true });
     gx += gw;
-    // Gap in ground (small, jumpable)
-    if (gx > VIEWPORT_W && Math.random() > 0.6 && levelIndex > 0) {
-      gx += 60 + Math.random() * 40;
+    // Gaps in ground — jumpable, more in later levels
+    if (gx > VIEWPORT_W * 1.5 && Math.random() > (0.7 - levelIndex * 0.05)) {
+      gx += 50 + Math.random() * 30 + levelIndex * 5;
     }
   }
 
@@ -892,9 +898,9 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     invincible: false, invincibleUntil: 0,
   });
   const cameraRef = useRef({ x: 0 });
-  const inputRef = useRef({ jump: false });
+  const inputRef = useRef({ left: false, right: false, jump: false });
   const frameRef = useRef(0);
-  const scrollSpeedRef = useRef(BASE_SCROLL_SPEED);
+  const facingRef = useRef(1); // 1 = right, -1 = left
   const pausedRef = useRef(false);
   const collectedCoinsRef = useRef(new Set());
   const activatedBlocksRef = useRef(new Set());
@@ -946,7 +952,8 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     collectedCoinsRef.current = new Set();
     activatedBlocksRef.current = new Set();
     deadEnemiesRef.current = new Set();
-    scrollSpeedRef.current = BASE_SCROLL_SPEED;
+    facingRef.current = 1;
+    inputRef.current = { left: false, right: false, jump: false };
     pausedRef.current = false;
     frameRef.current = 0;
 
@@ -978,22 +985,32 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
 
       const player = playerRef.current;
       const camera = cameraRef.current;
+      const input = inputRef.current;
       frameRef.current++;
 
-      // Auto-scroll
-      player.x += scrollSpeedRef.current;
+      // ── Horizontal movement (manual control) ──
+      const speed = PLAYER_SPEED;
+      if (input.left) {
+        player.x -= speed;
+        facingRef.current = -1;
+      }
+      if (input.right) {
+        player.x += speed;
+        facingRef.current = 1;
+      }
+      // Clamp to level bounds
+      player.x = Math.max(0, Math.min(levelRef.current.length, player.x));
 
-      // Jump input
-      if (inputRef.current.jump && player.onGround) {
+      // ── Jump ──
+      if (input.jump && player.onGround) {
         player.vy = JUMP_VEL;
         player.onGround = false;
         player.jumping = true;
-        inputRef.current.jump = false;
+        input.jump = false;
         playPop();
       }
-      inputRef.current.jump = false;
 
-      // Gravity
+      // ── Gravity ──
       player.vy += GRAVITY;
       player.y += player.vy;
 
@@ -1197,11 +1214,27 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     endGame(won);
   }, [endGame]);
 
-  // ── Input handler ──
-  const handleTap = useCallback(() => {
-    if (phase === 'playing') {
-      inputRef.current.jump = true;
-    }
+  // ── Keyboard controls (desktop) ──
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (phase !== 'playing') return;
+      if (e.key === 'ArrowLeft' || e.key === 'a') inputRef.current.left = true;
+      if (e.key === 'ArrowRight' || e.key === 'd') inputRef.current.right = true;
+      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === ' ') {
+        e.preventDefault();
+        inputRef.current.jump = true;
+      }
+    };
+    const handleKeyUp = (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a') inputRef.current.left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd') inputRef.current.right = false;
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
   }, [phase]);
 
   // ── Get current world ──
@@ -1291,44 +1324,41 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     // Only render entities near the camera
     const visibleRange = { left: camera.x - 100, right: camera.x + VIEWPORT_W + 100 };
 
+    const sx = viewSize.w / VIEWPORT_W;
+    const sy = viewSize.h / VIEWPORT_H;
+
     return (
       <div
         ref={viewportRef}
-        className="fixed inset-0 overflow-hidden select-none touch-none"
-        onClick={handleTap}
-        onTouchStart={handleTap}
-        style={{ cursor: 'pointer' }}
+        className="fixed inset-0 overflow-hidden select-none"
+        style={{ touchAction: 'none' }}
       >
         {/* Background */}
         <ParallaxBackground world={world} cameraX={camera.x} viewW={viewSize.w} viewH={viewSize.h} />
 
         {/* Game world — scrolls with camera */}
         <div className="absolute inset-0" style={{
-          transform: `translateX(${-camera.x * scaleX / (VIEWPORT_W / viewSize.w)}px)`,
+          transform: `translateX(${-camera.x * sx}px)`,
         }}>
           {/* Ground */}
           {level.platforms.filter(p => p.isGround).map((plat, i) => (
             <div key={`g${i}`} className="absolute" style={{
-              left: plat.x * (viewSize.w / VIEWPORT_W),
-              top: plat.y * (viewSize.h / VIEWPORT_H),
-              width: plat.w * (viewSize.w / VIEWPORT_W),
-              height: plat.h * (viewSize.h / VIEWPORT_H),
+              left: plat.x * sx, top: plat.y * sy,
+              width: plat.w * sx, height: plat.h * sy,
               background: world.groundColor,
-              borderTop: `3px solid ${world.grassColor}`,
+              borderTop: `4px solid ${world.grassColor}`,
             }} />
           ))}
 
           {/* Platforms */}
           {level.platforms.filter(p => !p.isGround && p.x > visibleRange.left && p.x < visibleRange.right).map((plat, i) => (
             <div key={`p${i}`} className="absolute" style={{
-              left: plat.x * (viewSize.w / VIEWPORT_W),
-              top: plat.y * (viewSize.h / VIEWPORT_H),
-              width: plat.w * (viewSize.w / VIEWPORT_W),
-              height: plat.h * (viewSize.h / VIEWPORT_H),
+              left: plat.x * sx, top: plat.y * sy,
+              width: plat.w * sx, height: plat.h * sy,
               background: world.platformColor,
-              borderTop: `3px solid ${world.platformTop}`,
-              borderRadius: '4px 4px 0 0',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+              borderTop: `4px solid ${world.platformTop}`,
+              borderRadius: '6px 6px 0 0',
+              boxShadow: '0 3px 6px rgba(0,0,0,0.25)',
             }} />
           ))}
 
@@ -1339,19 +1369,20 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             const bobY = Math.sin(frameRef.current * COIN_BOB_SPEED + i) * COIN_BOB_AMP;
             return (
               <div key={`c${i}`} className="absolute flex flex-col items-center" style={{
-                left: coin.x * (viewSize.w / VIEWPORT_W),
-                top: (coin.y + bobY) * (viewSize.h / VIEWPORT_H),
-                transition: 'none',
+                left: coin.x * sx, top: (coin.y + bobY) * sy,
               }}>
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-lg"
+                <div className="rounded-full flex items-center justify-center"
                   style={{
+                    width: 34, height: 34, fontSize: 18,
                     background: 'radial-gradient(circle at 30% 30%, #FFD700, #FFA500)',
-                    boxShadow: '0 0 8px rgba(255,215,0,0.6), 0 2px 4px rgba(0,0,0,0.2)',
+                    boxShadow: '0 0 10px rgba(255,215,0,0.7), 0 2px 4px rgba(0,0,0,0.2)',
                     border: '2px solid #FFE44D',
                   }}>
                   {coin.emoji}
                 </div>
-                <span className="text-xs font-bold text-white drop-shadow-md mt-0.5">{coin.word}</span>
+                <span className="text-xs font-black text-white mt-0.5" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+                  {coin.word}
+                </span>
               </div>
             );
           })}
@@ -1361,21 +1392,16 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             if (activatedBlocksRef.current.has(i)) return null;
             if (block.x < visibleRange.left || block.x > visibleRange.right) return null;
             return (
-              <div key={`b${i}`} className="absolute animate-jelly" style={{
-                left: block.x * (viewSize.w / VIEWPORT_W),
-                top: block.y * (viewSize.h / VIEWPORT_H),
-                width: TILE * (viewSize.w / VIEWPORT_W),
-                height: TILE * (viewSize.h / VIEWPORT_H),
+              <div key={`b${i}`} className="absolute" style={{
+                left: block.x * sx, top: block.y * sy,
+                width: 48, height: 48,
                 background: 'linear-gradient(135deg, #FFD700, #FFA500)',
-                borderRadius: 6,
+                borderRadius: 8,
                 border: '3px solid #B8860B',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 20,
-                fontWeight: 900,
-                color: '#8B4513',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 24, fontWeight: 900, color: '#8B4513',
+                boxShadow: '0 3px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.4)',
+                animation: 'jelly 2s ease-in-out infinite',
               }}>
                 ?
               </div>
@@ -1388,42 +1414,37 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             if (enemy.x < visibleRange.left || enemy.x > visibleRange.right) return null;
             return (
               <div key={`e${i}`} className="absolute" style={{
-                left: enemy.x * (viewSize.w / VIEWPORT_W),
-                top: enemy.y * (viewSize.h / VIEWPORT_H),
-                fontSize: 32,
+                left: enemy.x * sx, top: enemy.y * sy,
+                fontSize: 36,
                 transform: enemy.dir < 0 ? 'scaleX(-1)' : 'none',
+                filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.3))',
               }}>
-                🐸
+                {enemy.emoji || '🐸'}
               </div>
             );
           })}
 
           {/* Flag */}
           <div className="absolute flex flex-col items-center" style={{
-            left: level.flag.x * (viewSize.w / VIEWPORT_W),
-            top: level.flag.y * (viewSize.h / VIEWPORT_H),
+            left: level.flag.x * sx, top: level.flag.y * sy,
           }}>
-            <span className="text-3xl">🏁</span>
-            <div style={{
-              width: 4,
-              height: level.flag.h * (viewSize.h / VIEWPORT_H),
-              background: '#8B4513',
-            }} />
+            <span className="text-4xl">🏁</span>
+            <div style={{ width: 5, height: level.flag.h * sy, background: '#8B4513', borderRadius: 2 }} />
           </div>
         </div>
 
-        {/* Player character — fixed position relative to viewport */}
+        {/* Player character — positioned relative to camera */}
         <div className="absolute z-20" style={{
-          left: (player.x - camera.x) * (viewSize.w / VIEWPORT_W),
-          top: player.y * (viewSize.h / VIEWPORT_H),
-          width: PLAYER_W * (viewSize.w / VIEWPORT_W),
-          height: PLAYER_H * (viewSize.h / VIEWPORT_H),
+          left: (player.x - camera.x) * sx,
+          top: player.y * sy,
+          width: PLAYER_W * sx,
+          height: PLAYER_H * sy,
           opacity: player.invincible ? (Math.floor(Date.now() / 100) % 2 ? 0.3 : 1) : 1,
-          transition: 'opacity 0.1s',
+          transform: `scaleX(${facingRef.current})`,
         }}>
           <SpeakliAvatar
-            mode={player.jumping ? 'jump' : powerMode ? 'celebrate' : 'idle'}
-            size="sm"
+            mode={player.jumping ? 'jump' : (inputRef.current.left || inputRef.current.right) ? 'happy' : powerMode ? 'celebrate' : 'idle'}
+            size="md"
           />
         </div>
 
@@ -1431,36 +1452,30 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         {powerMode && (
           <div className="fixed inset-0 pointer-events-none z-10" style={{
             background: 'radial-gradient(circle at 30% 80%, rgba(255,215,0,0.15) 0%, transparent 60%)',
-            animation: 'powerPulse 1s ease-in-out infinite alternate',
           }} />
         )}
 
-        {/* HUD */}
+        {/* ═══ HUD ═══ */}
         <div className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3"
           style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 8px)' }}>
-          {/* Back button */}
           <button onClick={(e) => { e.stopPropagation(); onBack(); }}
             className="bg-black/30 backdrop-blur-sm rounded-full p-2 min-w-[40px] min-h-[40px] flex items-center justify-center">
             <ArrowLeft size={18} className="text-white" />
           </button>
-
-          {/* Lives */}
           <div className="flex gap-1">
             {[...Array(MAX_LIVES)].map((_, i) => (
               <Heart key={i} size={20} className={i < lives ? 'text-red-500 fill-red-500' : 'text-white/30'} />
             ))}
           </div>
-
-          {/* Score + Coins */}
           <div className="bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">
             <span className="text-yellow-300 text-sm font-bold">🪙 {coinsCollected}</span>
             <span className="text-white text-sm font-bold">{score}</span>
           </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="fixed bottom-4 left-4 right-4 z-30">
-          <div className="bg-black/20 backdrop-blur-sm rounded-full h-2 overflow-hidden">
+        {/* Progress bar — above controls */}
+        <div className="fixed z-30" style={{ bottom: 140, left: 16, right: 16 }}>
+          <div className="bg-black/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden">
             <div className="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full transition-all"
               style={{ width: `${Math.min(100, (player.x / level.length) * 100)}%` }} />
           </div>
@@ -1468,10 +1483,72 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
 
         {/* Streak indicator */}
         {streak >= 2 && (
-          <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-30 bg-yellow-400 text-yellow-900 rounded-full px-3 py-1 text-sm font-black animate-pop-in">
+          <div className="fixed z-30 bg-yellow-400 text-yellow-900 rounded-full px-3 py-1 text-sm font-black animate-pop-in"
+            style={{ bottom: 160, left: '50%', transform: 'translateX(-50%)' }}>
             🔥 {streak}x
           </div>
         )}
+
+        {/* ═══ VIRTUAL GAMEPAD ═══ */}
+        <div className="fixed bottom-0 left-0 right-0 z-40 flex items-end justify-between px-4 pb-4"
+          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)' }}>
+          {/* D-Pad (left side) — Left & Right arrows */}
+          <div className="flex gap-3">
+            <button
+              className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black select-none active:scale-90 transition-transform"
+              style={{
+                background: inputRef.current.left
+                  ? 'rgba(255,255,255,0.5)'
+                  : 'rgba(255,255,255,0.25)',
+                backdropFilter: 'blur(8px)',
+                border: '2px solid rgba(255,255,255,0.4)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              }}
+              onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
+              onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+              onMouseDown={() => inputRef.current.left = true}
+              onMouseUp={() => inputRef.current.left = false}
+              onMouseLeave={() => inputRef.current.left = false}
+            >
+              ◀
+            </button>
+            <button
+              className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black select-none active:scale-90 transition-transform"
+              style={{
+                background: inputRef.current.right
+                  ? 'rgba(255,255,255,0.5)'
+                  : 'rgba(255,255,255,0.25)',
+                backdropFilter: 'blur(8px)',
+                border: '2px solid rgba(255,255,255,0.4)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              }}
+              onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
+              onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+              onMouseDown={() => inputRef.current.right = true}
+              onMouseUp={() => inputRef.current.right = false}
+              onMouseLeave={() => inputRef.current.right = false}
+            >
+              ▶
+            </button>
+          </div>
+
+          {/* Jump button (right side) */}
+          <button
+            className="w-20 h-20 rounded-full flex items-center justify-center text-xl font-black select-none active:scale-90 transition-transform"
+            style={{
+              background: 'linear-gradient(135deg, rgba(59,130,246,0.7), rgba(37,99,235,0.7))',
+              backdropFilter: 'blur(8px)',
+              border: '3px solid rgba(255,255,255,0.5)',
+              boxShadow: '0 4px 16px rgba(37,99,235,0.4)',
+              color: 'white',
+              textShadow: '0 1px 3px rgba(0,0,0,0.3)',
+            }}
+            onTouchStart={(e) => { e.preventDefault(); inputRef.current.jump = true; }}
+            onMouseDown={() => inputRef.current.jump = true}
+          >
+            ▲
+          </button>
+        </div>
 
         {/* Word challenge overlay */}
         {phase === 'challenge' && challengeData && (
