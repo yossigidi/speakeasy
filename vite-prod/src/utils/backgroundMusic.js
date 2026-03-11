@@ -11,8 +11,8 @@ const TRACKS = {
 
 // Mobile speakers are much louder at the same volume level
 const IS_MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const NORMAL_VOL = IS_MOBILE ? 0.001 : 0.02;
-const DUCKED_VOL = IS_MOBILE ? 0.0002 : 0.003;
+const NORMAL_VOL = IS_MOBILE ? 0.0004 : 0.015;
+const DUCKED_VOL = IS_MOBILE ? 0.0001 : 0.002;
 const FADE_MS = 1200;
 const DUCK_MS = 400;
 
