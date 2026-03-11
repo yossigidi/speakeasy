@@ -55,6 +55,40 @@ const CHALLENGE_TIME = 12; // seconds
 //  WORLD DATA
 // ═══════════════════════════════════════════
 
+// ── Image asset paths ──
+const IMG = {
+  bg: {
+    'abc-forest': '/images/ABC_Forest.jpg',
+    'animal-valley': '/images/Animal_Valley.jpg',
+    'color-hills': '/images/Color_Hills.jpg',
+    'food-city': '/images/Food_Market.jpg',
+    'word-island': '/images/Space_Station.jpg',
+  },
+  platform: {
+    'abc-forest': '/images/Forest_platform.jpg',
+    'animal-valley': '/images/Savanna_platform.jpg',
+    'color-hills': '/images/Rainbow_platform.jpg',
+    'food-city': '/images/Savanna_platform.jpg',
+    'word-island': '/images/Rainbow_platform.jpg',
+  },
+  enemies: [
+    '/images/character_frog.jpg',
+    '/images/character_crab.jpg',
+    '/images/character_caterpillar.jpg',
+    '/images/character_snak.jpg',
+    '/images/character_scorpion.jpg',
+  ],
+  bosses: {
+    'abc-forest': '/images/character_bear_boss.jpg',
+    'animal-valley': '/images/character_dragon_bos.jpg',
+    'color-hills': '/images/character_dragon_bos.jpg',
+    'food-city': '/images/character_bear_boss.jpg',
+    'word-island': '/images/character_dragon_bos.jpg',
+  },
+  coin: '/images/Golden_coin_item.jpg',
+  questionBlock: '/images/Golden_question_item.jpg',
+};
+
 const WORLDS = [
   {
     id: 'abc-forest',
@@ -66,7 +100,6 @@ const WORLDS = [
     grassColor: '#66bb6a',
     platformColor: '#8B4513',
     platformTop: '#66bb6a',
-    farBg: ['🌲', '🌳', '🌿'],
     categories: ['alphabet'],
     minLevel: 1,
     bossEmoji: '🐻',
@@ -82,7 +115,6 @@ const WORLDS = [
     grassColor: '#DAA520',
     platformColor: '#A0522D',
     platformTop: '#DAA520',
-    farBg: ['🌴', '🌵', '🏜️'],
     categories: ['animals'],
     minLevel: 1,
     bossEmoji: '🐉',
@@ -98,7 +130,6 @@ const WORLDS = [
     grassColor: '#B39DDB',
     platformColor: '#6A5ACD',
     platformTop: '#CE93D8',
-    farBg: ['🌸', '🦋', '✨'],
     categories: ['colors'],
     minLevel: 1,
     bossEmoji: '🧙',
@@ -114,7 +145,6 @@ const WORLDS = [
     grassColor: '#DEB887',
     platformColor: '#D2691E',
     platformTop: '#F4A460',
-    farBg: ['🏪', '🏬', '🏠'],
     categories: ['food'],
     minLevel: 2,
     bossEmoji: '🤖',
@@ -125,12 +155,11 @@ const WORLDS = [
     nameHe: 'אי המילים',
     nameEn: 'Word Island',
     emoji: '🏝️',
-    bgGradient: 'linear-gradient(180deg, #00CED1 0%, #20B2AA 40%, #2E8B57 100%)',
-    groundColor: '#C2B280',
-    grassColor: '#F0E68C',
-    platformColor: '#8B7355',
-    platformTop: '#F0E68C',
-    farBg: ['🌊', '🐚', '🏖️'],
+    bgGradient: 'linear-gradient(180deg, #0B0B2B 0%, #1A1A4E 40%, #2E1065 100%)',
+    groundColor: '#1E1E5E',
+    grassColor: '#6366F1',
+    platformColor: '#4338CA',
+    platformTop: '#818CF8',
     categories: ['sentences'],
     minLevel: 3,
     bossEmoji: '🦈',
@@ -269,7 +298,7 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
         dir: 1,
         moveRange: 80 + Math.random() * 60,
         startX: ex,
-        emoji: ['🐸', '🦀', '🐛', '🐍', '🦂'][enemies.length % 5],
+        imgIdx: enemies.length % 5,
       });
     }
   }
@@ -327,62 +356,29 @@ function playerBox(p) {
 // ═══════════════════════════════════════════
 
 function ParallaxBackground({ world, cameraX, viewW, viewH }) {
-  const farItems = useMemo(() => {
-    const items = [];
-    for (let i = 0; i < 12; i++) {
-      items.push({
-        emoji: world.farBg[i % world.farBg.length],
-        x: i * 350 + Math.random() * 100,
-        y: viewH * 0.35 + Math.random() * viewH * 0.15,
-        scale: 0.8 + Math.random() * 0.6,
-      });
-    }
-    return items;
-  }, [world, viewH]);
-
-  const clouds = useMemo(() => {
-    const c = [];
-    for (let i = 0; i < 8; i++) {
-      c.push({
-        x: i * 500 + Math.random() * 200,
-        y: 20 + Math.random() * 80,
-        size: 30 + Math.random() * 40,
-        opacity: 0.3 + Math.random() * 0.3,
-      });
-    }
-    return c;
-  }, []);
+  const bgImg = IMG.bg[world.id];
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ background: world.bgGradient }}>
-      {/* Clouds — slow parallax, GPU-accelerated */}
-      <div style={{ transform: `translate3d(${-cameraX * 0.05}px, 0, 0)`, willChange: 'transform' }}>
-        {clouds.map((c, i) => (
-          <div key={`c${i}`} className="absolute rounded-full" style={{
-            left: c.x % (viewW + 400),
-            top: c.y,
-            width: c.size * 2.5,
-            height: c.size,
-            background: `rgba(255,255,255,${c.opacity})`,
-            filter: 'blur(6px)',
-            borderRadius: '50%',
-          }} />
-        ))}
-      </div>
-      {/* Far background elements — medium parallax */}
-      <div style={{ transform: `translate3d(${-cameraX * 0.2}px, 0, 0)`, willChange: 'transform' }}>
-        {farItems.map((item, i) => (
-          <div key={`f${i}`} className="absolute" style={{
-            left: item.x,
-            top: item.y,
-            fontSize: 32 * item.scale,
-            opacity: 0.5,
-            filter: 'blur(1px)',
-          }}>
-            {item.emoji}
-          </div>
-        ))}
-      </div>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Real background image — slow parallax for depth */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `url(${bgImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        transform: `translate3d(${-cameraX * 0.05}px, 0, 0) scale(1.1)`,
+        willChange: 'transform',
+      }} />
+      {/* Gradient overlay for ground blending */}
+      <div style={{
+        position: 'absolute', left: 0, right: 0, bottom: 0, height: '30%',
+        background: `linear-gradient(transparent, ${world.groundColor}88)`,
+      }} />
+      {/* Subtle vignette for depth */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'radial-gradient(ellipse at 50% 30%, transparent 50%, rgba(0,0,0,0.15) 100%)',
+      }} />
     </div>
   );
 }
@@ -459,12 +455,19 @@ function WorldSelect({ worlds, progress, onSelect, onBack, uiLang, childLevel })
                 key={world.id}
                 onClick={() => !locked && onSelect(world.id)}
                 disabled={locked}
-                className={`relative overflow-hidden rounded-2xl p-4 text-left transition-all active:scale-[0.97] ${
+                className={`relative overflow-hidden rounded-2xl text-left transition-all active:scale-[0.97] ${
                   locked ? 'opacity-50 grayscale' : 'shadow-lg'
                 }`}
-                style={{ background: world.bgGradient }}
+                style={{ minHeight: 100 }}
               >
-                <div className="flex items-center gap-4">
+                {/* Background image */}
+                <img src={IMG.bg[world.id]} alt="" style={{
+                  position: 'absolute', inset: 0, width: '100%', height: '100%',
+                  objectFit: 'cover', zIndex: 0,
+                }} />
+                {/* Dark overlay for text readability */}
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%)', zIndex: 1 }} />
+                <div className="relative z-10 flex items-center gap-4 p-4">
                   <span className="text-5xl">{locked ? '🔒' : world.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-lg font-black text-white drop-shadow-md">
@@ -502,19 +505,25 @@ function WorldSelect({ worlds, progress, onSelect, onBack, uiLang, childLevel })
 //  LEVEL SELECT SCREEN
 // ═══════════════════════════════════════════
 
-function LevelSelect({ world, progress, onSelect, onBack, uiLang }) {
+function LevelSelect({ world, progress, onSelect, onBack, uiLang, worldId }) {
   const worldProgress = progress?.[world.id] || {};
   const completedLevels = worldProgress.completedLevels || 0;
 
   return (
-    <div className="min-h-screen relative" style={{ background: world.bgGradient }}>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background image */}
+      <img src={IMG.bg[world.id]} alt="" style={{
+        position: 'absolute', inset: 0, width: '100%', height: '100%',
+        objectFit: 'cover', zIndex: 0,
+      }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', zIndex: 1 }} />
       <FloatingDecorations />
       <div className="relative z-10 px-4 pb-24" style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}>
         <div className="flex items-center gap-3 mb-6">
-          <button onClick={onBack} className="text-white/70 bg-white/20 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <button onClick={onBack} className="text-white/70 bg-black/30 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
             <ArrowLeft size={20} />
           </button>
-          <h1 className="text-2xl font-black text-white drop-shadow-md flex items-center gap-2">
+          <h1 className="text-2xl font-black text-white drop-shadow-lg flex items-center gap-2">
             {world.emoji} {uiLang === 'he' ? world.nameHe : world.nameEn}
           </h1>
         </div>
@@ -543,7 +552,8 @@ function LevelSelect({ world, progress, onSelect, onBack, uiLang }) {
                 } ${isLocked ? 'opacity-40' : 'active:scale-90'}`}
               >
                 {isBoss ? (
-                  <span className="text-2xl">{isLocked ? '🔒' : world.bossEmoji}</span>
+                  isLocked ? <span className="text-xl">🔒</span>
+                  : <img src={IMG.bosses[worldId]} alt="" style={{ width: 40, height: 40, objectFit: 'contain' }} />
                 ) : isLocked ? (
                   <span className="text-xl">🔒</span>
                 ) : (
@@ -659,7 +669,7 @@ function WordChallenge({ question, options, onAnswer, uiLang, speak, timeLimit }
 //  BOSS FIGHT
 // ═══════════════════════════════════════════
 
-function BossFight({ boss, world, onComplete, uiLang, speak }) {
+function BossFight({ boss, world, onComplete, uiLang, speak, worldId }) {
   const [hp, setHp] = useState(boss.hp);
   const [currentWordIdx, setCurrentWordIdx] = useState(0);
   const [options, setOptions] = useState([]);
@@ -710,7 +720,7 @@ function BossFight({ boss, world, onComplete, uiLang, speak }) {
   if (phase === 'intro') {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center" style={{ background: world.bgGradient }}>
-        <div className="animate-jelly text-8xl mb-4">{boss.emoji}</div>
+        <img src={IMG.bosses[worldId] || IMG.bosses['abc-forest']} alt={boss.name} className="animate-jelly" style={{ width: 120, height: 120, objectFit: 'contain' }} />
         <h2 className="text-3xl font-black text-white drop-shadow-lg mb-2">
           {boss.name}
         </h2>
@@ -747,9 +757,9 @@ function BossFight({ boss, world, onComplete, uiLang, speak }) {
       <div className="relative z-10 w-full max-w-sm mx-auto px-4">
         {/* Boss */}
         <div className="text-center mb-6">
-          <div className={`text-7xl ${selected && selected !== currentWord?.word ? 'animate-shake' : hp < boss.hp ? 'animate-jelly' : ''}`}>
-            {boss.emoji}
-          </div>
+          <img src={IMG.bosses[worldId] || IMG.bosses['abc-forest']} alt={boss.name}
+            className={selected && selected !== currentWord?.word ? 'animate-shake' : hp < boss.hp ? 'animate-jelly' : ''}
+            style={{ width: 100, height: 100, objectFit: 'contain', margin: '0 auto' }} />
           {/* HP bar */}
           <div className="flex justify-center gap-2 mt-3">
             {[...Array(boss.hp)].map((_, i) => (
@@ -1301,6 +1311,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     return (
       <LevelSelect
         world={world}
+        worldId={selectedWorld}
         progress={runnerProgress}
         onSelect={(levelIdx) => { setSelectedLevel(levelIdx); startLevel(selectedWorld, levelIdx); }}
         onBack={() => setPhase('world-select')}
@@ -1331,6 +1342,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
       <BossFight
         boss={level.boss}
         world={world}
+        worldId={selectedWorld}
         onComplete={handleBossComplete}
         uiLang={uiLang}
         speak={speak}
@@ -1378,47 +1390,35 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           transform: `translate3d(${-camera.x * sx}px, 0, 0)`,
           willChange: 'transform',
         }}>
-          {/* Ground with grass detail */}
+          {/* Ground with textured top */}
           {level.platforms.filter(p => p.isGround).map((plat, i) => (
             <div key={`g${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
               width: plat.w * sx, height: plat.h * sy,
-              background: `linear-gradient(180deg, ${world.grassColor} 0%, ${world.groundColor} 20%, ${world.groundColor} 100%)`,
+              background: `linear-gradient(180deg, ${world.grassColor} 0%, ${world.groundColor} 25%, ${world.groundColor} 100%)`,
               borderTop: `5px solid ${world.grassColor}`,
-              boxShadow: `inset 0 6px 0 -2px ${world.grassColor}44`,
-            }}>
-              {/* Grass tufts on top */}
-              <div style={{ position: 'absolute', top: -8, left: 0, right: 0, height: 10, overflow: 'hidden' }}>
-                {Array.from({ length: Math.floor(plat.w / 20) }, (_, j) => (
-                  <div key={j} style={{
-                    position: 'absolute',
-                    left: j * 20 * sx + Math.sin(j * 3) * 4,
-                    top: 2 + Math.sin(j * 7) * 2,
-                    width: 0, height: 0,
-                    borderLeft: '4px solid transparent',
-                    borderRight: '4px solid transparent',
-                    borderBottom: `${6 + Math.sin(j * 5) * 3}px solid ${world.grassColor}`,
-                  }} />
-                ))}
-              </div>
-            </div>
+              boxShadow: `inset 0 8px 0 -3px ${world.grassColor}55`,
+            }} />
           ))}
 
-          {/* Platforms with 3D look */}
+          {/* Floating platforms — real images */}
           {level.platforms.filter(p => !p.isGround && p.x > visibleRange.left && p.x < visibleRange.right).map((plat, i) => (
             <div key={`p${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
-              width: plat.w * sx, height: plat.h * sy,
-              background: `linear-gradient(180deg, ${world.platformTop} 0%, ${world.platformColor} 30%, ${world.platformColor}dd 100%)`,
-              borderRadius: '8px 8px 4px 4px',
-              boxShadow: `0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 ${world.platformTop}66, inset 0 -2px 0 rgba(0,0,0,0.15)`,
+              width: plat.w * sx, height: (plat.h + 8) * sy,
+              borderRadius: 10,
+              overflow: 'hidden',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.35)',
             }}>
-              {/* Brick lines */}
-              <div style={{ position: 'absolute', top: '50%', left: 4, right: 4, height: 1, background: 'rgba(0,0,0,0.1)' }} />
+              <img src={IMG.platform[world.id]} alt="" style={{
+                width: '100%', height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }} />
             </div>
           ))}
 
-          {/* Coins with glow */}
+          {/* Coins — real image with glow */}
           {level.coins.map((coin, i) => {
             if (collectedCoinsRef.current.has(i)) return null;
             if (coin.x < visibleRange.left || coin.x > visibleRange.right) return null;
@@ -1427,18 +1427,14 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
               <div key={`c${i}`} className="absolute flex flex-col items-center" style={{
                 left: coin.x * sx, top: (coin.y + bobY) * sy,
               }}>
-                <div className="rounded-full flex items-center justify-center"
-                  style={{
-                    width: 32, height: 32, fontSize: 16,
-                    background: 'radial-gradient(circle at 35% 35%, #FFE44D, #FFD700, #FFA500)',
-                    boxShadow: '0 0 12px rgba(255,215,0,0.6), 0 0 4px rgba(255,215,0,0.9), 0 2px 4px rgba(0,0,0,0.2)',
-                    border: '2px solid #FFE44D',
-                    animation: `coinSpin 3s ease-in-out ${i * 0.3}s infinite`,
-                  }}>
-                  {coin.emoji}
-                </div>
+                <img src={IMG.coin} alt="" style={{
+                  width: 36, height: 36,
+                  borderRadius: '50%',
+                  boxShadow: '0 0 12px rgba(255,215,0,0.6), 0 0 4px rgba(255,215,0,0.9)',
+                  animation: `coinSpin 3s ease-in-out ${i * 0.3}s infinite`,
+                }} />
                 <span className="text-xs font-black text-white mt-0.5" style={{
-                  textShadow: '0 1px 2px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.5)',
+                  textShadow: '0 1px 3px rgba(0,0,0,0.95), 0 0 8px rgba(0,0,0,0.5)',
                   letterSpacing: '0.5px',
                 }}>
                   {coin.word}
@@ -1447,46 +1443,49 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             );
           })}
 
-          {/* Question blocks with bounce animation */}
+          {/* Question blocks — real image */}
           {level.blocks.map((block, i) => {
             if (activatedBlocksRef.current.has(i)) return null;
             if (block.x < visibleRange.left || block.x > visibleRange.right) return null;
             return (
               <div key={`b${i}`} className="absolute" style={{
                 left: block.x * sx, top: block.y * sy,
-                width: 46 * sx / (VIEWPORT_W / VIEWPORT_W), height: 46 * sy / (VIEWPORT_H / VIEWPORT_H),
-                background: 'linear-gradient(135deg, #FFE44D 0%, #FFD700 40%, #FFA500 100%)',
+                width: 48, height: 48,
                 borderRadius: 10,
-                border: '3px solid #B8860B',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 22, fontWeight: 900, color: '#8B4513',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 3px 6px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.15)',
+                overflow: 'hidden',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.35), 0 0 20px rgba(255,215,0,0.25)',
                 animation: 'blockBounce 2s ease-in-out infinite',
-                textShadow: '0 1px 0 rgba(255,255,255,0.5)',
               }}>
-                ?
+                <img src={IMG.questionBlock} alt="?" style={{
+                  width: '100%', height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }} />
               </div>
             );
           })}
 
-          {/* Enemies with animation */}
+          {/* Enemies — real images */}
           {level.enemies.map((enemy, i) => {
             if (deadEnemiesRef.current.has(i) || !enemy.alive) return null;
             if (enemy.x < visibleRange.left || enemy.x > visibleRange.right) return null;
             return (
               <div key={`e${i}`} className="absolute" style={{
-                left: enemy.x * sx, top: enemy.y * sy,
-                fontSize: 34,
+                left: enemy.x * sx, top: (enemy.y - 8) * sy,
+                width: 48, height: 48,
                 transform: enemy.dir < 0 ? 'scaleX(-1)' : 'none',
-                filter: 'drop-shadow(0 3px 4px rgba(0,0,0,0.35))',
                 animation: 'enemyBob 0.6s ease-in-out infinite alternate',
               }}>
-                {enemy.emoji || '🐸'}
+                <img src={IMG.enemies[enemy.imgIdx ?? 0]} alt="" style={{
+                  width: '100%', height: '100%',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 3px 5px rgba(0,0,0,0.4))',
+                }} />
               </div>
             );
           })}
 
-          {/* Flag with wave animation */}
+          {/* Flag */}
           <div className="absolute flex flex-col items-center" style={{
             left: level.flag.x * sx, top: level.flag.y * sy,
           }}>
