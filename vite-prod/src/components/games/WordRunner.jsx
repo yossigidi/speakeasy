@@ -68,8 +68,8 @@ const IMG = {
     'abc-forest': '/images/Forest_platform.jpg',
     'animal-valley': '/images/Savanna_platform.jpg',
     'color-hills': '/images/Rainbow_platform.jpg',
-    'food-city': '/images/Savanna_platform.jpg',
-    'word-island': '/images/Rainbow_platform.jpg',
+    'food-city': '/images/Food_platform.jpg',
+    'word-island': '/images/Space_platform.jpg',
   },
   enemies: [
     '/images/character_frog.jpg',
@@ -81,9 +81,9 @@ const IMG = {
   bosses: {
     'abc-forest': '/images/character_bear_boss.jpg',
     'animal-valley': '/images/character_dragon_bos.jpg',
-    'color-hills': '/images/character_dragon_bos.jpg',
-    'food-city': '/images/character_bear_boss.jpg',
-    'word-island': '/images/character_dragon_bos.jpg',
+    'color-hills': '/images/character_wizard_boss.jpg',
+    'food-city': '/images/character_robot_boss.jpg',
+    'word-island': '/images/character_shark_boss.jpg',
   },
   coin: '/images/Golden_coin_item.jpg',
   questionBlock: '/images/Golden_question_item.jpg',
