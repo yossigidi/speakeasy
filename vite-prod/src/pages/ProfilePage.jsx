@@ -18,7 +18,7 @@ export default function ProfilePage({ onNavigate }) {
   const { user, signOut, deleteAccount } = useAuth();
   const { progress, levelInfo, updateProgress, children: childrenList, isChildMode, activeChild, deleteAllUserData } = useUserProgress();
   const { musicEnabled, soundsEnabled, toggleMusic, toggleSounds } = useMusic();
-  const { plan: currentPlan, isPremium, status: subStatus } = useSubscription();
+  const { plan: currentPlan, isPremium, status: subStatus, cancelAtPeriodEnd, expiresAt } = useSubscription();
 
   const [pushEnabled, setPushEnabled] = useState(false);
   const [portalLoading, setPortalLoading] = useState(false);
@@ -26,6 +26,8 @@ export default function ProfilePage({ onNavigate }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [showNotifDialog, setShowNotifDialog] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
 
   useEffect(() => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -160,6 +162,26 @@ export default function ProfilePage({ onNavigate }) {
       console.error('Portal error:', err);
     } finally {
       setPortalLoading(false);
+    }
+  };
+
+  const handleCancelSubscription = async () => {
+    if (!user) return;
+    setCancelLoading(true);
+    try {
+      const token = await user.getIdToken();
+      const res = await fetch('/api/cancel-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data.success) {
+        setShowCancelModal(false);
+      }
+    } catch (err) {
+      console.error('Cancel error:', err);
+    } finally {
+      setCancelLoading(false);
     }
   };
 
@@ -312,7 +334,50 @@ export default function ProfilePage({ onNavigate }) {
               <Star size={18} className="text-purple-500" fill="currentColor" />
             )}
           </div>
+          {/* Cancel / cancellation notice */}
+          {(currentPlan !== 'free' && subStatus === 'active') && (
+            cancelAtPeriodEnd ? (
+              <div className="mt-3 text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/30 rounded-lg px-3 py-2 text-center">
+                {t('subCancelScheduled', uiLang)} {expiresAt ? new Date(expiresAt.seconds ? expiresAt.seconds * 1000 : expiresAt).toLocaleDateString(uiLang === 'he' ? 'he-IL' : 'en-US') : ''}
+              </div>
+            ) : (
+              <button
+                onClick={(e) => { e.stopPropagation(); setShowCancelModal(true); }}
+                className="mt-3 w-full text-xs text-gray-400 hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400 transition-colors py-1"
+              >
+                {t('cancelSub', uiLang)}
+              </button>
+            )
+          )}
         </GlassCard>
+      )}
+
+      {/* Cancel subscription modal */}
+      {showCancelModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4" onClick={() => setShowCancelModal(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="text-center mb-4">
+              <div className="text-4xl mb-2">😢</div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('cancelSubTitle', uiLang)}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{t('cancelSubWarning', uiLang)}</p>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowCancelModal(false)}
+                className="flex-1 py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700"
+              >
+                {t('keepSub', uiLang)}
+              </button>
+              <button
+                onClick={handleCancelSubscription}
+                disabled={cancelLoading}
+                className="flex-1 py-3 rounded-xl font-bold text-white bg-red-500 hover:bg-red-600 disabled:opacity-50"
+              >
+                {cancelLoading ? '...' : t('confirmCancel', uiLang)}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Settings */}
