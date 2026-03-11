@@ -314,6 +314,11 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         setAuthError(t('passwordsMismatch', uiLang));
         return;
       }
+      // Strong password: min 8 chars, uppercase, lowercase, number
+      if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+        setAuthError(t('passwordTooWeak', uiLang));
+        return;
+      }
     }
 
     setAuthLoading(true);
@@ -503,7 +508,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              minLength={6}
+              minLength={8}
               className="landing-input"
             />
             <button
@@ -516,18 +521,32 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
             </button>
           </div>
 
-          {/* Confirm password — signup only */}
-          {authMode === 'signup' && (
+          {/* Confirm password + strength indicator — signup only */}
+          {authMode === 'signup' && (<>
             <input
               type="password"
               placeholder={t('confirmPassword', uiLang)}
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
               required
-              minLength={6}
+              minLength={8}
               className="landing-input"
             />
-          )}
+            {password && (
+              <div className="flex gap-2 items-center mt-1 px-1">
+                {[
+                  { ok: password.length >= 8, label: '8+' },
+                  { ok: /[A-Z]/.test(password), label: 'A' },
+                  { ok: /[a-z]/.test(password), label: 'a' },
+                  { ok: /[0-9]/.test(password), label: '1' },
+                ].map((r, i) => (
+                  <span key={i} className={`text-xs font-bold px-2 py-0.5 rounded-full ${r.ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-400'}`}>
+                    {r.ok ? '✓' : '✗'} {r.label}
+                  </span>
+                ))}
+              </div>
+            )}
+          </>)}
 
           {/* Honeypot — hidden from real users, bots fill it */}
           <input
