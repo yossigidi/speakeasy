@@ -214,6 +214,7 @@ function AppContent() {
     return (
       <div style={{ minHeight: '100dvh', background: '#030712' }}>
         <OnboardingPage
+          key="onboarding"
           onComplete={() => {
             setProfileSelected(true);
             sessionStorage.setItem('speakeasy_profileSelected', '1');
