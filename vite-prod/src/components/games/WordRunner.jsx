@@ -175,7 +175,7 @@ const LEVELS_PER_WORLD = 6;
 // ═══════════════════════════════════════════
 
 const ALPHABET_WORDS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => ({
-  word: l, emoji: l, translation: l, lower: l.toLowerCase(),
+  word: l, display: `${l}${l.toLowerCase()}`, emoji: l, translation: l, lower: l.toLowerCase(),
 }));
 
 function getWorldWords(worldId, childLevel) {
@@ -252,6 +252,7 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
         x: px + w / 2 - 15,
         y: y - TILE - 10,
         word: word.word,
+        display: word.display,
         emoji: word.emoji,
         translation: lf(word, 'translation', 'he') || word.translation || word.word,
         collected: false,
@@ -263,7 +264,7 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
         coins.push({
           x: px + TILE,
           y: y - TILE - 10,
-          word: word2.word, emoji: word2.emoji,
+          word: word2.word, display: word2.display, emoji: word2.emoji,
           translation: lf(word2, 'translation', 'he') || word2.translation || word2.word,
           collected: false,
         });
@@ -274,7 +275,9 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
     if (s % 2 === 1 || s === 0) {
       const sectionPlats = platforms.filter(p => p.x >= sx && p.x < sx + sectionWidth);
       const qWord = allLevelWords[blocks.length % allLevelWords.length];
-      const wrongWords = shuffle(words.filter(w => w.word !== qWord.word)).slice(0, 2);
+      // More distractors in higher levels: 2 wrong → 3 wrong at level 3+
+      const wrongCount = 2 + (difficulty >= 3 ? 1 : 0);
+      const wrongWords = shuffle(words.filter(w => w.word !== qWord.word)).slice(0, wrongCount);
 
       if (sectionPlats.length >= 1) {
         // Inline with platform — glued directly to the end (no gap), same height
@@ -300,8 +303,8 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
       }
     }
 
-    // Enemies — appear from level 1+, more in later sections
-    if (levelIndex > 0 && sectionType >= 2 && enemies.length < 2 + levelIndex) {
+    // Enemies — appear from level 1+, more in later sections & higher difficulty
+    if (levelIndex > 0 && sectionType >= 2 && enemies.length < 2 + levelIndex + Math.floor(difficulty / 2)) {
       const eWord = allLevelWords[enemies.length % allLevelWords.length];
       const ex = sx + sectionWidth * 0.5;
       enemies.push({
@@ -671,7 +674,7 @@ function WordChallenge({ question, options, onAnswer, uiLang, speak, timeLimit }
                 }`}
               >
                 <span className="text-2xl">{opt.emoji}</span>
-                <span>{opt.word}</span>
+                <span>{opt.display || opt.word}</span>
               </button>
             );
           })}
@@ -816,7 +819,7 @@ function BossFight({ boss, world, onComplete, uiLang, speak, worldId }) {
                 }`}
               >
                 <span className="text-2xl">{opt.emoji}</span>
-                <span>{opt.word}</span>
+                <span>{opt.display || opt.word}</span>
               </button>
             );
           })}
@@ -1450,7 +1453,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
                   textShadow: '0 1px 3px rgba(0,0,0,0.95), 0 0 8px rgba(0,0,0,0.5)',
                   letterSpacing: '0.5px',
                 }}>
-                  {coin.word}
+                  {coin.display || coin.word}
                 </span>
               </div>
             );
@@ -1653,7 +1656,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             onAnswer={handleChallengeAnswer}
             uiLang={uiLang}
             speak={speak}
-            timeLimit={CHALLENGE_TIME}
+            timeLimit={Math.max(6, CHALLENGE_TIME - selectedLevel)}
           />
         )}
       </div>
