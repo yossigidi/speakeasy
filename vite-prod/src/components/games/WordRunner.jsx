@@ -65,7 +65,7 @@ const IMG = {
     'word-island': '/images/Space_Station.jpg',
   },
   platform: {
-    'abc-forest': '/images/Forest_platform.jpg',
+    'abc-forest': '/images/platform_forest.jpg',
     'animal-valley': '/images/Savanna_platform.jpg',
     'color-hills': '/images/Rainbow_platform.jpg',
     'food-city': '/images/Food_platform.jpg',
@@ -1401,36 +1401,18 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             }} />
           ))}
 
-          {/* Floating platforms — styled CSS */}
+          {/* Floating platforms — tiled image */}
           {level.platforms.filter(p => !p.isGround && p.x > visibleRange.left && p.x < visibleRange.right).map((plat, i) => (
             <div key={`p${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
               width: plat.w * sx, height: plat.h * sy,
-            }}>
-              {/* Top surface with grass/texture */}
-              <div style={{
-                position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
-                background: `linear-gradient(180deg, ${world.platformTop}, ${world.platformTop}cc)`,
-                borderRadius: '8px 8px 0 0',
-              }} />
-              {/* Body */}
-              <div style={{
-                position: 'absolute', top: '35%', left: 0, right: 0, bottom: 0,
-                background: `linear-gradient(180deg, ${world.platformColor}, ${world.platformColor}dd)`,
-                borderRadius: '0 0 4px 4px',
-                boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-              }}>
-                {/* Brick lines for texture */}
-                <div style={{ position: 'absolute', top: '30%', left: 3, right: 3, height: 1, background: 'rgba(0,0,0,0.12)' }} />
-                <div style={{ position: 'absolute', top: '65%', left: 6, right: 6, height: 1, background: 'rgba(0,0,0,0.08)' }} />
-              </div>
-              {/* Highlight on top edge */}
-              <div style={{
-                position: 'absolute', top: 0, left: 2, right: 2, height: 3,
-                background: `${world.platformTop}88`,
-                borderRadius: '8px 8px 0 0',
-              }} />
-            </div>
+              borderRadius: 6,
+              overflow: 'hidden',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.35)',
+              backgroundImage: `url(${IMG.platform[world.id]})`,
+              backgroundSize: `${plat.h * sy}px ${plat.h * sy}px`,
+              backgroundRepeat: 'repeat-x',
+            }} />
           ))}
 
           {/* Coins — real image with glow */}
