@@ -1231,7 +1231,7 @@ const GAMES = [
   {
     id: 'word-runner',
     emoji: '🎮',
-    image: '/images/game-listen-pop.jpg',
+    image: '/images/Speakli_Jump.jpg',
     titleKey: 'gameWordRunnerTitle',
     descKey: 'gameWordRunnerDesc',
     gradient: 'from-emerald-400 via-green-500 to-cyan-500',
