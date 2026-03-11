@@ -27,21 +27,23 @@ import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 //  CONSTANTS
 // ═══════════════════════════════════════════
 
-const GRAVITY = 0.55;
-const JUMP_VEL = -12;
-const PLAYER_W = 56;
-const PLAYER_H = 56;
-const TILE = 40; // base tile size
-const GROUND_TILES = 2; // ground thickness in tiles
-const VIEWPORT_W = 375; // reference width
-const VIEWPORT_H = 600; // reference height — game scales to fit
+const GRAVITY = 0.6;
+const JUMP_VEL = -11;
+const PLAYER_W = 52;
+const PLAYER_H = 52;
+const TILE = 40;
+const GROUND_TILES = 2;
+const VIEWPORT_W = 375;
+const VIEWPORT_H = 600;
 
-// Player movement (manual control, not auto-scroll)
-const PLAYER_SPEED = 3.5;
-const PLAYER_RUN_SPEED = 5;
-const ENEMY_SPEED = 0.6;
-const COIN_BOB_SPEED = 0.003;
-const COIN_BOB_AMP = 4;
+// Smooth physics-based movement
+const PLAYER_ACCEL = 0.55;      // acceleration per frame
+const PLAYER_FRICTION = 0.82;   // friction when no input (0-1, lower = more friction)
+const PLAYER_MAX_SPEED = 4.2;   // max horizontal speed
+const ENEMY_SPEED = 0.5;
+const COIN_BOB_SPEED = 0.04;
+const COIN_BOB_AMP = 3;
+const CAMERA_LERP = 0.08;       // smooth camera follow (0-1, lower = smoother)
 
 // Game balance
 const MAX_LIVES = 3;
@@ -353,29 +355,34 @@ function ParallaxBackground({ world, cameraX, viewW, viewH }) {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ background: world.bgGradient }}>
-      {/* Clouds — slow parallax */}
-      {clouds.map((c, i) => (
-        <div key={`c${i}`} className="absolute rounded-full" style={{
-          left: ((c.x - cameraX * 0.1) % (viewW + 200)) - 100,
-          top: c.y,
-          width: c.size * 2,
-          height: c.size,
-          background: `rgba(255,255,255,${c.opacity})`,
-          filter: 'blur(4px)',
-        }} />
-      ))}
-      {/* Far background elements */}
-      {farItems.map((item, i) => (
-        <div key={`f${i}`} className="absolute" style={{
-          left: ((item.x - cameraX * 0.3) % (viewW * 3)) - viewW * 0.5,
-          top: item.y,
-          fontSize: 32 * item.scale,
-          opacity: 0.6,
-          filter: 'blur(1px)',
-        }}>
-          {item.emoji}
-        </div>
-      ))}
+      {/* Clouds — slow parallax, GPU-accelerated */}
+      <div style={{ transform: `translate3d(${-cameraX * 0.05}px, 0, 0)`, willChange: 'transform' }}>
+        {clouds.map((c, i) => (
+          <div key={`c${i}`} className="absolute rounded-full" style={{
+            left: c.x % (viewW + 400),
+            top: c.y,
+            width: c.size * 2.5,
+            height: c.size,
+            background: `rgba(255,255,255,${c.opacity})`,
+            filter: 'blur(6px)',
+            borderRadius: '50%',
+          }} />
+        ))}
+      </div>
+      {/* Far background elements — medium parallax */}
+      <div style={{ transform: `translate3d(${-cameraX * 0.2}px, 0, 0)`, willChange: 'transform' }}>
+        {farItems.map((item, i) => (
+          <div key={`f${i}`} className="absolute" style={{
+            left: item.x,
+            top: item.y,
+            fontSize: 32 * item.scale,
+            opacity: 0.5,
+            filter: 'blur(1px)',
+          }}>
+            {item.emoji}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -897,10 +904,14 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     onGround: false, jumping: false,
     invincible: false, invincibleUntil: 0,
   });
-  const cameraRef = useRef({ x: 0 });
+  const cameraRef = useRef({ x: 0, targetX: 0 });
   const inputRef = useRef({ left: false, right: false, jump: false });
   const frameRef = useRef(0);
-  const facingRef = useRef(1); // 1 = right, -1 = left
+  const facingRef = useRef(1);
+  // DOM refs for direct manipulation (no React re-render per frame)
+  const worldLayerRef = useRef(null);
+  const playerDomRef = useRef(null);
+  const hudRef = useRef({ coins: null, score: null, progress: null });
   const pausedRef = useRef(false);
   const collectedCoinsRef = useRef(new Set());
   const activatedBlocksRef = useRef(new Set());
@@ -928,10 +939,6 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  const scaleX = viewSize.w / VIEWPORT_W;
-  const scaleY = viewSize.h / VIEWPORT_H;
-  const scale = Math.min(scaleX, scaleY);
-
   // ── World progress ──
   const runnerProgress = progress.wordRunner || {};
 
@@ -948,7 +955,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
       onGround: true, jumping: false,
       invincible: false, invincibleUntil: 0,
     };
-    cameraRef.current = { x: 0 };
+    cameraRef.current = { x: 0, targetX: 0 };
     collectedCoinsRef.current = new Set();
     activatedBlocksRef.current = new Set();
     deadEnemiesRef.current = new Set();
@@ -988,16 +995,21 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
       const input = inputRef.current;
       frameRef.current++;
 
-      // ── Horizontal movement (manual control) ──
-      const speed = PLAYER_SPEED;
+      // ── Horizontal movement with acceleration/friction ──
       if (input.left) {
-        player.x -= speed;
+        player.vx -= PLAYER_ACCEL;
         facingRef.current = -1;
-      }
-      if (input.right) {
-        player.x += speed;
+      } else if (input.right) {
+        player.vx += PLAYER_ACCEL;
         facingRef.current = 1;
+      } else {
+        // Friction — decelerate smoothly
+        player.vx *= PLAYER_FRICTION;
+        if (Math.abs(player.vx) < 0.1) player.vx = 0;
       }
+      // Clamp speed
+      player.vx = Math.max(-PLAYER_MAX_SPEED, Math.min(PLAYER_MAX_SPEED, player.vx));
+      player.x += player.vx;
       // Clamp to level bounds
       player.x = Math.max(0, Math.min(levelRef.current.length, player.x));
 
@@ -1139,11 +1151,36 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         return; // stop loop
       }
 
-      // Camera follow
-      camera.x = Math.max(0, player.x - VIEWPORT_W * 0.3);
+      // Smooth camera follow (lerp)
+      camera.targetX = Math.max(0, player.x - VIEWPORT_W * 0.35);
+      camera.x += (camera.targetX - camera.x) * CAMERA_LERP;
 
-      // Force re-render
-      setFrame(frameRef.current);
+      // ── Direct DOM updates (skip React re-render for performance) ──
+      const sx = viewSize.w / VIEWPORT_W;
+      const sy = viewSize.h / VIEWPORT_H;
+
+      // Move world layer
+      if (worldLayerRef.current) {
+        worldLayerRef.current.style.transform = `translate3d(${-camera.x * sx}px, 0, 0)`;
+      }
+
+      // Move player
+      if (playerDomRef.current) {
+        const px = (player.x - camera.x) * sx;
+        const py = player.y * sy;
+        playerDomRef.current.style.transform = `translate3d(${px}px, ${py}px, 0) scaleX(${facingRef.current})`;
+        playerDomRef.current.style.opacity = player.invincible ? (Math.floor(Date.now() / 100) % 2 ? '0.3' : '1') : '1';
+      }
+
+      // Update HUD directly
+      if (hudRef.current.progress) {
+        hudRef.current.progress.style.width = `${Math.min(100, (player.x / level.length) * 100)}%`;
+      }
+
+      // Force re-render only every 6 frames (for coins/enemies visibility updates)
+      if (frameRef.current % 6 === 0) {
+        setFrame(frameRef.current);
+      }
 
       rafRef.current = requestAnimationFrame(loop);
     };
@@ -1281,7 +1318,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             3
           </div>
           <p className="text-white/70 text-lg mt-4 font-medium">
-            {uiLang === 'he' ? 'הקש לקפוץ!' : 'Tap to jump!'}
+            {uiLang === 'he' ? 'השתמש בחיצים לתנועה!' : 'Use arrows to move!'}
           </p>
         </div>
       </div>
@@ -1336,33 +1373,52 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Background */}
         <ParallaxBackground world={world} cameraX={camera.x} viewW={viewSize.w} viewH={viewSize.h} />
 
-        {/* Game world — scrolls with camera */}
-        <div className="absolute inset-0" style={{
-          transform: `translateX(${-camera.x * sx}px)`,
+        {/* Game world — GPU-accelerated scrolling */}
+        <div ref={worldLayerRef} className="absolute inset-0" style={{
+          transform: `translate3d(${-camera.x * sx}px, 0, 0)`,
+          willChange: 'transform',
         }}>
-          {/* Ground */}
+          {/* Ground with grass detail */}
           {level.platforms.filter(p => p.isGround).map((plat, i) => (
             <div key={`g${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
               width: plat.w * sx, height: plat.h * sy,
-              background: world.groundColor,
-              borderTop: `4px solid ${world.grassColor}`,
-            }} />
+              background: `linear-gradient(180deg, ${world.grassColor} 0%, ${world.groundColor} 20%, ${world.groundColor} 100%)`,
+              borderTop: `5px solid ${world.grassColor}`,
+              boxShadow: `inset 0 6px 0 -2px ${world.grassColor}44`,
+            }}>
+              {/* Grass tufts on top */}
+              <div style={{ position: 'absolute', top: -8, left: 0, right: 0, height: 10, overflow: 'hidden' }}>
+                {Array.from({ length: Math.floor(plat.w / 20) }, (_, j) => (
+                  <div key={j} style={{
+                    position: 'absolute',
+                    left: j * 20 * sx + Math.sin(j * 3) * 4,
+                    top: 2 + Math.sin(j * 7) * 2,
+                    width: 0, height: 0,
+                    borderLeft: '4px solid transparent',
+                    borderRight: '4px solid transparent',
+                    borderBottom: `${6 + Math.sin(j * 5) * 3}px solid ${world.grassColor}`,
+                  }} />
+                ))}
+              </div>
+            </div>
           ))}
 
-          {/* Platforms */}
+          {/* Platforms with 3D look */}
           {level.platforms.filter(p => !p.isGround && p.x > visibleRange.left && p.x < visibleRange.right).map((plat, i) => (
             <div key={`p${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
               width: plat.w * sx, height: plat.h * sy,
-              background: world.platformColor,
-              borderTop: `4px solid ${world.platformTop}`,
-              borderRadius: '6px 6px 0 0',
-              boxShadow: '0 3px 6px rgba(0,0,0,0.25)',
-            }} />
+              background: `linear-gradient(180deg, ${world.platformTop} 0%, ${world.platformColor} 30%, ${world.platformColor}dd 100%)`,
+              borderRadius: '8px 8px 4px 4px',
+              boxShadow: `0 4px 8px rgba(0,0,0,0.3), inset 0 2px 0 ${world.platformTop}66, inset 0 -2px 0 rgba(0,0,0,0.15)`,
+            }}>
+              {/* Brick lines */}
+              <div style={{ position: 'absolute', top: '50%', left: 4, right: 4, height: 1, background: 'rgba(0,0,0,0.1)' }} />
+            </div>
           ))}
 
-          {/* Coins */}
+          {/* Coins with glow */}
           {level.coins.map((coin, i) => {
             if (collectedCoinsRef.current.has(i)) return null;
             if (coin.x < visibleRange.left || coin.x > visibleRange.right) return null;
@@ -1373,74 +1429,81 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
               }}>
                 <div className="rounded-full flex items-center justify-center"
                   style={{
-                    width: 34, height: 34, fontSize: 18,
-                    background: 'radial-gradient(circle at 30% 30%, #FFD700, #FFA500)',
-                    boxShadow: '0 0 10px rgba(255,215,0,0.7), 0 2px 4px rgba(0,0,0,0.2)',
+                    width: 32, height: 32, fontSize: 16,
+                    background: 'radial-gradient(circle at 35% 35%, #FFE44D, #FFD700, #FFA500)',
+                    boxShadow: '0 0 12px rgba(255,215,0,0.6), 0 0 4px rgba(255,215,0,0.9), 0 2px 4px rgba(0,0,0,0.2)',
                     border: '2px solid #FFE44D',
+                    animation: `coinSpin 3s ease-in-out ${i * 0.3}s infinite`,
                   }}>
                   {coin.emoji}
                 </div>
-                <span className="text-xs font-black text-white mt-0.5" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+                <span className="text-xs font-black text-white mt-0.5" style={{
+                  textShadow: '0 1px 2px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.5)',
+                  letterSpacing: '0.5px',
+                }}>
                   {coin.word}
                 </span>
               </div>
             );
           })}
 
-          {/* Question blocks */}
+          {/* Question blocks with bounce animation */}
           {level.blocks.map((block, i) => {
             if (activatedBlocksRef.current.has(i)) return null;
             if (block.x < visibleRange.left || block.x > visibleRange.right) return null;
             return (
               <div key={`b${i}`} className="absolute" style={{
                 left: block.x * sx, top: block.y * sy,
-                width: 48, height: 48,
-                background: 'linear-gradient(135deg, #FFD700, #FFA500)',
-                borderRadius: 8,
+                width: 46 * sx / (VIEWPORT_W / VIEWPORT_W), height: 46 * sy / (VIEWPORT_H / VIEWPORT_H),
+                background: 'linear-gradient(135deg, #FFE44D 0%, #FFD700 40%, #FFA500 100%)',
+                borderRadius: 10,
                 border: '3px solid #B8860B',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 24, fontWeight: 900, color: '#8B4513',
-                boxShadow: '0 3px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.4)',
-                animation: 'jelly 2s ease-in-out infinite',
+                fontSize: 22, fontWeight: 900, color: '#8B4513',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 3px 6px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.15)',
+                animation: 'blockBounce 2s ease-in-out infinite',
+                textShadow: '0 1px 0 rgba(255,255,255,0.5)',
               }}>
                 ?
               </div>
             );
           })}
 
-          {/* Enemies */}
+          {/* Enemies with animation */}
           {level.enemies.map((enemy, i) => {
             if (deadEnemiesRef.current.has(i) || !enemy.alive) return null;
             if (enemy.x < visibleRange.left || enemy.x > visibleRange.right) return null;
             return (
               <div key={`e${i}`} className="absolute" style={{
                 left: enemy.x * sx, top: enemy.y * sy,
-                fontSize: 36,
+                fontSize: 34,
                 transform: enemy.dir < 0 ? 'scaleX(-1)' : 'none',
-                filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.3))',
+                filter: 'drop-shadow(0 3px 4px rgba(0,0,0,0.35))',
+                animation: 'enemyBob 0.6s ease-in-out infinite alternate',
               }}>
                 {enemy.emoji || '🐸'}
               </div>
             );
           })}
 
-          {/* Flag */}
+          {/* Flag with wave animation */}
           <div className="absolute flex flex-col items-center" style={{
             left: level.flag.x * sx, top: level.flag.y * sy,
           }}>
-            <span className="text-4xl">🏁</span>
-            <div style={{ width: 5, height: level.flag.h * sy, background: '#8B4513', borderRadius: 2 }} />
+            <span className="text-4xl" style={{ animation: 'flagWave 1.5s ease-in-out infinite' }}>🏁</span>
+            <div style={{ width: 5, height: level.flag.h * sy, background: 'linear-gradient(180deg, #8B4513, #654321)', borderRadius: 2 }} />
           </div>
         </div>
 
-        {/* Player character — positioned relative to camera */}
-        <div className="absolute z-20" style={{
-          left: (player.x - camera.x) * sx,
-          top: player.y * sy,
+        {/* Player character — GPU-accelerated positioning */}
+        <div ref={playerDomRef} className="absolute z-20" style={{
+          left: 0, top: 0,
           width: PLAYER_W * sx,
           height: PLAYER_H * sy,
+          transform: `translate3d(${(player.x - camera.x) * sx}px, ${player.y * sy}px, 0) scaleX(${facingRef.current})`,
+          willChange: 'transform',
           opacity: player.invincible ? (Math.floor(Date.now() / 100) % 2 ? 0.3 : 1) : 1,
-          transform: `scaleX(${facingRef.current})`,
+          filter: powerMode ? 'drop-shadow(0 0 8px rgba(255,215,0,0.6))' : 'none',
         }}>
           <SpeakliAvatar
             mode={player.jumping ? 'jump' : (inputRef.current.left || inputRef.current.right) ? 'happy' : powerMode ? 'celebrate' : 'idle'}
@@ -1451,7 +1514,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Power mode glow */}
         {powerMode && (
           <div className="fixed inset-0 pointer-events-none z-10" style={{
-            background: 'radial-gradient(circle at 30% 80%, rgba(255,215,0,0.15) 0%, transparent 60%)',
+            background: 'radial-gradient(circle at 30% 80%, rgba(255,215,0,0.12) 0%, transparent 60%)',
           }} />
         )}
 
@@ -1459,95 +1522,125 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         <div className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3"
           style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 8px)' }}>
           <button onClick={(e) => { e.stopPropagation(); onBack(); }}
-            className="bg-black/30 backdrop-blur-sm rounded-full p-2 min-w-[40px] min-h-[40px] flex items-center justify-center">
+            className="bg-black/40 backdrop-blur-md rounded-full p-2 min-w-[40px] min-h-[40px] flex items-center justify-center"
+            style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
             <ArrowLeft size={18} className="text-white" />
           </button>
           <div className="flex gap-1">
             {[...Array(MAX_LIVES)].map((_, i) => (
-              <Heart key={i} size={20} className={i < lives ? 'text-red-500 fill-red-500' : 'text-white/30'} />
+              <Heart key={i} size={22} className={i < lives ? 'text-red-500 fill-red-500' : 'text-white/30'}
+                style={i < lives ? { filter: 'drop-shadow(0 1px 3px rgba(239,68,68,0.5))' } : {}} />
             ))}
           </div>
-          <div className="bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">
-            <span className="text-yellow-300 text-sm font-bold">🪙 {coinsCollected}</span>
-            <span className="text-white text-sm font-bold">{score}</span>
+          <div className="bg-black/40 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-3"
+            style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
+            <span ref={el => hudRef.current.coins = el} className="text-yellow-300 text-sm font-bold" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>🪙 {coinsCollected}</span>
+            <span ref={el => hudRef.current.score = el} className="text-white text-sm font-bold" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>{score}</span>
           </div>
         </div>
 
         {/* Progress bar — above controls */}
-        <div className="fixed z-30" style={{ bottom: 140, left: 16, right: 16 }}>
-          <div className="bg-black/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full transition-all"
-              style={{ width: `${Math.min(100, (player.x / level.length) * 100)}%` }} />
+        <div className="fixed z-30" style={{ bottom: 136, left: 16, right: 16 }}>
+          <div className="bg-black/20 backdrop-blur-sm rounded-full h-2 overflow-hidden" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
+            <div ref={el => hudRef.current.progress = el}
+              className="h-full rounded-full"
+              style={{
+                width: `${Math.min(100, (player.x / level.length) * 100)}%`,
+                background: 'linear-gradient(90deg, #06B6D4, #10B981, #34D399)',
+                boxShadow: '0 0 8px rgba(16,185,129,0.4)',
+                transition: 'none',
+              }} />
           </div>
         </div>
 
         {/* Streak indicator */}
         {streak >= 2 && (
-          <div className="fixed z-30 bg-yellow-400 text-yellow-900 rounded-full px-3 py-1 text-sm font-black animate-pop-in"
-            style={{ bottom: 160, left: '50%', transform: 'translateX(-50%)' }}>
+          <div className="fixed z-30 rounded-full px-4 py-1.5 text-sm font-black animate-pop-in"
+            style={{
+              bottom: 152, left: '50%', transform: 'translateX(-50%)',
+              background: 'linear-gradient(135deg, #FBBF24, #F59E0B)',
+              color: '#78350F',
+              boxShadow: '0 2px 10px rgba(245,158,11,0.4)',
+            }}>
             🔥 {streak}x
           </div>
         )}
 
         {/* ═══ VIRTUAL GAMEPAD ═══ */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 flex items-end justify-between px-4 pb-4"
-          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)' }}>
-          {/* D-Pad (left side) — Left & Right arrows */}
-          <div className="flex gap-3">
+        <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none"
+          style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}>
+          <div className="flex items-end justify-between px-4 pb-2">
+            {/* D-Pad — larger, more responsive */}
+            <div className="flex gap-2 pointer-events-auto">
+              <button
+                className="select-none"
+                style={{
+                  width: 64, height: 64, borderRadius: 16,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 26,
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
+                  backdropFilter: 'blur(10px)',
+                  border: '2px solid rgba(255,255,255,0.35)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
+                  color: 'white',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  WebkitTapHighlightColor: 'transparent',
+                }}
+                onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
+                onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+                onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+                onMouseDown={() => inputRef.current.left = true}
+                onMouseUp={() => inputRef.current.left = false}
+                onMouseLeave={() => inputRef.current.left = false}
+              >
+                ◀
+              </button>
+              <button
+                className="select-none"
+                style={{
+                  width: 64, height: 64, borderRadius: 16,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 26,
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
+                  backdropFilter: 'blur(10px)',
+                  border: '2px solid rgba(255,255,255,0.35)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
+                  color: 'white',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  WebkitTapHighlightColor: 'transparent',
+                }}
+                onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
+                onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+                onTouchCancel={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+                onMouseDown={() => inputRef.current.right = true}
+                onMouseUp={() => inputRef.current.right = false}
+                onMouseLeave={() => inputRef.current.right = false}
+              >
+                ▶
+              </button>
+            </div>
+
+            {/* Jump button — big, satisfying */}
             <button
-              className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black select-none active:scale-90 transition-transform"
+              className="select-none pointer-events-auto"
               style={{
-                background: inputRef.current.left
-                  ? 'rgba(255,255,255,0.5)'
-                  : 'rgba(255,255,255,0.25)',
-                backdropFilter: 'blur(8px)',
-                border: '2px solid rgba(255,255,255,0.4)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                width: 76, height: 76, borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 28, fontWeight: 900,
+                background: 'linear-gradient(145deg, rgba(99,102,241,0.75), rgba(59,130,246,0.65))',
+                backdropFilter: 'blur(10px)',
+                border: '3px solid rgba(255,255,255,0.45)',
+                boxShadow: '0 4px 20px rgba(59,130,246,0.35), inset 0 2px 0 rgba(255,255,255,0.3)',
+                color: 'white',
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                WebkitTapHighlightColor: 'transparent',
               }}
-              onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
-              onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
-              onMouseDown={() => inputRef.current.left = true}
-              onMouseUp={() => inputRef.current.left = false}
-              onMouseLeave={() => inputRef.current.left = false}
+              onTouchStart={(e) => { e.preventDefault(); inputRef.current.jump = true; }}
+              onMouseDown={() => inputRef.current.jump = true}
             >
-              ◀
-            </button>
-            <button
-              className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black select-none active:scale-90 transition-transform"
-              style={{
-                background: inputRef.current.right
-                  ? 'rgba(255,255,255,0.5)'
-                  : 'rgba(255,255,255,0.25)',
-                backdropFilter: 'blur(8px)',
-                border: '2px solid rgba(255,255,255,0.4)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-              }}
-              onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
-              onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
-              onMouseDown={() => inputRef.current.right = true}
-              onMouseUp={() => inputRef.current.right = false}
-              onMouseLeave={() => inputRef.current.right = false}
-            >
-              ▶
+              ▲
             </button>
           </div>
-
-          {/* Jump button (right side) */}
-          <button
-            className="w-20 h-20 rounded-full flex items-center justify-center text-xl font-black select-none active:scale-90 transition-transform"
-            style={{
-              background: 'linear-gradient(135deg, rgba(59,130,246,0.7), rgba(37,99,235,0.7))',
-              backdropFilter: 'blur(8px)',
-              border: '3px solid rgba(255,255,255,0.5)',
-              boxShadow: '0 4px 16px rgba(37,99,235,0.4)',
-              color: 'white',
-              textShadow: '0 1px 3px rgba(0,0,0,0.3)',
-            }}
-            onTouchStart={(e) => { e.preventDefault(); inputRef.current.jump = true; }}
-            onMouseDown={() => inputRef.current.jump = true}
-          >
-            ▲
-          </button>
         </div>
 
         {/* Word challenge overlay */}
