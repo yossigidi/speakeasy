@@ -6,6 +6,7 @@ import { useSpeech } from '../contexts/SpeechContext.jsx';
 import { playSequence, playHebrew, preloadHebrewAudio, preloadEnglishAudio, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playWrong, playPop, playTap, playComplete, playStar, playSplash } from '../utils/gameSounds.js';
 import { ListenPopGame, CategorySortGame, MissingLetterGame, SentenceBuilderGame } from '../components/games/NewGames.jsx';
+import WordRunnerGame from '../components/games/WordRunner.jsx';
 import { SpeakliRunGame } from '../components/games/SpeakliRun.jsx';
 import { SpeakliFlightGame } from '../components/games/SpeakliFlight.jsx';
 import GameInstructionOverlay from '../components/games/GameInstructionOverlay.jsx';
@@ -1228,13 +1229,13 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
    ══════════════════════════════════════════════════════ */
 const GAMES = [
   {
-    id: 'listen-pop',
-    emoji: '🎧',
+    id: 'word-runner',
+    emoji: '🎮',
     image: '/images/game-listen-pop.jpg',
-    titleKey: 'gameListenPopTitle',
-    descKey: 'gameListenPopDesc',
-    gradient: 'from-cyan-400 via-sky-400 to-blue-500',
-    component: ListenPopGame,
+    titleKey: 'gameWordRunnerTitle',
+    descKey: 'gameWordRunnerDesc',
+    gradient: 'from-emerald-400 via-green-500 to-cyan-500',
+    component: WordRunnerGame,
   },
   {
     id: 'bubble-pop',
