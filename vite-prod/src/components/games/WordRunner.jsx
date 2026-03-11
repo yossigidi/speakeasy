@@ -270,20 +270,34 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
       }
     }
 
-    // Question blocks — 1-2 per section, spread throughout level
+    // Question blocks — Mario-style: embedded in platform rows or standalone
     if (s % 2 === 1 || s === 0) {
+      const sectionPlats = platforms.filter(p => p.x >= sx && p.x < sx + sectionWidth);
       const qWord = allLevelWords[blocks.length % allLevelWords.length];
       const wrongWords = shuffle(words.filter(w => w.word !== qWord.word)).slice(0, 2);
-      const bx = sx + sectionWidth * 0.4 + Math.random() * 40;
-      blocks.push({
-        x: bx,
-        y: groundY - TILE * 2.5,
-        w: TILE + 4,
-        h: TILE + 4,
-        activated: false,
-        question: qWord,
-        options: shuffle([qWord, ...wrongWords]),
-      });
+
+      if (sectionPlats.length >= 1) {
+        // Inline with platform — glued directly to the end (no gap), same height
+        const refPlat = sectionPlats[Math.floor(Math.random() * sectionPlats.length)];
+        const bx = refPlat.x + refPlat.w; // flush against platform edge
+        blocks.push({
+          x: bx, y: refPlat.y,
+          w: TILE, h: TILE,
+          activated: false,
+          question: qWord,
+          options: shuffle([qWord, ...wrongWords]),
+        });
+      } else {
+        // Standalone floating block above ground (like Mario's solo ? blocks)
+        const bx = sx + sectionWidth * 0.4 + Math.random() * 40;
+        blocks.push({
+          x: bx, y: groundY - TILE * 2.5,
+          w: TILE, h: TILE,
+          activated: false,
+          question: qWord,
+          options: shuffle([qWord, ...wrongWords]),
+        });
+      }
     }
 
     // Enemies — appear from level 1+, more in later sections
@@ -1038,11 +1052,12 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
       player.vy += GRAVITY;
       player.y += player.vy;
 
-      // Platform collision (only check nearby platforms)
+      // Platform collision (platforms + question blocks — player can stand on both)
       player.onGround = false;
       const pb = playerBox(player);
-      for (const plat of level.platforms) {
-        // Only check platforms near player
+      const allSolids = [...level.platforms, ...level.blocks.filter((_, i) => !activatedBlocksRef.current.has(i))];
+      for (const plat of allSolids) {
+        // Only check nearby
         if (plat.x > player.x + VIEWPORT_W || plat.x + plat.w < player.x - 100) continue;
 
         if (
@@ -1441,17 +1456,17 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             );
           })}
 
-          {/* Question blocks — real image */}
+          {/* Question blocks — Mario-style, same size as platform tiles */}
           {level.blocks.map((block, i) => {
             if (activatedBlocksRef.current.has(i)) return null;
             if (block.x < visibleRange.left || block.x > visibleRange.right) return null;
             return (
               <div key={`b${i}`} className="absolute" style={{
                 left: block.x * sx, top: block.y * sy,
-                width: 48, height: 48,
-                borderRadius: 10,
+                width: block.w * sx, height: block.h * sy,
+                borderRadius: 6,
                 overflow: 'hidden',
-                boxShadow: '0 4px 14px rgba(0,0,0,0.35), 0 0 20px rgba(255,215,0,0.25)',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.35), 0 0 16px rgba(255,215,0,0.3)',
                 animation: 'blockBounce 2s ease-in-out infinite',
               }}>
                 <img src={IMG.questionBlock} alt="?" style={{
