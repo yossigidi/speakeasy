@@ -67,10 +67,10 @@ const IMG = {
   },
   platform: {
     'abc-forest': '/images/platform_forest.jpg',
-    'animal-valley': '/images/Savanna_platform.jpg',
-    'color-hills': '/images/Rainbow_platform.jpg',
-    'food-city': '/images/Food_platform.jpg',
-    'word-island': '/images/Space_platform.jpg',
+    'animal-valley': '/images/platform_savanna.jpg',
+    'color-hills': '/images/platform_rainbow.jpg',
+    'food-city': '/images/platform_food.jpg',
+    'word-island': '/images/platform_space.jpg',
   },
   enemies: [
     '/images/character_frog.jpg',
