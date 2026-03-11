@@ -454,7 +454,7 @@ function BubblePopGame({ onComplete, onBack }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+            <ArrowLeft size={20} />
           </button>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-4 py-1.5 flex items-center gap-2">
             <span className="text-lg">🫧</span>
@@ -795,7 +795,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Header - compact */}
         <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+            <ArrowLeft size={20} />
           </button>
           <div className="text-center">
             <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
@@ -1089,7 +1089,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+            <ArrowLeft size={20} />
           </button>
           <div className="text-center">
             <h2 className="text-lg font-black text-gray-800 dark:text-white flex items-center gap-2">
@@ -1370,7 +1370,7 @@ function GameSelector({ onSelectGame, onBack, onNavigate }) {
         {/* Header */}
         <div className="flex items-center gap-3 mb-3">
           <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+            <ArrowLeft size={20} />
           </button>
           <h1 className="text-2xl font-black py-1 flex-1 text-center" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             {t('speakliGames', uiLang)}

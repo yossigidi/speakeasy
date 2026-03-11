@@ -133,7 +133,7 @@ function GameHeader({ onBack, title, emoji, right, uiLang }) {
   return (
     <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
       <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center">
-        <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
+        <ArrowLeft size={20} />
       </button>
       <div className="text-center">
         <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
