@@ -35,6 +35,7 @@ const TILE = 40;
 const GROUND_TILES = 2;
 const VIEWPORT_W = 375;
 const VIEWPORT_H = 600;
+const GROUND_Y_RATIO = 0.82; // ground at 82% of viewport height
 
 // Smooth physics-based movement
 const PLAYER_ACCEL = 0.55;      // acceleration per frame
@@ -209,7 +210,7 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
 
   // Level length grows with difficulty
   const levelLength = 3200 + levelIndex * 500 + difficulty * 200;
-  const groundY = VIEWPORT_H - TILE * GROUND_TILES;
+  const groundY = Math.floor(VIEWPORT_H * GROUND_Y_RATIO);
 
   // Words for this level: 2-3 new + review
   const wordsPerLevel = 2 + Math.min(1, Math.floor(levelIndex / 2));
@@ -1390,14 +1391,13 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           transform: `translate3d(${-camera.x * sx}px, 0, 0)`,
           willChange: 'transform',
         }}>
-          {/* Ground with textured top */}
+          {/* Ground — extends to bottom of screen */}
           {level.platforms.filter(p => p.isGround).map((plat, i) => (
             <div key={`g${i}`} className="absolute" style={{
               left: plat.x * sx, top: plat.y * sy,
-              width: plat.w * sx, height: plat.h * sy,
-              background: `linear-gradient(180deg, ${world.grassColor} 0%, ${world.groundColor} 25%, ${world.groundColor} 100%)`,
-              borderTop: `5px solid ${world.grassColor}`,
-              boxShadow: `inset 0 8px 0 -3px ${world.grassColor}55`,
+              width: plat.w * sx, height: viewSize.h,
+              background: `linear-gradient(180deg, ${world.grassColor} 0%, ${world.groundColor} 15%, ${world.groundColor} 100%)`,
+              borderTop: `4px solid ${world.grassColor}`,
             }} />
           ))}
 
@@ -1535,8 +1535,8 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           </div>
         </div>
 
-        {/* Progress bar — above controls */}
-        <div className="fixed z-30" style={{ bottom: 136, left: 16, right: 16 }}>
+        {/* Progress bar — top area, below HUD */}
+        <div className="fixed z-30" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 52px)', left: 16, right: 16 }}>
           <div className="bg-black/20 backdrop-blur-sm rounded-full h-2 overflow-hidden" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
             <div ref={el => hudRef.current.progress = el}
               className="h-full rounded-full"
@@ -1553,7 +1553,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         {streak >= 2 && (
           <div className="fixed z-30 rounded-full px-4 py-1.5 text-sm font-black animate-pop-in"
             style={{
-              bottom: 152, left: '50%', transform: 'translateX(-50%)',
+              top: 'calc(env(safe-area-inset-top, 0px) + 66px)', left: '50%', transform: 'translateX(-50%)',
               background: 'linear-gradient(135deg, #FBBF24, #F59E0B)',
               color: '#78350F',
               boxShadow: '0 2px 10px rgba(245,158,11,0.4)',
@@ -1562,82 +1562,72 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           </div>
         )}
 
-        {/* ═══ VIRTUAL GAMEPAD — forced LTR so buttons stay correct ═══ */}
-        <div className="fixed bottom-0 z-40 pointer-events-none"
-          style={{ left: 0, right: 0, direction: 'ltr', paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 16px 8px' }}>
-            {/* D-Pad LEFT side — ◀ ▶ */}
-            <div style={{ display: 'flex', gap: 8 }} className="pointer-events-auto">
-              <button
-                className="select-none"
-                style={{
-                  width: 64, height: 64, borderRadius: 16,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 26,
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
-                  backdropFilter: 'blur(10px)',
-                  border: '2px solid rgba(255,255,255,0.35)',
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
-                  color: 'white',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                  WebkitTapHighlightColor: 'transparent',
-                }}
-                onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
-                onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
-                onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; }}
-                onMouseDown={() => inputRef.current.left = true}
-                onMouseUp={() => inputRef.current.left = false}
-                onMouseLeave={() => inputRef.current.left = false}
-              >
-                ◀
-              </button>
-              <button
-                className="select-none"
-                style={{
-                  width: 64, height: 64, borderRadius: 16,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 26,
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
-                  backdropFilter: 'blur(10px)',
-                  border: '2px solid rgba(255,255,255,0.35)',
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
-                  color: 'white',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                  WebkitTapHighlightColor: 'transparent',
-                }}
-                onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
-                onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
-                onTouchCancel={(e) => { e.preventDefault(); inputRef.current.right = false; }}
-                onMouseDown={() => inputRef.current.right = true}
-                onMouseUp={() => inputRef.current.right = false}
-                onMouseLeave={() => inputRef.current.right = false}
-              >
-                ▶
-              </button>
-            </div>
-
-            {/* Jump button RIGHT side */}
-            <button
-              className="select-none pointer-events-auto"
-              style={{
-                width: 76, height: 76, borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 28, fontWeight: 900,
-                background: 'linear-gradient(145deg, rgba(99,102,241,0.75), rgba(59,130,246,0.65))',
-                backdropFilter: 'blur(10px)',
-                border: '3px solid rgba(255,255,255,0.45)',
-                boxShadow: '0 4px 20px rgba(59,130,246,0.35), inset 0 2px 0 rgba(255,255,255,0.3)',
-                color: 'white',
-                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                WebkitTapHighlightColor: 'transparent',
-              }}
-              onTouchStart={(e) => { e.preventDefault(); inputRef.current.jump = true; }}
-              onMouseDown={() => inputRef.current.jump = true}
-            >
-              ▲
-            </button>
-          </div>
+        {/* ═══ VIRTUAL GAMEPAD — absolute positions, immune to RTL ═══ */}
+        {/* D-Pad — fixed to bottom-LEFT */}
+        <div className="fixed z-40" style={{
+          left: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 16px)`,
+          display: 'flex', gap: 8,
+        }}>
+          <button
+            className="select-none"
+            style={{
+              width: 60, height: 60, borderRadius: 14,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 24,
+              background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
+              backdropFilter: 'blur(10px)',
+              border: '2px solid rgba(255,255,255,0.35)',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
+              color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+            onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+            onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+            onMouseDown={() => inputRef.current.left = true}
+            onMouseUp={() => inputRef.current.left = false}
+            onMouseLeave={() => inputRef.current.left = false}
+          >◀</button>
+          <button
+            className="select-none"
+            style={{
+              width: 60, height: 60, borderRadius: 14,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 24,
+              background: 'linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15))',
+              backdropFilter: 'blur(10px)',
+              border: '2px solid rgba(255,255,255,0.35)',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
+              color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+            onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+            onTouchCancel={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+            onMouseDown={() => inputRef.current.right = true}
+            onMouseUp={() => inputRef.current.right = false}
+            onMouseLeave={() => inputRef.current.right = false}
+          >▶</button>
         </div>
+
+        {/* Jump button — fixed to bottom-RIGHT */}
+        <button
+          className="fixed z-40 select-none"
+          style={{
+            right: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 16px)`,
+            width: 72, height: 72, borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 26, fontWeight: 900,
+            background: 'linear-gradient(145deg, rgba(99,102,241,0.75), rgba(59,130,246,0.65))',
+            backdropFilter: 'blur(10px)',
+            border: '3px solid rgba(255,255,255,0.45)',
+            boxShadow: '0 4px 20px rgba(59,130,246,0.35), inset 0 2px 0 rgba(255,255,255,0.3)',
+            color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+            WebkitTapHighlightColor: 'transparent',
+          }}
+          onTouchStart={(e) => { e.preventDefault(); inputRef.current.jump = true; }}
+          onMouseDown={() => inputRef.current.jump = true}
+        >▲</button>
 
         {/* Word challenge overlay */}
         {phase === 'challenge' && challengeData && (
