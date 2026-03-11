@@ -239,20 +239,6 @@ export function UserProgressProvider({ children: reactChildren }) {
         const childrenIds = userData.childrenIds || [];
 
         if (childrenIds.length === 0) {
-          // Try to auto-restore children via server API (Firestore rules block client-side query)
-          try {
-            const token = await user.getIdToken();
-            const res = await fetch('/api/restore-children', {
-              headers: { Authorization: `Bearer ${token}` },
-            });
-            const data = await res.json();
-            if (data.childrenIds && data.childrenIds.length > 0) {
-              console.log('Auto-restored children:', data.childrenIds);
-              return; // listener will re-fire with restored childrenIds
-            }
-          } catch (e) {
-            console.warn('Auto-restore children failed:', e);
-          }
           // Legacy subcollection migration
           try {
             const legacyRef = window.firestore.collection(window.db, 'users', user.uid, 'children');
