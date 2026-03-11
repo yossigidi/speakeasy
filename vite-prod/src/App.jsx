@@ -78,6 +78,64 @@ function PageLoader() {
 import { t, lf } from './utils/translations.js';
 import AchievementToast from './components/gamification/AchievementToast.jsx';
 
+/* ── Email verification screen (shown at App level to survive OnboardingPage remounts) ── */
+function EmailVerificationScreen({ user, onVerified }) {
+  const { resendVerification, signOut } = useAuth();
+  const { uiLang } = useTheme();
+  const [error, setError] = useState('');
+  const [resent, setResent] = useState(false);
+
+  return (
+    <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center px-6 text-center"
+      style={{ background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #C7D2FE 100%)' }}>
+      <div className="text-6xl mb-4">📧</div>
+      <h2 className="text-2xl font-black text-gray-900 mb-3">{t('verifyEmailTitle', uiLang)}</h2>
+      <p className="text-gray-600 mb-2 max-w-sm">{t('verifyEmailDesc', uiLang)}</p>
+      <p className="text-indigo-600 font-bold mb-6">{user.email}</p>
+      {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+      <button
+        onClick={async () => {
+          setError('');
+          try {
+            await user.reload();
+            if (user.emailVerified) {
+              sessionStorage.removeItem('se_verify');
+              onVerified();
+            } else {
+              setError(t('emailNotVerifiedYet', uiLang));
+            }
+          } catch (e) {
+            setError(e.message);
+          }
+        }}
+        className="w-full max-w-xs py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg mb-3"
+      >
+        {t('verifyEmailDone', uiLang)}
+      </button>
+      <button
+        onClick={async () => {
+          try {
+            await resendVerification();
+            setResent(true);
+            setTimeout(() => setResent(false), 5000);
+          } catch (e) {
+            setError(e.message);
+          }
+        }}
+        className="text-indigo-500 underline text-sm mb-4"
+      >
+        {resent ? t('verificationResent', uiLang) : t('resendVerification', uiLang)}
+      </button>
+      <button
+        onClick={() => { sessionStorage.removeItem('se_verify'); signOut(); }}
+        className="text-gray-400 text-xs underline"
+      >
+        {t('signOut', uiLang) || 'Sign out'}
+      </button>
+    </div>
+  );
+}
+
 function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const { childUser, logoutChild } = useChildAuth();
@@ -206,6 +264,24 @@ function AppContent() {
           <LoadingSpinner />
         </div>
       </div>
+    );
+  }
+
+  // Show email verification screen if user signed up with email but hasn't verified
+  const needsEmailVerification = user
+    && !user.emailVerified
+    && user.providerData?.some(p => p.providerId === 'password')
+    && sessionStorage.getItem('se_verify') === '1';
+
+  if (needsEmailVerification) {
+    return (
+      <EmailVerificationScreen
+        user={user}
+        onVerified={() => {
+          // Force re-render by reloading auth state
+          window.location.reload();
+        }}
+      />
     );
   }
 

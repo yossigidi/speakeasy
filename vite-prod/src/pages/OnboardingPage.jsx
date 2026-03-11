@@ -153,7 +153,7 @@ function calculateCurriculumLevel(answers) {
    ═══════════════════════════════════════════════ */
 export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { uiLang, dir, setLang } = useTheme();
-  const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, resendVerification, user } = useAuth();
+  const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, user } = useAuth();
   const { updateProgress, progress, addChild, familyCode } = useUserProgress();
 
   const [step, setStep] = useState(0);
@@ -185,8 +185,6 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
-  const [showVerification, setShowVerification] = useState(false);
-  const [verificationResent, setVerificationResent] = useState(false);
 
   const isRTL = RTL_LANGS.includes(uiLang);
 
@@ -321,9 +319,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     setAuthLoading(true);
     try {
       if (authMode === 'signup') {
+        // Set verification flag BEFORE creating user (so it persists across remount)
+        sessionStorage.setItem('se_verify', '1');
         await signUpWithEmail(email, password, displayName);
-        // Show email verification screen
-        setShowVerification(true);
         setAuthLoading(false);
         return;
       } else {
@@ -1088,51 +1086,6 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               }`}
             />
           ))}
-        </div>
-      )}
-
-      {/* Email verification overlay — shown on top of everything after signup */}
-      {showVerification && (
-        <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center px-6 text-center"
-          style={{ background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #C7D2FE 100%)' }}>
-          <div className="text-6xl mb-4">📧</div>
-          <h2 className="text-2xl font-black text-gray-900 mb-3">{t('verifyEmailTitle', uiLang)}</h2>
-          <p className="text-gray-600 mb-2 max-w-sm">{t('verifyEmailDesc', uiLang)}</p>
-          <p className="text-indigo-600 font-bold mb-6">{email}</p>
-          <button
-            onClick={async () => {
-              setAuthError('');
-              try {
-                await window.auth.currentUser?.reload();
-                if (window.auth.currentUser?.emailVerified) {
-                  setShowVerification(false);
-                  await handleAuthSuccess();
-                } else {
-                  setAuthError(t('emailNotVerifiedYet', uiLang));
-                }
-              } catch (e) {
-                setAuthError(e.message);
-              }
-            }}
-            className="w-full max-w-xs py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg mb-3"
-          >
-            {t('verifyEmailDone', uiLang)}
-          </button>
-          <button
-            onClick={async () => {
-              try {
-                await resendVerification();
-                setVerificationResent(true);
-                setTimeout(() => setVerificationResent(false), 5000);
-              } catch (e) {
-                setAuthError(e.message);
-              }
-            }}
-            className="text-sm text-indigo-500 hover:text-indigo-600 font-medium"
-          >
-            {verificationResent ? t('verificationResent', uiLang) : t('resendVerification', uiLang)}
-          </button>
-          {authError && <p className="text-red-500 text-sm mt-3">{authError}</p>}
         </div>
       )}
 
