@@ -179,6 +179,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const [authMode, setAuthMode] = useState('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
@@ -305,6 +306,18 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const handleEmailSubmit = useCallback(async (e) => {
     e.preventDefault();
     setAuthError('');
+
+    // Bot detection (honeypot)
+    if (window._botDetected) return;
+
+    // Signup validations
+    if (authMode === 'signup') {
+      if (password !== confirmPassword) {
+        setAuthError(t('passwordsMismatch', uiLang));
+        return;
+      }
+    }
+
     setAuthLoading(true);
     try {
       if (authMode === 'signup') {
@@ -335,7 +348,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     } finally {
       setAuthLoading(false);
     }
-  }, [email, password, displayName, authMode, signUpWithEmail, signInWithEmail, handleAuthSuccess, uiLang]);
+  }, [email, password, confirmPassword, displayName, authMode, signUpWithEmail, signInWithEmail, handleAuthSuccess, uiLang]);
 
   /* ─────────────── Step renderers ─────────────── */
 
@@ -557,6 +570,29 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+
+          {/* Confirm password — signup only */}
+          {authMode === 'signup' && (
+            <input
+              type="password"
+              placeholder={t('confirmPassword', uiLang)}
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              required
+              minLength={6}
+              className="landing-input"
+            />
+          )}
+
+          {/* Honeypot — hidden from real users, bots fill it */}
+          <input
+            type="text"
+            name="website"
+            autoComplete="off"
+            tabIndex={-1}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0 }}
+            onChange={() => { window._botDetected = true; }}
+          />
 
           {authMode === 'signin' && (
             <div style={{ textAlign: 'center', margin: '4px 0 12px' }}>
