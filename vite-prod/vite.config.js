@@ -3,7 +3,12 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  esbuild: {
+    drop: ['debugger'],
+    pure: ['console.log', 'console.warn'],
+  },
   build: {
+    sourcemap: false,
     outDir: 'dist',
     rollupOptions: {
       output: {

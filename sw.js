@@ -49,6 +49,7 @@ self.addEventListener('activate', event => {
         try {
           client.navigate(client.url);
         } catch (e) {
+          // navigate() can fail on focused clients — tell them to reload
           client.postMessage({ type: 'SW_UPDATED' });
         }
       });
