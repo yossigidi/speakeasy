@@ -28,7 +28,7 @@ import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 // ═══════════════════════════════════════════
 
 const GRAVITY = 0.6;
-const JUMP_VEL = -11;
+const JUMP_VEL = -12.5;
 const PLAYER_W = 52;
 const PLAYER_H = 52;
 const TILE = 40;
@@ -241,7 +241,8 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
       const px = sx + p * (sectionWidth / platCount) + Math.random() * 30;
       const tilesWide = 3 + Math.floor(Math.random() * 3);
       const w = tilesWide * TILE;
-      const heightLevels = [groundY - TILE * 2, groundY - TILE * 3.5, groundY - TILE * 5];
+      // Heights must be reachable by jump (max ~130px from ground)
+      const heightLevels = [groundY - TILE * 1.8, groundY - TILE * 2.5, groundY - TILE * 3];
       const y = heightLevels[Math.floor(Math.random() * Math.min(heightLevels.length, 2 + Math.floor(difficulty / 2)))];
       platforms.push({ x: px, y, w, h: TILE });
 
@@ -276,7 +277,7 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
       const bx = sx + sectionWidth * 0.4 + Math.random() * 40;
       blocks.push({
         x: bx,
-        y: groundY - TILE * 3,
+        y: groundY - TILE * 2.5,
         w: TILE + 4,
         h: TILE + 4,
         activated: false,
