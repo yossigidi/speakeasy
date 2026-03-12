@@ -127,19 +127,24 @@ async function sendWeeklyReports(db) {
                 if (!childDoc.exists) continue;
                 const child = childDoc.data();
 
-                // Fetch weekly activity
+                // Fetch weekly activity (per day for chart)
                 let weekXP = 0, weekMinutes = 0, activeDays = 0;
+                const dailyXPs = [];
                 for (const date of days) {
                     try {
                         const actSnap = await db.collection('childProfiles').doc(childId)
                             .collection('dailyActivity').doc(date).get();
                         if (actSnap.exists) {
                             const act = actSnap.data();
-                            weekXP += act.xp || 0;
+                            const dayXP = act.xp || 0;
+                            weekXP += dayXP;
                             weekMinutes += act.minutes || 0;
-                            if ((act.xp || 0) > 0) activeDays++;
+                            if (dayXP > 0) activeDays++;
+                            dailyXPs.push(dayXP);
+                        } else {
+                            dailyXPs.push(0);
                         }
-                    } catch (_) {}
+                    } catch (_) { dailyXPs.push(0); }
                 }
 
                 // Fetch recent learned words (last 10)
@@ -156,6 +161,7 @@ async function sendWeeklyReports(db) {
                     weekXP,
                     weekMinutes: Math.round(weekMinutes),
                     activeDays,
+                    dailyXPs,
                     totalWords: child.totalWordsLearned || 0,
                     totalLessons: child.totalLessonsCompleted || 0,
                     streak: child.streak || 0,
@@ -187,76 +193,166 @@ async function sendWeeklyReports(db) {
             ? { minutes: 'минут обучения', words: 'слов изучено', lessons: 'уроков', streak: 'серия', activeDays: 'активных дней', xp: 'очков', level: 'уровень', cta: 'Продолжаем учиться!', greeting: 'Привет!', summary: 'Вот ваш еженедельный отчёт', noActivity: 'На этой неделе не было активности. Давайте вернёмся к учёбе!' }
             : { minutes: 'learning minutes', words: 'words learned', lessons: 'lessons', streak: 'day streak', activeDays: 'active days', xp: 'XP earned', level: 'level', cta: "Let's keep learning!", greeting: 'Hello!', summary: "Here's your weekly summary", noActivity: 'No activity this week. Let\'s get back to learning!' };
 
+        // Day labels for chart
+        const dayLabelsHe = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+        const dayLabelsEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        const dayLabelsAr = ['أحد','إثن','ثلا','أرب','خمي','جمع','سبت'];
+        const dayLabelsRu = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+        const dayLbls = lang === 'he' ? dayLabelsHe : lang === 'ar' ? dayLabelsAr : lang === 'ru' ? dayLabelsRu : dayLabelsEn;
+        // Map days array to day-of-week labels
+        const chartLabels = days.map(d => dayLbls[new Date(d).getDay()]);
+
+        // Date range for header
+        const dateRange = `${days[0]} — ${days[6]}`;
+
         let childrenHtml = '';
         for (const c of childSummaries) {
             if (c.weekXP === 0 && c.activeDays === 0) {
-                childrenHtml += `<div style="background:#FFF3F3;border-radius:16px;padding:20px;margin-bottom:16px;text-align:center;">
-                    <div style="font-size:40px;margin-bottom:8px;">${c.avatar}</div>
-                    <div style="font-size:18px;font-weight:700;color:#1F2937;margin-bottom:8px;">${c.name}</div>
-                    <p style="color:#6B7280;font-size:14px;">${labels.noActivity}</p>
-                    ${c.aiInsight ? `<div style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-radius:12px;padding:14px;margin-top:12px;text-align:${dir === 'rtl' ? 'right' : 'left'};">
-                        <div style="font-size:13px;font-weight:700;color:#4338CA;margin-bottom:6px;">🤖 ${aiLabel}</div>
-                        <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">${c.aiInsight}</p>
+                childrenHtml += `<div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;border:1px solid #E5E7EB;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                        <div style="font-size:32px;">${c.avatar}</div>
+                        <div>
+                            <div style="font-size:16px;font-weight:700;color:#111827;">${c.name}</div>
+                            <div style="font-size:12px;color:#9CA3AF;">${labels.level} ${c.level}</div>
+                        </div>
+                    </div>
+                    <div style="background:#FEF2F2;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#6B7280;font-size:14px;margin:0;">${labels.noActivity}</p>
+                    </div>
+                    ${c.aiInsight ? `<div style="border-top:1px solid #E5E7EB;margin-top:16px;padding-top:16px;">
+                        <div style="font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">${aiLabel}</div>
+                        <p style="font-size:13px;color:#374151;margin:0;line-height:1.6;">${c.aiInsight}</p>
                     </div>` : ''}
                 </div>`;
                 continue;
             }
-            childrenHtml += `<div style="background:#F0F9FF;border-radius:16px;padding:20px;margin-bottom:16px;">
-                <div style="text-align:center;margin-bottom:16px;">
-                    <div style="font-size:40px;margin-bottom:4px;">${c.avatar}</div>
-                    <div style="font-size:18px;font-weight:700;color:#1F2937;">${c.name}</div>
-                    <div style="font-size:13px;color:#6B7280;">${labels.level} ${c.level}</div>
+
+            // Build daily activity bar chart
+            const maxXP = Math.max(...c.dailyXPs, 1);
+            let barChartHtml = '<table style="width:100%;border-collapse:collapse;"><tr style="vertical-align:bottom;">';
+            for (let i = 0; i < 7; i++) {
+                const h = Math.max(Math.round((c.dailyXPs[i] / maxXP) * 60), c.dailyXPs[i] > 0 ? 6 : 3);
+                const color = c.dailyXPs[i] > 0 ? '#6366F1' : '#E5E7EB';
+                barChartHtml += `<td style="text-align:center;width:14.28%;padding:0 2px;"><div style="background:${color};width:100%;height:${h}px;border-radius:4px 4px 0 0;"></div></td>`;
+            }
+            barChartHtml += '</tr><tr>';
+            for (let i = 0; i < 7; i++) {
+                barChartHtml += `<td style="text-align:center;font-size:10px;color:#9CA3AF;padding-top:4px;">${chartLabels[i]}</td>`;
+            }
+            barChartHtml += '</tr></table>';
+
+            // Progress bars: words, lessons, consistency
+            const wordsPct = Math.min(Math.round((c.totalWords / Math.max(c.totalWords, 50)) * 100), 100);
+            const lessonsPct = Math.min(Math.round((c.totalLessons / Math.max(c.totalLessons, 20)) * 100), 100);
+            const consistencyPct = Math.round((c.activeDays / 7) * 100);
+
+            childrenHtml += `<div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;border:1px solid #E5E7EB;">
+                <!-- Child header -->
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #F3F4F6;">
+                    <div style="font-size:32px;">${c.avatar}</div>
+                    <div style="flex:1;">
+                        <div style="font-size:16px;font-weight:700;color:#111827;">${c.name}</div>
+                        <div style="font-size:12px;color:#9CA3AF;">${labels.level} ${c.level} · ${labels.streak}: ${c.streak}</div>
+                    </div>
+                    <div style="text-align:center;background:#F0FDF4;border-radius:8px;padding:8px 12px;">
+                        <div style="font-size:20px;font-weight:800;color:#059669;">${c.weekXP}</div>
+                        <div style="font-size:9px;color:#6B7280;text-transform:uppercase;">${labels.xp}</div>
+                    </div>
                 </div>
-                <table style="width:100%;border-collapse:collapse;">
+
+                <!-- Key metrics row -->
+                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
                     <tr>
-                        <td style="padding:8px 4px;text-align:center;width:33%;">
-                            <div style="font-size:24px;font-weight:800;color:#6366F1;">${c.weekXP}</div>
-                            <div style="font-size:11px;color:#6B7280;">${labels.xp}</div>
+                        <td style="width:33%;text-align:center;padding:8px 0;">
+                            <div style="font-size:22px;font-weight:800;color:#111827;">${c.activeDays}<span style="font-size:13px;color:#9CA3AF;">/7</span></div>
+                            <div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.3px;">${labels.activeDays}</div>
                         </td>
-                        <td style="padding:8px 4px;text-align:center;width:33%;">
-                            <div style="font-size:24px;font-weight:800;color:#10B981;">${c.activeDays}/7</div>
-                            <div style="font-size:11px;color:#6B7280;">${labels.activeDays}</div>
+                        <td style="width:33%;text-align:center;padding:8px 0;border-left:1px solid #F3F4F6;border-right:1px solid #F3F4F6;">
+                            <div style="font-size:22px;font-weight:800;color:#111827;">${c.totalWords}</div>
+                            <div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.3px;">${labels.words}</div>
                         </td>
-                        <td style="padding:8px 4px;text-align:center;width:33%;">
-                            <div style="font-size:24px;font-weight:800;color:#F59E0B;">${c.weekMinutes}</div>
-                            <div style="font-size:11px;color:#6B7280;">${labels.minutes}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding:8px 4px;text-align:center;">
-                            <div style="font-size:24px;font-weight:800;color:#EC4899;">${c.totalWords}</div>
-                            <div style="font-size:11px;color:#6B7280;">${labels.words}</div>
-                        </td>
-                        <td style="padding:8px 4px;text-align:center;">
-                            <div style="font-size:24px;font-weight:800;color:#8B5CF6;">${c.totalLessons}</div>
-                            <div style="font-size:11px;color:#6B7280;">${labels.lessons}</div>
-                        </td>
-                        <td style="padding:8px 4px;text-align:center;">
-                            <div style="font-size:24px;font-weight:800;color:#EF4444;">🔥 ${c.streak}</div>
-                            <div style="font-size:11px;color:#6B7280;">${labels.streak}</div>
+                        <td style="width:33%;text-align:center;padding:8px 0;">
+                            <div style="font-size:22px;font-weight:800;color:#111827;">${c.totalLessons}</div>
+                            <div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.3px;">${labels.lessons}</div>
                         </td>
                     </tr>
                 </table>
-                ${c.aiInsight ? `<div style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-radius:12px;padding:14px;margin-top:16px;">
-                    <div style="font-size:13px;font-weight:700;color:#4338CA;margin-bottom:6px;">🤖 ${aiLabel}</div>
-                    <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">${c.aiInsight}</p>
+
+                <!-- Daily activity chart -->
+                <div style="margin-bottom:20px;">
+                    <div style="font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">${lang === 'he' ? 'פעילות יומית' : lang === 'ar' ? 'النشاط اليومي' : lang === 'ru' ? 'Ежедневная активность' : 'Daily Activity'}</div>
+                    ${barChartHtml}
+                </div>
+
+                <!-- Progress bars -->
+                <div style="margin-bottom:16px;">
+                    <div style="font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">${lang === 'he' ? 'התקדמות' : lang === 'ar' ? 'التقدم' : lang === 'ru' ? 'Прогресс' : 'Progress'}</div>
+
+                    <div style="margin-bottom:8px;">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:11px;color:#6B7280;">${labels.words}</span>
+                            <span style="font-size:11px;font-weight:600;color:#374151;">${c.totalWords}</span>
+                        </div>
+                        <div style="background:#F3F4F6;border-radius:99px;height:6px;overflow:hidden;">
+                            <div style="background:#6366F1;height:100%;width:${wordsPct}%;border-radius:99px;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:8px;">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:11px;color:#6B7280;">${labels.lessons}</span>
+                            <span style="font-size:11px;font-weight:600;color:#374151;">${c.totalLessons}</span>
+                        </div>
+                        <div style="background:#F3F4F6;border-radius:99px;height:6px;overflow:hidden;">
+                            <div style="background:#10B981;height:100%;width:${lessonsPct}%;border-radius:99px;"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:11px;color:#6B7280;">${lang === 'he' ? 'עקביות' : lang === 'ar' ? 'الاتساق' : lang === 'ru' ? 'Стабильность' : 'Consistency'}</span>
+                            <span style="font-size:11px;font-weight:600;color:#374151;">${c.activeDays}/7</span>
+                        </div>
+                        <div style="background:#F3F4F6;border-radius:99px;height:6px;overflow:hidden;">
+                            <div style="background:#F59E0B;height:100%;width:${consistencyPct}%;border-radius:99px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insight -->
+                ${c.aiInsight ? `<div style="border-top:1px solid #E5E7EB;margin-top:16px;padding-top:16px;">
+                    <div style="font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">${aiLabel}</div>
+                    <p style="font-size:13px;color:#374151;margin:0;line-height:1.7;">${c.aiInsight}</p>
                 </div>` : ''}
             </div>`;
         }
 
         const html = `<!DOCTYPE html><html dir="${dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
-<body style="margin:0;padding:0;background:#F3F4F6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-<div style="max-width:480px;margin:0 auto;padding:24px 16px;">
-    <div style="text-align:center;margin-bottom:24px;">
-        <img src="https://www.speakli.co.il/images/speakli-icon.webp" alt="Speakli" style="width:64px;height:64px;border-radius:16px;" />
-        <h1 style="font-size:22px;color:#1F2937;margin:12px 0 4px;">${title}</h1>
-        <p style="color:#6B7280;font-size:14px;margin:0;">${labels.greeting} ${labels.summary}</p>
-    </div>
+<body style="margin:0;padding:0;background:#F9FAFB;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+<div style="max-width:520px;margin:0 auto;padding:32px 16px;">
+    <!-- Header -->
+    <table style="width:100%;margin-bottom:28px;">
+        <tr>
+            <td style="width:48px;"><img src="https://www.speakli.co.il/images/speakli-icon.webp" alt="Speakli" style="width:40px;height:40px;border-radius:10px;" /></td>
+            <td style="padding-${dir === 'rtl' ? 'right' : 'left'}:12px;">
+                <div style="font-size:18px;font-weight:700;color:#111827;">${title}</div>
+                <div style="font-size:12px;color:#9CA3AF;">${dateRange}</div>
+            </td>
+        </tr>
+    </table>
+
     ${childrenHtml}
-    <div style="text-align:center;margin-top:24px;">
-        <a href="https://www.speakli.co.il" style="display:inline-block;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:white;padding:14px 36px;border-radius:14px;font-weight:700;font-size:16px;text-decoration:none;">${labels.cta}</a>
+
+    <!-- CTA -->
+    <div style="text-align:center;margin-top:28px;">
+        <a href="https://www.speakli.co.il" style="display:inline-block;background:#111827;color:white;padding:14px 40px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;">${labels.cta}</a>
     </div>
-    <p style="text-align:center;font-size:11px;color:#9CA3AF;margin-top:24px;">Speakli — Learn English the fun way</p>
+
+    <!-- Footer -->
+    <div style="text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid #E5E7EB;">
+        <p style="font-size:11px;color:#9CA3AF;margin:0;">Speakli — Learn English the fun way</p>
+        <p style="font-size:10px;color:#D1D5DB;margin:6px 0 0;">${lang === 'he' ? 'מייל זה נשלח אוטומטית מ-Speakli' : lang === 'ar' ? 'تم إرسال هذا البريد تلقائياً من Speakli' : lang === 'ru' ? 'Это письмо отправлено автоматически от Speakli' : 'This email was sent automatically by Speakli'}</p>
+    </div>
 </div>
 </body></html>`;
 
