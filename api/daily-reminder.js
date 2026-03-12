@@ -218,7 +218,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     // Require CRON_SECRET — fail closed (reject if not configured)
-    const cronSecret = process.env.CRON_SECRET;
+    const cronSecret = process.env.SPEAKLI_CRON_SECRET || process.env.CRON_SECRET;
     const authHeader = req.headers['authorization'];
     if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
         return res.status(401).json({ error: 'Unauthorized' });
