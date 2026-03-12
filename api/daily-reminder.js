@@ -228,9 +228,10 @@ module.exports = async function handler(req, res) {
         const db = getFirestoreAdmin();
         const results = { pushesSent: 0, pushesFailed: 0, staleRemoved: 0, errors: [] };
 
-        // ── Weekly report on Sundays ──
+        // ── Weekly report on Sundays (or forced via ?test=weekly) ──
+        const forceWeekly = req.query?.test === 'weekly';
         const dayOfWeek = new Date().getDay(); // 0 = Sunday
-        if (dayOfWeek === 0) {
+        if (dayOfWeek === 0 || forceWeekly) {
             try {
                 results.weeklyReport = await sendWeeklyReports(db);
             } catch (e) {
