@@ -321,6 +321,7 @@ export default function SpeakingCoachPage({ onBack }) {
       const aiMsg = {
         role: 'assistant',
         content: data.reply || 'Could you say that again?',
+        translation: data.replyTranslation || '',
         corrections: data.corrections || [],
         scores: {
           grammar: data.grammarScore || 70,
@@ -614,6 +615,7 @@ export default function SpeakingCoachPage({ onBack }) {
             key={i}
             role={msg.role}
             content={msg.content}
+            translation={msg.translation}
             corrections={msg.corrections}
             isChild={isChild}
             uiLang={uiLang}

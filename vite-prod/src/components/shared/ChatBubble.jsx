@@ -3,7 +3,7 @@ import { Volume2 } from 'lucide-react';
 import { t } from '../../utils/translations.js';
 import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 
-export default function ChatBubble({ role, content, corrections, isChild, uiLang, onPlayAudio }) {
+export default function ChatBubble({ role, content, translation, corrections, isChild, uiLang, onPlayAudio }) {
   const isAI = role === 'assistant';
   return (
     <div className={`flex ${isAI ? 'justify-start' : 'justify-end'} mb-3`}>
@@ -27,6 +27,11 @@ export default function ChatBubble({ role, content, corrections, isChild, uiLang
         <p className={`text-sm leading-relaxed ${isAI ? 'text-gray-800 dark:text-gray-200' : 'text-white'}`}>
           {content}
         </p>
+        {isAI && translation && (
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 italic leading-relaxed" dir="auto">
+            {translation}
+          </p>
+        )}
         {corrections && corrections.length > 0 && (
           <div className="mt-2 space-y-1.5 border-t border-gray-200 dark:border-gray-600 pt-2">
             <span className="text-xs font-bold text-amber-600 dark:text-amber-400">{t('corrections', uiLang)}</span>

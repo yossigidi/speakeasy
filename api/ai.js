@@ -542,7 +542,8 @@ FLUENCY DATA: The student spoke ${wordCount} words in ${Math.round(speakingTime)
 
 RESPONSE FORMAT — Reply with ONLY valid JSON:
 {
-  "reply": "Your conversational response (1-3 sentences, natural and engaging)",
+  "reply": "Your conversational response in English (1-3 sentences, natural and engaging)",
+  "replyTranslation": "Translation of your reply in the student's UI language so they understand what you said",
   "corrections": [
     { "wrong": "what they said wrong", "correct": "correct version", "rule": "grammar_rule_key", "explanation": "brief explanation in student's language" }
   ],
@@ -554,6 +555,7 @@ RESPONSE FORMAT — Reply with ONLY valid JSON:
 }
 
 RULES:
+- "replyTranslation" is REQUIRED — always translate your English reply to the student's UI language so they can learn what each sentence means.
 - "corrections" array should have 0-3 items max. Focus on the most impactful mistakes.
 - Each correction must include a "rule" key (e.g. "past_tense", "articles", "prepositions", "word_order", "subject_verb_agreement", "th_sound", "pronunciation").
 - Include "exercise" when there's a meaningful mistake to practice. Vary exercise types.
