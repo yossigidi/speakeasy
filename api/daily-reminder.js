@@ -61,7 +61,14 @@ async function sendWeeklyReports(db) {
 
     for (const userDoc of usersSnap.docs) {
         const userData = userDoc.data();
-        const email = userData.email;
+        // Try Firestore email first, fallback to Firebase Auth email
+        let email = userData.email;
+        if (!email) {
+            try {
+                const authUser = await admin.auth().getUser(userDoc.id);
+                email = authUser.email;
+            } catch (_) {}
+        }
         if (!email) { results.skipped++; results.skippedDetails.push({ uid: userDoc.id, reason: 'no email' }); continue; }
 
         const childrenIds = userData.childrenIds || [];
