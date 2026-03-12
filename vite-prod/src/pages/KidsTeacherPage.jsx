@@ -3,7 +3,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
-import TeacherCharacter from '../components/teacher/TeacherCharacter.jsx';
+import SpeakliAvatar from '../components/kids/SpeakliAvatar.jsx';
 import SpeechBubble from '../components/teacher/SpeechBubble.jsx';
 import ExerciseRenderer from '../components/teacher/ExerciseRenderer.jsx';
 import ConfettiExplosion from '../components/shared/ConfettiExplosion.jsx';
@@ -460,7 +460,7 @@ export default function KidsTeacherPage({ onBack }) {
           <h1 className="text-xl font-bold text-gray-800 dark:text-white">{t('teacherTime', uiLang)}</h1>
         </div>
         <div className="flex flex-col items-center mb-5">
-          <TeacherCharacter state={teacherState} size="normal" />
+          <SpeakliAvatar mode={teacherState === 'celebrating' ? 'celebrate' : teacherState === 'talking' ? 'talk' : 'idle'} size="xl" />
           <SpeechBubble text={speechText} direction={isRTL ? 'rtl' : 'ltr'} visible={showSpeech} />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -495,7 +495,7 @@ export default function KidsTeacherPage({ onBack }) {
   if (phase === 'intro') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col items-center justify-center p-5">
-        <TeacherCharacter state="talking" size="normal" />
+        <SpeakliAvatar mode="talk" size="xl" />
         <SpeechBubble text={speechText} direction={isRTL ? 'rtl' : 'ltr'} />
         <div className="mt-8 rounded-3xl p-6 text-center shadow-xl animate-pop-in" style={{ background: selectedTopic.gradient }}>
           <div className="text-5xl">{selectedTopic.emoji}</div>
@@ -526,7 +526,7 @@ export default function KidsTeacherPage({ onBack }) {
         </div>
         <div className="flex justify-end items-start gap-2 mb-2">
           <div className="flex flex-col items-center">
-            <TeacherCharacter state={teacherState} size="small" />
+            <SpeakliAvatar mode={teacherState === 'celebrating' ? 'celebrate' : teacherState === 'talking' ? 'talk' : 'idle'} size="sm" shadow={false} />
             {showSpeech && speechText && (
               <div className="glass-card rounded-lg px-2 py-1 text-xs font-semibold text-purple-600 dark:text-purple-400 max-w-[140px] text-center -mt-1">{speechText}</div>
             )}
@@ -546,7 +546,7 @@ export default function KidsTeacherPage({ onBack }) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col items-center justify-center p-5 relative overflow-hidden">
         {showConfetti && <ConfettiExplosion />}
-        <TeacherCharacter state="celebrating" size="normal" />
+        <SpeakliAvatar mode="celebrate" size="xl" />
         <SpeechBubble text={speechText} direction={isRTL ? 'rtl' : 'ltr'} />
         <div className="flex gap-2 mt-5">
           {[1,2,3,4].map(i => (

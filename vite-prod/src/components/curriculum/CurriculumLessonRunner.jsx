@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import TeacherCharacter from '../teacher/TeacherCharacter.jsx';
+import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 import CurriculumExerciseRenderer from './CurriculumExerciseRenderer.jsx';
 import LessonCompleteScreen from './LessonCompleteScreen.jsx';
 import { getLesson, calculateStars, calculateXP, LESSON_TYPES } from '../../data/curriculum/curriculum-index.js';
@@ -254,7 +254,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
       }}>
         {/* Teacher character - at top */}
         <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
-          <TeacherCharacter state="talking" size="normal" />
+          <SpeakliAvatar mode="talk" size="xl" />
         </div>
 
         {/* Lesson type icon + title */}
@@ -433,7 +433,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
           transition: 'all 0.3s',
           display: 'flex', flexDirection: 'column', alignItems: 'center',
         }}>
-          <TeacherCharacter state={teacherState} size="small" />
+          <SpeakliAvatar mode={teacherState === 'celebrating' ? 'celebrate' : teacherState === 'talking' ? 'talk' : 'idle'} size="sm" shadow={false} />
           {teacherState !== 'idle' && (
             <div style={{
               marginTop: 2, padding: '3px 8px', borderRadius: 8,

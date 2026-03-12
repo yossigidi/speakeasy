@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import TeacherCharacter from '../teacher/TeacherCharacter.jsx';
+import SpeakliAvatar from '../kids/SpeakliAvatar.jsx';
 import CurriculumExerciseRenderer from '../curriculum/CurriculumExerciseRenderer.jsx';
 import LessonCompleteScreen from '../curriculum/LessonCompleteScreen.jsx';
 import DialogueViewer from './DialogueViewer.jsx';
@@ -233,7 +233,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
         padding: '24px', paddingTop: 'calc(env(safe-area-inset-top, 0px) + 24px)',
       }}>
         <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
-          <TeacherCharacter state="talking" size="normal" />
+          <SpeakliAvatar mode="talk" size="xl" />
         </div>
 
         <div style={{
@@ -421,7 +421,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
           position: 'absolute', top: 8, right: 12, zIndex: 5,
           transition: 'all 0.3s', display: 'flex', flexDirection: 'column', alignItems: 'center',
         }}>
-          <TeacherCharacter state={teacherState} size="small" />
+          <SpeakliAvatar mode={teacherState === 'celebrating' ? 'celebrate' : teacherState === 'talking' ? 'talk' : 'idle'} size="sm" shadow={false} />
           {teacherState !== 'idle' && (
             <div style={{
               marginTop: 2, padding: '3px 8px', borderRadius: 8,
