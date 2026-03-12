@@ -340,6 +340,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         return;
       } else {
         await signInWithEmail(email, password);
+        // Check if existing password is weak — flag for upgrade banner
+        if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+          sessionStorage.setItem('se_weak_password', '1');
+        }
       }
       await handleAuthSuccess();
     } catch (err) {

@@ -152,6 +152,7 @@ function AppContent() {
   });
   const [progressChildId, setProgressChildId] = useState(null);
   const [showUpgradePopup, setShowUpgradePopup] = useState(false);
+  const [showWeakPasswordBanner, setShowWeakPasswordBanner] = useState(() => sessionStorage.getItem('se_weak_password') === '1');
   const isPopstateRef = useRef(false);
   const prevUserRef = useRef(user?.uid);
   const { setSection } = useMusic();
@@ -561,6 +562,24 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
           {t('backToLogin', uiLang)}
         </button>
       </div>
+
+      {/* Weak password banner */}
+      {showWeakPasswordBanner && !isChildMode && (
+        <div className="mx-4 mt-2 mb-0 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl px-4 py-3 flex items-center gap-3">
+          <span className="text-xl">🔒</span>
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">{t('weakPasswordBannerTitle', uiLang)}</p>
+            <p className="text-xs text-amber-600 dark:text-amber-400">{t('weakPasswordBannerDesc', uiLang)}</p>
+          </div>
+          <button
+            onClick={() => { navigateTo('profile'); setShowWeakPasswordBanner(false); sessionStorage.removeItem('se_weak_password'); }}
+            className="px-3 py-1.5 bg-amber-500 text-white text-xs font-bold rounded-xl shrink-0"
+          >
+            {t('weakPasswordBannerCta', uiLang)}
+          </button>
+          <button onClick={() => { setShowWeakPasswordBanner(false); sessionStorage.removeItem('se_weak_password'); }} className="text-amber-400 text-lg leading-none">&times;</button>
+        </div>
+      )}
 
       <main className="pt-4">
         <Suspense fallback={<PageLoader />}>

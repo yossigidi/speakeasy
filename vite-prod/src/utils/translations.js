@@ -1048,6 +1048,11 @@ const translations = {
     upgradePopupCta: 'צפו בתוכניות',
     upgradePopupSkip: 'אולי אחר כך',
 
+    // Weak password banner
+    weakPasswordBannerTitle: 'הסיסמה שלך חלשה',
+    weakPasswordBannerDesc: 'מומלץ לעדכן סיסמה חזקה יותר (8+ תווים, אות גדולה, קטנה ומספר)',
+    weakPasswordBannerCta: 'עדכון',
+
     // Misc
     speechLang: 'he-IL',
     introGreeting: 'שלום!',
@@ -2075,6 +2080,10 @@ const translations = {
     upgradePopupFeature4: 'Personalized tips for parents',
     upgradePopupCta: 'View Plans',
     upgradePopupSkip: 'Maybe later',
+
+    weakPasswordBannerTitle: 'Your password is weak',
+    weakPasswordBannerDesc: 'We recommend updating to a stronger password (8+ chars, uppercase, lowercase and number)',
+    weakPasswordBannerCta: 'Update',
 
     // Misc
     speechLang: 'en-US',
@@ -3127,6 +3136,10 @@ const translations = {
     upgradePopupCta: 'عرض الخطط',
     upgradePopupSkip: 'ربما لاحقاً',
 
+    weakPasswordBannerTitle: 'كلمة المرور ضعيفة',
+    weakPasswordBannerDesc: 'ننصح بتحديث كلمة مرور أقوى (8+ أحرف، حرف كبير وصغير ورقم)',
+    weakPasswordBannerCta: 'تحديث',
+
     // Misc
     speechLang: 'ar-SA',
     introGreeting: 'مرحبًا!',
@@ -4177,6 +4190,10 @@ const translations = {
     upgradePopupFeature4: 'Персональные советы для родителей',
     upgradePopupCta: 'Посмотреть планы',
     upgradePopupSkip: 'Может позже',
+
+    weakPasswordBannerTitle: 'Ваш пароль слабый',
+    weakPasswordBannerDesc: 'Рекомендуем обновить пароль (8+ символов, заглавная, строчная буква и цифра)',
+    weakPasswordBannerCta: 'Обновить',
 
     // Misc
     speechLang: 'ru-RU',
