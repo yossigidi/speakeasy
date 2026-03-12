@@ -24,21 +24,32 @@ export const ACTION_TO_FEATURE = {
 
 // Subscription plans
 export const PLANS = {
-  personal: {
-    id: 'personal',
+  child: {
+    id: 'child',
     priceMonthly: 19.90,
-    priceAnnualPerMonth: 16.90,
-    priceAnnualTotal: 202.80,
+    priceAnnualPerMonth: 16.92,
+    priceAnnualTotal: 202.98,
     currency: 'ILS',
     includesFamily: false,
+    maxChildren: 1,
+  },
+  adult: {
+    id: 'adult',
+    priceMonthly: 19.90,
+    priceAnnualPerMonth: 16.92,
+    priceAnnualTotal: 202.98,
+    currency: 'ILS',
+    includesFamily: false,
+    maxChildren: 0,
   },
   family: {
     id: 'family',
-    priceMonthly: 29.90,
-    priceAnnualPerMonth: 25.40,
-    priceAnnualTotal: 304.80,
+    priceMonthly: 34.90,
+    priceAnnualPerMonth: 29.67,
+    priceAnnualTotal: 355.98,
     currency: 'ILS',
     includesFamily: true,
+    maxChildren: Infinity,
   },
 };
 

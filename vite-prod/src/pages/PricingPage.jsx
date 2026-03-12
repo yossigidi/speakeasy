@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Check, X, Crown, Users, Sparkles, Tag } from 'lucide-react';
+import { ArrowLeft, Check, X, Crown, Users, Sparkles, Tag, Baby, User } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import useSubscription from '../hooks/useSubscription.js';
@@ -60,9 +60,10 @@ export default function PricingPage({ onBack }) {
     }
   };
 
-  const personalPrice = interval === 'annual' ? PLANS.personal.priceAnnualPerMonth : PLANS.personal.priceMonthly;
+  const childPrice = interval === 'annual' ? PLANS.child.priceAnnualPerMonth : PLANS.child.priceMonthly;
+  const adultPrice = interval === 'annual' ? PLANS.adult.priceAnnualPerMonth : PLANS.adult.priceMonthly;
   const familyPrice = interval === 'annual' ? PLANS.family.priceAnnualPerMonth : PLANS.family.priceMonthly;
-  const savingsPct = Math.round((1 - PLANS.personal.priceAnnualPerMonth / PLANS.personal.priceMonthly) * 100);
+  const savingsPct = Math.round((1 - PLANS.child.priceAnnualPerMonth / PLANS.child.priceMonthly) * 100);
 
   const plans = [
     {
@@ -75,14 +76,25 @@ export default function PricingPage({ onBack }) {
       isCurrent: currentPlan === 'free' || !currentPlan,
     },
     {
-      id: 'personal',
-      name: t('personalPlan', uiLang),
-      price: personalPrice,
-      icon: Crown,
+      id: 'child',
+      name: t('childPlan', uiLang),
+      price: childPrice,
+      icon: Baby,
+      gradient: 'from-pink-500 to-rose-600',
+      features: FEATURES.premium,
+      isCurrent: currentPlan === 'child',
+      extra: t('childPlanDesc', uiLang),
+    },
+    {
+      id: 'adult',
+      name: t('adultPlan', uiLang),
+      price: adultPrice,
+      icon: User,
       gradient: 'from-purple-500 to-indigo-600',
       features: FEATURES.premium,
-      isCurrent: currentPlan === 'personal',
+      isCurrent: currentPlan === 'adult' || currentPlan === 'personal',
       popular: true,
+      extra: t('adultPlanDesc', uiLang),
     },
     {
       id: 'family',
@@ -92,7 +104,7 @@ export default function PricingPage({ onBack }) {
       gradient: 'from-amber-500 to-orange-600',
       features: FEATURES.premium,
       isCurrent: currentPlan === 'family',
-      extra: t('familyFeatures', uiLang),
+      extra: t('familyPlanDesc', uiLang),
     },
   ];
 

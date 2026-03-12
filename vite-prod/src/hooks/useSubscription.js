@@ -16,7 +16,7 @@ export default function useSubscription() {
       const sub = progress?.subscription || {};
       const plan = sub.plan || 'free';
       const status = sub.status || 'none';
-      const hasPaidPlan = (plan === 'personal' || plan === 'family') && (status === 'active' || status === 'trialing');
+      const hasPaidPlan = (plan === 'child' || plan === 'adult' || plan === 'personal' || plan === 'family') && (status === 'active' || status === 'trialing');
 
       // Grandfather existing users: accounts created before freemium cutoff get premium
       let isGrandfathered = false;
