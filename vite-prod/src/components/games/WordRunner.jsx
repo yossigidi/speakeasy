@@ -1037,6 +1037,28 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     setTimeout(() => setPhase('playing'), 2500);
   }, [childLevel]);
 
+  // ── Lock to landscape when playing ──
+  useEffect(() => {
+    if (phase !== 'playing' && phase !== 'countdown' && phase !== 'challenge') return;
+    const lock = async () => {
+      try {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        }
+        if (screen.orientation?.lock) {
+          await screen.orientation.lock('landscape');
+        }
+      } catch (_) { /* not supported or denied */ }
+    };
+    lock();
+    return () => {
+      try {
+        if (screen.orientation?.unlock) screen.orientation.unlock();
+        if (document.fullscreenElement) document.exitFullscreen();
+      } catch (_) {}
+    };
+  }, [phase]);
+
   // ── Game loop ──
   useEffect(() => {
     if (phase !== 'playing') return;
@@ -1611,62 +1633,52 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
           </div>
         )}
 
-        {/* ═══ VIRTUAL JOYSTICK + JUMP BUTTON ═══ */}
-        {/* Joystick — fixed to bottom-LEFT */}
-        <div
+        {/* ═══ ARROW BUTTONS + JUMP ═══ */}
+        {/* Left arrow — fixed bottom-LEFT */}
+        <button
           className="fixed z-40 select-none"
           style={{
-            left: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 16px)`,
-            width: 120, height: 120,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.25) 100%)',
-            border: '3px solid rgba(255,255,255,0.2)',
+            left: 16, bottom: `calc(env(safe-area-inset-bottom, 0px) + 24px)`,
+            width: 72, height: 72, borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'radial-gradient(circle at 35% 35%, rgba(0,0,0,0.3), rgba(0,0,0,0.5))',
             backdropFilter: 'blur(6px)',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.2), inset 0 0 30px rgba(0,0,0,0.1)',
-            position: 'relative',
+            border: '3px solid rgba(255,255,255,0.25)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)',
+            color: 'white', fontSize: 28, fontWeight: 900,
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'none',
           }}
-          onTouchStart={(e) => {
-            e.preventDefault();
-            const rect = e.currentTarget.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const touch = e.touches[0];
-            if (touch.clientX < cx) inputRef.current.left = true;
-            else inputRef.current.right = true;
+          onTouchStart={(e) => { e.preventDefault(); inputRef.current.left = true; }}
+          onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+          onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; }}
+          onMouseDown={() => { inputRef.current.left = true; }}
+          onMouseUp={() => { inputRef.current.left = false; }}
+          onMouseLeave={() => { inputRef.current.left = false; }}
+        >◀</button>
+
+        {/* Right arrow — next to left */}
+        <button
+          className="fixed z-40 select-none"
+          style={{
+            left: 100, bottom: `calc(env(safe-area-inset-bottom, 0px) + 24px)`,
+            width: 72, height: 72, borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'radial-gradient(circle at 35% 35%, rgba(0,0,0,0.3), rgba(0,0,0,0.5))',
+            backdropFilter: 'blur(6px)',
+            border: '3px solid rgba(255,255,255,0.25)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)',
+            color: 'white', fontSize: 28, fontWeight: 900,
+            WebkitTapHighlightColor: 'transparent',
+            touchAction: 'none',
           }}
-          onTouchMove={(e) => {
-            e.preventDefault();
-            const rect = e.currentTarget.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const touch = e.touches[0];
-            inputRef.current.left = touch.clientX < cx;
-            inputRef.current.right = touch.clientX >= cx;
-          }}
-          onTouchEnd={(e) => { e.preventDefault(); inputRef.current.left = false; inputRef.current.right = false; }}
-          onTouchCancel={(e) => { e.preventDefault(); inputRef.current.left = false; inputRef.current.right = false; }}
-          onMouseDown={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            if (e.clientX < cx) inputRef.current.left = true;
-            else inputRef.current.right = true;
-          }}
-          onMouseUp={() => { inputRef.current.left = false; inputRef.current.right = false; }}
-          onMouseLeave={() => { inputRef.current.left = false; inputRef.current.right = false; }}
-        >
-          {/* Inner joystick knob */}
-          <div style={{
-            position: 'absolute', top: '50%', left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 52, height: 52, borderRadius: '50%',
-            background: 'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.5), rgba(255,255,255,0.15))',
-            border: '2px solid rgba(255,255,255,0.35)',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4)',
-          }} />
-          {/* Direction indicators */}
-          <div style={{ position: 'absolute', top: '50%', left: 12, transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.5)', fontSize: 16, fontWeight: 900 }}>◀</div>
-          <div style={{ position: 'absolute', top: '50%', right: 12, transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.5)', fontSize: 16, fontWeight: 900 }}>▶</div>
-        </div>
+          onTouchStart={(e) => { e.preventDefault(); inputRef.current.right = true; }}
+          onTouchEnd={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+          onTouchCancel={(e) => { e.preventDefault(); inputRef.current.right = false; }}
+          onMouseDown={() => { inputRef.current.right = true; }}
+          onMouseUp={() => { inputRef.current.right = false; }}
+          onMouseLeave={() => { inputRef.current.right = false; }}
+        >▶</button>
 
         {/* Jump button — fixed to bottom-RIGHT */}
         <button
