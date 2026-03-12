@@ -6,6 +6,50 @@
 const admin = require('firebase-admin');
 const webpush = require('web-push');
 
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+async function getAIInsight(childSummary, lang) {
+    const GROQ_KEY = process.env.GROQ_API_KEY;
+    if (!GROQ_KEY) return null;
+
+    const langName = lang === 'he' ? 'Hebrew' : lang === 'ar' ? 'Arabic' : lang === 'ru' ? 'Russian' : 'English';
+    const prompt = `You are an educational AI assistant for Speakli, an English learning app for children.
+Based on this child's weekly progress, write a SHORT (2-3 sentences) personalized insight for the parent in ${langName}.
+
+Child: ${childSummary.name}
+Level: ${childSummary.level}
+Weekly XP: ${childSummary.weekXP}
+Active days: ${childSummary.activeDays}/7
+Words learned (total): ${childSummary.totalWords}
+Lessons completed (total): ${childSummary.totalLessons}
+Current streak: ${childSummary.streak} days
+Recent words: ${(childSummary.recentWords || []).join(', ') || 'N/A'}
+
+Rules:
+- Be warm, encouraging, and specific
+- If active: praise what they did well, suggest what to focus on next
+- If inactive: gently encourage without guilt
+- Mention specific data points (e.g. "5 active days is great!")
+- Keep it SHORT — max 2-3 sentences
+- Write ONLY in ${langName}`;
+
+    try {
+        const resp = await fetch(GROQ_API_URL, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${GROQ_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'llama-3.3-70b-versatile',
+                messages: [{ role: 'user', content: prompt }],
+                temperature: 0.7,
+                max_tokens: 200,
+            }),
+        });
+        if (!resp.ok) return null;
+        const data = await resp.json();
+        return data?.choices?.[0]?.message?.content?.trim() || null;
+    } catch (_) { return null; }
+}
+
 let db = null;
 
 function getFirestoreAdmin() {
@@ -98,6 +142,14 @@ async function sendWeeklyReports(db) {
                     } catch (_) {}
                 }
 
+                // Fetch recent learned words (last 10)
+                let recentWords = [];
+                try {
+                    const wordsSnap = await db.collection('childProfiles').doc(childId)
+                        .collection('learnedWords').orderBy('learnedAt', 'desc').limit(10).get();
+                    recentWords = wordsSnap.docs.map(d => d.data().word || d.id);
+                } catch (_) {}
+
                 childSummaries.push({
                     name: child.name || 'ילד',
                     avatar: child.avatar || '👧',
@@ -108,11 +160,20 @@ async function sendWeeklyReports(db) {
                     totalLessons: child.totalLessonsCompleted || 0,
                     streak: child.streak || 0,
                     level: child.curriculumLevel || child.childLevel || 1,
+                    recentWords,
                 });
             } catch (_) {}
         }
 
         if (!childSummaries.length) { results.skipped++; results.skippedDetails.push({ uid: userDoc.id, email, reason: 'no child summaries' }); continue; }
+
+        // Generate AI insights for each child (in parallel)
+        const aiLabel = lang === 'he' ? 'המלצת AI' : lang === 'ar' ? 'توصية AI' : lang === 'ru' ? 'Рекомендация AI' : 'AI Insight';
+        await Promise.all(childSummaries.map(async (c) => {
+            try {
+                c.aiInsight = await getAIInsight(c, lang);
+            } catch (_) { c.aiInsight = null; }
+        }));
 
         // Build email HTML
         const isHe = lang === 'he' || lang === 'ar';
@@ -133,6 +194,10 @@ async function sendWeeklyReports(db) {
                     <div style="font-size:40px;margin-bottom:8px;">${c.avatar}</div>
                     <div style="font-size:18px;font-weight:700;color:#1F2937;margin-bottom:8px;">${c.name}</div>
                     <p style="color:#6B7280;font-size:14px;">${labels.noActivity}</p>
+                    ${c.aiInsight ? `<div style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-radius:12px;padding:14px;margin-top:12px;text-align:${dir === 'rtl' ? 'right' : 'left'};">
+                        <div style="font-size:13px;font-weight:700;color:#4338CA;margin-bottom:6px;">🤖 ${aiLabel}</div>
+                        <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">${c.aiInsight}</p>
+                    </div>` : ''}
                 </div>`;
                 continue;
             }
@@ -172,6 +237,10 @@ async function sendWeeklyReports(db) {
                         </td>
                     </tr>
                 </table>
+                ${c.aiInsight ? `<div style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-radius:12px;padding:14px;margin-top:16px;">
+                    <div style="font-size:13px;font-weight:700;color:#4338CA;margin-bottom:6px;">🤖 ${aiLabel}</div>
+                    <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">${c.aiInsight}</p>
+                </div>` : ''}
             </div>`;
         }
 
