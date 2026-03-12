@@ -44,7 +44,7 @@ async function sendWeeklyReports(db) {
     const BREVO_KEY = process.env.BREVO_API_KEY_speakli || process.env.BREVO_API_KEY;
     if (!BREVO_KEY) return { sent: 0, error: 'No BREVO_API_KEY configured' };
 
-    const results = { sent: 0, failed: 0, skipped: 0 };
+    const results = { sent: 0, failed: 0, skipped: 0, sentTo: [], skippedDetails: [] };
 
     // Get all users who have children
     const usersSnap = await db.collection('users').where('childrenIds', '!=', []).get();
@@ -62,10 +62,10 @@ async function sendWeeklyReports(db) {
     for (const userDoc of usersSnap.docs) {
         const userData = userDoc.data();
         const email = userData.email;
-        if (!email) { results.skipped++; continue; }
+        if (!email) { results.skipped++; results.skippedDetails.push({ uid: userDoc.id, reason: 'no email' }); continue; }
 
         const childrenIds = userData.childrenIds || [];
-        if (!childrenIds.length) { results.skipped++; continue; }
+        if (!childrenIds.length) { results.skipped++; results.skippedDetails.push({ uid: userDoc.id, email, reason: 'no children' }); continue; }
 
         const lang = userData.uiLang || 'he';
         const childSummaries = [];
@@ -105,7 +105,7 @@ async function sendWeeklyReports(db) {
             } catch (_) {}
         }
 
-        if (!childSummaries.length) { results.skipped++; continue; }
+        if (!childSummaries.length) { results.skipped++; results.skippedDetails.push({ uid: userDoc.id, email, reason: 'no child summaries' }); continue; }
 
         // Build email HTML
         const isHe = lang === 'he' || lang === 'ar';
@@ -199,10 +199,12 @@ async function sendWeeklyReports(db) {
                     htmlContent: html,
                 }),
             });
-            if (resp.ok) results.sent++;
+            if (resp.ok) { results.sent++; results.sentTo.push({ email, children: childSummaries.map(c => c.name) }); }
             else {
                 results.failed++;
-                console.error('Brevo error:', await resp.text());
+                const errText = await resp.text();
+                results.sentTo.push({ email, error: errText });
+                console.error('Brevo error:', errText);
             }
         } catch (e) {
             results.failed++;
