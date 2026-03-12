@@ -98,6 +98,7 @@ export const FEATURES = {
     'unlimitedTeacher',
     'skillsAccess',
     'audioLearningAccess',
+    'weeklyParentReport',
     'prioritySupport',
     'noAds',
   ],

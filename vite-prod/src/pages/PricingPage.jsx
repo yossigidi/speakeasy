@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Check, X, Crown, Users, Sparkles, Tag, Baby, User } from 'lucide-react';
+import { ArrowLeft, Check, X, Crown, Users, Sparkles, Tag, Baby, User, BarChart3, Mail } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import useSubscription from '../hooks/useSubscription.js';
@@ -146,6 +146,30 @@ export default function PricingPage({ onBack }) {
           </button>
         </div>
       </div>
+
+      {/* Weekly Report Highlight Banner */}
+      {!isPremium && (
+        <div className="mb-6 relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[2px]">
+          <div className="bg-white dark:bg-gray-900 rounded-[14px] p-4">
+            <div className="flex items-start gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg">
+                <BarChart3 size={22} className="text-white" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm">{t('weeklyReportTitle', uiLang)}</h3>
+                  <span className="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-0.5 rounded-full font-bold">PREMIUM</span>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{t('weeklyReportDesc', uiLang)}</p>
+              </div>
+            </div>
+            <div className="mt-3 flex items-center gap-2 bg-gray-50 dark:bg-gray-800/60 rounded-xl px-3 py-2">
+              <Mail size={14} className="text-purple-500 shrink-0" />
+              <span className="text-xs text-gray-600 dark:text-gray-300">{t('weeklyReportPreview', uiLang)}</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Plans */}
       <div className="space-y-4">

@@ -151,6 +151,7 @@ function AppContent() {
     return !!localStorage.getItem('speakeasy_activeChildId') || !!sessionStorage.getItem('speakeasy_profileSelected');
   });
   const [progressChildId, setProgressChildId] = useState(null);
+  const [showUpgradePopup, setShowUpgradePopup] = useState(false);
   const isPopstateRef = useRef(false);
   const prevUserRef = useRef(user?.uid);
   const { setSection } = useMusic();
@@ -295,6 +296,11 @@ function AppContent() {
             setProfileSelected(true);
             sessionStorage.setItem('speakeasy_profileSelected', '1');
             setCurrentPage('home');
+            // Show upgrade popup after onboarding (only once per signup)
+            if (!sessionStorage.getItem('se_upgrade_shown')) {
+              sessionStorage.setItem('se_upgrade_shown', '1');
+              setTimeout(() => setShowUpgradePopup(true), 1500);
+            }
           }}
           onChildLogin={() => setShowChildLogin(true)}
         />
@@ -575,6 +581,43 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
         onClose={onMathClose}
         onSuccess={onMathSuccess}
       />
+
+      {/* Upgrade Popup — shown after signup */}
+      {showUpgradePopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4" onClick={() => setShowUpgradePopup(false)}>
+          <div className="bg-white dark:bg-gray-900 rounded-3xl max-w-sm w-full p-6 shadow-2xl animate-[scaleIn_0.3s_ease-out]" onClick={e => e.stopPropagation()}>
+            <div className="text-center mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-3 shadow-lg">
+                <span className="text-3xl">📊</span>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{t('upgradePopupTitle', uiLang)}</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{t('upgradePopupDesc', uiLang)}</p>
+            </div>
+
+            <div className="space-y-2 mb-5">
+              {['upgradePopupFeature1', 'upgradePopupFeature2', 'upgradePopupFeature3', 'upgradePopupFeature4'].map(k => (
+                <div key={k} className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800/60 rounded-xl px-3 py-2">
+                  <span className="text-green-500 text-sm font-bold">✓</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{t(k, uiLang)}</span>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => { setShowUpgradePopup(false); navigateTo('pricing'); }}
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-sm shadow-lg active:scale-[0.98] transition-transform mb-2"
+            >
+              {t('upgradePopupCta', uiLang)}
+            </button>
+            <button
+              onClick={() => setShowUpgradePopup(false)}
+              className="w-full py-2.5 text-gray-400 text-sm font-medium"
+            >
+              {t('upgradePopupSkip', uiLang)}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

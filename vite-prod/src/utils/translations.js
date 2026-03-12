@@ -1028,9 +1028,25 @@ const translations = {
     unlimitedQuest: 'משימות ללא הגבלה',
     skillsAccess: 'גישה לדף כישורים',
     audioLearningAccess: 'גישה ללמידה בשמע',
+    weeklyParentReport: 'דו״ח שבועי להורים למייל',
     prioritySupport: 'תמיכה עדיפה',
     noAds: 'ללא פרסומות',
     familyFeatures: 'כולל כל ילדי המשפחה',
+
+    // Weekly report banner
+    weeklyReportTitle: 'דו״ח שבועי על התקדמות הילד',
+    weeklyReportDesc: 'קבלו כל שבוע למייל דו״ח מפורט עם גרפים, הישגים וטיפים — רק למנויי פרימיום!',
+    weeklyReportPreview: 'כולל: פעילות יומית, התקדמות במיומנויות, הישגים, השוואה שבועית וטיפים להורים',
+
+    // Upgrade popup
+    upgradePopupTitle: 'שדרגו את חוויית הלמידה!',
+    upgradePopupDesc: 'קבלו גישה לכל התכנים + דו״ח שבועי על ההתקדמות',
+    upgradePopupFeature1: 'כל השיעורים, המשחקים והעולמות',
+    upgradePopupFeature2: 'דו״ח שבועי מפורט עם גרפים למייל',
+    upgradePopupFeature3: 'מעקב הישגים ואבני דרך',
+    upgradePopupFeature4: 'טיפים מותאמים אישית להורים',
+    upgradePopupCta: 'צפו בתוכניות',
+    upgradePopupSkip: 'אולי אחר כך',
 
     // Misc
     speechLang: 'he-IL',
@@ -2042,9 +2058,23 @@ const translations = {
     unlimitedQuest: 'Unlimited quests',
     skillsAccess: 'Skills page access',
     audioLearningAccess: 'Audio learning access',
+    weeklyParentReport: 'Weekly parent progress report via email',
     prioritySupport: 'Priority support',
     noAds: 'No ads',
     familyFeatures: 'Includes all family children',
+
+    weeklyReportTitle: 'Weekly Child Progress Report',
+    weeklyReportDesc: 'Get a detailed report with charts, achievements and tips every week — premium only!',
+    weeklyReportPreview: 'Includes: daily activity, skills progress, achievements, weekly comparison and parent tips',
+
+    upgradePopupTitle: 'Upgrade your learning experience!',
+    upgradePopupDesc: 'Get access to all content + weekly progress reports',
+    upgradePopupFeature1: 'All lessons, games and worlds',
+    upgradePopupFeature2: 'Detailed weekly report with charts via email',
+    upgradePopupFeature3: 'Achievement tracking and milestones',
+    upgradePopupFeature4: 'Personalized tips for parents',
+    upgradePopupCta: 'View Plans',
+    upgradePopupSkip: 'Maybe later',
 
     // Misc
     speechLang: 'en-US',
@@ -3079,9 +3109,23 @@ const translations = {
     unlimitedQuest: 'مهام غير محدودة',
     skillsAccess: 'الوصول لصفحة المهارات',
     audioLearningAccess: 'الوصول للتعلم الصوتي',
+    weeklyParentReport: 'تقرير أسبوعي للوالدين عبر البريد',
     prioritySupport: 'دعم ذو أولوية',
     noAds: 'بدون إعلانات',
     familyFeatures: 'يشمل جميع أطفال العائلة',
+
+    weeklyReportTitle: 'تقرير أسبوعي عن تقدم الطفل',
+    weeklyReportDesc: 'احصلوا كل أسبوع على تقرير مفصل مع رسوم بيانية وإنجازات ونصائح — للمشتركين فقط!',
+    weeklyReportPreview: 'يشمل: نشاط يومي، تقدم المهارات، إنجازات، مقارنة أسبوعية ونصائح للوالدين',
+
+    upgradePopupTitle: 'طوّروا تجربة التعلم!',
+    upgradePopupDesc: 'احصلوا على كل المحتوى + تقارير تقدم أسبوعية',
+    upgradePopupFeature1: 'جميع الدروس والألعاب والعوالم',
+    upgradePopupFeature2: 'تقرير أسبوعي مفصل مع رسوم بيانية',
+    upgradePopupFeature3: 'متابعة الإنجازات والمعالم',
+    upgradePopupFeature4: 'نصائح مخصصة للوالدين',
+    upgradePopupCta: 'عرض الخطط',
+    upgradePopupSkip: 'ربما لاحقاً',
 
     // Misc
     speechLang: 'ar-SA',
@@ -4116,9 +4160,23 @@ const translations = {
     unlimitedQuest: 'Безлимитные квесты',
     skillsAccess: 'Доступ к странице навыков',
     audioLearningAccess: 'Доступ к аудио обучению',
+    weeklyParentReport: 'Еженедельный отчёт для родителей',
     prioritySupport: 'Приоритетная поддержка',
     noAds: 'Без рекламы',
     familyFeatures: 'Включает всех детей семьи',
+
+    weeklyReportTitle: 'Еженедельный отчёт о прогрессе ребёнка',
+    weeklyReportDesc: 'Получайте каждую неделю подробный отчёт с графиками, достижениями и советами — только для премиум!',
+    weeklyReportPreview: 'Включает: ежедневную активность, прогресс навыков, достижения, сравнение за неделю и советы родителям',
+
+    upgradePopupTitle: 'Улучшите опыт обучения!',
+    upgradePopupDesc: 'Получите доступ ко всему контенту + еженедельные отчёты',
+    upgradePopupFeature1: 'Все уроки, игры и миры',
+    upgradePopupFeature2: 'Подробный еженедельный отчёт с графиками',
+    upgradePopupFeature3: 'Отслеживание достижений и этапов',
+    upgradePopupFeature4: 'Персональные советы для родителей',
+    upgradePopupCta: 'Посмотреть планы',
+    upgradePopupSkip: 'Может позже',
 
     // Misc
     speechLang: 'ru-RU',
