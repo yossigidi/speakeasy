@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ChevronLeft, Zap, Flame, BookOpen, BookA, TrendingUp, Brain, RefreshCw, Calendar, Target, Award } from 'lucide-react';
+import { ChevronLeft, Zap, Flame, BookOpen, BookA, TrendingUp, Brain, RefreshCw, Calendar, Target, Award, Volume2, Star, Lock, CheckCircle, Home, MapPin } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { getLevelInfo, getLevelTitle } from '../utils/levelSystem.js';
 import { t, tReplace } from '../utils/translations.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
+import { playFromAPI } from '../utils/hebrewAudio.js';
 
 // Simple SVG bar chart component
 function BarChart({ data, label, color = '#6366f1', uiLang }) {
@@ -97,6 +98,43 @@ function StatMini({ icon: Icon, label, value, color, iconColor }) {
         <p className="text-lg font-bold text-gray-900 dark:text-white leading-tight">{value}</p>
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{label}</p>
       </div>
+    </div>
+  );
+}
+
+// Horizontal skill bar
+function SkillBar({ label, percent, color }) {
+  const clamped = Math.min(100, Math.max(0, Math.round(percent)));
+  return (
+    <div className="space-y-1">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{label}</span>
+        <span className="text-xs font-bold" style={{ color }}>{clamped}%</span>
+      </div>
+      <div className="h-2.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all duration-700"
+          style={{ width: `${clamped}%`, background: `linear-gradient(90deg, ${color}, ${color}cc)` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Milestone item
+function MilestoneItem({ label, achieved, icon: Icon }) {
+  return (
+    <div className={`flex items-center gap-3 p-2.5 rounded-xl transition-colors ${achieved ? 'bg-emerald-50 dark:bg-emerald-900/20' : 'bg-gray-50 dark:bg-white/5 opacity-60'}`}>
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${achieved ? 'bg-emerald-100 dark:bg-emerald-800/40' : 'bg-gray-200 dark:bg-gray-700'}`}>
+        {achieved
+          ? <CheckCircle size={16} className="text-emerald-600 dark:text-emerald-400" />
+          : <Lock size={14} className="text-gray-400 dark:text-gray-500" />
+        }
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className={`text-sm font-medium truncate ${achieved ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'}`}>{label}</p>
+      </div>
+      {achieved && <Star size={14} className="text-yellow-500 flex-shrink-0" />}
     </div>
   );
 }
@@ -243,6 +281,66 @@ export default function ChildProgressPage({ childId, onBack }) {
     setLoadingAdvice(false);
   };
 
+  // Skills map scores (memoized)
+  const skillScores = useMemo(() => {
+    if (!child) return { vocab: 0, pronunciation: 0, lessons: 0, consistency: 0 };
+    const wordsCount = child.totalWordsLearned || 0;
+    const vocab = Math.min(100, Math.round((wordsCount / 100) * 100));
+    const pronunciation = Math.min(100, child.pronunciationHighScore || 0);
+    const lessonsCount = child.totalLessonsCompleted || 0;
+    const lessons = Math.min(100, Math.round((lessonsCount / 50) * 100));
+    const streakVal = Math.max(child.streak || 0, child.longestStreak || 0);
+    const consistency = Math.min(100, Math.round((streakVal / 30) * 100));
+    return { vocab, pronunciation, lessons, consistency };
+  }, [child]);
+
+  // Recent words
+  const recentWords = useMemo(() => {
+    if (!child?.wordsLearned || !Array.isArray(child.wordsLearned)) return [];
+    return child.wordsLearned.slice(-15).reverse();
+  }, [child]);
+
+  // Curriculum level progress
+  const curriculumLevels = useMemo(() => {
+    const currentLvl = child?.curriculumLevel || child?.childLevel || 1;
+    const lessonData = child?.curriculum?.lessons || {};
+    return [1, 2, 3, 4].map(lvl => {
+      const completedLessons = lessonData[lvl]?.completed || 0;
+      const totalLessons = lessonData[lvl]?.total || 10;
+      const pct = lvl < currentLvl ? 100 : lvl === currentLvl ? Math.round((completedLessons / totalLessons) * 100) : 0;
+      const status = lvl < currentLvl ? 'completed' : lvl === currentLvl ? 'inProgress' : 'locked';
+      return { level: lvl, percent: pct, status };
+    });
+  }, [child]);
+
+  // Milestones
+  const milestoneList = useMemo(() => {
+    if (!child) return [];
+    const wordsCount = child.totalWordsLearned || 0;
+    const lessonsCount = child.totalLessonsCompleted || 0;
+    const streak = child.longestStreak || child.streak || 0;
+    const hasPerfect = child.perfectLessons > 0 || child.hasPerfectLesson;
+    return [
+      { key: 'first10Words', achieved: wordsCount >= 10 },
+      { key: 'first25Words', achieved: wordsCount >= 25 },
+      { key: 'first50Words', achieved: wordsCount >= 50 },
+      { key: 'firstLessonDone', achieved: lessonsCount >= 1 },
+      { key: 'sevenDayStreak', achieved: streak >= 7 },
+      { key: 'perfectLessonMilestone', achieved: !!hasPerfect },
+    ];
+  }, [child]);
+
+  // Parent tips based on curriculum level
+  const parentTipKeys = useMemo(() => {
+    const lvl = child?.curriculumLevel || child?.childLevel || 1;
+    const clampedLvl = Math.min(4, Math.max(1, lvl));
+    return [
+      `parentTipLevel${clampedLvl}_1`,
+      `parentTipLevel${clampedLvl}_2`,
+      `parentTipLevel${clampedLvl}_3`,
+    ];
+  }, [child]);
+
   if (!child) {
     return (
       <div className="pb-24 px-4 pt-2">
@@ -338,6 +436,20 @@ export default function ChildProgressPage({ childId, onBack }) {
         />
       </div>
 
+      {/* Skills Map */}
+      <GlassCard variant="strong" className="!p-4">
+        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+          <MapPin size={18} className="text-violet-500" />
+          {t('skillsMap', uiLang)}
+        </h3>
+        <div className="space-y-3">
+          <SkillBar label={t('vocabularySkill', uiLang)} percent={skillScores.vocab} color="#10b981" />
+          <SkillBar label={t('pronunciationSkill', uiLang)} percent={skillScores.pronunciation} color="#8b5cf6" />
+          <SkillBar label={t('lessonsSkill', uiLang)} percent={skillScores.lessons} color="#6366f1" />
+          <SkillBar label={t('consistencySkill', uiLang)} percent={skillScores.consistency} color="#f59e0b" />
+        </div>
+      </GlassCard>
+
       {/* XP Chart */}
       <GlassCard variant="strong" className="!p-4">
         <div className="flex items-center justify-between mb-3">
@@ -387,6 +499,38 @@ export default function ChildProgressPage({ childId, onBack }) {
         </div>
       </GlassCard>
 
+      {/* Recently Learned Words */}
+      <GlassCard variant="strong" className="!p-4">
+        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+          <BookA size={18} className="text-green-500" />
+          {t('recentWords', uiLang)}
+        </h3>
+        {recentWords.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {recentWords.map((word, i) => {
+              const wordText = typeof word === 'string' ? word : word?.word || word?.text || '';
+              const emoji = typeof word === 'object' ? word?.emoji : null;
+              return (
+                <button
+                  key={i}
+                  onClick={() => playFromAPI(wordText, 'en')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors text-sm"
+                  title={t('playWord', uiLang)}
+                >
+                  {emoji && <span>{emoji}</span>}
+                  <span className="font-medium text-gray-800 dark:text-gray-200">{wordText}</span>
+                  <Volume2 size={12} className="text-green-600 dark:text-green-400 flex-shrink-0" />
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-3">
+            {t('noWordsYet', uiLang)}
+          </p>
+        )}
+      </GlassCard>
+
       {/* Activity Breakdown */}
       {donutSegments.length > 0 && (
         <GlassCard variant="strong" className="!p-4">
@@ -408,6 +552,55 @@ export default function ChildProgressPage({ childId, onBack }) {
           </div>
         </GlassCard>
       )}
+
+      {/* Curriculum / Level Progress */}
+      <GlassCard variant="strong" className="!p-4">
+        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+          <BookOpen size={18} className="text-blue-500" />
+          {t('curriculumProgress', uiLang)}
+        </h3>
+        <div className="space-y-3">
+          {curriculumLevels.map(({ level, percent, status }) => {
+            const levelNames = [null, 'level1Name', 'level2Name', 'level3Name', 'level4Name'];
+            const statusColors = {
+              completed: 'text-emerald-600 dark:text-emerald-400',
+              inProgress: 'text-indigo-600 dark:text-indigo-400',
+              locked: 'text-gray-400 dark:text-gray-500',
+            };
+            const barColors = {
+              completed: '#10b981',
+              inProgress: '#6366f1',
+              locked: '#9ca3af',
+            };
+            return (
+              <div key={level} className={`${status === 'locked' ? 'opacity-50' : ''}`}>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-2">
+                    {status === 'locked'
+                      ? <Lock size={13} className="text-gray-400" />
+                      : status === 'completed'
+                        ? <CheckCircle size={13} className="text-emerald-500" />
+                        : <Star size={13} className="text-indigo-500" />
+                    }
+                    <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                      {t('worldLabel', uiLang)} {level} — {t(levelNames[level], uiLang)}
+                    </span>
+                  </div>
+                  <span className={`text-xs font-bold ${statusColors[status]}`}>
+                    {t(status, uiLang)}
+                  </span>
+                </div>
+                <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{ width: `${percent}%`, backgroundColor: barColors[status] }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </GlassCard>
 
       {/* Additional Stats */}
       <GlassCard variant="strong" className="!p-4">
@@ -444,6 +637,19 @@ export default function ChildProgressPage({ childId, onBack }) {
         </div>
       </GlassCard>
 
+      {/* Milestones */}
+      <GlassCard variant="strong" className="!p-4">
+        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+          <Award size={18} className="text-yellow-500" />
+          {t('milestones', uiLang)}
+        </h3>
+        <div className="space-y-2">
+          {milestoneList.map(({ key, achieved }) => (
+            <MilestoneItem key={key} label={t(key, uiLang)} achieved={achieved} />
+          ))}
+        </div>
+      </GlassCard>
+
       {/* AI Advice Section */}
       <GlassCard variant="strong" className="!p-4">
         <div className="flex items-center justify-between mb-3">
@@ -475,6 +681,22 @@ export default function ChildProgressPage({ childId, onBack }) {
             {t('advicePrompt', uiLang)}
           </p>
         )}
+      </GlassCard>
+
+      {/* Parent Tips */}
+      <GlassCard variant="strong" className="!p-4">
+        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+          <Home size={18} className="text-amber-500" />
+          {t('parentTips', uiLang)}
+        </h3>
+        <div className="space-y-2.5">
+          {parentTipKeys.map((key, i) => (
+            <div key={key} className="flex items-start gap-3 p-3 rounded-xl bg-amber-50/60 dark:bg-amber-900/10">
+              <span className="text-lg flex-shrink-0">{['1️⃣', '2️⃣', '3️⃣'][i]}</span>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{t(key, uiLang)}</p>
+            </div>
+          ))}
+        </div>
       </GlassCard>
     </div>
   );
