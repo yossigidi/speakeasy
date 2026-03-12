@@ -220,7 +220,12 @@ export default function PricingPage({ onBack }) {
               )}
 
               {p.extra && (
-                <p className="text-xs text-amber-600 dark:text-amber-400 font-semibold mb-3">{p.extra}</p>
+                <div className="mb-3">
+                  <p className="text-xs text-amber-600 dark:text-amber-400 font-semibold">{p.extra}</p>
+                  {p.id === 'family' && (
+                    <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">{t('extraChildPrice', uiLang)}</p>
+                  )}
+                </div>
               )}
 
               {/* Feature list */}

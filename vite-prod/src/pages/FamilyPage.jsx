@@ -4,6 +4,8 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { t, lf } from '../utils/translations.js';
 import { LEVEL_INFO } from '../data/kids-vocabulary.js';
+import { PLANS } from '../data/subscription-plans.js';
+import useSubscription from '../hooks/useSubscription.js';
 import GlassCard from '../components/shared/GlassCard.jsx';
 import AddChildModal from '../components/family/AddChildModal.jsx';
 import Modal from '../components/shared/Modal.jsx';
@@ -21,6 +23,14 @@ function formatLastActive(dateStr, uiLang) {
 export default function FamilyPage({ onNavigate }) {
   const { uiLang, dir } = useTheme();
   const { children, switchToChild, addChild, updateChild, deleteChild, familyCode, generateFamilyCode, resetChildPin, updateChildLevel } = useUserProgress();
+  const { currentPlan, hasPaidPlan } = useSubscription();
+  const planData = PLANS[currentPlan];
+  // Free: 1 child, child/adult plan: 1 child, family: 4 children (extra for 9.90₪)
+  const maxChildren = planData ? (planData.maxChildren || 1) : 1;
+  const isFamilyPlan = currentPlan === 'family';
+  // Family plan allows adding beyond limit (for extra charge), others are hard-limited
+  const canAddChild = isFamilyPlan || children.length < maxChildren;
+  const isExtraChild = isFamilyPlan && children.length >= maxChildren;
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingChild, setEditingChild] = useState(null);
   const [deletingChild, setDeletingChild] = useState(null);
@@ -277,16 +287,22 @@ export default function FamilyPage({ onNavigate }) {
 
       {/* Add Child Card */}
       <GlassCard
-        className="cursor-pointer border-2 border-dashed border-gray-300 dark:border-gray-600 !bg-transparent hover:border-brand-400 dark:hover:border-brand-500 transition-colors"
-        onClick={() => setShowAddModal(true)}
+        className={`border-2 border-dashed transition-colors ${canAddChild ? 'cursor-pointer border-gray-300 dark:border-gray-600 !bg-transparent hover:border-brand-400 dark:hover:border-brand-500' : 'border-gray-200 dark:border-gray-700 !bg-transparent opacity-50 cursor-not-allowed'}`}
+        onClick={() => canAddChild ? setShowAddModal(true) : onNavigate('pricing')}
       >
         <div className="flex flex-col items-center py-4 gap-2">
           <div className="w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
             <Plus size={28} className="text-gray-400" />
           </div>
           <span className="font-medium text-gray-500 dark:text-gray-400">
-            {t('addChild', uiLang)}
+            {canAddChild ? t('addChild', uiLang) : t('maxChildrenReached', uiLang)}
           </span>
+          {isExtraChild && (
+            <span className="text-xs text-amber-500 font-medium">{t('extraChildPrice', uiLang)}</span>
+          )}
+          {!canAddChild && (
+            <span className="text-xs text-brand-500">{t('upgradeForMore', uiLang)}</span>
+          )}
         </div>
       </GlassCard>
 

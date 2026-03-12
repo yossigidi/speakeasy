@@ -52,7 +52,8 @@ export const PLANS = {
     freeMonths: 1,
     currency: 'ILS',
     includesFamily: true,
-    maxChildren: Infinity,
+    maxChildren: 4,
+    extraChildPrice: 9.90,        // per additional child beyond 4
   },
 };
 

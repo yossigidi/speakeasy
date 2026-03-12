@@ -37,6 +37,17 @@ const DEFAULT_PROGRESS = {
 };
 
 const CHILD_LS_KEY = 'speakeasy_activeChildId';
+const SESSION_KEY = 'speakli_sessionId';
+
+// Generate or retrieve a unique session ID for this browser tab
+function getSessionId() {
+  let id = sessionStorage.getItem(SESSION_KEY);
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).substr(2, 9));
+    sessionStorage.setItem(SESSION_KEY, id);
+  }
+  return id;
+}
 
 // Generate random 6-char alphanumeric code
 function generateCode() {
@@ -64,6 +75,8 @@ export function UserProgressProvider({ children: reactChildren }) {
   const [childrenList, setChildrenList] = useState([]);
   const [childrenLoaded, setChildrenLoaded] = useState(false);
   const [familyCode, setFamilyCode] = useState(null);
+  const [sessionKicked, setSessionKicked] = useState(false);
+  const sessionIdRef = useRef(getSessionId());
 
   const isChildMode = !!activeChildId;
   const activeChildIdRef = useRef(activeChildId);
@@ -399,12 +412,16 @@ export function UserProgressProvider({ children: reactChildren }) {
     if (!user) {
       setProgress(DEFAULT_PROGRESS);
       setLoading(false);
+      setSessionKicked(false);
       return;
     }
 
     setLoading(true);
+    setSessionKicked(false);
     let unsub = null;
     let retryTimer = null;
+    let sessionWritten = false;
+    const mySessionId = sessionIdRef.current;
 
     const startListener = () => {
       if (unsub) unsub();
@@ -417,6 +434,19 @@ export function UserProgressProvider({ children: reactChildren }) {
       unsub = window.firestore.onSnapshot(docRef, (snap) => {
         if (snap.exists()) {
           const data = snap.data();
+
+          // Session enforcement: write our sessionId on first load,
+          // then detect if another device overwrites it
+          if (!sessionWritten) {
+            sessionWritten = true;
+            window.firestore.setDoc(docRef, { activeSessionId: mySessionId }, { merge: true })
+              .catch(() => {});
+          } else if (data.activeSessionId && data.activeSessionId !== mySessionId) {
+            // Another device took over this profile
+            setSessionKicked(true);
+            return;
+          }
+
           if (data.cefrLevel && !data.curriculumLevel) {
             const mapped = cefrToLevel[data.cefrLevel] || 1;
             data.curriculumLevel = mapped;
@@ -429,7 +459,9 @@ export function UserProgressProvider({ children: reactChildren }) {
             displayName: user.displayName || '',
             email: user.email || '',
             createdAt: window.firestore.serverTimestamp(),
+            activeSessionId: mySessionId,
           }, { merge: true });
+          sessionWritten = true;
         } else {
           setActiveChildId(null);
         }
@@ -1039,10 +1071,11 @@ export function UserProgressProvider({ children: reactChildren }) {
     updateChildLevel,
     deleteAllUserData,
     saveRecording,
+    sessionKicked,
   }), [progress, loading, updateProgress, addXP, addSpeakingMinutes, recordWordPractice, levelInfo, achievementToast, dismissAchievementToast,
        activeChildId, activeChild,
        isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
-       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData, saveRecording]);
+       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData, saveRecording, sessionKicked]);
 
   return <UserProgressContext.Provider value={value}>{reactChildren}</UserProgressContext.Provider>;
 }

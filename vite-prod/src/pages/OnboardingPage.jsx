@@ -185,6 +185,8 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const isRTL = RTL_LANGS.includes(uiLang);
 
@@ -260,16 +262,38 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     // Check if returning user (onboardingComplete already true)
     // The snapshot listener will update progress, but we need a small delay
     await new Promise(r => setTimeout(r, 300));
+
+    // Save terms acceptance for new signups
+    if (termsAccepted && window.firestore && window.db) {
+      try {
+        const uid = window.auth?.currentUser?.uid;
+        if (uid) {
+          const userRef = window.firestore.doc(window.db, 'users', uid);
+          await window.firestore.setDoc(userRef, {
+            termsAccepted: true,
+            termsAcceptedAt: new Date().toISOString(),
+            termsVersion: '1.0',
+          }, { merge: true });
+        }
+      } catch (e) {
+        console.error('Failed to save terms acceptance:', e);
+      }
+    }
+
     // If progress is already loaded and complete, skip to app
     if (progress.onboardingComplete) {
       onComplete();
       return;
     }
     nextStep();
-  }, [progress.onboardingComplete, onComplete, nextStep]);
+  }, [progress.onboardingComplete, onComplete, nextStep, termsAccepted]);
 
   /* ── auth handlers ── */
   const handleGoogle = useCallback(async () => {
+    if (authMode === 'signup' && !termsAccepted) {
+      setAuthError(t('mustAcceptTerms', uiLang));
+      return;
+    }
     setAuthError('');
     setAuthLoading(true);
     try {
@@ -280,9 +304,13 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     } finally {
       setAuthLoading(false);
     }
-  }, [signInWithGoogle, handleAuthSuccess]);
+  }, [signInWithGoogle, handleAuthSuccess, authMode, termsAccepted, uiLang]);
 
   const handleApple = useCallback(async () => {
+    if (authMode === 'signup' && !termsAccepted) {
+      setAuthError(t('mustAcceptTerms', uiLang));
+      return;
+    }
     setAuthError('');
     setAuthLoading(true);
     try {
@@ -299,7 +327,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     } finally {
       setAuthLoading(false);
     }
-  }, [signInWithApple, handleAuthSuccess, uiLang]);
+  }, [signInWithApple, handleAuthSuccess, uiLang, authMode, termsAccepted]);
 
   const handleEmailSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -310,6 +338,10 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
 
     // Signup validations
     if (authMode === 'signup') {
+      if (!termsAccepted) {
+        setAuthError(t('mustAcceptTerms', uiLang));
+        return;
+      }
       if (password !== confirmPassword) {
         setAuthError(t('passwordsMismatch', uiLang));
         return;
@@ -364,7 +396,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
     } finally {
       setAuthLoading(false);
     }
-  }, [email, password, confirmPassword, displayName, authMode, signUpWithEmail, signInWithEmail, handleAuthSuccess, uiLang]);
+  }, [email, password, confirmPassword, displayName, authMode, signUpWithEmail, signInWithEmail, handleAuthSuccess, uiLang, termsAccepted]);
 
   /* ─────────────── Step renderers ─────────────── */
 
@@ -614,6 +646,28 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
             </p>
           )}
 
+          {/* Terms checkbox — signup only */}
+          {authMode === 'signup' && (
+            <label className="flex items-start gap-2.5 cursor-pointer mt-2 px-1" style={{ direction: dir }}>
+              <input
+                type="checkbox"
+                checked={termsAccepted}
+                onChange={e => setTermsAccepted(e.target.checked)}
+                className="mt-1 w-4 h-4 rounded accent-purple-500 shrink-0"
+              />
+              <span className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                {t('termsAgreePrefix', uiLang)}{' '}
+                <button
+                  type="button"
+                  onClick={() => setShowTerms(true)}
+                  className="text-purple-500 underline font-semibold"
+                >
+                  {t('termsOfService', uiLang)}
+                </button>
+              </span>
+            </label>
+          )}
+
           {authError && (
             <p className="landing-error">{authError}</p>
           )}
@@ -649,6 +703,83 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
           {t('recaptchaNotice', uiLang)}
         </p>
       </div>
+
+      {/* Terms of Service Modal */}
+      {showTerms && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            background: 'rgba(0,0,0,0.7)', display: 'flex',
+            alignItems: 'center', justifyContent: 'center', padding: '16px',
+          }}
+          onClick={() => setShowTerms(false)}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#fff', borderRadius: '20px', maxWidth: '500px',
+              width: '100%', maxHeight: '80vh', display: 'flex', flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <div style={{ padding: '20px 20px 12px', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111' }}>{t('termsOfService', uiLang)}</h2>
+              <button onClick={() => setShowTerms(false)} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer', color: '#666', padding: '4px' }}>✕</button>
+            </div>
+            <div style={{ padding: '20px', overflowY: 'auto', fontSize: '13px', lineHeight: 1.7, color: '#333', direction: dir, textAlign: dir === 'rtl' ? 'right' : 'left' }}>
+              <p style={{ fontWeight: 600, marginBottom: '12px' }}>{t('termsLastUpdated', uiLang)}: 2026-03-12</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>1. {t('termsAcceptanceTitle', uiLang)}</h3>
+              <p>{t('termsAcceptanceBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>2. {t('termsServiceDescTitle', uiLang)}</h3>
+              <p>{t('termsServiceDescBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>3. {t('termsNotTeacherTitle', uiLang)}</h3>
+              <p>{t('termsNotTeacherBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>4. {t('termsChildrenTitle', uiLang)}</h3>
+              <p>{t('termsChildrenBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>5. {t('termsRecordingsTitle', uiLang)}</h3>
+              <p>{t('termsRecordingsBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>6. {t('termsAITitle', uiLang)}</h3>
+              <p>{t('termsAIBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>7. {t('termsLiabilityTitle', uiLang)}</h3>
+              <p>{t('termsLiabilityBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>8. {t('termsPaymentTitle', uiLang)}</h3>
+              <p>{t('termsPaymentBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>9. {t('termsPrivacyTitle', uiLang)}</h3>
+              <p>{t('termsPrivacyBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>10. {t('termsTerminationTitle', uiLang)}</h3>
+              <p>{t('termsTerminationBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>11. {t('termsChangesTitle', uiLang)}</h3>
+              <p>{t('termsChangesBody', uiLang)}</p>
+
+              <h3 style={{ fontWeight: 700, fontSize: '14px', marginTop: '16px', marginBottom: '6px', color: '#111' }}>12. {t('termsGoverningTitle', uiLang)}</h3>
+              <p>{t('termsGoverningBody', uiLang)}</p>
+            </div>
+            <div style={{ padding: '16px 20px', borderTop: '1px solid #e5e7eb' }}>
+              <button
+                onClick={() => { setTermsAccepted(true); setShowTerms(false); }}
+                style={{
+                  width: '100%', padding: '12px', borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+                  color: '#fff', fontWeight: 700, fontSize: '14px', border: 'none', cursor: 'pointer',
+                }}
+              >
+                {t('termsAcceptBtn', uiLang)}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         .landing-root {

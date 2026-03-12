@@ -139,7 +139,7 @@ function EmailVerificationScreen({ user, onVerified }) {
 function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const { childUser, logoutChild } = useChildAuth();
-  const { progress, loading: progressLoading, children, childrenLoaded, isChildMode, achievementToast, dismissAchievementToast } = useUserProgress();
+  const { progress, loading: progressLoading, children, childrenLoaded, isChildMode, achievementToast, dismissAchievementToast, sessionKicked } = useUserProgress();
   const { uiLang } = useTheme();
   const { dueCount } = useSpacedRepetition();
   const [currentPage, setCurrentPage] = useState('home');
@@ -634,6 +634,27 @@ function RemoteChildAppContent({ childUser, onLogout, showMathGate, onMathSucces
               className="w-full py-2.5 text-gray-400 text-sm font-medium"
             >
               {t('upgradePopupSkip', uiLang)}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Session kicked modal — shown when another device logs into the same profile */}
+      {sessionKicked && (
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+          <div className="bg-white dark:bg-gray-900 rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center">
+            <div className="text-5xl mb-4">🔒</div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              {t('sessionKickedTitle', uiLang)}
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
+              {t('sessionKickedDesc', uiLang)}
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="w-full py-3 rounded-xl bg-brand-600 text-white font-bold text-sm hover:bg-brand-700 transition-colors"
+            >
+              {t('sessionKickedBtn', uiLang)}
             </button>
           </div>
         </div>
