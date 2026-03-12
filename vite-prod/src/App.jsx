@@ -317,7 +317,8 @@ function AppContent() {
     }} /></Suspense>;
   }
 
-  const isKids = isChildMode;
+  const isTeenProfile = isChildMode && progress?.profileType === 'teen';
+  const isKids = isChildMode && !isTeenProfile;
 
   const pageTitles = {
     home: null,

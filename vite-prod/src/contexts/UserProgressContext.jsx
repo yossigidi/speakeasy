@@ -758,6 +758,7 @@ export function UserProgressProvider({ children: reactChildren }) {
           longestStreak: 0,
           streakFreezes: 0,
           ageGroup,
+          profileType: data.profileType || 'kids',
           childLevel,
           curriculumLevel: childLevel,
           onboardingComplete: true,

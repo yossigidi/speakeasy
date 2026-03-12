@@ -23,6 +23,7 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
   const [pinError, setPinError] = useState('');
   const [avatar, setAvatar] = useState(editData?.avatar || AVATARS[0]);
   const [avatarColor, setAvatarColor] = useState(editData?.avatarColor || COLORS[0]);
+  const [profileType, setProfileType] = useState(editData?.profileType || 'kids');
 
   const handleSubmit = () => {
     if (!name.trim()) return;
@@ -42,6 +43,7 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
       avatar,
       avatarColor,
       age: age ? parseInt(age, 10) : null,
+      profileType,
       ...(pin && { pin }),
     });
 
@@ -52,6 +54,7 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
       setConfirmPinVal('');
       setAvatar(AVATARS[0]);
       setAvatarColor(COLORS[0]);
+      setProfileType('kids');
     }
     onClose();
   };
@@ -91,6 +94,41 @@ export default function AddChildModal({ isOpen, onClose, onSubmit, editData }) {
             max={17}
             className="w-full px-3 py-2.5 rounded-xl bg-white/50 dark:bg-white/5 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-shadow"
           />
+        </div>
+
+        {/* Profile Type */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            {t('profileType', uiLang)}
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setProfileType('kids')}
+              className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all ${
+                profileType === 'kids'
+                  ? 'border-pink-500 bg-pink-50 dark:bg-pink-900/20 shadow-sm'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <span className="text-2xl">🧒</span>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{t('profileKids', uiLang)}</span>
+              <span className="text-[10px] text-gray-500 dark:text-gray-400 text-center leading-tight">{t('profileKidsDesc', uiLang)}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setProfileType('teen')}
+              className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all ${
+                profileType === 'teen'
+                  ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 shadow-sm'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <span className="text-2xl">🧑‍🎓</span>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{t('profileTeen', uiLang)}</span>
+              <span className="text-[10px] text-gray-500 dark:text-gray-400 text-center leading-tight">{t('profileTeenDesc', uiLang)}</span>
+            </button>
+          </div>
         </div>
 
         {/* PIN - 4 digit boxes */}

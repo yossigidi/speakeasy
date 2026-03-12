@@ -1053,6 +1053,13 @@ const translations = {
     weakPasswordBannerDesc: 'מומלץ לעדכן סיסמה חזקה יותר (8+ תווים, אות גדולה, קטנה ומספר)',
     weakPasswordBannerCta: 'עדכון',
 
+    // Child profile type
+    profileType: 'סוג פרופיל',
+    profileKids: 'ילדים',
+    profileKidsDesc: 'משחקים, ספיקלי, A-B-C',
+    profileTeen: 'נוער / בוגר',
+    profileTeenDesc: 'שיעורים, מאמן דיבור, אוצר מילים',
+
     // Misc
     speechLang: 'he-IL',
     introGreeting: 'שלום!',
@@ -2084,6 +2091,12 @@ const translations = {
     weakPasswordBannerTitle: 'Your password is weak',
     weakPasswordBannerDesc: 'We recommend updating to a stronger password (8+ chars, uppercase, lowercase and number)',
     weakPasswordBannerCta: 'Update',
+
+    profileType: 'Profile type',
+    profileKids: 'Kids',
+    profileKidsDesc: 'Games, Speakli, A-B-C',
+    profileTeen: 'Teen / Adult',
+    profileTeenDesc: 'Lessons, speaking coach, vocabulary',
 
     // Misc
     speechLang: 'en-US',
@@ -3140,6 +3153,12 @@ const translations = {
     weakPasswordBannerDesc: 'ننصح بتحديث كلمة مرور أقوى (8+ أحرف، حرف كبير وصغير ورقم)',
     weakPasswordBannerCta: 'تحديث',
 
+    profileType: 'نوع الملف الشخصي',
+    profileKids: 'أطفال',
+    profileKidsDesc: 'ألعاب، سبيكلي، A-B-C',
+    profileTeen: 'مراهق / بالغ',
+    profileTeenDesc: 'دروس، مدرب محادثة، مفردات',
+
     // Misc
     speechLang: 'ar-SA',
     introGreeting: 'مرحبًا!',
@@ -4194,6 +4213,12 @@ const translations = {
     weakPasswordBannerTitle: 'Ваш пароль слабый',
     weakPasswordBannerDesc: 'Рекомендуем обновить пароль (8+ символов, заглавная, строчная буква и цифра)',
     weakPasswordBannerCta: 'Обновить',
+
+    profileType: 'Тип профиля',
+    profileKids: 'Дети',
+    profileKidsDesc: 'Игры, Спикли, A-B-C',
+    profileTeen: 'Подросток / Взрослый',
+    profileTeenDesc: 'Уроки, тренер речи, словарный запас',
 
     // Misc
     speechLang: 'ru-RU',
