@@ -174,7 +174,8 @@ async function sendWeeklyReports(db) {
         if (!childSummaries.length) { results.skipped++; results.skippedDetails.push({ uid: userDoc.id, email, reason: 'no child summaries' }); continue; }
 
         // Generate AI insights for each child (in parallel)
-        const aiLabel = lang === 'he' ? 'המלצת AI' : lang === 'ar' ? 'توصية AI' : lang === 'ru' ? 'Рекомендация AI' : 'AI Insight';
+        const aiLabel = lang === 'he' ? '🎓 המלצת המורה' : lang === 'ar' ? '🎓 توصية المعلم' : lang === 'ru' ? '🎓 Рекомендация учителя' : '🎓 Teacher\'s Recommendation';
+        const borderSide = dir === 'rtl' ? 'border-right' : 'border-left';
         await Promise.all(childSummaries.map(async (c) => {
             try {
                 c.aiInsight = await getAIInsight(c, lang);
@@ -219,9 +220,9 @@ async function sendWeeklyReports(db) {
                     <div style="background:#FEF2F2;border-radius:8px;padding:16px;text-align:center;">
                         <p style="color:#6B7280;font-size:14px;margin:0;">${labels.noActivity}</p>
                     </div>
-                    ${c.aiInsight ? `<div style="border-top:1px solid #E5E7EB;margin-top:16px;padding-top:16px;">
-                        <div style="font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">${aiLabel}</div>
-                        <p style="font-size:13px;color:#374151;margin:0;line-height:1.6;">${c.aiInsight}</p>
+                    ${c.aiInsight ? `<div style="background:#F5F3FF;border-radius:10px;padding:18px;margin-top:16px;${borderSide}:4px solid #6366F1;">
+                        <div style="font-size:14px;font-weight:800;color:#4338CA;margin-bottom:8px;">${aiLabel}</div>
+                        <p style="font-size:14px;color:#1F2937;margin:0;line-height:1.8;">${c.aiInsight}</p>
                     </div>` : ''}
                 </div>`;
                 continue;
@@ -320,9 +321,9 @@ async function sendWeeklyReports(db) {
                 </div>
 
                 <!-- AI Insight -->
-                ${c.aiInsight ? `<div style="border-top:1px solid #E5E7EB;margin-top:16px;padding-top:16px;">
-                    <div style="font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">${aiLabel}</div>
-                    <p style="font-size:13px;color:#374151;margin:0;line-height:1.7;">${c.aiInsight}</p>
+                ${c.aiInsight ? `<div style="background:#F5F3FF;border-radius:10px;padding:18px;margin-top:20px;${borderSide}:4px solid #6366F1;">
+                    <div style="font-size:14px;font-weight:800;color:#4338CA;margin-bottom:8px;">${aiLabel}</div>
+                    <p style="font-size:14px;color:#1F2937;margin:0;line-height:1.8;">${c.aiInsight}</p>
                 </div>` : ''}
             </div>`;
         }
