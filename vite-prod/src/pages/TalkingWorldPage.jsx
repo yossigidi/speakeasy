@@ -100,12 +100,14 @@ export default function TalkingWorldPage({ onBack }) {
     try {
       // Speak Hebrew translation first so kid understands
       if (textHe && uiLang === 'he') {
-        await playFromAPI(textHe, 'he', undefined, { rate: 0.9 });
+        const heResult = await playFromAPI(textHe, 'he', undefined, { rate: 0.9 });
+        if (heResult?.endPromise) await heResult.endPromise;
         // Small pause between languages
         await new Promise(r => setTimeout(r, 400));
       }
       // Then speak English (the actual learning part)
-      await playFromAPI(textEn, 'en', undefined, { rate: 0.82 });
+      const enResult = await playFromAPI(textEn, 'en', undefined, { rate: 0.82 });
+      if (enResult?.endPromise) await enResult.endPromise;
     } catch (_) {}
     setIsSpeaking(false);
   }, [uiLang]);
@@ -573,7 +575,8 @@ export default function TalkingWorldPage({ onBack }) {
         <div className={`bg-gradient-to-r ${world.gradient} px-4 py-3 flex items-center gap-3 shadow-md`}
           style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
         >
-          <button onClick={() => setPhase('npc-path')} className="text-white/80 hover:text-white">
+          <button onClick={() => setPhase('npc-path')} className="text-white/80 hover:text-white"
+            style={isRTL ? { transform: 'scaleX(-1)' } : {}}>
             <ArrowLeft size={22} />
           </button>
           <img src={npc.image} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-white/30" />
@@ -884,12 +887,24 @@ export default function TalkingWorldPage({ onBack }) {
           onEnded={handleWorldIntroDone}
           ref={el => { if (el) videoRef.current = el; }}
         />
-        {/* Tap-to-play overlay */}
+        {/* Tap-to-play overlay — plays video + speaks intro */}
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             const v = videoRef.current;
             if (v) { v.muted = false; v.play().catch(() => {}); }
             e.currentTarget.style.display = 'none';
+            // Narrate the world intro
+            const introHe = world.introHe;
+            const introEn = world.introEn;
+            if (introHe && uiLang === 'he') {
+              const r = await playFromAPI(introHe, 'he', undefined, { rate: 0.9 });
+              if (r?.endPromise) await r.endPromise;
+              await new Promise(res => setTimeout(res, 300));
+            }
+            if (introEn) {
+              const r = await playFromAPI(introEn, 'en', undefined, { rate: 0.82 });
+              if (r?.endPromise) await r.endPromise;
+            }
           }}
           className="absolute inset-0 flex items-center justify-center bg-black/30"
           style={{ zIndex: 1 }}
@@ -955,6 +970,7 @@ export default function TalkingWorldPage({ onBack }) {
               else onBack();
             }}
             className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+            style={isRTL ? { transform: 'scaleX(-1)' } : {}}
           >
             <ArrowLeft size={22} />
           </button>

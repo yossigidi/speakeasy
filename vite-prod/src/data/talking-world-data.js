@@ -36,6 +36,8 @@ export const WORLDS = [
     bg: '/images/talking-world/backgrounds/tw-bg-magic-forest.jpg',
     icon: '/images/talking-world/icons/tw-icon-magic-forest.jpg',
     video: '/videos/talking-world/tw-world-magic-forest.mp4',
+    introHe: 'ברוכים הבאים ליער הקסום! כאן תפגשו חיות חמודות שידברו איתכם באנגלית. בואו נלמד צבעים, חיות ומספרים!',
+    introEn: 'Welcome to the Magic Forest! Here you will meet cute animals who will talk to you in English. Let\'s learn colors, animals and numbers!',
     topics: ['colors', 'animals', 'numbers'],
     npcs: [
       {
@@ -234,6 +236,8 @@ export const WORLDS = [
     bg: '/images/talking-world/backgrounds/tw-bg-happy-town.jpg',
     icon: '/images/talking-world/icons/tw-icon-happy-town.jpg',
     video: '/videos/talking-world/tw-world-happy-town.mp4',
+    introHe: 'ברוכים הבאים לעיר השמחה! כאן תפגשו דמויות מיוחדות שילמדו אתכם על אוכל, משפחה ובית ספר באנגלית!',
+    introEn: 'Welcome to Happy Town! Here you will meet special characters who will teach you about food, family and school in English!',
     topics: ['food', 'family', 'school'],
     npcs: [
       {
@@ -431,6 +435,8 @@ export const WORLDS = [
     bg: '/images/talking-world/backgrounds/tw-bg-nature-island.jpg',
     icon: '/images/talking-world/icons/tw-icon-nature-island.jpg',
     video: '/videos/talking-world/tw-world-nature-island.mp4',
+    introHe: 'ברוכים הבאים לאי הטבע! כאן תלמדו על הבית, הטבע ומזג האוויר באנגלית עם חברים חדשים!',
+    introEn: 'Welcome to Nature Island! Here you will learn about home, nature and weather in English with new friends!',
     topics: ['home', 'nature', 'weather'],
     npcs: [
       {
@@ -624,6 +630,8 @@ export const WORLDS = [
     bg: '/images/talking-world/backgrounds/tw-bg-adventure-land.jpg',
     icon: '/images/talking-world/icons/tw-icon-adventure-land.jpg',
     video: '/videos/talking-world/tw-world-adventure-land.mp4',
+    introHe: 'ברוכים הבאים לארץ ההרפתקאות! כאן תלמדו פעלים, משפטים וסיפורים באנגלית עם גיבורים אמיצים!',
+    introEn: 'Welcome to Adventure Land! Here you will learn verbs, sentences and stories in English with brave heroes!',
     topics: ['verbs', 'sentences', 'stories'],
     npcs: [
       {
