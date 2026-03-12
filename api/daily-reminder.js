@@ -41,7 +41,7 @@ const REMINDER_MESSAGES = {
 
 // ── Weekly Parent Report via Brevo Email ──
 async function sendWeeklyReports(db) {
-    const BREVO_KEY = process.env.BREVO_API_KEY;
+    const BREVO_KEY = process.env['BREVO_API_KEY-speakli'] || process.env.BREVO_API_KEY;
     if (!BREVO_KEY) return { sent: 0, error: 'No BREVO_API_KEY configured' };
 
     const results = { sent: 0, failed: 0, skipped: 0 };
