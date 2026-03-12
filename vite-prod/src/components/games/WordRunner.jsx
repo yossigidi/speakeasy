@@ -33,8 +33,8 @@ const PLAYER_W = 52;
 const PLAYER_H = 52;
 const TILE = 40;
 const GROUND_TILES = 2;
-const VIEWPORT_W = 375;
-const VIEWPORT_H = 600;
+const VIEWPORT_W = 375;   // virtual design width (portrait reference)
+const VIEWPORT_H = 600;   // virtual design height (portrait reference)
 const GROUND_Y_RATIO = 0.82; // ground at 82% of viewport height
 
 // Smooth physics-based movement
@@ -1037,28 +1037,6 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     setTimeout(() => setPhase('playing'), 2500);
   }, [childLevel]);
 
-  // ── Lock to landscape when playing ──
-  useEffect(() => {
-    if (phase !== 'playing' && phase !== 'countdown' && phase !== 'challenge') return;
-    const lock = async () => {
-      try {
-        if (document.documentElement.requestFullscreen) {
-          await document.documentElement.requestFullscreen();
-        }
-        if (screen.orientation?.lock) {
-          await screen.orientation.lock('landscape');
-        }
-      } catch (_) { /* not supported or denied */ }
-    };
-    lock();
-    return () => {
-      try {
-        if (screen.orientation?.unlock) screen.orientation.unlock();
-        if (document.fullscreenElement) document.exitFullscreen();
-      } catch (_) {}
-    };
-  }, [phase]);
-
   // ── Game loop ──
   useEffect(() => {
     if (phase !== 'playing') return;
@@ -1233,13 +1211,15 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
         return; // stop loop
       }
 
-      // Smooth camera follow (lerp)
-      camera.targetX = Math.max(0, player.x - VIEWPORT_W * 0.35);
+      // Smooth camera follow (lerp) — use actual visible width for landscape support
+      const visW = viewSize.w / (viewSize.h / VIEWPORT_H);
+      camera.targetX = Math.max(0, player.x - visW * 0.35);
       camera.x += (camera.targetX - camera.x) * CAMERA_LERP;
 
       // ── Direct DOM updates (skip React re-render for performance) ──
-      const sx = viewSize.w / VIEWPORT_W;
+      // Uniform scale based on height so landscape doesn't distort
       const sy = viewSize.h / VIEWPORT_H;
+      const sx = sy;
 
       // Move world layer
       if (worldLayerRef.current) {
@@ -1442,11 +1422,11 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
     const player = playerRef.current;
     const camera = cameraRef.current;
 
-    // Only render entities near the camera
-    const visibleRange = { left: camera.x - 100, right: camera.x + VIEWPORT_W + 100 };
-
-    const sx = viewSize.w / VIEWPORT_W;
+    // Uniform scale based on height — in landscape, more level is visible horizontally
     const sy = viewSize.h / VIEWPORT_H;
+    const sx = sy;
+    const visibleVirtualW = viewSize.w / sx; // how much of virtual world is visible
+    const visibleRange = { left: camera.x - 100, right: camera.x + visibleVirtualW + 100 };
 
     return (
       <div
