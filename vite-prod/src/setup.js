@@ -2,6 +2,7 @@
 // Firebase initialization for Speakli English learning app
 
 import { initializeApp } from 'firebase/app';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   initializeFirestore,
   persistentLocalCache,
@@ -64,6 +65,8 @@ window.db = initializeFirestore(app, {
 });
 
 window.auth = getAuth(app);
+window.storage = getStorage(app);
+window.firebaseStorage = { storageRef, uploadBytes, getDownloadURL };
 
 // Set explicit persistence for PWA / TWA compatibility
 setPersistence(window.auth, browserLocalPersistence).then(() => {

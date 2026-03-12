@@ -982,7 +982,8 @@ const translations = {
     familyPlan: 'משפחתי',
     free: 'חינם',
     upgradeNow: 'שדרגו עכשיו',
-    manageSub: 'נהלו מנוי',
+    manageSub: 'ניהול מנוי',
+    upgradeToSub: 'שדרגו למנוי',
     cancelSub: 'ביטול מנוי',
     cancelSubTitle: 'ביטול מנוי',
     cancelSubWarning: 'המנוי ישאר פעיל עד סוף תקופת החיוב. לאחר מכן תאבדו גישה לתכנים הפרימיום.',
@@ -993,6 +994,8 @@ const translations = {
     annualBilling: 'שנתי',
     perMonth: '/חודש',
     perYear: '/שנה',
+    freeMonthBadge: 'חודש חינם!',
+    pay11Get12: 'שלמו על 11 חודשים, קבלו 12!',
     currentPlan: 'תוכנית נוכחית',
     promoCodePlaceholder: 'קוד הנחה',
     promoCodeApplied: 'קוד ההנחה יופעל בתשלום',
@@ -1059,6 +1062,13 @@ const translations = {
     profileKidsDesc: 'משחקים, ספיקלי, A-B-C',
     profileTeen: 'נוער / בוגר',
     profileTeenDesc: 'שיעורים, מאמן דיבור, אוצר מילים',
+
+    // Recording consent
+    recordingConsentTitle: 'הקלטת הגייה לבקרת הורים',
+    recordingConsentDesc: 'נשמח להקליט את ההגייה של ילדך כדי שתוכלו לעקוב אחרי ההתקדמות שלו. ההקלטות נשמרות בצורה מאובטחת ונגישות רק לכם.',
+    recordingConsentAllow: 'מאשר',
+    recordingConsentDeny: 'לא עכשיו',
+    recentRecordings: 'הקלטות אחרונות',
 
     // Misc
     speechLang: 'he-IL',
@@ -2025,6 +2035,7 @@ const translations = {
     free: 'Free',
     upgradeNow: 'Upgrade Now',
     manageSub: 'Manage Subscription',
+    upgradeToSub: 'Upgrade to Premium',
     cancelSub: 'Cancel Subscription',
     cancelSubTitle: 'Cancel Subscription',
     cancelSubWarning: 'Your subscription will remain active until the end of the billing period. After that you will lose access to premium content.',
@@ -2035,6 +2046,8 @@ const translations = {
     annualBilling: 'Annual',
     perMonth: '/month',
     perYear: '/year',
+    freeMonthBadge: '1 month free!',
+    pay11Get12: 'Pay for 11 months, get 12!',
     currentPlan: 'Current Plan',
     promoCodePlaceholder: 'Promo code',
     promoCodeApplied: 'Discount will be applied at checkout',
@@ -2097,6 +2110,13 @@ const translations = {
     profileKidsDesc: 'Games, Speakli, A-B-C',
     profileTeen: 'Teen / Adult',
     profileTeenDesc: 'Lessons, speaking coach, vocabulary',
+
+    // Recording consent
+    recordingConsentTitle: 'Pronunciation Recording for Parents',
+    recordingConsentDesc: 'We\'d like to record your child\'s pronunciation so you can track their progress. Recordings are stored securely and accessible only to you.',
+    recordingConsentAllow: 'Allow',
+    recordingConsentDeny: 'Not now',
+    recentRecordings: 'Recent Recordings',
 
     // Misc
     speechLang: 'en-US',
@@ -3086,6 +3106,7 @@ const translations = {
     free: 'مجاني',
     upgradeNow: 'ترقية الآن',
     manageSub: 'إدارة الاشتراك',
+    upgradeToSub: 'ترقية للاشتراك',
     cancelSub: 'إلغاء الاشتراك',
     cancelSubTitle: 'إلغاء الاشتراك',
     cancelSubWarning: 'سيبقى اشتراكك نشطاً حتى نهاية فترة الفوترة. بعد ذلك ستفقد الوصول إلى المحتوى المميز.',
@@ -3096,6 +3117,8 @@ const translations = {
     annualBilling: 'سنوي',
     perMonth: '/شهر',
     perYear: '/سنة',
+    freeMonthBadge: 'شهر مجاني!',
+    pay11Get12: 'ادفع 11 شهرًا واحصل على 12!',
     currentPlan: 'الخطة الحالية',
     promoCodePlaceholder: 'رمز الخصم',
     promoCodeApplied: 'سيتم تطبيق الخصم عند الدفع',
@@ -3158,6 +3181,13 @@ const translations = {
     profileKidsDesc: 'ألعاب، سبيكلي، A-B-C',
     profileTeen: 'مراهق / بالغ',
     profileTeenDesc: 'دروس، مدرب محادثة، مفردات',
+
+    // Recording consent
+    recordingConsentTitle: 'تسجيل النطق لمراقبة الوالدين',
+    recordingConsentDesc: 'نود تسجيل نطق طفلك حتى تتمكن من متابعة تقدمه. التسجيلات مخزنة بشكل آمن ومتاحة لك فقط.',
+    recordingConsentAllow: 'موافق',
+    recordingConsentDeny: 'ليس الآن',
+    recentRecordings: 'التسجيلات الأخيرة',
 
     // Misc
     speechLang: 'ar-SA',
@@ -4147,6 +4177,7 @@ const translations = {
     free: 'Бесплатно',
     upgradeNow: 'Обновить сейчас',
     manageSub: 'Управление подпиской',
+    upgradeToSub: 'Перейти на подписку',
     cancelSub: 'Отменить подписку',
     cancelSubTitle: 'Отменить подписку',
     cancelSubWarning: 'Подписка останется активной до конца расчётного периода. После этого вы потеряете доступ к премиум-контенту.',
@@ -4157,6 +4188,8 @@ const translations = {
     annualBilling: 'Ежегодно',
     perMonth: '/месяц',
     perYear: '/год',
+    freeMonthBadge: 'Месяц бесплатно!',
+    pay11Get12: 'Платите за 11 месяцев, получите 12!',
     currentPlan: 'Текущий план',
     promoCodePlaceholder: 'Промокод',
     promoCodeApplied: 'Скидка будет применена при оплате',
@@ -4219,6 +4252,13 @@ const translations = {
     profileKidsDesc: 'Игры, Спикли, A-B-C',
     profileTeen: 'Подросток / Взрослый',
     profileTeenDesc: 'Уроки, тренер речи, словарный запас',
+
+    // Recording consent
+    recordingConsentTitle: 'Запись произношения для родителей',
+    recordingConsentDesc: 'Мы хотели бы записать произношение вашего ребёнка, чтобы вы могли отслеживать его прогресс. Записи хранятся безопасно и доступны только вам.',
+    recordingConsentAllow: 'Разрешить',
+    recordingConsentDeny: 'Не сейчас',
+    recentRecordings: 'Последние записи',
 
     // Misc
     speechLang: 'ru-RU',

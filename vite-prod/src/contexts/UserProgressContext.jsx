@@ -681,6 +681,18 @@ export function UserProgressProvider({ children: reactChildren }) {
     return code;
   }, [user, childrenList]);
 
+  // Notify parent via push when child starts/ends a session
+  const notifyParentActivity = useCallback(async (childName, event, durationMinutes) => {
+    if (!user) return;
+    try {
+      fetch('/api/child-activity-notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ parentUid: user.uid, childName, event, durationMinutes }),
+      }).catch(() => {});
+    } catch (_) {}
+  }, [user]);
+
   const switchToChild = useCallback((childId) => {
     // Clear session-scoped state so new child gets fresh intro/welcome
     // Preserve profile selection flag so picker doesn't reappear
@@ -688,14 +700,27 @@ export function UserProgressProvider({ children: reactChildren }) {
     sessionStorage.clear();
     if (profileFlag) sessionStorage.setItem('speakeasy_profileSelected', profileFlag);
     setActiveChildId(childId);
-  }, []);
+    // Save session start time and notify parent
+    sessionStorage.setItem('speakli_child_session_start', Date.now().toString());
+    const child = childrenList.find(c => c.id === childId);
+    if (child) notifyParentActivity(child.name, 'start');
+  }, [childrenList, notifyParentActivity]);
 
   const switchToParent = useCallback(() => {
+    // Calculate session duration and notify parent
+    const startTime = sessionStorage.getItem('speakli_child_session_start');
+    const currentChildId = activeChildIdRef.current;
+    if (currentChildId && startTime) {
+      const mins = Math.round((Date.now() - parseInt(startTime, 10)) / 60000);
+      const child = childrenList.find(c => c.id === currentChildId);
+      if (child) notifyParentActivity(child.name, 'end', mins);
+    }
+    sessionStorage.removeItem('speakli_child_session_start');
     const profileFlag = sessionStorage.getItem('speakeasy_profileSelected');
     sessionStorage.clear();
     if (profileFlag) sessionStorage.setItem('speakeasy_profileSelected', profileFlag);
     setActiveChildId(null);
-  }, []);
+  }, [childrenList, notifyParentActivity]);
 
   const addChild = useCallback(async (data) => {
     // data = { name, avatar, avatarColor, age, pin }
@@ -948,6 +973,37 @@ export function UserProgressProvider({ children: reactChildren }) {
     }
   }, [user, familyCode]);
 
+  // Save a speech recording to Firebase Storage + Firestore
+  const saveRecording = useCallback(async (audioBlob, word, score) => {
+    if (!window.firebaseStorage || !window.storage || !window.firestore || !window.db) return null;
+    const childId = activeChildIdRef.current;
+    if (!childId) return null;
+
+    try {
+      const timestamp = Date.now();
+      const ext = audioBlob.type?.includes('mp4') ? 'mp4' : 'webm';
+      const path = `recordings/${childId}/${word}_${timestamp}.${ext}`;
+      const ref = window.firebaseStorage.storageRef(window.storage, path);
+      await window.firebaseStorage.uploadBytes(ref, audioBlob, { contentType: audioBlob.type || 'audio/webm' });
+      const audioUrl = await window.firebaseStorage.getDownloadURL(ref);
+
+      // Save metadata to Firestore subcollection
+      const recRef = window.firestore.collection(window.db, 'childProfiles', childId, 'recordings');
+      await window.firestore.addDoc(recRef, {
+        word,
+        audioUrl,
+        score: score != null ? score : null,
+        date: new Date().toISOString(),
+        createdAt: window.firestore.serverTimestamp(),
+      });
+
+      return audioUrl;
+    } catch (err) {
+      console.warn('saveRecording failed:', err);
+      return null;
+    }
+  }, []);
+
   const activeChild = useMemo(() => {
     if (!activeChildId) return null;
     return childrenList.find(c => c.id === activeChildId) || null;
@@ -982,10 +1038,11 @@ export function UserProgressProvider({ children: reactChildren }) {
     resetChildPin,
     updateChildLevel,
     deleteAllUserData,
+    saveRecording,
   }), [progress, loading, updateProgress, addXP, addSpeakingMinutes, recordWordPractice, levelInfo, achievementToast, dismissAchievementToast,
        activeChildId, activeChild,
        isChildMode, childrenList, childrenLoaded, familyCode, switchToChild, switchToParent,
-       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData]);
+       addChild, updateChild, deleteChild, generateFamilyCode, resetChildPin, updateChildLevel, deleteAllUserData, saveRecording]);
 
   return <UserProgressContext.Provider value={value}>{reactChildren}</UserProgressContext.Provider>;
 }

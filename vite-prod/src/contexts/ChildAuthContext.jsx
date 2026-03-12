@@ -140,6 +140,17 @@ export function ChildAuthProvider({ children }) {
         await window.firebaseAuth.signInWithCustomToken(window.auth, data.customToken);
       }
       setChildUser(session);
+
+      // Notify parent that child started learning
+      sessionStorage.setItem('speakli_child_session_start', Date.now().toString());
+      if (data.child?.parentUid) {
+        fetch('/api/child-activity-notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ parentUid: data.child.parentUid, childName, event: 'start' }),
+        }).catch(() => {});
+      }
+
       return { success: true };
     } catch (error) {
       console.error('Child login error:', error);
@@ -149,6 +160,23 @@ export function ChildAuthProvider({ children }) {
 
   // Logout child
   const logoutChild = useCallback(() => {
+    // Notify parent that child finished learning
+    const startTime = sessionStorage.getItem('speakli_child_session_start');
+    const current = childUserRef.current;
+    if (current?.parentUid && startTime) {
+      const mins = Math.round((Date.now() - parseInt(startTime, 10)) / 60000);
+      fetch('/api/child-activity-notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          parentUid: current.parentUid,
+          childName: current.name || current.childName,
+          event: 'end',
+          durationMinutes: mins,
+        }),
+      }).catch(() => {});
+    }
+    sessionStorage.removeItem('speakli_child_session_start');
     localStorage.removeItem('speakeasy_childSession');
     localStorage.removeItem('speakeasy_activeChildId');
     sessionStorage.removeItem('speakeasy_profileSelected');

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ChevronLeft, Zap, Flame, BookOpen, BookA, TrendingUp, Brain, RefreshCw, Calendar, Target, Award, Volume2, Star, Lock, CheckCircle, Home, MapPin } from 'lucide-react';
+import { ChevronLeft, Zap, Flame, BookOpen, BookA, TrendingUp, Brain, RefreshCw, Calendar, Target, Award, Volume2, Star, Lock, CheckCircle, Home, MapPin, Mic, Play, Pause } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
@@ -148,6 +148,9 @@ export default function ChildProgressPage({ childId, onBack }) {
   const [advice, setAdvice] = useState('');
   const [loadingAdvice, setLoadingAdvice] = useState(false);
   const [timeRange, setTimeRange] = useState(7);
+  const [recordings, setRecordings] = useState([]);
+  const [playingRecording, setPlayingRecording] = useState(null);
+  const audioRef = React.useRef(null);
 
   const child = useMemo(() => children.find(c => c.id === childId), [children, childId]);
 
@@ -187,6 +190,39 @@ export default function ChildProgressPage({ childId, onBack }) {
 
     fetchActivity();
   }, [childId, timeRange]);
+
+  // Fetch recent recordings
+  useEffect(() => {
+    if (!childId || !window.firestore || !window.db) return;
+    async function fetchRecordings() {
+      try {
+        const recRef = window.firestore.query(
+          window.firestore.collection(window.db, 'childProfiles', childId, 'recordings'),
+          window.firestore.orderBy('createdAt', 'desc'),
+          window.firestore.firestoreLimit(10)
+        );
+        const snap = await window.firestore.getDocs(recRef);
+        setRecordings(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      } catch (e) {
+        console.warn('Failed to fetch recordings:', e);
+      }
+    }
+    fetchRecordings();
+  }, [childId]);
+
+  const togglePlayRecording = (rec) => {
+    if (playingRecording === rec.id) {
+      audioRef.current?.pause();
+      setPlayingRecording(null);
+      return;
+    }
+    if (audioRef.current) audioRef.current.pause();
+    const audio = new Audio(rec.audioUrl);
+    audio.onended = () => setPlayingRecording(null);
+    audio.play();
+    audioRef.current = audio;
+    setPlayingRecording(rec.id);
+  };
 
   // Prepare chart data
   const chartData = useMemo(() => {
@@ -530,6 +566,44 @@ export default function ChildProgressPage({ childId, onBack }) {
           </p>
         )}
       </GlassCard>
+
+      {/* Recent Recordings */}
+      {recordings.length > 0 && (
+        <GlassCard variant="strong" className="!p-4">
+          <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+            <Mic size={18} className="text-violet-500" />
+            {t('recentRecordings', uiLang)}
+          </h3>
+          <div className="space-y-2">
+            {recordings.map(rec => (
+              <div key={rec.id} className="flex items-center gap-3 p-3 rounded-xl bg-violet-50/60 dark:bg-violet-900/10">
+                <button
+                  onClick={() => togglePlayRecording(rec)}
+                  className="w-9 h-9 rounded-full bg-violet-100 dark:bg-violet-800/40 flex items-center justify-center flex-shrink-0 hover:bg-violet-200 dark:hover:bg-violet-800/60 transition-colors"
+                >
+                  {playingRecording === rec.id
+                    ? <Pause size={16} className="text-violet-600 dark:text-violet-400" />
+                    : <Play size={16} className="text-violet-600 dark:text-violet-400 ml-0.5" />
+                  }
+                </button>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-gray-900 dark:text-white truncate">{rec.word}</p>
+                  <p className="text-[10px] text-gray-400">{rec.date ? new Date(rec.date).toLocaleDateString(uiLang === 'he' ? 'he-IL' : 'en-US') : ''}</p>
+                </div>
+                {rec.score != null && (
+                  <div className={`px-2.5 py-1 rounded-full text-xs font-bold ${
+                    rec.score >= 80 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                    : rec.score >= 50 ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                    : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                  }`}>
+                    {rec.score}%
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+      )}
 
       {/* Activity Breakdown */}
       {donutSegments.length > 0 && (

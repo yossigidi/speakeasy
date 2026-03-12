@@ -63,7 +63,7 @@ export default function PricingPage({ onBack }) {
   const childPrice = interval === 'annual' ? PLANS.child.priceAnnualPerMonth : PLANS.child.priceMonthly;
   const adultPrice = interval === 'annual' ? PLANS.adult.priceAnnualPerMonth : PLANS.adult.priceMonthly;
   const familyPrice = interval === 'annual' ? PLANS.family.priceAnnualPerMonth : PLANS.family.priceMonthly;
-  const savingsPct = Math.round((1 - PLANS.child.priceAnnualPerMonth / PLANS.child.priceMonthly) * 100);
+  const freeMonths = PLANS.child.freeMonths || 1;
 
   const plans = [
     {
@@ -141,7 +141,7 @@ export default function PricingPage({ onBack }) {
           >
             {t('annualBilling', uiLang)}
             <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full font-bold">
-              -{savingsPct}%
+              {t('freeMonthBadge', uiLang)}
             </span>
           </button>
         </div>
@@ -209,9 +209,14 @@ export default function PricingPage({ onBack }) {
               </div>
 
               {interval === 'annual' && !isFree && (
-                <p className="text-xs text-gray-400 mb-3">
-                  {PLANS[p.id].priceAnnualTotal.toFixed(2)}₪ {t('perYear', uiLang)}
-                </p>
+                <div className="mb-3">
+                  <p className="text-xs text-green-600 dark:text-green-400 font-bold">
+                    {t('pay11Get12', uiLang)}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {PLANS[p.id].priceAnnualTotal.toFixed(2)}₪ {t('perYear', uiLang)}
+                  </p>
+                </div>
               )}
 
               {p.extra && (

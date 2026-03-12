@@ -30,7 +30,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
   const [simulationAccuracy, setSimulationAccuracy] = useState(null);
 
   const skillsProgress = useSkillsProgress();
-  const { progress: userProgress, updateProgress } = useUserProgress();
+  const { progress: userProgress, updateProgress, saveRecording, isChildMode } = useUserProgress();
   const { speak, stopSpeaking } = useSpeech();
   const spokenRef = useRef(false);
 
@@ -463,6 +463,7 @@ export default function SkillsLessonRunner({ lessonId, onComplete, onBack, uiLan
               onAnswer={handleAnswer}
               uiLang={uiLang}
               speak={speak}
+              saveRecording={isChildMode ? saveRecording : undefined}
             />
           )}
         </div>

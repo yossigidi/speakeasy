@@ -581,7 +581,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
                     const resp = await fetch('/api/reset-password', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ email }),
+                      body: JSON.stringify({ email, lang: uiLang }),
                     });
                     const data = await resp.json();
                     if (!resp.ok) throw new Error(data.detail || data.error || 'failed');

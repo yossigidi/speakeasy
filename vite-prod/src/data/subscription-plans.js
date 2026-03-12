@@ -27,8 +27,9 @@ export const PLANS = {
   child: {
     id: 'child',
     priceMonthly: 19.90,
-    priceAnnualPerMonth: 16.92,
-    priceAnnualTotal: 202.98,
+    priceAnnualPerMonth: 18.25,   // 11 months ÷ 12 = ~18.25
+    priceAnnualTotal: 218.90,     // 19.90 × 11 (pay 11 get 12)
+    freeMonths: 1,
     currency: 'ILS',
     includesFamily: false,
     maxChildren: 1,
@@ -36,8 +37,9 @@ export const PLANS = {
   adult: {
     id: 'adult',
     priceMonthly: 19.90,
-    priceAnnualPerMonth: 16.92,
-    priceAnnualTotal: 202.98,
+    priceAnnualPerMonth: 18.25,
+    priceAnnualTotal: 218.90,
+    freeMonths: 1,
     currency: 'ILS',
     includesFamily: false,
     maxChildren: 0,
@@ -45,8 +47,9 @@ export const PLANS = {
   family: {
     id: 'family',
     priceMonthly: 34.90,
-    priceAnnualPerMonth: 29.67,
-    priceAnnualTotal: 355.98,
+    priceAnnualPerMonth: 31.99,   // 11 months ÷ 12 = ~31.99
+    priceAnnualTotal: 383.90,     // 34.90 × 11
+    freeMonths: 1,
     currency: 'ILS',
     includesFamily: true,
     maxChildren: Infinity,

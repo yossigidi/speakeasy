@@ -24,7 +24,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
   const [lessonData, setLessonData] = useState(null);
 
   const curriculum = useCurriculumProgress();
-  const { progress: userProgress, updateProgress } = useUserProgress();
+  const { progress: userProgress, updateProgress, saveRecording, isChildMode } = useUserProgress();
   const { speak, stopSpeaking } = useSpeech();
   const introTimerRef = useRef(null);
   const spokenRef = useRef(false);
@@ -484,6 +484,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
               onAnswer={handleAnswer}
               uiLang={uiLang}
               speak={speak}
+              saveRecording={isChildMode ? saveRecording : undefined}
             />
           ) : (
             <div style={{ textAlign: 'center', padding: 40 }}>

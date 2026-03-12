@@ -39,12 +39,15 @@ function GuidanceBubble({ text, uiLang, speak, onDone }) {
   );
 }
 
-export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang, speak }) {
+export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang, speak, saveRecording }) {
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [listening, setListening] = useState(false);
   const [speakResult, setSpeakResult] = useState(null);
+  const [consentAnswered, setConsentAnswered] = useState(() => localStorage.getItem('speakli_recording_consent') !== null);
   const recognitionRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
   const guidanceDoneRef = useRef(false);
   const timersRef = useRef([]);
 
@@ -311,7 +314,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   // 5. speak-word
   // ====================================================================
   if (exercise.type === 'speak-word') {
-    const startListening = () => {
+    const startListening = async () => {
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SR) { onAnswer(true, exercise.wordData); return; }
       // Stop any previous recognition instance
@@ -320,6 +323,21 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         recognitionRef.current = null;
       }
       setListening(true);
+
+      // Start MediaRecorder alongside SR to capture raw audio
+      const hasConsent = localStorage.getItem('speakli_recording_consent') === '1';
+      if (hasConsent && saveRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
+          const mr = new MediaRecorder(stream, { mimeType });
+          audioChunksRef.current = [];
+          mr.ondataavailable = (e) => { if (e.data.size > 0) audioChunksRef.current.push(e.data); };
+          mr.start();
+          mediaRecorderRef.current = mr;
+        } catch (_) { /* mic denied or unavailable — SR still works */ }
+      }
+
       const recognition = new SR();
       recognitionRef.current = recognition;
       recognition.lang = 'en-US';
@@ -333,13 +351,35 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         );
         setListening(false);
         recognitionRef.current = null;
+
+        // Stop MediaRecorder and save the recording
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+          const mr = mediaRecorderRef.current;
+          mr.onstop = () => {
+            const blob = new Blob(audioChunksRef.current, { type: mr.mimeType || 'audio/webm' });
+            if (blob.size > 0 && saveRecording) {
+              saveRecording(blob, exercise.correctAnswer, correct ? 100 : 0);
+            }
+            mr.stream.getTracks().forEach(t => t.stop());
+            mediaRecorderRef.current = null;
+          };
+          mr.stop();
+        }
+
         setSpeakResult(correct ? 'correct' : 'wrong');
         timersRef.current.push(setTimeout(() => {
           onAnswer(correct, exercise.wordData);
           setSpeakResult(null);
         }, 800));
       };
-      recognition.onerror = () => { setListening(false); recognitionRef.current = null; };
+      recognition.onerror = () => {
+        setListening(false);
+        recognitionRef.current = null;
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+          try { mediaRecorderRef.current.stop(); mediaRecorderRef.current.stream.getTracks().forEach(t => t.stop()); } catch (_) {}
+          mediaRecorderRef.current = null;
+        }
+      };
       recognition.onend = () => { setListening(false); recognitionRef.current = null; };
       recognition.start();
     };
@@ -347,6 +387,37 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
     return (
       <div style={{ textAlign: 'center' }}>
         <GuidanceBubble text={t('guideSpeakWord', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+
+        {/* Recording consent banner — shown once if saveRecording is available */}
+        {saveRecording && !consentAnswered && (
+          <div style={{
+            background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: 12,
+            padding: '12px 16px', marginBottom: 16, textAlign: 'start',
+            direction: ['he', 'ar'].includes(uiLang) ? 'rtl' : 'ltr',
+          }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#0369A1', marginBottom: 6 }}>
+              {t('recordingConsentTitle', uiLang)}
+            </div>
+            <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.6, marginBottom: 10 }}>
+              {t('recordingConsentDesc', uiLang)}
+            </div>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => { localStorage.setItem('speakli_recording_consent', '0'); setConsentAnswered(true); }}
+                style={{ background: 'transparent', border: '1px solid #CBD5E1', borderRadius: 8, padding: '6px 14px', fontSize: 12, cursor: 'pointer', color: '#64748B' }}
+              >
+                {t('recordingConsentDeny', uiLang)}
+              </button>
+              <button
+                onClick={() => { localStorage.setItem('speakli_recording_consent', '1'); setConsentAnswered(true); }}
+                style={{ background: '#0284C7', border: 'none', borderRadius: 8, padding: '6px 14px', fontSize: 12, cursor: 'pointer', color: 'white', fontWeight: 600 }}
+              >
+                {t('recordingConsentAllow', uiLang)}
+              </button>
+            </div>
+          </div>
+        )}
+
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('sayTheWord', uiLang)}
         </div>

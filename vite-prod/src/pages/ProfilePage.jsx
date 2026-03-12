@@ -316,7 +316,7 @@ export default function ProfilePage({ onNavigate }) {
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-gray-900 dark:text-white">
-                  {(currentPlan !== 'free' && subStatus === 'active') ? t(currentPlan === 'family' ? 'familyPlan' : currentPlan === 'child' ? 'childPlan' : 'adultPlan', uiLang) : t('premium', uiLang)}
+                  {(currentPlan !== 'free' && subStatus === 'active') ? t('manageSub', uiLang) : t('upgradeToSub', uiLang)}
                 </h3>
                 {(currentPlan !== 'free' && subStatus === 'active') && (
                   <span className="text-[10px] bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full font-bold uppercase">
@@ -325,7 +325,7 @@ export default function ProfilePage({ onNavigate }) {
                 )}
               </div>
               <p className="text-xs text-gray-500">
-                {(currentPlan !== 'free' && subStatus === 'active') ? t('manageSub', uiLang) : t('upgradeNow', uiLang)}
+                {(currentPlan !== 'free' && subStatus === 'active') ? t(currentPlan === 'family' ? 'familyPlan' : currentPlan === 'child' ? 'childPlan' : 'adultPlan', uiLang) : t('upgradeNow', uiLang)}
               </p>
             </div>
             {(currentPlan !== 'free' && subStatus === 'active') ? (
