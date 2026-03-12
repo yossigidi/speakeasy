@@ -206,7 +206,7 @@ async function sendWeeklyReports(db) {
                     htmlContent: html,
                 }),
             });
-            if (resp.ok) { results.sent++; results.sentTo.push({ email, children: childSummaries.map(c => c.name) }); }
+            if (resp.ok) { results.sent++; results.sentTo.push({ email, children: childSummaries.map(c => ({ name: c.name, weekXP: c.weekXP, activeDays: c.activeDays, weekMinutes: c.weekMinutes, totalWords: c.totalWords, streak: c.streak })) }); }
             else {
                 results.failed++;
                 const errText = await resp.text();
