@@ -1,5 +1,5 @@
 // Background music player singleton
-// Uses two HTML5 Audio elements for smooth crossfading between tracks
+// Uses Web Audio API GainNode for precise volume control on iOS
 
 const TRACKS = {
   'kids-home':    '/sounds/music/kids-home.mp3',
@@ -9,27 +9,72 @@ const TRACKS = {
   'kids-adventure': '/sounds/music/kids-adventure.mp3',
 };
 
-// Mobile speakers are much louder at the same volume level
-// Safari on iOS handles volume differently — use extra-low values
+// Volume levels — GainNode gives true control even on iOS
 const IS_MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const IS_SAFARI = /Safari/i.test(navigator.userAgent) && !/Chrome/i.test(navigator.userAgent);
-const NORMAL_VOL = IS_MOBILE ? (IS_SAFARI ? 0.00015 : 0.0004) : 0.015;
-const DUCKED_VOL = IS_MOBILE ? (IS_SAFARI ? 0.00004 : 0.0001) : 0.002;
+const NORMAL_VOL = IS_MOBILE ? 0.03 : 0.08;
+const DUCKED_VOL = IS_MOBILE ? 0.008 : 0.015;
 const FADE_MS = 1200;
 const DUCK_MS = 400;
 
 class MusicPlayer {
   constructor() {
+    this._ctx = null;       // AudioContext (created on first user gesture)
+    this._gains = new Map(); // element → GainNode
     this._a = new Audio();
     this._b = new Audio();
     this._a.loop = true;
     this._b.loop = true;
-    this._active = this._a;   // currently playing element
-    this._section = null;      // current section id
-    this._volume = NORMAL_VOL; // target volume (before duck)
+    this._active = this._a;
+    this._section = null;
+    this._volume = NORMAL_VOL;
     this._ducked = false;
     this._paused = true;
     this._fadeTimers = new Map();
+  }
+
+  /** Lazily create AudioContext and connect element through GainNode */
+  _ensureContext(el) {
+    if (!this._ctx) {
+      try {
+        this._ctx = new (window.AudioContext || window.webkitAudioContext)();
+      } catch (e) {
+        // Web Audio API not available — fall back to el.volume
+        return null;
+      }
+    }
+    if (this._ctx.state === 'suspended') {
+      this._ctx.resume().catch(() => {});
+    }
+    if (!this._gains.has(el)) {
+      try {
+        const source = this._ctx.createMediaElementSource(el);
+        const gain = this._ctx.createGain();
+        gain.gain.value = 0;
+        source.connect(gain);
+        gain.connect(this._ctx.destination);
+        this._gains.set(el, gain);
+      } catch (e) {
+        // Already connected or other error
+        return this._gains.get(el) || null;
+      }
+    }
+    return this._gains.get(el);
+  }
+
+  _setVolume(el, vol) {
+    const gain = this._ensureContext(el);
+    if (gain) {
+      gain.gain.value = Math.max(0, Math.min(1, vol));
+      el.volume = 1; // Full volume on element, gain controls actual level
+    } else {
+      // Fallback: direct volume
+      el.volume = Math.max(0, Math.min(1, vol));
+    }
+  }
+
+  _getVolume(el) {
+    const gain = this._gains.get(el);
+    return gain ? gain.gain.value : el.volume;
   }
 
   /** Crossfade to a new section (or stop if section is null) */
@@ -39,23 +84,19 @@ class MusicPlayer {
 
     const src = section ? TRACKS[section] : null;
     if (!src) {
-      // Fade out current
       this._fadeOut(this._active, FADE_MS);
       return;
     }
 
-    // Swap active/inactive
     const outgoing = this._active;
     const incoming = this._active === this._a ? this._b : this._a;
     this._active = incoming;
 
-    // Set up incoming
     incoming.src = src;
-    incoming.volume = 0;
+    this._setVolume(incoming, 0);
     incoming.currentTime = 0;
     incoming.play().catch(() => {});
 
-    // Crossfade
     this._fade(incoming, 0, this._ducked ? DUCKED_VOL : this._volume, FADE_MS);
     this._fadeOut(outgoing, FADE_MS);
     this._paused = false;
@@ -64,7 +105,7 @@ class MusicPlayer {
   play() {
     if (!this._section || !TRACKS[this._section]) return;
     this._active.src = TRACKS[this._section];
-    this._active.volume = this._ducked ? DUCKED_VOL : this._volume;
+    this._setVolume(this._active, this._ducked ? DUCKED_VOL : this._volume);
     this._active.play().catch(() => {});
     this._paused = false;
   }
@@ -86,37 +127,36 @@ class MusicPlayer {
   duck() {
     if (this._ducked) return;
     this._ducked = true;
-    this._fade(this._active, this._active.volume, DUCKED_VOL, DUCK_MS);
+    this._fade(this._active, this._getVolume(this._active), DUCKED_VOL, DUCK_MS);
   }
 
   /** Restore volume after TTS finishes */
   unduck() {
     if (!this._ducked) return;
     this._ducked = false;
-    this._fade(this._active, this._active.volume, this._volume, DUCK_MS);
+    this._fade(this._active, this._getVolume(this._active), this._volume, DUCK_MS);
   }
 
   // ── Private helpers ──
 
   _fade(el, from, to, ms) {
     if (!el) return;
-    if (el.paused) { el.volume = Math.max(0, Math.min(1, to)); return; }
-    // Per-element timer so concurrent fades don't cancel each other
+    if (el.paused) { this._setVolume(el, to); return; }
     clearInterval(this._fadeTimers.get(el));
     const steps = 20;
     const stepMs = ms / steps;
     const delta = (to - from) / steps;
     let step = 0;
-    el.volume = Math.max(0, Math.min(1, from));
+    this._setVolume(el, from);
 
     const timer = setInterval(() => {
       step++;
       const v = from + delta * step;
-      el.volume = Math.max(0, Math.min(1, v));
+      this._setVolume(el, v);
       if (step >= steps) {
         clearInterval(timer);
         this._fadeTimers.delete(el);
-        el.volume = Math.max(0, Math.min(1, to));
+        this._setVolume(el, to);
       }
     }, stepMs);
     this._fadeTimers.set(el, timer);
@@ -124,7 +164,7 @@ class MusicPlayer {
 
   _fadeOut(el, ms) {
     if (!el || el.paused) return;
-    this._fade(el, el.volume, 0, ms);
+    this._fade(el, this._getVolume(el), 0, ms);
     setTimeout(() => {
       el.pause();
       el.src = '';
