@@ -13,6 +13,43 @@ import useContentGate from '../hooks/useContentGate.js';
 import PaywallModal from '../components/subscription/PaywallModal.jsx';
 // KidsIntro replaced by video intro
 
+// Teacher intro phrases for NPC speech (brief Hebrew intro before NPC talks)
+const NPC_TEACHER = {
+  he: {
+    letsChat: (name) => `בואו נדבר עם ${name}!`,
+    listen: (name) => `הקשיבו מה ${name} אומר`,
+    yourTurn: 'עכשיו תורכם! אמרו את המילה',
+    great: 'כל הכבוד!',
+    tryAgain: 'בואו ננסה שוב!',
+  },
+  ar: {
+    letsChat: (name) => `هيا نتحدث مع ${name}!`,
+    listen: (name) => `استمعوا لما يقول ${name}`,
+    yourTurn: 'الآن دوركم! قولوا الكلمة',
+    great: 'أحسنتم!',
+    tryAgain: 'هيا نحاول مرة أخرى!',
+  },
+  ru: {
+    letsChat: (name) => `Давайте поговорим с ${name}!`,
+    listen: (name) => `Послушайте, что говорит ${name}`,
+    yourTurn: 'Теперь ваша очередь! Скажите слово',
+    great: 'Молодцы!',
+    tryAgain: 'Давайте попробуем ещё раз!',
+  },
+};
+
+function getTeacher(key, lang) {
+  const msgs = NPC_TEACHER[lang] || NPC_TEACHER.he;
+  return msgs[key] || NPC_TEACHER.he[key] || '';
+}
+
+// Main intro narration
+const MAIN_INTRO_NARRATION = {
+  he: 'ברוכים הבאים לחברים מדברים! כאן תפגשו חברים חדשים ותלמדו לדבר איתם באנגלית!',
+  ar: 'مرحباً بكم في الأصدقاء المتحدثين! هنا ستلتقون بأصدقاء جدد وتتعلمون التحدث معهم بالإنجليزية!',
+  ru: 'Добро пожаловать в Говорящие друзья! Здесь вы встретите новых друзей и научитесь говорить с ними по-английски!',
+};
+
 /* ════════════════════════════════════════════════════════════════
    TALKING WORLD PAGE
    ════════════════════════════════════════════════════════════════ */
@@ -94,20 +131,29 @@ export default function TalkingWorldPage({ onBack }) {
     await updateProgress({ talkingWorld: merged });
   }, [progress.talkingWorld, updateProgress]);
 
-  // ── TTS at kid-friendly rate (English then Hebrew translation) ──
-  const speakNpc = useCallback(async (textEn, textHe) => {
+  // ── TTS: Teacher Hebrew → NPC English → Teacher explains Hebrew ──
+  const speakNpc = useCallback(async (textEn, textHe, opts = {}) => {
     setIsSpeaking(true);
     try {
-      // Speak Hebrew translation first so kid understands
-      if (textHe && uiLang === 'he') {
-        const heResult = await playFromAPI(textHe, 'he', undefined, { rate: 0.9 });
-        if (heResult?.endPromise) await heResult.endPromise;
-        // Small pause between languages
-        await new Promise(r => setTimeout(r, 400));
+      const lang = uiLang === 'en' ? 'he' : uiLang;
+
+      // Step 1: Teacher brief intro in user's language (optional)
+      if (opts.intro) {
+        const r1 = await playFromAPI(opts.intro, lang, undefined, { rate: 0.9 });
+        if (r1?.endPromise) await r1.endPromise;
+        await new Promise(r => setTimeout(r, 350));
       }
-      // Then speak English (the actual learning part)
+
+      // Step 2: NPC speaks English
       const enResult = await playFromAPI(textEn, 'en', undefined, { rate: 0.82 });
       if (enResult?.endPromise) await enResult.endPromise;
+
+      // Step 3: Teacher explains in user's language
+      if (textHe) {
+        await new Promise(r => setTimeout(r, 400));
+        const heResult = await playFromAPI(textHe, lang, undefined, { rate: 0.9 });
+        if (heResult?.endPromise) await heResult.endPromise;
+      }
     } catch (_) {}
     setIsSpeaking(false);
   }, [uiLang]);
@@ -247,9 +293,6 @@ export default function TalkingWorldPage({ onBack }) {
     else if (stars === 1) playCorrect();
     else if (result.score > 0) playWrong();
 
-    // Speak NPC reply
-    if (result.reply) speakNpc(result.reply);
-
     // Track score
     const newTotal = npcTotalScore + (result.score || 0);
     const newCount = npcTaskCount + 1;
@@ -261,28 +304,33 @@ export default function TalkingWorldPage({ onBack }) {
     addXP(TW_XP.taskComplete, 'talking-world');
     if (stars === 3) addXP(TW_XP.perfectTask, 'talking-world');
 
-    // Wait a bit then advance
-    setTimeout(() => {
-      setIsProcessing(false);
-      setTypedInput('');
+    // Speak NPC reply (await to prevent overlap with next task)
+    if (result.reply) {
+      await speakNpc(result.reply);
+    }
 
-      const nextIndex = taskIndex + 1;
-      if (nextIndex < (npc?.tasks?.length || 0)) {
-        setTaskIndex(nextIndex);
-        // Show & speak next task prompt with translation
-        const nextTask = npc.tasks[nextIndex];
-        if (nextTask) {
-          setTimeout(() => {
-            const taskHe = nextTask.promptHe || null;
-            setChatHistory(prev => [...prev, { role: 'npc', text: nextTask.promptEn, isTask: true, translation: taskHe }]);
-            speakNpc(nextTask.promptEn, taskHe);
-          }, 800);
-        }
-      } else {
-        // NPC complete
-        completeNpc(newTotal, newCount);
+    // Advance to next task (sequential, no overlap)
+    await new Promise(r => setTimeout(r, 800));
+    setIsProcessing(false);
+    setTypedInput('');
+
+    const npcName = lf(npc, 'name', uiLang);
+    const lang = uiLang === 'en' ? 'he' : uiLang;
+    const teacherFn = NPC_TEACHER[lang] || NPC_TEACHER.he;
+
+    const nextIndex = taskIndex + 1;
+    if (nextIndex < (npc?.tasks?.length || 0)) {
+      setTaskIndex(nextIndex);
+      const nextTask = npc.tasks[nextIndex];
+      if (nextTask) {
+        const taskHe = nextTask.promptHe || null;
+        setChatHistory(prev => [...prev, { role: 'npc', text: nextTask.promptEn, isTask: true, translation: taskHe }]);
+        await speakNpc(nextTask.promptEn, taskHe, { intro: teacherFn.listen(npcName) });
       }
-    }, 2000);
+    } else {
+      // NPC complete
+      completeNpc(newTotal, newCount);
+    }
   }
 
   // ── Complete NPC ──
@@ -335,7 +383,7 @@ export default function TalkingWorldPage({ onBack }) {
   }
 
   // ── Start NPC conversation ──
-  function startNpcConversation(npcId) {
+  async function startNpcConversation(npcId) {
     const world = WORLDS.find(w => w.id === selectedWorld);
     const npc = world?.npcs?.find(n => n.id === npcId);
     if (!npc) return;
@@ -350,18 +398,22 @@ export default function TalkingWorldPage({ onBack }) {
     setShowHint(false);
     setPhase('conversation');
 
-    // NPC greeting + first task
-    setTimeout(() => {
-      const greetHe = npc.greetingHe || null;
-      setChatHistory([{ role: 'npc', text: npc.greetingEn, translation: greetHe }]);
-      speakNpc(npc.greetingEn, greetHe);
-      setTimeout(() => {
-        const task0 = npc.tasks[0];
-        const taskHe = task0.promptHe || null;
-        setChatHistory(prev => [...prev, { role: 'npc', text: task0.promptEn, isTask: true, translation: taskHe }]);
-        speakNpc(task0.promptEn, taskHe);
-      }, 4000);
-    }, 500);
+    const npcName = lf(npc, 'name', uiLang);
+    const lang = uiLang === 'en' ? 'he' : uiLang;
+    const teacherFn = NPC_TEACHER[lang] || NPC_TEACHER.he;
+
+    // Step 1: Teacher intro → NPC greeting English → Teacher Hebrew translation
+    await new Promise(r => setTimeout(r, 500));
+    const greetHe = npc.greetingHe || null;
+    setChatHistory([{ role: 'npc', text: npc.greetingEn, translation: greetHe }]);
+    await speakNpc(npc.greetingEn, greetHe, { intro: teacherFn.letsChat(npcName) });
+
+    // Step 2: Small pause then first task
+    await new Promise(r => setTimeout(r, 600));
+    const task0 = npc.tasks[0];
+    const taskHe = task0.promptHe || null;
+    setChatHistory(prev => [...prev, { role: 'npc', text: task0.promptEn, isTask: true, translation: taskHe }]);
+    await speakNpc(task0.promptEn, taskHe, { intro: teacherFn.listen(npcName) });
   }
 
   // ── Send typed message ──
@@ -935,12 +987,19 @@ export default function TalkingWorldPage({ onBack }) {
             onEnded={handleIntroDone}
             ref={el => { if (el) videoRef.current = el; }}
           />
-          {/* Tap-to-play overlay — user gesture required for unmuted audio on mobile */}
+          {/* Tap-to-play overlay — user gesture + narration */}
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
               const v = videoRef.current;
               if (v) { v.muted = false; v.play().catch(() => {}); }
               e.currentTarget.style.display = 'none';
+              // Narrate the intro
+              const narration = MAIN_INTRO_NARRATION[uiLang] || MAIN_INTRO_NARRATION.he;
+              try {
+                const lang = uiLang === 'en' ? 'he' : uiLang;
+                const r = await playFromAPI(narration, lang, undefined, { rate: 0.9 });
+                if (r?.endPromise) await r.endPromise;
+              } catch (_) {}
             }}
             className="absolute inset-0 flex items-center justify-center bg-black/30"
             style={{ zIndex: 1 }}

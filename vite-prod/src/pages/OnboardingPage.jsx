@@ -156,8 +156,9 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, user } = useAuth();
   const { updateProgress, progress, addChild, familyCode } = useUserProgress();
 
-  // Skip language selection (step 0) if language was already chosen
-  const [step, setStep] = useState(() => localStorage.getItem('se-lang') ? 1 : 0);
+  // Skip language selection (step 0) only if user explicitly chose a language before
+  // (se-lang is always set by ThemeContext with default 'he', so we use a separate flag)
+  const [step, setStep] = useState(() => localStorage.getItem('se-lang-chosen') ? 1 : 0);
   const onboardTimersRef = useRef([]);
   useEffect(() => () => { onboardTimersRef.current.forEach(clearTimeout); }, []);
 
@@ -347,8 +348,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         setAuthError(t('passwordsMismatch', uiLang));
         return;
       }
-      // Strong password: min 8 chars, uppercase, lowercase, number
-      if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+      if (password.length < 6) {
         setAuthError(t('passwordTooWeak', uiLang));
         return;
       }
@@ -374,7 +374,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
       } else {
         await signInWithEmail(email, password);
         // Check if existing password is weak — flag for upgrade banner
-        if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+        if (password.length < 6) {
           sessionStorage.setItem('se_weak_password', '1');
         }
       }
@@ -427,7 +427,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
         {SUPPORTED_LANGS.map(lang => (
           <button
             key={lang}
-            onClick={() => { setLang(lang); nextStep(); }}
+            onClick={() => { setLang(lang); localStorage.setItem('se-lang-chosen', '1'); nextStep(); }}
             style={{
               padding: '18px 24px',
               borderRadius: 18,
@@ -554,7 +554,7 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              minLength={8}
+              minLength={6}
               className="landing-input"
             />
             <button
@@ -575,21 +575,14 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
               required
-              minLength={8}
+              minLength={6}
               className="landing-input"
             />
             {password && (
               <div className="flex gap-2 items-center mt-1 px-1">
-                {[
-                  { ok: password.length >= 8, label: '8+' },
-                  { ok: /[A-Z]/.test(password), label: 'A' },
-                  { ok: /[a-z]/.test(password), label: 'a' },
-                  { ok: /[0-9]/.test(password), label: '1' },
-                ].map((r, i) => (
-                  <span key={i} className={`text-xs font-bold px-2 py-0.5 rounded-full ${r.ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-400'}`}>
-                    {r.ok ? '✓' : '✗'} {r.label}
-                  </span>
-                ))}
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${password.length >= 6 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-400'}`}>
+                  {password.length >= 6 ? '✓' : '✗'} 6+
+                </span>
               </div>
             )}
           </>)}
