@@ -5,7 +5,7 @@ import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useUsageLimit from '../hooks/useUsageLimit.js';
-import { playFromAPI } from '../utils/hebrewAudio.js';
+import { playFromAPI, stopAllAudio } from '../utils/hebrewAudio.js';
 import { playCorrect, playComplete, playStar, playWrong } from '../utils/gameSounds.js';
 import { WORLDS, TW_XP, TW_STARS, scoreToStars } from '../data/talking-world-data.js';
 import { t, tReplace, lf, RTL_LANGS } from '../utils/translations.js';
@@ -255,20 +255,35 @@ export default function TalkingWorldPage({ onBack }) {
       result = await callTalkingWorldAPI(task, text.trim());
     } else {
       result = evaluateLocally(task, text.trim());
-      // Generate NPC reply for local eval
+      // Generate NPC reply for local eval (English + Hebrew translation)
       const score = result.score;
+      const lang = uiLang === 'en' ? 'he' : uiLang;
+      const replyHe = {
+        he: { perfect: 'מדהים! אמרתם את זה מושלם!', great: 'כל הכבוד! היה ממש טוב!', good: 'ניסיון טוב! תמשיכו לתרגל!', retry: 'לא נורא! תנסו שוב!' },
+        ar: { perfect: 'رائع! قلتموها بشكل مثالي!', great: 'أحسنتم! كان جيداً جداً!', good: 'محاولة جيدة! واصلوا التمرين!', retry: 'لا بأس! حاولوا مرة أخرى!' },
+        ru: { perfect: 'Потрясающе! Вы сказали идеально!', great: 'Молодцы! Было очень хорошо!', good: 'Хорошая попытка! Продолжайте!', retry: 'Ничего страшного! Попробуйте ещё!' },
+      }[lang] || { perfect: 'מדהים! אמרתם את זה מושלם!', great: 'כל הכבוד! היה ממש טוב!', good: 'ניסיון טוב! תמשיכו לתרגל!', retry: 'לא נורא! תנסו שוב!' };
+
       if (score >= TW_STARS.three) {
         result.reply = 'Amazing! You said it perfectly!';
+        result.replyHe = replyHe.perfect;
       } else if (score >= TW_STARS.two) {
         result.reply = 'Great job! That was really good!';
+        result.replyHe = replyHe.great;
       } else if (score >= TW_STARS.one) {
         result.reply = result.correction
           ? `Good try! The answer is "${result.correction}". Try again next time!`
           : 'Good try! Keep practicing!';
+        result.replyHe = result.correction
+          ? `${replyHe.good} ${result.correction}`
+          : replyHe.good;
       } else {
         result.reply = result.correction
           ? `No worries! The answer is "${result.correction}". You'll get it next time!`
           : 'No worries! Keep trying!';
+        result.replyHe = result.correction
+          ? `${replyHe.retry} ${result.correction}`
+          : replyHe.retry;
       }
     }
 
@@ -282,6 +297,7 @@ export default function TalkingWorldPage({ onBack }) {
     setChatHistory(prev => [...prev, {
       role: 'npc',
       text: result.reply,
+      translation: result.replyHe || null,
       score: result.score,
       correction: result.correction,
       stars: scoreToStars(result.score),
@@ -306,7 +322,7 @@ export default function TalkingWorldPage({ onBack }) {
 
     // Speak NPC reply (await to prevent overlap with next task)
     if (result.reply) {
-      await speakNpc(result.reply);
+      await speakNpc(result.reply, result.replyHe || null);
     }
 
     // Advance to next task (sequential, no overlap)
@@ -908,6 +924,7 @@ export default function TalkingWorldPage({ onBack }) {
   // ══════════════════════════════════════════
 
   function handleIntroDone() {
+    stopAllAudio();
     localStorage.setItem('tw-intro-seen', '1');
     setShowIntroVideo(false);
   }
@@ -921,6 +938,7 @@ export default function TalkingWorldPage({ onBack }) {
   }, [phase, selectedWorld]);
 
   function handleWorldIntroDone() {
+    stopAllAudio();
     if (selectedWorld) localStorage.setItem(`tw-world-seen-${selectedWorld}`, '1');
     setPhase('npc-path');
   }
