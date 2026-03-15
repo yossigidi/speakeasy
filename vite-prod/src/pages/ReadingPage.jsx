@@ -376,10 +376,10 @@ function ReadingView({ story, onBack }) {
         </button>
       </div>
 
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white">{story.title}</h2>
+      <h2 dir="ltr" className="text-xl font-bold text-gray-900 dark:text-white" style={{ textAlign: 'left' }}>{story.title}</h2>
 
       <GlassCard variant="strong" className="leading-relaxed">
-        <p className="text-gray-800 dark:text-gray-200">
+        <p dir="ltr" className="text-gray-800 dark:text-gray-200" style={{ textAlign: 'left' }}>
           {words.map((word, i) => {
             const clean = word.replace(/[^\w']/g, '').toLowerCase();
             const isVocab = story.vocabulary.some(v => v.word.toLowerCase().includes(clean) && clean.length > 2);
