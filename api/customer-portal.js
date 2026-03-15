@@ -35,6 +35,22 @@ export default async function handler(req, res) {
   const userDoc = await db.collection('users').doc(user.uid).get();
   const userData = userDoc.data() || {};
 
+  const { action } = req.body || {};
+
+  // Cancel subscription action
+  if (action === 'cancel') {
+    const subId = userData.subscription?.stripeSubscriptionId;
+    if (!subId) {
+      return res.status(400).json({ error: 'No active subscription found' });
+    }
+    await stripe.subscriptions.update(subId, { cancel_at_period_end: true });
+    await db.collection('users').doc(user.uid).update({
+      'subscription.cancelAtPeriodEnd': true,
+    });
+    return res.status(200).json({ success: true });
+  }
+
+  // Default: open Stripe customer portal
   if (!userData.stripeCustomerId) {
     return res.status(400).json({ error: 'No subscription found' });
   }

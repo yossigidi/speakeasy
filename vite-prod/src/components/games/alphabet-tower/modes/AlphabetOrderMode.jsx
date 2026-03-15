@@ -270,8 +270,8 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
         flexDirection: 'column',
         alignItems: 'center',
         width: '100%',
-        height: '100%',
-        padding: '8px 8px 4px',
+        minHeight: '100dvh',
+        padding: '8px 8px env(safe-area-inset-bottom, 8px)',
         direction: isRTL ? 'rtl' : 'ltr',
         position: 'relative',
         userSelect: 'none',
@@ -407,7 +407,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
                   letter={placedMap[idx]}
                   color={CUBE_COLORS[idx % CUBE_COLORS.length]}
                   isPlaced
-                  size={isTower ? 44 : 48}
+                  size={isTower ? 56 : 60}
                 />
               ) : (
                 <div style={{ position: 'relative' }}>
@@ -415,7 +415,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
                     letter={letter}
                     color="#9ca3af"
                     isGhost
-                    size={isTower ? 44 : 48}
+                    size={isTower ? 56 : 60}
                   />
                   {/* Visible drop zone indicator */}
                   <div style={{
@@ -516,7 +516,7 @@ const AlphabetOrderMode = React.memo(function AlphabetOrderMode({
               <LetterCube
                 letter={item.letter}
                 color={CUBE_COLORS[origIdx % CUBE_COLORS.length]}
-                size={52}
+                size={64}
                 onPointerDown={(e) => {
                   try { playTap(); } catch { /* */ }
                   dragHandlers.onPointerDown(e, item.id);

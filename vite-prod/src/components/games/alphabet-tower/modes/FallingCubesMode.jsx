@@ -318,10 +318,10 @@ const FallingCubesMode = React.memo(function FallingCubesMode({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        height: '100%',
+        minHeight: '100dvh',
         position: 'relative',
         overflow: 'hidden',
-        padding: '12px 8px',
+        padding: '12px 8px env(safe-area-inset-bottom, 8px)',
       }}
     >
       {/* ── Background image ── */}

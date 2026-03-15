@@ -170,9 +170,10 @@ export default function ProfilePage({ onNavigate }) {
     setCancelLoading(true);
     try {
       const token = await user.getIdToken();
-      const res = await fetch('/api/cancel-subscription', {
+      const res = await fetch('/api/customer-portal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ action: 'cancel' }),
       });
       const data = await res.json();
       if (data.success) {
