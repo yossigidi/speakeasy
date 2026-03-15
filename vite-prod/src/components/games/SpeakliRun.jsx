@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { ArrowLeft, Volume2, Star, Zap, Trophy, Coins } from 'lucide-react';
+import { ArrowLeft, Volume2, Star, Zap, Trophy, Coins, Pause } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
 import { playSequence, preloadHebrewAudio, preloadEnglishAudio, stopAllAudio } from '../../utils/hebrewAudio.js';
@@ -417,17 +417,25 @@ function RaceTrack({ playerPos, botPositions, world }) {
 }
 
 // ── RunHUD ──
-function RunHUD({ score, coins, streak, round, totalRounds, onBack, isPowerMode, uiLang }) {
+function RunHUD({ score, coins, streak, round, totalRounds, onBack, onPause, isPowerMode, uiLang }) {
   return (
     <>
-      {/* Back button — z-40 so it's always above challenge overlay */}
-      <div className="absolute top-3 left-3 z-40">
+      {/* Back + Pause buttons — z-40 so they're always above challenge overlay */}
+      <div className="absolute top-3 left-3 z-40 flex gap-2">
         <button
           onClick={(e) => { e.stopPropagation(); onBack(); }}
           className="text-white/90 bg-black/30 rounded-full p-3 backdrop-blur-md active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center shadow-lg border border-white/10"
         >
           <ArrowLeft size={20} className={RTL_LANGS.includes(uiLang) ? 'rotate-180' : ''} />
         </button>
+        {onPause && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onPause(); }}
+            className="text-white/90 bg-black/30 rounded-full p-3 backdrop-blur-md active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center shadow-lg border border-white/10"
+          >
+            <Pause size={20} />
+          </button>
+        )}
       </div>
 
       {/* Stats bar */}
@@ -959,6 +967,8 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
   const [streak, setStreak] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [isPowerMode, setIsPowerMode] = useState(false);
+  const [showPause, setShowPause] = useState(false);
+  const pausedPhaseRef = useRef(null);
 
   // Racing state
   const [playerPos, setPlayerPos] = useState(0);
@@ -1385,9 +1395,34 @@ export function SpeakliRunGame({ onComplete, onBack, childLevel = 1 }) {
           round={round}
           totalRounds={diff.rounds}
           onBack={handleBack}
+          onPause={() => { pausedPhaseRef.current = phase; setShowPause(true); }}
           isPowerMode={isPowerMode}
           uiLang={uiLang}
         />
+
+        {/* Pause overlay */}
+        {showPause && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.7)' }}>
+            <div className="text-center">
+              <div className="text-6xl mb-6">⏸️</div>
+              <h2 className="text-2xl font-black text-white mb-8">{t('gamePaused', uiLang)}</h2>
+              <div className="flex flex-col gap-3 items-center">
+                <button
+                  onClick={() => setShowPause(false)}
+                  className="px-8 py-3 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-lg shadow-lg min-w-[200px]"
+                >
+                  ▶️ {t('gameResume', uiLang)}
+                </button>
+                <button
+                  onClick={() => { setShowPause(false); handleBack(); }}
+                  className="px-8 py-3 rounded-2xl bg-white/20 text-white font-bold text-lg min-w-[200px]"
+                >
+                  🏠 {t('gameExit', uiLang)}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Golden flash overlay on correct */}
         {showGoldenFlash && (

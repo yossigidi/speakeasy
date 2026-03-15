@@ -11,7 +11,7 @@
  */
 
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { ArrowLeft, Volume2, Star, Zap, Heart, Trophy } from 'lucide-react';
+import { ArrowLeft, Volume2, Star, Zap, Heart, Trophy, Pause, Play } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
@@ -37,11 +37,11 @@ const VIEWPORT_W = 375;   // virtual design width (portrait reference)
 const VIEWPORT_H = 600;   // virtual design height (portrait reference)
 const GROUND_Y_RATIO = 0.82; // ground at 82% of viewport height
 
-// Smooth physics-based movement
-const PLAYER_ACCEL = 0.55;      // acceleration per frame
-const PLAYER_FRICTION = 0.82;   // friction when no input (0-1, lower = more friction)
-const PLAYER_MAX_SPEED = 4.2;   // max horizontal speed
-const ENEMY_SPEED = 0.5;
+// Smooth physics-based movement (kid-friendly speeds)
+const PLAYER_ACCEL = 0.35;      // acceleration per frame (slower for kids)
+const PLAYER_FRICTION = 0.78;   // friction when no input (0-1, lower = more friction)
+const PLAYER_MAX_SPEED = 2.8;   // max horizontal speed (slower for kids)
+const ENEMY_SPEED = 0.35;
 const COIN_BOB_SPEED = 0.04;
 const COIN_BOB_AMP = 3;
 const CAMERA_LERP = 0.08;       // smooth camera follow (0-1, lower = smoother)
@@ -329,9 +329,9 @@ function generateLevel(worldId, levelIndex, words, difficulty) {
     const gw = 250 + Math.random() * 350;
     groundPlatforms.push({ x: gx, y: groundY, w: gw, h: TILE * GROUND_TILES, isGround: true });
     gx += gw;
-    // Gaps in ground — jumpable, more in later levels
+    // Gaps in ground — jumpable, wider so slower player actually falls in
     if (gx > VIEWPORT_W * 1.5 && Math.random() > (0.7 - levelIndex * 0.05)) {
-      gx += 50 + Math.random() * 30 + levelIndex * 5;
+      gx += 80 + Math.random() * 40 + levelIndex * 8;
     }
   }
 
@@ -923,6 +923,7 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
   const [powerMode, setPowerMode] = useState(false);
   const [gameResult, setGameResult] = useState(null); // { stars, xp }
   const [challengeData, setChallengeData] = useState(null);
+  const [showPause, setShowPause] = useState(false);
 
   // ── Refs for game loop ──
   const viewportRef = useRef(null);
@@ -1519,15 +1520,18 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             if (enemy.x < visibleRange.left || enemy.x > visibleRange.right) return null;
             return (
               <div key={`e${i}`} className="absolute" style={{
-                left: enemy.x * sx, top: (enemy.y - 8) * sy,
-                width: 48, height: 48,
+                left: enemy.x * sx, top: (enemy.y - 12) * sy,
+                width: 64, height: 64,
                 transform: enemy.dir < 0 ? 'scaleX(-1)' : 'none',
                 animation: 'enemyBob 0.6s ease-in-out infinite alternate',
               }}>
                 <img src={IMG.enemies[enemy.imgIdx ?? 0]} alt="" style={{
                   width: '100%', height: '100%',
                   objectFit: 'contain',
+                  borderRadius: '50%',
                   filter: 'drop-shadow(0 3px 5px rgba(0,0,0,0.4))',
+                  background: 'transparent',
+                  mixBlendMode: 'multiply',
                 }} />
               </div>
             );
@@ -1573,6 +1577,11 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
             style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
             <ArrowLeft size={18} className="text-white" />
           </button>
+          <button onClick={(e) => { e.stopPropagation(); pausedRef.current = true; setShowPause(true); }}
+            className="bg-black/40 backdrop-blur-md rounded-full p-2 min-w-[40px] min-h-[40px] flex items-center justify-center"
+            style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
+            <Pause size={18} className="text-white" />
+          </button>
           <div className="flex gap-1">
             {[...Array(MAX_LIVES)].map((_, i) => (
               <Heart key={i} size={22} className={i < lives ? 'text-red-500 fill-red-500' : 'text-white/30'}
@@ -1610,6 +1619,30 @@ export default function WordRunnerGame({ onComplete, onBack, childLevel = 1 }) {
               boxShadow: '0 2px 10px rgba(245,158,11,0.4)',
             }}>
             🔥 {streak}x
+          </div>
+        )}
+
+        {/* ═══ PAUSE OVERLAY ═══ */}
+        {showPause && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.7)' }}>
+            <div className="text-center">
+              <div className="text-6xl mb-6">⏸️</div>
+              <h2 className="text-2xl font-black text-white mb-8">{t('gamePaused', uiLang)}</h2>
+              <div className="flex flex-col gap-3 items-center">
+                <button
+                  onClick={() => { pausedRef.current = false; setShowPause(false); }}
+                  className="px-8 py-3 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-lg shadow-lg min-w-[200px]"
+                >
+                  ▶️ {t('gameResume', uiLang)}
+                </button>
+                <button
+                  onClick={() => { pausedRef.current = false; setShowPause(false); onBack(); }}
+                  className="px-8 py-3 rounded-2xl bg-white/20 text-white font-bold text-lg min-w-[200px]"
+                >
+                  🏠 {t('gameExit', uiLang)}
+                </button>
+              </div>
+            </div>
           </div>
         )}
 

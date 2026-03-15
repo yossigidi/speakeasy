@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Check } from 'lucide-react';
+import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Check, Pause } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../../contexts/SpeechContext.jsx';
@@ -129,12 +129,19 @@ function GameOverScreen({ emoji, title, subtitle, score, total, xp, onContinue, 
   );
 }
 
-function GameHeader({ onBack, title, emoji, right, uiLang }) {
+function GameHeader({ onBack, onPause, title, emoji, right, uiLang }) {
   return (
     <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
-      <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center">
-        <ArrowLeft size={20} />
-      </button>
+      <div className="flex gap-2">
+        <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <ArrowLeft size={20} />
+        </button>
+        {onPause && (
+          <button onClick={onPause} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm active:scale-90 transition-transform min-w-[44px] min-h-[44px] flex items-center justify-center">
+            <Pause size={20} />
+          </button>
+        )}
+      </div>
       <div className="text-center">
         <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
           <span className="animate-wiggle inline-block">{emoji}</span>
@@ -142,6 +149,31 @@ function GameHeader({ onBack, title, emoji, right, uiLang }) {
         </h2>
       </div>
       {right || <div className="w-9" />}
+    </div>
+  );
+}
+
+function GamePauseOverlay({ onResume, onExit, uiLang }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.7)' }}>
+      <div className="text-center">
+        <div className="text-6xl mb-6">⏸️</div>
+        <h2 className="text-2xl font-black text-white mb-8">{t('gamePaused', uiLang)}</h2>
+        <div className="flex flex-col gap-3 items-center">
+          <button
+            onClick={onResume}
+            className="px-8 py-3 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-lg shadow-lg min-w-[200px]"
+          >
+            ▶️ {t('gameResume', uiLang)}
+          </button>
+          <button
+            onClick={onExit}
+            className="px-8 py-3 rounded-2xl bg-white/20 text-white font-bold text-lg min-w-[200px]"
+          >
+            🏠 {t('gameExit', uiLang)}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -186,6 +218,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPause, setShowPause] = useState(false);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
@@ -355,7 +388,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
         />
       )}
       <div className="relative z-10">
-        <GameHeader onBack={onBack} emoji="🎧"
+        <GameHeader onBack={onBack} onPause={() => setShowPause(true)} emoji="🎧"
           title={t('listenAndPop', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
@@ -414,6 +447,7 @@ export function ListenPopGame({ onComplete, onBack, childLevel = 1 }) {
           })}
         </div>
       </div>
+      {showPause && <GamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
     </div>
   );
 }
@@ -485,6 +519,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPause, setShowPause] = useState(false);
   const sortTimersRef = useRef([]);
 
   // Sets by level: 1-2→1 set, 3-4→2 sets
@@ -603,7 +638,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
         />
       )}
       <div className="relative z-10">
-        <GameHeader onBack={onBack} emoji="📦"
+        <GameHeader onBack={onBack} onPause={() => setShowPause(true)} emoji="📦"
           title={t('categorySort', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
@@ -670,6 +705,7 @@ export function CategorySortGame({ onComplete, onBack, childLevel = 1 }) {
           {t('tapRightCategory', uiLang)}
         </p>
       </div>
+      {showPause && <GamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
     </div>
   );
 }
@@ -710,6 +746,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
   const [selectedLetter, setSelectedLetter] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPause, setShowPause] = useState(false);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
@@ -860,7 +897,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
         />
       )}
       <div className="relative z-10">
-        <GameHeader onBack={onBack} emoji="🔤"
+        <GameHeader onBack={onBack} onPause={() => setShowPause(true)} emoji="🔤"
           title={t('missingLetter', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
@@ -939,6 +976,7 @@ export function MissingLetterGame({ onComplete, onBack, childLevel = 1 }) {
           })}
         </div>
       </div>
+      {showPause && <GamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
     </div>
   );
 }
@@ -974,6 +1012,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const [isCorrect, setIsCorrect] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPause, setShowPause] = useState(false);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const instructionsGiven = useRef(false);
@@ -1146,7 +1185,7 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
         />
       )}
       <div className="relative z-10">
-        <GameHeader onBack={onBack} emoji="📝"
+        <GameHeader onBack={onBack} onPause={() => setShowPause(true)} emoji="📝"
           title={t('sentenceBuilder', uiLang)}
           right={
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-3 py-1">
@@ -1231,6 +1270,9 @@ export function SentenceBuilderGame({ onComplete, onBack, childLevel = 1 }) {
             </button>
           </div>
         )}
+
+        {/* Pause overlay */}
+        {showPause && <GamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
 
         {/* Success overlay */}
         {isCorrect && (

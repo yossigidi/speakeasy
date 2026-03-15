@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Lock } from 'lucide-react';
+import { ArrowLeft, Volume2, Star, Zap, RotateCcw, Lock, Pause } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
 import { useSpeech } from '../contexts/SpeechContext.jsx';
@@ -26,6 +26,25 @@ const GAME_PHRASES = [
   'בּוֹנִים מִלָּה! הַקְשִׁיבוּ לַמִּלָּה וְלִחֲצוּ עַל הָאוֹתִיּוֹת בַּסֵּדֶר הַנָּכוֹן',
   'אֵיפֹה הָאוֹת','יוֹפִי!','נָכוֹן!','מְצוּיָּן!','כׇּל הַכָּבוֹד!','מַדְהִים!','נַסּוּ שׁוּב',
 ];
+
+function KidsGamePauseOverlay({ onResume, onExit, uiLang }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.7)' }}>
+      <div className="text-center">
+        <div className="text-6xl mb-6">⏸️</div>
+        <h2 className="text-2xl font-black text-white mb-8">{t('gamePaused', uiLang)}</h2>
+        <div className="flex flex-col gap-3 items-center">
+          <button onClick={onResume} className="px-8 py-3 rounded-2xl bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-lg shadow-lg min-w-[200px]">
+            ▶️ {t('gameResume', uiLang)}
+          </button>
+          <button onClick={onExit} className="px-8 py-3 rounded-2xl bg-white/20 text-white font-bold text-lg min-w-[200px]">
+            🏠 {t('gameExit', uiLang)}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // Game instruction strings by language
 const KIDS_GAME_INSTRUCTIONS = {
@@ -197,6 +216,7 @@ function BubblePopGame({ onComplete, onBack }) {
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
   const [showGroupComplete, setShowGroupComplete] = useState(false);
+  const [showPause, setShowPause] = useState(false);
   const animRef = useRef(null);
   const containerRef = useRef(null);
   const speakRef = useRef(speak);
@@ -454,9 +474,14 @@ function BubblePopGame({ onComplete, onBack }) {
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
-          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} />
-          </button>
+          <div className="flex gap-2">
+            <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <ArrowLeft size={20} />
+            </button>
+            <button onClick={() => setShowPause(true)} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <Pause size={20} />
+            </button>
+          </div>
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-4 py-1.5 flex items-center gap-2">
             <span className="text-lg">🫧</span>
             <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
@@ -524,6 +549,7 @@ function BubblePopGame({ onComplete, onBack }) {
           ))}
         </div>
       </div>
+      {showPause && <KidsGamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
     </div>
   );
 }
@@ -557,6 +583,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
   const [roundStars, setRoundStars] = useState([]);
   const [showRoundComplete, setShowRoundComplete] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPause, setShowPause] = useState(false);
   const lockRef = useRef(false);
   const matchTimersRef = useRef([]);
   const usedWordsRef = useRef(new Set());
@@ -795,9 +822,14 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
       <div className="relative z-10 flex flex-col h-full">
         {/* Header - compact */}
         <div className="flex items-center justify-between px-3 pt-2 pb-1 shrink-0">
-          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} />
-          </button>
+          <div className="flex gap-2">
+            <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <ArrowLeft size={20} />
+            </button>
+            <button onClick={() => setShowPause(true)} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <Pause size={20} />
+            </button>
+          </div>
           <div className="text-center">
             <h2 className="text-base font-black text-gray-800 dark:text-white flex items-center gap-1.5">
               <span className="animate-wiggle inline-block">🧠</span>
@@ -885,6 +917,7 @@ function MemoryMatchGame({ onComplete, onBack, childLevel = 1 }) {
           })}
         </div>
       </div>
+      {showPause && <KidsGamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
     </div>
   );
 }
@@ -910,6 +943,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
   const [score, setScore] = useState(0);
   const [roundComplete, setRoundComplete] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPause, setShowPause] = useState(false);
   const speakRef = useRef(speak);
   speakRef.current = speak;
   const speakSeqRef = useRef(speakSequence);
@@ -1089,9 +1123,14 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-3 pb-2">
-          <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <ArrowLeft size={20} />
-          </button>
+          <div className="flex gap-2">
+            <button onClick={onBack} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <ArrowLeft size={20} />
+            </button>
+            <button onClick={() => setShowPause(true)} className="text-gray-400 hover:text-gray-600 bg-white/50 dark:bg-gray-800/50 rounded-full p-3 backdrop-blur-sm min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <Pause size={20} />
+            </button>
+          </div>
           <div className="text-center">
             <h2 className="text-lg font-black text-gray-800 dark:text-white flex items-center gap-2">
               <span className="animate-wiggle inline-block">🏗️</span>
@@ -1220,6 +1259,7 @@ function WordBuilderGame({ onComplete, onBack, childLevel = 1 }) {
           </div>
         )}
       </div>
+      {showPause && <KidsGamePauseOverlay onResume={() => setShowPause(false)} onExit={() => { setShowPause(false); onBack(); }} uiLang={uiLang} />}
     </div>
   );
 }
