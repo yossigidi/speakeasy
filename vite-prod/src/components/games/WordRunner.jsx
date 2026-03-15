@@ -381,11 +381,11 @@ function ParallaxBackground({ world, cameraX, viewW, viewH }) {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Real background image — slow parallax for depth */}
       <div style={{
-        position: 'absolute', inset: 0,
+        position: 'absolute', inset: '-20%',
         backgroundImage: `url(${bgImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        transform: `translate3d(${-cameraX * 0.05}px, 0, 0) scale(1.1)`,
+        transform: `translate3d(${-cameraX * 0.05}px, 0, 0)`,
         willChange: 'transform',
       }} />
       {/* Gradient overlay for ground blending */}
