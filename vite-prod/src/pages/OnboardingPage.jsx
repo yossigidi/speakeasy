@@ -156,7 +156,8 @@ export default function OnboardingPage({ onComplete, onChildLogin }) {
   const { signInWithGoogle, signInWithApple, signUpWithEmail, signInWithEmail, resetPassword, user } = useAuth();
   const { updateProgress, progress, addChild, familyCode } = useUserProgress();
 
-  const [step, setStep] = useState(0);
+  // Skip language selection (step 0) if language was already chosen
+  const [step, setStep] = useState(() => localStorage.getItem('se-lang') ? 1 : 0);
   const onboardTimersRef = useRef([]);
   useEffect(() => () => { onboardTimersRef.current.forEach(clearTimeout); }, []);
 
