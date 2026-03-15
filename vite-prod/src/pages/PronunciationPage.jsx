@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Mic, MicOff, Volume2, RefreshCw, ArrowLeft } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useUserProgress } from '../contexts/UserProgressContext.jsx';
-import { t, lf } from '../utils/translations.js';
+import { t, lf, RTL_LANGS } from '../utils/translations.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
 import { stopAllAudio } from '../utils/hebrewAudio.js';
@@ -27,6 +27,52 @@ const PRACTICE_SENTENCES = [
   { text: "The presentation went better than expected", level: "B2", translation: "המצגת הלכה טוב מהצפוי", translationAr: "سارت العرض التقديمي أفضل مما كان متوقعاً", translationRu: "Презентация прошла лучше, чем ожидалось" },
   { text: "I would have called you if I had known", level: "B2", translation: "הייתי מתקשר אליך אם הייתי יודע", translationAr: "كنت سأتصل بك لو كنت أعلم", translationRu: "Я бы позвонил тебе, если бы знал" },
 ];
+
+// Teacher guidance messages per language
+const TEACHER_MSGS = {
+  he: {
+    letsLearn: 'עכשיו נתרגל להגיד משפט חדש באנגלית! הקשיבו טוב',
+    thisMeans: 'בעברית זה אומר:',
+    yourTurn: 'עכשיו תורכם! לחצו על המיקרופון ותגידו את המשפט',
+    perfect: 'מצוין! אמרתם את זה מושלם!',
+    great: 'כל הכבוד! כמעט מושלם!',
+    good: 'יפה! אבל יש כמה מילים שצריך לתרגל',
+    needsWork: 'בואו ננסה שוב! אני אעזור לכם',
+    wordCorrect: 'מילה טובה!',
+    wordClose: 'כמעט נכון, נסו לבטא יותר ברור',
+    wordMissing: 'חסרה מילה, נסו להגיד גם את',
+    wordWrong: 'המילה הזאת צריכה תרגול, תקשיבו איך אומרים',
+    listenAgain: 'תקשיבו שוב איך אומרים את זה',
+    tryAgain: 'בואו ננסה עוד פעם! אתם יכולים!',
+  },
+  ar: {
+    letsLearn: 'الآن سنتدرب على قول جملة جديدة بالإنجليزية! استمعوا جيداً',
+    thisMeans: 'بالعربية تعني:',
+    yourTurn: 'الآن دوركم! اضغطوا على الميكروفون وقولوا الجملة',
+    perfect: 'ممتاز! قلتموها بشكل مثالي!',
+    great: 'أحسنتم! تقريباً مثالي!',
+    good: 'جيد! لكن هناك بعض الكلمات تحتاج تمرين',
+    needsWork: 'هيا نحاول مرة أخرى! سأساعدكم',
+    listenAgain: 'استمعوا مرة أخرى كيف نقولها',
+    tryAgain: 'هيا نحاول مرة أخرى! أنتم تستطيعون!',
+  },
+  ru: {
+    letsLearn: 'Сейчас потренируемся говорить новое предложение по-английски! Слушайте внимательно',
+    thisMeans: 'По-русски это значит:',
+    yourTurn: 'Теперь ваша очередь! Нажмите на микрофон и скажите предложение',
+    perfect: 'Отлично! Вы сказали это идеально!',
+    great: 'Молодцы! Почти идеально!',
+    good: 'Хорошо! Но некоторые слова нужно потренировать',
+    needsWork: 'Давайте попробуем ещё раз! Я помогу вам',
+    listenAgain: 'Послушайте ещё раз, как это произносится',
+    tryAgain: 'Давайте попробуем ещё раз! Вы сможете!',
+  },
+};
+
+function getTeacherMsg(key, lang) {
+  const msgs = TEACHER_MSGS[lang] || TEACHER_MSGS.he;
+  return msgs[key] || TEACHER_MSGS.he[key] || '';
+}
 
 function WaveformVisualizer({ isActive }) {
   return (
@@ -106,9 +152,29 @@ function WordComparison({ results }) {
   );
 }
 
+// Teacher feedback bubble for kids
+function TeacherBubble({ text, isRTL }) {
+  return (
+    <div style={{
+      background: 'linear-gradient(135deg, #FFF7ED, #FEF3C7)',
+      border: '2px solid #FDE68A',
+      borderRadius: 16,
+      padding: '12px 16px',
+      marginBottom: 12,
+      textAlign: 'center',
+      direction: isRTL ? 'rtl' : 'ltr',
+      animation: 'curriculum-fade-in 0.4s ease',
+    }}>
+      <span style={{ fontSize: 15, fontWeight: 600, color: '#92400E', lineHeight: 1.6 }}>
+        {text}
+      </span>
+    </div>
+  );
+}
+
 export default function PronunciationPage() {
   const { uiLang } = useTheme();
-  const { addXP, progress, updateProgress } = useUserProgress();
+  const { addXP, progress, updateProgress, isChildMode } = useUserProgress();
   const { speak } = useSpeechSynthesis();
   const { transcript, confidence, isListening, startListening, stopListening, sttSupported: supported } = useSpeechRecognition();
 
@@ -116,9 +182,20 @@ export default function PronunciationPage() {
   const [score, setScore] = useState(null);
   const [wordResults, setWordResults] = useState(null);
   const [hasRecorded, setHasRecorded] = useState(false);
+  // Kids mode: teacher guidance phase
+  const [kidsPhase, setKidsPhase] = useState('intro'); // 'intro' | 'ready' | 'recording' | 'feedback'
+  const [teacherText, setTeacherText] = useState('');
+  const teacherTimersRef = useRef([]);
+
+  const isRTL = RTL_LANGS.includes(uiLang);
 
   // Stop all audio on unmount
-  useEffect(() => () => stopAllAudio(), []);
+  useEffect(() => {
+    return () => {
+      stopAllAudio();
+      teacherTimersRef.current.forEach(clearTimeout);
+    };
+  }, []);
 
   const sentence = PRACTICE_SENTENCES[currentIndex];
 
@@ -126,16 +203,97 @@ export default function PronunciationPage() {
   const progressRef = useRef(progress);
   useEffect(() => { progressRef.current = progress; }, [progress]);
 
+  // Kids: teacher intro sequence when sentence changes
+  useEffect(() => {
+    if (!isChildMode) return;
+    teacherTimersRef.current.forEach(clearTimeout);
+    teacherTimersRef.current = [];
+    setKidsPhase('intro');
+    setTeacherText(getTeacherMsg('letsLearn', uiLang));
+
+    // Step 1: "Let's practice a new sentence" (in user's language)
+    const t1 = setTimeout(() => {
+      speak(getTeacherMsg('letsLearn', uiLang), { lang: uiLang, rate: 0.9, onEnd: () => {
+        // Step 2: Read the English sentence slowly
+        const t2 = setTimeout(() => {
+          speak(sentence.text, { lang: 'en', rate: 0.75, onEnd: () => {
+            // Step 3: Say what it means in user's language
+            const translation = lf(sentence, 'translation', uiLang);
+            const t3 = setTimeout(() => {
+              setTeacherText(`${getTeacherMsg('thisMeans', uiLang)} ${translation}`);
+              speak(translation, { lang: uiLang, rate: 0.9, onEnd: () => {
+                // Step 4: Read the English again (faster this time)
+                const t4 = setTimeout(() => {
+                  speak(sentence.text, { lang: 'en', rate: 0.85, onEnd: () => {
+                    // Step 5: "Your turn!"
+                    const t5 = setTimeout(() => {
+                      setTeacherText(getTeacherMsg('yourTurn', uiLang));
+                      speak(getTeacherMsg('yourTurn', uiLang), { lang: uiLang, rate: 0.9 });
+                      setKidsPhase('ready');
+                    }, 300);
+                    teacherTimersRef.current.push(t5);
+                  }});
+                }, 400);
+                teacherTimersRef.current.push(t4);
+              }});
+            }, 400);
+            teacherTimersRef.current.push(t3);
+          }});
+        }, 400);
+        teacherTimersRef.current.push(t2);
+      }});
+    }, 500);
+    teacherTimersRef.current.push(t1);
+  }, [currentIndex, isChildMode]);
+
+  // Process results after recording
   useEffect(() => {
     if (transcript && !isListening && hasRecorded) {
       const s = pronunciationScore(sentence.text, transcript, confidence);
       setScore(s);
-      setWordResults(compareWords(sentence.text, transcript));
+      const results = compareWords(sentence.text, transcript);
+      setWordResults(results);
+
+      if (isChildMode) {
+        setKidsPhase('feedback');
+        // Teacher feedback based on score
+        const feedbackTimers = [];
+        let feedbackMsg;
+        if (s >= 90) feedbackMsg = getTeacherMsg('perfect', uiLang);
+        else if (s >= 70) feedbackMsg = getTeacherMsg('great', uiLang);
+        else if (s >= 50) feedbackMsg = getTeacherMsg('good', uiLang);
+        else feedbackMsg = getTeacherMsg('needsWork', uiLang);
+
+        setTeacherText(feedbackMsg);
+        const ft1 = setTimeout(() => {
+          speak(feedbackMsg, { lang: uiLang, rate: 0.9, onEnd: () => {
+            // For imperfect scores: find problematic words and teach them
+            const problemWords = results.filter(r => r.status === 'missing' || r.status === 'wrong' || r.status === 'close');
+            if (problemWords.length > 0 && s < 90) {
+              const ft2 = setTimeout(() => {
+                // Say "listen again how to say it"
+                const listenMsg = getTeacherMsg('listenAgain', uiLang);
+                setTeacherText(listenMsg);
+                speak(listenMsg, { lang: uiLang, rate: 0.9, onEnd: () => {
+                  // Read the full sentence slowly again
+                  const ft3 = setTimeout(() => {
+                    speak(sentence.text, { lang: 'en', rate: 0.7, _queued: true });
+                  }, 300);
+                  feedbackTimers.push(ft3);
+                }});
+              }, 400);
+              feedbackTimers.push(ft2);
+            }
+          }});
+        }, 500);
+        feedbackTimers.push(ft1);
+        teacherTimersRef.current.push(...feedbackTimers);
+      }
+
       if (s >= 50 && !xpAwardedRef.current) {
         xpAwardedRef.current = true;
         addXP(3, 'pronunciation');
 
-        // Increment pronunciation achievement counters
         const p = progressRef.current;
         const counterUpdates = {
           pronunciationExercises: (p.pronunciationExercises || 0) + 1,
@@ -143,7 +301,6 @@ export default function PronunciationPage() {
         if (s >= 95) {
           counterUpdates.pronunciationHighScore = Math.max(p.pronunciationHighScore || 0, s);
         }
-        // Track pronunciation streak (consecutive 80%+ scores)
         if (s >= 80) {
           counterUpdates.pronunciationStreak = (p.pronunciationStreak || 0) + 1;
         } else {
@@ -158,20 +315,35 @@ export default function PronunciationPage() {
     if (isListening) {
       stopListening();
     } else {
+      stopAllAudio();
+      teacherTimersRef.current.forEach(clearTimeout);
       setScore(null);
       setWordResults(null);
       setHasRecorded(true);
+      if (isChildMode) setKidsPhase('recording');
       startListening();
     }
   };
 
   const nextSentence = () => {
+    stopAllAudio();
+    teacherTimersRef.current.forEach(clearTimeout);
     setCurrentIndex(prev => (prev + 1) % PRACTICE_SENTENCES.length);
     setScore(null);
     setWordResults(null);
     setHasRecorded(false);
     xpAwardedRef.current = false;
   };
+
+  const replayTeacher = useCallback(() => {
+    stopAllAudio();
+    teacherTimersRef.current.forEach(clearTimeout);
+    // Read the sentence in English then translation
+    speak(sentence.text, { lang: 'en', rate: 0.75, onEnd: () => {
+      const translation = lf(sentence, 'translation', uiLang);
+      setTimeout(() => speak(translation, { lang: uiLang, rate: 0.9, _queued: true }), 300);
+    }});
+  }, [sentence, uiLang, speak]);
 
   if (!supported) {
     return (
@@ -222,17 +394,22 @@ export default function PronunciationPage() {
         </span>
       </div>
 
+      {/* Teacher guidance bubble (kids mode) */}
+      {isChildMode && teacherText && (
+        <TeacherBubble text={teacherText} isRTL={isRTL} />
+      )}
+
       {/* Target Sentence */}
       <GlassCard variant="strong" className="text-center py-6">
         <button
-          onClick={() => speak(sentence.text)}
+          onClick={isChildMode ? replayTeacher : () => speak(sentence.text, { lang: 'en', rate: 0.85 })}
           aria-label="Listen"
           className="mx-auto mb-3 p-3 rounded-full bg-brand-100 dark:bg-brand-900/30 hover:bg-brand-200 dark:hover:bg-brand-800/40 transition-colors"
         >
           <Volume2 size={24} className="text-brand-600 dark:text-brand-400" />
         </button>
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{sentence.text}</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{lf(sentence, 'translation', uiLang)}</p>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1" dir="ltr">{sentence.text}</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400" dir={isRTL ? 'rtl' : 'ltr'}>{lf(sentence, 'translation', uiLang)}</p>
       </GlassCard>
 
       {/* Waveform */}
@@ -242,25 +419,30 @@ export default function PronunciationPage() {
       <div className="flex justify-center">
         <button
           onClick={handleRecord}
+          disabled={isChildMode && kidsPhase === 'intro'}
           aria-label={isListening ? 'Stop recording' : 'Start recording'}
           className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-200 ${
-            isListening
-              ? 'bg-red-500 shadow-lg shadow-red-500/30 recording-pulse'
-              : 'bg-brand-500 shadow-lg shadow-brand-500/30 hover:bg-brand-600'
+            isChildMode && kidsPhase === 'intro'
+              ? 'bg-gray-300 dark:bg-gray-600 opacity-50 cursor-not-allowed'
+              : isListening
+                ? 'bg-red-500 shadow-lg shadow-red-500/30 recording-pulse'
+                : 'bg-brand-500 shadow-lg shadow-brand-500/30 hover:bg-brand-600'
           }`}
         >
           {isListening ? <MicOff size={32} className="text-white" /> : <Mic size={32} className="text-white" />}
         </button>
       </div>
       <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-        {isListening ? t('recording', uiLang) : t('tapToRecord', uiLang)}
+        {isListening ? t('recording', uiLang) :
+         isChildMode && kidsPhase === 'intro' ? (isRTL ? '🔊 המורה מדבר...' : '🔊 Teacher speaking...') :
+         t('tapToRecord', uiLang)}
       </p>
 
       {/* Transcript */}
       {transcript && !isListening && (
         <GlassCard className="text-center animate-slide-up">
           <p className="text-sm text-gray-500 mb-1">{t('youSaid', uiLang)}</p>
-          <p className="text-lg font-medium text-gray-900 dark:text-white">{transcript}</p>
+          <p className="text-lg font-medium text-gray-900 dark:text-white" dir="ltr">{transcript}</p>
         </GlassCard>
       )}
 
@@ -276,7 +458,7 @@ export default function PronunciationPage() {
         <div className="space-y-4 animate-slide-up">
           <ScoreDisplay score={score} />
           <div className="flex gap-3 justify-center">
-            <AnimatedButton onClick={handleRecord} variant="secondary" icon={RefreshCw}>
+            <AnimatedButton onClick={() => { handleRecord(); if (isChildMode) { setTeacherText(getTeacherMsg('tryAgain', uiLang)); speak(getTeacherMsg('tryAgain', uiLang), { lang: uiLang, rate: 0.9 }); } }} variant="secondary" icon={RefreshCw}>
               {t('tryAgainPronunciation', uiLang)}
             </AnimatedButton>
             <AnimatedButton onClick={nextSentence} variant="primary">
