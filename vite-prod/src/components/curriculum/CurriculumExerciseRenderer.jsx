@@ -39,7 +39,7 @@ function GuidanceBubble({ text, uiLang, speak, onDone }) {
   );
 }
 
-export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang, speak, saveRecording }) {
+export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang, speak, isChildMode, saveRecording }) {
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [listening, setListening] = useState(false);
@@ -97,6 +97,28 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
       timersRef.current.push(setTimeout(() => speak(exercise.question, { lang: 'en', rate: 0.9, _queued: true }), 300));
     }
   }, [exercise, speak]);
+
+  // Adult teacher voice: reads the English sentence/question then explains in user's language
+  const adultTeacherGuidanceDone = useCallback(() => {
+    guidanceDoneRef.current = true;
+    if (isChildMode || !speak) return;
+    // Determine what English sentence and translation to speak
+    const enText = exercise?.fullSentence || exercise?.question;
+    const trText = exercise?.fullSentenceTranslation ||
+      (exercise?.sentence ? (exercise.sentence[uiLang] || exercise.sentence.he) : null) ||
+      exercise?.wordData?.translation;
+    if (enText) {
+      timersRef.current.push(setTimeout(() => {
+        speak(enText, { lang: 'en', rate: 0.85, onEnd: () => {
+          if (trText) {
+            timersRef.current.push(setTimeout(() => {
+              speak(trText, { lang: uiLang, rate: 0.9, _queued: true });
+            }, 400));
+          }
+        }});
+      }, 300));
+    }
+  }, [exercise, speak, isChildMode, uiLang]);
 
   // Reset guidanceDone flag when exercise changes
   useEffect(() => {
@@ -194,7 +216,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'word-to-hebrew') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideWordToNative', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+        <GuidanceBubble text={t('guideWordToNative', uiLang)} uiLang={uiLang} speak={speak} onDone={isChildMode ? guidanceDoneCallback : adultTeacherGuidanceDone} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('translateToNative', uiLang)}
         </div>
@@ -465,7 +487,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'multiple-choice') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideMultipleChoice', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+        <GuidanceBubble text={t('guideMultipleChoice', uiLang)} uiLang={uiLang} speak={speak} onDone={isChildMode ? guidanceDoneCallback : adultTeacherGuidanceDone} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('chooseAnswer', uiLang)}
         </div>
@@ -499,7 +521,11 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'fill-blank') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideFillBlank', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+        {isChildMode ? (
+          <GuidanceBubble text={t('guideFillBlank', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+        ) : (
+          <GuidanceBubble text={t('guideFillBlank', uiLang)} uiLang={uiLang} speak={speak} onDone={adultTeacherGuidanceDone} />
+        )}
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('fillBlank', uiLang)}
         </div>
@@ -511,6 +537,16 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
         }}>
           {exercise.question}
         </div>
+        {/* For adults: show the Hebrew translation below the sentence */}
+        {!isChildMode && exercise.fullSentenceTranslation && (
+          <div style={{
+            fontSize: 14, color: '#6B7280', marginBottom: 16,
+            direction: RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr',
+            textAlign: 'center', fontStyle: 'italic',
+          }}>
+            {exercise.fullSentenceTranslation}
+          </div>
+        )}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 300, margin: '0 auto' }}>
           {exercise.options.map((opt, i) => {
             const isCorrect = opt === exercise.correctAnswer;
@@ -646,7 +682,7 @@ export default function CurriculumExerciseRenderer({ exercise, onAnswer, uiLang,
   if (exercise.type === 'translation') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <GuidanceBubble text={t('guideTranslation', uiLang)} uiLang={uiLang} speak={speak} onDone={guidanceDoneCallback} />
+        <GuidanceBubble text={t('guideTranslation', uiLang)} uiLang={uiLang} speak={speak} onDone={isChildMode ? guidanceDoneCallback : adultTeacherGuidanceDone} />
         <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#374151' }}>
           {t('translateSentence', uiLang)}
         </div>

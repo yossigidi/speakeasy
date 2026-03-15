@@ -247,15 +247,20 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
     return (
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100,
-        background: 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)',
+        background: isChildMode
+          ? 'linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%)'
+          : 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
-        padding: '24px', paddingTop: 'calc(env(safe-area-inset-top, 0px) + 32px)',
+        justifyContent: isChildMode ? 'flex-start' : 'center',
+        padding: '24px', paddingTop: isChildMode ? 'calc(env(safe-area-inset-top, 0px) + 32px)' : 'calc(env(safe-area-inset-top, 0px) + 24px)',
         overflow: 'auto',
       }}>
-        {/* Teacher character - at top */}
-        <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
-          <SpeakliAvatar mode="talk" size="xl" />
-        </div>
+        {/* Teacher character - at top (only for kids) */}
+        {isChildMode && (
+          <div style={{ animation: 'teacher-float 3s ease-in-out infinite', marginBottom: 24 }}>
+            <SpeakliAvatar mode="talk" size="xl" />
+          </div>
+        )}
 
         {/* Lesson type icon + title */}
         <div style={{
@@ -427,28 +432,30 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
         flex: 1, display: 'flex', flexDirection: 'column',
         overflow: 'auto', position: 'relative',
       }}>
-        {/* Teacher character with speech bubble */}
-        <div style={{
-          position: 'absolute', top: 8, right: 12, zIndex: 5,
-          transition: 'all 0.3s',
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-        }}>
-          <SpeakliAvatar mode={teacherState === 'celebrating' ? 'celebrate' : teacherState === 'talking' ? 'talk' : 'idle'} size="sm" shadow={false} />
-          {teacherState !== 'idle' && (
-            <div style={{
-              marginTop: 2, padding: '3px 8px', borderRadius: 8,
-              background: teacherState === 'encouraging' ? '#FEF3C7' : '#D1FAE5',
-              fontSize: 11, fontWeight: 700,
-              color: teacherState === 'encouraging' ? '#92400E' : '#065F46',
-              animation: 'curriculum-fade-in 0.3s ease',
-              whiteSpace: 'nowrap',
-            }}>
-              {teacherState === 'happy' ? t('teacherEncourage1', uiLang) :
-               teacherState === 'celebrating' ? t('teacherEncourage3', uiLang) :
-               t('teacherWrong', uiLang)}
-            </div>
-          )}
-        </div>
+        {/* Teacher character with speech bubble (only for kids) */}
+        {isChildMode && (
+          <div style={{
+            position: 'absolute', top: 8, right: 12, zIndex: 5,
+            transition: 'all 0.3s',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+          }}>
+            <SpeakliAvatar mode={teacherState === 'celebrating' ? 'celebrate' : teacherState === 'talking' ? 'talk' : 'idle'} size="sm" shadow={false} />
+            {teacherState !== 'idle' && (
+              <div style={{
+                marginTop: 2, padding: '3px 8px', borderRadius: 8,
+                background: teacherState === 'encouraging' ? '#FEF3C7' : '#D1FAE5',
+                fontSize: 11, fontWeight: 700,
+                color: teacherState === 'encouraging' ? '#92400E' : '#065F46',
+                animation: 'curriculum-fade-in 0.3s ease',
+                whiteSpace: 'nowrap',
+              }}>
+                {teacherState === 'happy' ? t('teacherEncourage1', uiLang) :
+                 teacherState === 'celebrating' ? t('teacherEncourage3', uiLang) :
+                 t('teacherWrong', uiLang)}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Last exercise indicator */}
         {isLastExercise && (
@@ -484,6 +491,7 @@ export default function CurriculumLessonRunner({ lessonId, onComplete, onBack, u
               onAnswer={handleAnswer}
               uiLang={uiLang}
               speak={speak}
+              isChildMode={isChildMode}
               saveRecording={isChildMode ? saveRecording : undefined}
             />
           ) : (

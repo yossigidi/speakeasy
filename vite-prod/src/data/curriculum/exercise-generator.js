@@ -272,6 +272,7 @@ function generateFillBlank(wordData, allWords, sentences, _lessonWords, lang) {
       wordData: wordSnapshot(wordData, lang),
       emoji: wordData.emoji,
       fullSentence: relatedSentence.en,
+      fullSentenceTranslation: getSentenceTranslation(relatedSentence, lang),
     };
   }
 
