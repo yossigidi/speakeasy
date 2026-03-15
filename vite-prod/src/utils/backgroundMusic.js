@@ -10,9 +10,11 @@ const TRACKS = {
 };
 
 // Mobile speakers are much louder at the same volume level
+// Safari on iOS handles volume differently — use extra-low values
 const IS_MOBILE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const NORMAL_VOL = IS_MOBILE ? 0.0004 : 0.015;
-const DUCKED_VOL = IS_MOBILE ? 0.0001 : 0.002;
+const IS_SAFARI = /Safari/i.test(navigator.userAgent) && !/Chrome/i.test(navigator.userAgent);
+const NORMAL_VOL = IS_MOBILE ? (IS_SAFARI ? 0.00015 : 0.0004) : 0.015;
+const DUCKED_VOL = IS_MOBILE ? (IS_SAFARI ? 0.00004 : 0.0001) : 0.002;
 const FADE_MS = 1200;
 const DUCK_MS = 400;
 

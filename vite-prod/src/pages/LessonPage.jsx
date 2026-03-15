@@ -34,7 +34,7 @@ function MultipleChoice({ exercise, onAnswer, uiLang, speak }) {
   // Auto-speak question on mount
   useEffect(() => {
     if (speak && exercise.question) {
-      const timer = setTimeout(() => speak(exercise.question, { rate: 0.85 }), 300);
+      const timer = setTimeout(() => speak(exercise.question, { lang: 'en', rate: 0.85 }), 300);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -43,7 +43,7 @@ function MultipleChoice({ exercise, onAnswer, uiLang, speak }) {
     setAnswered(true);
     const isCorrect = selected === exercise.correct;
     if (isCorrect && speak) {
-      speak(exercise.options[exercise.correct], { rate: 0.85 });
+      speak(exercise.options[exercise.correct], { lang: 'en', rate: 0.85 });
     }
     onAnswer(isCorrect);
   };
@@ -93,11 +93,20 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
   const [correct, setCorrect] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
-  // Auto-speak sentence on mount
+  // Auto-speak: read sentence in English (with "blank" instead of answer), then explain hint in user's language
   useEffect(() => {
     if (speak && exercise.sentence) {
-      const fullSentence = exercise.sentence.replace('___', '...');
-      const timer = setTimeout(() => speak(fullSentence, { rate: 0.8 }), 300);
+      const sentenceWithBlank = exercise.sentence.replace('___', 'blank');
+      const timer = setTimeout(() => {
+        speak(sentenceWithBlank, { lang: 'en', rate: 0.8, onEnd: () => {
+          // After English sentence, explain in user's language
+          if (exercise.hint) {
+            setTimeout(() => {
+              speak(exercise.hint, { lang: uiLang, rate: 0.9, _queued: true });
+            }, 400);
+          }
+        }});
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -110,20 +119,24 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
     if (speak) {
       const fullSentence = exercise.sentence.replace('___', exercise.answer);
       if (isCorrect) {
-        speak(exercise.answer, { rate: 0.85, onEnd: () => {
-          speak(fullSentence, { rate: 0.9, _queued: true });
+        speak(exercise.answer, { lang: 'en', rate: 0.85, onEnd: () => {
+          speak(fullSentence, { lang: 'en', rate: 0.9, _queued: true });
         }});
       } else {
-        // Speak correct answer on wrong too
-        speak(fullSentence, { rate: 0.8 });
+        // Speak correct sentence on wrong too
+        speak(fullSentence, { lang: 'en', rate: 0.8 });
       }
     }
     onAnswer(isCorrect);
   };
 
   const parts = exercise.sentence.split('___');
+  // Speaker button: read sentence WITHOUT revealing the answer
   const speakSentence = () => {
-    if (speak) speak(exercise.sentence.replace('___', '...'), { rate: 0.8 });
+    if (speak) {
+      const sentenceWithBlank = exercise.sentence.replace('___', 'blank');
+      speak(sentenceWithBlank, { lang: 'en', rate: 0.8 });
+    }
   };
 
   return (
@@ -142,7 +155,13 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
           </span>
           {parts[1]}
         </div>
-        <SpeakBtn text={exercise.sentence.replace('___', exercise.answer)} speak={speak} rate={0.8} />
+        <button
+          onClick={(e) => { e.stopPropagation(); speakSentence(); }}
+          aria-label="Listen"
+          className="inline-flex items-center justify-center p-1.5 rounded-full hover:bg-brand-50 dark:hover:bg-brand-900/30 transition-colors"
+        >
+          <Volume2 size={18} className="text-brand-500" />
+        </button>
       </div>
       {exercise.hint && <p className="text-sm text-gray-500 dark:text-gray-400" dir={RTL_LANGS.includes(uiLang) ? 'rtl' : 'ltr'}>💡 {exercise.hint}</p>}
       {!answered && (
@@ -159,7 +178,7 @@ function FillInBlank({ exercise, onAnswer, uiLang, speak }) {
             />
             {!showHelp && (
               <button
-                onClick={() => { setShowHelp(true); if (speak) speak(exercise.answer, { rate: 0.7 }); }}
+                onClick={() => { setShowHelp(true); if (speak) speak(exercise.answer, { lang: 'en', rate: 0.7 }); }}
                 className="px-3 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-700 text-amber-600 font-medium text-sm whitespace-nowrap"
               >
                 💡 {t('hint', uiLang)}
@@ -205,7 +224,7 @@ function WordArrange({ exercise, onAnswer, uiLang, speak }) {
     const isCorrect = selected.join(' ') === exercise.correct;
     setAnswered(true);
     // Always speak the correct sentence
-    if (speak) speak(exercise.correct, { rate: 0.85 });
+    if (speak) speak(exercise.correct, { lang: 'en', rate: 0.85 });
     onAnswer(isCorrect);
   };
 
@@ -267,7 +286,7 @@ function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
     setCorrect(isCorrect);
     setAnswered(true);
     // Always speak the correct answer
-    if (speak) speak(exercise.target, { rate: 0.85 });
+    if (speak) speak(exercise.target, { lang: 'en', rate: 0.85 });
     onAnswer(isCorrect);
   };
 
@@ -291,7 +310,7 @@ function TranslationExercise({ exercise, onAnswer, uiLang, speak }) {
             />
             {!showHelp && (
               <button
-                onClick={() => { setShowHelp(true); if (speak) speak(exercise.target, { rate: 0.7 }); }}
+                onClick={() => { setShowHelp(true); if (speak) speak(exercise.target, { lang: 'en', rate: 0.7 }); }}
                 className="px-3 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-700 text-amber-600 font-medium text-sm whitespace-nowrap"
               >
                 💡 {t('hint', uiLang)}
